@@ -7,12 +7,12 @@ RT_INTERFACE!{interface IAppActivationResult(IAppActivationResultVtbl, IAppActiv
 impl IAppActivationResult {
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExtendedError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExtendedError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_app_resource_group_info(&self) -> Result<Option<AppResourceGroupInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppResourceGroupInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppResourceGroupInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AppResourceGroupInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -24,7 +24,7 @@ RT_INTERFACE!{interface IAppDiagnosticInfo(IAppDiagnosticInfoVtbl, IAppDiagnosti
 impl IAppDiagnosticInfo {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_app_info(&self) -> Result<Option<super::applicationmodel::AppInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::applicationmodel::AppInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -60,12 +60,12 @@ RT_INTERFACE!{interface IAppDiagnosticInfo2(IAppDiagnosticInfo2Vtbl, IAppDiagnos
 impl IAppDiagnosticInfo2 {
     #[inline] pub fn get_resource_groups(&self) -> Result<Option<foundation::collections::IVector<AppResourceGroupInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetResourceGroups)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetResourceGroups)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_resource_group_watcher(&self) -> Result<Option<AppResourceGroupInfoWatcher>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateResourceGroupWatcher)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateResourceGroupWatcher)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AppResourceGroupInfoWatcher::wrap(out)) } else { err(hr) }
     }}
 }
@@ -76,7 +76,7 @@ RT_INTERFACE!{interface IAppDiagnosticInfo3(IAppDiagnosticInfo3Vtbl, IAppDiagnos
 impl IAppDiagnosticInfo3 {
     #[inline] pub fn launch_async(&self) -> Result<foundation::IAsyncOperation<AppActivationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -87,7 +87,7 @@ RT_INTERFACE!{static interface IAppDiagnosticInfoStatics(IAppDiagnosticInfoStati
 impl IAppDiagnosticInfoStatics {
     #[inline] pub fn request_info_async(&self) -> Result<foundation::IAsyncOperation<foundation::collections::IVector<AppDiagnosticInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestInfoAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestInfoAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -102,27 +102,27 @@ RT_INTERFACE!{static interface IAppDiagnosticInfoStatics2(IAppDiagnosticInfoStat
 impl IAppDiagnosticInfoStatics2 {
     #[inline] pub fn create_watcher(&self) -> Result<Option<AppDiagnosticInfoWatcher>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWatcher)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWatcher)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AppDiagnosticInfoWatcher::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_access_async(&self) -> Result<foundation::IAsyncOperation<DiagnosticAccessStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_info_for_package_async(&self, packageFamilyName: &HStringArg) -> Result<foundation::IAsyncOperation<foundation::collections::IVector<AppDiagnosticInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestInfoForPackageAsync)(self.0.as_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestInfoForPackageAsync)(self.get_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_info_for_app_async(&self) -> Result<foundation::IAsyncOperation<foundation::collections::IVector<AppDiagnosticInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestInfoForAppAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestInfoForAppAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_info_for_app_user_model_id(&self, appUserModelId: &HStringArg) -> Result<foundation::IAsyncOperation<foundation::collections::IVector<AppDiagnosticInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestInfoForAppUserModelId)(self.0.as_abi() as *const _ as *mut _, appUserModelId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestInfoForAppUserModelId)(self.get_abi() as *const _ as *mut _, appUserModelId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -143,51 +143,51 @@ RT_INTERFACE!{interface IAppDiagnosticInfoWatcher(IAppDiagnosticInfoWatcherVtbl,
 impl IAppDiagnosticInfoWatcher {
     #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<AppDiagnosticInfoWatcher, AppDiagnosticInfoWatcherEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Added)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Added)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Added)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Added)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<AppDiagnosticInfoWatcher, AppDiagnosticInfoWatcherEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Removed)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Removed)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Removed)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Removed)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<AppDiagnosticInfoWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_EnumerationCompleted)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_EnumerationCompleted)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_EnumerationCompleted)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_EnumerationCompleted)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_stopped(&self, handler: &foundation::TypedEventHandler<AppDiagnosticInfoWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Stopped)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Stopped)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stopped(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Stopped)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Stopped)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<AppDiagnosticInfoWatcherStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Start)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Start)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Stop)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Stop)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -199,7 +199,7 @@ RT_INTERFACE!{interface IAppDiagnosticInfoWatcherEventArgs(IAppDiagnosticInfoWat
 impl IAppDiagnosticInfoWatcherEventArgs {
     #[inline] pub fn get_app_diagnostic_info(&self) -> Result<Option<AppDiagnosticInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppDiagnosticInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppDiagnosticInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AppDiagnosticInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -214,7 +214,7 @@ RT_INTERFACE!{interface IAppExecutionStateChangeResult(IAppExecutionStateChangeR
 impl IAppExecutionStateChangeResult {
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExtendedError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExtendedError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -229,22 +229,22 @@ RT_INTERFACE!{interface IAppMemoryReport(IAppMemoryReportVtbl, IAppMemoryReport_
 impl IAppMemoryReport {
     #[inline] pub fn get_private_commit_usage(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrivateCommitUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrivateCommitUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_peak_private_commit_usage(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PeakPrivateCommitUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PeakPrivateCommitUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_total_commit_usage(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TotalCommitUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TotalCommitUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_total_commit_limit(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TotalCommitLimit)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TotalCommitLimit)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -256,7 +256,7 @@ RT_INTERFACE!{interface IAppMemoryReport2(IAppMemoryReport2Vtbl, IAppMemoryRepor
 impl IAppMemoryReport2 {
     #[inline] pub fn get_expected_total_commit_limit(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExpectedTotalCommitLimit)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExpectedTotalCommitLimit)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -271,12 +271,12 @@ RT_INTERFACE!{interface IAppMemoryUsageLimitChangingEventArgs(IAppMemoryUsageLim
 impl IAppMemoryUsageLimitChangingEventArgs {
     #[inline] pub fn get_old_limit(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OldLimit)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OldLimit)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_new_limit(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NewLimit)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NewLimit)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -291,22 +291,22 @@ RT_INTERFACE!{interface IAppResourceGroupBackgroundTaskReport(IAppResourceGroupB
 impl IAppResourceGroupBackgroundTaskReport {
     #[inline] pub fn get_task_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TaskId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TaskId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_trigger(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Trigger)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Trigger)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_entry_point(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EntryPoint)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EntryPoint)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -329,32 +329,32 @@ RT_INTERFACE!{interface IAppResourceGroupInfo(IAppResourceGroupInfoVtbl, IAppRes
 impl IAppResourceGroupInfo {
     #[inline] pub fn get_instance_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_InstanceId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_InstanceId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_shared(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsShared)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsShared)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_background_task_reports(&self) -> Result<Option<foundation::collections::IVector<AppResourceGroupBackgroundTaskReport>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetBackgroundTaskReports)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetBackgroundTaskReports)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_memory_report(&self) -> Result<Option<AppResourceGroupMemoryReport>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetMemoryReport)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetMemoryReport)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AppResourceGroupMemoryReport::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_process_diagnostic_infos(&self) -> Result<Option<foundation::collections::IVector<diagnostics::ProcessDiagnosticInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetProcessDiagnosticInfos)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetProcessDiagnosticInfos)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_state_report(&self) -> Result<Option<AppResourceGroupStateReport>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetStateReport)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetStateReport)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AppResourceGroupStateReport::wrap(out)) } else { err(hr) }
     }}
 }
@@ -368,17 +368,17 @@ RT_INTERFACE!{interface IAppResourceGroupInfo2(IAppResourceGroupInfo2Vtbl, IAppR
 impl IAppResourceGroupInfo2 {
     #[inline] pub fn start_suspend_async(&self) -> Result<foundation::IAsyncOperation<AppExecutionStateChangeResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StartSuspendAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StartSuspendAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn start_resume_async(&self) -> Result<foundation::IAsyncOperation<AppExecutionStateChangeResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StartResumeAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StartResumeAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn start_terminate_async(&self) -> Result<foundation::IAsyncOperation<AppExecutionStateChangeResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StartTerminateAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StartTerminateAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -401,60 +401,60 @@ RT_INTERFACE!{interface IAppResourceGroupInfoWatcher(IAppResourceGroupInfoWatche
 impl IAppResourceGroupInfoWatcher {
     #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Added)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Added)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Added)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Added)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Removed)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Removed)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Removed)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Removed)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<AppResourceGroupInfoWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_EnumerationCompleted)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_EnumerationCompleted)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_EnumerationCompleted)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_EnumerationCompleted)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_stopped(&self, handler: &foundation::TypedEventHandler<AppResourceGroupInfoWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Stopped)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Stopped)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stopped(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Stopped)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Stopped)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_execution_state_changed(&self, handler: &foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherExecutionStateChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_ExecutionStateChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_ExecutionStateChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_execution_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_ExecutionStateChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_ExecutionStateChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<AppResourceGroupInfoWatcherStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Start)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Start)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Stop)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Stop)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -467,12 +467,12 @@ RT_INTERFACE!{interface IAppResourceGroupInfoWatcherEventArgs(IAppResourceGroupI
 impl IAppResourceGroupInfoWatcherEventArgs {
     #[inline] pub fn get_app_diagnostic_infos(&self) -> Result<Option<foundation::collections::IVectorView<AppDiagnosticInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppDiagnosticInfos)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppDiagnosticInfos)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_app_resource_group_info(&self) -> Result<Option<AppResourceGroupInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppResourceGroupInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppResourceGroupInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AppResourceGroupInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -485,12 +485,12 @@ RT_INTERFACE!{interface IAppResourceGroupInfoWatcherExecutionStateChangedEventAr
 impl IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs {
     #[inline] pub fn get_app_diagnostic_infos(&self) -> Result<Option<foundation::collections::IVectorView<AppDiagnosticInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppDiagnosticInfos)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppDiagnosticInfos)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_app_resource_group_info(&self) -> Result<Option<AppResourceGroupInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppResourceGroupInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppResourceGroupInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AppResourceGroupInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -508,22 +508,22 @@ RT_INTERFACE!{interface IAppResourceGroupMemoryReport(IAppResourceGroupMemoryRep
 impl IAppResourceGroupMemoryReport {
     #[inline] pub fn get_commit_usage_limit(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CommitUsageLimit)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CommitUsageLimit)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_commit_usage_level(&self) -> Result<AppMemoryUsageLevel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CommitUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CommitUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_private_commit_usage(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrivateCommitUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrivateCommitUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_total_commit_usage(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TotalCommitUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TotalCommitUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -536,12 +536,12 @@ RT_INTERFACE!{interface IAppResourceGroupStateReport(IAppResourceGroupStateRepor
 impl IAppResourceGroupStateReport {
     #[inline] pub fn get_execution_state(&self) -> Result<AppResourceGroupExecutionState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExecutionState)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExecutionState)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_energy_quota_state(&self) -> Result<AppResourceGroupEnergyQuotaState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EnergyQuotaState)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EnergyQuotaState)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -554,11 +554,11 @@ RT_INTERFACE!{interface IAppUriHandlerHost(IAppUriHandlerHostVtbl, IAppUriHandle
 impl IAppUriHandlerHost {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Name)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Name)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -578,7 +578,7 @@ RT_INTERFACE!{static interface IAppUriHandlerHostFactory(IAppUriHandlerHostFacto
 impl IAppUriHandlerHostFactory {
     #[inline] pub fn create_instance(&self, name: &HStringArg) -> Result<AppUriHandlerHost> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateInstance)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateInstance)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(AppUriHandlerHost::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -592,22 +592,22 @@ RT_INTERFACE!{interface IAppUriHandlerRegistration(IAppUriHandlerRegistrationVtb
 impl IAppUriHandlerRegistration {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_user(&self) -> Result<Option<User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(User::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_app_added_hosts_async(&self) -> Result<foundation::IAsyncOperation<foundation::collections::IVector<AppUriHandlerHost>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAppAddedHostsAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAppAddedHostsAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_app_added_hosts_async(&self, hosts: &foundation::collections::IIterable<AppUriHandlerHost>) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetAppAddedHostsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(hosts) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetAppAddedHostsAsync)(self.get_abi() as *const _ as *mut _, hosts.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -620,12 +620,12 @@ RT_INTERFACE!{interface IAppUriHandlerRegistrationManager(IAppUriHandlerRegistra
 impl IAppUriHandlerRegistrationManager {
     #[inline] pub fn get_user(&self) -> Result<Option<User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(User::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_get_registration(&self, name: &HStringArg) -> Result<Option<AppUriHandlerRegistration>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryGetRegistration)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryGetRegistration)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(AppUriHandlerRegistration::wrap(out)) } else { err(hr) }
     }}
 }
@@ -648,12 +648,12 @@ RT_INTERFACE!{static interface IAppUriHandlerRegistrationManagerStatics(IAppUriH
 impl IAppUriHandlerRegistrationManagerStatics {
     #[inline] pub fn get_default(&self) -> Result<Option<AppUriHandlerRegistrationManager>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDefault)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDefault)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AppUriHandlerRegistrationManager::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_for_user(&self, user: &User) -> Result<Option<AppUriHandlerRegistrationManager>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForUser)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForUser)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AppUriHandlerRegistrationManager::wrap(out)) } else { err(hr) }
     }}
 }
@@ -674,7 +674,7 @@ RT_INTERFACE!{static interface IDateTimeSettingsStatics(IDateTimeSettingsStatics
 }}
 impl IDateTimeSettingsStatics {
     #[inline] pub fn set_system_date_time(&self, utcDateTime: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetSystemDateTime)(self.0.as_abi() as *const _ as *mut _, utcDateTime);
+        let hr = ((*self.get_abi().lpVtbl).SetSystemDateTime)(self.get_abi() as *const _ as *mut _, utcDateTime);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -694,35 +694,35 @@ RT_INTERFACE!{interface IDispatcherQueue(IDispatcherQueueVtbl, IDispatcherQueue_
 impl IDispatcherQueue {
     #[inline] pub fn create_timer(&self) -> Result<Option<DispatcherQueueTimer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateTimer)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateTimer)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DispatcherQueueTimer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_enqueue(&self, callback: &DispatcherQueueHandler) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TryEnqueue)(self.0.as_abi() as *const _ as *mut _, get_abi(callback) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryEnqueue)(self.get_abi() as *const _ as *mut _, callback.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn try_enqueue_with_priority(&self, priority: DispatcherQueuePriority, callback: &DispatcherQueueHandler) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TryEnqueueWithPriority)(self.0.as_abi() as *const _ as *mut _, priority, get_abi(callback) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryEnqueueWithPriority)(self.get_abi() as *const _ as *mut _, priority, callback.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_shutdown_starting(&self, handler: &foundation::TypedEventHandler<DispatcherQueue, DispatcherQueueShutdownStartingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_ShutdownStarting)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_ShutdownStarting)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_shutdown_starting(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_ShutdownStarting)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_ShutdownStarting)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_shutdown_completed(&self, handler: &foundation::TypedEventHandler<DispatcherQueue, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_ShutdownCompleted)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_ShutdownCompleted)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_shutdown_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_ShutdownCompleted)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_ShutdownCompleted)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -742,12 +742,12 @@ RT_INTERFACE!{interface IDispatcherQueueController(IDispatcherQueueControllerVtb
 impl IDispatcherQueueController {
     #[inline] pub fn get_dispatcher_queue(&self) -> Result<Option<DispatcherQueue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DispatcherQueue)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DispatcherQueue)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DispatcherQueue::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn shutdown_queue_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ShutdownQueueAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ShutdownQueueAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -766,7 +766,7 @@ RT_INTERFACE!{static interface IDispatcherQueueControllerStatics(IDispatcherQueu
 impl IDispatcherQueueControllerStatics {
     #[inline] pub fn create_on_dedicated_thread(&self) -> Result<Option<DispatcherQueueController>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateOnDedicatedThread)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateOnDedicatedThread)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DispatcherQueueController::wrap(out)) } else { err(hr) }
     }}
 }
@@ -776,7 +776,7 @@ RT_DELEGATE!{delegate DispatcherQueueHandler(DispatcherQueueHandlerVtbl, Dispatc
 }}
 impl DispatcherQueueHandler {
     #[inline] pub fn invoke(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Invoke)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Invoke)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -790,7 +790,7 @@ RT_INTERFACE!{interface IDispatcherQueueShutdownStartingEventArgs(IDispatcherQue
 impl IDispatcherQueueShutdownStartingEventArgs {
     #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
@@ -802,7 +802,7 @@ RT_INTERFACE!{static interface IDispatcherQueueStatics(IDispatcherQueueStaticsVt
 impl IDispatcherQueueStatics {
     #[inline] pub fn get_for_current_thread(&self) -> Result<Option<DispatcherQueue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForCurrentThread)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForCurrentThread)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DispatcherQueue::wrap(out)) } else { err(hr) }
     }}
 }
@@ -821,42 +821,42 @@ RT_INTERFACE!{interface IDispatcherQueueTimer(IDispatcherQueueTimerVtbl, IDispat
 impl IDispatcherQueueTimer {
     #[inline] pub fn get_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Interval)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Interval)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_interval(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Interval)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Interval)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_running(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsRunning)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsRunning)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_repeating(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsRepeating)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsRepeating)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_repeating(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IsRepeating)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IsRepeating)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Start)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Start)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Stop)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Stop)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_tick(&self, handler: &foundation::TypedEventHandler<DispatcherQueueTimer, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Tick)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Tick)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_tick(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Tick)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Tick)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -868,7 +868,7 @@ RT_INTERFACE!{interface IFolderLauncherOptions(IFolderLauncherOptionsVtbl, IFold
 impl IFolderLauncherOptions {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_items_to_select(&self) -> Result<Option<foundation::collections::IVector<super::storage::IStorageItem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ItemsToSelect)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ItemsToSelect)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -922,47 +922,47 @@ RT_INTERFACE!{static interface IKnownUserPropertiesStatics(IKnownUserPropertiesS
 impl IKnownUserPropertiesStatics {
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_first_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FirstName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FirstName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_last_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LastName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LastName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProviderName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProviderName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_account_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AccountName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AccountName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_guest_host(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_GuestHost)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_GuestHost)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_principal_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrincipalName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrincipalName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_domain_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DomainName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DomainName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_session_initiation_protocol_uri(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SessionInitiationProtocolUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SessionInitiationProtocolUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1078,61 +1078,61 @@ RT_INTERFACE!{interface ILauncherOptions(ILauncherOptionsVtbl, ILauncherOptions_
 impl ILauncherOptions {
     #[inline] pub fn get_treat_as_untrusted(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TreatAsUntrusted)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TreatAsUntrusted)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_treat_as_untrusted(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_TreatAsUntrusted)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_TreatAsUntrusted)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_display_application_picker(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayApplicationPicker)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayApplicationPicker)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_display_application_picker(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DisplayApplicationPicker)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_DisplayApplicationPicker)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_ui(&self) -> Result<Option<LauncherUIOptions>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UI)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UI)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LauncherUIOptions::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_preferred_application_package_family_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PreferredApplicationPackageFamilyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PreferredApplicationPackageFamilyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_preferred_application_package_family_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_PreferredApplicationPackageFamilyName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_PreferredApplicationPackageFamilyName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_preferred_application_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PreferredApplicationDisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PreferredApplicationDisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_preferred_application_display_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_PreferredApplicationDisplayName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_PreferredApplicationDisplayName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_fallback_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FallbackUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FallbackUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_fallback_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_FallbackUri)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_FallbackUri)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_content_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ContentType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ContentType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_content_type(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ContentType)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_ContentType)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1149,20 +1149,20 @@ RT_INTERFACE!{interface ILauncherOptions2(ILauncherOptions2Vtbl, ILauncherOption
 impl ILauncherOptions2 {
     #[inline] pub fn get_target_application_package_family_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TargetApplicationPackageFamilyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TargetApplicationPackageFamilyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_target_application_package_family_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_TargetApplicationPackageFamilyName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_TargetApplicationPackageFamilyName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_neighboring_files_query(&self) -> Result<Option<super::storage::search::StorageFileQueryResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NeighboringFilesQuery)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NeighboringFilesQuery)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::storage::search::StorageFileQueryResult::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_neighboring_files_query(&self, value: &super::storage::search::StorageFileQueryResult) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_NeighboringFilesQuery)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_NeighboringFilesQuery)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1174,11 +1174,11 @@ RT_INTERFACE!{interface ILauncherOptions3(ILauncherOptions3Vtbl, ILauncherOption
 impl ILauncherOptions3 {
     #[inline] pub fn get_ignore_app_uri_handlers(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IgnoreAppUriHandlers)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IgnoreAppUriHandlers)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_ignore_app_uri_handlers(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IgnoreAppUriHandlers)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IgnoreAppUriHandlers)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1190,11 +1190,11 @@ RT_INTERFACE!{interface ILauncherOptions4(ILauncherOptions4Vtbl, ILauncherOption
 impl ILauncherOptions4 {
     #[inline] pub fn get_limit_picker_to_current_app_and_app_uri_handlers(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LimitPickerToCurrentAppAndAppUriHandlers)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LimitPickerToCurrentAppAndAppUriHandlers)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_limit_picker_to_current_app_and_app_uri_handlers(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_LimitPickerToCurrentAppAndAppUriHandlers)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_LimitPickerToCurrentAppAndAppUriHandlers)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1210,22 +1210,22 @@ RT_INTERFACE!{static interface ILauncherStatics(ILauncherStaticsVtbl, ILauncherS
 impl ILauncherStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_async(&self, file: &super::storage::IStorageFile) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchFileAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(file) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchFileAsync)(self.get_abi() as *const _ as *mut _, file.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn launch_file_with_options_async(&self, file: &super::storage::IStorageFile, options: &LauncherOptions) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchFileWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(file) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchFileWithOptionsAsync)(self.get_abi() as *const _ as *mut _, file.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_uri_async(&self, uri: &foundation::Uri) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_uri_with_options_async(&self, uri: &foundation::Uri, options: &LauncherOptions) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriWithOptionsAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1247,52 +1247,52 @@ RT_INTERFACE!{static interface ILauncherStatics2(ILauncherStatics2Vtbl, ILaunche
 impl ILauncherStatics2 {
     #[inline] pub fn launch_uri_for_results_async(&self, uri: &foundation::Uri, options: &LauncherOptions) -> Result<foundation::IAsyncOperation<LaunchUriResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriForResultsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriForResultsAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_uri_for_results_with_data_async(&self, uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<foundation::IAsyncOperation<LaunchUriResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriForResultsWithDataAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, get_abi(inputData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriForResultsWithDataAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, inputData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_uri_with_data_async(&self, uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriWithDataAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, get_abi(inputData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriWithDataAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, inputData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn query_uri_support_async(&self, uri: &foundation::Uri, launchQuerySupportType: LaunchQuerySupportType) -> Result<foundation::IAsyncOperation<LaunchQuerySupportStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).QueryUriSupportAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, launchQuerySupportType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).QueryUriSupportAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, launchQuerySupportType, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn query_uri_support_with_package_family_name_async(&self, uri: &foundation::Uri, launchQuerySupportType: LaunchQuerySupportType, packageFamilyName: &HStringArg) -> Result<foundation::IAsyncOperation<LaunchQuerySupportStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).QueryUriSupportWithPackageFamilyNameAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, launchQuerySupportType, packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).QueryUriSupportWithPackageFamilyNameAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, launchQuerySupportType, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn query_file_support_async(&self, file: &super::storage::StorageFile) -> Result<foundation::IAsyncOperation<LaunchQuerySupportStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).QueryFileSupportAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(file) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).QueryFileSupportAsync)(self.get_abi() as *const _ as *mut _, file.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn query_file_support_with_package_family_name_async(&self, file: &super::storage::StorageFile, packageFamilyName: &HStringArg) -> Result<foundation::IAsyncOperation<LaunchQuerySupportStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).QueryFileSupportWithPackageFamilyNameAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(file) as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).QueryFileSupportWithPackageFamilyNameAsync)(self.get_abi() as *const _ as *mut _, file.get_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_uri_scheme_handlers_async(&self, scheme: &HStringArg) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindUriSchemeHandlersAsync)(self.0.as_abi() as *const _ as *mut _, scheme.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindUriSchemeHandlersAsync)(self.get_abi() as *const _ as *mut _, scheme.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_uri_scheme_handlers_with_launch_uri_type_async(&self, scheme: &HStringArg, launchQuerySupportType: LaunchQuerySupportType) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindUriSchemeHandlersWithLaunchUriTypeAsync)(self.0.as_abi() as *const _ as *mut _, scheme.get(), launchQuerySupportType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindUriSchemeHandlersWithLaunchUriTypeAsync)(self.get_abi() as *const _ as *mut _, scheme.get(), launchQuerySupportType, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_file_handlers_async(&self, extension: &HStringArg) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindFileHandlersAsync)(self.0.as_abi() as *const _ as *mut _, extension.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindFileHandlersAsync)(self.get_abi() as *const _ as *mut _, extension.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1304,12 +1304,12 @@ RT_INTERFACE!{static interface ILauncherStatics3(ILauncherStatics3Vtbl, ILaunche
 impl ILauncherStatics3 {
     #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_async(&self, folder: &super::storage::IStorageFolder) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchFolderAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(folder) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchFolderAsync)(self.get_abi() as *const _ as *mut _, folder.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn launch_folder_with_options_async(&self, folder: &super::storage::IStorageFolder, options: &FolderLauncherOptions) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchFolderWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(folder) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchFolderWithOptionsAsync)(self.get_abi() as *const _ as *mut _, folder.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1328,42 +1328,42 @@ RT_INTERFACE!{static interface ILauncherStatics4(ILauncherStatics4Vtbl, ILaunche
 impl ILauncherStatics4 {
     #[inline] pub fn query_app_uri_support_async(&self, uri: &foundation::Uri) -> Result<foundation::IAsyncOperation<LaunchQuerySupportStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).QueryAppUriSupportAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).QueryAppUriSupportAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn query_app_uri_support_with_package_family_name_async(&self, uri: &foundation::Uri, packageFamilyName: &HStringArg) -> Result<foundation::IAsyncOperation<LaunchQuerySupportStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).QueryAppUriSupportWithPackageFamilyNameAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).QueryAppUriSupportWithPackageFamilyNameAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_app_uri_handlers_async(&self, uri: &foundation::Uri) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<super::applicationmodel::AppInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAppUriHandlersAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAppUriHandlersAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_uri_for_user_async(&self, user: &User, uri: &foundation::Uri) -> Result<foundation::IAsyncOperation<LaunchUriStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriForUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriForUserAsync)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_uri_with_options_for_user_async(&self, user: &User, uri: &foundation::Uri, options: &LauncherOptions) -> Result<foundation::IAsyncOperation<LaunchUriStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriWithOptionsForUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriWithOptionsForUserAsync)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_uri_with_data_for_user_async(&self, user: &User, uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<foundation::IAsyncOperation<LaunchUriStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriWithDataForUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, get_abi(inputData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriWithDataForUserAsync)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, inputData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_uri_for_results_for_user_async(&self, user: &User, uri: &foundation::Uri, options: &LauncherOptions) -> Result<foundation::IAsyncOperation<LaunchUriResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriForResultsForUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriForResultsForUserAsync)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_uri_for_results_with_data_for_user_async(&self, user: &User, uri: &foundation::Uri, options: &LauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<foundation::IAsyncOperation<LaunchUriResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriForResultsWithDataForUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, get_abi(inputData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriForResultsWithDataForUserAsync)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, inputData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1377,22 +1377,22 @@ RT_INTERFACE!{static interface ILauncherStatics5(ILauncherStatics5Vtbl, ILaunche
 impl ILauncherStatics5 {
     #[inline] pub fn launch_folder_path_async(&self, path: &HStringArg) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchFolderPathAsync)(self.0.as_abi() as *const _ as *mut _, path.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchFolderPathAsync)(self.get_abi() as *const _ as *mut _, path.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_folder_path_with_options_async(&self, path: &HStringArg, options: &FolderLauncherOptions) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchFolderPathWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, path.get(), get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchFolderPathWithOptionsAsync)(self.get_abi() as *const _ as *mut _, path.get(), options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_folder_path_for_user_async(&self, user: &User, path: &HStringArg) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchFolderPathForUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, path.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchFolderPathForUserAsync)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, path.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_folder_path_with_options_for_user_async(&self, user: &User, path: &HStringArg, options: &FolderLauncherOptions) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchFolderPathWithOptionsForUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, path.get(), get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchFolderPathWithOptionsForUserAsync)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, path.get(), options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1408,29 +1408,29 @@ RT_INTERFACE!{interface ILauncherUIOptions(ILauncherUIOptionsVtbl, ILauncherUIOp
 impl ILauncherUIOptions {
     #[inline] pub fn get_invocation_point(&self) -> Result<Option<foundation::IReference<foundation::Point>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_InvocationPoint)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_InvocationPoint)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IReference::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_invocation_point(&self, value: &foundation::IReference<foundation::Point>) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_InvocationPoint)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_InvocationPoint)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_selection_rect(&self) -> Result<Option<foundation::IReference<foundation::Rect>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SelectionRect)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SelectionRect)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IReference::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_selection_rect(&self, value: &foundation::IReference<foundation::Rect>) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_SelectionRect)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_SelectionRect)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_preferred_placement(&self) -> Result<super::ui::popups::Placement> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PreferredPlacement)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PreferredPlacement)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn set_preferred_placement(&self, value: super::ui::popups::Placement) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_PreferredPlacement)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_PreferredPlacement)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1443,11 +1443,11 @@ RT_INTERFACE!{interface ILauncherViewOptions(ILauncherViewOptionsVtbl, ILauncher
 impl ILauncherViewOptions {
     #[cfg(feature="windows-ui")] #[inline] pub fn get_desired_remaining_view(&self) -> Result<super::ui::viewmanagement::ViewSizePreference> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DesiredRemainingView)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DesiredRemainingView)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn set_desired_remaining_view(&self, value: super::ui::viewmanagement::ViewSizePreference) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DesiredRemainingView)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_DesiredRemainingView)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1468,12 +1468,12 @@ RT_INTERFACE!{interface ILaunchUriResult(ILaunchUriResultVtbl, ILaunchUriResult_
 impl ILaunchUriResult {
     #[inline] pub fn get_status(&self) -> Result<LaunchUriStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_result(&self) -> Result<Option<foundation::collections::ValueSet>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Result)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Result)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::ValueSet::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1543,44 +1543,44 @@ RT_INTERFACE!{static interface IMemoryManagerStatics(IMemoryManagerStaticsVtbl, 
 impl IMemoryManagerStatics {
     #[inline] pub fn get_app_memory_usage(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppMemoryUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppMemoryUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_app_memory_usage_limit(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppMemoryUsageLimit)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppMemoryUsageLimit)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_app_memory_usage_level(&self) -> Result<AppMemoryUsageLevel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppMemoryUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppMemoryUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_app_memory_usage_increased(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_AppMemoryUsageIncreased)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_AppMemoryUsageIncreased)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_app_memory_usage_increased(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_AppMemoryUsageIncreased)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_AppMemoryUsageIncreased)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_app_memory_usage_decreased(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_AppMemoryUsageDecreased)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_AppMemoryUsageDecreased)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_app_memory_usage_decreased(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_AppMemoryUsageDecreased)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_AppMemoryUsageDecreased)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_app_memory_usage_limit_changing(&self, handler: &foundation::EventHandler<AppMemoryUsageLimitChangingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_AppMemoryUsageLimitChanging)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_AppMemoryUsageLimitChanging)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_app_memory_usage_limit_changing(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_AppMemoryUsageLimitChanging)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_AppMemoryUsageLimitChanging)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1592,12 +1592,12 @@ RT_INTERFACE!{static interface IMemoryManagerStatics2(IMemoryManagerStatics2Vtbl
 impl IMemoryManagerStatics2 {
     #[inline] pub fn get_app_memory_report(&self) -> Result<Option<AppMemoryReport>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAppMemoryReport)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAppMemoryReport)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AppMemoryReport::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_process_memory_report(&self) -> Result<Option<ProcessMemoryReport>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetProcessMemoryReport)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetProcessMemoryReport)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ProcessMemoryReport::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1608,7 +1608,7 @@ RT_INTERFACE!{static interface IMemoryManagerStatics3(IMemoryManagerStatics3Vtbl
 impl IMemoryManagerStatics3 {
     #[inline] pub fn try_set_app_memory_usage_limit(&self, value: u64) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TrySetAppMemoryUsageLimit)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TrySetAppMemoryUsageLimit)(self.get_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1619,7 +1619,7 @@ RT_INTERFACE!{static interface IMemoryManagerStatics4(IMemoryManagerStatics4Vtbl
 impl IMemoryManagerStatics4 {
     #[inline] pub fn get_expected_app_memory_usage_limit(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExpectedAppMemoryUsageLimit)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExpectedAppMemoryUsageLimit)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1657,38 +1657,38 @@ RT_INTERFACE!{interface IProcessLauncherOptions(IProcessLauncherOptionsVtbl, IPr
 impl IProcessLauncherOptions {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_standard_input(&self) -> Result<Option<super::storage::streams::IInputStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_StandardInput)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_StandardInput)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::storage::streams::IInputStream::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_standard_input(&self, value: &super::storage::streams::IInputStream) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_StandardInput)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_StandardInput)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_standard_output(&self) -> Result<Option<super::storage::streams::IOutputStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_StandardOutput)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_StandardOutput)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::storage::streams::IOutputStream::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_standard_output(&self, value: &super::storage::streams::IOutputStream) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_StandardOutput)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_StandardOutput)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_standard_error(&self) -> Result<Option<super::storage::streams::IOutputStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_StandardError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_StandardError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::storage::streams::IOutputStream::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_standard_error(&self, value: &super::storage::streams::IOutputStream) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_StandardError)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_StandardError)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_working_directory(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WorkingDirectory)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WorkingDirectory)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_working_directory(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_WorkingDirectory)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_WorkingDirectory)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1702,7 +1702,7 @@ RT_INTERFACE!{interface IProcessLauncherResult(IProcessLauncherResultVtbl, IProc
 impl IProcessLauncherResult {
     #[inline] pub fn get_exit_code(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExitCode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExitCode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1715,12 +1715,12 @@ RT_INTERFACE!{static interface IProcessLauncherStatics(IProcessLauncherStaticsVt
 impl IProcessLauncherStatics {
     #[inline] pub fn run_to_completion_async(&self, fileName: &HStringArg, args: &HStringArg) -> Result<foundation::IAsyncOperation<ProcessLauncherResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RunToCompletionAsync)(self.0.as_abi() as *const _ as *mut _, fileName.get(), args.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RunToCompletionAsync)(self.get_abi() as *const _ as *mut _, fileName.get(), args.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn run_to_completion_async_with_options(&self, fileName: &HStringArg, args: &HStringArg, options: &ProcessLauncherOptions) -> Result<foundation::IAsyncOperation<ProcessLauncherResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RunToCompletionAsyncWithOptions)(self.0.as_abi() as *const _ as *mut _, fileName.get(), args.get(), get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RunToCompletionAsyncWithOptions)(self.get_abi() as *const _ as *mut _, fileName.get(), args.get(), options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1732,12 +1732,12 @@ RT_INTERFACE!{interface IProcessMemoryReport(IProcessMemoryReportVtbl, IProcessM
 impl IProcessMemoryReport {
     #[inline] pub fn get_private_working_set_usage(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrivateWorkingSetUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrivateWorkingSetUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_total_working_set_usage(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TotalWorkingSetUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TotalWorkingSetUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1751,7 +1751,7 @@ RT_INTERFACE!{interface IProtocolForResultsOperation(IProtocolForResultsOperatio
 }}
 impl IProtocolForResultsOperation {
     #[inline] pub fn report_completed(&self, data: &foundation::collections::ValueSet) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ReportCompleted)(self.0.as_abi() as *const _ as *mut _, get_abi(data) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).ReportCompleted)(self.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1779,16 +1779,16 @@ RT_INTERFACE!{interface IRemoteLauncherOptions(IRemoteLauncherOptionsVtbl, IRemo
 impl IRemoteLauncherOptions {
     #[inline] pub fn get_fallback_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FallbackUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FallbackUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_fallback_uri(&self, value: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_FallbackUri)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_FallbackUri)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_preferred_app_ids(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PreferredAppIds)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PreferredAppIds)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1804,17 +1804,17 @@ RT_INTERFACE!{static interface IRemoteLauncherStatics(IRemoteLauncherStaticsVtbl
 impl IRemoteLauncherStatics {
     #[inline] pub fn launch_uri_async(&self, remoteSystemConnectionRequest: &remotesystems::RemoteSystemConnectionRequest, uri: &foundation::Uri) -> Result<foundation::IAsyncOperation<RemoteLaunchUriStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(remoteSystemConnectionRequest) as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriAsync)(self.get_abi() as *const _ as *mut _, remoteSystemConnectionRequest.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_uri_with_options_async(&self, remoteSystemConnectionRequest: &remotesystems::RemoteSystemConnectionRequest, uri: &foundation::Uri, options: &RemoteLauncherOptions) -> Result<foundation::IAsyncOperation<RemoteLaunchUriStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(remoteSystemConnectionRequest) as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriWithOptionsAsync)(self.get_abi() as *const _ as *mut _, remoteSystemConnectionRequest.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn launch_uri_with_data_async(&self, remoteSystemConnectionRequest: &remotesystems::RemoteSystemConnectionRequest, uri: &foundation::Uri, options: &RemoteLauncherOptions, inputData: &foundation::collections::ValueSet) -> Result<foundation::IAsyncOperation<RemoteLaunchUriStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LaunchUriWithDataAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(remoteSystemConnectionRequest) as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, get_abi(inputData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LaunchUriWithDataAsync)(self.get_abi() as *const _ as *mut _, remoteSystemConnectionRequest.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, inputData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1852,11 +1852,11 @@ RT_INTERFACE!{static interface IShutdownManagerStatics(IShutdownManagerStaticsVt
 }}
 impl IShutdownManagerStatics {
     #[inline] pub fn begin_shutdown(&self, shutdownKind: ShutdownKind, timeout: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).BeginShutdown)(self.0.as_abi() as *const _ as *mut _, shutdownKind, timeout);
+        let hr = ((*self.get_abi().lpVtbl).BeginShutdown)(self.get_abi() as *const _ as *mut _, shutdownKind, timeout);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn cancel_shutdown(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).CancelShutdown)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).CancelShutdown)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1869,15 +1869,15 @@ RT_INTERFACE!{static interface IShutdownManagerStatics2(IShutdownManagerStatics2
 impl IShutdownManagerStatics2 {
     #[inline] pub fn is_power_state_supported(&self, powerState: PowerState) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsPowerStateSupported)(self.0.as_abi() as *const _ as *mut _, powerState, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsPowerStateSupported)(self.get_abi() as *const _ as *mut _, powerState, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn enter_power_state(&self, powerState: PowerState) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).EnterPowerState)(self.0.as_abi() as *const _ as *mut _, powerState);
+        let hr = ((*self.get_abi().lpVtbl).EnterPowerState)(self.get_abi() as *const _ as *mut _, powerState);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn enter_power_state_with_time_span(&self, powerState: PowerState, wakeUpAfter: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).EnterPowerStateWithTimeSpan)(self.0.as_abi() as *const _ as *mut _, powerState, wakeUpAfter);
+        let hr = ((*self.get_abi().lpVtbl).EnterPowerStateWithTimeSpan)(self.get_abi() as *const _ as *mut _, powerState, wakeUpAfter);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1912,21 +1912,21 @@ RT_INTERFACE!{static interface ITimeZoneSettingsStatics(ITimeZoneSettingsStatics
 impl ITimeZoneSettingsStatics {
     #[inline] pub fn get_current_time_zone_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CurrentTimeZoneDisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CurrentTimeZoneDisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_supported_time_zone_display_names(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SupportedTimeZoneDisplayNames)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SupportedTimeZoneDisplayNames)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_can_change_time_zone(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CanChangeTimeZone)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CanChangeTimeZone)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn change_time_zone_by_display_name(&self, timeZoneDisplayName: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ChangeTimeZoneByDisplayName)(self.0.as_abi() as *const _ as *mut _, timeZoneDisplayName.get());
+        let hr = ((*self.get_abi().lpVtbl).ChangeTimeZoneByDisplayName)(self.get_abi() as *const _ as *mut _, timeZoneDisplayName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1937,7 +1937,7 @@ RT_INTERFACE!{static interface ITimeZoneSettingsStatics2(ITimeZoneSettingsStatic
 impl ITimeZoneSettingsStatics2 {
     #[inline] pub fn auto_update_time_zone_async(&self, timeout: foundation::TimeSpan) -> Result<foundation::IAsyncOperation<AutoUpdateTimeZoneStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AutoUpdateTimeZoneAsync)(self.0.as_abi() as *const _ as *mut _, timeout, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AutoUpdateTimeZoneAsync)(self.get_abi() as *const _ as *mut _, timeout, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1953,32 +1953,32 @@ RT_INTERFACE!{interface IUser(IUserVtbl, IUser_Abi): IInspectable(IInspectableVt
 impl IUser {
     #[inline] pub fn get_non_roamable_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NonRoamableId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NonRoamableId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_authentication_status(&self) -> Result<UserAuthenticationStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AuthenticationStatus)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AuthenticationStatus)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_type(&self) -> Result<UserType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Type)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Type)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_property_async(&self, value: &HStringArg) -> Result<foundation::IAsyncOperation<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPropertyAsync)(self.0.as_abi() as *const _ as *mut _, value.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPropertyAsync)(self.get_abi() as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_properties_async(&self, values: &foundation::collections::IVectorView<HString>) -> Result<foundation::IAsyncOperation<foundation::collections::IPropertySet>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPropertiesAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(values) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPropertiesAsync)(self.get_abi() as *const _ as *mut _, values.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_picture_async(&self, desiredSize: UserPictureSize) -> Result<foundation::IAsyncOperation<super::storage::streams::IRandomAccessStreamReference>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPictureAsync)(self.0.as_abi() as *const _ as *mut _, desiredSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPictureAsync)(self.get_abi() as *const _ as *mut _, desiredSize, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2011,7 +2011,7 @@ RT_INTERFACE!{interface IUserAuthenticationStatusChangeDeferral(IUserAuthenticat
 }}
 impl IUserAuthenticationStatusChangeDeferral {
     #[inline] pub fn complete(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Complete)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Complete)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2026,22 +2026,22 @@ RT_INTERFACE!{interface IUserAuthenticationStatusChangingEventArgs(IUserAuthenti
 impl IUserAuthenticationStatusChangingEventArgs {
     #[inline] pub fn get_deferral(&self) -> Result<Option<UserAuthenticationStatusChangeDeferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(UserAuthenticationStatusChangeDeferral::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_user(&self) -> Result<Option<User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(User::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_new_status(&self) -> Result<UserAuthenticationStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NewStatus)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NewStatus)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_current_status(&self) -> Result<UserAuthenticationStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CurrentStatus)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CurrentStatus)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2053,7 +2053,7 @@ RT_INTERFACE!{interface IUserChangedEventArgs(IUserChangedEventArgsVtbl, IUserCh
 impl IUserChangedEventArgs {
     #[inline] pub fn get_user(&self) -> Result<Option<User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(User::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2081,17 +2081,17 @@ RT_INTERFACE!{interface IUserDeviceAssociationChangedEventArgs(IUserDeviceAssoci
 impl IUserDeviceAssociationChangedEventArgs {
     #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_new_user(&self) -> Result<Option<User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NewUser)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NewUser)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(User::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_old_user(&self) -> Result<Option<User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OldUser)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OldUser)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(User::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2105,16 +2105,16 @@ RT_INTERFACE!{static interface IUserDeviceAssociationStatics(IUserDeviceAssociat
 impl IUserDeviceAssociationStatics {
     #[inline] pub fn find_user_from_device_id(&self, deviceId: &HStringArg) -> Result<Option<User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindUserFromDeviceId)(self.0.as_abi() as *const _ as *mut _, deviceId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindUserFromDeviceId)(self.get_abi() as *const _ as *mut _, deviceId.get(), &mut out);
         if hr == S_OK { Ok(User::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_user_device_association_changed(&self, handler: &foundation::EventHandler<UserDeviceAssociationChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_UserDeviceAssociationChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_UserDeviceAssociationChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_user_device_association_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_UserDeviceAssociationChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_UserDeviceAssociationChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2129,25 +2129,25 @@ RT_INTERFACE!{interface IUserPicker(IUserPickerVtbl, IUserPicker_Abi): IInspecta
 impl IUserPicker {
     #[inline] pub fn get_allow_guest_accounts(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AllowGuestAccounts)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AllowGuestAccounts)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_allow_guest_accounts(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_AllowGuestAccounts)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_AllowGuestAccounts)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_suggested_selected_user(&self) -> Result<Option<User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SuggestedSelectedUser)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SuggestedSelectedUser)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(User::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_suggested_selected_user(&self, value: &User) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_SuggestedSelectedUser)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_SuggestedSelectedUser)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn pick_single_user_async(&self) -> Result<foundation::IAsyncOperation<User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).PickSingleUserAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).PickSingleUserAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2167,7 +2167,7 @@ RT_INTERFACE!{static interface IUserPickerStatics(IUserPickerStaticsVtbl, IUserP
 impl IUserPickerStatics {
     #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2185,27 +2185,27 @@ RT_INTERFACE!{static interface IUserStatics(IUserStaticsVtbl, IUserStatics_Abi):
 impl IUserStatics {
     #[inline] pub fn create_watcher(&self) -> Result<Option<UserWatcher>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWatcher)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWatcher)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(UserWatcher::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_async(&self) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<User>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_async_by_type(&self, type_: UserType) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<User>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllAsyncByType)(self.0.as_abi() as *const _ as *mut _, type_, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllAsyncByType)(self.get_abi() as *const _ as *mut _, type_, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_async_by_type_and_status(&self, type_: UserType, status: UserAuthenticationStatus) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<User>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllAsyncByTypeAndStatus)(self.0.as_abi() as *const _ as *mut _, type_, status, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllAsyncByTypeAndStatus)(self.get_abi() as *const _ as *mut _, type_, status, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_from_id(&self, nonRoamableId: &HStringArg) -> Result<Option<User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetFromId)(self.0.as_abi() as *const _ as *mut _, nonRoamableId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetFromId)(self.get_abi() as *const _ as *mut _, nonRoamableId.get(), &mut out);
         if hr == S_OK { Ok(User::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2235,78 +2235,78 @@ RT_INTERFACE!{interface IUserWatcher(IUserWatcherVtbl, IUserWatcher_Abi): IInspe
 impl IUserWatcher {
     #[inline] pub fn get_status(&self) -> Result<UserWatcherStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Start)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Start)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Stop)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Stop)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Added)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Added)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Added)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Added)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Removed)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Removed)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Removed)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Removed)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_updated(&self, handler: &foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Updated)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Updated)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Updated)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Updated)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_authentication_status_changed(&self, handler: &foundation::TypedEventHandler<UserWatcher, UserChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_AuthenticationStatusChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_AuthenticationStatusChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_authentication_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_AuthenticationStatusChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_AuthenticationStatusChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_authentication_status_changing(&self, handler: &foundation::TypedEventHandler<UserWatcher, UserAuthenticationStatusChangingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_AuthenticationStatusChanging)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_AuthenticationStatusChanging)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_authentication_status_changing(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_AuthenticationStatusChanging)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_AuthenticationStatusChanging)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<UserWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_EnumerationCompleted)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_EnumerationCompleted)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_EnumerationCompleted)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_EnumerationCompleted)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_stopped(&self, handler: &foundation::TypedEventHandler<UserWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Stopped)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Stopped)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_stopped(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Stopped)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Stopped)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2330,12 +2330,12 @@ RT_INTERFACE!{interface IDiagnosticActionResult(IDiagnosticActionResultVtbl, IDi
 impl IDiagnosticActionResult {
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExtendedError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExtendedError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_results(&self) -> Result<Option<foundation::collections::ValueSet>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Results)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Results)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::ValueSet::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2350,7 +2350,7 @@ RT_INTERFACE!{interface IDiagnosticInvoker(IDiagnosticInvokerVtbl, IDiagnosticIn
 impl IDiagnosticInvoker {
     #[cfg(feature="windows-data")] #[inline] pub fn run_diagnostic_action_async(&self, context: &super::super::data::json::JsonObject) -> Result<foundation::IAsyncOperationWithProgress<DiagnosticActionResult, DiagnosticActionState>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RunDiagnosticActionAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(context) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RunDiagnosticActionAsync)(self.get_abi() as *const _ as *mut _, context.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2375,7 +2375,7 @@ RT_INTERFACE!{interface IDiagnosticInvoker2(IDiagnosticInvoker2Vtbl, IDiagnostic
 impl IDiagnosticInvoker2 {
     #[inline] pub fn run_diagnostic_action_from_string_async(&self, context: &HStringArg) -> Result<foundation::IAsyncOperationWithProgress<DiagnosticActionResult, DiagnosticActionState>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RunDiagnosticActionFromStringAsync)(self.0.as_abi() as *const _ as *mut _, context.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RunDiagnosticActionFromStringAsync)(self.get_abi() as *const _ as *mut _, context.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2388,17 +2388,17 @@ RT_INTERFACE!{static interface IDiagnosticInvokerStatics(IDiagnosticInvokerStati
 impl IDiagnosticInvokerStatics {
     #[inline] pub fn get_default(&self) -> Result<Option<DiagnosticInvoker>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDefault)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDefault)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DiagnosticInvoker::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<DiagnosticInvoker>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForUser)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForUser)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DiagnosticInvoker::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2409,7 +2409,7 @@ RT_INTERFACE!{interface IProcessCpuUsage(IProcessCpuUsageVtbl, IProcessCpuUsage_
 impl IProcessCpuUsage {
     #[inline] pub fn get_report(&self) -> Result<Option<ProcessCpuUsageReport>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetReport)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetReport)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ProcessCpuUsageReport::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2422,12 +2422,12 @@ RT_INTERFACE!{interface IProcessCpuUsageReport(IProcessCpuUsageReportVtbl, IProc
 impl IProcessCpuUsageReport {
     #[inline] pub fn get_kernel_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KernelTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KernelTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_user_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UserTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UserTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2445,37 +2445,37 @@ RT_INTERFACE!{interface IProcessDiagnosticInfo(IProcessDiagnosticInfoVtbl, IProc
 impl IProcessDiagnosticInfo {
     #[inline] pub fn get_process_id(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProcessId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProcessId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_executable_file_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExecutableFileName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExecutableFileName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_parent(&self) -> Result<Option<ProcessDiagnosticInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Parent)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Parent)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ProcessDiagnosticInfo::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_process_start_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProcessStartTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProcessStartTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_disk_usage(&self) -> Result<Option<ProcessDiskUsage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DiskUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DiskUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ProcessDiskUsage::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_memory_usage(&self) -> Result<Option<ProcessMemoryUsage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MemoryUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MemoryUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ProcessMemoryUsage::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cpu_usage(&self) -> Result<Option<ProcessCpuUsage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CpuUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CpuUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ProcessCpuUsage::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2502,12 +2502,12 @@ RT_INTERFACE!{interface IProcessDiagnosticInfo2(IProcessDiagnosticInfo2Vtbl, IPr
 impl IProcessDiagnosticInfo2 {
     #[inline] pub fn get_app_diagnostic_infos(&self) -> Result<Option<foundation::collections::IVector<super::AppDiagnosticInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAppDiagnosticInfos)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAppDiagnosticInfos)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_packaged(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsPackaged)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsPackaged)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2519,12 +2519,12 @@ RT_INTERFACE!{static interface IProcessDiagnosticInfoStatics(IProcessDiagnosticI
 impl IProcessDiagnosticInfoStatics {
     #[inline] pub fn get_for_processes(&self) -> Result<Option<foundation::collections::IVectorView<ProcessDiagnosticInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForProcesses)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForProcesses)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_for_current_process(&self) -> Result<Option<ProcessDiagnosticInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForCurrentProcess)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForCurrentProcess)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ProcessDiagnosticInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2535,7 +2535,7 @@ RT_INTERFACE!{static interface IProcessDiagnosticInfoStatics2(IProcessDiagnostic
 impl IProcessDiagnosticInfoStatics2 {
     #[inline] pub fn try_get_for_process_id(&self, processId: u32) -> Result<Option<ProcessDiagnosticInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryGetForProcessId)(self.0.as_abi() as *const _ as *mut _, processId, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryGetForProcessId)(self.get_abi() as *const _ as *mut _, processId, &mut out);
         if hr == S_OK { Ok(ProcessDiagnosticInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2546,7 +2546,7 @@ RT_INTERFACE!{interface IProcessDiskUsage(IProcessDiskUsageVtbl, IProcessDiskUsa
 impl IProcessDiskUsage {
     #[inline] pub fn get_report(&self) -> Result<Option<ProcessDiskUsageReport>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetReport)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetReport)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ProcessDiskUsageReport::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2563,32 +2563,32 @@ RT_INTERFACE!{interface IProcessDiskUsageReport(IProcessDiskUsageReportVtbl, IPr
 impl IProcessDiskUsageReport {
     #[inline] pub fn get_read_operation_count(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ReadOperationCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ReadOperationCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_write_operation_count(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WriteOperationCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WriteOperationCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_other_operation_count(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OtherOperationCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OtherOperationCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_bytes_read_count(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BytesReadCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BytesReadCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_bytes_written_count(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BytesWrittenCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BytesWrittenCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_other_bytes_count(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OtherBytesCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OtherBytesCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2600,7 +2600,7 @@ RT_INTERFACE!{interface IProcessMemoryUsage(IProcessMemoryUsageVtbl, IProcessMem
 impl IProcessMemoryUsage {
     #[inline] pub fn get_report(&self) -> Result<Option<ProcessMemoryUsageReport>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetReport)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetReport)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ProcessMemoryUsageReport::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2623,62 +2623,62 @@ RT_INTERFACE!{interface IProcessMemoryUsageReport(IProcessMemoryUsageReportVtbl,
 impl IProcessMemoryUsageReport {
     #[inline] pub fn get_non_paged_pool_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NonPagedPoolSizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NonPagedPoolSizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_page_fault_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageFaultCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageFaultCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_page_file_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageFileSizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageFileSizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_paged_pool_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PagedPoolSizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PagedPoolSizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_peak_non_paged_pool_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PeakNonPagedPoolSizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PeakNonPagedPoolSizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_peak_page_file_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PeakPageFileSizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PeakPageFileSizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_peak_paged_pool_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PeakPagedPoolSizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PeakPagedPoolSizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_peak_virtual_memory_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PeakVirtualMemorySizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PeakVirtualMemorySizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_peak_working_set_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PeakWorkingSetSizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PeakWorkingSetSizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_private_page_count(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrivatePageCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrivatePageCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_virtual_memory_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_VirtualMemorySizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_VirtualMemorySizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_working_set_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WorkingSetSizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WorkingSetSizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2690,7 +2690,7 @@ RT_INTERFACE!{interface ISystemCpuUsage(ISystemCpuUsageVtbl, ISystemCpuUsage_Abi
 impl ISystemCpuUsage {
     #[inline] pub fn get_report(&self) -> Result<Option<SystemCpuUsageReport>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetReport)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetReport)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SystemCpuUsageReport::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2704,17 +2704,17 @@ RT_INTERFACE!{interface ISystemCpuUsageReport(ISystemCpuUsageReportVtbl, ISystem
 impl ISystemCpuUsageReport {
     #[inline] pub fn get_kernel_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KernelTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KernelTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_user_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UserTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UserTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_idle_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IdleTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IdleTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2727,12 +2727,12 @@ RT_INTERFACE!{interface ISystemDiagnosticInfo(ISystemDiagnosticInfoVtbl, ISystem
 impl ISystemDiagnosticInfo {
     #[inline] pub fn get_memory_usage(&self) -> Result<Option<SystemMemoryUsage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MemoryUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MemoryUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SystemMemoryUsage::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cpu_usage(&self) -> Result<Option<SystemCpuUsage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CpuUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CpuUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SystemCpuUsage::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2751,7 +2751,7 @@ RT_INTERFACE!{static interface ISystemDiagnosticInfoStatics(ISystemDiagnosticInf
 impl ISystemDiagnosticInfoStatics {
     #[inline] pub fn get_for_current_system(&self) -> Result<Option<SystemDiagnosticInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForCurrentSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForCurrentSystem)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SystemDiagnosticInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2762,7 +2762,7 @@ RT_INTERFACE!{interface ISystemMemoryUsage(ISystemMemoryUsageVtbl, ISystemMemory
 impl ISystemMemoryUsage {
     #[inline] pub fn get_report(&self) -> Result<Option<SystemMemoryUsageReport>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetReport)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetReport)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SystemMemoryUsageReport::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2776,17 +2776,17 @@ RT_INTERFACE!{interface ISystemMemoryUsageReport(ISystemMemoryUsageReportVtbl, I
 impl ISystemMemoryUsageReport {
     #[inline] pub fn get_total_physical_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TotalPhysicalSizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TotalPhysicalSizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_available_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AvailableSizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AvailableSizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_committed_size_in_bytes(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CommittedSizeInBytes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CommittedSizeInBytes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2803,20 +2803,20 @@ RT_INTERFACE!{interface IDevicePortalConnection(IDevicePortalConnectionVtbl, IDe
 impl IDevicePortalConnection {
     #[inline] pub fn add_closed(&self, handler: &foundation::TypedEventHandler<DevicePortalConnection, DevicePortalConnectionClosedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Closed)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Closed)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_closed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Closed)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Closed)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_request_received(&self, handler: &foundation::TypedEventHandler<DevicePortalConnection, DevicePortalConnectionRequestReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_RequestReceived)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_RequestReceived)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_request_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_RequestReceived)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_RequestReceived)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2835,7 +2835,7 @@ RT_INTERFACE!{interface IDevicePortalConnectionClosedEventArgs(IDevicePortalConn
 impl IDevicePortalConnectionClosedEventArgs {
     #[inline] pub fn get_reason(&self) -> Result<DevicePortalConnectionClosedReason> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Reason)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Reason)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2851,12 +2851,12 @@ RT_INTERFACE!{interface IDevicePortalConnectionRequestReceivedEventArgs(IDeviceP
 impl IDevicePortalConnectionRequestReceivedEventArgs {
     #[cfg(feature="windows-web")] #[inline] pub fn get_request_message(&self) -> Result<Option<crate::windows::web::http::HttpRequestMessage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RequestMessage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RequestMessage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::web::http::HttpRequestMessage::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-web")] #[inline] pub fn get_response_message(&self) -> Result<Option<crate::windows::web::http::HttpResponseMessage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResponseMessage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResponseMessage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::web::http::HttpResponseMessage::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2868,7 +2868,7 @@ RT_INTERFACE!{static interface IDevicePortalConnectionStatics(IDevicePortalConne
 impl IDevicePortalConnectionStatics {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn get_for_app_service_connection(&self, appServiceConnection: &crate::windows::applicationmodel::appservice::AppServiceConnection) -> Result<Option<DevicePortalConnection>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForAppServiceConnection)(self.0.as_abi() as *const _ as *mut _, get_abi(appServiceConnection) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForAppServiceConnection)(self.get_abi() as *const _ as *mut _, appServiceConnection.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DevicePortalConnection::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2883,27 +2883,27 @@ RT_INTERFACE!{interface IDevicePortalWebSocketConnection(IDevicePortalWebSocketC
 impl IDevicePortalWebSocketConnection {
     #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request(&self, request: &crate::windows::web::http::HttpRequestMessage) -> Result<Option<crate::windows::networking::sockets::ServerMessageWebSocket>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetServerMessageWebSocketForRequest)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetServerMessageWebSocketForRequest)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::networking::sockets::ServerMessageWebSocket::wrap(out)) } else { err(hr) }
     }}
     #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request2(&self, request: &crate::windows::web::http::HttpRequestMessage, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: &HStringArg) -> Result<Option<crate::windows::networking::sockets::ServerMessageWebSocket>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetServerMessageWebSocketForRequest2)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, messageType, protocol.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetServerMessageWebSocketForRequest2)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, messageType, protocol.get(), &mut out);
         if hr == S_OK { Ok(crate::windows::networking::sockets::ServerMessageWebSocket::wrap(out)) } else { err(hr) }
     }}
     #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_message_web_socket_for_request3(&self, request: &crate::windows::web::http::HttpRequestMessage, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: &HStringArg, outboundBufferSizeInBytes: u32, maxMessageSize: u32, receiveMode: crate::windows::networking::sockets::MessageWebSocketReceiveMode) -> Result<Option<crate::windows::networking::sockets::ServerMessageWebSocket>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetServerMessageWebSocketForRequest3)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, messageType, protocol.get(), outboundBufferSizeInBytes, maxMessageSize, receiveMode, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetServerMessageWebSocketForRequest3)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, messageType, protocol.get(), outboundBufferSizeInBytes, maxMessageSize, receiveMode, &mut out);
         if hr == S_OK { Ok(crate::windows::networking::sockets::ServerMessageWebSocket::wrap(out)) } else { err(hr) }
     }}
     #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request(&self, request: &crate::windows::web::http::HttpRequestMessage) -> Result<Option<crate::windows::networking::sockets::ServerStreamWebSocket>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetServerStreamWebSocketForRequest)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetServerStreamWebSocketForRequest)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::networking::sockets::ServerStreamWebSocket::wrap(out)) } else { err(hr) }
     }}
     #[cfg(all(feature="windows-networking",feature="windows-web"))] #[inline] pub fn get_server_stream_web_socket_for_request2(&self, request: &crate::windows::web::http::HttpRequestMessage, protocol: &HStringArg, outboundBufferSizeInBytes: u32, noDelay: bool) -> Result<Option<crate::windows::networking::sockets::ServerStreamWebSocket>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetServerStreamWebSocketForRequest2)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, protocol.get(), outboundBufferSizeInBytes, noDelay, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetServerStreamWebSocketForRequest2)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, protocol.get(), outboundBufferSizeInBytes, noDelay, &mut out);
         if hr == S_OK { Ok(crate::windows::networking::sockets::ServerStreamWebSocket::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2916,17 +2916,17 @@ RT_INTERFACE!{interface IDevicePortalWebSocketConnectionRequestReceivedEventArgs
 impl IDevicePortalWebSocketConnectionRequestReceivedEventArgs {
     #[inline] pub fn get_is_web_socket_upgrade_request(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsWebSocketUpgradeRequest)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsWebSocketUpgradeRequest)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_web_socket_protocols_requested(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WebSocketProtocolsRequested)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WebSocketProtocolsRequested)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2952,12 +2952,12 @@ RT_INTERFACE!{static interface IPlatformTelemetryClientStatics(IPlatformTelemetr
 impl IPlatformTelemetryClientStatics {
     #[inline] pub fn register(&self, id: &HStringArg) -> Result<Option<PlatformTelemetryRegistrationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Register)(self.0.as_abi() as *const _ as *mut _, id.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Register)(self.get_abi() as *const _ as *mut _, id.get(), &mut out);
         if hr == S_OK { Ok(PlatformTelemetryRegistrationResult::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn register_with_settings(&self, id: &HStringArg, settings: &PlatformTelemetryRegistrationSettings) -> Result<Option<PlatformTelemetryRegistrationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RegisterWithSettings)(self.0.as_abi() as *const _ as *mut _, id.get(), get_abi(settings) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RegisterWithSettings)(self.get_abi() as *const _ as *mut _, id.get(), settings.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PlatformTelemetryRegistrationResult::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2968,7 +2968,7 @@ RT_INTERFACE!{interface IPlatformTelemetryRegistrationResult(IPlatformTelemetryR
 impl IPlatformTelemetryRegistrationResult {
     #[inline] pub fn get_status(&self) -> Result<PlatformTelemetryRegistrationStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2983,20 +2983,20 @@ RT_INTERFACE!{interface IPlatformTelemetryRegistrationSettings(IPlatformTelemetr
 impl IPlatformTelemetryRegistrationSettings {
     #[inline] pub fn get_storage_size(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_StorageSize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_StorageSize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_storage_size(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_StorageSize)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_StorageSize)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_upload_quota_size(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UploadQuotaSize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UploadQuotaSize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_upload_quota_size(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_UploadQuotaSize)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_UploadQuotaSize)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3052,42 +3052,42 @@ RT_INTERFACE!{static interface IPlatformDiagnosticActionsStatics(IPlatformDiagno
 impl IPlatformDiagnosticActionsStatics {
     #[inline] pub fn is_scenario_enabled(&self, scenarioId: Guid) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsScenarioEnabled)(self.0.as_abi() as *const _ as *mut _, scenarioId, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsScenarioEnabled)(self.get_abi() as *const _ as *mut _, scenarioId, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn try_escalate_scenario(&self, scenarioId: Guid, escalationType: PlatformDiagnosticEscalationType, outputDirectory: &HStringArg, timestampOutputDirectory: bool, forceEscalationUpload: bool, triggers: &foundation::collections::IMapView<HString, HString>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TryEscalateScenario)(self.0.as_abi() as *const _ as *mut _, scenarioId, escalationType, outputDirectory.get(), timestampOutputDirectory, forceEscalationUpload, get_abi(triggers) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryEscalateScenario)(self.get_abi() as *const _ as *mut _, scenarioId, escalationType, outputDirectory.get(), timestampOutputDirectory, forceEscalationUpload, triggers.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn download_latest_settings_for_namespace(&self, partner: &HStringArg, feature: &HStringArg, isScenarioNamespace: bool, downloadOverCostedNetwork: bool, downloadOverBattery: bool) -> Result<PlatformDiagnosticActionState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).DownloadLatestSettingsForNamespace)(self.0.as_abi() as *const _ as *mut _, partner.get(), feature.get(), isScenarioNamespace, downloadOverCostedNetwork, downloadOverBattery, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DownloadLatestSettingsForNamespace)(self.get_abi() as *const _ as *mut _, partner.get(), feature.get(), isScenarioNamespace, downloadOverCostedNetwork, downloadOverBattery, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_active_scenario_list(&self) -> Result<Option<foundation::collections::IVectorView<Guid>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetActiveScenarioList)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetActiveScenarioList)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn force_upload(&self, latency: PlatformDiagnosticEventBufferLatencies, uploadOverCostedNetwork: bool, uploadOverBattery: bool) -> Result<PlatformDiagnosticActionState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).ForceUpload)(self.0.as_abi() as *const _ as *mut _, latency, uploadOverCostedNetwork, uploadOverBattery, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ForceUpload)(self.get_abi() as *const _ as *mut _, latency, uploadOverCostedNetwork, uploadOverBattery, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_trace_running(&self, slotType: PlatformDiagnosticTraceSlotType, scenarioId: Guid, traceProfileHash: u64) -> Result<PlatformDiagnosticTraceSlotState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsTraceRunning)(self.0.as_abi() as *const _ as *mut _, slotType, scenarioId, traceProfileHash, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsTraceRunning)(self.get_abi() as *const _ as *mut _, slotType, scenarioId, traceProfileHash, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_active_trace_runtime(&self, slotType: PlatformDiagnosticTraceSlotType) -> Result<Option<PlatformDiagnosticTraceRuntimeInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetActiveTraceRuntime)(self.0.as_abi() as *const _ as *mut _, slotType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetActiveTraceRuntime)(self.get_abi() as *const _ as *mut _, slotType, &mut out);
         if hr == S_OK { Ok(PlatformDiagnosticTraceRuntimeInfo::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_known_trace_list(&self, slotType: PlatformDiagnosticTraceSlotType) -> Result<Option<foundation::collections::IVectorView<PlatformDiagnosticTraceInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetKnownTraceList)(self.0.as_abi() as *const _ as *mut _, slotType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetKnownTraceList)(self.get_abi() as *const _ as *mut _, slotType, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3112,32 +3112,32 @@ RT_INTERFACE!{interface IPlatformDiagnosticTraceInfo(IPlatformDiagnosticTraceInf
 impl IPlatformDiagnosticTraceInfo {
     #[inline] pub fn get_scenario_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ScenarioId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ScenarioId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_profile_hash(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProfileHash)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProfileHash)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_exclusive(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsExclusive)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsExclusive)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_auto_logger(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsAutoLogger)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsAutoLogger)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_max_trace_duration_file_time(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxTraceDurationFileTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxTraceDurationFileTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_priority(&self) -> Result<PlatformDiagnosticTracePriority> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Priority)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Priority)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3153,12 +3153,12 @@ RT_INTERFACE!{interface IPlatformDiagnosticTraceRuntimeInfo(IPlatformDiagnosticT
 impl IPlatformDiagnosticTraceRuntimeInfo {
     #[inline] pub fn get_runtime_file_time(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RuntimeFileTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RuntimeFileTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_etw_runtime_file_time(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EtwRuntimeFileTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EtwRuntimeFileTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3180,11 +3180,11 @@ RT_INTERFACE!{interface IDisplayRequest(IDisplayRequestVtbl, IDisplayRequest_Abi
 }}
 impl IDisplayRequest {
     #[inline] pub fn request_active(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).RequestActive)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).RequestActive)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn request_release(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).RequestRelease)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).RequestRelease)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3204,22 +3204,22 @@ RT_INTERFACE!{interface IInstalledDesktopApp(IInstalledDesktopAppVtbl, IInstalle
 impl IInstalledDesktopApp {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_publisher(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Publisher)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Publisher)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayVersion)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayVersion)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3238,7 +3238,7 @@ RT_INTERFACE!{static interface IInstalledDesktopAppStatics(IInstalledDesktopAppS
 impl IInstalledDesktopAppStatics {
     #[inline] pub fn get_inventory_async(&self) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<InstalledDesktopApp>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetInventoryAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetInventoryAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3304,60 +3304,60 @@ RT_INTERFACE!{static interface IBackgroundEnergyManagerStatics(IBackgroundEnergy
 impl IBackgroundEnergyManagerStatics {
     #[inline] pub fn get_low_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LowUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LowUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_near_max_acceptable_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NearMaxAcceptableUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NearMaxAcceptableUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_max_acceptable_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxAcceptableUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxAcceptableUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_excessive_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExcessiveUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExcessiveUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_near_termination_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NearTerminationUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NearTerminationUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_termination_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TerminationUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TerminationUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_recent_energy_usage(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RecentEnergyUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RecentEnergyUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_recent_energy_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RecentEnergyUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RecentEnergyUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_recent_energy_usage_increased(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_RecentEnergyUsageIncreased)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_RecentEnergyUsageIncreased)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_recent_energy_usage_increased(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_RecentEnergyUsageIncreased)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_RecentEnergyUsageIncreased)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_recent_energy_usage_returned_to_low(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_RecentEnergyUsageReturnedToLow)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_RecentEnergyUsageReturnedToLow)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_recent_energy_usage_returned_to_low(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_RecentEnergyUsageReturnedToLow)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_RecentEnergyUsageReturnedToLow)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3418,50 +3418,50 @@ RT_INTERFACE!{static interface IForegroundEnergyManagerStatics(IForegroundEnergy
 impl IForegroundEnergyManagerStatics {
     #[inline] pub fn get_low_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LowUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LowUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_near_max_acceptable_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NearMaxAcceptableUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NearMaxAcceptableUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_max_acceptable_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxAcceptableUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxAcceptableUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_excessive_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExcessiveUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExcessiveUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_recent_energy_usage(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RecentEnergyUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RecentEnergyUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_recent_energy_usage_level(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RecentEnergyUsageLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RecentEnergyUsageLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_recent_energy_usage_increased(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_RecentEnergyUsageIncreased)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_RecentEnergyUsageIncreased)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_recent_energy_usage_increased(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_RecentEnergyUsageIncreased)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_RecentEnergyUsageIncreased)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_recent_energy_usage_returned_to_low(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_RecentEnergyUsageReturnedToLow)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_RecentEnergyUsageReturnedToLow)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_recent_energy_usage_returned_to_low(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_RecentEnergyUsageReturnedToLow)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_RecentEnergyUsageReturnedToLow)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3536,72 +3536,72 @@ RT_INTERFACE!{static interface IPowerManagerStatics(IPowerManagerStaticsVtbl, IP
 impl IPowerManagerStatics {
     #[inline] pub fn get_energy_saver_status(&self) -> Result<EnergySaverStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EnergySaverStatus)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EnergySaverStatus)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_energy_saver_status_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_EnergySaverStatusChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_EnergySaverStatusChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_energy_saver_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_EnergySaverStatusChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_EnergySaverStatusChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_battery_status(&self) -> Result<BatteryStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BatteryStatus)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BatteryStatus)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_battery_status_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_BatteryStatusChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_BatteryStatusChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_battery_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_BatteryStatusChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_BatteryStatusChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_power_supply_status(&self) -> Result<PowerSupplyStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PowerSupplyStatus)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PowerSupplyStatus)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_power_supply_status_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_PowerSupplyStatusChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_PowerSupplyStatusChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_power_supply_status_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_PowerSupplyStatusChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_PowerSupplyStatusChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_remaining_charge_percent(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemainingChargePercent)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemainingChargePercent)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_remaining_charge_percent_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_RemainingChargePercentChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_RemainingChargePercentChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_remaining_charge_percent_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_RemainingChargePercentChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_RemainingChargePercentChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_remaining_discharge_time(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemainingDischargeTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemainingDischargeTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_remaining_discharge_time_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_RemainingDischargeTimeChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_RemainingDischargeTimeChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_remaining_discharge_time_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_RemainingDischargeTimeChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_RemainingDischargeTimeChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3633,16 +3633,16 @@ RT_INTERFACE!{static interface IBackgroundEnergyDiagnosticsStatics(IBackgroundEn
 impl IBackgroundEnergyDiagnosticsStatics {
     #[inline] pub fn get_device_specific_conversion_factor(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceSpecificConversionFactor)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceSpecificConversionFactor)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn compute_total_energy_usage(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).ComputeTotalEnergyUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ComputeTotalEnergyUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn reset_total_energy_usage(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ResetTotalEnergyUsage)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).ResetTotalEnergyUsage)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3669,16 +3669,16 @@ RT_INTERFACE!{static interface IForegroundEnergyDiagnosticsStatics(IForegroundEn
 impl IForegroundEnergyDiagnosticsStatics {
     #[inline] pub fn get_device_specific_conversion_factor(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceSpecificConversionFactor)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceSpecificConversionFactor)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn compute_total_energy_usage(&self) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).ComputeTotalEnergyUsage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ComputeTotalEnergyUsage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn reset_total_energy_usage(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ResetTotalEnergyUsage)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).ResetTotalEnergyUsage)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3698,16 +3698,16 @@ RT_INTERFACE!{interface ITwoPanelHingedDevicePosturePreview(ITwoPanelHingedDevic
 impl ITwoPanelHingedDevicePosturePreview {
     #[inline] pub fn get_current_posture_async(&self) -> Result<foundation::IAsyncOperation<TwoPanelHingedDevicePosturePreviewReading>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCurrentPostureAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCurrentPostureAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_posture_changed(&self, handler: &foundation::TypedEventHandler<TwoPanelHingedDevicePosturePreview, TwoPanelHingedDevicePosturePreviewReadingChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_PostureChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_PostureChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_posture_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_PostureChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_PostureChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3733,32 +3733,32 @@ RT_INTERFACE!{interface ITwoPanelHingedDevicePosturePreviewReading(ITwoPanelHing
 impl ITwoPanelHingedDevicePosturePreviewReading {
     #[inline] pub fn get_timestamp(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Timestamp)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Timestamp)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_hinge_state(&self) -> Result<HingeState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HingeState)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HingeState)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_panel1_orientation(&self) -> Result<super::super::devices::sensors::SimpleOrientation> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Panel1Orientation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Panel1Orientation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_panel1_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Panel1Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Panel1Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-devices")] #[inline] pub fn get_panel2_orientation(&self) -> Result<super::super::devices::sensors::SimpleOrientation> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Panel2Orientation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Panel2Orientation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_panel2_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Panel2Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Panel2Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3770,7 +3770,7 @@ RT_INTERFACE!{interface ITwoPanelHingedDevicePosturePreviewReadingChangedEventAr
 impl ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs {
     #[inline] pub fn get_reading(&self) -> Result<Option<TwoPanelHingedDevicePosturePreviewReading>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Reading)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Reading)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(TwoPanelHingedDevicePosturePreviewReading::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3782,7 +3782,7 @@ RT_INTERFACE!{static interface ITwoPanelHingedDevicePosturePreviewStatics(ITwoPa
 impl ITwoPanelHingedDevicePosturePreviewStatics {
     #[inline] pub fn get_default_async(&self) -> Result<foundation::IAsyncOperation<TwoPanelHingedDevicePosturePreview>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDefaultAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDefaultAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3812,12 +3812,12 @@ RT_INTERFACE!{static interface IAnalyticsInfoStatics(IAnalyticsInfoStaticsVtbl, 
 impl IAnalyticsInfoStatics {
     #[inline] pub fn get_version_info(&self) -> Result<Option<AnalyticsVersionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_VersionInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_VersionInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AnalyticsVersionInfo::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_device_form(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceForm)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceForm)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3828,7 +3828,7 @@ RT_INTERFACE!{static interface IAnalyticsInfoStatics2(IAnalyticsInfoStatics2Vtbl
 impl IAnalyticsInfoStatics2 {
     #[inline] pub fn get_system_properties_async(&self, attributeNames: &foundation::collections::IIterable<HString>) -> Result<foundation::IAsyncOperation<foundation::collections::IMapView<HString, HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSystemPropertiesAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(attributeNames) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSystemPropertiesAsync)(self.get_abi() as *const _ as *mut _, attributeNames.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3840,12 +3840,12 @@ RT_INTERFACE!{interface IAnalyticsVersionInfo(IAnalyticsVersionInfoVtbl, IAnalyt
 impl IAnalyticsVersionInfo {
     #[inline] pub fn get_device_family(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceFamily)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceFamily)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_device_family_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceFamilyVersion)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceFamilyVersion)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3865,7 +3865,7 @@ RT_INTERFACE!{static interface IEducationSettingsStatics(IEducationSettingsStati
 impl IEducationSettingsStatics {
     #[inline] pub fn get_is_education_environment(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsEducationEnvironment)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsEducationEnvironment)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3884,7 +3884,7 @@ RT_INTERFACE!{static interface IHardwareIdentificationStatics(IHardwareIdentific
 impl IHardwareIdentificationStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_package_specific_token(&self, nonce: &super::super::storage::streams::IBuffer) -> Result<Option<HardwareToken>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPackageSpecificToken)(self.0.as_abi() as *const _ as *mut _, get_abi(nonce) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPackageSpecificToken)(self.get_abi() as *const _ as *mut _, nonce.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HardwareToken::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3897,17 +3897,17 @@ RT_INTERFACE!{interface IHardwareToken(IHardwareTokenVtbl, IHardwareToken_Abi): 
 impl IHardwareToken {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_id(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_signature(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Signature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Signature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_certificate(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Certificate)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Certificate)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4011,112 +4011,112 @@ RT_INTERFACE!{static interface IKnownRetailInfoPropertiesStatics(IKnownRetailInf
 impl IKnownRetailInfoPropertiesStatics {
     #[inline] pub fn get_retail_access_code(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RetailAccessCode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RetailAccessCode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_manufacturer_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ManufacturerName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ManufacturerName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_model_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ModelName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ModelName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_model_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayModelName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayModelName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_price(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Price)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Price)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_featured(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsFeatured)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsFeatured)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_form_factor(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FormFactor)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FormFactor)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_screen_size(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ScreenSize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ScreenSize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_weight(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Weight)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Weight)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_battery_life_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BatteryLifeDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BatteryLifeDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_processor_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProcessorDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProcessorDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_memory(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Memory)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Memory)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_storage_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_StorageDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_StorageDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_graphics_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_GraphicsDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_GraphicsDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_front_camera_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FrontCameraDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FrontCameraDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rear_camera_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RearCameraDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RearCameraDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_has_nfc(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HasNfc)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HasNfc)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_has_sd_slot(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HasSdSlot)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HasSdSlot)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_has_optical_drive(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HasOpticalDrive)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HasOpticalDrive)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_office_installed(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsOfficeInstalled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsOfficeInstalled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_windows_edition(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WindowsEdition)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WindowsEdition)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4150,21 +4150,21 @@ RT_INTERFACE!{static interface IPlatformDiagnosticsAndUsageDataSettingsStatics(I
 impl IPlatformDiagnosticsAndUsageDataSettingsStatics {
     #[inline] pub fn get_collection_level(&self) -> Result<PlatformDataCollectionLevel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CollectionLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CollectionLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_collection_level_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_CollectionLevelChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_CollectionLevelChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_collection_level_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_CollectionLevelChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_CollectionLevelChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn can_collect_diagnostics(&self, level: PlatformDataCollectionLevel) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).CanCollectDiagnostics)(self.0.as_abi() as *const _ as *mut _, level, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CanCollectDiagnostics)(self.get_abi() as *const _ as *mut _, level, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4187,12 +4187,12 @@ RT_INTERFACE!{static interface IRetailInfoStatics(IRetailInfoStaticsVtbl, IRetai
 impl IRetailInfoStatics {
     #[inline] pub fn get_is_demo_mode_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsDemoModeEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsDemoModeEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<foundation::collections::IMapView<HString, IInspectable>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Properties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Properties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IMapView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4215,7 +4215,7 @@ RT_INTERFACE!{static interface ISharedModeSettingsStatics(ISharedModeSettingsSta
 impl ISharedModeSettingsStatics {
     #[inline] pub fn get_is_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4226,7 +4226,7 @@ RT_INTERFACE!{static interface ISharedModeSettingsStatics2(ISharedModeSettingsSt
 impl ISharedModeSettingsStatics2 {
     #[inline] pub fn get_should_avoid_local_storage(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ShouldAvoidLocalStorage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ShouldAvoidLocalStorage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4250,12 +4250,12 @@ RT_INTERFACE!{interface ISystemIdentificationInfo(ISystemIdentificationInfoVtbl,
 impl ISystemIdentificationInfo {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_id(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_source(&self) -> Result<SystemIdentificationSource> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Source)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Source)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4271,12 +4271,12 @@ RT_INTERFACE!{static interface ISystemIdentificationStatics(ISystemIdentificatio
 impl ISystemIdentificationStatics {
     #[inline] pub fn get_system_id_for_publisher(&self) -> Result<Option<SystemIdentificationInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSystemIdForPublisher)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSystemIdForPublisher)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SystemIdentificationInfo::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_id_for_user(&self, user: &super::User) -> Result<Option<SystemIdentificationInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSystemIdForUser)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSystemIdForUser)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SystemIdentificationInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4306,16 +4306,16 @@ RT_INTERFACE!{static interface ISystemSetupInfoStatics(ISystemSetupInfoStaticsVt
 impl ISystemSetupInfoStatics {
     #[inline] pub fn get_out_of_box_experience_state(&self) -> Result<SystemOutOfBoxExperienceState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OutOfBoxExperienceState)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OutOfBoxExperienceState)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_out_of_box_experience_state_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_OutOfBoxExperienceStateChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_OutOfBoxExperienceStateChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_out_of_box_experience_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_OutOfBoxExperienceStateChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_OutOfBoxExperienceStateChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4354,31 +4354,31 @@ RT_INTERFACE!{static interface IWindowsIntegrityPolicyStatics(IWindowsIntegrityP
 impl IWindowsIntegrityPolicyStatics {
     #[inline] pub fn get_is_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_enabled_for_trial(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsEnabledForTrial)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsEnabledForTrial)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_can_disable(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CanDisable)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CanDisable)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_disable_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsDisableSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsDisableSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_policy_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_PolicyChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_PolicyChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_policy_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_PolicyChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_PolicyChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4393,17 +4393,17 @@ RT_INTERFACE!{interface IOemSupportInfo(IOemSupportInfoVtbl, IOemSupportInfo_Abi
 impl IOemSupportInfo {
     #[inline] pub fn get_support_link(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SupportLink)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SupportLink)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_support_app_link(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SupportAppLink)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SupportAppLink)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_support_provider(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SupportProvider)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SupportProvider)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4423,7 +4423,7 @@ RT_INTERFACE!{static interface ISmbiosInformationStatics(ISmbiosInformationStati
 impl ISmbiosInformationStatics {
     #[inline] pub fn get_serial_number(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SerialNumber)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SerialNumber)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4440,37 +4440,37 @@ RT_INTERFACE!{interface ISystemSupportDeviceInfo(ISystemSupportDeviceInfoVtbl, I
 impl ISystemSupportDeviceInfo {
     #[inline] pub fn get_operating_system(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OperatingSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OperatingSystem)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_friendly_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FriendlyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FriendlyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_manufacturer(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemManufacturer)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemManufacturer)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_product_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemProductName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemProductName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_sku(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemSku)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemSku)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_hardware_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemHardwareVersion)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemHardwareVersion)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_firmware_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemFirmwareVersion)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemFirmwareVersion)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4498,12 +4498,12 @@ RT_INTERFACE!{static interface ISystemSupportInfoStatics(ISystemSupportInfoStati
 impl ISystemSupportInfoStatics {
     #[inline] pub fn get_local_system_edition(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LocalSystemEdition)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LocalSystemEdition)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_oem_support_info(&self) -> Result<Option<OemSupportInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OemSupportInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OemSupportInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(OemSupportInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4514,7 +4514,7 @@ RT_INTERFACE!{static interface ISystemSupportInfoStatics2(ISystemSupportInfoStat
 impl ISystemSupportInfoStatics2 {
     #[inline] pub fn get_local_device_info(&self) -> Result<Option<SystemSupportDeviceInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LocalDeviceInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LocalDeviceInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SystemSupportDeviceInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4537,7 +4537,7 @@ RT_INTERFACE!{static interface IInteractiveSessionStatics(IInteractiveSessionSta
 impl IInteractiveSessionStatics {
     #[inline] pub fn get_is_remote(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsRemote)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsRemote)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4571,22 +4571,22 @@ RT_INTERFACE!{static interface IKnownRemoteSystemCapabilitiesStatics(IKnownRemot
 impl IKnownRemoteSystemCapabilitiesStatics {
     #[inline] pub fn get_app_service(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppService)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppService)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_launch_uri(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LaunchUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LaunchUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_remote_session(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemoteSession)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemoteSession)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_spatial_entity(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SpatialEntity)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SpatialEntity)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4601,27 +4601,27 @@ RT_INTERFACE!{interface IRemoteSystem(IRemoteSystemVtbl, IRemoteSystem_Abi): IIn
 impl IRemoteSystem {
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kind(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Kind)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Kind)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<RemoteSystemStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_available_by_proximity(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsAvailableByProximity)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsAvailableByProximity)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4654,12 +4654,12 @@ RT_INTERFACE!{interface IRemoteSystem2(IRemoteSystem2Vtbl, IRemoteSystem2_Abi): 
 impl IRemoteSystem2 {
     #[inline] pub fn get_is_available_by_spatial_proximity(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsAvailableBySpatialProximity)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsAvailableBySpatialProximity)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_capability_supported_async(&self, capabilityName: &HStringArg) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCapabilitySupportedAsync)(self.0.as_abi() as *const _ as *mut _, capabilityName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCapabilitySupportedAsync)(self.get_abi() as *const _ as *mut _, capabilityName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4671,12 +4671,12 @@ RT_INTERFACE!{interface IRemoteSystem3(IRemoteSystem3Vtbl, IRemoteSystem3_Abi): 
 impl IRemoteSystem3 {
     #[inline] pub fn get_manufacturer_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ManufacturerDisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ManufacturerDisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_model_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ModelDisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ModelDisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4687,7 +4687,7 @@ RT_INTERFACE!{interface IRemoteSystem4(IRemoteSystem4Vtbl, IRemoteSystem4_Abi): 
 impl IRemoteSystem4 {
     #[inline] pub fn get_platform(&self) -> Result<RemoteSystemPlatform> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Platform)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Platform)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4698,7 +4698,7 @@ RT_INTERFACE!{interface IRemoteSystem5(IRemoteSystem5Vtbl, IRemoteSystem5_Abi): 
 impl IRemoteSystem5 {
     #[inline] pub fn get_apps(&self) -> Result<Option<foundation::collections::IVectorView<RemoteSystemApp>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Apps)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Apps)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4712,7 +4712,7 @@ RT_INTERFACE!{interface IRemoteSystemAddedEventArgs(IRemoteSystemAddedEventArgsV
 impl IRemoteSystemAddedEventArgs {
     #[inline] pub fn get_remote_system(&self) -> Result<Option<RemoteSystem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemoteSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemoteSystem)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystem::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4728,27 +4728,27 @@ RT_INTERFACE!{interface IRemoteSystemApp(IRemoteSystemAppVtbl, IRemoteSystemApp_
 impl IRemoteSystemApp {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_available_by_proximity(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsAvailableByProximity)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsAvailableByProximity)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_available_by_spatial_proximity(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsAvailableBySpatialProximity)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsAvailableBySpatialProximity)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_attributes(&self) -> Result<Option<foundation::collections::IMapView<HString, HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Attributes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Attributes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IMapView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4762,17 +4762,17 @@ RT_INTERFACE!{interface IRemoteSystemAppRegistration(IRemoteSystemAppRegistratio
 impl IRemoteSystemAppRegistration {
     #[inline] pub fn get_user(&self) -> Result<Option<super::User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::User::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_attributes(&self) -> Result<Option<foundation::collections::IMap<HString, HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Attributes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Attributes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IMap::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn save_async(&self) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SaveAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SaveAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4795,12 +4795,12 @@ RT_INTERFACE!{static interface IRemoteSystemAppRegistrationStatics(IRemoteSystem
 impl IRemoteSystemAppRegistrationStatics {
     #[inline] pub fn get_default(&self) -> Result<Option<RemoteSystemAppRegistration>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDefault)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDefault)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemAppRegistration::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<RemoteSystemAppRegistration>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForUser)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForUser)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemAppRegistration::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4814,7 +4814,7 @@ RT_INTERFACE!{interface IRemoteSystemAuthorizationKindFilter(IRemoteSystemAuthor
 impl IRemoteSystemAuthorizationKindFilter {
     #[inline] pub fn get_remote_system_authorization_kind(&self) -> Result<RemoteSystemAuthorizationKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemoteSystemAuthorizationKind)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemoteSystemAuthorizationKind)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4833,7 +4833,7 @@ RT_INTERFACE!{static interface IRemoteSystemAuthorizationKindFilterFactory(IRemo
 impl IRemoteSystemAuthorizationKindFilterFactory {
     #[inline] pub fn create(&self, remoteSystemAuthorizationKind: RemoteSystemAuthorizationKind) -> Result<RemoteSystemAuthorizationKindFilter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, remoteSystemAuthorizationKind, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, remoteSystemAuthorizationKind, &mut out);
         if hr == S_OK { Ok(RemoteSystemAuthorizationKindFilter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4844,7 +4844,7 @@ RT_INTERFACE!{interface IRemoteSystemConnectionInfo(IRemoteSystemConnectionInfoV
 impl IRemoteSystemConnectionInfo {
     #[inline] pub fn get_is_proximal(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsProximal)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsProximal)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4863,7 +4863,7 @@ RT_INTERFACE!{static interface IRemoteSystemConnectionInfoStatics(IRemoteSystemC
 impl IRemoteSystemConnectionInfoStatics {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn try_create_from_app_service_connection(&self, connection: &super::super::applicationmodel::appservice::AppServiceConnection) -> Result<Option<RemoteSystemConnectionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryCreateFromAppServiceConnection)(self.0.as_abi() as *const _ as *mut _, get_abi(connection) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryCreateFromAppServiceConnection)(self.get_abi() as *const _ as *mut _, connection.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemConnectionInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4874,7 +4874,7 @@ RT_INTERFACE!{interface IRemoteSystemConnectionRequest(IRemoteSystemConnectionRe
 impl IRemoteSystemConnectionRequest {
     #[inline] pub fn get_remote_system(&self) -> Result<Option<RemoteSystem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemoteSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemoteSystem)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystem::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4897,7 +4897,7 @@ RT_INTERFACE!{interface IRemoteSystemConnectionRequest2(IRemoteSystemConnectionR
 impl IRemoteSystemConnectionRequest2 {
     #[inline] pub fn get_remote_system_app(&self) -> Result<Option<RemoteSystemApp>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemoteSystemApp)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemoteSystemApp)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemApp::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4908,7 +4908,7 @@ RT_INTERFACE!{static interface IRemoteSystemConnectionRequestFactory(IRemoteSyst
 impl IRemoteSystemConnectionRequestFactory {
     #[inline] pub fn create(&self, remoteSystem: &RemoteSystem) -> Result<RemoteSystemConnectionRequest> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, get_abi(remoteSystem) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, remoteSystem.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemConnectionRequest::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4919,7 +4919,7 @@ RT_INTERFACE!{static interface IRemoteSystemConnectionRequestStatics(IRemoteSyst
 impl IRemoteSystemConnectionRequestStatics {
     #[inline] pub fn create_for_app(&self, remoteSystemApp: &RemoteSystemApp) -> Result<Option<RemoteSystemConnectionRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateForApp)(self.0.as_abi() as *const _ as *mut _, get_abi(remoteSystemApp) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateForApp)(self.get_abi() as *const _ as *mut _, remoteSystemApp.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemConnectionRequest::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4933,7 +4933,7 @@ RT_INTERFACE!{interface IRemoteSystemDiscoveryTypeFilter(IRemoteSystemDiscoveryT
 impl IRemoteSystemDiscoveryTypeFilter {
     #[inline] pub fn get_remote_system_discovery_type(&self) -> Result<RemoteSystemDiscoveryType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemoteSystemDiscoveryType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemoteSystemDiscoveryType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4952,7 +4952,7 @@ RT_INTERFACE!{static interface IRemoteSystemDiscoveryTypeFilterFactory(IRemoteSy
 impl IRemoteSystemDiscoveryTypeFilterFactory {
     #[inline] pub fn create(&self, discoveryType: RemoteSystemDiscoveryType) -> Result<RemoteSystemDiscoveryTypeFilter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, discoveryType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, discoveryType, &mut out);
         if hr == S_OK { Ok(RemoteSystemDiscoveryTypeFilter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4972,7 +4972,7 @@ RT_INTERFACE!{interface IRemoteSystemKindFilter(IRemoteSystemKindFilterVtbl, IRe
 impl IRemoteSystemKindFilter {
     #[inline] pub fn get_remote_system_kinds(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemoteSystemKinds)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemoteSystemKinds)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4991,7 +4991,7 @@ RT_INTERFACE!{static interface IRemoteSystemKindFilterFactory(IRemoteSystemKindF
 impl IRemoteSystemKindFilterFactory {
     #[inline] pub fn create(&self, remoteSystemKinds: &foundation::collections::IIterable<HString>) -> Result<RemoteSystemKindFilter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, get_abi(remoteSystemKinds) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, remoteSystemKinds.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemKindFilter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5036,27 +5036,27 @@ RT_INTERFACE!{static interface IRemoteSystemKindStatics(IRemoteSystemKindStatics
 impl IRemoteSystemKindStatics {
     #[inline] pub fn get_phone(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Phone)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Phone)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hub(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Hub)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Hub)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_holographic(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Holographic)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Holographic)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_desktop(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Desktop)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Desktop)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xbox(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Xbox)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Xbox)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5069,17 +5069,17 @@ RT_INTERFACE!{static interface IRemoteSystemKindStatics2(IRemoteSystemKindStatic
 impl IRemoteSystemKindStatics2 {
     #[inline] pub fn get_iot(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Iot)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Iot)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tablet(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Tablet)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Tablet)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_laptop(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Laptop)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Laptop)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5093,7 +5093,7 @@ RT_INTERFACE!{interface IRemoteSystemRemovedEventArgs(IRemoteSystemRemovedEventA
 impl IRemoteSystemRemovedEventArgs {
     #[inline] pub fn get_remote_system_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemoteSystemId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemoteSystemId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5111,36 +5111,36 @@ RT_INTERFACE!{interface IRemoteSystemSession(IRemoteSystemSessionVtbl, IRemoteSy
 impl IRemoteSystemSession {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_controller_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ControllerDisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ControllerDisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_disconnected(&self, handler: &foundation::TypedEventHandler<RemoteSystemSession, RemoteSystemSessionDisconnectedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Disconnected)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Disconnected)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_disconnected(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Disconnected)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Disconnected)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn create_participant_watcher(&self) -> Result<Option<RemoteSystemSessionParticipantWatcher>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateParticipantWatcher)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateParticipantWatcher)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionParticipantWatcher::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn send_invitation_async(&self, invitee: &RemoteSystem) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SendInvitationAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(invitee) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SendInvitationAsync)(self.get_abi() as *const _ as *mut _, invitee.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5159,7 +5159,7 @@ RT_INTERFACE!{interface IRemoteSystemSessionAddedEventArgs(IRemoteSystemSessionA
 impl IRemoteSystemSessionAddedEventArgs {
     #[inline] pub fn get_session_info(&self) -> Result<Option<RemoteSystemSessionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SessionInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SessionInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5174,21 +5174,21 @@ RT_INTERFACE!{interface IRemoteSystemSessionController(IRemoteSystemSessionContr
 impl IRemoteSystemSessionController {
     #[inline] pub fn add_join_requested(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionController, RemoteSystemSessionJoinRequestedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_JoinRequested)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_JoinRequested)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_join_requested(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_JoinRequested)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_JoinRequested)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn remove_participant_async(&self, pParticipant: &RemoteSystemSessionParticipant) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RemoveParticipantAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(pParticipant) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RemoveParticipantAsync)(self.get_abi() as *const _ as *mut _, pParticipant.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_session_async(&self) -> Result<foundation::IAsyncOperation<RemoteSystemSessionCreationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateSessionAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateSessionAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5211,12 +5211,12 @@ RT_INTERFACE!{static interface IRemoteSystemSessionControllerFactory(IRemoteSyst
 impl IRemoteSystemSessionControllerFactory {
     #[inline] pub fn create_controller(&self, displayName: &HStringArg) -> Result<RemoteSystemSessionController> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateController)(self.0.as_abi() as *const _ as *mut _, displayName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateController)(self.get_abi() as *const _ as *mut _, displayName.get(), &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionController::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_controller_with_session_options(&self, displayName: &HStringArg, options: &RemoteSystemSessionOptions) -> Result<RemoteSystemSessionController> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateControllerWithSessionOptions)(self.0.as_abi() as *const _ as *mut _, displayName.get(), get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateControllerWithSessionOptions)(self.get_abi() as *const _ as *mut _, displayName.get(), options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionController::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5228,12 +5228,12 @@ RT_INTERFACE!{interface IRemoteSystemSessionCreationResult(IRemoteSystemSessionC
 impl IRemoteSystemSessionCreationResult {
     #[inline] pub fn get_status(&self) -> Result<RemoteSystemSessionCreationStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_session(&self) -> Result<Option<RemoteSystemSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Session)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Session)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSession::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5248,7 +5248,7 @@ RT_INTERFACE!{interface IRemoteSystemSessionDisconnectedEventArgs(IRemoteSystemS
 impl IRemoteSystemSessionDisconnectedEventArgs {
     #[inline] pub fn get_reason(&self) -> Result<RemoteSystemSessionDisconnectedReason> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Reason)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Reason)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5265,17 +5265,17 @@ RT_INTERFACE!{interface IRemoteSystemSessionInfo(IRemoteSystemSessionInfoVtbl, I
 impl IRemoteSystemSessionInfo {
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_controller_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ControllerDisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ControllerDisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn join_async(&self) -> Result<foundation::IAsyncOperation<RemoteSystemSessionJoinResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).JoinAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).JoinAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5288,12 +5288,12 @@ RT_INTERFACE!{interface IRemoteSystemSessionInvitation(IRemoteSystemSessionInvit
 impl IRemoteSystemSessionInvitation {
     #[inline] pub fn get_sender(&self) -> Result<Option<RemoteSystem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sender)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sender)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystem::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_session_info(&self) -> Result<Option<RemoteSystemSessionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SessionInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SessionInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5306,11 +5306,11 @@ RT_INTERFACE!{interface IRemoteSystemSessionInvitationListener(IRemoteSystemSess
 impl IRemoteSystemSessionInvitationListener {
     #[inline] pub fn add_invitation_received(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionInvitationListener, RemoteSystemSessionInvitationReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_InvitationReceived)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_InvitationReceived)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_invitation_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_InvitationReceived)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_InvitationReceived)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5324,7 +5324,7 @@ RT_INTERFACE!{interface IRemoteSystemSessionInvitationReceivedEventArgs(IRemoteS
 impl IRemoteSystemSessionInvitationReceivedEventArgs {
     #[inline] pub fn get_invitation(&self) -> Result<Option<RemoteSystemSessionInvitation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Invitation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Invitation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionInvitation::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5337,11 +5337,11 @@ RT_INTERFACE!{interface IRemoteSystemSessionJoinRequest(IRemoteSystemSessionJoin
 impl IRemoteSystemSessionJoinRequest {
     #[inline] pub fn get_participant(&self) -> Result<Option<RemoteSystemSessionParticipant>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Participant)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Participant)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionParticipant::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn accept(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Accept)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Accept)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5354,12 +5354,12 @@ RT_INTERFACE!{interface IRemoteSystemSessionJoinRequestedEventArgs(IRemoteSystem
 impl IRemoteSystemSessionJoinRequestedEventArgs {
     #[inline] pub fn get_join_request(&self) -> Result<Option<RemoteSystemSessionJoinRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_JoinRequest)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_JoinRequest)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionJoinRequest::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5372,12 +5372,12 @@ RT_INTERFACE!{interface IRemoteSystemSessionJoinResult(IRemoteSystemSessionJoinR
 impl IRemoteSystemSessionJoinResult {
     #[inline] pub fn get_status(&self) -> Result<RemoteSystemSessionJoinStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_session(&self) -> Result<Option<RemoteSystemSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Session)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Session)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSession::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5397,31 +5397,31 @@ RT_INTERFACE!{interface IRemoteSystemSessionMessageChannel(IRemoteSystemSessionM
 impl IRemoteSystemSessionMessageChannel {
     #[inline] pub fn get_session(&self) -> Result<Option<RemoteSystemSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Session)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Session)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSession::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn broadcast_value_set_async(&self, messageData: &foundation::collections::ValueSet) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).BroadcastValueSetAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(messageData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).BroadcastValueSetAsync)(self.get_abi() as *const _ as *mut _, messageData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn send_value_set_async(&self, messageData: &foundation::collections::ValueSet, participant: &RemoteSystemSessionParticipant) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SendValueSetAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(messageData) as *const _ as *mut _, get_abi(participant) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SendValueSetAsync)(self.get_abi() as *const _ as *mut _, messageData.get_abi() as *const _ as *mut _, participant.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn send_value_set_to_participants_async(&self, messageData: &foundation::collections::ValueSet, participants: &foundation::collections::IIterable<RemoteSystemSessionParticipant>) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SendValueSetToParticipantsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(messageData) as *const _ as *mut _, get_abi(participants) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SendValueSetToParticipantsAsync)(self.get_abi() as *const _ as *mut _, messageData.get_abi() as *const _ as *mut _, participants.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_value_set_received(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionMessageChannel, RemoteSystemSessionValueSetReceivedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_ValueSetReceived)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_ValueSetReceived)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_value_set_received(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_ValueSetReceived)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_ValueSetReceived)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5444,12 +5444,12 @@ RT_INTERFACE!{static interface IRemoteSystemSessionMessageChannelFactory(IRemote
 impl IRemoteSystemSessionMessageChannelFactory {
     #[inline] pub fn create(&self, session: &RemoteSystemSession, channelName: &HStringArg) -> Result<RemoteSystemSessionMessageChannel> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, get_abi(session) as *const _ as *mut _, channelName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, session.get_abi() as *const _ as *mut _, channelName.get(), &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionMessageChannel::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_reliability(&self, session: &RemoteSystemSession, channelName: &HStringArg, reliability: RemoteSystemSessionMessageChannelReliability) -> Result<RemoteSystemSessionMessageChannel> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithReliability)(self.0.as_abi() as *const _ as *mut _, get_abi(session) as *const _ as *mut _, channelName.get(), reliability, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithReliability)(self.get_abi() as *const _ as *mut _, session.get_abi() as *const _ as *mut _, channelName.get(), reliability, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionMessageChannel::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5464,11 +5464,11 @@ RT_INTERFACE!{interface IRemoteSystemSessionOptions(IRemoteSystemSessionOptionsV
 impl IRemoteSystemSessionOptions {
     #[inline] pub fn get_is_invite_only(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsInviteOnly)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsInviteOnly)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_invite_only(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IsInviteOnly)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IsInviteOnly)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5483,12 +5483,12 @@ RT_INTERFACE!{interface IRemoteSystemSessionParticipant(IRemoteSystemSessionPart
 impl IRemoteSystemSessionParticipant {
     #[inline] pub fn get_remote_system(&self) -> Result<Option<RemoteSystem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemoteSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemoteSystem)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystem::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-networking")] #[inline] pub fn get_host_names(&self) -> Result<Option<foundation::collections::IVectorView<super::super::networking::HostName>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetHostNames)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetHostNames)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5500,7 +5500,7 @@ RT_INTERFACE!{interface IRemoteSystemSessionParticipantAddedEventArgs(IRemoteSys
 impl IRemoteSystemSessionParticipantAddedEventArgs {
     #[inline] pub fn get_participant(&self) -> Result<Option<RemoteSystemSessionParticipant>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Participant)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Participant)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionParticipant::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5512,7 +5512,7 @@ RT_INTERFACE!{interface IRemoteSystemSessionParticipantRemovedEventArgs(IRemoteS
 impl IRemoteSystemSessionParticipantRemovedEventArgs {
     #[inline] pub fn get_participant(&self) -> Result<Option<RemoteSystemSessionParticipant>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Participant)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Participant)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionParticipant::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5531,43 +5531,43 @@ RT_INTERFACE!{interface IRemoteSystemSessionParticipantWatcher(IRemoteSystemSess
 }}
 impl IRemoteSystemSessionParticipantWatcher {
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Start)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Start)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Stop)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Stop)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<RemoteSystemSessionParticipantWatcherStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionParticipantWatcher, RemoteSystemSessionParticipantAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Added)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Added)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Added)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Added)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionParticipantWatcher, RemoteSystemSessionParticipantRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Removed)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Removed)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Removed)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Removed)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionParticipantWatcher, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_EnumerationCompleted)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_EnumerationCompleted)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_EnumerationCompleted)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_EnumerationCompleted)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5582,7 +5582,7 @@ RT_INTERFACE!{interface IRemoteSystemSessionRemovedEventArgs(IRemoteSystemSessio
 impl IRemoteSystemSessionRemovedEventArgs {
     #[inline] pub fn get_session_info(&self) -> Result<Option<RemoteSystemSessionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SessionInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SessionInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5594,7 +5594,7 @@ RT_INTERFACE!{static interface IRemoteSystemSessionStatics(IRemoteSystemSessionS
 impl IRemoteSystemSessionStatics {
     #[inline] pub fn create_watcher(&self) -> Result<Option<RemoteSystemSessionWatcher>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWatcher)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWatcher)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionWatcher::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5605,7 +5605,7 @@ RT_INTERFACE!{interface IRemoteSystemSessionUpdatedEventArgs(IRemoteSystemSessio
 impl IRemoteSystemSessionUpdatedEventArgs {
     #[inline] pub fn get_session_info(&self) -> Result<Option<RemoteSystemSessionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SessionInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SessionInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5618,12 +5618,12 @@ RT_INTERFACE!{interface IRemoteSystemSessionValueSetReceivedEventArgs(IRemoteSys
 impl IRemoteSystemSessionValueSetReceivedEventArgs {
     #[inline] pub fn get_sender(&self) -> Result<Option<RemoteSystemSessionParticipant>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sender)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sender)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemSessionParticipant::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_message(&self) -> Result<Option<foundation::collections::ValueSet>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Message)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Message)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::ValueSet::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5642,43 +5642,43 @@ RT_INTERFACE!{interface IRemoteSystemSessionWatcher(IRemoteSystemSessionWatcherV
 }}
 impl IRemoteSystemSessionWatcher {
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Start)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Start)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Stop)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Stop)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<RemoteSystemSessionWatcherStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_added(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionWatcher, RemoteSystemSessionAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Added)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Added)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Added)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Added)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_updated(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionWatcher, RemoteSystemSessionUpdatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Updated)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Updated)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Updated)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Updated)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<RemoteSystemSessionWatcher, RemoteSystemSessionRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Removed)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Removed)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Removed)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Removed)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5697,22 +5697,22 @@ RT_INTERFACE!{static interface IRemoteSystemStatics(IRemoteSystemStaticsVtbl, IR
 impl IRemoteSystemStatics {
     #[cfg(feature="windows-networking")] #[inline] pub fn find_by_host_name_async(&self, hostName: &super::super::networking::HostName) -> Result<foundation::IAsyncOperation<RemoteSystem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindByHostNameAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(hostName) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindByHostNameAsync)(self.get_abi() as *const _ as *mut _, hostName.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_watcher(&self) -> Result<Option<RemoteSystemWatcher>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWatcher)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWatcher)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemWatcher::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_watcher_with_filters(&self, filters: &foundation::collections::IIterable<IRemoteSystemFilter>) -> Result<Option<RemoteSystemWatcher>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWatcherWithFilters)(self.0.as_abi() as *const _ as *mut _, get_abi(filters) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWatcherWithFilters)(self.get_abi() as *const _ as *mut _, filters.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemWatcher::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_access_async(&self) -> Result<foundation::IAsyncOperation<RemoteSystemAccessStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5723,7 +5723,7 @@ RT_INTERFACE!{static interface IRemoteSystemStatics2(IRemoteSystemStatics2Vtbl, 
 impl IRemoteSystemStatics2 {
     #[inline] pub fn is_authorization_kind_enabled(&self, kind: RemoteSystemAuthorizationKind) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsAuthorizationKindEnabled)(self.0.as_abi() as *const _ as *mut _, kind, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsAuthorizationKindEnabled)(self.get_abi() as *const _ as *mut _, kind, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5740,7 +5740,7 @@ RT_INTERFACE!{interface IRemoteSystemStatusTypeFilter(IRemoteSystemStatusTypeFil
 impl IRemoteSystemStatusTypeFilter {
     #[inline] pub fn get_remote_system_status_type(&self) -> Result<RemoteSystemStatusType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemoteSystemStatusType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemoteSystemStatusType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5759,7 +5759,7 @@ RT_INTERFACE!{static interface IRemoteSystemStatusTypeFilterFactory(IRemoteSyste
 impl IRemoteSystemStatusTypeFilterFactory {
     #[inline] pub fn create(&self, remoteSystemStatusType: RemoteSystemStatusType) -> Result<RemoteSystemStatusTypeFilter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, remoteSystemStatusType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, remoteSystemStatusType, &mut out);
         if hr == S_OK { Ok(RemoteSystemStatusTypeFilter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5770,7 +5770,7 @@ RT_INTERFACE!{interface IRemoteSystemUpdatedEventArgs(IRemoteSystemUpdatedEventA
 impl IRemoteSystemUpdatedEventArgs {
     #[inline] pub fn get_remote_system(&self) -> Result<Option<RemoteSystem>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RemoteSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RemoteSystem)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystem::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5788,38 +5788,38 @@ RT_INTERFACE!{interface IRemoteSystemWatcher(IRemoteSystemWatcherVtbl, IRemoteSy
 }}
 impl IRemoteSystemWatcher {
     #[inline] pub fn start(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Start)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Start)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn stop(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Stop)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Stop)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_remote_system_added(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemAddedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_RemoteSystemAdded)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_RemoteSystemAdded)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_remote_system_added(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_RemoteSystemAdded)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_RemoteSystemAdded)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_remote_system_updated(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemUpdatedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_RemoteSystemUpdated)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_RemoteSystemUpdated)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_remote_system_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_RemoteSystemUpdated)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_RemoteSystemUpdated)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_remote_system_removed(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemRemovedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_RemoteSystemRemoved)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_RemoteSystemRemoved)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_remote_system_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_RemoteSystemRemoved)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_RemoteSystemRemoved)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5834,20 +5834,20 @@ RT_INTERFACE!{interface IRemoteSystemWatcher2(IRemoteSystemWatcher2Vtbl, IRemote
 impl IRemoteSystemWatcher2 {
     #[inline] pub fn add_enumeration_completed(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemEnumerationCompletedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_EnumerationCompleted)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_EnumerationCompleted)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_enumeration_completed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_EnumerationCompleted)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_EnumerationCompleted)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_error_occurred(&self, handler: &foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemWatcherErrorOccurredEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_ErrorOccurred)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_ErrorOccurred)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_error_occurred(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_ErrorOccurred)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_ErrorOccurred)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5861,7 +5861,7 @@ RT_INTERFACE!{interface IRemoteSystemWatcherErrorOccurredEventArgs(IRemoteSystem
 impl IRemoteSystemWatcherErrorOccurredEventArgs {
     #[inline] pub fn get_error(&self) -> Result<RemoteSystemWatcherError> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Error)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Error)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5873,7 +5873,7 @@ RT_INTERFACE!{interface IRemoteSystemWebAccountFilter(IRemoteSystemWebAccountFil
 impl IRemoteSystemWebAccountFilter {
     #[cfg(feature="windows-security")] #[inline] pub fn get_account(&self) -> Result<Option<super::super::security::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Account)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Account)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::security::credentials::WebAccount::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5892,7 +5892,7 @@ RT_INTERFACE!{static interface IRemoteSystemWebAccountFilterFactory(IRemoteSyste
 impl IRemoteSystemWebAccountFilterFactory {
     #[cfg(feature="windows-security")] #[inline] pub fn create(&self, account: &super::super::security::credentials::WebAccount) -> Result<RemoteSystemWebAccountFilter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, get_abi(account) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, account.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(RemoteSystemWebAccountFilter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5922,17 +5922,17 @@ RT_INTERFACE!{static interface IThreadPoolStatics(IThreadPoolStaticsVtbl, IThrea
 impl IThreadPoolStatics {
     #[inline] pub fn run_async(&self, handler: &WorkItemHandler) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RunAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RunAsync)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn run_with_priority_async(&self, handler: &WorkItemHandler, priority: WorkItemPriority) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RunWithPriorityAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, priority, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RunWithPriorityAsync)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, priority, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn run_with_priority_and_options_async(&self, handler: &WorkItemHandler, priority: WorkItemPriority, options: WorkItemOptions) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RunWithPriorityAndOptionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, priority, options, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RunWithPriorityAndOptionsAsync)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, priority, options, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5945,16 +5945,16 @@ RT_INTERFACE!{interface IThreadPoolTimer(IThreadPoolTimerVtbl, IThreadPoolTimer_
 impl IThreadPoolTimer {
     #[inline] pub fn get_period(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Period)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Period)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_delay(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Delay)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Delay)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn cancel(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Cancel)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Cancel)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5985,22 +5985,22 @@ RT_INTERFACE!{static interface IThreadPoolTimerStatics(IThreadPoolTimerStaticsVt
 impl IThreadPoolTimerStatics {
     #[inline] pub fn create_periodic_timer(&self, handler: &TimerElapsedHandler, period: foundation::TimeSpan) -> Result<Option<ThreadPoolTimer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreatePeriodicTimer)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, period, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreatePeriodicTimer)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, period, &mut out);
         if hr == S_OK { Ok(ThreadPoolTimer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_timer(&self, handler: &TimerElapsedHandler, delay: foundation::TimeSpan) -> Result<Option<ThreadPoolTimer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateTimer)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, delay, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateTimer)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, delay, &mut out);
         if hr == S_OK { Ok(ThreadPoolTimer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_periodic_timer_with_completion(&self, handler: &TimerElapsedHandler, period: foundation::TimeSpan, destroyed: &TimerDestroyedHandler) -> Result<Option<ThreadPoolTimer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreatePeriodicTimerWithCompletion)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, period, get_abi(destroyed) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreatePeriodicTimerWithCompletion)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, period, destroyed.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ThreadPoolTimer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_timer_with_completion(&self, handler: &TimerElapsedHandler, delay: foundation::TimeSpan, destroyed: &TimerDestroyedHandler) -> Result<Option<ThreadPoolTimer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateTimerWithCompletion)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, delay, get_abi(destroyed) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateTimerWithCompletion)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, delay, destroyed.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ThreadPoolTimer::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6010,7 +6010,7 @@ RT_DELEGATE!{delegate TimerDestroyedHandler(TimerDestroyedHandlerVtbl, TimerDest
 }}
 impl TimerDestroyedHandler {
     #[inline] pub fn invoke(&self, timer: &ThreadPoolTimer) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Invoke)(self.0.as_abi() as *const _ as *mut _, get_abi(timer) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Invoke)(self.get_abi() as *const _ as *mut _, timer.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6020,7 +6020,7 @@ RT_DELEGATE!{delegate TimerElapsedHandler(TimerElapsedHandlerVtbl, TimerElapsedH
 }}
 impl TimerElapsedHandler {
     #[inline] pub fn invoke(&self, timer: &ThreadPoolTimer) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Invoke)(self.0.as_abi() as *const _ as *mut _, get_abi(timer) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Invoke)(self.get_abi() as *const _ as *mut _, timer.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6030,7 +6030,7 @@ RT_DELEGATE!{delegate WorkItemHandler(WorkItemHandlerVtbl, WorkItemHandler_Abi, 
 }}
 impl WorkItemHandler {
     #[inline] pub fn invoke(&self, operation: &foundation::IAsyncAction) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Invoke)(self.0.as_abi() as *const _ as *mut _, get_abi(operation) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Invoke)(self.get_abi() as *const _ as *mut _, operation.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6049,7 +6049,7 @@ RT_INTERFACE!{interface IPreallocatedWorkItem(IPreallocatedWorkItemVtbl, IPreall
 impl IPreallocatedWorkItem {
     #[inline] pub fn run_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RunAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RunAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6076,17 +6076,17 @@ RT_INTERFACE!{static interface IPreallocatedWorkItemFactory(IPreallocatedWorkIte
 impl IPreallocatedWorkItemFactory {
     #[inline] pub fn create_work_item(&self, handler: &super::WorkItemHandler) -> Result<PreallocatedWorkItem> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWorkItem)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWorkItem)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PreallocatedWorkItem::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_work_item_with_priority(&self, handler: &super::WorkItemHandler, priority: super::WorkItemPriority) -> Result<PreallocatedWorkItem> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWorkItemWithPriority)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, priority, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWorkItemWithPriority)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, priority, &mut out);
         if hr == S_OK { Ok(PreallocatedWorkItem::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_work_item_with_priority_and_options(&self, handler: &super::WorkItemHandler, priority: super::WorkItemPriority, options: super::WorkItemOptions) -> Result<PreallocatedWorkItem> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWorkItemWithPriorityAndOptions)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, priority, options, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWorkItemWithPriorityAndOptions)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, priority, options, &mut out);
         if hr == S_OK { Ok(PreallocatedWorkItem::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6096,7 +6096,7 @@ RT_DELEGATE!{delegate SignalHandler(SignalHandlerVtbl, SignalHandler_Abi, Signal
 }}
 impl SignalHandler {
     #[inline] pub fn invoke(&self, signalNotifier: &SignalNotifier, timedOut: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Invoke)(self.0.as_abi() as *const _ as *mut _, get_abi(signalNotifier) as *const _ as *mut _, timedOut);
+        let hr = ((*self.get_abi().lpVtbl).Invoke)(self.get_abi() as *const _ as *mut _, signalNotifier.get_abi() as *const _ as *mut _, timedOut);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6107,11 +6107,11 @@ RT_INTERFACE!{interface ISignalNotifier(ISignalNotifierVtbl, ISignalNotifier_Abi
 }}
 impl ISignalNotifier {
     #[inline] pub fn enable(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Enable)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Enable)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn terminate(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Terminate)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Terminate)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6142,22 +6142,22 @@ RT_INTERFACE!{static interface ISignalNotifierStatics(ISignalNotifierStaticsVtbl
 impl ISignalNotifierStatics {
     #[inline] pub fn attach_to_event(&self, name: &HStringArg, handler: &SignalHandler) -> Result<Option<SignalNotifier>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AttachToEvent)(self.0.as_abi() as *const _ as *mut _, name.get(), get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AttachToEvent)(self.get_abi() as *const _ as *mut _, name.get(), handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SignalNotifier::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn attach_to_event_with_timeout(&self, name: &HStringArg, handler: &SignalHandler, timeout: foundation::TimeSpan) -> Result<Option<SignalNotifier>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AttachToEventWithTimeout)(self.0.as_abi() as *const _ as *mut _, name.get(), get_abi(handler) as *const _ as *mut _, timeout, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AttachToEventWithTimeout)(self.get_abi() as *const _ as *mut _, name.get(), handler.get_abi() as *const _ as *mut _, timeout, &mut out);
         if hr == S_OK { Ok(SignalNotifier::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn attach_to_semaphore(&self, name: &HStringArg, handler: &SignalHandler) -> Result<Option<SignalNotifier>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AttachToSemaphore)(self.0.as_abi() as *const _ as *mut _, name.get(), get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AttachToSemaphore)(self.get_abi() as *const _ as *mut _, name.get(), handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SignalNotifier::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn attach_to_semaphore_with_timeout(&self, name: &HStringArg, handler: &SignalHandler, timeout: foundation::TimeSpan) -> Result<Option<SignalNotifier>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AttachToSemaphoreWithTimeout)(self.0.as_abi() as *const _ as *mut _, name.get(), get_abi(handler) as *const _ as *mut _, timeout, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AttachToSemaphoreWithTimeout)(self.get_abi() as *const _ as *mut _, name.get(), handler.get_abi() as *const _ as *mut _, timeout, &mut out);
         if hr == S_OK { Ok(SignalNotifier::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6182,42 +6182,42 @@ RT_INTERFACE!{interface ISystemUpdateItem(ISystemUpdateItemVtbl, ISystemUpdateIt
 impl ISystemUpdateItem {
     #[inline] pub fn get_state(&self) -> Result<SystemUpdateItemState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_State)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_State)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_title(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Title)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Title)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Description)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Description)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_revision(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Revision)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Revision)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_download_progress(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DownloadProgress)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DownloadProgress)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_install_progress(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_InstallProgress)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_InstallProgress)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExtendedError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExtendedError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6234,17 +6234,17 @@ RT_INTERFACE!{interface ISystemUpdateLastErrorInfo(ISystemUpdateLastErrorInfoVtb
 impl ISystemUpdateLastErrorInfo {
     #[inline] pub fn get_state(&self) -> Result<SystemUpdateManagerState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_State)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_State)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExtendedError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExtendedError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_interactive(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsInteractive)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsInteractive)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6359,118 +6359,118 @@ RT_INTERFACE!{static interface ISystemUpdateManagerStatics(ISystemUpdateManagerS
 impl ISystemUpdateManagerStatics {
     #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_state(&self) -> Result<SystemUpdateManagerState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_State)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_State)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_state_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_StateChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_StateChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_state_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_StateChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_StateChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_download_progress(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DownloadProgress)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DownloadProgress)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_install_progress(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_InstallProgress)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_InstallProgress)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_user_active_hours_start(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UserActiveHoursStart)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UserActiveHoursStart)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_user_active_hours_end(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UserActiveHoursEnd)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UserActiveHoursEnd)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_user_active_hours_max(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UserActiveHoursMax)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UserActiveHoursMax)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn try_set_user_active_hours(&self, start: foundation::TimeSpan, end: foundation::TimeSpan) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TrySetUserActiveHours)(self.0.as_abi() as *const _ as *mut _, start, end, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TrySetUserActiveHours)(self.get_abi() as *const _ as *mut _, start, end, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_update_check_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LastUpdateCheckTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LastUpdateCheckTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_update_install_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LastUpdateInstallTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LastUpdateInstallTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_error_info(&self) -> Result<Option<SystemUpdateLastErrorInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LastErrorInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LastErrorInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SystemUpdateLastErrorInfo::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_automatic_reboot_block_ids(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAutomaticRebootBlockIds)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAutomaticRebootBlockIds)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn block_automatic_reboot_async(&self, lockId: &HStringArg) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).BlockAutomaticRebootAsync)(self.0.as_abi() as *const _ as *mut _, lockId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).BlockAutomaticRebootAsync)(self.get_abi() as *const _ as *mut _, lockId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn unblock_automatic_reboot_async(&self, lockId: &HStringArg) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UnblockAutomaticRebootAsync)(self.0.as_abi() as *const _ as *mut _, lockId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UnblockAutomaticRebootAsync)(self.get_abi() as *const _ as *mut _, lockId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExtendedError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExtendedError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_update_items(&self) -> Result<Option<foundation::collections::IVectorView<SystemUpdateItem>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetUpdateItems)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetUpdateItems)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_attention_required_reason(&self) -> Result<SystemUpdateAttentionRequiredReason> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AttentionRequiredReason)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AttentionRequiredReason)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_flight_ring(&self, flightRing: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).SetFlightRing)(self.0.as_abi() as *const _ as *mut _, flightRing.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetFlightRing)(self.get_abi() as *const _ as *mut _, flightRing.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_flight_ring(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetFlightRing)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetFlightRing)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn start_install(&self, action: SystemUpdateStartInstallAction) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).StartInstall)(self.0.as_abi() as *const _ as *mut _, action);
+        let hr = ((*self.get_abi().lpVtbl).StartInstall)(self.get_abi() as *const _ as *mut _, action);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn reboot_to_complete_install(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).RebootToCompleteInstall)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).RebootToCompleteInstall)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn start_cancel_updates(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).StartCancelUpdates)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).StartCancelUpdates)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -6503,12 +6503,12 @@ RT_INTERFACE!{interface IAdvertisingManagerForUser(IAdvertisingManagerForUserVtb
 impl IAdvertisingManagerForUser {
     #[inline] pub fn get_advertising_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AdvertisingId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AdvertisingId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_user(&self) -> Result<Option<super::User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::User::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6520,7 +6520,7 @@ RT_INTERFACE!{static interface IAdvertisingManagerStatics(IAdvertisingManagerSta
 impl IAdvertisingManagerStatics {
     #[inline] pub fn get_advertising_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AdvertisingId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AdvertisingId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6531,7 +6531,7 @@ RT_INTERFACE!{static interface IAdvertisingManagerStatics2(IAdvertisingManagerSt
 impl IAdvertisingManagerStatics2 {
     #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<AdvertisingManagerForUser>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForUser)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForUser)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AdvertisingManagerForUser::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6544,17 +6544,17 @@ RT_INTERFACE!{interface IAssignedAccessSettings(IAssignedAccessSettingsVtbl, IAs
 impl IAssignedAccessSettings {
     #[inline] pub fn get_is_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_single_app_kiosk_mode(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsSingleAppKioskMode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsSingleAppKioskMode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_user(&self) -> Result<Option<super::User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::User::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6577,12 +6577,12 @@ RT_INTERFACE!{static interface IAssignedAccessSettingsStatics(IAssignedAccessSet
 impl IAssignedAccessSettingsStatics {
     #[inline] pub fn get_default(&self) -> Result<Option<AssignedAccessSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDefault)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDefault)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AssignedAccessSettings::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<AssignedAccessSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForUser)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForUser)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(AssignedAccessSettings::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6594,12 +6594,12 @@ RT_INTERFACE!{interface IDiagnosticsSettings(IDiagnosticsSettingsVtbl, IDiagnost
 impl IDiagnosticsSettings {
     #[inline] pub fn get_can_use_diagnostics_to_tailor_experiences(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CanUseDiagnosticsToTailorExperiences)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CanUseDiagnosticsToTailorExperiences)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_user(&self) -> Result<Option<super::User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::User::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6622,12 +6622,12 @@ RT_INTERFACE!{static interface IDiagnosticsSettingsStatics(IDiagnosticsSettingsS
 impl IDiagnosticsSettingsStatics {
     #[inline] pub fn get_default(&self) -> Result<Option<DiagnosticsSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDefault)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDefault)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DiagnosticsSettings::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<DiagnosticsSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForUser)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForUser)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DiagnosticsSettings::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6650,7 +6650,7 @@ RT_INTERFACE!{static interface IFirstSignInSettingsStatics(IFirstSignInSettingsS
 impl IFirstSignInSettingsStatics {
     #[inline] pub fn get_default(&self) -> Result<Option<FirstSignInSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDefault)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDefault)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(FirstSignInSettings::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6701,37 +6701,37 @@ RT_INTERFACE!{interface IGlobalizationPreferencesForUser(IGlobalizationPreferenc
 impl IGlobalizationPreferencesForUser {
     #[inline] pub fn get_user(&self) -> Result<Option<super::User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::User::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_calendars(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Calendars)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Calendars)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_clocks(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Clocks)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Clocks)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_currencies(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Currencies)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Currencies)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_languages(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Languages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Languages)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_home_geographic_region(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HomeGeographicRegion)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HomeGeographicRegion)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-globalization")] #[inline] pub fn get_week_starts_on(&self) -> Result<super::super::globalization::DayOfWeek> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WeekStartsOn)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WeekStartsOn)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6748,32 +6748,32 @@ RT_INTERFACE!{static interface IGlobalizationPreferencesStatics(IGlobalizationPr
 impl IGlobalizationPreferencesStatics {
     #[inline] pub fn get_calendars(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Calendars)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Calendars)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_clocks(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Clocks)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Clocks)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_currencies(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Currencies)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Currencies)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_languages(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Languages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Languages)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_home_geographic_region(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HomeGeographicRegion)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HomeGeographicRegion)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-globalization")] #[inline] pub fn get_week_starts_on(&self) -> Result<super::super::globalization::DayOfWeek> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WeekStartsOn)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WeekStartsOn)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6785,12 +6785,12 @@ RT_INTERFACE!{static interface IGlobalizationPreferencesStatics2(IGlobalizationP
 impl IGlobalizationPreferencesStatics2 {
     #[inline] pub fn try_set_home_geographic_region(&self, region: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TrySetHomeGeographicRegion)(self.0.as_abi() as *const _ as *mut _, region.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TrySetHomeGeographicRegion)(self.get_abi() as *const _ as *mut _, region.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn try_set_languages(&self, languageTags: &foundation::collections::IIterable<HString>) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TrySetLanguages)(self.0.as_abi() as *const _ as *mut _, get_abi(languageTags) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TrySetLanguages)(self.get_abi() as *const _ as *mut _, languageTags.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6801,7 +6801,7 @@ RT_INTERFACE!{static interface IGlobalizationPreferencesStatics3(IGlobalizationP
 impl IGlobalizationPreferencesStatics3 {
     #[inline] pub fn get_for_user(&self, user: &super::User) -> Result<Option<GlobalizationPreferencesForUser>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForUser)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForUser)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(GlobalizationPreferencesForUser::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6837,12 +6837,12 @@ RT_INTERFACE!{static interface ILockScreenImageFeedStatics(ILockScreenImageFeedS
 impl ILockScreenImageFeedStatics {
     #[inline] pub fn request_set_image_feed_async(&self, syndicationFeedUri: &foundation::Uri) -> Result<foundation::IAsyncOperation<SetImageFeedResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestSetImageFeedAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(syndicationFeedUri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestSetImageFeedAsync)(self.get_abi() as *const _ as *mut _, syndicationFeedUri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_remove_image_feed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TryRemoveImageFeed)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryRemoveImageFeed)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6856,22 +6856,22 @@ RT_INTERFACE!{static interface ILockScreenStatics(ILockScreenStaticsVtbl, ILockS
 impl ILockScreenStatics {
     #[inline] pub fn get_original_image_file(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OriginalImageFile)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OriginalImageFile)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_image_stream(&self) -> Result<Option<super::super::storage::streams::IRandomAccessStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetImageStream)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetImageStream)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IRandomAccessStream::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_image_file_async(&self, value: &super::super::storage::IStorageFile) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetImageFileAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetImageFileAsync)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_image_stream_async(&self, value: &super::super::storage::streams::IRandomAccessStream) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetImageStreamAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetImageStreamAsync)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6957,76 +6957,76 @@ RT_INTERFACE!{static interface IUserInformationStatics(IUserInformationStaticsVt
 impl IUserInformationStatics {
     #[inline] pub fn get_account_picture_change_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AccountPictureChangeEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AccountPictureChangeEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_name_access_allowed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NameAccessAllowed)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NameAccessAllowed)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_account_picture(&self, kind: AccountPictureKind) -> Result<Option<super::super::storage::IStorageFile>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAccountPicture)(self.0.as_abi() as *const _ as *mut _, kind, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAccountPicture)(self.get_abi() as *const _ as *mut _, kind, &mut out);
         if hr == S_OK { Ok(super::super::storage::IStorageFile::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_account_picture_async(&self, image: &super::super::storage::IStorageFile) -> Result<foundation::IAsyncOperation<SetAccountPictureResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetAccountPictureAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(image) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetAccountPictureAsync)(self.get_abi() as *const _ as *mut _, image.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_account_pictures_async(&self, smallImage: &super::super::storage::IStorageFile, largeImage: &super::super::storage::IStorageFile, video: &super::super::storage::IStorageFile) -> Result<foundation::IAsyncOperation<SetAccountPictureResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetAccountPicturesAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(smallImage) as *const _ as *mut _, get_abi(largeImage) as *const _ as *mut _, get_abi(video) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetAccountPicturesAsync)(self.get_abi() as *const _ as *mut _, smallImage.get_abi() as *const _ as *mut _, largeImage.get_abi() as *const _ as *mut _, video.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_account_picture_from_stream_async(&self, image: &super::super::storage::streams::IRandomAccessStream) -> Result<foundation::IAsyncOperation<SetAccountPictureResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetAccountPictureFromStreamAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(image) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetAccountPictureFromStreamAsync)(self.get_abi() as *const _ as *mut _, image.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_account_pictures_from_streams_async(&self, smallImage: &super::super::storage::streams::IRandomAccessStream, largeImage: &super::super::storage::streams::IRandomAccessStream, video: &super::super::storage::streams::IRandomAccessStream) -> Result<foundation::IAsyncOperation<SetAccountPictureResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetAccountPicturesFromStreamsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(smallImage) as *const _ as *mut _, get_abi(largeImage) as *const _ as *mut _, get_abi(video) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetAccountPicturesFromStreamsAsync)(self.get_abi() as *const _ as *mut _, smallImage.get_abi() as *const _ as *mut _, largeImage.get_abi() as *const _ as *mut _, video.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_account_picture_changed(&self, changeHandler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_AccountPictureChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(changeHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_AccountPictureChanged)(self.get_abi() as *const _ as *mut _, changeHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_account_picture_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_AccountPictureChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_AccountPictureChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name_async(&self) -> Result<foundation::IAsyncOperation<HString>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDisplayNameAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDisplayNameAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_first_name_async(&self) -> Result<foundation::IAsyncOperation<HString>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetFirstNameAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetFirstNameAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_last_name_async(&self) -> Result<foundation::IAsyncOperation<HString>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetLastNameAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetLastNameAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_principal_name_async(&self) -> Result<foundation::IAsyncOperation<HString>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPrincipalNameAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPrincipalNameAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_session_initiation_protocol_uri_async(&self) -> Result<foundation::IAsyncOperation<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSessionInitiationProtocolUriAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSessionInitiationProtocolUriAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_domain_name_async(&self) -> Result<foundation::IAsyncOperation<HString>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDomainNameAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDomainNameAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -7038,12 +7038,12 @@ RT_INTERFACE!{interface IUserProfilePersonalizationSettings(IUserProfilePersonal
 impl IUserProfilePersonalizationSettings {
     #[cfg(feature="windows-storage")] #[inline] pub fn try_set_lock_screen_image_async(&self, imageFile: &super::super::storage::StorageFile) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TrySetLockScreenImageAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(imageFile) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TrySetLockScreenImageAsync)(self.get_abi() as *const _ as *mut _, imageFile.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn try_set_wallpaper_image_async(&self, imageFile: &super::super::storage::StorageFile) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TrySetWallpaperImageAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(imageFile) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TrySetWallpaperImageAsync)(self.get_abi() as *const _ as *mut _, imageFile.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -7066,12 +7066,12 @@ RT_INTERFACE!{static interface IUserProfilePersonalizationSettingsStatics(IUserP
 impl IUserProfilePersonalizationSettingsStatics {
     #[inline] pub fn get_current(&self) -> Result<Option<UserProfilePersonalizationSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Current)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Current)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(UserProfilePersonalizationSettings::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }

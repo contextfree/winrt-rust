@@ -7,7 +7,7 @@ RT_INTERFACE!{static interface IHtmlUtilities(IHtmlUtilitiesVtbl, IHtmlUtilities
 impl IHtmlUtilities {
     #[inline] pub fn convert_to_text(&self, html: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ConvertToText)(self.0.as_abi() as *const _ as *mut _, html.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ConvertToText)(self.get_abi() as *const _ as *mut _, html.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -33,27 +33,27 @@ RT_INTERFACE!{interface IJsonArray(IJsonArrayVtbl, IJsonArray_Abi): IInspectable
 impl IJsonArray {
     #[inline] pub fn get_object_at(&self, index: u32) -> Result<Option<JsonObject>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetObjectAt)(self.0.as_abi() as *const _ as *mut _, index, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetObjectAt)(self.get_abi() as *const _ as *mut _, index, &mut out);
         if hr == S_OK { Ok(JsonObject::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_array_at(&self, index: u32) -> Result<Option<JsonArray>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetArrayAt)(self.0.as_abi() as *const _ as *mut _, index, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetArrayAt)(self.get_abi() as *const _ as *mut _, index, &mut out);
         if hr == S_OK { Ok(JsonArray::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_string_at(&self, index: u32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetStringAt)(self.0.as_abi() as *const _ as *mut _, index, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetStringAt)(self.get_abi() as *const _ as *mut _, index, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_number_at(&self, index: u32) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNumberAt)(self.0.as_abi() as *const _ as *mut _, index, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNumberAt)(self.get_abi() as *const _ as *mut _, index, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_boolean_at(&self, index: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetBooleanAt)(self.0.as_abi() as *const _ as *mut _, index, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetBooleanAt)(self.get_abi() as *const _ as *mut _, index, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -77,12 +77,12 @@ RT_INTERFACE!{static interface IJsonArrayStatics(IJsonArrayStaticsVtbl, IJsonArr
 impl IJsonArrayStatics {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<JsonArray>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Parse)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Parse)(self.get_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(JsonArray::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<JsonArray>, bool)> { unsafe { 
         let mut result = null_mut(); let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TryParse)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut result, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryParse)(self.get_abi() as *const _ as *mut _, input.get(), &mut result, &mut out);
         if hr == S_OK { Ok((JsonArray::wrap(result), out)) } else { err(hr) }
     }}
 }
@@ -101,7 +101,7 @@ RT_INTERFACE!{static interface IJsonErrorStatics2(IJsonErrorStatics2Vtbl, IJsonE
 impl IJsonErrorStatics2 {
     #[inline] pub fn get_json_status(&self, hresult: i32) -> Result<JsonErrorStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetJsonStatus)(self.0.as_abi() as *const _ as *mut _, hresult, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetJsonStatus)(self.get_abi() as *const _ as *mut _, hresult, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -121,36 +121,36 @@ RT_INTERFACE!{interface IJsonObject(IJsonObjectVtbl, IJsonObject_Abi): IInspecta
 impl IJsonObject {
     #[inline] pub fn get_named_value(&self, name: &HStringArg) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedValue)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedValue)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_named_value(&self, name: &HStringArg, value: &IJsonValue) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetNamedValue)(self.0.as_abi() as *const _ as *mut _, name.get(), get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).SetNamedValue)(self.get_abi() as *const _ as *mut _, name.get(), value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_named_object(&self, name: &HStringArg) -> Result<Option<JsonObject>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedObject)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedObject)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(JsonObject::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_array(&self, name: &HStringArg) -> Result<Option<JsonArray>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedArray)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedArray)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(JsonArray::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_string(&self, name: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedString)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedString)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_number(&self, name: &HStringArg) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedNumber)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedNumber)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_named_boolean(&self, name: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedBoolean)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedBoolean)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -174,12 +174,12 @@ RT_INTERFACE!{static interface IJsonObjectStatics(IJsonObjectStaticsVtbl, IJsonO
 impl IJsonObjectStatics {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<JsonObject>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Parse)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Parse)(self.get_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(JsonObject::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<JsonObject>, bool)> { unsafe { 
         let mut result = null_mut(); let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TryParse)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut result, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryParse)(self.get_abi() as *const _ as *mut _, input.get(), &mut result, &mut out);
         if hr == S_OK { Ok((JsonObject::wrap(result), out)) } else { err(hr) }
     }}
 }
@@ -195,32 +195,32 @@ RT_INTERFACE!{interface IJsonObjectWithDefaultValues(IJsonObjectWithDefaultValue
 impl IJsonObjectWithDefaultValues {
     #[inline] pub fn get_named_value_or_default(&self, name: &HStringArg, defaultValue: &JsonValue) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedValueOrDefault)(self.0.as_abi() as *const _ as *mut _, name.get(), get_abi(defaultValue) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedValueOrDefault)(self.get_abi() as *const _ as *mut _, name.get(), defaultValue.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_object_or_default(&self, name: &HStringArg, defaultValue: &JsonObject) -> Result<Option<JsonObject>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedObjectOrDefault)(self.0.as_abi() as *const _ as *mut _, name.get(), get_abi(defaultValue) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedObjectOrDefault)(self.get_abi() as *const _ as *mut _, name.get(), defaultValue.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(JsonObject::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_string_or_default(&self, name: &HStringArg, defaultValue: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedStringOrDefault)(self.0.as_abi() as *const _ as *mut _, name.get(), defaultValue.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedStringOrDefault)(self.get_abi() as *const _ as *mut _, name.get(), defaultValue.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_array_or_default(&self, name: &HStringArg, defaultValue: &JsonArray) -> Result<Option<JsonArray>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedArrayOrDefault)(self.0.as_abi() as *const _ as *mut _, name.get(), get_abi(defaultValue) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedArrayOrDefault)(self.get_abi() as *const _ as *mut _, name.get(), defaultValue.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(JsonArray::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_number_or_default(&self, name: &HStringArg, defaultValue: f64) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedNumberOrDefault)(self.0.as_abi() as *const _ as *mut _, name.get(), defaultValue, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedNumberOrDefault)(self.get_abi() as *const _ as *mut _, name.get(), defaultValue, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_named_boolean_or_default(&self, name: &HStringArg, defaultValue: bool) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedBooleanOrDefault)(self.0.as_abi() as *const _ as *mut _, name.get(), defaultValue, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedBooleanOrDefault)(self.get_abi() as *const _ as *mut _, name.get(), defaultValue, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -237,37 +237,37 @@ RT_INTERFACE!{interface IJsonValue(IJsonValueVtbl, IJsonValue_Abi): IInspectable
 impl IJsonValue {
     #[inline] pub fn get_value_type(&self) -> Result<JsonValueType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ValueType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ValueType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn stringify(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Stringify)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Stringify)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetString)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetString)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_number(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNumber)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNumber)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_boolean(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetBoolean)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetBoolean)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_array(&self) -> Result<Option<JsonArray>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetArray)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetArray)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(JsonArray::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_object(&self) -> Result<Option<JsonObject>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetObject)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetObject)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(JsonObject::wrap(out)) } else { err(hr) }
     }}
 }
@@ -306,27 +306,27 @@ RT_INTERFACE!{static interface IJsonValueStatics(IJsonValueStaticsVtbl, IJsonVal
 impl IJsonValueStatics {
     #[inline] pub fn parse(&self, input: &HStringArg) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Parse)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Parse)(self.get_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<JsonValue>, bool)> { unsafe { 
         let mut result = null_mut(); let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TryParse)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut result, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryParse)(self.get_abi() as *const _ as *mut _, input.get(), &mut result, &mut out);
         if hr == S_OK { Ok((JsonValue::wrap(result), out)) } else { err(hr) }
     }}
     #[inline] pub fn create_boolean_value(&self, input: bool) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateBooleanValue)(self.0.as_abi() as *const _ as *mut _, input, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateBooleanValue)(self.get_abi() as *const _ as *mut _, input, &mut out);
         if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_number_value(&self, input: f64) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateNumberValue)(self.0.as_abi() as *const _ as *mut _, input, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateNumberValue)(self.get_abi() as *const _ as *mut _, input, &mut out);
         if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_string_value(&self, input: &HStringArg) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateStringValue)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateStringValue)(self.get_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
 }
@@ -337,7 +337,7 @@ RT_INTERFACE!{static interface IJsonValueStatics2(IJsonValueStatics2Vtbl, IJsonV
 impl IJsonValueStatics2 {
     #[inline] pub fn create_null_value(&self) -> Result<Option<JsonValue>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateNullValue)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateNullValue)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(JsonValue::wrap(out)) } else { err(hr) }
     }}
 }
@@ -356,17 +356,17 @@ RT_INTERFACE!{interface IPdfDocument(IPdfDocumentVtbl, IPdfDocument_Abi): IInspe
 impl IPdfDocument {
     #[inline] pub fn get_page(&self, pageIndex: u32) -> Result<Option<PdfPage>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPage)(self.0.as_abi() as *const _ as *mut _, pageIndex, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPage)(self.get_abi() as *const _ as *mut _, pageIndex, &mut out);
         if hr == S_OK { Ok(PdfPage::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_page_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PageCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PageCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_password_protected(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsPasswordProtected)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsPasswordProtected)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -397,22 +397,22 @@ RT_INTERFACE!{static interface IPdfDocumentStatics(IPdfDocumentStaticsVtbl, IPdf
 impl IPdfDocumentStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &super::super::storage::IStorageFile) -> Result<foundation::IAsyncOperation<PdfDocument>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadFromFileAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(file) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadFromFileAsync)(self.get_abi() as *const _ as *mut _, file.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_password_async(&self, file: &super::super::storage::IStorageFile, password: &HStringArg) -> Result<foundation::IAsyncOperation<PdfDocument>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadFromFileWithPasswordAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(file) as *const _ as *mut _, password.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadFromFileWithPasswordAsync)(self.get_abi() as *const _ as *mut _, file.get_abi() as *const _ as *mut _, password.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<foundation::IAsyncOperation<PdfDocument>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadFromStreamAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(inputStream) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadFromStreamAsync)(self.get_abi() as *const _ as *mut _, inputStream.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_stream_with_password_async(&self, inputStream: &super::super::storage::streams::IRandomAccessStream, password: &HStringArg) -> Result<foundation::IAsyncOperation<PdfDocument>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadFromStreamWithPasswordAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(inputStream) as *const _ as *mut _, password.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadFromStreamWithPasswordAsync)(self.get_abi() as *const _ as *mut _, inputStream.get_abi() as *const _ as *mut _, password.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -432,42 +432,42 @@ RT_INTERFACE!{interface IPdfPage(IPdfPageVtbl, IPdfPage_Abi): IInspectable(IInsp
 impl IPdfPage {
     #[cfg(feature="windows-storage")] #[inline] pub fn render_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RenderToStreamAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(outputStream) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RenderToStreamAsync)(self.get_abi() as *const _ as *mut _, outputStream.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn render_with_options_to_stream_async(&self, outputStream: &super::super::storage::streams::IRandomAccessStream, options: &PdfPageRenderOptions) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RenderWithOptionsToStreamAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(outputStream) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RenderWithOptionsToStreamAsync)(self.get_abi() as *const _ as *mut _, outputStream.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn prepare_page_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).PreparePageAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).PreparePageAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_index(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Index)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Index)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_size(&self) -> Result<foundation::Size> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Size)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Size)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_dimensions(&self) -> Result<Option<PdfPageDimensions>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Dimensions)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Dimensions)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PdfPageDimensions::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rotation(&self) -> Result<PdfPageRotation> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Rotation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Rotation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_preferred_zoom(&self) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PreferredZoom)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PreferredZoom)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -483,27 +483,27 @@ RT_INTERFACE!{interface IPdfPageDimensions(IPdfPageDimensionsVtbl, IPdfPageDimen
 impl IPdfPageDimensions {
     #[inline] pub fn get_media_box(&self) -> Result<foundation::Rect> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MediaBox)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MediaBox)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_crop_box(&self) -> Result<foundation::Rect> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CropBox)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CropBox)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_bleed_box(&self) -> Result<foundation::Rect> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BleedBox)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BleedBox)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_trim_box(&self) -> Result<foundation::Rect> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TrimBox)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TrimBox)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_art_box(&self) -> Result<foundation::Rect> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ArtBox)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ArtBox)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -528,56 +528,56 @@ RT_INTERFACE!{interface IPdfPageRenderOptions(IPdfPageRenderOptionsVtbl, IPdfPag
 impl IPdfPageRenderOptions {
     #[inline] pub fn get_source_rect(&self) -> Result<foundation::Rect> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SourceRect)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SourceRect)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_source_rect(&self, value: foundation::Rect) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_SourceRect)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_SourceRect)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_destination_width(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DestinationWidth)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DestinationWidth)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_destination_width(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DestinationWidth)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_DestinationWidth)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_destination_height(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DestinationHeight)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DestinationHeight)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_destination_height(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DestinationHeight)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_DestinationHeight)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_background_color(&self) -> Result<super::super::ui::Color> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BackgroundColor)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BackgroundColor)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn set_background_color(&self, value: super::super::ui::Color) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_BackgroundColor)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_BackgroundColor)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_ignoring_high_contrast(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsIgnoringHighContrast)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsIgnoringHighContrast)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_ignoring_high_contrast(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IsIgnoringHighContrast)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IsIgnoringHighContrast)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_bitmap_encoder_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BitmapEncoderId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BitmapEncoderId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_bitmap_encoder_id(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_BitmapEncoderId)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_BitmapEncoderId)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -602,17 +602,17 @@ RT_INTERFACE!{interface IAlternateWordForm(IAlternateWordFormVtbl, IAlternateWor
 impl IAlternateWordForm {
     #[inline] pub fn get_source_text_segment(&self) -> Result<TextSegment> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SourceTextSegment)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SourceTextSegment)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_alternate_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AlternateText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AlternateText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_normalization_format(&self) -> Result<AlternateNormalizationFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NormalizationFormat)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NormalizationFormat)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -625,12 +625,12 @@ RT_INTERFACE!{interface ISelectableWordSegment(ISelectableWordSegmentVtbl, ISele
 impl ISelectableWordSegment {
     #[inline] pub fn get_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Text)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Text)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_source_text_segment(&self) -> Result<TextSegment> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SourceTextSegment)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SourceTextSegment)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -641,7 +641,7 @@ RT_DELEGATE!{delegate SelectableWordSegmentsTokenizingHandler(SelectableWordSegm
 }}
 impl SelectableWordSegmentsTokenizingHandler {
     #[inline] pub fn invoke(&self, precedingWords: &foundation::collections::IIterable<SelectableWordSegment>, words: &foundation::collections::IIterable<SelectableWordSegment>) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Invoke)(self.0.as_abi() as *const _ as *mut _, get_abi(precedingWords) as *const _ as *mut _, get_abi(words) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Invoke)(self.get_abi() as *const _ as *mut _, precedingWords.get_abi() as *const _ as *mut _, words.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -655,21 +655,21 @@ RT_INTERFACE!{interface ISelectableWordsSegmenter(ISelectableWordsSegmenterVtbl,
 impl ISelectableWordsSegmenter {
     #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResolvedLanguage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResolvedLanguage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_token_at(&self, text: &HStringArg, startIndex: u32) -> Result<Option<SelectableWordSegment>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetTokenAt)(self.0.as_abi() as *const _ as *mut _, text.get(), startIndex, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetTokenAt)(self.get_abi() as *const _ as *mut _, text.get(), startIndex, &mut out);
         if hr == S_OK { Ok(SelectableWordSegment::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tokens(&self, text: &HStringArg) -> Result<Option<foundation::collections::IVectorView<SelectableWordSegment>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetTokens)(self.0.as_abi() as *const _ as *mut _, text.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetTokens)(self.get_abi() as *const _ as *mut _, text.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &SelectableWordSegmentsTokenizingHandler) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Tokenize)(self.0.as_abi() as *const _ as *mut _, text.get(), startIndex, get_abi(handler) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Tokenize)(self.get_abi() as *const _ as *mut _, text.get(), startIndex, handler.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -688,7 +688,7 @@ RT_INTERFACE!{static interface ISelectableWordsSegmenterFactory(ISelectableWords
 impl ISelectableWordsSegmenterFactory {
     #[inline] pub fn create_with_language(&self, language: &HStringArg) -> Result<SelectableWordsSegmenter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithLanguage)(self.0.as_abi() as *const _ as *mut _, language.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithLanguage)(self.get_abi() as *const _ as *mut _, language.get(), &mut out);
         if hr == S_OK { Ok(SelectableWordsSegmenter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -700,12 +700,12 @@ RT_INTERFACE!{interface ISemanticTextQuery(ISemanticTextQueryVtbl, ISemanticText
 impl ISemanticTextQuery {
     #[inline] pub fn find(&self, content: &HStringArg) -> Result<Option<foundation::collections::IVectorView<TextSegment>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Find)(self.0.as_abi() as *const _ as *mut _, content.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Find)(self.get_abi() as *const _ as *mut _, content.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_in_property(&self, propertyContent: &HStringArg, propertyName: &HStringArg) -> Result<Option<foundation::collections::IVectorView<TextSegment>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindInProperty)(self.0.as_abi() as *const _ as *mut _, propertyContent.get(), propertyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindInProperty)(self.get_abi() as *const _ as *mut _, propertyContent.get(), propertyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -728,12 +728,12 @@ RT_INTERFACE!{static interface ISemanticTextQueryFactory(ISemanticTextQueryFacto
 impl ISemanticTextQueryFactory {
     #[inline] pub fn create(&self, aqsFilter: &HStringArg) -> Result<SemanticTextQuery> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, aqsFilter.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, aqsFilter.get(), &mut out);
         if hr == S_OK { Ok(SemanticTextQuery::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_language(&self, aqsFilter: &HStringArg, filterLanguage: &HStringArg) -> Result<SemanticTextQuery> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithLanguage)(self.0.as_abi() as *const _ as *mut _, aqsFilter.get(), filterLanguage.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithLanguage)(self.get_abi() as *const _ as *mut _, aqsFilter.get(), filterLanguage.get(), &mut out);
         if hr == S_OK { Ok(SemanticTextQuery::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -747,22 +747,22 @@ RT_INTERFACE!{interface ITextConversionGenerator(ITextConversionGeneratorVtbl, I
 impl ITextConversionGenerator {
     #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResolvedLanguage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResolvedLanguage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_language_available_but_not_installed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LanguageAvailableButNotInstalled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LanguageAvailableButNotInstalled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_candidates_async(&self, input: &HStringArg) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCandidatesAsync)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCandidatesAsync)(self.get_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCandidatesWithMaxCountAsync)(self.0.as_abi() as *const _ as *mut _, input.get(), maxCandidates, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCandidatesWithMaxCountAsync)(self.get_abi() as *const _ as *mut _, input.get(), maxCandidates, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -781,7 +781,7 @@ RT_INTERFACE!{static interface ITextConversionGeneratorFactory(ITextConversionGe
 impl ITextConversionGeneratorFactory {
     #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<TextConversionGenerator> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, languageTag.get(), &mut out);
         if hr == S_OK { Ok(TextConversionGenerator::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -793,12 +793,12 @@ RT_INTERFACE!{interface ITextPhoneme(ITextPhonemeVtbl, ITextPhoneme_Abi): IInspe
 impl ITextPhoneme {
     #[inline] pub fn get_display_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_reading_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ReadingText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ReadingText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -813,22 +813,22 @@ RT_INTERFACE!{interface ITextPredictionGenerator(ITextPredictionGeneratorVtbl, I
 impl ITextPredictionGenerator {
     #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResolvedLanguage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResolvedLanguage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_language_available_but_not_installed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LanguageAvailableButNotInstalled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LanguageAvailableButNotInstalled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_candidates_async(&self, input: &HStringArg) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCandidatesAsync)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCandidatesAsync)(self.get_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_candidates_with_max_count_async(&self, input: &HStringArg, maxCandidates: u32) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCandidatesWithMaxCountAsync)(self.0.as_abi() as *const _ as *mut _, input.get(), maxCandidates, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCandidatesWithMaxCountAsync)(self.get_abi() as *const _ as *mut _, input.get(), maxCandidates, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -850,21 +850,21 @@ RT_INTERFACE!{interface ITextPredictionGenerator2(ITextPredictionGenerator2Vtbl,
 impl ITextPredictionGenerator2 {
     #[inline] pub fn get_candidates_with_parameters_async(&self, input: &HStringArg, maxCandidates: u32, predictionOptions: TextPredictionOptions, previousStrings: &foundation::collections::IIterable<HString>) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCandidatesWithParametersAsync)(self.0.as_abi() as *const _ as *mut _, input.get(), maxCandidates, predictionOptions, get_abi(previousStrings) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCandidatesWithParametersAsync)(self.get_abi() as *const _ as *mut _, input.get(), maxCandidates, predictionOptions, previousStrings.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_next_word_candidates_async(&self, maxCandidates: u32, previousStrings: &foundation::collections::IIterable<HString>) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNextWordCandidatesAsync)(self.0.as_abi() as *const _ as *mut _, maxCandidates, get_abi(previousStrings) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNextWordCandidatesAsync)(self.get_abi() as *const _ as *mut _, maxCandidates, previousStrings.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_input_scope(&self) -> Result<super::super::ui::text::core::CoreTextInputScope> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_InputScope)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_InputScope)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn set_input_scope(&self, value: super::super::ui::text::core::CoreTextInputScope) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_InputScope)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_InputScope)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -875,7 +875,7 @@ RT_INTERFACE!{static interface ITextPredictionGeneratorFactory(ITextPredictionGe
 impl ITextPredictionGeneratorFactory {
     #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<TextPredictionGenerator> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, languageTag.get(), &mut out);
         if hr == S_OK { Ok(TextPredictionGenerator::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -891,17 +891,17 @@ RT_INTERFACE!{interface ITextReverseConversionGenerator(ITextReverseConversionGe
 impl ITextReverseConversionGenerator {
     #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResolvedLanguage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResolvedLanguage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_language_available_but_not_installed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LanguageAvailableButNotInstalled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LanguageAvailableButNotInstalled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn convert_back_async(&self, input: &HStringArg) -> Result<foundation::IAsyncOperation<HString>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ConvertBackAsync)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ConvertBackAsync)(self.get_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -920,7 +920,7 @@ RT_INTERFACE!{interface ITextReverseConversionGenerator2(ITextReverseConversionG
 impl ITextReverseConversionGenerator2 {
     #[inline] pub fn get_phonemes_async(&self, input: &HStringArg) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<TextPhoneme>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPhonemesAsync)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPhonemesAsync)(self.get_abi() as *const _ as *mut _, input.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -931,7 +931,7 @@ RT_INTERFACE!{static interface ITextReverseConversionGeneratorFactory(ITextRever
 impl ITextReverseConversionGeneratorFactory {
     #[inline] pub fn create(&self, languageTag: &HStringArg) -> Result<TextReverseConversionGenerator> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, languageTag.get(), &mut out);
         if hr == S_OK { Ok(TextReverseConversionGenerator::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1017,87 +1017,87 @@ RT_INTERFACE!{static interface IUnicodeCharactersStatics(IUnicodeCharactersStati
 impl IUnicodeCharactersStatics {
     #[inline] pub fn get_codepoint_from_surrogate_pair(&self, highSurrogate: u32, lowSurrogate: u32) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCodepointFromSurrogatePair)(self.0.as_abi() as *const _ as *mut _, highSurrogate, lowSurrogate, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCodepointFromSurrogatePair)(self.get_abi() as *const _ as *mut _, highSurrogate, lowSurrogate, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_surrogate_pair_from_codepoint(&self, codepoint: u32) -> Result<(Char, Char)> { unsafe { 
         let mut highSurrogate = zeroed(); let mut lowSurrogate = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSurrogatePairFromCodepoint)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut highSurrogate, &mut lowSurrogate);
+        let hr = ((*self.get_abi().lpVtbl).GetSurrogatePairFromCodepoint)(self.get_abi() as *const _ as *mut _, codepoint, &mut highSurrogate, &mut lowSurrogate);
         if hr == S_OK { Ok((highSurrogate, lowSurrogate)) } else { err(hr) }
     }}
     #[inline] pub fn is_high_surrogate(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsHighSurrogate)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsHighSurrogate)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_low_surrogate(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsLowSurrogate)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsLowSurrogate)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_supplementary(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsSupplementary)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsSupplementary)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_noncharacter(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsNoncharacter)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsNoncharacter)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_whitespace(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsWhitespace)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsWhitespace)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_alphabetic(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsAlphabetic)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsAlphabetic)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_cased(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsCased)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsCased)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_uppercase(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsUppercase)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsUppercase)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_lowercase(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsLowercase)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsLowercase)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_id_start(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsIdStart)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsIdStart)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_id_continue(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsIdContinue)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsIdContinue)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_grapheme_base(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsGraphemeBase)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsGraphemeBase)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_grapheme_extend(&self, codepoint: u32) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsGraphemeExtend)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsGraphemeExtend)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_numeric_type(&self, codepoint: u32) -> Result<UnicodeNumericType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNumericType)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNumericType)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_general_category(&self, codepoint: u32) -> Result<UnicodeGeneralCategory> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetGeneralCategory)(self.0.as_abi() as *const _ as *mut _, codepoint, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetGeneralCategory)(self.get_abi() as *const _ as *mut _, codepoint, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1116,17 +1116,17 @@ RT_INTERFACE!{interface IWordSegment(IWordSegmentVtbl, IWordSegment_Abi): IInspe
 impl IWordSegment {
     #[inline] pub fn get_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Text)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Text)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_source_text_segment(&self) -> Result<TextSegment> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SourceTextSegment)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SourceTextSegment)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_alternate_forms(&self) -> Result<Option<foundation::collections::IVectorView<AlternateWordForm>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AlternateForms)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AlternateForms)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1137,7 +1137,7 @@ RT_DELEGATE!{delegate WordSegmentsTokenizingHandler(WordSegmentsTokenizingHandle
 }}
 impl WordSegmentsTokenizingHandler {
     #[inline] pub fn invoke(&self, precedingWords: &foundation::collections::IIterable<WordSegment>, words: &foundation::collections::IIterable<WordSegment>) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Invoke)(self.0.as_abi() as *const _ as *mut _, get_abi(precedingWords) as *const _ as *mut _, get_abi(words) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Invoke)(self.get_abi() as *const _ as *mut _, precedingWords.get_abi() as *const _ as *mut _, words.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1151,21 +1151,21 @@ RT_INTERFACE!{interface IWordsSegmenter(IWordsSegmenterVtbl, IWordsSegmenter_Abi
 impl IWordsSegmenter {
     #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResolvedLanguage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResolvedLanguage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_token_at(&self, text: &HStringArg, startIndex: u32) -> Result<Option<WordSegment>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetTokenAt)(self.0.as_abi() as *const _ as *mut _, text.get(), startIndex, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetTokenAt)(self.get_abi() as *const _ as *mut _, text.get(), startIndex, &mut out);
         if hr == S_OK { Ok(WordSegment::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tokens(&self, text: &HStringArg) -> Result<Option<foundation::collections::IVectorView<WordSegment>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetTokens)(self.0.as_abi() as *const _ as *mut _, text.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetTokens)(self.get_abi() as *const _ as *mut _, text.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn tokenize(&self, text: &HStringArg, startIndex: u32, handler: &WordSegmentsTokenizingHandler) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Tokenize)(self.0.as_abi() as *const _ as *mut _, text.get(), startIndex, get_abi(handler) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Tokenize)(self.get_abi() as *const _ as *mut _, text.get(), startIndex, handler.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1184,7 +1184,7 @@ RT_INTERFACE!{static interface IWordsSegmenterFactory(IWordsSegmenterFactoryVtbl
 impl IWordsSegmenterFactory {
     #[inline] pub fn create_with_language(&self, language: &HStringArg) -> Result<WordsSegmenter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithLanguage)(self.0.as_abi() as *const _ as *mut _, language.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithLanguage)(self.get_abi() as *const _ as *mut _, language.get(), &mut out);
         if hr == S_OK { Ok(WordsSegmenter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1201,17 +1201,17 @@ RT_INTERFACE!{interface IDtdEntity(IDtdEntityVtbl, IDtdEntity_Abi): IInspectable
 impl IDtdEntity {
     #[inline] pub fn get_public_id(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PublicId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PublicId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_id(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_notation_name(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NotationName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NotationName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1224,12 +1224,12 @@ RT_INTERFACE!{interface IDtdNotation(IDtdNotationVtbl, IDtdNotation_Abi): IInspe
 impl IDtdNotation {
     #[inline] pub fn get_public_id(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PublicId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PublicId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_id(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1247,21 +1247,21 @@ RT_INTERFACE!{interface IXmlAttribute(IXmlAttributeVtbl, IXmlAttribute_Abi): IIn
 impl IXmlAttribute {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_specified(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Specified)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Specified)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Value)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Value)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_value(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Value)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Value)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1285,37 +1285,37 @@ RT_INTERFACE!{interface IXmlCharacterData(IXmlCharacterDataVtbl, IXmlCharacterDa
 impl IXmlCharacterData {
     #[inline] pub fn get_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Data)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Data)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_data(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Data)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Data)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_length(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Length)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Length)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn substring_data(&self, offset: u32, count: u32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SubstringData)(self.0.as_abi() as *const _ as *mut _, offset, count, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SubstringData)(self.get_abi() as *const _ as *mut _, offset, count, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn append_data(&self, data: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).AppendData)(self.0.as_abi() as *const _ as *mut _, data.get());
+        let hr = ((*self.get_abi().lpVtbl).AppendData)(self.get_abi() as *const _ as *mut _, data.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn insert_data(&self, offset: u32, data: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).InsertData)(self.0.as_abi() as *const _ as *mut _, offset, data.get());
+        let hr = ((*self.get_abi().lpVtbl).InsertData)(self.get_abi() as *const _ as *mut _, offset, data.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn delete_data(&self, offset: u32, count: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).DeleteData)(self.0.as_abi() as *const _ as *mut _, offset, count);
+        let hr = ((*self.get_abi().lpVtbl).DeleteData)(self.get_abi() as *const _ as *mut _, offset, count);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn replace_data(&self, offset: u32, count: u32, data: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ReplaceData)(self.0.as_abi() as *const _ as *mut _, offset, count, data.get());
+        let hr = ((*self.get_abi().lpVtbl).ReplaceData)(self.get_abi() as *const _ as *mut _, offset, count, data.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1347,87 +1347,87 @@ RT_INTERFACE!{interface IXmlDocument(IXmlDocumentVtbl, IXmlDocument_Abi): IInspe
 impl IXmlDocument {
     #[inline] pub fn get_doctype(&self) -> Result<Option<XmlDocumentType>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Doctype)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Doctype)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlDocumentType::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_implementation(&self) -> Result<Option<XmlDomImplementation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Implementation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Implementation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlDomImplementation::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_element(&self) -> Result<Option<XmlElement>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentElement)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentElement)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlElement::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_element(&self, tagName: &HStringArg) -> Result<Option<XmlElement>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateElement)(self.0.as_abi() as *const _ as *mut _, tagName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateElement)(self.get_abi() as *const _ as *mut _, tagName.get(), &mut out);
         if hr == S_OK { Ok(XmlElement::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_document_fragment(&self) -> Result<Option<XmlDocumentFragment>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateDocumentFragment)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateDocumentFragment)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlDocumentFragment::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_text_node(&self, data: &HStringArg) -> Result<Option<XmlText>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateTextNode)(self.0.as_abi() as *const _ as *mut _, data.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateTextNode)(self.get_abi() as *const _ as *mut _, data.get(), &mut out);
         if hr == S_OK { Ok(XmlText::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_comment(&self, data: &HStringArg) -> Result<Option<XmlComment>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateComment)(self.0.as_abi() as *const _ as *mut _, data.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateComment)(self.get_abi() as *const _ as *mut _, data.get(), &mut out);
         if hr == S_OK { Ok(XmlComment::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_processing_instruction(&self, target: &HStringArg, data: &HStringArg) -> Result<Option<XmlProcessingInstruction>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateProcessingInstruction)(self.0.as_abi() as *const _ as *mut _, target.get(), data.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateProcessingInstruction)(self.get_abi() as *const _ as *mut _, target.get(), data.get(), &mut out);
         if hr == S_OK { Ok(XmlProcessingInstruction::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_attribute(&self, name: &HStringArg) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateAttribute)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateAttribute)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_entity_reference(&self, name: &HStringArg) -> Result<Option<XmlEntityReference>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateEntityReference)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateEntityReference)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(XmlEntityReference::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_elements_by_tag_name(&self, tagName: &HStringArg) -> Result<Option<XmlNodeList>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetElementsByTagName)(self.0.as_abi() as *const _ as *mut _, tagName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetElementsByTagName)(self.get_abi() as *const _ as *mut _, tagName.get(), &mut out);
         if hr == S_OK { Ok(XmlNodeList::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_cdata_section(&self, data: &HStringArg) -> Result<Option<XmlCDataSection>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateCDataSection)(self.0.as_abi() as *const _ as *mut _, data.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateCDataSection)(self.get_abi() as *const _ as *mut _, data.get(), &mut out);
         if hr == S_OK { Ok(XmlCDataSection::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_uri(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DocumentUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_attribute_ns(&self, namespaceUri: &IInspectable, qualifiedName: &HStringArg) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateAttributeNS)(self.0.as_abi() as *const _ as *mut _, get_abi(namespaceUri) as *const _ as *mut _, qualifiedName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateAttributeNS)(self.get_abi() as *const _ as *mut _, namespaceUri.get_abi() as *const _ as *mut _, qualifiedName.get(), &mut out);
         if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_element_ns(&self, namespaceUri: &IInspectable, qualifiedName: &HStringArg) -> Result<Option<XmlElement>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateElementNS)(self.0.as_abi() as *const _ as *mut _, get_abi(namespaceUri) as *const _ as *mut _, qualifiedName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateElementNS)(self.get_abi() as *const _ as *mut _, namespaceUri.get_abi() as *const _ as *mut _, qualifiedName.get(), &mut out);
         if hr == S_OK { Ok(XmlElement::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_element_by_id(&self, elementId: &HStringArg) -> Result<Option<XmlElement>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetElementById)(self.0.as_abi() as *const _ as *mut _, elementId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetElementById)(self.get_abi() as *const _ as *mut _, elementId.get(), &mut out);
         if hr == S_OK { Ok(XmlElement::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn import_node(&self, node: &IXmlNode, deep: bool) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ImportNode)(self.0.as_abi() as *const _ as *mut _, get_abi(node) as *const _ as *mut _, deep, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ImportNode)(self.get_abi() as *const _ as *mut _, node.get_abi() as *const _ as *mut _, deep, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1462,16 +1462,16 @@ RT_INTERFACE!{interface IXmlDocumentIO(IXmlDocumentIOVtbl, IXmlDocumentIO_Abi): 
 }}
 impl IXmlDocumentIO {
     #[inline] pub fn load_xml(&self, xml: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).LoadXml)(self.0.as_abi() as *const _ as *mut _, xml.get());
+        let hr = ((*self.get_abi().lpVtbl).LoadXml)(self.get_abi() as *const _ as *mut _, xml.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn load_xml_with_settings(&self, xml: &HStringArg, loadSettings: &XmlLoadSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).LoadXmlWithSettings)(self.0.as_abi() as *const _ as *mut _, xml.get(), get_abi(loadSettings) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).LoadXmlWithSettings)(self.get_abi() as *const _ as *mut _, xml.get(), loadSettings.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn save_to_file_async(&self, file: &crate::windows::storage::IStorageFile) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SaveToFileAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(file) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SaveToFileAsync)(self.get_abi() as *const _ as *mut _, file.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1482,11 +1482,11 @@ RT_INTERFACE!{interface IXmlDocumentIO2(IXmlDocumentIO2Vtbl, IXmlDocumentIO2_Abi
 }}
 impl IXmlDocumentIO2 {
     #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer(&self, buffer: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).LoadXmlFromBuffer)(self.0.as_abi() as *const _ as *mut _, get_abi(buffer) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).LoadXmlFromBuffer)(self.get_abi() as *const _ as *mut _, buffer.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_xml_from_buffer_with_settings(&self, buffer: &crate::windows::storage::streams::IBuffer, loadSettings: &XmlLoadSettings) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).LoadXmlFromBufferWithSettings)(self.0.as_abi() as *const _ as *mut _, get_abi(buffer) as *const _ as *mut _, get_abi(loadSettings) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).LoadXmlFromBufferWithSettings)(self.get_abi() as *const _ as *mut _, buffer.get_abi() as *const _ as *mut _, loadSettings.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1500,22 +1500,22 @@ RT_INTERFACE!{static interface IXmlDocumentStatics(IXmlDocumentStaticsVtbl, IXml
 impl IXmlDocumentStatics {
     #[inline] pub fn load_from_uri_async(&self, uri: &foundation::Uri) -> Result<foundation::IAsyncOperation<XmlDocument>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadFromUriAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadFromUriAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn load_from_uri_with_settings_async(&self, uri: &foundation::Uri, loadSettings: &XmlLoadSettings) -> Result<foundation::IAsyncOperation<XmlDocument>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadFromUriWithSettingsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(loadSettings) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadFromUriWithSettingsAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, loadSettings.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_async(&self, file: &crate::windows::storage::IStorageFile) -> Result<foundation::IAsyncOperation<XmlDocument>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadFromFileAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(file) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadFromFileAsync)(self.get_abi() as *const _ as *mut _, file.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_from_file_with_settings_async(&self, file: &crate::windows::storage::IStorageFile, loadSettings: &XmlLoadSettings) -> Result<foundation::IAsyncOperation<XmlDocument>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadFromFileWithSettingsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(file) as *const _ as *mut _, get_abi(loadSettings) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadFromFileWithSettingsAsync)(self.get_abi() as *const _ as *mut _, file.get_abi() as *const _ as *mut _, loadSettings.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1528,17 +1528,17 @@ RT_INTERFACE!{interface IXmlDocumentType(IXmlDocumentTypeVtbl, IXmlDocumentType_
 impl IXmlDocumentType {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_entities(&self) -> Result<Option<XmlNamedNodeMap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Entities)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Entities)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlNamedNodeMap::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_notations(&self) -> Result<Option<XmlNamedNodeMap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Notations)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Notations)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlNamedNodeMap::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1550,7 +1550,7 @@ RT_INTERFACE!{interface IXmlDomImplementation(IXmlDomImplementationVtbl, IXmlDom
 impl IXmlDomImplementation {
     #[inline] pub fn has_feature(&self, feature: &HStringArg, version: &IInspectable) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).HasFeature)(self.0.as_abi() as *const _ as *mut _, feature.get(), get_abi(version) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).HasFeature)(self.get_abi() as *const _ as *mut _, feature.get(), version.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1574,63 +1574,63 @@ RT_INTERFACE!{interface IXmlElement(IXmlElementVtbl, IXmlElement_Abi): IInspecta
 impl IXmlElement {
     #[inline] pub fn get_tag_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TagName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TagName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_attribute(&self, attributeName: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAttribute)(self.0.as_abi() as *const _ as *mut _, attributeName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAttribute)(self.get_abi() as *const _ as *mut _, attributeName.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_attribute(&self, attributeName: &HStringArg, attributeValue: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetAttribute)(self.0.as_abi() as *const _ as *mut _, attributeName.get(), attributeValue.get());
+        let hr = ((*self.get_abi().lpVtbl).SetAttribute)(self.get_abi() as *const _ as *mut _, attributeName.get(), attributeValue.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn remove_attribute(&self, attributeName: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).RemoveAttribute)(self.0.as_abi() as *const _ as *mut _, attributeName.get());
+        let hr = ((*self.get_abi().lpVtbl).RemoveAttribute)(self.get_abi() as *const _ as *mut _, attributeName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_attribute_node(&self, attributeName: &HStringArg) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAttributeNode)(self.0.as_abi() as *const _ as *mut _, attributeName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAttributeNode)(self.get_abi() as *const _ as *mut _, attributeName.get(), &mut out);
         if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_attribute_node(&self, newAttribute: &XmlAttribute) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetAttributeNode)(self.0.as_abi() as *const _ as *mut _, get_abi(newAttribute) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetAttributeNode)(self.get_abi() as *const _ as *mut _, newAttribute.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_attribute_node(&self, attributeNode: &XmlAttribute) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RemoveAttributeNode)(self.0.as_abi() as *const _ as *mut _, get_abi(attributeNode) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RemoveAttributeNode)(self.get_abi() as *const _ as *mut _, attributeNode.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_elements_by_tag_name(&self, tagName: &HStringArg) -> Result<Option<XmlNodeList>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetElementsByTagName)(self.0.as_abi() as *const _ as *mut _, tagName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetElementsByTagName)(self.get_abi() as *const _ as *mut _, tagName.get(), &mut out);
         if hr == S_OK { Ok(XmlNodeList::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_attribute_ns(&self, namespaceUri: &IInspectable, qualifiedName: &HStringArg, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetAttributeNS)(self.0.as_abi() as *const _ as *mut _, get_abi(namespaceUri) as *const _ as *mut _, qualifiedName.get(), value.get());
+        let hr = ((*self.get_abi().lpVtbl).SetAttributeNS)(self.get_abi() as *const _ as *mut _, namespaceUri.get_abi() as *const _ as *mut _, qualifiedName.get(), value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_attribute_ns(&self, namespaceUri: &IInspectable, localName: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAttributeNS)(self.0.as_abi() as *const _ as *mut _, get_abi(namespaceUri) as *const _ as *mut _, localName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAttributeNS)(self.get_abi() as *const _ as *mut _, namespaceUri.get_abi() as *const _ as *mut _, localName.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_attribute_ns(&self, namespaceUri: &IInspectable, localName: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).RemoveAttributeNS)(self.0.as_abi() as *const _ as *mut _, get_abi(namespaceUri) as *const _ as *mut _, localName.get());
+        let hr = ((*self.get_abi().lpVtbl).RemoveAttributeNS)(self.get_abi() as *const _ as *mut _, namespaceUri.get_abi() as *const _ as *mut _, localName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_attribute_node_ns(&self, newAttribute: &XmlAttribute) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetAttributeNodeNS)(self.0.as_abi() as *const _ as *mut _, get_abi(newAttribute) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetAttributeNodeNS)(self.get_abi() as *const _ as *mut _, newAttribute.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_attribute_node_ns(&self, namespaceUri: &IInspectable, localName: &HStringArg) -> Result<Option<XmlAttribute>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAttributeNodeNS)(self.0.as_abi() as *const _ as *mut _, get_abi(namespaceUri) as *const _ as *mut _, localName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAttributeNodeNS)(self.get_abi() as *const _ as *mut _, namespaceUri.get_abi() as *const _ as *mut _, localName.get(), &mut out);
         if hr == S_OK { Ok(XmlAttribute::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1656,47 +1656,47 @@ RT_INTERFACE!{interface IXmlLoadSettings(IXmlLoadSettingsVtbl, IXmlLoadSettings_
 impl IXmlLoadSettings {
     #[inline] pub fn get_max_element_depth(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxElementDepth)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxElementDepth)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_max_element_depth(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_MaxElementDepth)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_MaxElementDepth)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_prohibit_dtd(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProhibitDtd)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProhibitDtd)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_prohibit_dtd(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ProhibitDtd)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ProhibitDtd)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_resolve_externals(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResolveExternals)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResolveExternals)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_resolve_externals(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ResolveExternals)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ResolveExternals)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_validate_on_parse(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ValidateOnParse)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ValidateOnParse)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_validate_on_parse(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ValidateOnParse)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ValidateOnParse)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_element_content_white_space(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ElementContentWhiteSpace)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ElementContentWhiteSpace)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_element_content_white_space(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ElementContentWhiteSpace)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ElementContentWhiteSpace)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1717,42 +1717,42 @@ RT_INTERFACE!{interface IXmlNamedNodeMap(IXmlNamedNodeMapVtbl, IXmlNamedNodeMap_
 impl IXmlNamedNodeMap {
     #[inline] pub fn get_length(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Length)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Length)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn item(&self, index: u32) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Item)(self.0.as_abi() as *const _ as *mut _, index, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Item)(self.get_abi() as *const _ as *mut _, index, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_item(&self, name: &HStringArg) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedItem)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedItem)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_named_item(&self, node: &IXmlNode) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetNamedItem)(self.0.as_abi() as *const _ as *mut _, get_abi(node) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetNamedItem)(self.get_abi() as *const _ as *mut _, node.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_named_item(&self, name: &HStringArg) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RemoveNamedItem)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RemoveNamedItem)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_named_item_ns(&self, namespaceUri: &IInspectable, name: &HStringArg) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetNamedItemNS)(self.0.as_abi() as *const _ as *mut _, get_abi(namespaceUri) as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetNamedItemNS)(self.get_abi() as *const _ as *mut _, namespaceUri.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_named_item_ns(&self, namespaceUri: &IInspectable, name: &HStringArg) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RemoveNamedItemNS)(self.0.as_abi() as *const _ as *mut _, get_abi(namespaceUri) as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RemoveNamedItemNS)(self.get_abi() as *const _ as *mut _, namespaceUri.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_named_item_ns(&self, node: &IXmlNode) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetNamedItemNS)(self.0.as_abi() as *const _ as *mut _, get_abi(node) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetNamedItemNS)(self.get_abi() as *const _ as *mut _, node.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1786,114 +1786,114 @@ RT_INTERFACE!{interface IXmlNode(IXmlNodeVtbl, IXmlNode_Abi): IInspectable(IInsp
 impl IXmlNode {
     #[inline] pub fn get_node_value(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NodeValue)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NodeValue)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_node_value(&self, value: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_NodeValue)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_NodeValue)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_node_type(&self) -> Result<NodeType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NodeType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NodeType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_node_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NodeName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NodeName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_parent_node(&self) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ParentNode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ParentNode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_child_nodes(&self) -> Result<Option<XmlNodeList>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ChildNodes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ChildNodes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlNodeList::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_first_child(&self) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FirstChild)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FirstChild)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_last_child(&self) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LastChild)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LastChild)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_previous_sibling(&self) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PreviousSibling)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PreviousSibling)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_next_sibling(&self) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NextSibling)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NextSibling)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_attributes(&self) -> Result<Option<XmlNamedNodeMap>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Attributes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Attributes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlNamedNodeMap::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn has_child_nodes(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).HasChildNodes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).HasChildNodes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_owner_document(&self) -> Result<Option<XmlDocument>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OwnerDocument)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OwnerDocument)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlDocument::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn insert_before(&self, newChild: &IXmlNode, referenceChild: &IXmlNode) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).InsertBefore)(self.0.as_abi() as *const _ as *mut _, get_abi(newChild) as *const _ as *mut _, get_abi(referenceChild) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).InsertBefore)(self.get_abi() as *const _ as *mut _, newChild.get_abi() as *const _ as *mut _, referenceChild.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn replace_child(&self, newChild: &IXmlNode, referenceChild: &IXmlNode) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ReplaceChild)(self.0.as_abi() as *const _ as *mut _, get_abi(newChild) as *const _ as *mut _, get_abi(referenceChild) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ReplaceChild)(self.get_abi() as *const _ as *mut _, newChild.get_abi() as *const _ as *mut _, referenceChild.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_child(&self, childNode: &IXmlNode) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RemoveChild)(self.0.as_abi() as *const _ as *mut _, get_abi(childNode) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RemoveChild)(self.get_abi() as *const _ as *mut _, childNode.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn append_child(&self, newChild: &IXmlNode) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AppendChild)(self.0.as_abi() as *const _ as *mut _, get_abi(newChild) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AppendChild)(self.get_abi() as *const _ as *mut _, newChild.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn clone_node(&self, deep: bool) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CloneNode)(self.0.as_abi() as *const _ as *mut _, deep, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CloneNode)(self.get_abi() as *const _ as *mut _, deep, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_namespace_uri(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NamespaceUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NamespaceUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_local_name(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LocalName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LocalName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_prefix(&self) -> Result<Option<IInspectable>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Prefix)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Prefix)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IInspectable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn normalize(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Normalize)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Normalize)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_prefix(&self, value: &IInspectable) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Prefix)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Prefix)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1905,12 +1905,12 @@ RT_INTERFACE!{interface IXmlNodeList(IXmlNodeListVtbl, IXmlNodeList_Abi): IInspe
 impl IXmlNodeList {
     #[inline] pub fn get_length(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Length)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Length)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn item(&self, index: u32) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Item)(self.0.as_abi() as *const _ as *mut _, index, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Item)(self.get_abi() as *const _ as *mut _, index, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1925,22 +1925,22 @@ RT_INTERFACE!{interface IXmlNodeSelector(IXmlNodeSelectorVtbl, IXmlNodeSelector_
 impl IXmlNodeSelector {
     #[inline] pub fn select_single_node(&self, xpath: &HStringArg) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SelectSingleNode)(self.0.as_abi() as *const _ as *mut _, xpath.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SelectSingleNode)(self.get_abi() as *const _ as *mut _, xpath.get(), &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn select_nodes(&self, xpath: &HStringArg) -> Result<Option<XmlNodeList>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SelectNodes)(self.0.as_abi() as *const _ as *mut _, xpath.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SelectNodes)(self.get_abi() as *const _ as *mut _, xpath.get(), &mut out);
         if hr == S_OK { Ok(XmlNodeList::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn select_single_node_ns(&self, xpath: &HStringArg, namespaces: &IInspectable) -> Result<Option<IXmlNode>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SelectSingleNodeNS)(self.0.as_abi() as *const _ as *mut _, xpath.get(), get_abi(namespaces) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SelectSingleNodeNS)(self.get_abi() as *const _ as *mut _, xpath.get(), namespaces.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IXmlNode::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn select_nodes_ns(&self, xpath: &HStringArg, namespaces: &IInspectable) -> Result<Option<XmlNodeList>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SelectNodesNS)(self.0.as_abi() as *const _ as *mut _, xpath.get(), get_abi(namespaces) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SelectNodesNS)(self.get_abi() as *const _ as *mut _, xpath.get(), namespaces.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XmlNodeList::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1953,16 +1953,16 @@ RT_INTERFACE!{interface IXmlNodeSerializer(IXmlNodeSerializerVtbl, IXmlNodeSeria
 impl IXmlNodeSerializer {
     #[inline] pub fn get_xml(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetXml)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetXml)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_inner_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_InnerText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_InnerText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_inner_text(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_InnerText)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_InnerText)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1975,16 +1975,16 @@ RT_INTERFACE!{interface IXmlProcessingInstruction(IXmlProcessingInstructionVtbl,
 impl IXmlProcessingInstruction {
     #[inline] pub fn get_target(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Target)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Target)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Data)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Data)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_data(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Data)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Data)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1996,7 +1996,7 @@ RT_INTERFACE!{interface IXmlText(IXmlTextVtbl, IXmlText_Abi): IInspectable(IInsp
 impl IXmlText {
     #[inline] pub fn split_text(&self, offset: u32) -> Result<Option<IXmlText>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SplitText)(self.0.as_abi() as *const _ as *mut _, offset, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SplitText)(self.get_abi() as *const _ as *mut _, offset, &mut out);
         if hr == S_OK { Ok(IXmlText::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2011,7 +2011,7 @@ RT_INTERFACE!{interface IXsltProcessor(IXsltProcessorVtbl, IXsltProcessor_Abi): 
 impl IXsltProcessor {
     #[inline] pub fn transform_to_string(&self, inputNode: &super::dom::IXmlNode) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TransformToString)(self.0.as_abi() as *const _ as *mut _, get_abi(inputNode) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TransformToString)(self.get_abi() as *const _ as *mut _, inputNode.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2030,7 +2030,7 @@ RT_INTERFACE!{interface IXsltProcessor2(IXsltProcessor2Vtbl, IXsltProcessor2_Abi
 impl IXsltProcessor2 {
     #[inline] pub fn transform_to_document(&self, inputNode: &super::dom::IXmlNode) -> Result<Option<super::dom::XmlDocument>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TransformToDocument)(self.0.as_abi() as *const _ as *mut _, get_abi(inputNode) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TransformToDocument)(self.get_abi() as *const _ as *mut _, inputNode.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::dom::XmlDocument::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2041,7 +2041,7 @@ RT_INTERFACE!{static interface IXsltProcessorFactory(IXsltProcessorFactoryVtbl, 
 impl IXsltProcessorFactory {
     #[inline] pub fn create_instance(&self, document: &super::dom::XmlDocument) -> Result<XsltProcessor> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateInstance)(self.0.as_abi() as *const _ as *mut _, get_abi(document) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateInstance)(self.get_abi() as *const _ as *mut _, document.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(XsltProcessor::wrap_nonnull(out)) } else { err(hr) }
     }}
 }

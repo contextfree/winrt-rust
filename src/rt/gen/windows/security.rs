@@ -12,27 +12,27 @@ RT_INTERFACE!{interface IEnterpriseKeyCredentialRegistrationInfo(IEnterpriseKeyC
 impl IEnterpriseKeyCredentialRegistrationInfo {
     #[inline] pub fn get_tenant_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TenantId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TenantId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tenant_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TenantName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TenantName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_subject(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Subject)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Subject)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_key_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_key_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -44,7 +44,7 @@ RT_INTERFACE!{interface IEnterpriseKeyCredentialRegistrationManager(IEnterpriseK
 impl IEnterpriseKeyCredentialRegistrationManager {
     #[inline] pub fn get_registrations_async(&self) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<EnterpriseKeyCredentialRegistrationInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetRegistrationsAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetRegistrationsAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -63,7 +63,7 @@ RT_INTERFACE!{static interface IEnterpriseKeyCredentialRegistrationManagerStatic
 impl IEnterpriseKeyCredentialRegistrationManagerStatics {
     #[inline] pub fn get_current(&self) -> Result<Option<EnterpriseKeyCredentialRegistrationManager>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Current)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Current)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(EnterpriseKeyCredentialRegistrationManager::wrap(out)) } else { err(hr) }
     }}
 }
@@ -85,52 +85,52 @@ RT_INTERFACE!{interface IMicrosoftAccountMultiFactorAuthenticationManager(IMicro
 impl IMicrosoftAccountMultiFactorAuthenticationManager {
     #[inline] pub fn get_one_time_pass_code_async(&self, userAccountId: &HStringArg, codeLength: u32) -> Result<foundation::IAsyncOperation<MicrosoftAccountMultiFactorOneTimeCodedInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetOneTimePassCodeAsync)(self.0.as_abi() as *const _ as *mut _, userAccountId.get(), codeLength, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetOneTimePassCodeAsync)(self.get_abi() as *const _ as *mut _, userAccountId.get(), codeLength, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_device_async(&self, userAccountId: &HStringArg, authenticationToken: &HStringArg, wnsChannelId: &HStringArg) -> Result<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddDeviceAsync)(self.0.as_abi() as *const _ as *mut _, userAccountId.get(), authenticationToken.get(), wnsChannelId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddDeviceAsync)(self.get_abi() as *const _ as *mut _, userAccountId.get(), authenticationToken.get(), wnsChannelId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_device_async(&self, userAccountId: &HStringArg) -> Result<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RemoveDeviceAsync)(self.0.as_abi() as *const _ as *mut _, userAccountId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RemoveDeviceAsync)(self.get_abi() as *const _ as *mut _, userAccountId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_wns_channel_async(&self, userAccountId: &HStringArg, channelUri: &HStringArg) -> Result<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UpdateWnsChannelAsync)(self.0.as_abi() as *const _ as *mut _, userAccountId.get(), channelUri.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UpdateWnsChannelAsync)(self.get_abi() as *const _ as *mut _, userAccountId.get(), channelUri.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sessions_async(&self, userAccountIdList: &foundation::collections::IIterable<HString>) -> Result<foundation::IAsyncOperation<MicrosoftAccountMultiFactorGetSessionsResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSessionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(userAccountIdList) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSessionsAsync)(self.get_abi() as *const _ as *mut _, userAccountIdList.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sessions_and_unregistered_accounts_async(&self, userAccountIdList: &foundation::collections::IIterable<HString>) -> Result<foundation::IAsyncOperation<MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSessionsAndUnregisteredAccountsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(userAccountIdList) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSessionsAndUnregisteredAccountsAsync)(self.get_abi() as *const _ as *mut _, userAccountIdList.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn approve_session_using_auth_session_info_async(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, authenticationSessionInfo: &MicrosoftAccountMultiFactorSessionInfo) -> Result<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ApproveSessionUsingAuthSessionInfoAsync)(self.0.as_abi() as *const _ as *mut _, sessionAuthentictionStatus, get_abi(authenticationSessionInfo) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ApproveSessionUsingAuthSessionInfoAsync)(self.get_abi() as *const _ as *mut _, sessionAuthentictionStatus, authenticationSessionInfo.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn approve_session_async(&self, sessionAuthentictionStatus: MicrosoftAccountMultiFactorSessionAuthenticationStatus, userAccountId: &HStringArg, sessionId: &HStringArg, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType) -> Result<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ApproveSessionAsync)(self.0.as_abi() as *const _ as *mut _, sessionAuthentictionStatus, userAccountId.get(), sessionId.get(), sessionAuthenticationType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ApproveSessionAsync)(self.get_abi() as *const _ as *mut _, sessionAuthentictionStatus, userAccountId.get(), sessionId.get(), sessionAuthenticationType, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn deny_session_using_auth_session_info_async(&self, authenticationSessionInfo: &MicrosoftAccountMultiFactorSessionInfo) -> Result<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DenySessionUsingAuthSessionInfoAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(authenticationSessionInfo) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DenySessionUsingAuthSessionInfoAsync)(self.get_abi() as *const _ as *mut _, authenticationSessionInfo.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn deny_session_async(&self, userAccountId: &HStringArg, sessionId: &HStringArg, sessionAuthenticationType: MicrosoftAccountMultiFactorAuthenticationType) -> Result<foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DenySessionAsync)(self.0.as_abi() as *const _ as *mut _, userAccountId.get(), sessionId.get(), sessionAuthenticationType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DenySessionAsync)(self.get_abi() as *const _ as *mut _, userAccountId.get(), sessionId.get(), sessionAuthenticationType, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -152,7 +152,7 @@ RT_INTERFACE!{static interface IMicrosoftAccountMultiFactorAuthenticatorStatics(
 impl IMicrosoftAccountMultiFactorAuthenticatorStatics {
     #[inline] pub fn get_current(&self) -> Result<Option<MicrosoftAccountMultiFactorAuthenticationManager>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Current)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Current)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(MicrosoftAccountMultiFactorAuthenticationManager::wrap(out)) } else { err(hr) }
     }}
 }
@@ -164,12 +164,12 @@ RT_INTERFACE!{interface IMicrosoftAccountMultiFactorGetSessionsResult(IMicrosoft
 impl IMicrosoftAccountMultiFactorGetSessionsResult {
     #[inline] pub fn get_sessions(&self) -> Result<Option<foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sessions)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sessions)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_service_response(&self) -> Result<MicrosoftAccountMultiFactorServiceResponse> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ServiceResponse)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ServiceResponse)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -184,22 +184,22 @@ RT_INTERFACE!{interface IMicrosoftAccountMultiFactorOneTimeCodedInfo(IMicrosoftA
 impl IMicrosoftAccountMultiFactorOneTimeCodedInfo {
     #[inline] pub fn get_code(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Code)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Code)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_time_interval(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TimeInterval)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TimeInterval)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_time_to_live(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TimeToLive)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TimeToLive)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_service_response(&self) -> Result<MicrosoftAccountMultiFactorServiceResponse> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ServiceResponse)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ServiceResponse)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -226,37 +226,37 @@ RT_INTERFACE!{interface IMicrosoftAccountMultiFactorSessionInfo(IMicrosoftAccoun
 impl IMicrosoftAccountMultiFactorSessionInfo {
     #[inline] pub fn get_user_account_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UserAccountId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UserAccountId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_session_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SessionId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SessionId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_session_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplaySessionId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplaySessionId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_approval_status(&self) -> Result<MicrosoftAccountMultiFactorSessionApprovalStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ApprovalStatus)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ApprovalStatus)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_authentication_type(&self) -> Result<MicrosoftAccountMultiFactorAuthenticationType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AuthenticationType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AuthenticationType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_request_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RequestTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RequestTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_expiration_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExpirationTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExpirationTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -270,17 +270,17 @@ RT_INTERFACE!{interface IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessi
 impl IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo {
     #[inline] pub fn get_sessions(&self) -> Result<Option<foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sessions)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sessions)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_unregistered_accounts(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UnregisteredAccounts)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UnregisteredAccounts)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_service_response(&self) -> Result<MicrosoftAccountMultiFactorServiceResponse> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ServiceResponse)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ServiceResponse)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -305,32 +305,32 @@ RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthentication(ISecondaryA
 impl ISecondaryAuthenticationFactorAuthentication {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_service_authentication_hmac(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ServiceAuthenticationHmac)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ServiceAuthenticationHmac)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_session_nonce(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SessionNonce)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SessionNonce)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_device_nonce(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceNonce)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceNonce)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_device_configuration_data(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceConfigurationData)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceConfigurationData)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn finish_authentication_async(&self, deviceHmac: &crate::windows::storage::streams::IBuffer, sessionHmac: &crate::windows::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<SecondaryAuthenticationFactorFinishAuthenticationStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FinishAuthenticationAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(deviceHmac) as *const _ as *mut _, get_abi(sessionHmac) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FinishAuthenticationAsync)(self.get_abi() as *const _ as *mut _, deviceHmac.get_abi() as *const _ as *mut _, sessionHmac.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn abort_authentication_async(&self, errorLogMessage: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AbortAuthenticationAsync)(self.0.as_abi() as *const _ as *mut _, errorLogMessage.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AbortAuthenticationAsync)(self.get_abi() as *const _ as *mut _, errorLogMessage.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -365,12 +365,12 @@ RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationResult(ISeco
 impl ISecondaryAuthenticationFactorAuthenticationResult {
     #[inline] pub fn get_status(&self) -> Result<SecondaryAuthenticationFactorAuthenticationStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_authentication(&self) -> Result<Option<SecondaryAuthenticationFactorAuthentication>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Authentication)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Authentication)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SecondaryAuthenticationFactorAuthentication::wrap(out)) } else { err(hr) }
     }}
 }
@@ -388,7 +388,7 @@ RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageChanged
 impl ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs {
     #[inline] pub fn get_stage_info(&self) -> Result<Option<SecondaryAuthenticationFactorAuthenticationStageInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_StageInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_StageInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SecondaryAuthenticationFactorAuthenticationStageInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -402,17 +402,17 @@ RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageInfo(IS
 impl ISecondaryAuthenticationFactorAuthenticationStageInfo {
     #[inline] pub fn get_stage(&self) -> Result<SecondaryAuthenticationFactorAuthenticationStage> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Stage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Stage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_scenario(&self) -> Result<SecondaryAuthenticationFactorAuthenticationScenario> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Scenario)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Scenario)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -429,26 +429,26 @@ RT_INTERFACE!{static interface ISecondaryAuthenticationFactorAuthenticationStati
 impl ISecondaryAuthenticationFactorAuthenticationStatics {
     #[inline] pub fn show_notification_message_async(&self, deviceName: &HStringArg, message: SecondaryAuthenticationFactorAuthenticationMessage) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ShowNotificationMessageAsync)(self.0.as_abi() as *const _ as *mut _, deviceName.get(), message, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ShowNotificationMessageAsync)(self.get_abi() as *const _ as *mut _, deviceName.get(), message, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn start_authentication_async(&self, deviceId: &HStringArg, serviceAuthenticationNonce: &crate::windows::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StartAuthenticationAsync)(self.0.as_abi() as *const _ as *mut _, deviceId.get(), get_abi(serviceAuthenticationNonce) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StartAuthenticationAsync)(self.get_abi() as *const _ as *mut _, deviceId.get(), serviceAuthenticationNonce.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_authentication_stage_changed(&self, handler: &foundation::EventHandler<SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_AuthenticationStageChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_AuthenticationStageChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_authentication_stage_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_AuthenticationStageChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_AuthenticationStageChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_authentication_stage_info_async(&self) -> Result<foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationStageInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAuthenticationStageInfoAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAuthenticationStageInfoAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -478,22 +478,22 @@ RT_INTERFACE!{static interface ISecondaryAuthenticationFactorDevicePresenceMonit
 impl ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics {
     #[inline] pub fn register_device_presence_monitoring_async(&self, deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode) -> Result<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RegisterDevicePresenceMonitoringAsync)(self.0.as_abi() as *const _ as *mut _, deviceId.get(), deviceInstancePath.get(), monitoringMode, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RegisterDevicePresenceMonitoringAsync)(self.get_abi() as *const _ as *mut _, deviceId.get(), deviceInstancePath.get(), monitoringMode, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn register_device_presence_monitoring_with_new_device_async(&self, deviceId: &HStringArg, deviceInstancePath: &HStringArg, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceConfigurationData: &crate::windows::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RegisterDevicePresenceMonitoringWithNewDeviceAsync)(self.0.as_abi() as *const _ as *mut _, deviceId.get(), deviceInstancePath.get(), monitoringMode, deviceFriendlyName.get(), deviceModelNumber.get(), get_abi(deviceConfigurationData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RegisterDevicePresenceMonitoringWithNewDeviceAsync)(self.get_abi() as *const _ as *mut _, deviceId.get(), deviceInstancePath.get(), monitoringMode, deviceFriendlyName.get(), deviceModelNumber.get(), deviceConfigurationData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn unregister_device_presence_monitoring_async(&self, deviceId: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UnregisterDevicePresenceMonitoringAsync)(self.0.as_abi() as *const _ as *mut _, deviceId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UnregisterDevicePresenceMonitoringAsync)(self.get_abi() as *const _ as *mut _, deviceId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn is_device_presence_monitoring_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsDevicePresenceMonitoringSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsDevicePresenceMonitoringSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -513,22 +513,22 @@ RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo(ISecondaryAuthenticat
 impl ISecondaryAuthenticationFactorInfo {
     #[inline] pub fn get_device_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_device_friendly_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceFriendlyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceFriendlyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_device_model_number(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceModelNumber)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceModelNumber)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_device_configuration_data(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DeviceConfigurationData)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DeviceConfigurationData)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
 }
@@ -542,17 +542,17 @@ RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo2(ISecondaryAuthentica
 impl ISecondaryAuthenticationFactorInfo2 {
     #[inline] pub fn get_presence_monitoring_mode(&self) -> Result<SecondaryAuthenticationFactorDevicePresenceMonitoringMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PresenceMonitoringMode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PresenceMonitoringMode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn update_device_presence_async(&self, presenceState: SecondaryAuthenticationFactorDevicePresence) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UpdateDevicePresenceAsync)(self.0.as_abi() as *const _ as *mut _, presenceState, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UpdateDevicePresenceAsync)(self.get_abi() as *const _ as *mut _, presenceState, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_authentication_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsAuthenticationSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsAuthenticationSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -565,12 +565,12 @@ RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistration(ISecondaryAut
 impl ISecondaryAuthenticationFactorRegistration {
     #[cfg(feature="windows-storage")] #[inline] pub fn finish_registering_device_async(&self, deviceConfigurationData: &crate::windows::storage::streams::IBuffer) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FinishRegisteringDeviceAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(deviceConfigurationData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FinishRegisteringDeviceAsync)(self.get_abi() as *const _ as *mut _, deviceConfigurationData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn abort_registering_device_async(&self, errorLogMessage: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AbortRegisteringDeviceAsync)(self.0.as_abi() as *const _ as *mut _, errorLogMessage.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AbortRegisteringDeviceAsync)(self.get_abi() as *const _ as *mut _, errorLogMessage.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -612,12 +612,12 @@ RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistrationResult(ISecond
 impl ISecondaryAuthenticationFactorRegistrationResult {
     #[inline] pub fn get_status(&self) -> Result<SecondaryAuthenticationFactorRegistrationStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_registration(&self) -> Result<Option<SecondaryAuthenticationFactorRegistration>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Registration)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Registration)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SecondaryAuthenticationFactorRegistration::wrap(out)) } else { err(hr) }
     }}
 }
@@ -632,22 +632,22 @@ RT_INTERFACE!{static interface ISecondaryAuthenticationFactorRegistrationStatics
 impl ISecondaryAuthenticationFactorRegistrationStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn request_start_registering_device_async(&self, deviceId: &HStringArg, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: &HStringArg, deviceModelNumber: &HStringArg, deviceKey: &crate::windows::storage::streams::IBuffer, mutualAuthenticationKey: &crate::windows::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestStartRegisteringDeviceAsync)(self.0.as_abi() as *const _ as *mut _, deviceId.get(), capabilities, deviceFriendlyName.get(), deviceModelNumber.get(), get_abi(deviceKey) as *const _ as *mut _, get_abi(mutualAuthenticationKey) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestStartRegisteringDeviceAsync)(self.get_abi() as *const _ as *mut _, deviceId.get(), capabilities, deviceFriendlyName.get(), deviceModelNumber.get(), deviceKey.get_abi() as *const _ as *mut _, mutualAuthenticationKey.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_registered_device_info_async(&self, queryType: SecondaryAuthenticationFactorDeviceFindScope) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<SecondaryAuthenticationFactorInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllRegisteredDeviceInfoAsync)(self.0.as_abi() as *const _ as *mut _, queryType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllRegisteredDeviceInfoAsync)(self.get_abi() as *const _ as *mut _, queryType, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn unregister_device_async(&self, deviceId: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UnregisterDeviceAsync)(self.0.as_abi() as *const _ as *mut _, deviceId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UnregisterDeviceAsync)(self.get_abi() as *const _ as *mut _, deviceId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn update_device_configuration_data_async(&self, deviceId: &HStringArg, deviceConfigurationData: &crate::windows::storage::streams::IBuffer) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UpdateDeviceConfigurationDataAsync)(self.0.as_abi() as *const _ as *mut _, deviceId.get(), get_abi(deviceConfigurationData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UpdateDeviceConfigurationDataAsync)(self.get_abi() as *const _ as *mut _, deviceId.get(), deviceConfigurationData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -674,36 +674,36 @@ RT_INTERFACE!{interface IOnlineIdAuthenticator(IOnlineIdAuthenticatorVtbl, IOnli
 impl IOnlineIdAuthenticator {
     #[inline] pub fn authenticate_user_async(&self, request: &OnlineIdServiceTicketRequest) -> Result<UserAuthenticationOperation> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AuthenticateUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AuthenticateUserAsync)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(UserAuthenticationOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn authenticate_user_async_advanced(&self, requests: &foundation::collections::IIterable<OnlineIdServiceTicketRequest>, credentialPromptType: CredentialPromptType) -> Result<UserAuthenticationOperation> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AuthenticateUserAsyncAdvanced)(self.0.as_abi() as *const _ as *mut _, get_abi(requests) as *const _ as *mut _, credentialPromptType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AuthenticateUserAsyncAdvanced)(self.get_abi() as *const _ as *mut _, requests.get_abi() as *const _ as *mut _, credentialPromptType, &mut out);
         if hr == S_OK { Ok(UserAuthenticationOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn sign_out_user_async(&self) -> Result<SignOutUserOperation> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SignOutUserAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SignOutUserAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SignOutUserOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_application_id(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ApplicationId)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ApplicationId)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_application_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ApplicationId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ApplicationId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_can_sign_out(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CanSignOut)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CanSignOut)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_authenticated_safe_customer_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AuthenticatedSafeCustomerId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AuthenticatedSafeCustomerId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -719,17 +719,17 @@ RT_INTERFACE!{interface IOnlineIdServiceTicket(IOnlineIdServiceTicketVtbl, IOnli
 impl IOnlineIdServiceTicket {
     #[inline] pub fn get_value(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Value)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Value)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_request(&self) -> Result<Option<OnlineIdServiceTicketRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Request)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Request)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(OnlineIdServiceTicketRequest::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_error_code(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ErrorCode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ErrorCode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -742,12 +742,12 @@ RT_INTERFACE!{interface IOnlineIdServiceTicketRequest(IOnlineIdServiceTicketRequ
 impl IOnlineIdServiceTicketRequest {
     #[inline] pub fn get_service(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Service)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Service)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_policy(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Policy)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Policy)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -770,12 +770,12 @@ RT_INTERFACE!{static interface IOnlineIdServiceTicketRequestFactory(IOnlineIdSer
 impl IOnlineIdServiceTicketRequestFactory {
     #[inline] pub fn create_online_id_service_ticket_request(&self, service: &HStringArg, policy: &HStringArg) -> Result<OnlineIdServiceTicketRequest> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateOnlineIdServiceTicketRequest)(self.0.as_abi() as *const _ as *mut _, service.get(), policy.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateOnlineIdServiceTicketRequest)(self.get_abi() as *const _ as *mut _, service.get(), policy.get(), &mut out);
         if hr == S_OK { Ok(OnlineIdServiceTicketRequest::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_online_id_service_ticket_request_advanced(&self, service: &HStringArg) -> Result<OnlineIdServiceTicketRequest> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateOnlineIdServiceTicketRequestAdvanced)(self.0.as_abi() as *const _ as *mut _, service.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateOnlineIdServiceTicketRequestAdvanced)(self.get_abi() as *const _ as *mut _, service.get(), &mut out);
         if hr == S_OK { Ok(OnlineIdServiceTicketRequest::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -800,21 +800,21 @@ RT_INTERFACE!{interface IOnlineIdSystemAuthenticatorForUser(IOnlineIdSystemAuthe
 impl IOnlineIdSystemAuthenticatorForUser {
     #[inline] pub fn get_ticket_async(&self, request: &OnlineIdServiceTicketRequest) -> Result<foundation::IAsyncOperation<OnlineIdSystemTicketResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetTicketAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetTicketAsync)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_application_id(&self, value: Guid) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ApplicationId)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ApplicationId)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_application_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ApplicationId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ApplicationId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<crate::windows::system::User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::system::User::wrap(out)) } else { err(hr) }
     }}
 }
@@ -827,12 +827,12 @@ RT_INTERFACE!{static interface IOnlineIdSystemAuthenticatorStatics(IOnlineIdSyst
 impl IOnlineIdSystemAuthenticatorStatics {
     #[inline] pub fn get_default(&self) -> Result<Option<OnlineIdSystemAuthenticatorForUser>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Default)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Default)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(OnlineIdSystemAuthenticatorForUser::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_for_user(&self, user: &crate::windows::system::User) -> Result<Option<OnlineIdSystemAuthenticatorForUser>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForUser)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForUser)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(OnlineIdSystemAuthenticatorForUser::wrap(out)) } else { err(hr) }
     }}
 }
@@ -844,12 +844,12 @@ RT_INTERFACE!{interface IOnlineIdSystemIdentity(IOnlineIdSystemIdentityVtbl, IOn
 impl IOnlineIdSystemIdentity {
     #[inline] pub fn get_ticket(&self) -> Result<Option<OnlineIdServiceTicket>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Ticket)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Ticket)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(OnlineIdServiceTicket::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -863,17 +863,17 @@ RT_INTERFACE!{interface IOnlineIdSystemTicketResult(IOnlineIdSystemTicketResultV
 impl IOnlineIdSystemTicketResult {
     #[inline] pub fn get_identity(&self) -> Result<Option<OnlineIdSystemIdentity>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Identity)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Identity)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(OnlineIdSystemIdentity::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<OnlineIdSystemTicketStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExtendedError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExtendedError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -897,42 +897,42 @@ RT_INTERFACE!{interface IUserIdentity(IUserIdentityVtbl, IUserIdentity_Abi): IIn
 impl IUserIdentity {
     #[inline] pub fn get_tickets(&self) -> Result<Option<foundation::collections::IVectorView<OnlineIdServiceTicket>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Tickets)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Tickets)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_safe_customer_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SafeCustomerId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SafeCustomerId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sign_in_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SignInName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SignInName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_first_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FirstName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FirstName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_last_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_LastName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_LastName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_beta_account(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsBetaAccount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsBetaAccount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_confirmed_pc(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsConfirmedPC)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsConfirmedPC)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -982,17 +982,17 @@ RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics(IWebAuthenticatio
 impl IWebAuthenticationBrokerStatics {
     #[inline] pub fn authenticate_with_callback_uri_async(&self, options: WebAuthenticationOptions, requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<foundation::IAsyncOperation<WebAuthenticationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AuthenticateWithCallbackUriAsync)(self.0.as_abi() as *const _ as *mut _, options, get_abi(requestUri) as *const _ as *mut _, get_abi(callbackUri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AuthenticateWithCallbackUriAsync)(self.get_abi() as *const _ as *mut _, options, requestUri.get_abi() as *const _ as *mut _, callbackUri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn authenticate_without_callback_uri_async(&self, options: WebAuthenticationOptions, requestUri: &foundation::Uri) -> Result<foundation::IAsyncOperation<WebAuthenticationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AuthenticateWithoutCallbackUriAsync)(self.0.as_abi() as *const _ as *mut _, options, get_abi(requestUri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AuthenticateWithoutCallbackUriAsync)(self.get_abi() as *const _ as *mut _, options, requestUri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_current_application_callback_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCurrentApplicationCallbackUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCurrentApplicationCallbackUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1006,25 +1006,25 @@ RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics2(IWebAuthenticati
 }}
 impl IWebAuthenticationBrokerStatics2 {
     #[inline] pub fn authenticate_and_continue(&self, requestUri: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).AuthenticateAndContinue)(self.0.as_abi() as *const _ as *mut _, get_abi(requestUri) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).AuthenticateAndContinue)(self.get_abi() as *const _ as *mut _, requestUri.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn authenticate_with_callback_uri_and_continue(&self, requestUri: &foundation::Uri, callbackUri: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).AuthenticateWithCallbackUriAndContinue)(self.0.as_abi() as *const _ as *mut _, get_abi(requestUri) as *const _ as *mut _, get_abi(callbackUri) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).AuthenticateWithCallbackUriAndContinue)(self.get_abi() as *const _ as *mut _, requestUri.get_abi() as *const _ as *mut _, callbackUri.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn authenticate_with_callback_uri_continuation_data_and_options_and_continue(&self, requestUri: &foundation::Uri, callbackUri: &foundation::Uri, continuationData: &foundation::collections::ValueSet, options: WebAuthenticationOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).AuthenticateWithCallbackUriContinuationDataAndOptionsAndContinue)(self.0.as_abi() as *const _ as *mut _, get_abi(requestUri) as *const _ as *mut _, get_abi(callbackUri) as *const _ as *mut _, get_abi(continuationData) as *const _ as *mut _, options);
+        let hr = ((*self.get_abi().lpVtbl).AuthenticateWithCallbackUriContinuationDataAndOptionsAndContinue)(self.get_abi() as *const _ as *mut _, requestUri.get_abi() as *const _ as *mut _, callbackUri.get_abi() as *const _ as *mut _, continuationData.get_abi() as *const _ as *mut _, options);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn authenticate_silently_async(&self, requestUri: &foundation::Uri) -> Result<foundation::IAsyncOperation<WebAuthenticationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AuthenticateSilentlyAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(requestUri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AuthenticateSilentlyAsync)(self.get_abi() as *const _ as *mut _, requestUri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn authenticate_silently_with_options_async(&self, requestUri: &foundation::Uri, options: WebAuthenticationOptions) -> Result<foundation::IAsyncOperation<WebAuthenticationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AuthenticateSilentlyWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(requestUri) as *const _ as *mut _, options, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AuthenticateSilentlyWithOptionsAsync)(self.get_abi() as *const _ as *mut _, requestUri.get_abi() as *const _ as *mut _, options, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1040,17 +1040,17 @@ RT_INTERFACE!{interface IWebAuthenticationResult(IWebAuthenticationResultVtbl, I
 impl IWebAuthenticationResult {
     #[inline] pub fn get_response_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResponseData)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResponseData)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_response_status(&self) -> Result<WebAuthenticationStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResponseStatus)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResponseStatus)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_response_error_detail(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResponseErrorDetail)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResponseErrorDetail)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1069,17 +1069,17 @@ RT_INTERFACE!{interface IFindAllAccountsResult(IFindAllAccountsResultVtbl, IFind
 impl IFindAllAccountsResult {
     #[inline] pub fn get_accounts(&self) -> Result<Option<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Accounts)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Accounts)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<FindAllWebAccountsStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_error(&self) -> Result<Option<WebProviderError>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProviderError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProviderError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebProviderError::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1094,7 +1094,7 @@ RT_INTERFACE!{interface IWebAccountEventArgs(IWebAccountEventArgsVtbl, IWebAccou
 impl IWebAccountEventArgs {
     #[inline] pub fn get_account(&self) -> Result<Option<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Account)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Account)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::super::credentials::WebAccount::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1111,29 +1111,29 @@ RT_INTERFACE!{interface IWebAccountMonitor(IWebAccountMonitorVtbl, IWebAccountMo
 impl IWebAccountMonitor {
     #[inline] pub fn add_updated(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Updated)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Updated)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_updated(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Updated)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Updated)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_removed(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Removed)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Removed)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_removed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Removed)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_Removed)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_default_sign_in_account_changed(&self, handler: &foundation::TypedEventHandler<WebAccountMonitor, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_DefaultSignInAccountChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_DefaultSignInAccountChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_default_sign_in_account_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_DefaultSignInAccountChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_DefaultSignInAccountChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1201,37 +1201,37 @@ RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics(IWebAuthenti
 impl IWebAuthenticationCoreManagerStatics {
     #[inline] pub fn get_token_silently_async(&self, request: &WebTokenRequest) -> Result<foundation::IAsyncOperation<WebTokenRequestResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetTokenSilentlyAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetTokenSilentlyAsync)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_token_silently_with_web_account_async(&self, request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<foundation::IAsyncOperation<WebTokenRequestResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetTokenSilentlyWithWebAccountAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetTokenSilentlyWithWebAccountAsync)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_token_async(&self, request: &WebTokenRequest) -> Result<foundation::IAsyncOperation<WebTokenRequestResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestTokenAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestTokenAsync)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_token_with_web_account_async(&self, request: &WebTokenRequest, webAccount: &super::super::super::credentials::WebAccount) -> Result<foundation::IAsyncOperation<WebTokenRequestResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestTokenWithWebAccountAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestTokenWithWebAccountAsync)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_account_async(&self, provider: &super::super::super::credentials::WebAccountProvider, webAccountId: &HStringArg) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAccountAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(provider) as *const _ as *mut _, webAccountId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAccountAsync)(self.get_abi() as *const _ as *mut _, provider.get_abi() as *const _ as *mut _, webAccountId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_account_provider_async(&self, webAccountProviderId: &HStringArg) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAccountProviderAsync)(self.0.as_abi() as *const _ as *mut _, webAccountProviderId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAccountProviderAsync)(self.get_abi() as *const _ as *mut _, webAccountProviderId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_account_provider_with_authority_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAccountProviderWithAuthorityAsync)(self.0.as_abi() as *const _ as *mut _, webAccountProviderId.get(), authority.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAccountProviderWithAuthorityAsync)(self.get_abi() as *const _ as *mut _, webAccountProviderId.get(), authority.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1242,7 +1242,7 @@ RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics2(IWebAuthent
 impl IWebAuthenticationCoreManagerStatics2 {
     #[cfg(feature="windows-system")] #[inline] pub fn find_account_provider_with_authority_for_user_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg, user: &crate::windows::system::User) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAccountProviderWithAuthorityForUserAsync)(self.0.as_abi() as *const _ as *mut _, webAccountProviderId.get(), authority.get(), get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAccountProviderWithAuthorityForUserAsync)(self.get_abi() as *const _ as *mut _, webAccountProviderId.get(), authority.get(), user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1253,7 +1253,7 @@ RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics3(IWebAuthent
 impl IWebAuthenticationCoreManagerStatics3 {
     #[inline] pub fn create_web_account_monitor(&self, webAccounts: &foundation::collections::IIterable<super::super::super::credentials::WebAccount>) -> Result<Option<WebAccountMonitor>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWebAccountMonitor)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccounts) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWebAccountMonitor)(self.get_abi() as *const _ as *mut _, webAccounts.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebAccountMonitor::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1268,27 +1268,27 @@ RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics4(IWebAuthent
 impl IWebAuthenticationCoreManagerStatics4 {
     #[inline] pub fn find_all_accounts_async(&self, provider: &super::super::super::credentials::WebAccountProvider) -> Result<foundation::IAsyncOperation<FindAllAccountsResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllAccountsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(provider) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllAccountsAsync)(self.get_abi() as *const _ as *mut _, provider.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_accounts_with_client_id_async(&self, provider: &super::super::super::credentials::WebAccountProvider, clientId: &HStringArg) -> Result<foundation::IAsyncOperation<FindAllAccountsResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllAccountsWithClientIdAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(provider) as *const _ as *mut _, clientId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllAccountsWithClientIdAsync)(self.get_abi() as *const _ as *mut _, provider.get_abi() as *const _ as *mut _, clientId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_system_account_provider_async(&self, webAccountProviderId: &HStringArg) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindSystemAccountProviderAsync)(self.0.as_abi() as *const _ as *mut _, webAccountProviderId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindSystemAccountProviderAsync)(self.get_abi() as *const _ as *mut _, webAccountProviderId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_system_account_provider_with_authority_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindSystemAccountProviderWithAuthorityAsync)(self.0.as_abi() as *const _ as *mut _, webAccountProviderId.get(), authority.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindSystemAccountProviderWithAuthorityAsync)(self.get_abi() as *const _ as *mut _, webAccountProviderId.get(), authority.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn find_system_account_provider_with_authority_for_user_async(&self, webAccountProviderId: &HStringArg, authority: &HStringArg, user: &crate::windows::system::User) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindSystemAccountProviderWithAuthorityForUserAsync)(self.0.as_abi() as *const _ as *mut _, webAccountProviderId.get(), authority.get(), get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindSystemAccountProviderWithAuthorityForUserAsync)(self.get_abi() as *const _ as *mut _, webAccountProviderId.get(), authority.get(), user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1301,17 +1301,17 @@ RT_INTERFACE!{interface IWebProviderError(IWebProviderErrorVtbl, IWebProviderErr
 impl IWebProviderError {
     #[inline] pub fn get_error_code(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ErrorCode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ErrorCode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_error_message(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ErrorMessage)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ErrorMessage)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<foundation::collections::IMap<HString, HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Properties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Properties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IMap::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1330,7 +1330,7 @@ RT_INTERFACE!{static interface IWebProviderErrorFactory(IWebProviderErrorFactory
 impl IWebProviderErrorFactory {
     #[inline] pub fn create(&self, errorCode: u32, errorMessage: &HStringArg) -> Result<WebProviderError> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, errorCode, errorMessage.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, errorCode, errorMessage.get(), &mut out);
         if hr == S_OK { Ok(WebProviderError::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1345,27 +1345,27 @@ RT_INTERFACE!{interface IWebTokenRequest(IWebTokenRequestVtbl, IWebTokenRequest_
 impl IWebTokenRequest {
     #[inline] pub fn get_web_account_provider(&self) -> Result<Option<super::super::super::credentials::WebAccountProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WebAccountProvider)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WebAccountProvider)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::super::credentials::WebAccountProvider::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_scope(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Scope)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Scope)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_client_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ClientId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ClientId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_prompt_type(&self) -> Result<WebTokenRequestPromptType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PromptType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PromptType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<foundation::collections::IMap<HString, HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Properties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Properties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IMap::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1393,7 +1393,7 @@ RT_INTERFACE!{interface IWebTokenRequest2(IWebTokenRequest2Vtbl, IWebTokenReques
 impl IWebTokenRequest2 {
     #[inline] pub fn get_app_properties(&self) -> Result<Option<foundation::collections::IMap<HString, HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AppProperties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AppProperties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IMap::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1405,11 +1405,11 @@ RT_INTERFACE!{interface IWebTokenRequest3(IWebTokenRequest3Vtbl, IWebTokenReques
 impl IWebTokenRequest3 {
     #[inline] pub fn get_correlation_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CorrelationId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CorrelationId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_correlation_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_CorrelationId)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_CorrelationId)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1423,22 +1423,22 @@ RT_INTERFACE!{static interface IWebTokenRequestFactory(IWebTokenRequestFactoryVt
 impl IWebTokenRequestFactory {
     #[inline] pub fn create(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg) -> Result<WebTokenRequest> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, get_abi(provider) as *const _ as *mut _, scope.get(), clientId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, provider.get_abi() as *const _ as *mut _, scope.get(), clientId.get(), &mut out);
         if hr == S_OK { Ok(WebTokenRequest::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_prompt_type(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg, clientId: &HStringArg, promptType: WebTokenRequestPromptType) -> Result<WebTokenRequest> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithPromptType)(self.0.as_abi() as *const _ as *mut _, get_abi(provider) as *const _ as *mut _, scope.get(), clientId.get(), promptType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithPromptType)(self.get_abi() as *const _ as *mut _, provider.get_abi() as *const _ as *mut _, scope.get(), clientId.get(), promptType, &mut out);
         if hr == S_OK { Ok(WebTokenRequest::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_provider(&self, provider: &super::super::super::credentials::WebAccountProvider) -> Result<WebTokenRequest> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithProvider)(self.0.as_abi() as *const _ as *mut _, get_abi(provider) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithProvider)(self.get_abi() as *const _ as *mut _, provider.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebTokenRequest::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_scope(&self, provider: &super::super::super::credentials::WebAccountProvider, scope: &HStringArg) -> Result<WebTokenRequest> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithScope)(self.0.as_abi() as *const _ as *mut _, get_abi(provider) as *const _ as *mut _, scope.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithScope)(self.get_abi() as *const _ as *mut _, provider.get_abi() as *const _ as *mut _, scope.get(), &mut out);
         if hr == S_OK { Ok(WebTokenRequest::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1455,22 +1455,22 @@ RT_INTERFACE!{interface IWebTokenRequestResult(IWebTokenRequestResultVtbl, IWebT
 impl IWebTokenRequestResult {
     #[inline] pub fn get_response_data(&self) -> Result<Option<foundation::collections::IVectorView<WebTokenResponse>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResponseData)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResponseData)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_response_status(&self) -> Result<WebTokenRequestStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResponseStatus)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResponseStatus)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_response_error(&self) -> Result<Option<WebProviderError>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ResponseError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ResponseError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebProviderError::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn invalidate_cache_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).InvalidateCacheAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).InvalidateCacheAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1488,22 +1488,22 @@ RT_INTERFACE!{interface IWebTokenResponse(IWebTokenResponseVtbl, IWebTokenRespon
 impl IWebTokenResponse {
     #[inline] pub fn get_token(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Token)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Token)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_error(&self) -> Result<Option<WebProviderError>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProviderError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProviderError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebProviderError::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_web_account(&self) -> Result<Option<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WebAccount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WebAccount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::super::credentials::WebAccount::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<foundation::collections::IMap<HString, HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Properties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Properties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IMap::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1531,17 +1531,17 @@ RT_INTERFACE!{static interface IWebTokenResponseFactory(IWebTokenResponseFactory
 impl IWebTokenResponseFactory {
     #[inline] pub fn create_with_token(&self, token: &HStringArg) -> Result<WebTokenResponse> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithToken)(self.0.as_abi() as *const _ as *mut _, token.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithToken)(self.get_abi() as *const _ as *mut _, token.get(), &mut out);
         if hr == S_OK { Ok(WebTokenResponse::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_token_and_account(&self, token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount) -> Result<WebTokenResponse> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithTokenAndAccount)(self.0.as_abi() as *const _ as *mut _, token.get(), get_abi(webAccount) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithTokenAndAccount)(self.get_abi() as *const _ as *mut _, token.get(), webAccount.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebTokenResponse::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_token_account_and_error(&self, token: &HStringArg, webAccount: &super::super::super::credentials::WebAccount, error: &WebProviderError) -> Result<WebTokenResponse> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithTokenAccountAndError)(self.0.as_abi() as *const _ as *mut _, token.get(), get_abi(webAccount) as *const _ as *mut _, get_abi(error) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithTokenAccountAndError)(self.get_abi() as *const _ as *mut _, token.get(), webAccount.get_abi() as *const _ as *mut _, error.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebTokenResponse::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1557,17 +1557,17 @@ RT_INTERFACE!{interface IWebAccountClientView(IWebAccountClientViewVtbl, IWebAcc
 impl IWebAccountClientView {
     #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ApplicationCallbackUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ApplicationCallbackUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_type(&self) -> Result<WebAccountClientViewType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Type)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Type)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_account_pairwise_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AccountPairwiseId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AccountPairwiseId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1590,12 +1590,12 @@ RT_INTERFACE!{static interface IWebAccountClientViewFactory(IWebAccountClientVie
 impl IWebAccountClientViewFactory {
     #[inline] pub fn create(&self, viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri) -> Result<WebAccountClientView> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, viewType, get_abi(applicationCallbackUri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, viewType, applicationCallbackUri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebAccountClientView::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_pairwise_id(&self, viewType: WebAccountClientViewType, applicationCallbackUri: &foundation::Uri, accountPairwiseId: &HStringArg) -> Result<WebAccountClientView> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithPairwiseId)(self.0.as_abi() as *const _ as *mut _, viewType, get_abi(applicationCallbackUri) as *const _ as *mut _, accountPairwiseId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithPairwiseId)(self.get_abi() as *const _ as *mut _, viewType, applicationCallbackUri.get_abi() as *const _ as *mut _, accountPairwiseId.get(), &mut out);
         if hr == S_OK { Ok(WebAccountClientView::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1702,52 +1702,52 @@ RT_INTERFACE!{static interface IWebAccountManagerStatics(IWebAccountManagerStati
 impl IWebAccountManagerStatics {
     #[inline] pub fn update_web_account_properties_async(&self, webAccount: &super::super::super::credentials::WebAccount, webAccountUserName: &HStringArg, additionalProperties: &foundation::collections::IMapView<HString, HString>) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UpdateWebAccountPropertiesAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, webAccountUserName.get(), get_abi(additionalProperties) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UpdateWebAccountPropertiesAsync)(self.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, webAccountUserName.get(), additionalProperties.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_web_account_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddWebAccountAsync)(self.0.as_abi() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), get_abi(props) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddWebAccountAsync)(self.get_abi() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_web_account_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DeleteWebAccountAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DeleteWebAccountAsync)(self.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_provider_web_accounts_async(&self) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllProviderWebAccountsAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllProviderWebAccountsAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-web")] #[inline] pub fn push_cookies_async(&self, uri: &foundation::Uri, cookies: &foundation::collections::IVectorView<crate::windows::web::http::HttpCookie>) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).PushCookiesAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _, get_abi(cookies) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).PushCookiesAsync)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _, cookies.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_view_async(&self, webAccount: &super::super::super::credentials::WebAccount, view: &WebAccountClientView) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetViewAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, get_abi(view) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetViewAsync)(self.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, view.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_view_async(&self, webAccount: &super::super::super::credentials::WebAccount, applicationCallbackUri: &foundation::Uri) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ClearViewAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, get_abi(applicationCallbackUri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ClearViewAsync)(self.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, applicationCallbackUri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_views_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<WebAccountClientView>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetViewsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetViewsAsync)(self.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_web_account_picture_async(&self, webAccount: &super::super::super::credentials::WebAccount, webAccountPicture: &crate::windows::storage::streams::IRandomAccessStream) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetWebAccountPictureAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, get_abi(webAccountPicture) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetWebAccountPictureAsync)(self.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, webAccountPicture.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_web_account_picture_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ClearWebAccountPictureAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ClearWebAccountPictureAsync)(self.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1758,7 +1758,7 @@ RT_INTERFACE!{static interface IWebAccountManagerStatics2(IWebAccountManagerStat
 impl IWebAccountManagerStatics2 {
     #[inline] pub fn pull_cookies_async(&self, uriString: &HStringArg, callerPFN: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).PullCookiesAsync)(self.0.as_abi() as *const _ as *mut _, uriString.get(), callerPFN.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).PullCookiesAsync)(self.get_abi() as *const _ as *mut _, uriString.get(), callerPFN.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1772,22 +1772,22 @@ RT_INTERFACE!{static interface IWebAccountManagerStatics3(IWebAccountManagerStat
 impl IWebAccountManagerStatics3 {
     #[cfg(feature="windows-system")] #[inline] pub fn find_all_provider_web_accounts_for_user_async(&self, user: &crate::windows::system::User) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllProviderWebAccountsForUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllProviderWebAccountsForUserAsync)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_for_user_async(&self, user: &crate::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddWebAccountForUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), get_abi(props) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddWebAccountForUserAsync)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_for_user_async(&self, user: &crate::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddWebAccountWithScopeForUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), get_abi(props) as *const _ as *mut _, scope, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddWebAccountWithScopeForUserAsync)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.get_abi() as *const _ as *mut _, scope, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn add_web_account_with_scope_and_map_for_user_async(&self, user: &crate::windows::system::User, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddWebAccountWithScopeAndMapForUserAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), get_abi(props) as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddWebAccountWithScopeAndMapForUserAsync)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.get_abi() as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1799,12 +1799,12 @@ RT_INTERFACE!{static interface IWebAccountManagerStatics4(IWebAccountManagerStat
 impl IWebAccountManagerStatics4 {
     #[inline] pub fn invalidate_app_cache_for_all_accounts_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).InvalidateAppCacheForAllAccountsAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).InvalidateAppCacheForAllAccountsAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn invalidate_app_cache_for_account_async(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).InvalidateAppCacheForAccountAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).InvalidateAppCacheForAccountAsync)(self.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1818,22 +1818,22 @@ RT_INTERFACE!{static interface IWebAccountMapManagerStatics(IWebAccountMapManage
 impl IWebAccountMapManagerStatics {
     #[inline] pub fn add_web_account_with_scope_and_map_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope, perUserWebAccountId: &HStringArg) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddWebAccountWithScopeAndMapAsync)(self.0.as_abi() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), get_abi(props) as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddWebAccountWithScopeAndMapAsync)(self.get_abi() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.get_abi() as *const _ as *mut _, scope, perUserWebAccountId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_per_app_to_per_user_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount, perUserWebAccountId: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetPerAppToPerUserAccountAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(perAppAccount) as *const _ as *mut _, perUserWebAccountId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetPerAppToPerUserAccountAsync)(self.get_abi() as *const _ as *mut _, perAppAccount.get_abi() as *const _ as *mut _, perUserWebAccountId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_per_user_from_per_app_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPerUserFromPerAppAccountAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(perAppAccount) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPerUserFromPerAppAccountAsync)(self.get_abi() as *const _ as *mut _, perAppAccount.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_per_user_from_per_app_account_async(&self, perAppAccount: &super::super::super::credentials::WebAccount) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ClearPerUserFromPerAppAccountAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(perAppAccount) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ClearPerUserFromPerAppAccountAsync)(self.get_abi() as *const _ as *mut _, perAppAccount.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1843,7 +1843,7 @@ RT_INTERFACE!{interface IWebAccountProviderAddAccountOperation(IWebAccountProvid
 }}
 impl IWebAccountProviderAddAccountOperation {
     #[inline] pub fn report_completed(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ReportCompleted)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).ReportCompleted)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1855,11 +1855,11 @@ RT_INTERFACE!{interface IWebAccountProviderBaseReportOperation(IWebAccountProvid
 }}
 impl IWebAccountProviderBaseReportOperation {
     #[inline] pub fn report_completed(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ReportCompleted)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).ReportCompleted)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn report_error(&self, value: &super::core::WebProviderError) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ReportError)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).ReportError)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1870,7 +1870,7 @@ RT_INTERFACE!{interface IWebAccountProviderDeleteAccountOperation(IWebAccountPro
 impl IWebAccountProviderDeleteAccountOperation {
     #[inline] pub fn get_web_account(&self) -> Result<Option<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WebAccount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WebAccount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::super::credentials::WebAccount::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1884,11 +1884,11 @@ RT_INTERFACE!{interface IWebAccountProviderManageAccountOperation(IWebAccountPro
 impl IWebAccountProviderManageAccountOperation {
     #[inline] pub fn get_web_account(&self) -> Result<Option<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WebAccount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WebAccount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::super::credentials::WebAccount::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn report_completed(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ReportCompleted)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).ReportCompleted)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1900,7 +1900,7 @@ RT_INTERFACE!{interface IWebAccountProviderOperation(IWebAccountProviderOperatio
 impl IWebAccountProviderOperation {
     #[inline] pub fn get_kind(&self) -> Result<WebAccountProviderOperationKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Kind)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Kind)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1920,26 +1920,26 @@ RT_INTERFACE!{interface IWebAccountProviderRetrieveCookiesOperation(IWebAccountP
 impl IWebAccountProviderRetrieveCookiesOperation {
     #[inline] pub fn get_context(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Context)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Context)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-web")] #[inline] pub fn get_cookies(&self) -> Result<Option<foundation::collections::IVector<crate::windows::web::http::HttpCookie>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Cookies)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Cookies)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_uri(&self, uri: &foundation::Uri) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Uri)(self.0.as_abi() as *const _ as *mut _, get_abi(uri) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Uri)(self.get_abi() as *const _ as *mut _, uri.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Uri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Uri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ApplicationCallbackUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ApplicationCallbackUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1953,17 +1953,17 @@ RT_INTERFACE!{interface IWebAccountProviderSignOutAccountOperation(IWebAccountPr
 impl IWebAccountProviderSignOutAccountOperation {
     #[inline] pub fn get_web_account(&self) -> Result<Option<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WebAccount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WebAccount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::super::credentials::WebAccount::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ApplicationCallbackUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ApplicationCallbackUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_client_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ClientId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ClientId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1975,11 +1975,11 @@ RT_INTERFACE!{interface IWebAccountProviderSilentReportOperation(IWebAccountProv
 }}
 impl IWebAccountProviderSilentReportOperation {
     #[inline] pub fn report_user_interaction_required(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ReportUserInteractionRequired)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).ReportUserInteractionRequired)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn report_user_interaction_required_with_error(&self, value: &super::core::WebProviderError) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ReportUserInteractionRequiredWithError)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).ReportUserInteractionRequiredWithError)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -1990,7 +1990,7 @@ RT_INTERFACE!{interface IWebAccountProviderTokenObjects(IWebAccountProviderToken
 impl IWebAccountProviderTokenObjects {
     #[inline] pub fn get_operation(&self) -> Result<Option<IWebAccountProviderOperation>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Operation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Operation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(IWebAccountProviderOperation::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2001,7 +2001,7 @@ RT_INTERFACE!{interface IWebAccountProviderTokenObjects2(IWebAccountProviderToke
 impl IWebAccountProviderTokenObjects2 {
     #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<crate::windows::system::User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::system::User::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2015,21 +2015,21 @@ RT_INTERFACE!{interface IWebAccountProviderTokenOperation(IWebAccountProviderTok
 impl IWebAccountProviderTokenOperation {
     #[inline] pub fn get_provider_request(&self) -> Result<Option<WebProviderTokenRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProviderRequest)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProviderRequest)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebProviderTokenRequest::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_provider_responses(&self) -> Result<Option<foundation::collections::IVector<WebProviderTokenResponse>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProviderResponses)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProviderResponses)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_cache_expiration_time(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_CacheExpirationTime)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_CacheExpirationTime)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_cache_expiration_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CacheExpirationTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CacheExpirationTime)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2040,7 +2040,7 @@ RT_INTERFACE!{interface IWebAccountProviderUIReportOperation(IWebAccountProvider
 }}
 impl IWebAccountProviderUIReportOperation {
     #[inline] pub fn report_user_canceled(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ReportUserCanceled)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).ReportUserCanceled)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -2056,17 +2056,17 @@ RT_INTERFACE!{static interface IWebAccountScopeManagerStatics(IWebAccountScopeMa
 impl IWebAccountScopeManagerStatics {
     #[inline] pub fn add_web_account_with_scope_async(&self, webAccountId: &HStringArg, webAccountUserName: &HStringArg, props: &foundation::collections::IMapView<HString, HString>, scope: WebAccountScope) -> Result<foundation::IAsyncOperation<super::super::super::credentials::WebAccount>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddWebAccountWithScopeAsync)(self.0.as_abi() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), get_abi(props) as *const _ as *mut _, scope, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddWebAccountWithScopeAsync)(self.get_abi() as *const _ as *mut _, webAccountId.get(), webAccountUserName.get(), props.get_abi() as *const _ as *mut _, scope, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_scope_async(&self, webAccount: &super::super::super::credentials::WebAccount, scope: WebAccountScope) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetScopeAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, scope, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetScopeAsync)(self.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, scope, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_scope(&self, webAccount: &super::super::super::credentials::WebAccount) -> Result<WebAccountScope> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetScope)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccount) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetScope)(self.get_abi() as *const _ as *mut _, webAccount.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2084,27 +2084,27 @@ RT_INTERFACE!{interface IWebProviderTokenRequest(IWebProviderTokenRequestVtbl, I
 impl IWebProviderTokenRequest {
     #[inline] pub fn get_client_request(&self) -> Result<Option<super::core::WebTokenRequest>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ClientRequest)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ClientRequest)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::core::WebTokenRequest::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_web_accounts(&self) -> Result<Option<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WebAccounts)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WebAccounts)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_web_account_selection_options(&self) -> Result<WebAccountSelectionOptions> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WebAccountSelectionOptions)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WebAccountSelectionOptions)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_application_callback_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ApplicationCallbackUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ApplicationCallbackUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_application_token_binding_key_async(&self, keyType: super::TokenBindingKeyType, target: &foundation::Uri) -> Result<foundation::IAsyncOperation<super::super::super::cryptography::core::CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetApplicationTokenBindingKeyAsync)(self.0.as_abi() as *const _ as *mut _, keyType, get_abi(target) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetApplicationTokenBindingKeyAsync)(self.get_abi() as *const _ as *mut _, keyType, target.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2116,7 +2116,7 @@ RT_INTERFACE!{interface IWebProviderTokenRequest2(IWebProviderTokenRequest2Vtbl,
 impl IWebProviderTokenRequest2 {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_application_token_binding_key_id_async(&self, keyType: super::TokenBindingKeyType, target: &foundation::Uri) -> Result<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetApplicationTokenBindingKeyIdAsync)(self.0.as_abi() as *const _ as *mut _, keyType, get_abi(target) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetApplicationTokenBindingKeyIdAsync)(self.get_abi() as *const _ as *mut _, keyType, target.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2129,17 +2129,17 @@ RT_INTERFACE!{interface IWebProviderTokenRequest3(IWebProviderTokenRequest3Vtbl,
 impl IWebProviderTokenRequest3 {
     #[inline] pub fn get_application_package_family_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ApplicationPackageFamilyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ApplicationPackageFamilyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_application_process_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ApplicationProcessName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ApplicationProcessName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn check_application_for_capability_async(&self, capabilityName: &HStringArg) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CheckApplicationForCapabilityAsync)(self.0.as_abi() as *const _ as *mut _, capabilityName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CheckApplicationForCapabilityAsync)(self.get_abi() as *const _ as *mut _, capabilityName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2150,7 +2150,7 @@ RT_INTERFACE!{interface IWebProviderTokenResponse(IWebProviderTokenResponseVtbl,
 impl IWebProviderTokenResponse {
     #[inline] pub fn get_client_response(&self) -> Result<Option<super::core::WebTokenResponse>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ClientResponse)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ClientResponse)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::core::WebTokenResponse::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2169,7 +2169,7 @@ RT_INTERFACE!{static interface IWebProviderTokenResponseFactory(IWebProviderToke
 impl IWebProviderTokenResponseFactory {
     #[inline] pub fn create(&self, webTokenResponse: &super::core::WebTokenResponse) -> Result<WebProviderTokenResponse> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, get_abi(webTokenResponse) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, webTokenResponse.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebProviderTokenResponse::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2185,7 +2185,7 @@ RT_INTERFACE!{static interface ICredentialFactory(ICredentialFactoryVtbl, ICrede
 impl ICredentialFactory {
     #[inline] pub fn create_password_credential(&self, resource: &HStringArg, userName: &HStringArg, password: &HStringArg) -> Result<PasswordCredential> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreatePasswordCredential)(self.0.as_abi() as *const _ as *mut _, resource.get(), userName.get(), password.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreatePasswordCredential)(self.get_abi() as *const _ as *mut _, resource.get(), userName.get(), password.get(), &mut out);
         if hr == S_OK { Ok(PasswordCredential::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2203,27 +2203,27 @@ RT_INTERFACE!{interface IKeyCredential(IKeyCredentialVtbl, IKeyCredential_Abi): 
 impl IKeyCredential {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn retrieve_public_key_with_default_blob_type(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RetrievePublicKeyWithDefaultBlobType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RetrievePublicKeyWithDefaultBlobType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn retrieve_public_key_with_blob_type(&self, blobType: super::cryptography::core::CryptographicPublicKeyBlobType) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RetrievePublicKeyWithBlobType)(self.0.as_abi() as *const _ as *mut _, blobType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RetrievePublicKeyWithBlobType)(self.get_abi() as *const _ as *mut _, blobType, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn request_sign_async(&self, data: &super::super::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<KeyCredentialOperationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestSignAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(data) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestSignAsync)(self.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_attestation_async(&self) -> Result<foundation::IAsyncOperation<KeyCredentialAttestationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAttestationAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAttestationAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2239,17 +2239,17 @@ RT_INTERFACE!{interface IKeyCredentialAttestationResult(IKeyCredentialAttestatio
 impl IKeyCredentialAttestationResult {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_certificate_chain_buffer(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CertificateChainBuffer)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CertificateChainBuffer)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_attestation_buffer(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AttestationBuffer)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AttestationBuffer)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<KeyCredentialAttestationStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2291,27 +2291,27 @@ RT_INTERFACE!{static interface IKeyCredentialManagerStatics(IKeyCredentialManage
 impl IKeyCredentialManagerStatics {
     #[inline] pub fn is_supported_async(&self) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).IsSupportedAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsSupportedAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn renew_attestation_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RenewAttestationAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RenewAttestationAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_create_async(&self, name: &HStringArg, option: KeyCredentialCreationOption) -> Result<foundation::IAsyncOperation<KeyCredentialRetrievalResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestCreateAsync)(self.0.as_abi() as *const _ as *mut _, name.get(), option, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestCreateAsync)(self.get_abi() as *const _ as *mut _, name.get(), option, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn open_async(&self, name: &HStringArg) -> Result<foundation::IAsyncOperation<KeyCredentialRetrievalResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).OpenAsync)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).OpenAsync)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_async(&self, name: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DeleteAsync)(self.0.as_abi() as *const _ as *mut _, name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DeleteAsync)(self.get_abi() as *const _ as *mut _, name.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2324,12 +2324,12 @@ RT_INTERFACE!{interface IKeyCredentialOperationResult(IKeyCredentialOperationRes
 impl IKeyCredentialOperationResult {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_result(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Result)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Result)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<KeyCredentialStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2342,12 +2342,12 @@ RT_INTERFACE!{interface IKeyCredentialRetrievalResult(IKeyCredentialRetrievalRes
 impl IKeyCredentialRetrievalResult {
     #[inline] pub fn get_credential(&self) -> Result<Option<KeyCredential>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Credential)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Credential)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(KeyCredential::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<KeyCredentialStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2369,38 +2369,38 @@ RT_INTERFACE!{interface IPasswordCredential(IPasswordCredentialVtbl, IPasswordCr
 impl IPasswordCredential {
     #[inline] pub fn get_resource(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Resource)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Resource)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_resource(&self, resource: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Resource)(self.0.as_abi() as *const _ as *mut _, resource.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Resource)(self.get_abi() as *const _ as *mut _, resource.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_user_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UserName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UserName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_user_name(&self, userName: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_UserName)(self.0.as_abi() as *const _ as *mut _, userName.get());
+        let hr = ((*self.get_abi().lpVtbl).put_UserName)(self.get_abi() as *const _ as *mut _, userName.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_password(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Password)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Password)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_password(&self, password: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Password)(self.0.as_abi() as *const _ as *mut _, password.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Password)(self.get_abi() as *const _ as *mut _, password.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn retrieve_password(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).RetrievePassword)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).RetrievePassword)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<foundation::collections::IPropertySet>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Properties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Properties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IPropertySet::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2427,31 +2427,31 @@ RT_INTERFACE!{interface IPasswordVault(IPasswordVaultVtbl, IPasswordVault_Abi): 
 }}
 impl IPasswordVault {
     #[inline] pub fn add(&self, credential: &PasswordCredential) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Add)(self.0.as_abi() as *const _ as *mut _, get_abi(credential) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Add)(self.get_abi() as *const _ as *mut _, credential.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn remove(&self, credential: &PasswordCredential) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Remove)(self.0.as_abi() as *const _ as *mut _, get_abi(credential) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Remove)(self.get_abi() as *const _ as *mut _, credential.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn retrieve(&self, resource: &HStringArg, userName: &HStringArg) -> Result<Option<PasswordCredential>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Retrieve)(self.0.as_abi() as *const _ as *mut _, resource.get(), userName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Retrieve)(self.get_abi() as *const _ as *mut _, resource.get(), userName.get(), &mut out);
         if hr == S_OK { Ok(PasswordCredential::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_by_resource(&self, resource: &HStringArg) -> Result<Option<foundation::collections::IVectorView<PasswordCredential>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllByResource)(self.0.as_abi() as *const _ as *mut _, resource.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllByResource)(self.get_abi() as *const _ as *mut _, resource.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_by_user_name(&self, userName: &HStringArg) -> Result<Option<foundation::collections::IVectorView<PasswordCredential>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllByUserName)(self.0.as_abi() as *const _ as *mut _, userName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllByUserName)(self.get_abi() as *const _ as *mut _, userName.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn retrieve_all(&self) -> Result<Option<foundation::collections::IVectorView<PasswordCredential>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RetrieveAll)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RetrieveAll)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2467,17 +2467,17 @@ RT_INTERFACE!{interface IWebAccount(IWebAccountVtbl, IWebAccount_Abi): IInspecta
 impl IWebAccount {
     #[inline] pub fn get_web_account_provider(&self) -> Result<Option<WebAccountProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_WebAccountProvider)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_WebAccountProvider)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebAccountProvider::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_user_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UserName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UserName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_state(&self) -> Result<WebAccountState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_State)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_State)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2501,27 +2501,27 @@ RT_INTERFACE!{interface IWebAccount2(IWebAccount2Vtbl, IWebAccount2_Abi): IInspe
 impl IWebAccount2 {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_properties(&self) -> Result<Option<foundation::collections::IMapView<HString, HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Properties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Properties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IMapView::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_picture_async(&self, desizedSize: WebAccountPictureSize) -> Result<foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPictureAsync)(self.0.as_abi() as *const _ as *mut _, desizedSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPictureAsync)(self.get_abi() as *const _ as *mut _, desizedSize, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn sign_out_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SignOutAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SignOutAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn sign_out_with_client_id_async(&self, clientId: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SignOutWithClientIdAsync)(self.0.as_abi() as *const _ as *mut _, clientId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SignOutWithClientIdAsync)(self.get_abi() as *const _ as *mut _, clientId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2532,7 +2532,7 @@ RT_INTERFACE!{static interface IWebAccountFactory(IWebAccountFactoryVtbl, IWebAc
 impl IWebAccountFactory {
     #[inline] pub fn create_web_account(&self, webAccountProvider: &WebAccountProvider, userName: &HStringArg, state: WebAccountState) -> Result<WebAccount> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWebAccount)(self.0.as_abi() as *const _ as *mut _, get_abi(webAccountProvider) as *const _ as *mut _, userName.get(), state, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWebAccount)(self.get_abi() as *const _ as *mut _, webAccountProvider.get_abi() as *const _ as *mut _, userName.get(), state, &mut out);
         if hr == S_OK { Ok(WebAccount::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2548,17 +2548,17 @@ RT_INTERFACE!{interface IWebAccountProvider(IWebAccountProviderVtbl, IWebAccount
 impl IWebAccountProvider {
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_icon_uri(&self) -> Result<Option<foundation::Uri>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IconUri)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IconUri)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Uri::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2578,12 +2578,12 @@ RT_INTERFACE!{interface IWebAccountProvider2(IWebAccountProvider2Vtbl, IWebAccou
 impl IWebAccountProvider2 {
     #[inline] pub fn get_display_purpose(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayPurpose)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayPurpose)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_authority(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Authority)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Authority)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2594,7 +2594,7 @@ RT_INTERFACE!{interface IWebAccountProvider3(IWebAccountProvider3Vtbl, IWebAccou
 impl IWebAccountProvider3 {
     #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<super::super::system::User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::system::User::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2605,7 +2605,7 @@ RT_INTERFACE!{interface IWebAccountProvider4(IWebAccountProvider4Vtbl, IWebAccou
 impl IWebAccountProvider4 {
     #[inline] pub fn get_is_system_provider(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsSystemProvider)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsSystemProvider)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2616,7 +2616,7 @@ RT_INTERFACE!{static interface IWebAccountProviderFactory(IWebAccountProviderFac
 impl IWebAccountProviderFactory {
     #[inline] pub fn create_web_account_provider(&self, id: &HStringArg, displayName: &HStringArg, iconUri: &foundation::Uri) -> Result<WebAccountProvider> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWebAccountProvider)(self.0.as_abi() as *const _ as *mut _, id.get(), displayName.get(), get_abi(iconUri) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWebAccountProvider)(self.get_abi() as *const _ as *mut _, id.get(), displayName.get(), iconUri.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(WebAccountProvider::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2669,93 +2669,93 @@ RT_INTERFACE!{interface ICredentialPickerOptions(ICredentialPickerOptionsVtbl, I
 }}
 impl ICredentialPickerOptions {
     #[inline] pub fn set_caption(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Caption)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Caption)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_caption(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Caption)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Caption)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_message(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Message)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Message)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_message(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Message)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Message)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_error_code(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ErrorCode)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ErrorCode)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_error_code(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ErrorCode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ErrorCode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_target_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_TargetName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_TargetName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_target_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TargetName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TargetName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_authentication_protocol(&self, value: AuthenticationProtocol) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_AuthenticationProtocol)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_AuthenticationProtocol)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_authentication_protocol(&self) -> Result<AuthenticationProtocol> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AuthenticationProtocol)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AuthenticationProtocol)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_custom_authentication_protocol(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_CustomAuthenticationProtocol)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_CustomAuthenticationProtocol)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_custom_authentication_protocol(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CustomAuthenticationProtocol)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CustomAuthenticationProtocol)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_previous_credential(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_PreviousCredential)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_PreviousCredential)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_previous_credential(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PreviousCredential)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PreviousCredential)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_always_display_dialog(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_AlwaysDisplayDialog)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_AlwaysDisplayDialog)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_always_display_dialog(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AlwaysDisplayDialog)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AlwaysDisplayDialog)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_caller_saves_credential(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_CallerSavesCredential)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_CallerSavesCredential)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_caller_saves_credential(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CallerSavesCredential)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CallerSavesCredential)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_credential_save_option(&self, value: CredentialSaveOption) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_CredentialSaveOption)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_CredentialSaveOption)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_credential_save_option(&self) -> Result<CredentialSaveOption> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CredentialSaveOption)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CredentialSaveOption)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2776,37 +2776,37 @@ RT_INTERFACE!{interface ICredentialPickerResults(ICredentialPickerResultsVtbl, I
 impl ICredentialPickerResults {
     #[inline] pub fn get_error_code(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ErrorCode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ErrorCode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_credential_save_option(&self) -> Result<CredentialSaveOption> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CredentialSaveOption)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CredentialSaveOption)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_credential_saved(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CredentialSaved)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CredentialSaved)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_credential(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Credential)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Credential)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_credential_domain_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CredentialDomainName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CredentialDomainName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_credential_user_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CredentialUserName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CredentialUserName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_credential_password(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CredentialPassword)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CredentialPassword)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2820,17 +2820,17 @@ RT_INTERFACE!{static interface ICredentialPickerStatics(ICredentialPickerStatics
 impl ICredentialPickerStatics {
     #[inline] pub fn pick_with_options_async(&self, options: &CredentialPickerOptions) -> Result<foundation::IAsyncOperation<CredentialPickerResults>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).PickWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).PickWithOptionsAsync)(self.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn pick_with_message_async(&self, targetName: &HStringArg, message: &HStringArg) -> Result<foundation::IAsyncOperation<CredentialPickerResults>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).PickWithMessageAsync)(self.0.as_abi() as *const _ as *mut _, targetName.get(), message.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).PickWithMessageAsync)(self.get_abi() as *const _ as *mut _, targetName.get(), message.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn pick_with_caption_async(&self, targetName: &HStringArg, message: &HStringArg, caption: &HStringArg) -> Result<foundation::IAsyncOperation<CredentialPickerResults>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).PickWithCaptionAsync)(self.0.as_abi() as *const _ as *mut _, targetName.get(), message.get(), caption.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).PickWithCaptionAsync)(self.get_abi() as *const _ as *mut _, targetName.get(), message.get(), caption.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2862,12 +2862,12 @@ RT_INTERFACE!{static interface IUserConsentVerifierStatics(IUserConsentVerifierS
 impl IUserConsentVerifierStatics {
     #[inline] pub fn check_availability_async(&self) -> Result<foundation::IAsyncOperation<UserConsentVerifierAvailability>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CheckAvailabilityAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CheckAvailabilityAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_verification_async(&self, message: &HStringArg) -> Result<foundation::IAsyncOperation<UserConsentVerificationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestVerificationAsync)(self.0.as_abi() as *const _ as *mut _, message.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestVerificationAsync)(self.get_abi() as *const _ as *mut _, message.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2933,57 +2933,57 @@ RT_INTERFACE!{static interface ICryptographicBufferStatics(ICryptographicBufferS
 impl ICryptographicBufferStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn compare(&self, object1: &super::super::storage::streams::IBuffer, object2: &super::super::storage::streams::IBuffer) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).Compare)(self.0.as_abi() as *const _ as *mut _, get_abi(object1) as *const _ as *mut _, get_abi(object2) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Compare)(self.get_abi() as *const _ as *mut _, object1.get_abi() as *const _ as *mut _, object2.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn generate_random(&self, length: u32) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GenerateRandom)(self.0.as_abi() as *const _ as *mut _, length, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GenerateRandom)(self.get_abi() as *const _ as *mut _, length, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn generate_random_number(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GenerateRandomNumber)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GenerateRandomNumber)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_from_byte_array(&self, value: &[u8]) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateFromByteArray)(self.0.as_abi() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateFromByteArray)(self.get_abi() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn copy_to_byte_array(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<ComArray<u8>> { unsafe { 
         let mut valueSize = 0; let mut value = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CopyToByteArray)(self.0.as_abi() as *const _ as *mut _, get_abi(buffer) as *const _ as *mut _, &mut valueSize, &mut value);
+        let hr = ((*self.get_abi().lpVtbl).CopyToByteArray)(self.get_abi() as *const _ as *mut _, buffer.get_abi() as *const _ as *mut _, &mut valueSize, &mut value);
         if hr == S_OK { Ok(ComArray::from_raw(valueSize, value)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn decode_from_hex_string(&self, value: &HStringArg) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DecodeFromHexString)(self.0.as_abi() as *const _ as *mut _, value.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DecodeFromHexString)(self.get_abi() as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_hex_string(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).EncodeToHexString)(self.0.as_abi() as *const _ as *mut _, get_abi(buffer) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).EncodeToHexString)(self.get_abi() as *const _ as *mut _, buffer.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn decode_from_base64_string(&self, value: &HStringArg) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DecodeFromBase64String)(self.0.as_abi() as *const _ as *mut _, value.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DecodeFromBase64String)(self.get_abi() as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn encode_to_base64_string(&self, buffer: &super::super::storage::streams::IBuffer) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).EncodeToBase64String)(self.0.as_abi() as *const _ as *mut _, get_abi(buffer) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).EncodeToBase64String)(self.get_abi() as *const _ as *mut _, buffer.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn convert_string_to_binary(&self, value: &HStringArg, encoding: BinaryStringEncoding) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ConvertStringToBinary)(self.0.as_abi() as *const _ as *mut _, value.get(), encoding, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ConvertStringToBinary)(self.get_abi() as *const _ as *mut _, value.get(), encoding, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn convert_binary_to_string(&self, encoding: BinaryStringEncoding, buffer: &super::super::storage::streams::IBuffer) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ConvertBinaryToString)(self.0.as_abi() as *const _ as *mut _, encoding, get_abi(buffer) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ConvertBinaryToString)(self.get_abi() as *const _ as *mut _, encoding, buffer.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3011,76 +3011,76 @@ RT_INTERFACE!{interface ICertificate(ICertificateVtbl, ICertificate_Abi): IInspe
 impl ICertificate {
     #[inline] pub fn build_chain_async(&self, certificates: &foundation::collections::IIterable<Certificate>) -> Result<foundation::IAsyncOperation<CertificateChain>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).BuildChainAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(certificates) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).BuildChainAsync)(self.get_abi() as *const _ as *mut _, certificates.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn build_chain_with_parameters_async(&self, certificates: &foundation::collections::IIterable<Certificate>, parameters: &ChainBuildingParameters) -> Result<foundation::IAsyncOperation<CertificateChain>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).BuildChainWithParametersAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(certificates) as *const _ as *mut _, get_abi(parameters) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).BuildChainWithParametersAsync)(self.get_abi() as *const _ as *mut _, certificates.get_abi() as *const _ as *mut _, parameters.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_serial_number(&self) -> Result<ComArray<u8>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SerialNumber)(self.0.as_abi() as *const _ as *mut _, &mut outSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SerialNumber)(self.get_abi() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hash_value(&self) -> Result<ComArray<u8>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetHashValue)(self.0.as_abi() as *const _ as *mut _, &mut outSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetHashValue)(self.get_abi() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hash_value_with_algorithm(&self, hashAlgorithmName: &HStringArg) -> Result<ComArray<u8>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetHashValueWithAlgorithm)(self.0.as_abi() as *const _ as *mut _, hashAlgorithmName.get(), &mut outSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetHashValueWithAlgorithm)(self.get_abi() as *const _ as *mut _, hashAlgorithmName.get(), &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_certificate_blob(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCertificateBlob)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCertificateBlob)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_subject(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Subject)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Subject)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_issuer(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Issuer)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Issuer)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_has_private_key(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HasPrivateKey)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HasPrivateKey)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_strongly_protected(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsStronglyProtected)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsStronglyProtected)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_valid_from(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ValidFrom)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ValidFrom)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_valid_to(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ValidTo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ValidTo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_enhanced_key_usages(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EnhancedKeyUsages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EnhancedKeyUsages)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_friendly_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_FriendlyName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_FriendlyName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_friendly_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FriendlyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FriendlyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3104,32 +3104,32 @@ RT_INTERFACE!{interface ICertificate2(ICertificate2Vtbl, ICertificate2_Abi): IIn
 impl ICertificate2 {
     #[inline] pub fn get_is_security_device_bound(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsSecurityDeviceBound)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsSecurityDeviceBound)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_key_usages(&self) -> Result<Option<CertificateKeyUsages>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyUsages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyUsages)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CertificateKeyUsages::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_key_algorithm_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyAlgorithmName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyAlgorithmName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_signature_algorithm_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SignatureAlgorithmName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SignatureAlgorithmName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_signature_hash_algorithm_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SignatureHashAlgorithmName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SignatureHashAlgorithmName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_subject_alternative_name(&self) -> Result<Option<SubjectAlternativeNameInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SubjectAlternativeName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SubjectAlternativeName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SubjectAlternativeNameInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3142,17 +3142,17 @@ RT_INTERFACE!{interface ICertificate3(ICertificate3Vtbl, ICertificate3_Abi): IIn
 impl ICertificate3 {
     #[inline] pub fn get_is_per_user(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsPerUser)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsPerUser)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_store_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_StoreName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_StoreName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_key_storage_provider_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyStorageProviderName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyStorageProviderName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3165,17 +3165,17 @@ RT_INTERFACE!{interface ICertificateChain(ICertificateChainVtbl, ICertificateCha
 impl ICertificateChain {
     #[inline] pub fn validate(&self) -> Result<ChainValidationResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).Validate)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Validate)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn validate_with_parameters(&self, parameter: &ChainValidationParameters) -> Result<ChainValidationResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).ValidateWithParameters)(self.0.as_abi() as *const _ as *mut _, get_abi(parameter) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ValidateWithParameters)(self.get_abi() as *const _ as *mut _, parameter.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_certificates(&self, includeRoot: bool) -> Result<Option<foundation::collections::IVectorView<Certificate>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCertificates)(self.0.as_abi() as *const _ as *mut _, includeRoot, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCertificates)(self.get_abi() as *const _ as *mut _, includeRoot, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3217,17 +3217,17 @@ RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics(ICertificate
 impl ICertificateEnrollmentManagerStatics {
     #[inline] pub fn create_request_async(&self, request: &CertificateRequestProperties) -> Result<foundation::IAsyncOperation<HString>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateRequestAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateRequestAsync)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn install_certificate_async(&self, certificate: &HStringArg, installOption: InstallOptions) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).InstallCertificateAsync)(self.0.as_abi() as *const _ as *mut _, certificate.get(), installOption, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).InstallCertificateAsync)(self.get_abi() as *const _ as *mut _, certificate.get(), installOption, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn import_pfx_data_async(&self, pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ImportPfxDataAsync)(self.0.as_abi() as *const _ as *mut _, pfxData.get(), password.get(), exportable, keyProtectionLevel, installOption, friendlyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ImportPfxDataAsync)(self.get_abi() as *const _ as *mut _, pfxData.get(), password.get(), exportable, keyProtectionLevel, installOption, friendlyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3239,12 +3239,12 @@ RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics2(ICertificat
 impl ICertificateEnrollmentManagerStatics2 {
     #[inline] pub fn get_user_certificate_enrollment_manager(&self) -> Result<Option<UserCertificateEnrollmentManager>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UserCertificateEnrollmentManager)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UserCertificateEnrollmentManager)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(UserCertificateEnrollmentManager::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn import_pfx_data_to_ksp_async(&self, pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg, keyStorageProvider: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ImportPfxDataToKspAsync)(self.0.as_abi() as *const _ as *mut _, pfxData.get(), password.get(), exportable, keyProtectionLevel, installOption, friendlyName.get(), keyStorageProvider.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ImportPfxDataToKspAsync)(self.get_abi() as *const _ as *mut _, pfxData.get(), password.get(), exportable, keyProtectionLevel, installOption, friendlyName.get(), keyStorageProvider.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3255,7 +3255,7 @@ RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics3(ICertificat
 impl ICertificateEnrollmentManagerStatics3 {
     #[inline] pub fn import_pfx_data_to_ksp_with_parameters_async(&self, pfxData: &HStringArg, password: &HStringArg, pfxImportParameters: &PfxImportParameters) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ImportPfxDataToKspWithParametersAsync)(self.0.as_abi() as *const _ as *mut _, pfxData.get(), password.get(), get_abi(pfxImportParameters) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ImportPfxDataToKspWithParametersAsync)(self.get_abi() as *const _ as *mut _, pfxData.get(), password.get(), pfxImportParameters.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3272,33 +3272,33 @@ RT_INTERFACE!{interface ICertificateExtension(ICertificateExtensionVtbl, ICertif
 impl ICertificateExtension {
     #[inline] pub fn get_object_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ObjectId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ObjectId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_object_id(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ObjectId)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_ObjectId)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_critical(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsCritical)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsCritical)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_critical(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IsCritical)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IsCritical)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn encode_value(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).EncodeValue)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).EncodeValue)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_value(&self) -> Result<ComArray<u8>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Value)(self.0.as_abi() as *const _ as *mut _, &mut outSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Value)(self.get_abi() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
     #[inline] pub fn set_value(&self, value: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Value)(self.0.as_abi() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Value)(self.get_abi() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3312,7 +3312,7 @@ RT_INTERFACE!{static interface ICertificateFactory(ICertificateFactoryVtbl, ICer
 impl ICertificateFactory {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_certificate(&self, certBlob: &crate::windows::storage::streams::IBuffer) -> Result<Certificate> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateCertificate)(self.0.as_abi() as *const _ as *mut _, get_abi(certBlob) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateCertificate)(self.get_abi() as *const _ as *mut _, certBlob.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Certificate::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3338,74 +3338,74 @@ RT_INTERFACE!{interface ICertificateKeyUsages(ICertificateKeyUsagesVtbl, ICertif
 impl ICertificateKeyUsages {
     #[inline] pub fn get_encipher_only(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EncipherOnly)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EncipherOnly)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_encipher_only(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_EncipherOnly)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_EncipherOnly)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_crl_sign(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CrlSign)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CrlSign)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_crl_sign(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_CrlSign)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_CrlSign)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_key_certificate_sign(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyCertificateSign)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyCertificateSign)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_key_certificate_sign(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_KeyCertificateSign)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_KeyCertificateSign)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_key_agreement(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyAgreement)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyAgreement)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_key_agreement(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_KeyAgreement)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_KeyAgreement)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_data_encipherment(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DataEncipherment)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DataEncipherment)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_data_encipherment(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DataEncipherment)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_DataEncipherment)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_key_encipherment(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyEncipherment)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyEncipherment)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_key_encipherment(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_KeyEncipherment)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_KeyEncipherment)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_non_repudiation(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NonRepudiation)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NonRepudiation)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_non_repudiation(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_NonRepudiation)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_NonRepudiation)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_digital_signature(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DigitalSignature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DigitalSignature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_digital_signature(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DigitalSignature)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_DigitalSignature)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3427,43 +3427,43 @@ RT_INTERFACE!{interface ICertificateQuery(ICertificateQueryVtbl, ICertificateQue
 impl ICertificateQuery {
     #[inline] pub fn get_enhanced_key_usages(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EnhancedKeyUsages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EnhancedKeyUsages)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_issuer_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IssuerName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IssuerName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_issuer_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IssuerName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_IssuerName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_friendly_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FriendlyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FriendlyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_friendly_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_FriendlyName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_FriendlyName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_thumbprint(&self) -> Result<ComArray<u8>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Thumbprint)(self.0.as_abi() as *const _ as *mut _, &mut outSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Thumbprint)(self.get_abi() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
     #[inline] pub fn set_thumbprint(&self, value: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Thumbprint)(self.0.as_abi() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Thumbprint)(self.get_abi() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_hardware_only(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HardwareOnly)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HardwareOnly)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_hardware_only(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_HardwareOnly)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_HardwareOnly)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3482,29 +3482,29 @@ RT_INTERFACE!{interface ICertificateQuery2(ICertificateQuery2Vtbl, ICertificateQ
 impl ICertificateQuery2 {
     #[inline] pub fn get_include_duplicates(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IncludeDuplicates)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IncludeDuplicates)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_include_duplicates(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IncludeDuplicates)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IncludeDuplicates)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_include_expired_certificates(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IncludeExpiredCertificates)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IncludeExpiredCertificates)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_include_expired_certificates(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_IncludeExpiredCertificates)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_IncludeExpiredCertificates)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_store_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_StoreName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_StoreName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_store_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_StoreName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_StoreName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3532,83 +3532,83 @@ RT_INTERFACE!{interface ICertificateRequestProperties(ICertificateRequestPropert
 impl ICertificateRequestProperties {
     #[inline] pub fn get_subject(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Subject)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Subject)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_subject(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Subject)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Subject)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_key_algorithm_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyAlgorithmName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyAlgorithmName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_key_algorithm_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_KeyAlgorithmName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_KeyAlgorithmName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_key_size(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeySize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeySize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_key_size(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_KeySize)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_KeySize)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_friendly_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FriendlyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FriendlyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_friendly_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_FriendlyName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_FriendlyName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_hash_algorithm_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HashAlgorithmName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HashAlgorithmName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_hash_algorithm_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_HashAlgorithmName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_HashAlgorithmName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_exportable(&self) -> Result<ExportOption> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Exportable)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Exportable)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_exportable(&self, value: ExportOption) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Exportable)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Exportable)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_key_usages(&self) -> Result<EnrollKeyUsages> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyUsages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyUsages)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_key_usages(&self, value: EnrollKeyUsages) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_KeyUsages)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_KeyUsages)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_key_protection_level(&self) -> Result<KeyProtectionLevel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyProtectionLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyProtectionLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_key_protection_level(&self, value: KeyProtectionLevel) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_KeyProtectionLevel)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_KeyProtectionLevel)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_key_storage_provider_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyStorageProviderName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyStorageProviderName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_key_storage_provider_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_KeyStorageProviderName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_KeyStorageProviderName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3627,29 +3627,29 @@ RT_INTERFACE!{interface ICertificateRequestProperties2(ICertificateRequestProper
 impl ICertificateRequestProperties2 {
     #[inline] pub fn get_smartcard_reader_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SmartcardReaderName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SmartcardReaderName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_smartcard_reader_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_SmartcardReaderName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_SmartcardReaderName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_signing_certificate(&self) -> Result<Option<Certificate>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SigningCertificate)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SigningCertificate)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Certificate::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_signing_certificate(&self, value: &Certificate) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_SigningCertificate)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_SigningCertificate)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_attestation_credential_certificate(&self) -> Result<Option<Certificate>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AttestationCredentialCertificate)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AttestationCredentialCertificate)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Certificate::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_attestation_credential_certificate(&self, value: &Certificate) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_AttestationCredentialCertificate)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_AttestationCredentialCertificate)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3669,47 +3669,47 @@ RT_INTERFACE!{interface ICertificateRequestProperties3(ICertificateRequestProper
 impl ICertificateRequestProperties3 {
     #[inline] pub fn get_curve_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CurveName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CurveName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_curve_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_CurveName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_CurveName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_curve_parameters(&self) -> Result<ComArray<u8>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CurveParameters)(self.0.as_abi() as *const _ as *mut _, &mut outSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CurveParameters)(self.get_abi() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
     #[inline] pub fn set_curve_parameters(&self, value: &[u8]) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_CurveParameters)(self.0.as_abi() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_CurveParameters)(self.get_abi() as *const _ as *mut _, value.len() as u32, value.as_ptr() as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_container_name_prefix(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ContainerNamePrefix)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ContainerNamePrefix)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_container_name_prefix(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ContainerNamePrefix)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_ContainerNamePrefix)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_container_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ContainerName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ContainerName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_container_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ContainerName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_ContainerName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_use_existing_key(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UseExistingKey)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UseExistingKey)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_use_existing_key(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_UseExistingKey)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_UseExistingKey)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3722,17 +3722,17 @@ RT_INTERFACE!{interface ICertificateRequestProperties4(ICertificateRequestProper
 impl ICertificateRequestProperties4 {
     #[inline] pub fn get_suppressed_defaults(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SuppressedDefaults)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SuppressedDefaults)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_subject_alternative_name(&self) -> Result<Option<SubjectAlternativeNameInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SubjectAlternativeName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SubjectAlternativeName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(SubjectAlternativeNameInfo::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extensions(&self) -> Result<Option<foundation::collections::IVector<CertificateExtension>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Extensions)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Extensions)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3743,11 +3743,11 @@ RT_INTERFACE!{interface ICertificateStore(ICertificateStoreVtbl, ICertificateSto
 }}
 impl ICertificateStore {
     #[inline] pub fn add(&self, certificate: &Certificate) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Add)(self.0.as_abi() as *const _ as *mut _, get_abi(certificate) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Add)(self.get_abi() as *const _ as *mut _, certificate.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn delete(&self, certificate: &Certificate) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Delete)(self.0.as_abi() as *const _ as *mut _, get_abi(certificate) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Delete)(self.get_abi() as *const _ as *mut _, certificate.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3759,7 +3759,7 @@ RT_INTERFACE!{interface ICertificateStore2(ICertificateStore2Vtbl, ICertificateS
 impl ICertificateStore2 {
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3798,27 +3798,27 @@ RT_INTERFACE!{static interface ICertificateStoresStatics(ICertificateStoresStati
 impl ICertificateStoresStatics {
     #[inline] pub fn find_all_async(&self) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<Certificate>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_all_with_query_async(&self, query: &CertificateQuery) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<Certificate>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindAllWithQueryAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(query) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindAllWithQueryAsync)(self.get_abi() as *const _ as *mut _, query.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_trusted_root_certification_authorities(&self) -> Result<Option<CertificateStore>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TrustedRootCertificationAuthorities)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TrustedRootCertificationAuthorities)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CertificateStore::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_intermediate_certification_authorities(&self) -> Result<Option<CertificateStore>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IntermediateCertificationAuthorities)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IntermediateCertificationAuthorities)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CertificateStore::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_store_by_name(&self, storeName: &HStringArg) -> Result<Option<CertificateStore>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetStoreByName)(self.0.as_abi() as *const _ as *mut _, storeName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetStoreByName)(self.get_abi() as *const _ as *mut _, storeName.get(), &mut out);
         if hr == S_OK { Ok(CertificateStore::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3829,7 +3829,7 @@ RT_INTERFACE!{static interface ICertificateStoresStatics2(ICertificateStoresStat
 impl ICertificateStoresStatics2 {
     #[inline] pub fn get_user_store_by_name(&self, storeName: &HStringArg) -> Result<Option<UserCertificateStore>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetUserStoreByName)(self.0.as_abi() as *const _ as *mut _, storeName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetUserStoreByName)(self.get_abi() as *const _ as *mut _, storeName.get(), &mut out);
         if hr == S_OK { Ok(UserCertificateStore::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3851,57 +3851,57 @@ RT_INTERFACE!{interface IChainBuildingParameters(IChainBuildingParametersVtbl, I
 impl IChainBuildingParameters {
     #[inline] pub fn get_enhanced_key_usages(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EnhancedKeyUsages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EnhancedKeyUsages)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_validation_timestamp(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ValidationTimestamp)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ValidationTimestamp)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_validation_timestamp(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ValidationTimestamp)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ValidationTimestamp)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_revocation_check_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RevocationCheckEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RevocationCheckEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_revocation_check_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_RevocationCheckEnabled)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_RevocationCheckEnabled)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_network_retrieval_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NetworkRetrievalEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NetworkRetrievalEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_network_retrieval_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_NetworkRetrievalEnabled)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_NetworkRetrievalEnabled)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_authority_information_access_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AuthorityInformationAccessEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AuthorityInformationAccessEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_authority_information_access_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_AuthorityInformationAccessEnabled)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_AuthorityInformationAccessEnabled)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_current_time_validation_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CurrentTimeValidationEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CurrentTimeValidationEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_current_time_validation_enabled(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_CurrentTimeValidationEnabled)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_CurrentTimeValidationEnabled)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_exclusive_trust_roots(&self) -> Result<Option<foundation::collections::IVector<Certificate>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExclusiveTrustRoots)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExclusiveTrustRoots)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3918,20 +3918,20 @@ RT_INTERFACE!{interface IChainValidationParameters(IChainValidationParametersVtb
 impl IChainValidationParameters {
     #[inline] pub fn get_certificate_chain_policy(&self) -> Result<CertificateChainPolicy> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CertificateChainPolicy)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CertificateChainPolicy)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_certificate_chain_policy(&self, value: CertificateChainPolicy) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_CertificateChainPolicy)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_CertificateChainPolicy)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-networking")] #[inline] pub fn get_server_dns_name(&self) -> Result<Option<crate::windows::networking::HostName>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ServerDnsName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ServerDnsName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::networking::HostName::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-networking")] #[inline] pub fn set_server_dns_name(&self, value: &crate::windows::networking::HostName) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ServerDnsName)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_ServerDnsName)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3951,22 +3951,22 @@ RT_INTERFACE!{interface ICmsAttachedSignature(ICmsAttachedSignatureVtbl, ICmsAtt
 impl ICmsAttachedSignature {
     #[inline] pub fn get_certificates(&self) -> Result<Option<foundation::collections::IVectorView<Certificate>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Certificates)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Certificates)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_content(&self) -> Result<ComArray<u8>> { unsafe { 
         let mut outSize = 0; let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Content)(self.0.as_abi() as *const _ as *mut _, &mut outSize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Content)(self.get_abi() as *const _ as *mut _, &mut outSize, &mut out);
         if hr == S_OK { Ok(ComArray::from_raw(outSize, out)) } else { err(hr) }
     }}
     #[inline] pub fn get_signers(&self) -> Result<Option<foundation::collections::IVectorView<CmsSignerInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Signers)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Signers)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn verify_signature(&self) -> Result<SignatureValidationResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).VerifySignature)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).VerifySignature)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -3989,7 +3989,7 @@ RT_INTERFACE!{static interface ICmsAttachedSignatureFactory(ICmsAttachedSignatur
 impl ICmsAttachedSignatureFactory {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_cms_attached_signature(&self, inputBlob: &crate::windows::storage::streams::IBuffer) -> Result<CmsAttachedSignature> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateCmsAttachedSignature)(self.0.as_abi() as *const _ as *mut _, get_abi(inputBlob) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateCmsAttachedSignature)(self.get_abi() as *const _ as *mut _, inputBlob.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CmsAttachedSignature::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4000,7 +4000,7 @@ RT_INTERFACE!{static interface ICmsAttachedSignatureStatics(ICmsAttachedSignatur
 impl ICmsAttachedSignatureStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn generate_signature_async(&self, data: &crate::windows::storage::streams::IBuffer, signers: &foundation::collections::IIterable<CmsSignerInfo>, certificates: &foundation::collections::IIterable<Certificate>) -> Result<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GenerateSignatureAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(data) as *const _ as *mut _, get_abi(signers) as *const _ as *mut _, get_abi(certificates) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GenerateSignatureAsync)(self.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, signers.get_abi() as *const _ as *mut _, certificates.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4013,17 +4013,17 @@ RT_INTERFACE!{interface ICmsDetachedSignature(ICmsDetachedSignatureVtbl, ICmsDet
 impl ICmsDetachedSignature {
     #[inline] pub fn get_certificates(&self) -> Result<Option<foundation::collections::IVectorView<Certificate>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Certificates)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Certificates)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_signers(&self) -> Result<Option<foundation::collections::IVectorView<CmsSignerInfo>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Signers)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Signers)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature_async(&self, data: &crate::windows::storage::streams::IInputStream) -> Result<foundation::IAsyncOperation<SignatureValidationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).VerifySignatureAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(data) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).VerifySignatureAsync)(self.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4046,7 +4046,7 @@ RT_INTERFACE!{static interface ICmsDetachedSignatureFactory(ICmsDetachedSignatur
 impl ICmsDetachedSignatureFactory {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_cms_detached_signature(&self, inputBlob: &crate::windows::storage::streams::IBuffer) -> Result<CmsDetachedSignature> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateCmsDetachedSignature)(self.0.as_abi() as *const _ as *mut _, get_abi(inputBlob) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateCmsDetachedSignature)(self.get_abi() as *const _ as *mut _, inputBlob.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CmsDetachedSignature::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4057,7 +4057,7 @@ RT_INTERFACE!{static interface ICmsDetachedSignatureStatics(ICmsDetachedSignatur
 impl ICmsDetachedSignatureStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn generate_signature_async(&self, data: &crate::windows::storage::streams::IInputStream, signers: &foundation::collections::IIterable<CmsSignerInfo>, certificates: &foundation::collections::IIterable<Certificate>) -> Result<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GenerateSignatureAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(data) as *const _ as *mut _, get_abi(signers) as *const _ as *mut _, get_abi(certificates) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GenerateSignatureAsync)(self.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, signers.get_abi() as *const _ as *mut _, certificates.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4072,25 +4072,25 @@ RT_INTERFACE!{interface ICmsSignerInfo(ICmsSignerInfoVtbl, ICmsSignerInfo_Abi): 
 impl ICmsSignerInfo {
     #[inline] pub fn get_certificate(&self) -> Result<Option<Certificate>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Certificate)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Certificate)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Certificate::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_certificate(&self, value: &Certificate) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Certificate)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_Certificate)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_hash_algorithm_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HashAlgorithmName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HashAlgorithmName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_hash_algorithm_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_HashAlgorithmName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_HashAlgorithmName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_timestamp_info(&self) -> Result<Option<CmsTimestampInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TimestampInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TimestampInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CmsTimestampInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4106,17 +4106,17 @@ RT_INTERFACE!{interface ICmsTimestampInfo(ICmsTimestampInfoVtbl, ICmsTimestampIn
 impl ICmsTimestampInfo {
     #[inline] pub fn get_signing_certificate(&self) -> Result<Option<Certificate>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SigningCertificate)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SigningCertificate)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Certificate::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_certificates(&self) -> Result<Option<foundation::collections::IVectorView<Certificate>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Certificates)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Certificates)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_timestamp(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Timestamp)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Timestamp)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4180,42 +4180,42 @@ RT_INTERFACE!{static interface IKeyAlgorithmNamesStatics(IKeyAlgorithmNamesStati
 impl IKeyAlgorithmNamesStatics {
     #[inline] pub fn get_rsa(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Rsa)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Rsa)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_dsa(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Dsa)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Dsa)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdh_256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Ecdh256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Ecdh256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdh_384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Ecdh384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Ecdh384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdh_521(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Ecdh521)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Ecdh521)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdsa_256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Ecdsa256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Ecdsa256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdsa_384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Ecdsa384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Ecdsa384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdsa_521(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Ecdsa521)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Ecdsa521)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4227,12 +4227,12 @@ RT_INTERFACE!{static interface IKeyAlgorithmNamesStatics2(IKeyAlgorithmNamesStat
 impl IKeyAlgorithmNamesStatics2 {
     #[inline] pub fn get_ecdsa(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Ecdsa)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Ecdsa)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdh(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Ecdh)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Ecdh)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4259,12 +4259,12 @@ RT_INTERFACE!{static interface IKeyAttestationHelperStatics(IKeyAttestationHelpe
 impl IKeyAttestationHelperStatics {
     #[inline] pub fn decrypt_tpm_attestation_credential_async(&self, credential: &HStringArg) -> Result<foundation::IAsyncOperation<HString>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DecryptTpmAttestationCredentialAsync)(self.0.as_abi() as *const _ as *mut _, credential.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DecryptTpmAttestationCredentialAsync)(self.get_abi() as *const _ as *mut _, credential.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tpm_attestation_credential_id(&self, credential: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetTpmAttestationCredentialId)(self.0.as_abi() as *const _ as *mut _, credential.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetTpmAttestationCredentialId)(self.get_abi() as *const _ as *mut _, credential.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4275,7 +4275,7 @@ RT_INTERFACE!{static interface IKeyAttestationHelperStatics2(IKeyAttestationHelp
 impl IKeyAttestationHelperStatics2 {
     #[inline] pub fn decrypt_tpm_attestation_credential_with_container_name_async(&self, credential: &HStringArg, containerName: &HStringArg) -> Result<foundation::IAsyncOperation<HString>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DecryptTpmAttestationCredentialWithContainerNameAsync)(self.0.as_abi() as *const _ as *mut _, credential.get(), containerName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DecryptTpmAttestationCredentialWithContainerNameAsync)(self.get_abi() as *const _ as *mut _, credential.get(), containerName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4312,17 +4312,17 @@ RT_INTERFACE!{static interface IKeyStorageProviderNamesStatics(IKeyStorageProvid
 impl IKeyStorageProviderNamesStatics {
     #[inline] pub fn get_software_key_storage_provider(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SoftwareKeyStorageProvider)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SoftwareKeyStorageProvider)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_smartcard_key_storage_provider(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SmartcardKeyStorageProvider)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SmartcardKeyStorageProvider)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_platform_key_storage_provider(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PlatformKeyStorageProvider)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PlatformKeyStorageProvider)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4333,7 +4333,7 @@ RT_INTERFACE!{static interface IKeyStorageProviderNamesStatics2(IKeyStorageProvi
 impl IKeyStorageProviderNamesStatics2 {
     #[inline] pub fn get_passport_key_storage_provider(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PassportKeyStorageProvider)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PassportKeyStorageProvider)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4357,65 +4357,65 @@ RT_INTERFACE!{interface IPfxImportParameters(IPfxImportParametersVtbl, IPfxImpor
 impl IPfxImportParameters {
     #[inline] pub fn get_exportable(&self) -> Result<ExportOption> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Exportable)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Exportable)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_exportable(&self, value: ExportOption) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Exportable)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Exportable)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_key_protection_level(&self) -> Result<KeyProtectionLevel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyProtectionLevel)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyProtectionLevel)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_key_protection_level(&self, value: KeyProtectionLevel) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_KeyProtectionLevel)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_KeyProtectionLevel)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_install_options(&self) -> Result<InstallOptions> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_InstallOptions)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_InstallOptions)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_install_options(&self, value: InstallOptions) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_InstallOptions)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_InstallOptions)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_friendly_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FriendlyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FriendlyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_friendly_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_FriendlyName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_FriendlyName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_key_storage_provider_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeyStorageProviderName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeyStorageProviderName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_key_storage_provider_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_KeyStorageProviderName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_KeyStorageProviderName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_container_name_prefix(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ContainerNamePrefix)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ContainerNamePrefix)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_container_name_prefix(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ContainerNamePrefix)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_ContainerNamePrefix)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_reader_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ReaderName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ReaderName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_reader_name(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ReaderName)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_ReaderName)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4448,17 +4448,17 @@ RT_INTERFACE!{static interface IStandardCertificateStoreNamesStatics(IStandardCe
 impl IStandardCertificateStoreNamesStatics {
     #[inline] pub fn get_personal(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Personal)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Personal)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_trusted_root_certification_authorities(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TrustedRootCertificationAuthorities)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TrustedRootCertificationAuthorities)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_intermediate_certification_authorities(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IntermediateCertificationAuthorities)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IntermediateCertificationAuthorities)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4474,32 +4474,32 @@ RT_INTERFACE!{interface ISubjectAlternativeNameInfo(ISubjectAlternativeNameInfoV
 impl ISubjectAlternativeNameInfo {
     #[inline] pub fn get_email_name(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EmailName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EmailName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ip_address(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IPAddress)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IPAddress)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_url(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Url)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Url)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_dns_name(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DnsName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DnsName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_distinguished_name(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DistinguishedName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DistinguishedName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_principal_name(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrincipalName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrincipalName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4519,37 +4519,37 @@ RT_INTERFACE!{interface ISubjectAlternativeNameInfo2(ISubjectAlternativeNameInfo
 impl ISubjectAlternativeNameInfo2 {
     #[inline] pub fn get_email_names(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EmailNames)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EmailNames)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ip_addresses(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IPAddresses)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IPAddresses)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_urls(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Urls)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Urls)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_dns_names(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DnsNames)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DnsNames)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_distinguished_names(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DistinguishedNames)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DistinguishedNames)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_principal_names(&self) -> Result<Option<foundation::collections::IVector<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrincipalNames)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrincipalNames)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extension(&self) -> Result<Option<CertificateExtension>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Extension)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Extension)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CertificateExtension::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4563,22 +4563,22 @@ RT_INTERFACE!{interface IUserCertificateEnrollmentManager(IUserCertificateEnroll
 impl IUserCertificateEnrollmentManager {
     #[inline] pub fn create_request_async(&self, request: &CertificateRequestProperties) -> Result<foundation::IAsyncOperation<HString>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateRequestAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(request) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateRequestAsync)(self.get_abi() as *const _ as *mut _, request.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn install_certificate_async(&self, certificate: &HStringArg, installOption: InstallOptions) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).InstallCertificateAsync)(self.0.as_abi() as *const _ as *mut _, certificate.get(), installOption, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).InstallCertificateAsync)(self.get_abi() as *const _ as *mut _, certificate.get(), installOption, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn import_pfx_data_async(&self, pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ImportPfxDataAsync)(self.0.as_abi() as *const _ as *mut _, pfxData.get(), password.get(), exportable, keyProtectionLevel, installOption, friendlyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ImportPfxDataAsync)(self.get_abi() as *const _ as *mut _, pfxData.get(), password.get(), exportable, keyProtectionLevel, installOption, friendlyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn import_pfx_data_to_ksp_async(&self, pfxData: &HStringArg, password: &HStringArg, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: &HStringArg, keyStorageProvider: &HStringArg) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ImportPfxDataToKspAsync)(self.0.as_abi() as *const _ as *mut _, pfxData.get(), password.get(), exportable, keyProtectionLevel, installOption, friendlyName.get(), keyStorageProvider.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ImportPfxDataToKspAsync)(self.get_abi() as *const _ as *mut _, pfxData.get(), password.get(), exportable, keyProtectionLevel, installOption, friendlyName.get(), keyStorageProvider.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4590,7 +4590,7 @@ RT_INTERFACE!{interface IUserCertificateEnrollmentManager2(IUserCertificateEnrol
 impl IUserCertificateEnrollmentManager2 {
     #[inline] pub fn import_pfx_data_to_ksp_with_parameters_async(&self, pfxData: &HStringArg, password: &HStringArg, pfxImportParameters: &PfxImportParameters) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ImportPfxDataToKspWithParametersAsync)(self.0.as_abi() as *const _ as *mut _, pfxData.get(), password.get(), get_abi(pfxImportParameters) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ImportPfxDataToKspWithParametersAsync)(self.get_abi() as *const _ as *mut _, pfxData.get(), password.get(), pfxImportParameters.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -4603,17 +4603,17 @@ RT_INTERFACE!{interface IUserCertificateStore(IUserCertificateStoreVtbl, IUserCe
 impl IUserCertificateStore {
     #[inline] pub fn request_add_async(&self, certificate: &Certificate) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAddAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(certificate) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAddAsync)(self.get_abi() as *const _ as *mut _, certificate.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_delete_async(&self, certificate: &Certificate) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestDeleteAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(certificate) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestDeleteAsync)(self.get_abi() as *const _ as *mut _, certificate.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4714,92 +4714,92 @@ RT_INTERFACE!{static interface IAsymmetricAlgorithmNamesStatics(IAsymmetricAlgor
 impl IAsymmetricAlgorithmNamesStatics {
     #[inline] pub fn get_rsa_pkcs1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaPkcs1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaPkcs1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_oaep_sha1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaOaepSha1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaOaepSha1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_oaep_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaOaepSha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaOaepSha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_oaep_sha384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaOaepSha384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaOaepSha384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_oaep_sha512(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaOaepSha512)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaOaepSha512)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdsa_p256_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EcdsaP256Sha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EcdsaP256Sha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdsa_p384_sha384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EcdsaP384Sha384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EcdsaP384Sha384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdsa_p521_sha512(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EcdsaP521Sha512)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EcdsaP521Sha512)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_dsa_sha1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DsaSha1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DsaSha1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_dsa_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DsaSha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DsaSha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_sign_pkcs1_sha1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaSignPkcs1Sha1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaSignPkcs1Sha1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_sign_pkcs1_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaSignPkcs1Sha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaSignPkcs1Sha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_sign_pkcs1_sha384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaSignPkcs1Sha384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaSignPkcs1Sha384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_sign_pkcs1_sha512(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaSignPkcs1Sha512)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaSignPkcs1Sha512)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_sign_pss_sha1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaSignPssSha1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaSignPssSha1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_sign_pss_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaSignPssSha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaSignPssSha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_sign_pss_sha384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaSignPssSha384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaSignPssSha384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsa_sign_pss_sha512(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RsaSignPssSha512)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RsaSignPssSha512)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4812,17 +4812,17 @@ RT_INTERFACE!{static interface IAsymmetricAlgorithmNamesStatics2(IAsymmetricAlgo
 impl IAsymmetricAlgorithmNamesStatics2 {
     #[inline] pub fn get_ecdsa_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EcdsaSha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EcdsaSha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdsa_sha384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EcdsaSha384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EcdsaSha384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ecdsa_sha512(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EcdsaSha512)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EcdsaSha512)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4838,32 +4838,32 @@ RT_INTERFACE!{interface IAsymmetricKeyAlgorithmProvider(IAsymmetricKeyAlgorithmP
 impl IAsymmetricKeyAlgorithmProvider {
     #[inline] pub fn get_algorithm_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AlgorithmName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AlgorithmName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_key_pair(&self, keySize: u32) -> Result<Option<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateKeyPair)(self.0.as_abi() as *const _ as *mut _, keySize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateKeyPair)(self.get_abi() as *const _ as *mut _, keySize, &mut out);
         if hr == S_OK { Ok(CryptographicKey::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn import_default_private_key_blob(&self, keyBlob: &crate::windows::storage::streams::IBuffer) -> Result<Option<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ImportDefaultPrivateKeyBlob)(self.0.as_abi() as *const _ as *mut _, get_abi(keyBlob) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ImportDefaultPrivateKeyBlob)(self.get_abi() as *const _ as *mut _, keyBlob.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CryptographicKey::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn import_key_pair_with_blob_type(&self, keyBlob: &crate::windows::storage::streams::IBuffer, blobType: CryptographicPrivateKeyBlobType) -> Result<Option<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ImportKeyPairWithBlobType)(self.0.as_abi() as *const _ as *mut _, get_abi(keyBlob) as *const _ as *mut _, blobType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ImportKeyPairWithBlobType)(self.get_abi() as *const _ as *mut _, keyBlob.get_abi() as *const _ as *mut _, blobType, &mut out);
         if hr == S_OK { Ok(CryptographicKey::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn import_default_public_key_blob(&self, keyBlob: &crate::windows::storage::streams::IBuffer) -> Result<Option<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ImportDefaultPublicKeyBlob)(self.0.as_abi() as *const _ as *mut _, get_abi(keyBlob) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ImportDefaultPublicKeyBlob)(self.get_abi() as *const _ as *mut _, keyBlob.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CryptographicKey::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn import_public_key_with_blob_type(&self, keyBlob: &crate::windows::storage::streams::IBuffer, blobType: CryptographicPublicKeyBlobType) -> Result<Option<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ImportPublicKeyWithBlobType)(self.0.as_abi() as *const _ as *mut _, get_abi(keyBlob) as *const _ as *mut _, blobType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ImportPublicKeyWithBlobType)(self.get_abi() as *const _ as *mut _, keyBlob.get_abi() as *const _ as *mut _, blobType, &mut out);
         if hr == S_OK { Ok(CryptographicKey::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4883,12 +4883,12 @@ RT_INTERFACE!{interface IAsymmetricKeyAlgorithmProvider2(IAsymmetricKeyAlgorithm
 impl IAsymmetricKeyAlgorithmProvider2 {
     #[inline] pub fn create_key_pair_with_curve_name(&self, curveName: &HStringArg) -> Result<Option<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateKeyPairWithCurveName)(self.0.as_abi() as *const _ as *mut _, curveName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateKeyPairWithCurveName)(self.get_abi() as *const _ as *mut _, curveName.get(), &mut out);
         if hr == S_OK { Ok(CryptographicKey::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_key_pair_with_curve_parameters(&self, parameters: &[u8]) -> Result<Option<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateKeyPairWithCurveParameters)(self.0.as_abi() as *const _ as *mut _, parameters.len() as u32, parameters.as_ptr() as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateKeyPairWithCurveParameters)(self.get_abi() as *const _ as *mut _, parameters.len() as u32, parameters.as_ptr() as *mut _, &mut out);
         if hr == S_OK { Ok(CryptographicKey::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4899,7 +4899,7 @@ RT_INTERFACE!{static interface IAsymmetricKeyAlgorithmProviderStatics(IAsymmetri
 impl IAsymmetricKeyAlgorithmProviderStatics {
     #[inline] pub fn open_algorithm(&self, algorithm: &HStringArg) -> Result<Option<AsymmetricKeyAlgorithmProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).OpenAlgorithm)(self.0.as_abi() as *const _ as *mut _, algorithm.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).OpenAlgorithm)(self.get_abi() as *const _ as *mut _, algorithm.get(), &mut out);
         if hr == S_OK { Ok(AsymmetricKeyAlgorithmProvider::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4961,37 +4961,37 @@ RT_INTERFACE!{static interface ICryptographicEngineStatics(ICryptographicEngineS
 impl ICryptographicEngineStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn encrypt(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, iv: &crate::windows::storage::streams::IBuffer) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Encrypt)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(data) as *const _ as *mut _, get_abi(iv) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Encrypt)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, iv.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn decrypt(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, iv: &crate::windows::storage::streams::IBuffer) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Decrypt)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(data) as *const _ as *mut _, get_abi(iv) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Decrypt)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, iv.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn encrypt_and_authenticate(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, nonce: &crate::windows::storage::streams::IBuffer, authenticatedData: &crate::windows::storage::streams::IBuffer) -> Result<Option<EncryptedAndAuthenticatedData>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).EncryptAndAuthenticate)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(data) as *const _ as *mut _, get_abi(nonce) as *const _ as *mut _, get_abi(authenticatedData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).EncryptAndAuthenticate)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, nonce.get_abi() as *const _ as *mut _, authenticatedData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(EncryptedAndAuthenticatedData::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_and_authenticate(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, nonce: &crate::windows::storage::streams::IBuffer, authenticationTag: &crate::windows::storage::streams::IBuffer, authenticatedData: &crate::windows::storage::streams::IBuffer) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DecryptAndAuthenticate)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(data) as *const _ as *mut _, get_abi(nonce) as *const _ as *mut _, get_abi(authenticationTag) as *const _ as *mut _, get_abi(authenticatedData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DecryptAndAuthenticate)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, nonce.get_abi() as *const _ as *mut _, authenticationTag.get_abi() as *const _ as *mut _, authenticatedData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn sign(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Sign)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(data) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Sign)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, signature: &crate::windows::storage::streams::IBuffer) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).VerifySignature)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(data) as *const _ as *mut _, get_abi(signature) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).VerifySignature)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, signature.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn derive_key_material(&self, key: &CryptographicKey, parameters: &KeyDerivationParameters, desiredKeySize: u32) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DeriveKeyMaterial)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(parameters) as *const _ as *mut _, desiredKeySize, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DeriveKeyMaterial)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, parameters.get_abi() as *const _ as *mut _, desiredKeySize, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5006,27 +5006,27 @@ RT_INTERFACE!{static interface ICryptographicEngineStatics2(ICryptographicEngine
 impl ICryptographicEngineStatics2 {
     #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SignHashedData)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(data) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SignHashedData)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn verify_signature_with_hash_input(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, signature: &crate::windows::storage::streams::IBuffer) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).VerifySignatureWithHashInput)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(data) as *const _ as *mut _, get_abi(signature) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).VerifySignatureWithHashInput)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, signature.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn decrypt_async(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer, iv: &crate::windows::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DecryptAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(data) as *const _ as *mut _, get_abi(iv) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DecryptAsync)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, iv.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn sign_async(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SignAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(data) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SignAsync)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn sign_hashed_data_async(&self, key: &CryptographicKey, data: &crate::windows::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SignHashedDataAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(key) as *const _ as *mut _, get_abi(data) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SignHashedDataAsync)(self.get_abi() as *const _ as *mut _, key.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -5042,27 +5042,27 @@ RT_INTERFACE!{interface ICryptographicKey(ICryptographicKeyVtbl, ICryptographicK
 impl ICryptographicKey {
     #[inline] pub fn get_key_size(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KeySize)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KeySize)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn export_default_private_key_blob_type(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ExportDefaultPrivateKeyBlobType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ExportDefaultPrivateKeyBlobType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn export_private_key_with_blob_type(&self, blobType: CryptographicPrivateKeyBlobType) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ExportPrivateKeyWithBlobType)(self.0.as_abi() as *const _ as *mut _, blobType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ExportPrivateKeyWithBlobType)(self.get_abi() as *const _ as *mut _, blobType, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn export_default_public_key_blob_type(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ExportDefaultPublicKeyBlobType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ExportDefaultPublicKeyBlobType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn export_public_key_with_blob_type(&self, blobType: CryptographicPublicKeyBlobType) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ExportPublicKeyWithBlobType)(self.0.as_abi() as *const _ as *mut _, blobType, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ExportPublicKeyWithBlobType)(self.get_abi() as *const _ as *mut _, blobType, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5271,232 +5271,232 @@ RT_INTERFACE!{static interface IEccCurveNamesStatics(IEccCurveNamesStaticsVtbl, 
 impl IEccCurveNamesStatics {
     #[inline] pub fn get_brainpool_p160r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP160r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP160r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p160t1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP160t1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP160t1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p192r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP192r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP192r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p192t1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP192t1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP192t1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p224r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP224r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP224r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p224t1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP224t1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP224t1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p256r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP256r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP256r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p256t1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP256t1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP256t1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p320r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP320r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP320r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p320t1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP320t1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP320t1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p384r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP384r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP384r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p384t1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP384t1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP384t1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p512r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP512r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP512r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brainpool_p512t1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BrainpoolP512t1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BrainpoolP512t1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_curve_25519(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Curve25519)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Curve25519)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ec192wapi(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Ec192wapi)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Ec192wapi)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nist_p192(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NistP192)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NistP192)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nist_p224(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NistP224)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NistP224)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nist_p256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NistP256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NistP256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nist_p384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NistP384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NistP384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nist_p521(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NistP521)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NistP521)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nums_p256t1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NumsP256t1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NumsP256t1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nums_p384t1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NumsP384t1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NumsP384t1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nums_p512t1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_NumsP512t1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_NumsP512t1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sec_p160k1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SecP160k1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SecP160k1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sec_p160r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SecP160r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SecP160r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sec_p160r2(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SecP160r2)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SecP160r2)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sec_p192k1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SecP192k1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SecP192k1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sec_p192r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SecP192r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SecP192r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sec_p224k1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SecP224k1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SecP224k1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sec_p224r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SecP224r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SecP224r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sec_p256k1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SecP256k1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SecP256k1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sec_p256r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SecP256r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SecP256r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sec_p384r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SecP384r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SecP384r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sec_p521r1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SecP521r1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SecP521r1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_wtls7(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Wtls7)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Wtls7)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_wtls9(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Wtls9)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Wtls9)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_wtls12(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Wtls12)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Wtls12)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_x962p192v1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_X962P192v1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_X962P192v1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_x962p192v2(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_X962P192v2)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_X962P192v2)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_x962p192v3(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_X962P192v3)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_X962P192v3)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_x962p239v1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_X962P239v1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_X962P239v1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_x962p239v2(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_X962P239v2)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_X962P239v2)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_x962p239v3(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_X962P239v3)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_X962P239v3)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_x962p256v1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_X962P256v1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_X962P256v1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_all_ecc_curve_names(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AllEccCurveNames)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AllEccCurveNames)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5508,12 +5508,12 @@ RT_INTERFACE!{interface IEncryptedAndAuthenticatedData(IEncryptedAndAuthenticate
 impl IEncryptedAndAuthenticatedData {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_encrypted_data(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EncryptedData)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EncryptedData)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_authentication_tag(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AuthenticationTag)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AuthenticationTag)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5549,27 +5549,27 @@ RT_INTERFACE!{static interface IHashAlgorithmNamesStatics(IHashAlgorithmNamesSta
 impl IHashAlgorithmNamesStatics {
     #[inline] pub fn get_md5(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Md5)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Md5)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sha1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sha1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sha1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sha384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sha384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sha384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sha512(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sha512)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sha512)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5584,22 +5584,22 @@ RT_INTERFACE!{interface IHashAlgorithmProvider(IHashAlgorithmProviderVtbl, IHash
 impl IHashAlgorithmProvider {
     #[inline] pub fn get_algorithm_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AlgorithmName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AlgorithmName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hash_length(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HashLength)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HashLength)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn hash_data(&self, data: &crate::windows::storage::streams::IBuffer) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).HashData)(self.0.as_abi() as *const _ as *mut _, get_abi(data) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).HashData)(self.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_hash(&self) -> Result<Option<CryptographicHash>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateHash)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateHash)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CryptographicHash::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5618,7 +5618,7 @@ RT_INTERFACE!{static interface IHashAlgorithmProviderStatics(IHashAlgorithmProvi
 impl IHashAlgorithmProviderStatics {
     #[inline] pub fn open_algorithm(&self, algorithm: &HStringArg) -> Result<Option<HashAlgorithmProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).OpenAlgorithm)(self.0.as_abi() as *const _ as *mut _, algorithm.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).OpenAlgorithm)(self.get_abi() as *const _ as *mut _, algorithm.get(), &mut out);
         if hr == S_OK { Ok(HashAlgorithmProvider::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5629,12 +5629,12 @@ RT_INTERFACE!{interface IHashComputation(IHashComputationVtbl, IHashComputation_
 }}
 impl IHashComputation {
     #[cfg(feature="windows-storage")] #[inline] pub fn append(&self, data: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Append)(self.0.as_abi() as *const _ as *mut _, get_abi(data) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Append)(self.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_value_and_reset(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetValueAndReset)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetValueAndReset)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5725,77 +5725,77 @@ RT_INTERFACE!{static interface IKeyDerivationAlgorithmNamesStatics(IKeyDerivatio
 impl IKeyDerivationAlgorithmNamesStatics {
     #[inline] pub fn get_pbkdf2_md5(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Pbkdf2Md5)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Pbkdf2Md5)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pbkdf2_sha1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Pbkdf2Sha1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Pbkdf2Sha1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pbkdf2_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Pbkdf2Sha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Pbkdf2Sha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pbkdf2_sha384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Pbkdf2Sha384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Pbkdf2Sha384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pbkdf2_sha512(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Pbkdf2Sha512)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Pbkdf2Sha512)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sp800108_ctr_hmac_md5(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sp800108CtrHmacMd5)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sp800108CtrHmacMd5)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sp800108_ctr_hmac_sha1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sp800108CtrHmacSha1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sp800108CtrHmacSha1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sp800108_ctr_hmac_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sp800108CtrHmacSha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sp800108CtrHmacSha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sp800108_ctr_hmac_sha384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sp800108CtrHmacSha384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sp800108CtrHmacSha384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sp800108_ctr_hmac_sha512(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sp800108CtrHmacSha512)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sp800108CtrHmacSha512)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sp80056a_concat_md5(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sp80056aConcatMd5)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sp80056aConcatMd5)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sp80056a_concat_sha1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sp80056aConcatSha1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sp80056aConcatSha1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sp80056a_concat_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sp80056aConcatSha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sp80056aConcatSha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sp80056a_concat_sha384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sp80056aConcatSha384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sp80056aConcatSha384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sp80056a_concat_sha512(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Sp80056aConcatSha512)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Sp80056aConcatSha512)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5810,27 +5810,27 @@ RT_INTERFACE!{static interface IKeyDerivationAlgorithmNamesStatics2(IKeyDerivati
 impl IKeyDerivationAlgorithmNamesStatics2 {
     #[inline] pub fn get_capi_kdf_md5(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CapiKdfMd5)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CapiKdfMd5)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_capi_kdf_sha1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CapiKdfSha1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CapiKdfSha1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_capi_kdf_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CapiKdfSha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CapiKdfSha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_capi_kdf_sha384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CapiKdfSha384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CapiKdfSha384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_capi_kdf_sha512(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_CapiKdfSha512)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_CapiKdfSha512)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5842,12 +5842,12 @@ RT_INTERFACE!{interface IKeyDerivationAlgorithmProvider(IKeyDerivationAlgorithmP
 impl IKeyDerivationAlgorithmProvider {
     #[inline] pub fn get_algorithm_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AlgorithmName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AlgorithmName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_key(&self, keyMaterial: &crate::windows::storage::streams::IBuffer) -> Result<Option<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateKey)(self.0.as_abi() as *const _ as *mut _, get_abi(keyMaterial) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateKey)(self.get_abi() as *const _ as *mut _, keyMaterial.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CryptographicKey::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5866,7 +5866,7 @@ RT_INTERFACE!{static interface IKeyDerivationAlgorithmProviderStatics(IKeyDeriva
 impl IKeyDerivationAlgorithmProviderStatics {
     #[inline] pub fn open_algorithm(&self, algorithm: &HStringArg) -> Result<Option<KeyDerivationAlgorithmProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).OpenAlgorithm)(self.0.as_abi() as *const _ as *mut _, algorithm.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).OpenAlgorithm)(self.get_abi() as *const _ as *mut _, algorithm.get(), &mut out);
         if hr == S_OK { Ok(KeyDerivationAlgorithmProvider::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5881,16 +5881,16 @@ RT_INTERFACE!{interface IKeyDerivationParameters(IKeyDerivationParametersVtbl, I
 impl IKeyDerivationParameters {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_kdf_generic_binary(&self) -> Result<Option<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_KdfGenericBinary)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_KdfGenericBinary)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(crate::windows::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn set_kdf_generic_binary(&self, value: &crate::windows::storage::streams::IBuffer) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_KdfGenericBinary)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).put_KdfGenericBinary)(self.get_abi() as *const _ as *mut _, value.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_iteration_count(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IterationCount)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IterationCount)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -5920,11 +5920,11 @@ RT_INTERFACE!{interface IKeyDerivationParameters2(IKeyDerivationParameters2Vtbl,
 impl IKeyDerivationParameters2 {
     #[inline] pub fn get_capi1_kdf_target_algorithm(&self) -> Result<Capi1KdfTargetAlgorithm> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Capi1KdfTargetAlgorithm)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Capi1KdfTargetAlgorithm)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_capi1_kdf_target_algorithm(&self, value: Capi1KdfTargetAlgorithm) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Capi1KdfTargetAlgorithm)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Capi1KdfTargetAlgorithm)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -5937,17 +5937,17 @@ RT_INTERFACE!{static interface IKeyDerivationParametersStatics(IKeyDerivationPar
 impl IKeyDerivationParametersStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn build_for_pbkdf2(&self, pbkdf2Salt: &crate::windows::storage::streams::IBuffer, iterationCount: u32) -> Result<Option<KeyDerivationParameters>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).BuildForPbkdf2)(self.0.as_abi() as *const _ as *mut _, get_abi(pbkdf2Salt) as *const _ as *mut _, iterationCount, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).BuildForPbkdf2)(self.get_abi() as *const _ as *mut _, pbkdf2Salt.get_abi() as *const _ as *mut _, iterationCount, &mut out);
         if hr == S_OK { Ok(KeyDerivationParameters::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp800108(&self, label: &crate::windows::storage::streams::IBuffer, context: &crate::windows::storage::streams::IBuffer) -> Result<Option<KeyDerivationParameters>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).BuildForSP800108)(self.0.as_abi() as *const _ as *mut _, get_abi(label) as *const _ as *mut _, get_abi(context) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).BuildForSP800108)(self.get_abi() as *const _ as *mut _, label.get_abi() as *const _ as *mut _, context.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(KeyDerivationParameters::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn build_for_sp80056a(&self, algorithmId: &crate::windows::storage::streams::IBuffer, partyUInfo: &crate::windows::storage::streams::IBuffer, partyVInfo: &crate::windows::storage::streams::IBuffer, suppPubInfo: &crate::windows::storage::streams::IBuffer, suppPrivInfo: &crate::windows::storage::streams::IBuffer) -> Result<Option<KeyDerivationParameters>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).BuildForSP80056a)(self.0.as_abi() as *const _ as *mut _, get_abi(algorithmId) as *const _ as *mut _, get_abi(partyUInfo) as *const _ as *mut _, get_abi(partyVInfo) as *const _ as *mut _, get_abi(suppPubInfo) as *const _ as *mut _, get_abi(suppPrivInfo) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).BuildForSP80056a)(self.get_abi() as *const _ as *mut _, algorithmId.get_abi() as *const _ as *mut _, partyUInfo.get_abi() as *const _ as *mut _, partyVInfo.get_abi() as *const _ as *mut _, suppPubInfo.get_abi() as *const _ as *mut _, suppPrivInfo.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(KeyDerivationParameters::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5958,7 +5958,7 @@ RT_INTERFACE!{static interface IKeyDerivationParametersStatics2(IKeyDerivationPa
 impl IKeyDerivationParametersStatics2 {
     #[inline] pub fn build_for_capi1_kdf(&self, capi1KdfTargetAlgorithm: Capi1KdfTargetAlgorithm) -> Result<Option<KeyDerivationParameters>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).BuildForCapi1Kdf)(self.0.as_abi() as *const _ as *mut _, capi1KdfTargetAlgorithm, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).BuildForCapi1Kdf)(self.get_abi() as *const _ as *mut _, capi1KdfTargetAlgorithm, &mut out);
         if hr == S_OK { Ok(KeyDerivationParameters::wrap(out)) } else { err(hr) }
     }}
 }
@@ -5997,32 +5997,32 @@ RT_INTERFACE!{static interface IMacAlgorithmNamesStatics(IMacAlgorithmNamesStati
 impl IMacAlgorithmNamesStatics {
     #[inline] pub fn get_hmac_md5(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HmacMd5)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HmacMd5)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hmac_sha1(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HmacSha1)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HmacSha1)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hmac_sha256(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HmacSha256)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HmacSha256)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hmac_sha384(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HmacSha384)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HmacSha384)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hmac_sha512(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_HmacSha512)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_HmacSha512)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_aes_cmac(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AesCmac)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AesCmac)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6035,17 +6035,17 @@ RT_INTERFACE!{interface IMacAlgorithmProvider(IMacAlgorithmProviderVtbl, IMacAlg
 impl IMacAlgorithmProvider {
     #[inline] pub fn get_algorithm_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AlgorithmName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AlgorithmName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mac_length(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MacLength)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MacLength)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_key(&self, keyMaterial: &crate::windows::storage::streams::IBuffer) -> Result<Option<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateKey)(self.0.as_abi() as *const _ as *mut _, get_abi(keyMaterial) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateKey)(self.get_abi() as *const _ as *mut _, keyMaterial.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CryptographicKey::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6064,7 +6064,7 @@ RT_INTERFACE!{interface IMacAlgorithmProvider2(IMacAlgorithmProvider2Vtbl, IMacA
 impl IMacAlgorithmProvider2 {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_hash(&self, keyMaterial: &crate::windows::storage::streams::IBuffer) -> Result<Option<CryptographicHash>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateHash)(self.0.as_abi() as *const _ as *mut _, get_abi(keyMaterial) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateHash)(self.get_abi() as *const _ as *mut _, keyMaterial.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CryptographicHash::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6075,7 +6075,7 @@ RT_INTERFACE!{static interface IMacAlgorithmProviderStatics(IMacAlgorithmProvide
 impl IMacAlgorithmProviderStatics {
     #[inline] pub fn open_algorithm(&self, algorithm: &HStringArg) -> Result<Option<MacAlgorithmProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).OpenAlgorithm)(self.0.as_abi() as *const _ as *mut _, algorithm.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).OpenAlgorithm)(self.get_abi() as *const _ as *mut _, algorithm.get(), &mut out);
         if hr == S_OK { Ok(MacAlgorithmProvider::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6098,12 +6098,12 @@ RT_INTERFACE!{static interface IPersistedKeyProviderStatics(IPersistedKeyProvide
 impl IPersistedKeyProviderStatics {
     #[inline] pub fn open_key_pair_from_certificate_async(&self, certificate: &super::certificates::Certificate, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<foundation::IAsyncOperation<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).OpenKeyPairFromCertificateAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(certificate) as *const _ as *mut _, hashAlgorithmName.get(), padding, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).OpenKeyPairFromCertificateAsync)(self.get_abi() as *const _ as *mut _, certificate.get_abi() as *const _ as *mut _, hashAlgorithmName.get(), padding, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn open_public_key_from_certificate(&self, certificate: &super::certificates::Certificate, hashAlgorithmName: &HStringArg, padding: CryptographicPadding) -> Result<Option<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).OpenPublicKeyFromCertificate)(self.0.as_abi() as *const _ as *mut _, get_abi(certificate) as *const _ as *mut _, hashAlgorithmName.get(), padding, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).OpenPublicKeyFromCertificate)(self.get_abi() as *const _ as *mut _, certificate.get_abi() as *const _ as *mut _, hashAlgorithmName.get(), padding, &mut out);
         if hr == S_OK { Ok(CryptographicKey::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6194,97 +6194,97 @@ RT_INTERFACE!{static interface ISymmetricAlgorithmNamesStatics(ISymmetricAlgorit
 impl ISymmetricAlgorithmNamesStatics {
     #[inline] pub fn get_des_cbc(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DesCbc)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DesCbc)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_des_ecb(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DesEcb)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DesEcb)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_triple_des_cbc(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TripleDesCbc)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TripleDesCbc)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_triple_des_ecb(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TripleDesEcb)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TripleDesEcb)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rc2_cbc(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Rc2Cbc)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Rc2Cbc)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rc2_ecb(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Rc2Ecb)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Rc2Ecb)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_aes_cbc(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AesCbc)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AesCbc)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_aes_ecb(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AesEcb)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AesEcb)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_aes_gcm(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AesGcm)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AesGcm)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_aes_ccm(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AesCcm)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AesCcm)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_aes_cbc_pkcs7(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AesCbcPkcs7)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AesCbcPkcs7)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_aes_ecb_pkcs7(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AesEcbPkcs7)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AesEcbPkcs7)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_des_cbc_pkcs7(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DesCbcPkcs7)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DesCbcPkcs7)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_des_ecb_pkcs7(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DesEcbPkcs7)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DesEcbPkcs7)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_triple_des_cbc_pkcs7(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TripleDesCbcPkcs7)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TripleDesCbcPkcs7)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_triple_des_ecb_pkcs7(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TripleDesEcbPkcs7)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TripleDesEcbPkcs7)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rc2_cbc_pkcs7(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Rc2CbcPkcs7)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Rc2CbcPkcs7)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rc2_ecb_pkcs7(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Rc2EcbPkcs7)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Rc2EcbPkcs7)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rc4(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Rc4)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Rc4)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6297,17 +6297,17 @@ RT_INTERFACE!{interface ISymmetricKeyAlgorithmProvider(ISymmetricKeyAlgorithmPro
 impl ISymmetricKeyAlgorithmProvider {
     #[inline] pub fn get_algorithm_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_AlgorithmName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_AlgorithmName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_block_length(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_BlockLength)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_BlockLength)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_symmetric_key(&self, keyMaterial: &crate::windows::storage::streams::IBuffer) -> Result<Option<CryptographicKey>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateSymmetricKey)(self.0.as_abi() as *const _ as *mut _, get_abi(keyMaterial) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateSymmetricKey)(self.get_abi() as *const _ as *mut _, keyMaterial.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(CryptographicKey::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6326,7 +6326,7 @@ RT_INTERFACE!{static interface ISymmetricKeyAlgorithmProviderStatics(ISymmetricK
 impl ISymmetricKeyAlgorithmProviderStatics {
     #[inline] pub fn open_algorithm(&self, algorithm: &HStringArg) -> Result<Option<SymmetricKeyAlgorithmProvider>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).OpenAlgorithm)(self.0.as_abi() as *const _ as *mut _, algorithm.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).OpenAlgorithm)(self.get_abi() as *const _ as *mut _, algorithm.get(), &mut out);
         if hr == S_OK { Ok(SymmetricKeyAlgorithmProvider::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6343,22 +6343,22 @@ RT_INTERFACE!{interface IDataProtectionProvider(IDataProtectionProviderVtbl, IDa
 impl IDataProtectionProvider {
     #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, data: &crate::windows::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ProtectAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(data) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ProtectAsync)(self.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(&self, data: &crate::windows::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UnprotectAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(data) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UnprotectAsync)(self.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn protect_stream_async(&self, src: &crate::windows::storage::streams::IInputStream, dest: &crate::windows::storage::streams::IOutputStream) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ProtectStreamAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(src) as *const _ as *mut _, get_abi(dest) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ProtectStreamAsync)(self.get_abi() as *const _ as *mut _, src.get_abi() as *const _ as *mut _, dest.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_stream_async(&self, src: &crate::windows::storage::streams::IInputStream, dest: &crate::windows::storage::streams::IOutputStream) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UnprotectStreamAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(src) as *const _ as *mut _, get_abi(dest) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UnprotectStreamAsync)(self.get_abi() as *const _ as *mut _, src.get_abi() as *const _ as *mut _, dest.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6378,7 +6378,7 @@ RT_INTERFACE!{static interface IDataProtectionProviderFactory(IDataProtectionPro
 impl IDataProtectionProviderFactory {
     #[inline] pub fn create_overload_explicit(&self, protectionDescriptor: &HStringArg) -> Result<DataProtectionProvider> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateOverloadExplicit)(self.0.as_abi() as *const _ as *mut _, protectionDescriptor.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateOverloadExplicit)(self.get_abi() as *const _ as *mut _, protectionDescriptor.get(), &mut out);
         if hr == S_OK { Ok(DataProtectionProvider::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6395,12 +6395,12 @@ RT_INTERFACE!{interface IBufferProtectUnprotectResult(IBufferProtectUnprotectRes
 impl IBufferProtectUnprotectResult {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_buffer(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Buffer)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Buffer)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_protection_info(&self) -> Result<Option<DataProtectionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProtectionInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProtectionInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DataProtectionInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6413,12 +6413,12 @@ RT_INTERFACE!{interface IDataProtectionInfo(IDataProtectionInfoVtbl, IDataProtec
 impl IDataProtectionInfo {
     #[inline] pub fn get_status(&self) -> Result<DataProtectionStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_identity(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Identity)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Identity)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6458,32 +6458,32 @@ RT_INTERFACE!{static interface IDataProtectionManagerStatics(IDataProtectionMana
 impl IDataProtectionManagerStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, data: &super::super::storage::streams::IBuffer, identity: &HStringArg) -> Result<foundation::IAsyncOperation<BufferProtectUnprotectResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ProtectAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(data) as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ProtectAsync)(self.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(&self, data: &super::super::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<BufferProtectUnprotectResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UnprotectAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(data) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UnprotectAsync)(self.get_abi() as *const _ as *mut _, data.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn protect_stream_async(&self, unprotectedStream: &super::super::storage::streams::IInputStream, identity: &HStringArg, protectedStream: &super::super::storage::streams::IOutputStream) -> Result<foundation::IAsyncOperation<DataProtectionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ProtectStreamAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(unprotectedStream) as *const _ as *mut _, identity.get(), get_abi(protectedStream) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ProtectStreamAsync)(self.get_abi() as *const _ as *mut _, unprotectedStream.get_abi() as *const _ as *mut _, identity.get(), protectedStream.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_stream_async(&self, protectedStream: &super::super::storage::streams::IInputStream, unprotectedStream: &super::super::storage::streams::IOutputStream) -> Result<foundation::IAsyncOperation<DataProtectionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UnprotectStreamAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(protectedStream) as *const _ as *mut _, get_abi(unprotectedStream) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UnprotectStreamAsync)(self.get_abi() as *const _ as *mut _, protectedStream.get_abi() as *const _ as *mut _, unprotectedStream.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_protection_info_async(&self, protectedData: &super::super::storage::streams::IBuffer) -> Result<foundation::IAsyncOperation<DataProtectionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetProtectionInfoAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(protectedData) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetProtectionInfoAsync)(self.get_abi() as *const _ as *mut _, protectedData.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_stream_protection_info_async(&self, protectedStream: &super::super::storage::streams::IInputStream) -> Result<foundation::IAsyncOperation<DataProtectionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetStreamProtectionInfoAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(protectedStream) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetStreamProtectionInfoAsync)(self.get_abi() as *const _ as *mut _, protectedStream.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6502,17 +6502,17 @@ RT_INTERFACE!{interface IFileProtectionInfo(IFileProtectionInfoVtbl, IFileProtec
 impl IFileProtectionInfo {
     #[inline] pub fn get_status(&self) -> Result<FileProtectionStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_roamable(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsRoamable)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsRoamable)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_identity(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Identity)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Identity)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6524,7 +6524,7 @@ RT_INTERFACE!{interface IFileProtectionInfo2(IFileProtectionInfo2Vtbl, IFileProt
 impl IFileProtectionInfo2 {
     #[inline] pub fn get_is_protect_while_open_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsProtectWhileOpenSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsProtectWhileOpenSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6584,37 +6584,37 @@ RT_INTERFACE!{static interface IFileProtectionManagerStatics(IFileProtectionMana
 impl IFileProtectionManagerStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, target: &super::super::storage::IStorageItem, identity: &HStringArg) -> Result<foundation::IAsyncOperation<FileProtectionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ProtectAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(target) as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ProtectAsync)(self.get_abi() as *const _ as *mut _, target.get_abi() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn copy_protection_async(&self, source: &super::super::storage::IStorageItem, target: &super::super::storage::IStorageItem) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CopyProtectionAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(source) as *const _ as *mut _, get_abi(target) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CopyProtectionAsync)(self.get_abi() as *const _ as *mut _, source.get_abi() as *const _ as *mut _, target.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_protection_info_async(&self, source: &super::super::storage::IStorageItem) -> Result<foundation::IAsyncOperation<FileProtectionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetProtectionInfoAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(source) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetProtectionInfoAsync)(self.get_abi() as *const _ as *mut _, source.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn save_file_as_container_async(&self, protectedFile: &super::super::storage::IStorageFile) -> Result<foundation::IAsyncOperation<ProtectedContainerExportResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SaveFileAsContainerAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(protectedFile) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SaveFileAsContainerAsync)(self.get_abi() as *const _ as *mut _, protectedFile.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_async(&self, containerFile: &super::super::storage::IStorageFile) -> Result<foundation::IAsyncOperation<ProtectedContainerImportResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadFileFromContainerAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(containerFile) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadFileFromContainerAsync)(self.get_abi() as *const _ as *mut _, containerFile.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_with_target_async(&self, containerFile: &super::super::storage::IStorageFile, target: &super::super::storage::IStorageItem) -> Result<foundation::IAsyncOperation<ProtectedContainerImportResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadFileFromContainerWithTargetAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(containerFile) as *const _ as *mut _, get_abi(target) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadFileFromContainerWithTargetAsync)(self.get_abi() as *const _ as *mut _, containerFile.get_abi() as *const _ as *mut _, target.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn create_protected_and_open_async(&self, parentFolder: &super::super::storage::IStorageFolder, desiredName: &HStringArg, identity: &HStringArg, collisionOption: super::super::storage::CreationCollisionOption) -> Result<foundation::IAsyncOperation<ProtectedFileCreateResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateProtectedAndOpenAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(parentFolder) as *const _ as *mut _, desiredName.get(), identity.get(), collisionOption, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateProtectedAndOpenAsync)(self.get_abi() as *const _ as *mut _, parentFolder.get_abi() as *const _ as *mut _, desiredName.get(), identity.get(), collisionOption, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6627,17 +6627,17 @@ RT_INTERFACE!{static interface IFileProtectionManagerStatics2(IFileProtectionMan
 impl IFileProtectionManagerStatics2 {
     #[cfg(feature="windows-storage")] #[inline] pub fn is_container_async(&self, file: &super::super::storage::IStorageFile) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).IsContainerAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(file) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsContainerAsync)(self.get_abi() as *const _ as *mut _, file.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn load_file_from_container_with_target_and_name_collision_option_async(&self, containerFile: &super::super::storage::IStorageFile, target: &super::super::storage::IStorageItem, collisionOption: super::super::storage::NameCollisionOption) -> Result<foundation::IAsyncOperation<ProtectedContainerImportResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).LoadFileFromContainerWithTargetAndNameCollisionOptionAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(containerFile) as *const _ as *mut _, get_abi(target) as *const _ as *mut _, collisionOption, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).LoadFileFromContainerWithTargetAndNameCollisionOptionAsync)(self.get_abi() as *const _ as *mut _, containerFile.get_abi() as *const _ as *mut _, target.get_abi() as *const _ as *mut _, collisionOption, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn save_file_as_container_with_sharing_async(&self, protectedFile: &super::super::storage::IStorageFile, sharedWithIdentities: &foundation::collections::IIterable<HString>) -> Result<foundation::IAsyncOperation<ProtectedContainerExportResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SaveFileAsContainerWithSharingAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(protectedFile) as *const _ as *mut _, get_abi(sharedWithIdentities) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SaveFileAsContainerWithSharingAsync)(self.get_abi() as *const _ as *mut _, protectedFile.get_abi() as *const _ as *mut _, sharedWithIdentities.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6649,12 +6649,12 @@ RT_INTERFACE!{static interface IFileProtectionManagerStatics3(IFileProtectionMan
 impl IFileProtectionManagerStatics3 {
     #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_async(&self, target: &super::super::storage::IStorageItem) -> Result<foundation::IAsyncOperation<FileProtectionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UnprotectAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(target) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UnprotectAsync)(self.get_abi() as *const _ as *mut _, target.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn unprotect_with_options_async(&self, target: &super::super::storage::IStorageItem, options: &FileUnprotectOptions) -> Result<foundation::IAsyncOperation<FileProtectionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UnprotectWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(target) as *const _ as *mut _, get_abi(options) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UnprotectWithOptionsAsync)(self.get_abi() as *const _ as *mut _, target.get_abi() as *const _ as *mut _, options.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6688,21 +6688,21 @@ RT_INTERFACE!{static interface IFileRevocationManagerStatics(IFileRevocationMana
 impl IFileRevocationManagerStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn protect_async(&self, storageItem: &super::super::storage::IStorageItem, enterpriseIdentity: &HStringArg) -> Result<foundation::IAsyncOperation<FileProtectionStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ProtectAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(storageItem) as *const _ as *mut _, enterpriseIdentity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ProtectAsync)(self.get_abi() as *const _ as *mut _, storageItem.get_abi() as *const _ as *mut _, enterpriseIdentity.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn copy_protection_async(&self, sourceStorageItem: &super::super::storage::IStorageItem, targetStorageItem: &super::super::storage::IStorageItem) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CopyProtectionAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(sourceStorageItem) as *const _ as *mut _, get_abi(targetStorageItem) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CopyProtectionAsync)(self.get_abi() as *const _ as *mut _, sourceStorageItem.get_abi() as *const _ as *mut _, targetStorageItem.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn revoke(&self, enterpriseIdentity: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Revoke)(self.0.as_abi() as *const _ as *mut _, enterpriseIdentity.get());
+        let hr = ((*self.get_abi().lpVtbl).Revoke)(self.get_abi() as *const _ as *mut _, enterpriseIdentity.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_status_async(&self, storageItem: &super::super::storage::IStorageItem) -> Result<foundation::IAsyncOperation<FileProtectionStatus>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetStatusAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(storageItem) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetStatusAsync)(self.get_abi() as *const _ as *mut _, storageItem.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6713,12 +6713,12 @@ RT_INTERFACE!{interface IFileUnprotectOptions(IFileUnprotectOptionsVtbl, IFileUn
 }}
 impl IFileUnprotectOptions {
     #[inline] pub fn set_audit(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Audit)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Audit)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_audit(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Audit)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Audit)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -6737,7 +6737,7 @@ RT_INTERFACE!{static interface IFileUnprotectOptionsFactory(IFileUnprotectOption
 impl IFileUnprotectOptionsFactory {
     #[inline] pub fn create(&self, audit: bool) -> Result<FileUnprotectOptions> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, audit, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, audit, &mut out);
         if hr == S_OK { Ok(FileUnprotectOptions::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6748,7 +6748,7 @@ RT_INTERFACE!{interface IProtectedAccessResumedEventArgs(IProtectedAccessResumed
 impl IProtectedAccessResumedEventArgs {
     #[inline] pub fn get_identities(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Identities)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Identities)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6762,17 +6762,17 @@ RT_INTERFACE!{interface IProtectedAccessSuspendingEventArgs(IProtectedAccessSusp
 impl IProtectedAccessSuspendingEventArgs {
     #[inline] pub fn get_identities(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Identities)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Identities)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deadline(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Deadline)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Deadline)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_deferral(&self) -> Result<Option<foundation::Deferral>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDeferral)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDeferral)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::Deferral::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6785,12 +6785,12 @@ RT_INTERFACE!{interface IProtectedContainerExportResult(IProtectedContainerExpor
 impl IProtectedContainerExportResult {
     #[inline] pub fn get_status(&self) -> Result<ProtectedImportExportStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_file(&self) -> Result<Option<super::super::storage::StorageFile>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_File)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_File)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::StorageFile::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6803,12 +6803,12 @@ RT_INTERFACE!{interface IProtectedContainerImportResult(IProtectedContainerImpor
 impl IProtectedContainerImportResult {
     #[inline] pub fn get_status(&self) -> Result<ProtectedImportExportStatus> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_file(&self) -> Result<Option<super::super::storage::StorageFile>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_File)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_File)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::StorageFile::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6820,7 +6820,7 @@ RT_INTERFACE!{interface IProtectedContentRevokedEventArgs(IProtectedContentRevok
 impl IProtectedContentRevokedEventArgs {
     #[inline] pub fn get_identities(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Identities)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Identities)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6836,17 +6836,17 @@ RT_INTERFACE!{interface IProtectedFileCreateResult(IProtectedFileCreateResultVtb
 impl IProtectedFileCreateResult {
     #[cfg(feature="windows-storage")] #[inline] pub fn get_file(&self) -> Result<Option<super::super::storage::StorageFile>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_File)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_File)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::StorageFile::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_stream(&self) -> Result<Option<super::super::storage::streams::IRandomAccessStream>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Stream)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Stream)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IRandomAccessStream::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_protection_info(&self) -> Result<Option<FileProtectionInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ProtectionInfo)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ProtectionInfo)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(FileProtectionInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6870,39 +6870,39 @@ RT_INTERFACE!{interface IProtectionPolicyAuditInfo(IProtectionPolicyAuditInfoVtb
 }}
 impl IProtectionPolicyAuditInfo {
     #[inline] pub fn set_action(&self, value: ProtectionPolicyAuditAction) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Action)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Action)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_action(&self) -> Result<ProtectionPolicyAuditAction> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Action)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Action)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_data_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DataDescription)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_DataDescription)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_data_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DataDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DataDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_source_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_SourceDescription)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_SourceDescription)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_source_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SourceDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SourceDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_target_description(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_TargetDescription)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_TargetDescription)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_target_description(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_TargetDescription)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_TargetDescription)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -6925,12 +6925,12 @@ RT_INTERFACE!{static interface IProtectionPolicyAuditInfoFactory(IProtectionPoli
 impl IProtectionPolicyAuditInfoFactory {
     #[inline] pub fn create(&self, action: ProtectionPolicyAuditAction, dataDescription: &HStringArg, sourceDescription: &HStringArg, targetDescription: &HStringArg) -> Result<ProtectionPolicyAuditInfo> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, action, dataDescription.get(), sourceDescription.get(), targetDescription.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).Create)(self.get_abi() as *const _ as *mut _, action, dataDescription.get(), sourceDescription.get(), targetDescription.get(), &mut out);
         if hr == S_OK { Ok(ProtectionPolicyAuditInfo::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_with_action_and_data_description(&self, action: ProtectionPolicyAuditAction, dataDescription: &HStringArg) -> Result<ProtectionPolicyAuditInfo> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateWithActionAndDataDescription)(self.0.as_abi() as *const _ as *mut _, action, dataDescription.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateWithActionAndDataDescription)(self.get_abi() as *const _ as *mut _, action, dataDescription.get(), &mut out);
         if hr == S_OK { Ok(ProtectionPolicyAuditInfo::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -6944,12 +6944,12 @@ RT_INTERFACE!{interface IProtectionPolicyManager(IProtectionPolicyManagerVtbl, I
 }}
 impl IProtectionPolicyManager {
     #[inline] pub fn set_identity(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Identity)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Identity)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_identity(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Identity)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Identity)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -7088,12 +7088,12 @@ RT_INTERFACE!{interface IProtectionPolicyManager2(IProtectionPolicyManager2Vtbl,
 }}
 impl IProtectionPolicyManager2 {
     #[inline] pub fn set_show_enterprise_indicator(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ShowEnterpriseIndicator)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ShowEnterpriseIndicator)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_show_enterprise_indicator(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ShowEnterpriseIndicator)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ShowEnterpriseIndicator)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -7119,72 +7119,72 @@ RT_INTERFACE!{static interface IProtectionPolicyManagerStatics(IProtectionPolicy
 impl IProtectionPolicyManagerStatics {
     #[inline] pub fn is_identity_managed(&self, identity: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsIdentityManaged)(self.0.as_abi() as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsIdentityManaged)(self.get_abi() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn try_apply_process_ui_policy(&self, identity: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).TryApplyProcessUIPolicy)(self.0.as_abi() as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryApplyProcessUIPolicy)(self.get_abi() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn clear_process_ui_policy(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ClearProcessUIPolicy)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).ClearProcessUIPolicy)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn create_current_thread_network_context(&self, identity: &HStringArg) -> Result<Option<ThreadNetworkContext>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateCurrentThreadNetworkContext)(self.0.as_abi() as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateCurrentThreadNetworkContext)(self.get_abi() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(ThreadNetworkContext::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-networking")] #[inline] pub fn get_primary_managed_identity_for_network_endpoint_async(&self, endpointHost: &super::super::networking::HostName) -> Result<foundation::IAsyncOperation<HString>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPrimaryManagedIdentityForNetworkEndpointAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(endpointHost) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPrimaryManagedIdentityForNetworkEndpointAsync)(self.get_abi() as *const _ as *mut _, endpointHost.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn revoke_content(&self, identity: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).RevokeContent)(self.0.as_abi() as *const _ as *mut _, identity.get());
+        let hr = ((*self.get_abi().lpVtbl).RevokeContent)(self.get_abi() as *const _ as *mut _, identity.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_for_current_view(&self) -> Result<Option<ProtectionPolicyManager>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetForCurrentView)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetForCurrentView)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(ProtectionPolicyManager::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_protected_access_suspending(&self, handler: &foundation::EventHandler<ProtectedAccessSuspendingEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_ProtectedAccessSuspending)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_ProtectedAccessSuspending)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_protected_access_suspending(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_ProtectedAccessSuspending)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_ProtectedAccessSuspending)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_protected_access_resumed(&self, handler: &foundation::EventHandler<ProtectedAccessResumedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_ProtectedAccessResumed)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_ProtectedAccessResumed)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_protected_access_resumed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_ProtectedAccessResumed)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_ProtectedAccessResumed)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_protected_content_revoked(&self, handler: &foundation::EventHandler<ProtectedContentRevokedEventArgs>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_ProtectedContentRevoked)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_ProtectedContentRevoked)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_protected_content_revoked(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_ProtectedContentRevoked)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_ProtectedContentRevoked)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn check_access(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg) -> Result<ProtectionPolicyEvaluationResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).CheckAccess)(self.0.as_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CheckAccess)(self.get_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn request_access_async(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessAsync)(self.0.as_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessAsync)(self.get_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -7203,46 +7203,46 @@ RT_INTERFACE!{static interface IProtectionPolicyManagerStatics2(IProtectionPolic
 impl IProtectionPolicyManagerStatics2 {
     #[inline] pub fn has_content_been_revoked_since(&self, identity: &HStringArg, since: foundation::DateTime) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).HasContentBeenRevokedSince)(self.0.as_abi() as *const _ as *mut _, identity.get(), since, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).HasContentBeenRevokedSince)(self.get_abi() as *const _ as *mut _, identity.get(), since, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn check_access_for_app(&self, sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg) -> Result<ProtectionPolicyEvaluationResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).CheckAccessForApp)(self.0.as_abi() as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CheckAccessForApp)(self.get_abi() as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn request_access_for_app_async(&self, sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessForAppAsync)(self.0.as_abi() as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessForAppAsync)(self.get_abi() as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_enforcement_level(&self, identity: &HStringArg) -> Result<EnforcementLevel> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetEnforcementLevel)(self.0.as_abi() as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetEnforcementLevel)(self.get_abi() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_user_decryption_allowed(&self, identity: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsUserDecryptionAllowed)(self.0.as_abi() as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsUserDecryptionAllowed)(self.get_abi() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_protection_under_lock_required(&self, identity: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsProtectionUnderLockRequired)(self.0.as_abi() as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsProtectionUnderLockRequired)(self.get_abi() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn add_policy_changed(&self, handler: &foundation::EventHandler<IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_PolicyChanged)(self.0.as_abi() as *const _ as *mut _, get_abi(handler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_PolicyChanged)(self.get_abi() as *const _ as *mut _, handler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_policy_changed(&self, token: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_PolicyChanged)(self.0.as_abi() as *const _ as *mut _, token);
+        let hr = ((*self.get_abi().lpVtbl).remove_PolicyChanged)(self.get_abi() as *const _ as *mut _, token);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_protection_enabled(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsProtectionEnabled)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsProtectionEnabled)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -7257,26 +7257,26 @@ RT_INTERFACE!{static interface IProtectionPolicyManagerStatics3(IProtectionPolic
 impl IProtectionPolicyManagerStatics3 {
     #[inline] pub fn request_access_with_auditing_info_async(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessWithAuditingInfoAsync)(self.0.as_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), get_abi(auditInfo) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessWithAuditingInfoAsync)(self.get_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_access_with_message_async(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessWithMessageAsync)(self.0.as_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), get_abi(auditInfo) as *const _ as *mut _, messageFromApp.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessWithMessageAsync)(self.get_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo.get_abi() as *const _ as *mut _, messageFromApp.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_access_for_app_with_auditing_info_async(&self, sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessForAppWithAuditingInfoAsync)(self.0.as_abi() as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), get_abi(auditInfo) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessForAppWithAuditingInfoAsync)(self.get_abi() as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), auditInfo.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_access_for_app_with_message_async(&self, sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessForAppWithMessageAsync)(self.0.as_abi() as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), get_abi(auditInfo) as *const _ as *mut _, messageFromApp.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessForAppWithMessageAsync)(self.get_abi() as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), auditInfo.get_abi() as *const _ as *mut _, messageFromApp.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn log_audit_event(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).LogAuditEvent)(self.0.as_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), get_abi(auditInfo) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).LogAuditEvent)(self.get_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -7303,57 +7303,57 @@ RT_INTERFACE!{static interface IProtectionPolicyManagerStatics4(IProtectionPolic
 impl IProtectionPolicyManagerStatics4 {
     #[inline] pub fn is_roamable_protection_enabled(&self, identity: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsRoamableProtectionEnabled)(self.0.as_abi() as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsRoamableProtectionEnabled)(self.get_abi() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn request_access_with_behavior_async(&self, sourceIdentity: &HStringArg, targetIdentity: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessWithBehaviorAsync)(self.0.as_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), get_abi(auditInfo) as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessWithBehaviorAsync)(self.get_abi() as *const _ as *mut _, sourceIdentity.get(), targetIdentity.get(), auditInfo.get_abi() as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_access_for_app_with_behavior_async(&self, sourceIdentity: &HStringArg, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessForAppWithBehaviorAsync)(self.0.as_abi() as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), get_abi(auditInfo) as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessForAppWithBehaviorAsync)(self.get_abi() as *const _ as *mut _, sourceIdentity.get(), appPackageFamilyName.get(), auditInfo.get_abi() as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_async(&self, sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessToFilesForAppAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(sourceItemList) as *const _ as *mut _, appPackageFamilyName.get(), get_abi(auditInfo) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessToFilesForAppAsync)(self.get_abi() as *const _ as *mut _, sourceItemList.get_abi() as *const _ as *mut _, appPackageFamilyName.get(), auditInfo.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_app_with_message_and_behavior_async(&self, sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, appPackageFamilyName: &HStringArg, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessToFilesForAppWithMessageAndBehaviorAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(sourceItemList) as *const _ as *mut _, appPackageFamilyName.get(), get_abi(auditInfo) as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessToFilesForAppWithMessageAndBehaviorAsync)(self.get_abi() as *const _ as *mut _, sourceItemList.get_abi() as *const _ as *mut _, appPackageFamilyName.get(), auditInfo.get_abi() as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_async(&self, sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, processId: u32, auditInfo: &ProtectionPolicyAuditInfo) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessToFilesForProcessAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(sourceItemList) as *const _ as *mut _, processId, get_abi(auditInfo) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessToFilesForProcessAsync)(self.get_abi() as *const _ as *mut _, sourceItemList.get_abi() as *const _ as *mut _, processId, auditInfo.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn request_access_to_files_for_process_with_message_and_behavior_async(&self, sourceItemList: &foundation::collections::IIterable<super::super::storage::IStorageItem>, processId: u32, auditInfo: &ProtectionPolicyAuditInfo, messageFromApp: &HStringArg, behavior: ProtectionPolicyRequestAccessBehavior) -> Result<foundation::IAsyncOperation<ProtectionPolicyEvaluationResult>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAccessToFilesForProcessWithMessageAndBehaviorAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(sourceItemList) as *const _ as *mut _, processId, get_abi(auditInfo) as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAccessToFilesForProcessWithMessageAndBehaviorAsync)(self.get_abi() as *const _ as *mut _, sourceItemList.get_abi() as *const _ as *mut _, processId, auditInfo.get_abi() as *const _ as *mut _, messageFromApp.get(), behavior, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_async(&self, target: &super::super::storage::IStorageItem, identity: &HStringArg) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).IsFileProtectionRequiredAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(target) as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsFileProtectionRequiredAsync)(self.get_abi() as *const _ as *mut _, target.get_abi() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn is_file_protection_required_for_new_file_async(&self, parentFolder: &super::super::storage::IStorageFolder, identity: &HStringArg, desiredName: &HStringArg) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).IsFileProtectionRequiredForNewFileAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(parentFolder) as *const _ as *mut _, identity.get(), desiredName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsFileProtectionRequiredForNewFileAsync)(self.get_abi() as *const _ as *mut _, parentFolder.get_abi() as *const _ as *mut _, identity.get(), desiredName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_primary_managed_identity(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PrimaryManagedIdentity)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PrimaryManagedIdentity)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_primary_managed_identity_for_identity(&self, identity: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPrimaryManagedIdentityForIdentity)(self.0.as_abi() as *const _ as *mut _, identity.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPrimaryManagedIdentityForIdentity)(self.get_abi() as *const _ as *mut _, identity.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -7380,32 +7380,32 @@ RT_INTERFACE!{interface IEasClientDeviceInformation(IEasClientDeviceInformationV
 impl IEasClientDeviceInformation {
     #[inline] pub fn get_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_operating_system(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_OperatingSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_OperatingSystem)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_friendly_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_FriendlyName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_FriendlyName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_manufacturer(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemManufacturer)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemManufacturer)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_product_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemProductName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemProductName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_sku(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemSku)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemSku)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -7420,12 +7420,12 @@ RT_INTERFACE!{interface IEasClientDeviceInformation2(IEasClientDeviceInformation
 impl IEasClientDeviceInformation2 {
     #[inline] pub fn get_system_hardware_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemHardwareVersion)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemHardwareVersion)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_system_firmware_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SystemFirmwareVersion)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SystemFirmwareVersion)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -7453,84 +7453,84 @@ RT_INTERFACE!{interface IEasClientSecurityPolicy(IEasClientSecurityPolicyVtbl, I
 impl IEasClientSecurityPolicy {
     #[inline] pub fn get_require_encryption(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RequireEncryption)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RequireEncryption)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_require_encryption(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_RequireEncryption)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_RequireEncryption)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_min_password_length(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MinPasswordLength)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MinPasswordLength)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_min_password_length(&self, value: u8) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_MinPasswordLength)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_MinPasswordLength)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_disallow_convenience_logon(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisallowConvenienceLogon)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisallowConvenienceLogon)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_disallow_convenience_logon(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_DisallowConvenienceLogon)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_DisallowConvenienceLogon)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_min_password_complex_characters(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MinPasswordComplexCharacters)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MinPasswordComplexCharacters)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_min_password_complex_characters(&self, value: u8) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_MinPasswordComplexCharacters)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_MinPasswordComplexCharacters)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_password_expiration(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PasswordExpiration)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PasswordExpiration)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_password_expiration(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_PasswordExpiration)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_PasswordExpiration)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_password_history(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PasswordHistory)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PasswordHistory)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_password_history(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_PasswordHistory)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_PasswordHistory)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_password_failed_attempts(&self) -> Result<u8> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxPasswordFailedAttempts)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxPasswordFailedAttempts)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_max_password_failed_attempts(&self, value: u8) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_MaxPasswordFailedAttempts)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_MaxPasswordFailedAttempts)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_max_inactivity_time_lock(&self) -> Result<foundation::TimeSpan> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxInactivityTimeLock)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxInactivityTimeLock)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_max_inactivity_time_lock(&self, value: foundation::TimeSpan) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_MaxInactivityTimeLock)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_MaxInactivityTimeLock)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn check_compliance(&self) -> Result<Option<EasComplianceResults>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CheckCompliance)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CheckCompliance)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(EasComplianceResults::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn apply_async(&self) -> Result<foundation::IAsyncOperation<EasComplianceResults>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ApplyAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ApplyAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -7552,47 +7552,47 @@ RT_INTERFACE!{interface IEasComplianceResults(IEasComplianceResultsVtbl, IEasCom
 impl IEasComplianceResults {
     #[inline] pub fn get_compliant(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Compliant)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Compliant)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_require_encryption_result(&self) -> Result<EasRequireEncryptionResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_RequireEncryptionResult)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_RequireEncryptionResult)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_min_password_length_result(&self) -> Result<EasMinPasswordLengthResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MinPasswordLengthResult)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MinPasswordLengthResult)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_disallow_convenience_logon_result(&self) -> Result<EasDisallowConvenienceLogonResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisallowConvenienceLogonResult)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisallowConvenienceLogonResult)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_min_password_complex_characters_result(&self) -> Result<EasMinPasswordComplexCharactersResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MinPasswordComplexCharactersResult)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MinPasswordComplexCharactersResult)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_password_expiration_result(&self) -> Result<EasPasswordExpirationResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PasswordExpirationResult)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PasswordExpirationResult)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_password_history_result(&self) -> Result<EasPasswordHistoryResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PasswordHistoryResult)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PasswordHistoryResult)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_max_password_failed_attempts_result(&self) -> Result<EasMaxPasswordFailedAttemptsResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxPasswordFailedAttemptsResult)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxPasswordFailedAttemptsResult)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_max_inactivity_time_lock_result(&self) -> Result<EasMaxInactivityTimeLockResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MaxInactivityTimeLockResult)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MaxInactivityTimeLockResult)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -7604,7 +7604,7 @@ RT_INTERFACE!{interface IEasComplianceResults2(IEasComplianceResults2Vtbl, IEasC
 impl IEasComplianceResults2 {
     #[inline] pub fn get_encryption_provider_type(&self) -> Result<EasEncryptionProviderType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_EncryptionProviderType)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_EncryptionProviderType)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }

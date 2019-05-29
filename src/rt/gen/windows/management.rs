@@ -18,61 +18,61 @@ RT_INTERFACE!{interface IMdmAlert(IMdmAlertVtbl, IMdmAlert_Abi): IInspectable(II
 impl IMdmAlert {
     #[inline] pub fn get_data(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Data)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Data)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_data(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Data)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Data)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_format(&self) -> Result<MdmAlertDataType> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Format)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Format)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_format(&self, value: MdmAlertDataType) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Format)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Format)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_mark(&self) -> Result<MdmAlertMark> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Mark)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Mark)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_mark(&self, value: MdmAlertMark) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Mark)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_Mark)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_source(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Source)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Source)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_source(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Source)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Source)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_status(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Status)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Status)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_target(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Target)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Target)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_target(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Target)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Target)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_type(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Type)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Type)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_type(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_Type)(self.0.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.get_abi().lpVtbl).put_Type)(self.get_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -99,41 +99,41 @@ RT_INTERFACE!{interface IMdmSession(IMdmSessionVtbl, IMdmSession_Abi): IInspecta
 impl IMdmSession {
     #[inline] pub fn get_alerts(&self) -> Result<Option<foundation::collections::IVectorView<MdmAlert>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Alerts)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Alerts)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExtendedError)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExtendedError)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Id)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Id)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_state(&self) -> Result<MdmSessionState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_State)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_State)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn attach_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AttachAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AttachAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).Delete)(self.0.as_abi() as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).Delete)(self.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn start_async(&self) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StartAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StartAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn start_with_alerts_async(&self, alerts: &foundation::collections::IIterable<MdmAlert>) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StartWithAlertsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(alerts) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StartWithAlertsAsync)(self.get_abi() as *const _ as *mut _, alerts.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -165,21 +165,21 @@ RT_INTERFACE!{static interface IMdmSessionManagerStatics(IMdmSessionManagerStati
 impl IMdmSessionManagerStatics {
     #[inline] pub fn get_session_ids(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SessionIds)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SessionIds)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn try_create_session(&self) -> Result<Option<MdmSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).TryCreateSession)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).TryCreateSession)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(MdmSession::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn delete_session_by_id(&self, sessionId: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).DeleteSessionById)(self.0.as_abi() as *const _ as *mut _, sessionId.get());
+        let hr = ((*self.get_abi().lpVtbl).DeleteSessionById)(self.get_abi() as *const _ as *mut _, sessionId.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_session_by_id(&self, sessionId: &HStringArg) -> Result<Option<MdmSession>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetSessionById)(self.0.as_abi() as *const _ as *mut _, sessionId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetSessionById)(self.get_abi() as *const _ as *mut _, sessionId.get(), &mut out);
         if hr == S_OK { Ok(MdmSession::wrap(out)) } else { err(hr) }
     }}
 }
@@ -207,7 +207,7 @@ RT_INTERFACE!{static interface IApplicationDataManagerStatics(IApplicationDataMa
 impl IApplicationDataManagerStatics {
     #[cfg(feature="windows-storage")] #[inline] pub fn create_for_package_family(&self, packageFamilyName: &HStringArg) -> Result<Option<super::super::storage::ApplicationData>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CreateForPackageFamily)(self.0.as_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CreateForPackageFamily)(self.get_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(super::super::storage::ApplicationData::wrap(out)) } else { err(hr) }
     }}
 }
@@ -235,17 +235,17 @@ RT_INTERFACE!{interface IDeploymentResult(IDeploymentResultVtbl, IDeploymentResu
 impl IDeploymentResult {
     #[inline] pub fn get_error_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ErrorText)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ErrorText)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_activity_id(&self) -> Result<Guid> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ActivityId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ActivityId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_extended_error_code(&self) -> Result<foundation::HResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ExtendedErrorCode)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ExtendedErrorCode)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -257,7 +257,7 @@ RT_INTERFACE!{interface IDeploymentResult2(IDeploymentResult2Vtbl, IDeploymentRe
 impl IDeploymentResult2 {
     #[inline] pub fn get_is_registered(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsRegistered)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsRegistered)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -286,81 +286,81 @@ RT_INTERFACE!{interface IPackageManager(IPackageManagerVtbl, IPackageManager_Abi
 impl IPackageManager {
     #[inline] pub fn add_package_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddPackageAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, deploymentOptions, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddPackageAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn update_package_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).UpdatePackageAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, deploymentOptions, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).UpdatePackageAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_package_async(&self, packageFullName: &HStringArg) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RemovePackageAsync)(self.0.as_abi() as *const _ as *mut _, packageFullName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RemovePackageAsync)(self.get_abi() as *const _ as *mut _, packageFullName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn stage_package_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StagePackageAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StagePackageAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn register_package_async(&self, manifestUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RegisterPackageAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(manifestUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, deploymentOptions, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RegisterPackageAsync)(self.get_abi() as *const _ as *mut _, manifestUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages(&self) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackages)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id(&self, userSecurityId: &HStringArg) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityId)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityId)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_name_publisher(&self, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByNamePublisher)(self.0.as_abi() as *const _ as *mut _, packageName.get(), packagePublisher.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByNamePublisher)(self.get_abi() as *const _ as *mut _, packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id_name_publisher(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityIdNamePublisher)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityIdNamePublisher)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_users(&self, packageFullName: &HStringArg) -> Result<Option<foundation::collections::IIterable<PackageUserInformation>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindUsers)(self.0.as_abi() as *const _ as *mut _, packageFullName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindUsers)(self.get_abi() as *const _ as *mut _, packageFullName.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_package_state(&self, packageFullName: &HStringArg, packageState: PackageState) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetPackageState)(self.0.as_abi() as *const _ as *mut _, packageFullName.get(), packageState);
+        let hr = ((*self.get_abi().lpVtbl).SetPackageState)(self.get_abi() as *const _ as *mut _, packageFullName.get(), packageState);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_package_by_package_full_name(&self, packageFullName: &HStringArg) -> Result<Option<super::super::applicationmodel::Package>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackageByPackageFullName)(self.0.as_abi() as *const _ as *mut _, packageFullName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackageByPackageFullName)(self.get_abi() as *const _ as *mut _, packageFullName.get(), &mut out);
         if hr == S_OK { Ok(super::super::applicationmodel::Package::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn cleanup_package_for_user_async(&self, packageName: &HStringArg, userSecurityId: &HStringArg) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).CleanupPackageForUserAsync)(self.0.as_abi() as *const _ as *mut _, packageName.get(), userSecurityId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).CleanupPackageForUserAsync)(self.get_abi() as *const _ as *mut _, packageName.get(), userSecurityId.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByPackageFamilyName)(self.0.as_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByPackageFamilyName)(self.get_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id_package_family_name(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityIdPackageFamilyName)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityIdPackageFamilyName)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_package_by_user_security_id_package_full_name(&self, userSecurityId: &HStringArg, packageFullName: &HStringArg) -> Result<Option<super::super::applicationmodel::Package>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackageByUserSecurityIdPackageFullName)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageFullName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackageByUserSecurityIdPackageFullName)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageFullName.get(), &mut out);
         if hr == S_OK { Ok(super::super::applicationmodel::Package::wrap(out)) } else { err(hr) }
     }}
 }
@@ -389,52 +389,52 @@ RT_INTERFACE!{interface IPackageManager2(IPackageManager2Vtbl, IPackageManager2_
 impl IPackageManager2 {
     #[inline] pub fn remove_package_with_options_async(&self, packageFullName: &HStringArg, removalOptions: RemovalOptions) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RemovePackageWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, packageFullName.get(), removalOptions, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RemovePackageWithOptionsAsync)(self.get_abi() as *const _ as *mut _, packageFullName.get(), removalOptions, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn stage_package_with_options_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StagePackageWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, deploymentOptions, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StagePackageWithOptionsAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn register_package_by_full_name_async(&self, mainPackageFullName: &HStringArg, dependencyPackageFullNames: &foundation::collections::IIterable<HString>, deploymentOptions: DeploymentOptions) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RegisterPackageByFullNameAsync)(self.0.as_abi() as *const _ as *mut _, mainPackageFullName.get(), get_abi(dependencyPackageFullNames) as *const _ as *mut _, deploymentOptions, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RegisterPackageByFullNameAsync)(self.get_abi() as *const _ as *mut _, mainPackageFullName.get(), dependencyPackageFullNames.get_abi() as *const _ as *mut _, deploymentOptions, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_with_package_types(&self, packageTypes: PackageTypes) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesWithPackageTypes)(self.0.as_abi() as *const _ as *mut _, packageTypes, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesWithPackageTypes)(self.get_abi() as *const _ as *mut _, packageTypes, &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityIdWithPackageTypes)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageTypes, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityIdWithPackageTypes)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_name_publisher_with_package_types(&self, packageName: &HStringArg, packagePublisher: &HStringArg, packageTypes: PackageTypes) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByNamePublisherWithPackageTypes)(self.0.as_abi() as *const _ as *mut _, packageName.get(), packagePublisher.get(), packageTypes, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByNamePublisherWithPackageTypes)(self.get_abi() as *const _ as *mut _, packageName.get(), packagePublisher.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id_name_publisher_with_package_types(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg, packageTypes: PackageTypes) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityIdNamePublisherWithPackageTypes)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), packageTypes, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityIdNamePublisherWithPackageTypes)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_package_family_name_with_package_types(&self, packageFamilyName: &HStringArg, packageTypes: PackageTypes) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByPackageFamilyNameWithPackageTypes)(self.0.as_abi() as *const _ as *mut _, packageFamilyName.get(), packageTypes, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByPackageFamilyNameWithPackageTypes)(self.get_abi() as *const _ as *mut _, packageFamilyName.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id_package_family_name_with_package_types(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg, packageTypes: PackageTypes) -> Result<Option<foundation::collections::IIterable<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityIdPackageFamilyNameWithPackageTypes)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), packageTypes, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityIdPackageFamilyNameWithPackageTypes)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn stage_user_data_async(&self, packageFullName: &HStringArg) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StageUserDataAsync)(self.0.as_abi() as *const _ as *mut _, packageFullName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StageUserDataAsync)(self.get_abi() as *const _ as *mut _, packageFullName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -459,74 +459,74 @@ RT_INTERFACE!{interface IPackageManager3(IPackageManager3Vtbl, IPackageManager3_
 impl IPackageManager3 {
     #[inline] pub fn add_package_volume_async(&self, packageStorePath: &HStringArg) -> Result<foundation::IAsyncOperation<PackageVolume>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddPackageVolumeAsync)(self.0.as_abi() as *const _ as *mut _, packageStorePath.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddPackageVolumeAsync)(self.get_abi() as *const _ as *mut _, packageStorePath.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_package_to_volume_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddPackageToVolumeAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, deploymentOptions, get_abi(targetVolume) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddPackageToVolumeAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, deploymentOptions, targetVolume.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn clear_package_status(&self, packageFullName: &HStringArg, status: PackageStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).ClearPackageStatus)(self.0.as_abi() as *const _ as *mut _, packageFullName.get(), status);
+        let hr = ((*self.get_abi().lpVtbl).ClearPackageStatus)(self.get_abi() as *const _ as *mut _, packageFullName.get(), status);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn register_package_with_app_data_volume_async(&self, manifestUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, appDataVolume: &PackageVolume) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RegisterPackageWithAppDataVolumeAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(manifestUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, deploymentOptions, get_abi(appDataVolume) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RegisterPackageWithAppDataVolumeAsync)(self.get_abi() as *const _ as *mut _, manifestUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, deploymentOptions, appDataVolume.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_package_volume_by_name(&self, volumeName: &HStringArg) -> Result<Option<PackageVolume>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackageVolumeByName)(self.0.as_abi() as *const _ as *mut _, volumeName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackageVolumeByName)(self.get_abi() as *const _ as *mut _, volumeName.get(), &mut out);
         if hr == S_OK { Ok(PackageVolume::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn find_package_volumes(&self) -> Result<Option<foundation::collections::IIterable<PackageVolume>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackageVolumes)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackageVolumes)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IIterable::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_default_package_volume(&self) -> Result<Option<PackageVolume>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDefaultPackageVolume)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDefaultPackageVolume)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PackageVolume::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn move_package_to_volume_async(&self, packageFullName: &HStringArg, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).MovePackageToVolumeAsync)(self.0.as_abi() as *const _ as *mut _, packageFullName.get(), deploymentOptions, get_abi(targetVolume) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).MovePackageToVolumeAsync)(self.get_abi() as *const _ as *mut _, packageFullName.get(), deploymentOptions, targetVolume.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn remove_package_volume_async(&self, volume: &PackageVolume) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RemovePackageVolumeAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(volume) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RemovePackageVolumeAsync)(self.get_abi() as *const _ as *mut _, volume.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_default_package_volume(&self, volume: &PackageVolume) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetDefaultPackageVolume)(self.0.as_abi() as *const _ as *mut _, get_abi(volume) as *const _ as *mut _);
+        let hr = ((*self.get_abi().lpVtbl).SetDefaultPackageVolume)(self.get_abi() as *const _ as *mut _, volume.get_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_package_status(&self, packageFullName: &HStringArg, status: PackageStatus) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).SetPackageStatus)(self.0.as_abi() as *const _ as *mut _, packageFullName.get(), status);
+        let hr = ((*self.get_abi().lpVtbl).SetPackageStatus)(self.get_abi() as *const _ as *mut _, packageFullName.get(), status);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_package_volume_offline_async(&self, packageVolume: &PackageVolume) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetPackageVolumeOfflineAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageVolume) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetPackageVolumeOfflineAsync)(self.get_abi() as *const _ as *mut _, packageVolume.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_package_volume_online_async(&self, packageVolume: &PackageVolume) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetPackageVolumeOnlineAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageVolume) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetPackageVolumeOnlineAsync)(self.get_abi() as *const _ as *mut _, packageVolume.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn stage_package_to_volume_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StagePackageToVolumeAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, deploymentOptions, get_abi(targetVolume) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StagePackageToVolumeAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, deploymentOptions, targetVolume.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn stage_user_data_with_options_async(&self, packageFullName: &HStringArg, deploymentOptions: DeploymentOptions) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StageUserDataWithOptionsAsync)(self.0.as_abi() as *const _ as *mut _, packageFullName.get(), deploymentOptions, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StageUserDataWithOptionsAsync)(self.get_abi() as *const _ as *mut _, packageFullName.get(), deploymentOptions, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -537,7 +537,7 @@ RT_INTERFACE!{interface IPackageManager4(IPackageManager4Vtbl, IPackageManager4_
 impl IPackageManager4 {
     #[inline] pub fn get_package_volumes_async(&self) -> Result<foundation::IAsyncOperation<foundation::collections::IVectorView<PackageVolume>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPackageVolumesAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPackageVolumesAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -551,22 +551,22 @@ RT_INTERFACE!{interface IPackageManager5(IPackageManager5Vtbl, IPackageManager5_
 impl IPackageManager5 {
     #[inline] pub fn add_package_to_volume_and_optional_packages_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, externalPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddPackageToVolumeAndOptionalPackagesAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, deploymentOptions, get_abi(targetVolume) as *const _ as *mut _, get_abi(optionalPackageFamilyNames) as *const _ as *mut _, get_abi(externalPackageUris) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddPackageToVolumeAndOptionalPackagesAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, deploymentOptions, targetVolume.get_abi() as *const _ as *mut _, optionalPackageFamilyNames.get_abi() as *const _ as *mut _, externalPackageUris.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn stage_package_to_volume_and_optional_packages_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, externalPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StagePackageToVolumeAndOptionalPackagesAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, deploymentOptions, get_abi(targetVolume) as *const _ as *mut _, get_abi(optionalPackageFamilyNames) as *const _ as *mut _, get_abi(externalPackageUris) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StagePackageToVolumeAndOptionalPackagesAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, deploymentOptions, targetVolume.get_abi() as *const _ as *mut _, optionalPackageFamilyNames.get_abi() as *const _ as *mut _, externalPackageUris.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn register_package_by_family_name_and_optional_packages_async(&self, mainPackageFamilyName: &HStringArg, dependencyPackageFamilyNames: &foundation::collections::IIterable<HString>, deploymentOptions: DeploymentOptions, appDataVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RegisterPackageByFamilyNameAndOptionalPackagesAsync)(self.0.as_abi() as *const _ as *mut _, mainPackageFamilyName.get(), get_abi(dependencyPackageFamilyNames) as *const _ as *mut _, deploymentOptions, get_abi(appDataVolume) as *const _ as *mut _, get_abi(optionalPackageFamilyNames) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RegisterPackageByFamilyNameAndOptionalPackagesAsync)(self.get_abi() as *const _ as *mut _, mainPackageFamilyName.get(), dependencyPackageFamilyNames.get_abi() as *const _ as *mut _, deploymentOptions, appDataVolume.get_abi() as *const _ as *mut _, optionalPackageFamilyNames.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_debug_settings(&self) -> Result<Option<PackageManagerDebugSettings>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DebugSettings)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DebugSettings)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PackageManagerDebugSettings::wrap(out)) } else { err(hr) }
     }}
 }
@@ -582,32 +582,32 @@ RT_INTERFACE!{interface IPackageManager6(IPackageManager6Vtbl, IPackageManager6_
 impl IPackageManager6 {
     #[inline] pub fn provision_package_for_all_users_async(&self, packageFamilyName: &HStringArg) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).ProvisionPackageForAllUsersAsync)(self.0.as_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).ProvisionPackageForAllUsersAsync)(self.get_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_package_by_app_installer_file_async(&self, appInstallerFileUri: &foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: &PackageVolume) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddPackageByAppInstallerFileAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(appInstallerFileUri) as *const _ as *mut _, options, get_abi(targetVolume) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddPackageByAppInstallerFileAsync)(self.get_abi() as *const _ as *mut _, appInstallerFileUri.get_abi() as *const _ as *mut _, options, targetVolume.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_add_package_by_app_installer_file_async(&self, appInstallerFileUri: &foundation::Uri, options: AddPackageByAppInstallerOptions, targetVolume: &PackageVolume) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAddPackageByAppInstallerFileAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(appInstallerFileUri) as *const _ as *mut _, options, get_abi(targetVolume) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAddPackageByAppInstallerFileAsync)(self.get_abi() as *const _ as *mut _, appInstallerFileUri.get_abi() as *const _ as *mut _, options, targetVolume.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_package_to_volume_and_related_set_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, options: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, packageUrisToInstall: &foundation::collections::IIterable<foundation::Uri>, relatedPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).AddPackageToVolumeAndRelatedSetAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, options, get_abi(targetVolume) as *const _ as *mut _, get_abi(optionalPackageFamilyNames) as *const _ as *mut _, get_abi(packageUrisToInstall) as *const _ as *mut _, get_abi(relatedPackageUris) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).AddPackageToVolumeAndRelatedSetAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, options, targetVolume.get_abi() as *const _ as *mut _, optionalPackageFamilyNames.get_abi() as *const _ as *mut _, packageUrisToInstall.get_abi() as *const _ as *mut _, relatedPackageUris.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn stage_package_to_volume_and_related_set_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, options: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, packageUrisToInstall: &foundation::collections::IIterable<foundation::Uri>, relatedPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).StagePackageToVolumeAndRelatedSetAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, options, get_abi(targetVolume) as *const _ as *mut _, get_abi(optionalPackageFamilyNames) as *const _ as *mut _, get_abi(packageUrisToInstall) as *const _ as *mut _, get_abi(relatedPackageUris) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).StagePackageToVolumeAndRelatedSetAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, options, targetVolume.get_abi() as *const _ as *mut _, optionalPackageFamilyNames.get_abi() as *const _ as *mut _, packageUrisToInstall.get_abi() as *const _ as *mut _, relatedPackageUris.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn request_add_package_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, relatedPackageUris: &foundation::collections::IIterable<foundation::Uri>) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAddPackageAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, deploymentOptions, get_abi(targetVolume) as *const _ as *mut _, get_abi(optionalPackageFamilyNames) as *const _ as *mut _, get_abi(relatedPackageUris) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAddPackageAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, deploymentOptions, targetVolume.get_abi() as *const _ as *mut _, optionalPackageFamilyNames.get_abi() as *const _ as *mut _, relatedPackageUris.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -618,7 +618,7 @@ RT_INTERFACE!{interface IPackageManager7(IPackageManager7Vtbl, IPackageManager7_
 impl IPackageManager7 {
     #[inline] pub fn request_add_package_and_related_set_async(&self, packageUri: &foundation::Uri, dependencyPackageUris: &foundation::collections::IIterable<foundation::Uri>, deploymentOptions: DeploymentOptions, targetVolume: &PackageVolume, optionalPackageFamilyNames: &foundation::collections::IIterable<HString>, relatedPackageUris: &foundation::collections::IIterable<foundation::Uri>, packageUrisToInstall: &foundation::collections::IIterable<foundation::Uri>) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).RequestAddPackageAndRelatedSetAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(packageUri) as *const _ as *mut _, get_abi(dependencyPackageUris) as *const _ as *mut _, deploymentOptions, get_abi(targetVolume) as *const _ as *mut _, get_abi(optionalPackageFamilyNames) as *const _ as *mut _, get_abi(relatedPackageUris) as *const _ as *mut _, get_abi(packageUrisToInstall) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).RequestAddPackageAndRelatedSetAsync)(self.get_abi() as *const _ as *mut _, packageUri.get_abi() as *const _ as *mut _, dependencyPackageUris.get_abi() as *const _ as *mut _, deploymentOptions, targetVolume.get_abi() as *const _ as *mut _, optionalPackageFamilyNames.get_abi() as *const _ as *mut _, relatedPackageUris.get_abi() as *const _ as *mut _, packageUrisToInstall.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -629,7 +629,7 @@ RT_INTERFACE!{interface IPackageManager8(IPackageManager8Vtbl, IPackageManager8_
 impl IPackageManager8 {
     #[inline] pub fn deprovision_package_for_all_users_async(&self, packageFamilyName: &HStringArg) -> Result<foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).DeprovisionPackageForAllUsersAsync)(self.0.as_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).DeprovisionPackageForAllUsersAsync)(self.get_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperationWithProgress::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -641,12 +641,12 @@ RT_INTERFACE!{interface IPackageManagerDebugSettings(IPackageManagerDebugSetting
 impl IPackageManagerDebugSettings {
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn set_content_group_state_async(&self, package: &super::super::applicationmodel::Package, contentGroupName: &HStringArg, state: super::super::applicationmodel::PackageContentGroupState) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetContentGroupStateAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(package) as *const _ as *mut _, contentGroupName.get(), state, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetContentGroupStateAsync)(self.get_abi() as *const _ as *mut _, package.get_abi() as *const _ as *mut _, contentGroupName.get(), state, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn set_content_group_state_with_percentage_async(&self, package: &super::super::applicationmodel::Package, contentGroupName: &HStringArg, state: super::super::applicationmodel::PackageContentGroupState, completionPercentage: f64) -> Result<foundation::IAsyncAction> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SetContentGroupStateWithPercentageAsync)(self.0.as_abi() as *const _ as *mut _, get_abi(package) as *const _ as *mut _, contentGroupName.get(), state, completionPercentage, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SetContentGroupStateWithPercentageAsync)(self.get_abi() as *const _ as *mut _, package.get_abi() as *const _ as *mut _, contentGroupName.get(), state, completionPercentage, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncAction::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -668,12 +668,12 @@ RT_INTERFACE!{interface IPackageUserInformation(IPackageUserInformationVtbl, IPa
 impl IPackageUserInformation {
     #[inline] pub fn get_user_security_id(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_UserSecurityId)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_UserSecurityId)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_install_state(&self) -> Result<PackageInstallState> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_InstallState)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_InstallState)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -704,102 +704,102 @@ RT_INTERFACE!{interface IPackageVolume(IPackageVolumeVtbl, IPackageVolume_Abi): 
 impl IPackageVolume {
     #[inline] pub fn get_is_offline(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsOffline)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsOffline)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_system_volume(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsSystemVolume)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsSystemVolume)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_mount_point(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_MountPoint)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_MountPoint)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_package_store_path(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_PackageStorePath)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_PackageStorePath)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_supports_hard_links(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_SupportsHardLinks)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_SupportsHardLinks)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages(&self) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackages)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_name_publisher(&self, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByNamePublisher)(self.0.as_abi() as *const _ as *mut _, packageName.get(), packagePublisher.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByNamePublisher)(self.get_abi() as *const _ as *mut _, packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_package_family_name(&self, packageFamilyName: &HStringArg) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByPackageFamilyName)(self.0.as_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByPackageFamilyName)(self.get_abi() as *const _ as *mut _, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_with_package_types(&self, packageTypes: PackageTypes) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesWithPackageTypes)(self.0.as_abi() as *const _ as *mut _, packageTypes, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesWithPackageTypes)(self.get_abi() as *const _ as *mut _, packageTypes, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_name_publisher_with_packages_types(&self, packageTypes: PackageTypes, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByNamePublisherWithPackagesTypes)(self.0.as_abi() as *const _ as *mut _, packageTypes, packageName.get(), packagePublisher.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByNamePublisherWithPackagesTypes)(self.get_abi() as *const _ as *mut _, packageTypes, packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_package_family_name_with_package_types(&self, packageTypes: PackageTypes, packageFamilyName: &HStringArg) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByPackageFamilyNameWithPackageTypes)(self.0.as_abi() as *const _ as *mut _, packageTypes, packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByPackageFamilyNameWithPackageTypes)(self.get_abi() as *const _ as *mut _, packageTypes, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_package_by_package_full_name(&self, packageFullName: &HStringArg) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackageByPackageFullName)(self.0.as_abi() as *const _ as *mut _, packageFullName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackageByPackageFullName)(self.get_abi() as *const _ as *mut _, packageFullName.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id(&self, userSecurityId: &HStringArg) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityId)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityId)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id_name_publisher(&self, userSecurityId: &HStringArg, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityIdNamePublisher)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityIdNamePublisher)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id_package_family_name(&self, userSecurityId: &HStringArg, packageFamilyName: &HStringArg) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityIdPackageFamilyName)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityIdPackageFamilyName)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityIdWithPackageTypes)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageTypes, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityIdWithPackageTypes)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageTypes, &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id_name_publisher_with_package_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes, packageName: &HStringArg, packagePublisher: &HStringArg) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityIdNamePublisherWithPackageTypes)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageTypes, packageName.get(), packagePublisher.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityIdNamePublisherWithPackageTypes)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageTypes, packageName.get(), packagePublisher.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_packages_by_user_security_id_package_family_name_with_packages_types(&self, userSecurityId: &HStringArg, packageTypes: PackageTypes, packageFamilyName: &HStringArg) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackagesByUserSecurityIdPackageFamilyNameWithPackagesTypes)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageTypes, packageFamilyName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackagesByUserSecurityIdPackageFamilyNameWithPackagesTypes)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageTypes, packageFamilyName.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-applicationmodel")] #[inline] pub fn find_package_by_user_security_id_package_full_name(&self, userSecurityId: &HStringArg, packageFullName: &HStringArg) -> Result<Option<foundation::collections::IVector<super::super::applicationmodel::Package>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindPackageByUserSecurityIdPackageFullName)(self.0.as_abi() as *const _ as *mut _, userSecurityId.get(), packageFullName.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindPackageByUserSecurityIdPackageFullName)(self.get_abi() as *const _ as *mut _, userSecurityId.get(), packageFullName.get(), &mut out);
         if hr == S_OK { Ok(foundation::collections::IVector::wrap(out)) } else { err(hr) }
     }}
 }
@@ -813,17 +813,17 @@ RT_INTERFACE!{interface IPackageVolume2(IPackageVolume2Vtbl, IPackageVolume2_Abi
 impl IPackageVolume2 {
     #[inline] pub fn get_is_full_trust_package_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsFullTrustPackageSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsFullTrustPackageSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_appx_install_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsAppxInstallSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsAppxInstallSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_available_space_async(&self) -> Result<foundation::IAsyncOperation<u64>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetAvailableSpaceAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetAvailableSpaceAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -847,7 +847,7 @@ RT_INTERFACE!{static interface IClassicAppManagerStatics(IClassicAppManagerStati
 impl IClassicAppManagerStatics {
     #[inline] pub fn find_installed_app(&self, appUninstallKey: &HStringArg) -> Result<Option<InstalledClassicAppInfo>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).FindInstalledApp)(self.0.as_abi() as *const _ as *mut _, appUninstallKey.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).FindInstalledApp)(self.get_abi() as *const _ as *mut _, appUninstallKey.get(), &mut out);
         if hr == S_OK { Ok(InstalledClassicAppInfo::wrap(out)) } else { err(hr) }
     }}
 }
@@ -859,12 +859,12 @@ RT_INTERFACE!{interface IInstalledClassicAppInfo(IInstalledClassicAppInfoVtbl, I
 impl IInstalledClassicAppInfo {
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayName)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_version(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayVersion)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_DisplayVersion)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -905,66 +905,66 @@ RT_INTERFACE!{interface INamedPolicyData(INamedPolicyDataVtbl, INamedPolicyData_
 impl INamedPolicyData {
     #[inline] pub fn get_area(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Area)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Area)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Name)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Name)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kind(&self) -> Result<NamedPolicyKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Kind)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Kind)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_managed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsManaged)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsManaged)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_is_user_policy(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsUserPolicy)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsUserPolicy)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_user(&self) -> Result<Option<super::super::system::User>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_User)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_User)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::system::User::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_boolean(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetBoolean)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetBoolean)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-storage")] #[inline] pub fn get_binary(&self) -> Result<Option<super::super::storage::streams::IBuffer>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetBinary)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetBinary)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(super::super::storage::streams::IBuffer::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_int32(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetInt32)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetInt32)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_int64(&self) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetInt64)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetInt64)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetString)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetString)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_changed(&self, changedHandler: &foundation::TypedEventHandler<NamedPolicyData, IInspectable>) -> Result<foundation::EventRegistrationToken> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).add_Changed)(self.0.as_abi() as *const _ as *mut _, get_abi(changedHandler) as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).add_Changed)(self.get_abi() as *const _ as *mut _, changedHandler.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn remove_changed(&self, cookie: foundation::EventRegistrationToken) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).remove_Changed)(self.0.as_abi() as *const _ as *mut _, cookie);
+        let hr = ((*self.get_abi().lpVtbl).remove_Changed)(self.get_abi() as *const _ as *mut _, cookie);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -980,12 +980,12 @@ RT_INTERFACE!{static interface INamedPolicyStatics(INamedPolicyStaticsVtbl, INam
 impl INamedPolicyStatics {
     #[inline] pub fn get_policy_from_path(&self, area: &HStringArg, name: &HStringArg) -> Result<Option<NamedPolicyData>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPolicyFromPath)(self.0.as_abi() as *const _ as *mut _, area.get(), name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPolicyFromPath)(self.get_abi() as *const _ as *mut _, area.get(), name.get(), &mut out);
         if hr == S_OK { Ok(NamedPolicyData::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-system")] #[inline] pub fn get_policy_from_path_for_user(&self, user: &super::super::system::User, area: &HStringArg, name: &HStringArg) -> Result<Option<NamedPolicyData>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetPolicyFromPathForUser)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, area.get(), name.get(), &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetPolicyFromPathForUser)(self.get_abi() as *const _ as *mut _, user.get_abi() as *const _ as *mut _, area.get(), name.get(), &mut out);
         if hr == S_OK { Ok(NamedPolicyData::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1002,21 +1002,21 @@ RT_INTERFACE!{interface IPreviewBuildsManager(IPreviewBuildsManagerVtbl, IPrevie
 impl IPreviewBuildsManager {
     #[inline] pub fn get_are_preview_builds_allowed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_ArePreviewBuildsAllowed)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_ArePreviewBuildsAllowed)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_are_preview_builds_allowed(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.0.as_abi().lpVtbl).put_ArePreviewBuildsAllowed)(self.0.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.get_abi().lpVtbl).put_ArePreviewBuildsAllowed)(self.get_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_current_state(&self) -> Result<Option<PreviewBuildsState>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetCurrentState)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetCurrentState)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PreviewBuildsState::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn sync_async(&self) -> Result<foundation::IAsyncOperation<bool>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).SyncAsync)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).SyncAsync)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::IAsyncOperation::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -1039,12 +1039,12 @@ RT_INTERFACE!{static interface IPreviewBuildsManagerStatics(IPreviewBuildsManage
 impl IPreviewBuildsManagerStatics {
     #[inline] pub fn get_default(&self) -> Result<Option<PreviewBuildsManager>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).GetDefault)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetDefault)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(PreviewBuildsManager::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn is_supported(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsSupported)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsSupported)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1055,7 +1055,7 @@ RT_INTERFACE!{interface IPreviewBuildsState(IPreviewBuildsStateVtbl, IPreviewBui
 impl IPreviewBuildsState {
     #[inline] pub fn get_properties(&self) -> Result<Option<foundation::collections::ValueSet>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.0.as_abi().lpVtbl).get_Properties)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_Properties)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(foundation::collections::ValueSet::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1073,22 +1073,22 @@ RT_INTERFACE!{static interface IMdmAllowPolicyStatics(IMdmAllowPolicyStaticsVtbl
 impl IMdmAllowPolicyStatics {
     #[inline] pub fn is_browser_allowed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsBrowserAllowed)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsBrowserAllowed)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_camera_allowed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsCameraAllowed)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsCameraAllowed)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_microsoft_account_allowed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsMicrosoftAccountAllowed)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsMicrosoftAccountAllowed)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn is_store_allowed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).IsStoreAllowed)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).IsStoreAllowed)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1120,7 +1120,7 @@ RT_INTERFACE!{static interface IMdmPolicyStatics2(IMdmPolicyStatics2Vtbl, IMdmPo
 impl IMdmPolicyStatics2 {
     #[inline] pub fn get_messaging_sync_policy(&self) -> Result<MessagingSyncPolicy> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).GetMessagingSyncPolicy)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).GetMessagingSyncPolicy)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -1142,7 +1142,7 @@ RT_INTERFACE!{static interface IWorkplaceSettingsStatics(IWorkplaceSettingsStati
 impl IWorkplaceSettingsStatics {
     #[inline] pub fn get_is_microsoft_account_optional(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.0.as_abi().lpVtbl).get_IsMicrosoftAccountOptional)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.get_abi().lpVtbl).get_IsMicrosoftAccountOptional)(self.get_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
