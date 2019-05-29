@@ -11,7 +11,7 @@ use w::um::combaseapi::CoTaskMemFree;
 /// reference count of the underlying COM object.
 #[repr(transparent)]
 #[derive(Debug)]
-pub struct ComPtr<T: ComInterfaceAbi>(ptr::NonNull<T>);
+pub(crate) struct ComPtr<T: ComInterfaceAbi>(ptr::NonNull<T>);
 
 impl<T: ComInterfaceAbi> fmt::Pointer for ComPtr<T> {
     #[inline]
