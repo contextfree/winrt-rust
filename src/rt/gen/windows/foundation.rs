@@ -3445,7 +3445,7 @@ impl<T: RtType> IIterator<T> {
         let hr = ((*self.0.as_abi().lpVtbl).MoveNext)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn get_many(&self, items: &mut Vec<T::OutNonNull>) -> Result<()> { unsafe { 
+    #[inline] pub fn get_many(&self, items: &mut Vec<T>) -> Result<()> { unsafe { 
         debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
         let mut out = zeroed();
         let hr = ((*self.0.as_abi().lpVtbl).GetMany)(self.0.as_abi() as *const _ as *mut _, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
@@ -3675,7 +3675,7 @@ impl<T: RtType> IVector<T> {
         let hr = ((*self.0.as_abi().lpVtbl).Clear)(self.0.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_many(&self, startIndex: u32, items: &mut Vec<T::OutNonNull>) -> Result<()> { unsafe { 
+    #[inline] pub fn get_many(&self, startIndex: u32, items: &mut Vec<T>) -> Result<()> { unsafe { 
         debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
         let mut out = zeroed();
         let hr = ((*self.0.as_abi().lpVtbl).GetMany)(self.0.as_abi() as *const _ as *mut _, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
@@ -3736,7 +3736,7 @@ impl<T: RtType> IVectorView<T> {
         let hr = ((*self.0.as_abi().lpVtbl).IndexOf)(self.0.as_abi() as *const _ as *mut _, T::unwrap(value), &mut index, &mut out);
         if hr == S_OK { Ok((index, out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_many(&self, startIndex: u32, items: &mut Vec<T::OutNonNull>) -> Result<()> { unsafe { 
+    #[inline] pub fn get_many(&self, startIndex: u32, items: &mut Vec<T>) -> Result<()> { unsafe { 
         debug_assert!(items.capacity() > 0, "capacity of `items` must not be 0 (use Vec::with_capacity)"); items.clear();
         let mut out = zeroed();
         let hr = ((*self.0.as_abi().lpVtbl).GetMany)(self.0.as_abi() as *const _ as *mut _, startIndex, items.capacity() as u32, items.as_mut_ptr() as *mut T::Abi, &mut out);
