@@ -15,7 +15,7 @@ impl ApplicationLanguages {
     #[inline] pub fn get_manifest_languages() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
         <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().get_manifest_languages()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(user: &super::system::User) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
         <Self as RtActivatable<IApplicationLanguagesStatics2>>::get_activation_factory().get_languages_for_user(user)
     }
 }
@@ -40,28 +40,28 @@ impl ComPtr<IApplicationLanguagesStatics> {
     #[inline] pub fn get_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Languages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_manifest_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ManifestLanguages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IApplicationLanguagesStatics2, 502324815, 1835, 19835, 143, 6, 203, 45, 180, 15, 43, 181);
 RT_INTERFACE!{static interface IApplicationLanguagesStatics2(IApplicationLanguagesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationLanguagesStatics2] {
-    #[cfg(feature="windows-system")] fn GetLanguagesForUser(&self, user: *mut super::system::User, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
+    #[cfg(feature="windows-system")] fn GetLanguagesForUser(&self, user: <super::system::User as RtType>::Abi, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
 }}
 impl ComPtr<IApplicationLanguagesStatics2> {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(&self, user: &ComPtr<super::system::User>) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(&self, user: &super::system::User) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetLanguagesForUser)(self.as_abi() as *const _ as *mut _, user.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ICalendar, 3392152093, 34521, 16635, 162, 107, 212, 78, 183, 207, 8, 234);
 RT_INTERFACE!{interface ICalendar(ICalendarVtbl): IInspectable(IInspectableVtbl) [IID_ICalendar] {
-    fn Clone(&self, out: *mut *mut Calendar) -> HRESULT,
+    fn Clone(&self, out: *mut <Calendar as RtType>::Abi) -> HRESULT,
     fn SetToMin(&self) -> HRESULT,
     fn SetToMax(&self) -> HRESULT,
     fn get_Languages(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
@@ -148,9 +148,9 @@ RT_INTERFACE!{interface ICalendar(ICalendarVtbl): IInspectable(IInspectableVtbl)
     fn AddNanoseconds(&self, nanoseconds: i32) -> HRESULT,
     fn NanosecondAsString(&self, out: *mut HSTRING) -> HRESULT,
     fn NanosecondAsPaddedString(&self, minDigits: i32, out: *mut HSTRING) -> HRESULT,
-    fn Compare(&self, other: *mut Calendar, out: *mut i32) -> HRESULT,
+    fn Compare(&self, other: <Calendar as RtType>::Abi, out: *mut i32) -> HRESULT,
     fn CompareDateTime(&self, other: foundation::DateTime, out: *mut i32) -> HRESULT,
-    fn CopyTo(&self, other: *mut Calendar) -> HRESULT,
+    fn CopyTo(&self, other: <Calendar as RtType>::Abi) -> HRESULT,
     fn get_FirstMinuteInThisHour(&self, out: *mut i32) -> HRESULT,
     fn get_LastMinuteInThisHour(&self, out: *mut i32) -> HRESULT,
     fn get_NumberOfMinutesInThisHour(&self, out: *mut i32) -> HRESULT,
@@ -161,10 +161,10 @@ RT_INTERFACE!{interface ICalendar(ICalendarVtbl): IInspectable(IInspectableVtbl)
     fn get_IsDaylightSavingTime(&self, out: *mut bool) -> HRESULT
 }}
 impl ComPtr<ICalendar> {
-    #[inline] pub fn clone(&self) -> Result<Option<ComPtr<Calendar>>> { unsafe { 
+    #[inline] pub fn clone(&self) -> Result<Option<Calendar>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Clone)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Calendar::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_to_min(&self) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).SetToMin)(self.as_abi() as *const _ as *mut _);
@@ -177,7 +177,7 @@ impl ComPtr<ICalendar> {
     #[inline] pub fn get_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Languages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_numeral_system(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -570,7 +570,7 @@ impl ComPtr<ICalendar> {
         let hr = ((*self.as_abi().lpVtbl).NanosecondAsPaddedString)(self.as_abi() as *const _ as *mut _, minDigits, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn compare(&self, other: &ComPtr<Calendar>) -> Result<i32> { unsafe { 
+    #[inline] pub fn compare(&self, other: &Calendar) -> Result<i32> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).Compare)(self.as_abi() as *const _ as *mut _, other.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -580,7 +580,7 @@ impl ComPtr<ICalendar> {
         let hr = ((*self.as_abi().lpVtbl).CompareDateTime)(self.as_abi() as *const _ as *mut _, other, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
-    #[inline] pub fn copy_to(&self, other: &ComPtr<Calendar>) -> Result<()> { unsafe { 
+    #[inline] pub fn copy_to(&self, other: &Calendar) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).CopyTo)(self.as_abi() as *const _ as *mut _, other.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
@@ -630,43 +630,43 @@ impl RtActivatable<ICalendarFactory> for Calendar {}
 impl RtActivatable<ICalendarFactory2> for Calendar {}
 impl RtActivatable<IActivationFactory> for Calendar {}
 impl Calendar {
-    #[inline] pub fn create_calendar_default_calendar_and_clock(languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<Calendar>> {
+    #[inline] pub fn create_calendar_default_calendar_and_clock(languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<Calendar> {
         <Self as RtActivatable<ICalendarFactory>>::get_activation_factory().create_calendar_default_calendar_and_clock(languages)
     }
-    #[inline] pub fn create_calendar(languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<Calendar>> {
+    #[inline] pub fn create_calendar(languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg) -> Result<Calendar> {
         <Self as RtActivatable<ICalendarFactory>>::get_activation_factory().create_calendar(languages, calendar, clock)
     }
-    #[inline] pub fn create_calendar_with_time_zone(languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<ComPtr<Calendar>> {
+    #[inline] pub fn create_calendar_with_time_zone(languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<Calendar> {
         <Self as RtActivatable<ICalendarFactory2>>::get_activation_factory().create_calendar_with_time_zone(languages, calendar, clock, timeZoneId)
     }
 }
 DEFINE_CLSID!(Calendar(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,97,108,101,110,100,97,114,0]) [CLSID_Calendar]);
 DEFINE_IID!(IID_ICalendarFactory, 2213905426, 58731, 19573, 166, 110, 15, 99, 213, 119, 88, 166);
 RT_INTERFACE!{static interface ICalendarFactory(ICalendarFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICalendarFactory] {
-    fn CreateCalendarDefaultCalendarAndClock(&self, languages: *mut foundation::collections::IIterable<HString>, out: *mut *mut Calendar) -> HRESULT,
-    fn CreateCalendar(&self, languages: *mut foundation::collections::IIterable<HString>, calendar: HSTRING, clock: HSTRING, out: *mut *mut Calendar) -> HRESULT
+    fn CreateCalendarDefaultCalendarAndClock(&self, languages: *mut foundation::collections::IIterable<HString>, out: *mut <Calendar as RtType>::Abi) -> HRESULT,
+    fn CreateCalendar(&self, languages: *mut foundation::collections::IIterable<HString>, calendar: HSTRING, clock: HSTRING, out: *mut <Calendar as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ICalendarFactory> {
-    #[inline] pub fn create_calendar_default_calendar_and_clock(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<Calendar>> { unsafe { 
+    #[inline] pub fn create_calendar_default_calendar_and_clock(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<Calendar> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateCalendarDefaultCalendarAndClock)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Calendar::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_calendar(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<Calendar>> { unsafe { 
+    #[inline] pub fn create_calendar(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg) -> Result<Calendar> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateCalendar)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, calendar.get(), clock.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Calendar::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ICalendarFactory2, 3024828300, 51838, 17808, 158, 114, 234, 43, 236, 26, 81, 21);
 RT_INTERFACE!{static interface ICalendarFactory2(ICalendarFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_ICalendarFactory2] {
-    fn CreateCalendarWithTimeZone(&self, languages: *mut foundation::collections::IIterable<HString>, calendar: HSTRING, clock: HSTRING, timeZoneId: HSTRING, out: *mut *mut Calendar) -> HRESULT
+    fn CreateCalendarWithTimeZone(&self, languages: *mut foundation::collections::IIterable<HString>, calendar: HSTRING, clock: HSTRING, timeZoneId: HSTRING, out: *mut <Calendar as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ICalendarFactory2> {
-    #[inline] pub fn create_calendar_with_time_zone(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<ComPtr<Calendar>> { unsafe { 
+    #[inline] pub fn create_calendar_with_time_zone(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<Calendar> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateCalendarWithTimeZone)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, calendar.get(), clock.get(), timeZoneId.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Calendar::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{static class CalendarIdentifiers}
@@ -2381,7 +2381,7 @@ impl ComPtr<IGeographicRegion> {
     #[inline] pub fn get_currencies_in_use(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_CurrenciesInUse)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GeographicRegion: IGeographicRegion}
@@ -2389,7 +2389,7 @@ impl RtActivatable<IGeographicRegionFactory> for GeographicRegion {}
 impl RtActivatable<IGeographicRegionStatics> for GeographicRegion {}
 impl RtActivatable<IActivationFactory> for GeographicRegion {}
 impl GeographicRegion {
-    #[inline] pub fn create_geographic_region(geographicRegionCode: &HStringArg) -> Result<ComPtr<GeographicRegion>> {
+    #[inline] pub fn create_geographic_region(geographicRegionCode: &HStringArg) -> Result<GeographicRegion> {
         <Self as RtActivatable<IGeographicRegionFactory>>::get_activation_factory().create_geographic_region(geographicRegionCode)
     }
     #[inline] pub fn is_supported(geographicRegionCode: &HStringArg) -> Result<bool> {
@@ -2399,13 +2399,13 @@ impl GeographicRegion {
 DEFINE_CLSID!(GeographicRegion(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,71,101,111,103,114,97,112,104,105,99,82,101,103,105,111,110,0]) [CLSID_GeographicRegion]);
 DEFINE_IID!(IID_IGeographicRegionFactory, 1396855408, 30644, 17003, 133, 159, 129, 225, 157, 81, 37, 70);
 RT_INTERFACE!{static interface IGeographicRegionFactory(IGeographicRegionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeographicRegionFactory] {
-    fn CreateGeographicRegion(&self, geographicRegionCode: HSTRING, out: *mut *mut GeographicRegion) -> HRESULT
+    fn CreateGeographicRegion(&self, geographicRegionCode: HSTRING, out: *mut <GeographicRegion as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IGeographicRegionFactory> {
-    #[inline] pub fn create_geographic_region(&self, geographicRegionCode: &HStringArg) -> Result<ComPtr<GeographicRegion>> { unsafe { 
+    #[inline] pub fn create_geographic_region(&self, geographicRegionCode: &HStringArg) -> Result<GeographicRegion> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateGeographicRegion)(self.as_abi() as *const _ as *mut _, geographicRegionCode.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(GeographicRegion::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IGeographicRegionStatics, 702712180, 31449, 20212, 135, 153, 179, 180, 79, 173, 236, 8);
@@ -2463,12 +2463,12 @@ impl ComPtr<IJapanesePhoneticAnalyzerStatics> {
     #[inline] pub fn get_words(&self, input: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<JapanesePhoneme>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetWords)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_words_with_mono_ruby_option(&self, input: &HStringArg, monoRuby: bool) -> Result<Option<ComPtr<foundation::collections::IVectorView<JapanesePhoneme>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetWordsWithMonoRubyOption)(self.as_abi() as *const _ as *mut _, input.get(), monoRuby, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ILanguage, 3933841234, 63426, 16997, 177, 189, 196, 222, 196, 228, 240, 128);
@@ -2505,7 +2505,7 @@ impl RtActivatable<ILanguageFactory> for Language {}
 impl RtActivatable<ILanguageStatics> for Language {}
 impl RtActivatable<ILanguageStatics2> for Language {}
 impl Language {
-    #[inline] pub fn create_language(languageTag: &HStringArg) -> Result<ComPtr<Language>> {
+    #[inline] pub fn create_language(languageTag: &HStringArg) -> Result<Language> {
         <Self as RtActivatable<ILanguageFactory>>::get_activation_factory().create_language(languageTag)
     }
     #[inline] pub fn is_well_formed(languageTag: &HStringArg) -> Result<bool> {
@@ -2538,18 +2538,18 @@ impl ComPtr<ILanguageExtensionSubtags> {
     #[inline] pub fn get_extension_subtags(&self, singleton: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).GetExtensionSubtags)(self.as_abi() as *const _ as *mut _, singleton.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ILanguageFactory, 2600620716, 3111, 17656, 183, 146, 151, 147, 251, 102, 198, 62);
 RT_INTERFACE!{static interface ILanguageFactory(ILanguageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFactory] {
-    fn CreateLanguage(&self, languageTag: HSTRING, out: *mut *mut Language) -> HRESULT
+    fn CreateLanguage(&self, languageTag: HSTRING, out: *mut <Language as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ILanguageFactory> {
-    #[inline] pub fn create_language(&self, languageTag: &HStringArg) -> Result<ComPtr<Language>> { unsafe { 
+    #[inline] pub fn create_language(&self, languageTag: &HStringArg) -> Result<Language> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateLanguage)(self.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(Language::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum LanguageLayoutDirection: i32 {
@@ -3094,20 +3094,20 @@ RT_CLASS!{class CharacterGroupings: ICharacterGroupings}
 impl RtActivatable<ICharacterGroupingsFactory> for CharacterGroupings {}
 impl RtActivatable<IActivationFactory> for CharacterGroupings {}
 impl CharacterGroupings {
-    #[inline] pub fn create(language: &HStringArg) -> Result<ComPtr<CharacterGroupings>> {
+    #[inline] pub fn create(language: &HStringArg) -> Result<CharacterGroupings> {
         <Self as RtActivatable<ICharacterGroupingsFactory>>::get_activation_factory().create(language)
     }
 }
 DEFINE_CLSID!(CharacterGroupings(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,111,108,108,97,116,105,111,110,46,67,104,97,114,97,99,116,101,114,71,114,111,117,112,105,110,103,115,0]) [CLSID_CharacterGroupings]);
 DEFINE_IID!(IID_ICharacterGroupingsFactory, 2582290393, 34925, 17409, 159, 152, 105, 200, 45, 76, 47, 120);
 RT_INTERFACE!{static interface ICharacterGroupingsFactory(ICharacterGroupingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGroupingsFactory] {
-    fn Create(&self, language: HSTRING, out: *mut *mut CharacterGroupings) -> HRESULT
+    fn Create(&self, language: HSTRING, out: *mut <CharacterGroupings as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ICharacterGroupingsFactory> {
-    #[inline] pub fn create(&self, language: &HStringArg) -> Result<ComPtr<CharacterGroupings>> { unsafe { 
+    #[inline] pub fn create(&self, language: &HStringArg) -> Result<CharacterGroupings> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, language.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(CharacterGroupings::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 } // Windows.Globalization.Collation
@@ -3138,7 +3138,7 @@ impl ComPtr<IDateTimeFormatter> {
     #[inline] pub fn get_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Languages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_geographic_region(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -3167,7 +3167,7 @@ impl ComPtr<IDateTimeFormatter> {
     #[inline] pub fn get_patterns(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Patterns)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_template(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -3229,37 +3229,37 @@ RT_CLASS!{class DateTimeFormatter: IDateTimeFormatter}
 impl RtActivatable<IDateTimeFormatterFactory> for DateTimeFormatter {}
 impl RtActivatable<IDateTimeFormatterStatics> for DateTimeFormatter {}
 impl DateTimeFormatter {
-    #[inline] pub fn create_date_time_formatter(formatTemplate: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> {
+    #[inline] pub fn create_date_time_formatter(formatTemplate: &HStringArg) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter(formatTemplate)
     }
-    #[inline] pub fn create_date_time_formatter_languages(formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<DateTimeFormatter>> {
+    #[inline] pub fn create_date_time_formatter_languages(formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_languages(formatTemplate, languages)
     }
-    #[inline] pub fn create_date_time_formatter_context(formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> {
+    #[inline] pub fn create_date_time_formatter_context(formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_context(formatTemplate, languages, geographicRegion, calendar, clock)
     }
-    #[inline] pub fn create_date_time_formatter_date(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat) -> Result<ComPtr<DateTimeFormatter>> {
+    #[inline] pub fn create_date_time_formatter_date(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_date(yearFormat, monthFormat, dayFormat, dayOfWeekFormat)
     }
-    #[inline] pub fn create_date_time_formatter_time(hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat) -> Result<ComPtr<DateTimeFormatter>> {
+    #[inline] pub fn create_date_time_formatter_time(hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_time(hourFormat, minuteFormat, secondFormat)
     }
-    #[inline] pub fn create_date_time_formatter_date_time_languages(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<DateTimeFormatter>> {
+    #[inline] pub fn create_date_time_formatter_date_time_languages(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_date_time_languages(yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages)
     }
-    #[inline] pub fn create_date_time_formatter_date_time_context(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> {
+    #[inline] pub fn create_date_time_formatter_date_time_context(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_date_time_context(yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages, geographicRegion, calendar, clock)
     }
-    #[inline] pub fn get_long_date() -> Result<Option<ComPtr<DateTimeFormatter>>> {
+    #[inline] pub fn get_long_date() -> Result<Option<DateTimeFormatter>> {
         <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_long_date()
     }
-    #[inline] pub fn get_long_time() -> Result<Option<ComPtr<DateTimeFormatter>>> {
+    #[inline] pub fn get_long_time() -> Result<Option<DateTimeFormatter>> {
         <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_long_time()
     }
-    #[inline] pub fn get_short_date() -> Result<Option<ComPtr<DateTimeFormatter>>> {
+    #[inline] pub fn get_short_date() -> Result<Option<DateTimeFormatter>> {
         <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_short_date()
     }
-    #[inline] pub fn get_short_time() -> Result<Option<ComPtr<DateTimeFormatter>>> {
+    #[inline] pub fn get_short_time() -> Result<Option<DateTimeFormatter>> {
         <Self as RtActivatable<IDateTimeFormatterStatics>>::get_activation_factory().get_short_time()
     }
 }
@@ -3277,78 +3277,78 @@ impl ComPtr<IDateTimeFormatter2> {
 }
 DEFINE_IID!(IID_IDateTimeFormatterFactory, 3968698963, 6702, 16685, 136, 21, 59, 116, 95, 177, 162, 160);
 RT_INTERFACE!{static interface IDateTimeFormatterFactory(IDateTimeFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatterFactory] {
-    fn CreateDateTimeFormatter(&self, formatTemplate: HSTRING, out: *mut *mut DateTimeFormatter) -> HRESULT,
-    fn CreateDateTimeFormatterLanguages(&self, formatTemplate: HSTRING, languages: *mut foundation::collections::IIterable<HString>, out: *mut *mut DateTimeFormatter) -> HRESULT,
-    fn CreateDateTimeFormatterContext(&self, formatTemplate: HSTRING, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, calendar: HSTRING, clock: HSTRING, out: *mut *mut DateTimeFormatter) -> HRESULT,
-    fn CreateDateTimeFormatterDate(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, out: *mut *mut DateTimeFormatter) -> HRESULT,
-    fn CreateDateTimeFormatterTime(&self, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, out: *mut *mut DateTimeFormatter) -> HRESULT,
-    fn CreateDateTimeFormatterDateTimeLanguages(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: *mut foundation::collections::IIterable<HString>, out: *mut *mut DateTimeFormatter) -> HRESULT,
-    fn CreateDateTimeFormatterDateTimeContext(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, calendar: HSTRING, clock: HSTRING, out: *mut *mut DateTimeFormatter) -> HRESULT
+    fn CreateDateTimeFormatter(&self, formatTemplate: HSTRING, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn CreateDateTimeFormatterLanguages(&self, formatTemplate: HSTRING, languages: *mut foundation::collections::IIterable<HString>, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn CreateDateTimeFormatterContext(&self, formatTemplate: HSTRING, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, calendar: HSTRING, clock: HSTRING, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn CreateDateTimeFormatterDate(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn CreateDateTimeFormatterTime(&self, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn CreateDateTimeFormatterDateTimeLanguages(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: *mut foundation::collections::IIterable<HString>, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn CreateDateTimeFormatterDateTimeContext(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, calendar: HSTRING, clock: HSTRING, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IDateTimeFormatterFactory> {
-    #[inline] pub fn create_date_time_formatter(&self, formatTemplate: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
+    #[inline] pub fn create_date_time_formatter(&self, formatTemplate: &HStringArg) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatter)(self.as_abi() as *const _ as *mut _, formatTemplate.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_languages(&self, formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_languages(&self, formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterLanguages)(self.as_abi() as *const _ as *mut _, formatTemplate.get(), languages.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_context(&self, formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_context(&self, formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterContext)(self.as_abi() as *const _ as *mut _, formatTemplate.get(), languages.as_abi() as *const _ as *mut _, geographicRegion.get(), calendar.get(), clock.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_date(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_date(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterDate)(self.as_abi() as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_time(&self, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_time(&self, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterTime)(self.as_abi() as *const _ as *mut _, hourFormat, minuteFormat, secondFormat, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_date_time_languages(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_date_time_languages(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterDateTimeLanguages)(self.as_abi() as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_date_time_context(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<ComPtr<DateTimeFormatter>> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_date_time_context(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterDateTimeContext)(self.as_abi() as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages.as_abi() as *const _ as *mut _, geographicRegion.get(), calendar.get(), clock.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDateTimeFormatterStatics, 3217942464, 57164, 18990, 144, 18, 244, 125, 175, 63, 18, 18);
 RT_INTERFACE!{static interface IDateTimeFormatterStatics(IDateTimeFormatterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatterStatics] {
-    fn get_LongDate(&self, out: *mut *mut DateTimeFormatter) -> HRESULT,
-    fn get_LongTime(&self, out: *mut *mut DateTimeFormatter) -> HRESULT,
-    fn get_ShortDate(&self, out: *mut *mut DateTimeFormatter) -> HRESULT,
-    fn get_ShortTime(&self, out: *mut *mut DateTimeFormatter) -> HRESULT
+    fn get_LongDate(&self, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn get_LongTime(&self, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn get_ShortDate(&self, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn get_ShortTime(&self, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IDateTimeFormatterStatics> {
-    #[inline] pub fn get_long_date(&self) -> Result<Option<ComPtr<DateTimeFormatter>>> { unsafe { 
+    #[inline] pub fn get_long_date(&self) -> Result<Option<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LongDate)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DateTimeFormatter::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_long_time(&self) -> Result<Option<ComPtr<DateTimeFormatter>>> { unsafe { 
+    #[inline] pub fn get_long_time(&self) -> Result<Option<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_LongTime)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DateTimeFormatter::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_short_date(&self) -> Result<Option<ComPtr<DateTimeFormatter>>> { unsafe { 
+    #[inline] pub fn get_short_date(&self) -> Result<Option<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ShortDate)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DateTimeFormatter::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_short_time(&self) -> Result<Option<ComPtr<DateTimeFormatter>>> { unsafe { 
+    #[inline] pub fn get_short_time(&self) -> Result<Option<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ShortTime)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DateTimeFormatter::wrap(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum DayFormat: i32 {
@@ -3416,92 +3416,92 @@ impl ComPtr<ILanguageFont> {
 RT_CLASS!{class LanguageFont: ILanguageFont}
 DEFINE_IID!(IID_ILanguageFontGroup, 4080697283, 14940, 19178, 185, 255, 179, 159, 178, 66, 247, 246);
 RT_INTERFACE!{interface ILanguageFontGroup(ILanguageFontGroupVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroup] {
-    fn get_UITextFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_UIHeadingFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_UITitleFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_UICaptionFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_UINotificationHeadingFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_TraditionalDocumentFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_ModernDocumentFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_DocumentHeadingFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_FixedWidthTextFont(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_DocumentAlternate1Font(&self, out: *mut *mut LanguageFont) -> HRESULT,
-    fn get_DocumentAlternate2Font(&self, out: *mut *mut LanguageFont) -> HRESULT
+    fn get_UITextFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
+    fn get_UIHeadingFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
+    fn get_UITitleFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
+    fn get_UICaptionFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
+    fn get_UINotificationHeadingFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
+    fn get_TraditionalDocumentFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
+    fn get_ModernDocumentFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
+    fn get_DocumentHeadingFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
+    fn get_FixedWidthTextFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
+    fn get_DocumentAlternate1Font(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
+    fn get_DocumentAlternate2Font(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ILanguageFontGroup> {
-    #[inline] pub fn get_ui_text_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_ui_text_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_UITextFont)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ui_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_ui_heading_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_UIHeadingFont)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ui_title_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_ui_title_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_UITitleFont)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ui_caption_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_ui_caption_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_UICaptionFont)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_ui_notification_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_ui_notification_heading_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_UINotificationHeadingFont)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_traditional_document_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_traditional_document_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_TraditionalDocumentFont)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_modern_document_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_modern_document_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_ModernDocumentFont)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_heading_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_document_heading_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentHeadingFont)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_fixed_width_text_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_fixed_width_text_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_FixedWidthTextFont)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_alternate1_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_document_alternate1_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentAlternate1Font)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_document_alternate2_font(&self) -> Result<Option<ComPtr<LanguageFont>>> { unsafe { 
+    #[inline] pub fn get_document_alternate2_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_DocumentAlternate2Font)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class LanguageFontGroup: ILanguageFontGroup}
 impl RtActivatable<ILanguageFontGroupFactory> for LanguageFontGroup {}
 impl LanguageFontGroup {
-    #[inline] pub fn create_language_font_group(languageTag: &HStringArg) -> Result<ComPtr<LanguageFontGroup>> {
+    #[inline] pub fn create_language_font_group(languageTag: &HStringArg) -> Result<LanguageFontGroup> {
         <Self as RtActivatable<ILanguageFontGroupFactory>>::get_activation_factory().create_language_font_group(languageTag)
     }
 }
 DEFINE_CLSID!(LanguageFontGroup(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,70,111,110,116,115,46,76,97,110,103,117,97,103,101,70,111,110,116,71,114,111,117,112,0]) [CLSID_LanguageFontGroup]);
 DEFINE_IID!(IID_ILanguageFontGroupFactory, 4239305831, 20087, 18887, 184, 86, 221, 233, 52, 252, 115, 91);
 RT_INTERFACE!{static interface ILanguageFontGroupFactory(ILanguageFontGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroupFactory] {
-    fn CreateLanguageFontGroup(&self, languageTag: HSTRING, out: *mut *mut LanguageFontGroup) -> HRESULT
+    fn CreateLanguageFontGroup(&self, languageTag: HSTRING, out: *mut <LanguageFontGroup as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ILanguageFontGroupFactory> {
-    #[inline] pub fn create_language_font_group(&self, languageTag: &HStringArg) -> Result<ComPtr<LanguageFontGroup>> { unsafe { 
+    #[inline] pub fn create_language_font_group(&self, languageTag: &HStringArg) -> Result<LanguageFontGroup> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateLanguageFontGroup)(self.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(LanguageFontGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 } // Windows.Globalization.Fonts
@@ -3526,10 +3526,10 @@ impl ComPtr<ICurrencyFormatter> {
 RT_CLASS!{class CurrencyFormatter: ICurrencyFormatter}
 impl RtActivatable<ICurrencyFormatterFactory> for CurrencyFormatter {}
 impl CurrencyFormatter {
-    #[inline] pub fn create_currency_formatter_code(currencyCode: &HStringArg) -> Result<ComPtr<CurrencyFormatter>> {
+    #[inline] pub fn create_currency_formatter_code(currencyCode: &HStringArg) -> Result<CurrencyFormatter> {
         <Self as RtActivatable<ICurrencyFormatterFactory>>::get_activation_factory().create_currency_formatter_code(currencyCode)
     }
-    #[inline] pub fn create_currency_formatter_code_context(currencyCode: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<CurrencyFormatter>> {
+    #[inline] pub fn create_currency_formatter_code_context(currencyCode: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<CurrencyFormatter> {
         <Self as RtActivatable<ICurrencyFormatterFactory>>::get_activation_factory().create_currency_formatter_code_context(currencyCode, languages, geographicRegion)
     }
 }
@@ -3557,19 +3557,19 @@ impl ComPtr<ICurrencyFormatter2> {
 }
 DEFINE_IID!(IID_ICurrencyFormatterFactory, 2261209982, 47416, 19106, 132, 176, 44, 51, 220, 91, 20, 80);
 RT_INTERFACE!{static interface ICurrencyFormatterFactory(ICurrencyFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatterFactory] {
-    fn CreateCurrencyFormatterCode(&self, currencyCode: HSTRING, out: *mut *mut CurrencyFormatter) -> HRESULT,
-    fn CreateCurrencyFormatterCodeContext(&self, currencyCode: HSTRING, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut *mut CurrencyFormatter) -> HRESULT
+    fn CreateCurrencyFormatterCode(&self, currencyCode: HSTRING, out: *mut <CurrencyFormatter as RtType>::Abi) -> HRESULT,
+    fn CreateCurrencyFormatterCodeContext(&self, currencyCode: HSTRING, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut <CurrencyFormatter as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<ICurrencyFormatterFactory> {
-    #[inline] pub fn create_currency_formatter_code(&self, currencyCode: &HStringArg) -> Result<ComPtr<CurrencyFormatter>> { unsafe { 
+    #[inline] pub fn create_currency_formatter_code(&self, currencyCode: &HStringArg) -> Result<CurrencyFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateCurrencyFormatterCode)(self.as_abi() as *const _ as *mut _, currencyCode.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(CurrencyFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_currency_formatter_code_context(&self, currencyCode: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<CurrencyFormatter>> { unsafe { 
+    #[inline] pub fn create_currency_formatter_code_context(&self, currencyCode: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<CurrencyFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateCurrencyFormatterCodeContext)(self.as_abi() as *const _ as *mut _, currencyCode.get(), languages.as_abi() as *const _ as *mut _, geographicRegion.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(CurrencyFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum CurrencyFormatterMode: i32 {
@@ -3579,20 +3579,20 @@ RT_CLASS!{class DecimalFormatter: INumberFormatter}
 impl RtActivatable<IDecimalFormatterFactory> for DecimalFormatter {}
 impl RtActivatable<IActivationFactory> for DecimalFormatter {}
 impl DecimalFormatter {
-    #[inline] pub fn create_decimal_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<DecimalFormatter>> {
+    #[inline] pub fn create_decimal_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<DecimalFormatter> {
         <Self as RtActivatable<IDecimalFormatterFactory>>::get_activation_factory().create_decimal_formatter(languages, geographicRegion)
     }
 }
 DEFINE_CLSID!(DecimalFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,68,101,99,105,109,97,108,70,111,114,109,97,116,116,101,114,0]) [CLSID_DecimalFormatter]);
 DEFINE_IID!(IID_IDecimalFormatterFactory, 218205338, 58259, 18104, 184, 48, 122, 105, 200, 248, 159, 187);
 RT_INTERFACE!{static interface IDecimalFormatterFactory(IDecimalFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDecimalFormatterFactory] {
-    fn CreateDecimalFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut *mut DecimalFormatter) -> HRESULT
+    fn CreateDecimalFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut <DecimalFormatter as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IDecimalFormatterFactory> {
-    #[inline] pub fn create_decimal_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<DecimalFormatter>> { unsafe { 
+    #[inline] pub fn create_decimal_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<DecimalFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreateDecimalFormatter)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, geographicRegion.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(DecimalFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IIncrementNumberRounder, 1889947640, 26283, 16725, 157, 161, 115, 158, 70, 118, 69, 67);
@@ -3692,7 +3692,7 @@ impl ComPtr<INumberFormatterOptions> {
     #[inline] pub fn get_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Languages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_geographic_region(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -3765,17 +3765,17 @@ impl ComPtr<INumberParser> {
     #[inline] pub fn parse_int(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::IReference<i64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ParseInt)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn parse_uint(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ParseUInt)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn parse_double(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).ParseDouble)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INumberRounder, 1416872821, 14573, 17969, 184, 12, 239, 52, 252, 72, 183, 245);
@@ -3828,7 +3828,7 @@ impl ComPtr<INumberRounderOption> {
     #[inline] pub fn get_number_rounder(&self) -> Result<Option<ComPtr<INumberRounder>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_NumberRounder)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_number_rounder(&self, value: &ComPtr<INumberRounder>) -> Result<()> { unsafe { 
         let hr = ((*self.as_abi().lpVtbl).put_NumberRounder)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
@@ -3847,7 +3847,7 @@ impl ComPtr<INumeralSystemTranslator> {
     #[inline] pub fn get_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).get_Languages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(out)) } else { err(hr) }
+        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
@@ -3873,60 +3873,60 @@ RT_CLASS!{class NumeralSystemTranslator: INumeralSystemTranslator}
 impl RtActivatable<INumeralSystemTranslatorFactory> for NumeralSystemTranslator {}
 impl RtActivatable<IActivationFactory> for NumeralSystemTranslator {}
 impl NumeralSystemTranslator {
-    #[inline] pub fn create(languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<NumeralSystemTranslator>> {
+    #[inline] pub fn create(languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<NumeralSystemTranslator> {
         <Self as RtActivatable<INumeralSystemTranslatorFactory>>::get_activation_factory().create(languages)
     }
 }
 DEFINE_CLSID!(NumeralSystemTranslator(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,78,117,109,101,114,97,108,83,121,115,116,101,109,84,114,97,110,115,108,97,116,111,114,0]) [CLSID_NumeralSystemTranslator]);
 DEFINE_IID!(IID_INumeralSystemTranslatorFactory, 2519779546, 14063, 19848, 168, 92, 111, 13, 152, 214, 32, 166);
 RT_INTERFACE!{static interface INumeralSystemTranslatorFactory(INumeralSystemTranslatorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INumeralSystemTranslatorFactory] {
-    fn Create(&self, languages: *mut foundation::collections::IIterable<HString>, out: *mut *mut NumeralSystemTranslator) -> HRESULT
+    fn Create(&self, languages: *mut foundation::collections::IIterable<HString>, out: *mut <NumeralSystemTranslator as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<INumeralSystemTranslatorFactory> {
-    #[inline] pub fn create(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<ComPtr<NumeralSystemTranslator>> { unsafe { 
+    #[inline] pub fn create(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<NumeralSystemTranslator> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(NumeralSystemTranslator::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PercentFormatter: INumberFormatter}
 impl RtActivatable<IPercentFormatterFactory> for PercentFormatter {}
 impl RtActivatable<IActivationFactory> for PercentFormatter {}
 impl PercentFormatter {
-    #[inline] pub fn create_percent_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<PercentFormatter>> {
+    #[inline] pub fn create_percent_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<PercentFormatter> {
         <Self as RtActivatable<IPercentFormatterFactory>>::get_activation_factory().create_percent_formatter(languages, geographicRegion)
     }
 }
 DEFINE_CLSID!(PercentFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,101,114,99,101,110,116,70,111,114,109,97,116,116,101,114,0]) [CLSID_PercentFormatter]);
 DEFINE_IID!(IID_IPercentFormatterFactory, 3078785775, 65236, 16408, 166, 226, 224, 153, 97, 224, 55, 101);
 RT_INTERFACE!{static interface IPercentFormatterFactory(IPercentFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPercentFormatterFactory] {
-    fn CreatePercentFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut *mut PercentFormatter) -> HRESULT
+    fn CreatePercentFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut <PercentFormatter as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPercentFormatterFactory> {
-    #[inline] pub fn create_percent_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<PercentFormatter>> { unsafe { 
+    #[inline] pub fn create_percent_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<PercentFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreatePercentFormatter)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, geographicRegion.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PercentFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class PermilleFormatter: INumberFormatter}
 impl RtActivatable<IPermilleFormatterFactory> for PermilleFormatter {}
 impl RtActivatable<IActivationFactory> for PermilleFormatter {}
 impl PermilleFormatter {
-    #[inline] pub fn create_permille_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<PermilleFormatter>> {
+    #[inline] pub fn create_permille_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<PermilleFormatter> {
         <Self as RtActivatable<IPermilleFormatterFactory>>::get_activation_factory().create_permille_formatter(languages, geographicRegion)
     }
 }
 DEFINE_CLSID!(PermilleFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,101,114,109,105,108,108,101,70,111,114,109,97,116,116,101,114,0]) [CLSID_PermilleFormatter]);
 DEFINE_IID!(IID_IPermilleFormatterFactory, 725071020, 58936, 20181, 169, 152, 98, 246, 176, 106, 73, 174);
 RT_INTERFACE!{static interface IPermilleFormatterFactory(IPermilleFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPermilleFormatterFactory] {
-    fn CreatePermilleFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut *mut PermilleFormatter) -> HRESULT
+    fn CreatePermilleFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut <PermilleFormatter as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPermilleFormatterFactory> {
-    #[inline] pub fn create_permille_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<ComPtr<PermilleFormatter>> { unsafe { 
+    #[inline] pub fn create_permille_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<PermilleFormatter> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).CreatePermilleFormatter)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, geographicRegion.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PermilleFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum RoundingAlgorithm: i32 {
@@ -4002,19 +4002,19 @@ RT_ENUM! { enum PhoneNumberFormat: i32 {
 }}
 DEFINE_IID!(IID_IPhoneNumberFormatter, 358003870, 47828, 19274, 144, 13, 68, 7, 173, 183, 201, 129);
 RT_INTERFACE!{interface IPhoneNumberFormatter(IPhoneNumberFormatterVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatter] {
-    fn Format(&self, number: *mut PhoneNumberInfo, out: *mut HSTRING) -> HRESULT,
-    fn FormatWithOutputFormat(&self, number: *mut PhoneNumberInfo, numberFormat: PhoneNumberFormat, out: *mut HSTRING) -> HRESULT,
+    fn Format(&self, number: <PhoneNumberInfo as RtType>::Abi, out: *mut HSTRING) -> HRESULT,
+    fn FormatWithOutputFormat(&self, number: <PhoneNumberInfo as RtType>::Abi, numberFormat: PhoneNumberFormat, out: *mut HSTRING) -> HRESULT,
     fn FormatPartialString(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn FormatString(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn FormatStringWithLeftToRightMarkers(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
 impl ComPtr<IPhoneNumberFormatter> {
-    #[inline] pub fn format(&self, number: &ComPtr<PhoneNumberInfo>) -> Result<HString> { unsafe { 
+    #[inline] pub fn format(&self, number: &PhoneNumberInfo) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Format)(self.as_abi() as *const _ as *mut _, number.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn format_with_output_format(&self, number: &ComPtr<PhoneNumberInfo>, numberFormat: PhoneNumberFormat) -> Result<HString> { unsafe { 
+    #[inline] pub fn format_with_output_format(&self, number: &PhoneNumberInfo, numberFormat: PhoneNumberFormat) -> Result<HString> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).FormatWithOutputFormat)(self.as_abi() as *const _ as *mut _, number.as_abi() as *const _ as *mut _, numberFormat, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
@@ -4039,7 +4039,7 @@ RT_CLASS!{class PhoneNumberFormatter: IPhoneNumberFormatter}
 impl RtActivatable<IPhoneNumberFormatterStatics> for PhoneNumberFormatter {}
 impl RtActivatable<IActivationFactory> for PhoneNumberFormatter {}
 impl PhoneNumberFormatter {
-    #[inline] pub fn try_create(regionCode: &HStringArg) -> Result<Option<ComPtr<PhoneNumberFormatter>>> {
+    #[inline] pub fn try_create(regionCode: &HStringArg) -> Result<Option<PhoneNumberFormatter>> {
         <Self as RtActivatable<IPhoneNumberFormatterStatics>>::get_activation_factory().try_create(regionCode)
     }
     #[inline] pub fn get_country_code_for_region(regionCode: &HStringArg) -> Result<i32> {
@@ -4055,16 +4055,16 @@ impl PhoneNumberFormatter {
 DEFINE_CLSID!(PhoneNumberFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,101,114,0]) [CLSID_PhoneNumberFormatter]);
 DEFINE_IID!(IID_IPhoneNumberFormatterStatics, 1554446641, 34009, 16715, 171, 78, 160, 85, 44, 135, 134, 2);
 RT_INTERFACE!{static interface IPhoneNumberFormatterStatics(IPhoneNumberFormatterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatterStatics] {
-    fn TryCreate(&self, regionCode: HSTRING, phoneNumber: *mut *mut PhoneNumberFormatter) -> HRESULT,
+    fn TryCreate(&self, regionCode: HSTRING, phoneNumber: *mut <PhoneNumberFormatter as RtType>::Abi) -> HRESULT,
     fn GetCountryCodeForRegion(&self, regionCode: HSTRING, out: *mut i32) -> HRESULT,
     fn GetNationalDirectDialingPrefixForRegion(&self, regionCode: HSTRING, stripNonDigit: bool, out: *mut HSTRING) -> HRESULT,
     fn WrapWithLeftToRightMarkers(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
 impl ComPtr<IPhoneNumberFormatterStatics> {
-    #[inline] pub fn try_create(&self, regionCode: &HStringArg) -> Result<Option<ComPtr<PhoneNumberFormatter>>> { unsafe { 
+    #[inline] pub fn try_create(&self, regionCode: &HStringArg) -> Result<Option<PhoneNumberFormatter>> { unsafe { 
         let mut phoneNumber = null_mut();
         let hr = ((*self.as_abi().lpVtbl).TryCreate)(self.as_abi() as *const _ as *mut _, regionCode.get(), &mut phoneNumber);
-        if hr == S_OK { Ok(ComPtr::wrap_optional(phoneNumber)) } else { err(hr) }
+        if hr == S_OK { Ok(PhoneNumberFormatter::wrap(phoneNumber)) } else { err(hr) }
     }}
     #[inline] pub fn get_country_code_for_region(&self, regionCode: &HStringArg) -> Result<i32> { unsafe { 
         let mut out = zeroed();
@@ -4091,7 +4091,7 @@ RT_INTERFACE!{interface IPhoneNumberInfo(IPhoneNumberInfoVtbl): IInspectable(IIn
     fn GetLengthOfNationalDestinationCode(&self, out: *mut i32) -> HRESULT,
     fn PredictNumberKind(&self, out: *mut PredictedPhoneNumberKind) -> HRESULT,
     fn GetGeographicRegionCode(&self, out: *mut HSTRING) -> HRESULT,
-    fn CheckNumberMatch(&self, otherNumber: *mut PhoneNumberInfo, out: *mut PhoneNumberMatchResult) -> HRESULT
+    fn CheckNumberMatch(&self, otherNumber: <PhoneNumberInfo as RtType>::Abi, out: *mut PhoneNumberMatchResult) -> HRESULT
 }}
 impl ComPtr<IPhoneNumberInfo> {
     #[inline] pub fn get_country_code(&self) -> Result<i32> { unsafe { 
@@ -4129,7 +4129,7 @@ impl ComPtr<IPhoneNumberInfo> {
         let hr = ((*self.as_abi().lpVtbl).GetGeographicRegionCode)(self.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn check_number_match(&self, otherNumber: &ComPtr<PhoneNumberInfo>) -> Result<PhoneNumberMatchResult> { unsafe { 
+    #[inline] pub fn check_number_match(&self, otherNumber: &PhoneNumberInfo) -> Result<PhoneNumberMatchResult> { unsafe { 
         let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).CheckNumberMatch)(self.as_abi() as *const _ as *mut _, otherNumber.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
@@ -4139,43 +4139,43 @@ RT_CLASS!{class PhoneNumberInfo: IPhoneNumberInfo}
 impl RtActivatable<IPhoneNumberInfoFactory> for PhoneNumberInfo {}
 impl RtActivatable<IPhoneNumberInfoStatics> for PhoneNumberInfo {}
 impl PhoneNumberInfo {
-    #[inline] pub fn create(number: &HStringArg) -> Result<ComPtr<PhoneNumberInfo>> {
+    #[inline] pub fn create(number: &HStringArg) -> Result<PhoneNumberInfo> {
         <Self as RtActivatable<IPhoneNumberInfoFactory>>::get_activation_factory().create(number)
     }
-    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> {
+    #[inline] pub fn try_parse(input: &HStringArg) -> Result<(Option<PhoneNumberInfo>, PhoneNumberParseResult)> {
         <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().try_parse(input)
     }
-    #[inline] pub fn try_parse_with_region(input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> {
+    #[inline] pub fn try_parse_with_region(input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<PhoneNumberInfo>, PhoneNumberParseResult)> {
         <Self as RtActivatable<IPhoneNumberInfoStatics>>::get_activation_factory().try_parse_with_region(input, regionCode)
     }
 }
 DEFINE_CLSID!(PhoneNumberInfo(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,73,110,102,111,0]) [CLSID_PhoneNumberInfo]);
 DEFINE_IID!(IID_IPhoneNumberInfoFactory, 2181216612, 44458, 19711, 143, 207, 23, 231, 81, 106, 40, 255);
 RT_INTERFACE!{static interface IPhoneNumberInfoFactory(IPhoneNumberInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoFactory] {
-    fn Create(&self, number: HSTRING, out: *mut *mut PhoneNumberInfo) -> HRESULT
+    fn Create(&self, number: HSTRING, out: *mut <PhoneNumberInfo as RtType>::Abi) -> HRESULT
 }}
 impl ComPtr<IPhoneNumberInfoFactory> {
-    #[inline] pub fn create(&self, number: &HStringArg) -> Result<ComPtr<PhoneNumberInfo>> { unsafe { 
+    #[inline] pub fn create(&self, number: &HStringArg) -> Result<PhoneNumberInfo> { unsafe { 
         let mut out = null_mut();
         let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, number.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        if hr == S_OK { Ok(PhoneNumberInfo::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPhoneNumberInfoStatics, 1530875754, 34473, 16617, 134, 73, 109, 97, 22, 25, 40, 212);
 RT_INTERFACE!{static interface IPhoneNumberInfoStatics(IPhoneNumberInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoStatics] {
-    fn TryParse(&self, input: HSTRING, phoneNumber: *mut *mut PhoneNumberInfo, out: *mut PhoneNumberParseResult) -> HRESULT,
-    fn TryParseWithRegion(&self, input: HSTRING, regionCode: HSTRING, phoneNumber: *mut *mut PhoneNumberInfo, out: *mut PhoneNumberParseResult) -> HRESULT
+    fn TryParse(&self, input: HSTRING, phoneNumber: *mut <PhoneNumberInfo as RtType>::Abi, out: *mut PhoneNumberParseResult) -> HRESULT,
+    fn TryParseWithRegion(&self, input: HSTRING, regionCode: HSTRING, phoneNumber: *mut <PhoneNumberInfo as RtType>::Abi, out: *mut PhoneNumberParseResult) -> HRESULT
 }}
 impl ComPtr<IPhoneNumberInfoStatics> {
-    #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> { unsafe { 
+    #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<PhoneNumberInfo>, PhoneNumberParseResult)> { unsafe { 
         let mut phoneNumber = null_mut(); let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut phoneNumber, &mut out);
-        if hr == S_OK { Ok((ComPtr::wrap_optional(phoneNumber), out)) } else { err(hr) }
+        if hr == S_OK { Ok((PhoneNumberInfo::wrap(phoneNumber), out)) } else { err(hr) }
     }}
-    #[inline] pub fn try_parse_with_region(&self, input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<ComPtr<PhoneNumberInfo>>, PhoneNumberParseResult)> { unsafe { 
+    #[inline] pub fn try_parse_with_region(&self, input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<PhoneNumberInfo>, PhoneNumberParseResult)> { unsafe { 
         let mut phoneNumber = null_mut(); let mut out = zeroed();
         let hr = ((*self.as_abi().lpVtbl).TryParseWithRegion)(self.as_abi() as *const _ as *mut _, input.get(), regionCode.get(), &mut phoneNumber, &mut out);
-        if hr == S_OK { Ok((ComPtr::wrap_optional(phoneNumber), out)) } else { err(hr) }
+        if hr == S_OK { Ok((PhoneNumberInfo::wrap(phoneNumber), out)) } else { err(hr) }
     }}
 }
 RT_ENUM! { enum PhoneNumberMatchResult: i32 {

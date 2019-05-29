@@ -14,6 +14,7 @@ namespace Generator.Types
         public string[] InputParameterNames;
         public Tuple<TypeReference, InputKind>[] InputParameterTypes;
         public Tuple<TypeReference, bool>[] OutTypes;
+        public string[] GeneratedOutTypes;
         public string GetManyParameterName;
         public List<Tuple<string, TypeReference, bool>> Output;
 
@@ -24,7 +25,8 @@ namespace Generator.Types
 
         public string MakeOutType(Generator generator, ITypeRequestSource source, bool isFactoryMethod)
         {
-            string outType = String.Join(", ", OutTypes.Select(o => TypeHelpers.GetTypeName(generator, source, o.Item1, (o.Item2 || isFactoryMethod) ? TypeUsage.OutNonNull : TypeUsage.Out)));
+            GeneratedOutTypes = OutTypes.Select(o => TypeHelpers.GetTypeName(generator, source, o.Item1, (o.Item2 || isFactoryMethod) ? TypeUsage.OutNonNull : TypeUsage.Out)).ToArray();
+            string outType = String.Join(", ", GeneratedOutTypes);
             if (OutTypes.Count() != 1)
             {
                 outType = "(" + outType + ")"; // also works for count == 0 (empty tuple)
@@ -96,7 +98,7 @@ namespace Generator.Types
             var outInit = String.Join(" ", output.SelectMany(o => TypeHelpers.CreateUninitializedOutputs(o.Item1, o.Item2)));
             if (outInit != "") outInit = "\r\n        " + outInit;
 
-            var outWrap = String.Join(", ", output.Select(o => TypeHelpers.WrapOutputParameter(o.Item1, o.Item2, isFactoryMethod || o.Item3)));
+            var outWrap = String.Join(", ", output.Zip(GeneratedOutTypes, (a, b) => Tuple.Create(a.Item1, a.Item2, a.Item3, b)).Select(o => TypeHelpers.WrapOutputParameter(o.Item1, o.Item2, isFactoryMethod || o.Item3, o.Item4)));
             if (output.Count != 1)
             {
                 outWrap = "(" + outWrap + ")"; // also works for count == 0 (empty tuple)

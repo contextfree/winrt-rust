@@ -41,7 +41,7 @@ fn main() {
             let error_info = {
                 let mut res = ptr::null_mut();
                 assert_eq!(GetRestrictedErrorInfo(&mut res), S_OK);
-                ComPtr::wrap(res)
+                ComPtr::wrap_nonnull(res)
             };
             let (description, error, restricted_description, _) = {
                 let mut description = ptr::null_mut();
