@@ -1,11 +1,9 @@
 use std::ops::{Deref, DerefMut};
 use std::fmt;
 use std::ptr;
-use crate::{ComIid, ComInterface, RtInterface, RtClassInterface, IInspectable, Guid};
+use crate::{ComInterface, ComInterfaceAbi, RtInterface, IInspectable};
 
-use w::shared::ntdef::VOID;
 use w::shared::minwindef::LPVOID;
-use w::shared::winerror::S_OK;
 use w::um::unknwnbase::IUnknown;
 use w::um::combaseapi::CoTaskMemFree;
 
@@ -13,35 +11,41 @@ use w::um::combaseapi::CoTaskMemFree;
 /// reference count of the underlying COM object.
 #[repr(transparent)]
 #[derive(Debug)]
-pub struct ComPtr<T: ComInterface>(ptr::NonNull<T>);
+pub struct ComPtr<T: ComInterfaceAbi>(ptr::NonNull<T>);
 
-impl<T: ComInterface> fmt::Pointer for ComPtr<T> {
+impl<T: ComInterfaceAbi> fmt::Pointer for ComPtr<T> {
     #[inline]
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         fmt::Pointer::fmt(&self.0, f)
     }
 }
 
-// This is a helper method that is not exposed publically by the library
-#[inline]
-pub fn query_interface<T, Target>(interface: &T) -> Option<ComPtr<Target>> where Target: ComIid + ComInterface, T: ComInterface {
-    let iid: &'static Guid = Target::iid();
-    let as_unknown = unsafe { &mut *(interface  as *const T as *mut T as *mut IUnknown) };
-    let mut res = ptr::null_mut();
-    unsafe {
-        match as_unknown.QueryInterface(iid.as_ref(), &mut res as *mut _ as *mut *mut VOID) {
-            S_OK => Some(ComPtr::wrap_nonnull(res)),
-            _ => None
-        }
+pub(crate) trait ComPtrHelpers {
+    /// Changes the type of the underlying COM object to a different interface without doing `QueryInterface`.
+    /// This is a runtime no-op, but you need to be sure that the interface is compatible.
+    unsafe fn into_unchecked<Interface: ComInterface>(self) -> Interface;
+
+    unsafe fn as_unchecked<Interface: ComInterface>(&self) -> &Interface;
+}
+
+impl<T> ComPtrHelpers for T where T: ComInterface + Sized {
+    #[inline]
+    unsafe fn into_unchecked<Interface: ComInterface>(self) -> Interface {
+        let ptr = self.get_abi();
+        std::mem::forget(self);
+        Interface::wrap_com(ptr as *mut _)
+    }
+
+    unsafe fn as_unchecked<Interface: ComInterface>(&self) -> &Interface {
+        std::mem::transmute(self)
     }
 }
 
-// This trait is not exported in the library interface
-pub trait HiddenGetRuntimeClassName {
-    fn get_runtime_class_name(&self) -> crate::HString;
+pub(crate) fn get_abi<Interface: crate::RtType<In=Interface> + ComInterface>(intf: &Interface) -> <Interface as crate::RtType>::Abi {
+    unsafe { Interface::unwrap(intf) }
 }
 
-impl<T: ComInterface> ComPtr<T> {
+impl<T: ComInterfaceAbi> ComPtr<T> {
     /// Creates a `ComPtr` to wrap a raw pointer.
     /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
     /// The wrapped pointer must not be null.
@@ -73,41 +77,14 @@ impl<T: ComInterface> ComPtr<T> {
     fn as_unknown(&self) -> &mut IUnknown {
         unsafe { &mut *(self.0.as_ptr() as *mut IUnknown) }
     }
-
-    /// Changes the type of the underlying COM object to a different interface without doing `QueryInterface`.
-    /// This is a runtime no-op, but you need to be sure that the interface is compatible.
-    #[inline]
-    pub unsafe fn into_unchecked<Interface>(self) -> ComPtr<Interface> where Interface: ComInterface {
-        std::mem::transmute(self)
-    }
     
-    /// Gets the fully qualified name of the current Windows Runtime object.
-    /// This is only available for interfaces that inherit from `IInspectable` and
-    /// are not factory or statics interfaces.
-    ///
-    /// # Examples
-    ///
-    /// Basic usage:
-    ///
-    /// ```
-    /// use winrt::*;
-    /// use winrt::windows::foundation::Uri;
-    ///
-    /// let uri = FastHString::new("https://www.rust-lang.org");
-    /// let uri = Uri::create_uri(&uri).unwrap();
-    /// assert_eq!("Windows.Foundation.Uri", uri.get_runtime_class_name().to_string());
-    /// ```
-    #[inline]
-    pub fn get_runtime_class_name(&self) -> crate::HString where T: RtClassInterface {
-        HiddenGetRuntimeClassName::get_runtime_class_name(self.as_inspectable())
-    }
-    
+    /*
     /// Retrieves a `ComPtr` to the specified interface, if it is supported by the underlying object.
     /// If the requested interface is not supported, `None` is returned.
     #[inline]
-    pub fn query_interface<Target>(&self) -> Option<ComPtr<Target>> where Target: ComIid + ComInterface {
+    pub fn query_interface<Target>(&self) -> Option<ComPtr<Target::TAbi>> where Target: ComIid + ComInterface {
         query_interface::<_, Target>(&*self.as_abi())
-    }
+    }*/
 
     // TODO: should be pub(crate)
     #[inline]
@@ -122,7 +99,7 @@ impl<T: ComInterface> ComPtr<T> {
     }
 }
 
-impl<T: ComInterface> Clone for ComPtr<T> {
+impl<T: ComInterfaceAbi> Clone for ComPtr<T> {
     #[inline]
     fn clone(&self) -> Self {
         unsafe { 
@@ -131,13 +108,13 @@ impl<T: ComInterface> Clone for ComPtr<T> {
         }
     }
 }
-impl<T: ComInterface> Drop for ComPtr<T> {
+impl<T: ComInterfaceAbi> Drop for ComPtr<T> {
     #[inline]
     fn drop(&mut self) {
         unsafe { self.as_unknown().Release() };
     }
 }
-impl<T: ComInterface> PartialEq<ComPtr<T>> for ComPtr<T> {
+impl<T: ComInterfaceAbi> PartialEq<ComPtr<T>> for ComPtr<T> {
     #[inline]
     fn eq(&self, other: &ComPtr<T>) -> bool {
         self.0 == other.0
@@ -198,8 +175,8 @@ mod extra {
     // i.e. when a compiler version is used that still has dropflags
     #[inline]
     fn assert_no_dropflags() {
-        let p: *mut crate::IInspectable = std::ptr::null_mut();
-        let _: crate::ComPtr<crate::IInspectable> = unsafe { std::mem::transmute(p) };
+        let p: *mut () = std::ptr::null_mut();
+        let _: crate::ComPtr<<crate::IInspectable as crate::ComInterface>::TAbi> = unsafe { std::mem::transmute(p) };
     }
 }
 
@@ -212,7 +189,7 @@ mod tests {
         use std::mem::size_of;
 
         // make sure that ComPtr is pointer-sized
-        assert_eq!(size_of::<crate::ComPtr<crate::IInspectable>>(), size_of::<*mut crate::IInspectable>());
-        assert_eq!(size_of::<Option<crate::ComPtr<crate::IInspectable>>>(), size_of::<*mut crate::IInspectable>());
+        assert_eq!(size_of::<crate::ComPtr<<crate::IInspectable as crate::ComInterface>::TAbi>>(), size_of::<<crate::IInspectable as crate::ComInterface>::TAbi>());
+        assert_eq!(size_of::<Option<crate::ComPtr<<crate::IInspectable as crate::ComInterface>::TAbi>>>(), size_of::<<crate::IInspectable as crate::ComInterface>::TAbi>());
     }
 }

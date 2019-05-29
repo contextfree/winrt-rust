@@ -9,62 +9,62 @@ impl ApplicationLanguages {
     #[inline] pub fn set_primary_language_override(value: &HStringArg) -> Result<()> {
         <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().set_primary_language_override(value)
     }
-    #[inline] pub fn get_languages() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
+    #[inline] pub fn get_languages() -> Result<Option<foundation::collections::IVectorView<HString>>> {
         <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().get_languages()
     }
-    #[inline] pub fn get_manifest_languages() -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
+    #[inline] pub fn get_manifest_languages() -> Result<Option<foundation::collections::IVectorView<HString>>> {
         <Self as RtActivatable<IApplicationLanguagesStatics>>::get_activation_factory().get_manifest_languages()
     }
-    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(user: &super::system::User) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(user: &super::system::User) -> Result<Option<foundation::collections::IVectorView<HString>>> {
         <Self as RtActivatable<IApplicationLanguagesStatics2>>::get_activation_factory().get_languages_for_user(user)
     }
 }
 DEFINE_CLSID!(ApplicationLanguages(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,65,112,112,108,105,99,97,116,105,111,110,76,97,110,103,117,97,103,101,115,0]) [CLSID_ApplicationLanguages]);
 DEFINE_IID!(IID_IApplicationLanguagesStatics, 1974732871, 2636, 19090, 149, 101, 253, 99, 201, 95, 122, 237);
-RT_INTERFACE!{static interface IApplicationLanguagesStatics(IApplicationLanguagesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationLanguagesStatics] {
+RT_INTERFACE!{static interface IApplicationLanguagesStatics(IApplicationLanguagesStaticsVtbl, IApplicationLanguagesStatics_Abi): IInspectable(IInspectableVtbl) [IID_IApplicationLanguagesStatics] {
     fn get_PrimaryLanguageOverride(&self, out: *mut HSTRING) -> HRESULT,
     fn put_PrimaryLanguageOverride(&self, value: HSTRING) -> HRESULT,
-    fn get_Languages(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
-    fn get_ManifestLanguages(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
+    fn get_Languages(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
+    fn get_ManifestLanguages(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<IApplicationLanguagesStatics> {
+impl IApplicationLanguagesStatics {
     #[inline] pub fn get_primary_language_override(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_PrimaryLanguageOverride)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_PrimaryLanguageOverride)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_primary_language_override(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_PrimaryLanguageOverride)(self.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.0.as_abi().lpVtbl).put_PrimaryLanguageOverride)(self.0.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+    #[inline] pub fn get_languages(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Languages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).get_Languages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_manifest_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+    #[inline] pub fn get_manifest_languages(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ManifestLanguages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).get_ManifestLanguages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IApplicationLanguagesStatics2, 502324815, 1835, 19835, 143, 6, 203, 45, 180, 15, 43, 181);
-RT_INTERFACE!{static interface IApplicationLanguagesStatics2(IApplicationLanguagesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationLanguagesStatics2] {
-    #[cfg(feature="windows-system")] fn GetLanguagesForUser(&self, user: <super::system::User as RtType>::Abi, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
+RT_INTERFACE!{static interface IApplicationLanguagesStatics2(IApplicationLanguagesStatics2Vtbl, IApplicationLanguagesStatics2_Abi): IInspectable(IInspectableVtbl) [IID_IApplicationLanguagesStatics2] {
+    #[cfg(feature="windows-system")] fn GetLanguagesForUser(&self, user: <super::system::User as RtType>::Abi, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<IApplicationLanguagesStatics2> {
-    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(&self, user: &super::system::User) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+impl IApplicationLanguagesStatics2 {
+    #[cfg(feature="windows-system")] #[inline] pub fn get_languages_for_user(&self, user: &super::system::User) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).GetLanguagesForUser)(self.as_abi() as *const _ as *mut _, user.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).GetLanguagesForUser)(self.0.as_abi() as *const _ as *mut _, get_abi(user) as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ICalendar, 3392152093, 34521, 16635, 162, 107, 212, 78, 183, 207, 8, 234);
-RT_INTERFACE!{interface ICalendar(ICalendarVtbl): IInspectable(IInspectableVtbl) [IID_ICalendar] {
+RT_INTERFACE!{interface ICalendar(ICalendarVtbl, ICalendar_Abi): IInspectable(IInspectableVtbl) [IID_ICalendar] {
     fn Clone(&self, out: *mut <Calendar as RtType>::Abi) -> HRESULT,
     fn SetToMin(&self) -> HRESULT,
     fn SetToMax(&self) -> HRESULT,
-    fn get_Languages(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+    fn get_Languages(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_NumeralSystem(&self, out: *mut HSTRING) -> HRESULT,
     fn put_NumeralSystem(&self, value: HSTRING) -> HRESULT,
     fn GetCalendarSystem(&self, out: *mut HSTRING) -> HRESULT,
@@ -160,468 +160,468 @@ RT_INTERFACE!{interface ICalendar(ICalendarVtbl): IInspectable(IInspectableVtbl)
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IsDaylightSavingTime(&self, out: *mut bool) -> HRESULT
 }}
-impl ComPtr<ICalendar> {
+impl ICalendar {
     #[inline] pub fn clone(&self) -> Result<Option<Calendar>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).Clone)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).Clone)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Calendar::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_to_min(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).SetToMin)(self.as_abi() as *const _ as *mut _);
+        let hr = ((*self.0.as_abi().lpVtbl).SetToMin)(self.0.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_to_max(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).SetToMax)(self.as_abi() as *const _ as *mut _);
+        let hr = ((*self.0.as_abi().lpVtbl).SetToMax)(self.0.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+    #[inline] pub fn get_languages(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Languages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).get_Languages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_numeral_system(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NumeralSystem)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumeralSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_numeral_system(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_NumeralSystem)(self.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.0.as_abi().lpVtbl).put_NumeralSystem)(self.0.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_calendar_system(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).GetCalendarSystem)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).GetCalendarSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn change_calendar_system(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).ChangeCalendarSystem)(self.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.0.as_abi().lpVtbl).ChangeCalendarSystem)(self.0.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_clock(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).GetClock)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).GetClock)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn change_clock(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).ChangeClock)(self.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.0.as_abi().lpVtbl).ChangeClock)(self.0.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_date_time(&self) -> Result<foundation::DateTime> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).GetDateTime)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).GetDateTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_date_time(&self, value: foundation::DateTime) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).SetDateTime)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).SetDateTime)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn set_to_now(&self) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).SetToNow)(self.as_abi() as *const _ as *mut _);
+        let hr = ((*self.0.as_abi().lpVtbl).SetToNow)(self.0.as_abi() as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_first_era(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FirstEra)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FirstEra)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_era(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_LastEra)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LastEra)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_number_of_eras(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_NumberOfEras)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumberOfEras)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_era(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_Era)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Era)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_era(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Era)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_Era)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_eras(&self, eras: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).AddEras)(self.as_abi() as *const _ as *mut _, eras);
+        let hr = ((*self.0.as_abi().lpVtbl).AddEras)(self.0.as_abi() as *const _ as *mut _, eras);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn era_as_full_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).EraAsFullString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).EraAsFullString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn era_as_string(&self, idealLength: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).EraAsString)(self.as_abi() as *const _ as *mut _, idealLength, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).EraAsString)(self.0.as_abi() as *const _ as *mut _, idealLength, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_first_year_in_this_era(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FirstYearInThisEra)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FirstYearInThisEra)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_year_in_this_era(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_LastYearInThisEra)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LastYearInThisEra)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_number_of_years_in_this_era(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_NumberOfYearsInThisEra)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumberOfYearsInThisEra)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_year(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_Year)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Year)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_year(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Year)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_Year)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_years(&self, years: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).AddYears)(self.as_abi() as *const _ as *mut _, years);
+        let hr = ((*self.0.as_abi().lpVtbl).AddYears)(self.0.as_abi() as *const _ as *mut _, years);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn year_as_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).YearAsString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).YearAsString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn year_as_truncated_string(&self, remainingDigits: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).YearAsTruncatedString)(self.as_abi() as *const _ as *mut _, remainingDigits, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).YearAsTruncatedString)(self.0.as_abi() as *const _ as *mut _, remainingDigits, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn year_as_padded_string(&self, minDigits: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).YearAsPaddedString)(self.as_abi() as *const _ as *mut _, minDigits, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).YearAsPaddedString)(self.0.as_abi() as *const _ as *mut _, minDigits, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_first_month_in_this_year(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FirstMonthInThisYear)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FirstMonthInThisYear)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_month_in_this_year(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_LastMonthInThisYear)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LastMonthInThisYear)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_number_of_months_in_this_year(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_NumberOfMonthsInThisYear)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumberOfMonthsInThisYear)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_month(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_Month)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Month)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_month(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Month)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_Month)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_months(&self, months: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).AddMonths)(self.as_abi() as *const _ as *mut _, months);
+        let hr = ((*self.0.as_abi().lpVtbl).AddMonths)(self.0.as_abi() as *const _ as *mut _, months);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn month_as_full_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).MonthAsFullString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).MonthAsFullString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn month_as_string(&self, idealLength: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).MonthAsString)(self.as_abi() as *const _ as *mut _, idealLength, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).MonthAsString)(self.0.as_abi() as *const _ as *mut _, idealLength, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn month_as_full_solo_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).MonthAsFullSoloString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).MonthAsFullSoloString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn month_as_solo_string(&self, idealLength: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).MonthAsSoloString)(self.as_abi() as *const _ as *mut _, idealLength, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).MonthAsSoloString)(self.0.as_abi() as *const _ as *mut _, idealLength, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn month_as_numeric_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).MonthAsNumericString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).MonthAsNumericString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn month_as_padded_numeric_string(&self, minDigits: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).MonthAsPaddedNumericString)(self.as_abi() as *const _ as *mut _, minDigits, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).MonthAsPaddedNumericString)(self.0.as_abi() as *const _ as *mut _, minDigits, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn add_weeks(&self, weeks: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).AddWeeks)(self.as_abi() as *const _ as *mut _, weeks);
+        let hr = ((*self.0.as_abi().lpVtbl).AddWeeks)(self.0.as_abi() as *const _ as *mut _, weeks);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_first_day_in_this_month(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FirstDayInThisMonth)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FirstDayInThisMonth)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_day_in_this_month(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_LastDayInThisMonth)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LastDayInThisMonth)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_number_of_days_in_this_month(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_NumberOfDaysInThisMonth)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumberOfDaysInThisMonth)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_day(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_Day)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Day)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_day(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Day)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_Day)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_days(&self, days: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).AddDays)(self.as_abi() as *const _ as *mut _, days);
+        let hr = ((*self.0.as_abi().lpVtbl).AddDays)(self.0.as_abi() as *const _ as *mut _, days);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn day_as_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).DayAsString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).DayAsString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn day_as_padded_string(&self, minDigits: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).DayAsPaddedString)(self.as_abi() as *const _ as *mut _, minDigits, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).DayAsPaddedString)(self.0.as_abi() as *const _ as *mut _, minDigits, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_day_of_week(&self) -> Result<DayOfWeek> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_DayOfWeek)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_DayOfWeek)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn day_of_week_as_full_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).DayOfWeekAsFullString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).DayOfWeekAsFullString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn day_of_week_as_string(&self, idealLength: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).DayOfWeekAsString)(self.as_abi() as *const _ as *mut _, idealLength, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).DayOfWeekAsString)(self.0.as_abi() as *const _ as *mut _, idealLength, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn day_of_week_as_full_solo_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).DayOfWeekAsFullSoloString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).DayOfWeekAsFullSoloString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn day_of_week_as_solo_string(&self, idealLength: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).DayOfWeekAsSoloString)(self.as_abi() as *const _ as *mut _, idealLength, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).DayOfWeekAsSoloString)(self.0.as_abi() as *const _ as *mut _, idealLength, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_first_period_in_this_day(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FirstPeriodInThisDay)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FirstPeriodInThisDay)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_period_in_this_day(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_LastPeriodInThisDay)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LastPeriodInThisDay)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_number_of_periods_in_this_day(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_NumberOfPeriodsInThisDay)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumberOfPeriodsInThisDay)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_period(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_Period)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Period)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_period(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Period)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_Period)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_periods(&self, periods: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).AddPeriods)(self.as_abi() as *const _ as *mut _, periods);
+        let hr = ((*self.0.as_abi().lpVtbl).AddPeriods)(self.0.as_abi() as *const _ as *mut _, periods);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn period_as_full_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).PeriodAsFullString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).PeriodAsFullString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn period_as_string(&self, idealLength: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).PeriodAsString)(self.as_abi() as *const _ as *mut _, idealLength, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).PeriodAsString)(self.0.as_abi() as *const _ as *mut _, idealLength, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_first_hour_in_this_period(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FirstHourInThisPeriod)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FirstHourInThisPeriod)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_hour_in_this_period(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_LastHourInThisPeriod)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LastHourInThisPeriod)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_number_of_hours_in_this_period(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_NumberOfHoursInThisPeriod)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumberOfHoursInThisPeriod)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_hour(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_Hour)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Hour)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_hour(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Hour)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_Hour)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_hours(&self, hours: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).AddHours)(self.as_abi() as *const _ as *mut _, hours);
+        let hr = ((*self.0.as_abi().lpVtbl).AddHours)(self.0.as_abi() as *const _ as *mut _, hours);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn hour_as_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).HourAsString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).HourAsString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn hour_as_padded_string(&self, minDigits: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).HourAsPaddedString)(self.as_abi() as *const _ as *mut _, minDigits, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).HourAsPaddedString)(self.0.as_abi() as *const _ as *mut _, minDigits, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_minute(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_Minute)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Minute)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_minute(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Minute)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_Minute)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_minutes(&self, minutes: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).AddMinutes)(self.as_abi() as *const _ as *mut _, minutes);
+        let hr = ((*self.0.as_abi().lpVtbl).AddMinutes)(self.0.as_abi() as *const _ as *mut _, minutes);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn minute_as_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).MinuteAsString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).MinuteAsString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn minute_as_padded_string(&self, minDigits: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).MinuteAsPaddedString)(self.as_abi() as *const _ as *mut _, minDigits, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).MinuteAsPaddedString)(self.0.as_abi() as *const _ as *mut _, minDigits, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_second(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_Second)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Second)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_second(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Second)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_Second)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_seconds(&self, seconds: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).AddSeconds)(self.as_abi() as *const _ as *mut _, seconds);
+        let hr = ((*self.0.as_abi().lpVtbl).AddSeconds)(self.0.as_abi() as *const _ as *mut _, seconds);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn second_as_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).SecondAsString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).SecondAsString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn second_as_padded_string(&self, minDigits: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).SecondAsPaddedString)(self.as_abi() as *const _ as *mut _, minDigits, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).SecondAsPaddedString)(self.0.as_abi() as *const _ as *mut _, minDigits, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nanosecond(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_Nanosecond)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Nanosecond)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_nanosecond(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Nanosecond)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_Nanosecond)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn add_nanoseconds(&self, nanoseconds: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).AddNanoseconds)(self.as_abi() as *const _ as *mut _, nanoseconds);
+        let hr = ((*self.0.as_abi().lpVtbl).AddNanoseconds)(self.0.as_abi() as *const _ as *mut _, nanoseconds);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn nanosecond_as_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).NanosecondAsString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).NanosecondAsString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn nanosecond_as_padded_string(&self, minDigits: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).NanosecondAsPaddedString)(self.as_abi() as *const _ as *mut _, minDigits, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).NanosecondAsPaddedString)(self.0.as_abi() as *const _ as *mut _, minDigits, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn compare(&self, other: &Calendar) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).Compare)(self.as_abi() as *const _ as *mut _, other.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).Compare)(self.0.as_abi() as *const _ as *mut _, get_abi(other) as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn compare_date_time(&self, other: foundation::DateTime) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).CompareDateTime)(self.as_abi() as *const _ as *mut _, other, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CompareDateTime)(self.0.as_abi() as *const _ as *mut _, other, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn copy_to(&self, other: &Calendar) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).CopyTo)(self.as_abi() as *const _ as *mut _, other.as_abi() as *const _ as *mut _);
+        let hr = ((*self.0.as_abi().lpVtbl).CopyTo)(self.0.as_abi() as *const _ as *mut _, get_abi(other) as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_first_minute_in_this_hour(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FirstMinuteInThisHour)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FirstMinuteInThisHour)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_minute_in_this_hour(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_LastMinuteInThisHour)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LastMinuteInThisHour)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_number_of_minutes_in_this_hour(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_NumberOfMinutesInThisHour)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumberOfMinutesInThisHour)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_first_second_in_this_minute(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FirstSecondInThisMinute)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FirstSecondInThisMinute)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_last_second_in_this_minute(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_LastSecondInThisMinute)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LastSecondInThisMinute)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_number_of_seconds_in_this_minute(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_NumberOfSecondsInThisMinute)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumberOfSecondsInThisMinute)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ResolvedLanguage)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ResolvedLanguage)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_daylight_saving_time(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IsDaylightSavingTime)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IsDaylightSavingTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -630,42 +630,42 @@ impl RtActivatable<ICalendarFactory> for Calendar {}
 impl RtActivatable<ICalendarFactory2> for Calendar {}
 impl RtActivatable<IActivationFactory> for Calendar {}
 impl Calendar {
-    #[inline] pub fn create_calendar_default_calendar_and_clock(languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<Calendar> {
+    #[inline] pub fn create_calendar_default_calendar_and_clock(languages: &foundation::collections::IIterable<HString>) -> Result<Calendar> {
         <Self as RtActivatable<ICalendarFactory>>::get_activation_factory().create_calendar_default_calendar_and_clock(languages)
     }
-    #[inline] pub fn create_calendar(languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg) -> Result<Calendar> {
+    #[inline] pub fn create_calendar(languages: &foundation::collections::IIterable<HString>, calendar: &HStringArg, clock: &HStringArg) -> Result<Calendar> {
         <Self as RtActivatable<ICalendarFactory>>::get_activation_factory().create_calendar(languages, calendar, clock)
     }
-    #[inline] pub fn create_calendar_with_time_zone(languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<Calendar> {
+    #[inline] pub fn create_calendar_with_time_zone(languages: &foundation::collections::IIterable<HString>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<Calendar> {
         <Self as RtActivatable<ICalendarFactory2>>::get_activation_factory().create_calendar_with_time_zone(languages, calendar, clock, timeZoneId)
     }
 }
 DEFINE_CLSID!(Calendar(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,97,108,101,110,100,97,114,0]) [CLSID_Calendar]);
 DEFINE_IID!(IID_ICalendarFactory, 2213905426, 58731, 19573, 166, 110, 15, 99, 213, 119, 88, 166);
-RT_INTERFACE!{static interface ICalendarFactory(ICalendarFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICalendarFactory] {
-    fn CreateCalendarDefaultCalendarAndClock(&self, languages: *mut foundation::collections::IIterable<HString>, out: *mut <Calendar as RtType>::Abi) -> HRESULT,
-    fn CreateCalendar(&self, languages: *mut foundation::collections::IIterable<HString>, calendar: HSTRING, clock: HSTRING, out: *mut <Calendar as RtType>::Abi) -> HRESULT
+RT_INTERFACE!{static interface ICalendarFactory(ICalendarFactoryVtbl, ICalendarFactory_Abi): IInspectable(IInspectableVtbl) [IID_ICalendarFactory] {
+    fn CreateCalendarDefaultCalendarAndClock(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <Calendar as RtType>::Abi) -> HRESULT,
+    fn CreateCalendar(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, calendar: HSTRING, clock: HSTRING, out: *mut <Calendar as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<ICalendarFactory> {
-    #[inline] pub fn create_calendar_default_calendar_and_clock(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<Calendar> { unsafe { 
+impl ICalendarFactory {
+    #[inline] pub fn create_calendar_default_calendar_and_clock(&self, languages: &foundation::collections::IIterable<HString>) -> Result<Calendar> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateCalendarDefaultCalendarAndClock)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateCalendarDefaultCalendarAndClock)(self.0.as_abi() as *const _ as *mut _, get_abi(languages) as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(Calendar::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_calendar(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg) -> Result<Calendar> { unsafe { 
+    #[inline] pub fn create_calendar(&self, languages: &foundation::collections::IIterable<HString>, calendar: &HStringArg, clock: &HStringArg) -> Result<Calendar> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateCalendar)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, calendar.get(), clock.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateCalendar)(self.0.as_abi() as *const _ as *mut _, get_abi(languages) as *const _ as *mut _, calendar.get(), clock.get(), &mut out);
         if hr == S_OK { Ok(Calendar::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ICalendarFactory2, 3024828300, 51838, 17808, 158, 114, 234, 43, 236, 26, 81, 21);
-RT_INTERFACE!{static interface ICalendarFactory2(ICalendarFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_ICalendarFactory2] {
-    fn CreateCalendarWithTimeZone(&self, languages: *mut foundation::collections::IIterable<HString>, calendar: HSTRING, clock: HSTRING, timeZoneId: HSTRING, out: *mut <Calendar as RtType>::Abi) -> HRESULT
+RT_INTERFACE!{static interface ICalendarFactory2(ICalendarFactory2Vtbl, ICalendarFactory2_Abi): IInspectable(IInspectableVtbl) [IID_ICalendarFactory2] {
+    fn CreateCalendarWithTimeZone(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, calendar: HSTRING, clock: HSTRING, timeZoneId: HSTRING, out: *mut <Calendar as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<ICalendarFactory2> {
-    #[inline] pub fn create_calendar_with_time_zone(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<Calendar> { unsafe { 
+impl ICalendarFactory2 {
+    #[inline] pub fn create_calendar_with_time_zone(&self, languages: &foundation::collections::IIterable<HString>, calendar: &HStringArg, clock: &HStringArg, timeZoneId: &HStringArg) -> Result<Calendar> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateCalendarWithTimeZone)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, calendar.get(), clock.get(), timeZoneId.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateCalendarWithTimeZone)(self.0.as_abi() as *const _ as *mut _, get_abi(languages) as *const _ as *mut _, calendar.get(), clock.get(), timeZoneId.get(), &mut out);
         if hr == S_OK { Ok(Calendar::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -722,7 +722,7 @@ impl CalendarIdentifiers {
 }
 DEFINE_CLSID!(CalendarIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,97,108,101,110,100,97,114,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_CalendarIdentifiers]);
 DEFINE_IID!(IID_ICalendarIdentifiersStatics, 2154119016, 11442, 19487, 181, 144, 240, 245, 43, 244, 253, 26);
-RT_INTERFACE!{static interface ICalendarIdentifiersStatics(ICalendarIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICalendarIdentifiersStatics] {
+RT_INTERFACE!{static interface ICalendarIdentifiersStatics(ICalendarIdentifiersStaticsVtbl, ICalendarIdentifiersStatics_Abi): IInspectable(IInspectableVtbl) [IID_ICalendarIdentifiersStatics] {
     fn get_Gregorian(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Hebrew(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Hijri(&self, out: *mut HSTRING) -> HRESULT,
@@ -733,96 +733,96 @@ RT_INTERFACE!{static interface ICalendarIdentifiersStatics(ICalendarIdentifiersS
     fn get_Thai(&self, out: *mut HSTRING) -> HRESULT,
     fn get_UmAlQura(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<ICalendarIdentifiersStatics> {
+impl ICalendarIdentifiersStatics {
     #[inline] pub fn get_gregorian(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Gregorian)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Gregorian)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hebrew(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Hebrew)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Hebrew)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hijri(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Hijri)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Hijri)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_japanese(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Japanese)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Japanese)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_julian(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Julian)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Julian)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_korean(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Korean)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Korean)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_taiwan(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Taiwan)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Taiwan)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_thai(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Thai)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Thai)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_um_al_qura(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_UmAlQura)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_UmAlQura)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ICalendarIdentifiersStatics2, 2113197192, 24528, 17063, 149, 181, 125, 152, 216, 35, 7, 95);
-RT_INTERFACE!{static interface ICalendarIdentifiersStatics2(ICalendarIdentifiersStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ICalendarIdentifiersStatics2] {
+RT_INTERFACE!{static interface ICalendarIdentifiersStatics2(ICalendarIdentifiersStatics2Vtbl, ICalendarIdentifiersStatics2_Abi): IInspectable(IInspectableVtbl) [IID_ICalendarIdentifiersStatics2] {
     fn get_Persian(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<ICalendarIdentifiersStatics2> {
+impl ICalendarIdentifiersStatics2 {
     #[inline] pub fn get_persian(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Persian)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Persian)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ICalendarIdentifiersStatics3, 740447267, 8109, 16576, 147, 52, 168, 235, 144, 219, 4, 245);
-RT_INTERFACE!{static interface ICalendarIdentifiersStatics3(ICalendarIdentifiersStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_ICalendarIdentifiersStatics3] {
+RT_INTERFACE!{static interface ICalendarIdentifiersStatics3(ICalendarIdentifiersStatics3Vtbl, ICalendarIdentifiersStatics3_Abi): IInspectable(IInspectableVtbl) [IID_ICalendarIdentifiersStatics3] {
     fn get_ChineseLunar(&self, out: *mut HSTRING) -> HRESULT,
     fn get_JapaneseLunar(&self, out: *mut HSTRING) -> HRESULT,
     fn get_KoreanLunar(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TaiwanLunar(&self, out: *mut HSTRING) -> HRESULT,
     fn get_VietnameseLunar(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<ICalendarIdentifiersStatics3> {
+impl ICalendarIdentifiersStatics3 {
     #[inline] pub fn get_chinese_lunar(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ChineseLunar)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ChineseLunar)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_japanese_lunar(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_JapaneseLunar)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_JapaneseLunar)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_korean_lunar(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_KoreanLunar)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_KoreanLunar)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_taiwan_lunar(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TaiwanLunar)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TaiwanLunar)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_vietnamese_lunar(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_VietnameseLunar)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_VietnameseLunar)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -838,19 +838,19 @@ impl ClockIdentifiers {
 }
 DEFINE_CLSID!(ClockIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,108,111,99,107,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_ClockIdentifiers]);
 DEFINE_IID!(IID_IClockIdentifiersStatics, 1379403195, 4844, 20355, 188, 49, 177, 180, 55, 107, 8, 8);
-RT_INTERFACE!{static interface IClockIdentifiersStatics(IClockIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IClockIdentifiersStatics] {
+RT_INTERFACE!{static interface IClockIdentifiersStatics(IClockIdentifiersStaticsVtbl, IClockIdentifiersStatics_Abi): IInspectable(IInspectableVtbl) [IID_IClockIdentifiersStatics] {
     fn get_TwelveHour(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TwentyFourHour(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<IClockIdentifiersStatics> {
+impl IClockIdentifiersStatics {
     #[inline] pub fn get_twelve_hour(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TwelveHour)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TwelveHour)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_twenty_four_hour(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TwentyFourHour)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TwentyFourHour)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -1348,7 +1348,7 @@ impl CurrencyIdentifiers {
 }
 DEFINE_CLSID!(CurrencyIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,117,114,114,101,110,99,121,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_CurrencyIdentifiers]);
 DEFINE_IID!(IID_ICurrencyIdentifiersStatics, 2669480219, 54662, 18707, 155, 106, 169, 189, 45, 193, 40, 116);
-RT_INTERFACE!{static interface ICurrencyIdentifiersStatics(ICurrencyIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyIdentifiersStatics] {
+RT_INTERFACE!{static interface ICurrencyIdentifiersStatics(ICurrencyIdentifiersStaticsVtbl, ICurrencyIdentifiersStatics_Abi): IInspectable(IInspectableVtbl) [IID_ICurrencyIdentifiersStatics] {
     fn get_AED(&self, out: *mut HSTRING) -> HRESULT,
     fn get_AFN(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ALL(&self, out: *mut HSTRING) -> HRESULT,
@@ -1507,830 +1507,830 @@ RT_INTERFACE!{static interface ICurrencyIdentifiersStatics(ICurrencyIdentifiersS
     fn get_ZMW(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ZWL(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<ICurrencyIdentifiersStatics> {
+impl ICurrencyIdentifiersStatics {
     #[inline] pub fn get_aed(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_AED)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_AED)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_afn(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_AFN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_AFN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_all(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ALL)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ALL)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_amd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_AMD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_AMD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ang(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ANG)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ANG)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_aoa(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_AOA)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_AOA)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ars(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ARS)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ARS)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_aud(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_AUD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_AUD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_awg(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_AWG)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_AWG)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_azn(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_AZN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_AZN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bam(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BAM)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BAM)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bbd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BBD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BBD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bdt(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BDT)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BDT)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bgn(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BGN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BGN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bhd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BHD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BHD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bif(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BIF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BIF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bmd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BMD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BMD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bnd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BND)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BND)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bob(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BOB)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BOB)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_brl(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BRL)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BRL)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bsd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BSD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BSD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_btn(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BTN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BTN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bwp(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BWP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BWP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_byr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BYR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BYR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bzd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BZD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BZD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cad(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CAD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CAD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cdf(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CDF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CDF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_chf(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CHF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CHF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_clp(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CLP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CLP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cny(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CNY)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CNY)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cop(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_COP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_COP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_crc(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CRC)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CRC)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cup(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CUP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CUP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cve(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CVE)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CVE)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_czk(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CZK)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CZK)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_djf(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_DJF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_DJF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_dkk(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_DKK)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_DKK)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_dop(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_DOP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_DOP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_dzd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_DZD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_DZD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_egp(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_EGP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_EGP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ern(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ERN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ERN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_etb(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ETB)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ETB)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_eur(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_EUR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_EUR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_fjd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_FJD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FJD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_fkp(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_FKP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FKP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gbp(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_GBP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_GBP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gel(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_GEL)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_GEL)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ghs(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_GHS)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_GHS)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gip(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_GIP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_GIP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gmd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_GMD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_GMD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gnf(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_GNF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_GNF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gtq(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_GTQ)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_GTQ)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gyd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_GYD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_GYD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hkd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_HKD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_HKD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hnl(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_HNL)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_HNL)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hrk(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_HRK)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_HRK)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_htg(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_HTG)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_HTG)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_huf(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_HUF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_HUF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_idr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_IDR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IDR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ils(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ILS)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ILS)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_inr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_INR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_INR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_iqd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_IQD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IQD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_irr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_IRR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IRR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_isk(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ISK)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ISK)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_jmd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_JMD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_JMD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_jod(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_JOD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_JOD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_jpy(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_JPY)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_JPY)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kes(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_KES)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_KES)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kgs(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_KGS)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_KGS)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_khr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_KHR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_KHR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kmf(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_KMF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_KMF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kpw(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_KPW)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_KPW)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_krw(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_KRW)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_KRW)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kwd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_KWD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_KWD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kyd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_KYD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_KYD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kzt(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_KZT)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_KZT)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_lak(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LAK)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LAK)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_lbp(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LBP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LBP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_lkr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LKR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LKR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_lrd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LRD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LRD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_lsl(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LSL)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LSL)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ltl(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LTL)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LTL)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_lvl(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LVL)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LVL)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_lyd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LYD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LYD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mad(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MAD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MAD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mdl(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MDL)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MDL)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mga(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MGA)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MGA)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mkd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MKD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MKD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mmk(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MMK)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MMK)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mnt(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MNT)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MNT)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mop(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MOP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MOP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mro(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MRO)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MRO)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mur(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MUR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MUR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mvr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MVR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MVR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mwk(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MWK)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MWK)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mxn(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MXN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MXN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_myr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MYR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MYR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mzn(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MZN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MZN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nad(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NAD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NAD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ngn(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NGN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NGN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nio(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NIO)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NIO)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nok(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NOK)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NOK)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_npr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NPR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NPR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nzd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NZD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NZD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_omr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_OMR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_OMR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pab(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_PAB)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_PAB)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pen(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_PEN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_PEN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pgk(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_PGK)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_PGK)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_php(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_PHP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_PHP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pkr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_PKR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_PKR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pln(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_PLN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_PLN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_pyg(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_PYG)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_PYG)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_qar(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_QAR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_QAR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ron(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_RON)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_RON)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rsd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_RSD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_RSD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rub(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_RUB)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_RUB)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_rwf(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_RWF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_RWF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sar(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SAR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SAR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sbd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SBD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SBD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_scr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SCR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SCR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sdg(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SDG)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SDG)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sek(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SEK)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SEK)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sgd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SGD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SGD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_shp(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SHP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SHP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sll(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SLL)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SLL)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sos(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SOS)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SOS)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_srd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SRD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SRD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_std(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_STD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_STD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_syp(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SYP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SYP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_szl(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SZL)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SZL)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_thb(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_THB)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_THB)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tjs(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TJS)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TJS)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tmt(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TMT)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TMT)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tnd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TND)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TND)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_top(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TOP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TOP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_try(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TRY)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TRY)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ttd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TTD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TTD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_twd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TWD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TWD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tzs(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TZS)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TZS)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_uah(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_UAH)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_UAH)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ugx(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_UGX)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_UGX)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_usd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_USD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_USD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_uyu(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_UYU)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_UYU)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_uzs(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_UZS)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_UZS)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_vef(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_VEF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_VEF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_vnd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_VND)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_VND)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_vuv(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_VUV)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_VUV)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_wst(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_WST)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_WST)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xaf(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_XAF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_XAF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xcd(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_XCD)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_XCD)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xof(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_XOF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_XOF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xpf(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_XPF)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_XPF)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_xxx(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_XXX)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_XXX)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_yer(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_YER)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_YER)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_zar(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ZAR)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ZAR)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_zmw(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ZMW)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ZMW)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_zwl(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ZWL)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ZWL)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ICurrencyIdentifiersStatics2, 403995007, 50098, 19507, 149, 145, 152, 0, 17, 149, 13, 55);
-RT_INTERFACE!{static interface ICurrencyIdentifiersStatics2(ICurrencyIdentifiersStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyIdentifiersStatics2] {
+RT_INTERFACE!{static interface ICurrencyIdentifiersStatics2(ICurrencyIdentifiersStatics2Vtbl, ICurrencyIdentifiersStatics2_Abi): IInspectable(IInspectableVtbl) [IID_ICurrencyIdentifiersStatics2] {
     fn get_BYN(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<ICurrencyIdentifiersStatics2> {
+impl ICurrencyIdentifiersStatics2 {
     #[inline] pub fn get_byn(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_BYN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_BYN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ICurrencyIdentifiersStatics3, 1337080826, 60709, 20301, 133, 127, 35, 127, 23, 72, 194, 28);
-RT_INTERFACE!{static interface ICurrencyIdentifiersStatics3(ICurrencyIdentifiersStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyIdentifiersStatics3] {
+RT_INTERFACE!{static interface ICurrencyIdentifiersStatics3(ICurrencyIdentifiersStatics3Vtbl, ICurrencyIdentifiersStatics3_Abi): IInspectable(IInspectableVtbl) [IID_ICurrencyIdentifiersStatics3] {
     fn get_MRU(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SSP(&self, out: *mut HSTRING) -> HRESULT,
     fn get_STN(&self, out: *mut HSTRING) -> HRESULT,
     fn get_VES(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<ICurrencyIdentifiersStatics3> {
+impl ICurrencyIdentifiersStatics3 {
     #[inline] pub fn get_mru(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MRU)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MRU)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ssp(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_SSP)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SSP)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_stn(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_STN)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_STN)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ves(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_VES)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_VES)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2338,50 +2338,50 @@ RT_ENUM! { enum DayOfWeek: i32 {
     Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6,
 }}
 DEFINE_IID!(IID_IGeographicRegion, 32089633, 19044, 20185, 149, 79, 158, 222, 176, 123, 217, 3);
-RT_INTERFACE!{interface IGeographicRegion(IGeographicRegionVtbl): IInspectable(IInspectableVtbl) [IID_IGeographicRegion] {
+RT_INTERFACE!{interface IGeographicRegion(IGeographicRegionVtbl, IGeographicRegion_Abi): IInspectable(IInspectableVtbl) [IID_IGeographicRegion] {
     fn get_Code(&self, out: *mut HSTRING) -> HRESULT,
     fn get_CodeTwoLetter(&self, out: *mut HSTRING) -> HRESULT,
     fn get_CodeThreeLetter(&self, out: *mut HSTRING) -> HRESULT,
     fn get_CodeThreeDigit(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_NativeName(&self, out: *mut HSTRING) -> HRESULT,
-    fn get_CurrenciesInUse(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
+    fn get_CurrenciesInUse(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<IGeographicRegion> {
+impl IGeographicRegion {
     #[inline] pub fn get_code(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Code)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Code)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_code_two_letter(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CodeTwoLetter)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CodeTwoLetter)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_code_three_letter(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CodeThreeLetter)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CodeThreeLetter)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_code_three_digit(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CodeThreeDigit)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CodeThreeDigit)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_DisplayName)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_native_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NativeName)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NativeName)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_currencies_in_use(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+    #[inline] pub fn get_currencies_in_use(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CurrenciesInUse)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).get_CurrenciesInUse)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class GeographicRegion: IGeographicRegion}
@@ -2398,47 +2398,47 @@ impl GeographicRegion {
 }
 DEFINE_CLSID!(GeographicRegion(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,71,101,111,103,114,97,112,104,105,99,82,101,103,105,111,110,0]) [CLSID_GeographicRegion]);
 DEFINE_IID!(IID_IGeographicRegionFactory, 1396855408, 30644, 17003, 133, 159, 129, 225, 157, 81, 37, 70);
-RT_INTERFACE!{static interface IGeographicRegionFactory(IGeographicRegionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeographicRegionFactory] {
+RT_INTERFACE!{static interface IGeographicRegionFactory(IGeographicRegionFactoryVtbl, IGeographicRegionFactory_Abi): IInspectable(IInspectableVtbl) [IID_IGeographicRegionFactory] {
     fn CreateGeographicRegion(&self, geographicRegionCode: HSTRING, out: *mut <GeographicRegion as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<IGeographicRegionFactory> {
+impl IGeographicRegionFactory {
     #[inline] pub fn create_geographic_region(&self, geographicRegionCode: &HStringArg) -> Result<GeographicRegion> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateGeographicRegion)(self.as_abi() as *const _ as *mut _, geographicRegionCode.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateGeographicRegion)(self.0.as_abi() as *const _ as *mut _, geographicRegionCode.get(), &mut out);
         if hr == S_OK { Ok(GeographicRegion::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IGeographicRegionStatics, 702712180, 31449, 20212, 135, 153, 179, 180, 79, 173, 236, 8);
-RT_INTERFACE!{static interface IGeographicRegionStatics(IGeographicRegionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeographicRegionStatics] {
+RT_INTERFACE!{static interface IGeographicRegionStatics(IGeographicRegionStaticsVtbl, IGeographicRegionStatics_Abi): IInspectable(IInspectableVtbl) [IID_IGeographicRegionStatics] {
     fn IsSupported(&self, geographicRegionCode: HSTRING, out: *mut bool) -> HRESULT
 }}
-impl ComPtr<IGeographicRegionStatics> {
+impl IGeographicRegionStatics {
     #[inline] pub fn is_supported(&self, geographicRegionCode: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).IsSupported)(self.as_abi() as *const _ as *mut _, geographicRegionCode.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).IsSupported)(self.0.as_abi() as *const _ as *mut _, geographicRegionCode.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IJapanesePhoneme, 795513600, 59483, 17382, 137, 125, 93, 130, 248, 98, 223, 33);
-RT_INTERFACE!{interface IJapanesePhoneme(IJapanesePhonemeVtbl): IInspectable(IInspectableVtbl) [IID_IJapanesePhoneme] {
+RT_INTERFACE!{interface IJapanesePhoneme(IJapanesePhonemeVtbl, IJapanesePhoneme_Abi): IInspectable(IInspectableVtbl) [IID_IJapanesePhoneme] {
     fn get_DisplayText(&self, out: *mut HSTRING) -> HRESULT,
     fn get_YomiText(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IsPhraseStart(&self, out: *mut bool) -> HRESULT
 }}
-impl ComPtr<IJapanesePhoneme> {
+impl IJapanesePhoneme {
     #[inline] pub fn get_display_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_DisplayText)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayText)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_yomi_text(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_YomiText)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_YomiText)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_is_phrase_start(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IsPhraseStart)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IsPhraseStart)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2446,57 +2446,57 @@ RT_CLASS!{class JapanesePhoneme: IJapanesePhoneme}
 RT_CLASS!{static class JapanesePhoneticAnalyzer}
 impl RtActivatable<IJapanesePhoneticAnalyzerStatics> for JapanesePhoneticAnalyzer {}
 impl JapanesePhoneticAnalyzer {
-    #[inline] pub fn get_words(input: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<JapanesePhoneme>>>> {
+    #[inline] pub fn get_words(input: &HStringArg) -> Result<Option<foundation::collections::IVectorView<JapanesePhoneme>>> {
         <Self as RtActivatable<IJapanesePhoneticAnalyzerStatics>>::get_activation_factory().get_words(input)
     }
-    #[inline] pub fn get_words_with_mono_ruby_option(input: &HStringArg, monoRuby: bool) -> Result<Option<ComPtr<foundation::collections::IVectorView<JapanesePhoneme>>>> {
+    #[inline] pub fn get_words_with_mono_ruby_option(input: &HStringArg, monoRuby: bool) -> Result<Option<foundation::collections::IVectorView<JapanesePhoneme>>> {
         <Self as RtActivatable<IJapanesePhoneticAnalyzerStatics>>::get_activation_factory().get_words_with_mono_ruby_option(input, monoRuby)
     }
 }
 DEFINE_CLSID!(JapanesePhoneticAnalyzer(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,74,97,112,97,110,101,115,101,80,104,111,110,101,116,105,99,65,110,97,108,121,122,101,114,0]) [CLSID_JapanesePhoneticAnalyzer]);
 DEFINE_IID!(IID_IJapanesePhoneticAnalyzerStatics, 2292948624, 37854, 16818, 180, 213, 142, 219, 34, 127, 209, 194);
-RT_INTERFACE!{static interface IJapanesePhoneticAnalyzerStatics(IJapanesePhoneticAnalyzerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJapanesePhoneticAnalyzerStatics] {
-    fn GetWords(&self, input: HSTRING, out: *mut *mut foundation::collections::IVectorView<JapanesePhoneme>) -> HRESULT,
-    fn GetWordsWithMonoRubyOption(&self, input: HSTRING, monoRuby: bool, out: *mut *mut foundation::collections::IVectorView<JapanesePhoneme>) -> HRESULT
+RT_INTERFACE!{static interface IJapanesePhoneticAnalyzerStatics(IJapanesePhoneticAnalyzerStaticsVtbl, IJapanesePhoneticAnalyzerStatics_Abi): IInspectable(IInspectableVtbl) [IID_IJapanesePhoneticAnalyzerStatics] {
+    fn GetWords(&self, input: HSTRING, out: *mut <foundation::collections::IVectorView<JapanesePhoneme> as RtType>::Abi) -> HRESULT,
+    fn GetWordsWithMonoRubyOption(&self, input: HSTRING, monoRuby: bool, out: *mut <foundation::collections::IVectorView<JapanesePhoneme> as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<IJapanesePhoneticAnalyzerStatics> {
-    #[inline] pub fn get_words(&self, input: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<JapanesePhoneme>>>> { unsafe { 
+impl IJapanesePhoneticAnalyzerStatics {
+    #[inline] pub fn get_words(&self, input: &HStringArg) -> Result<Option<foundation::collections::IVectorView<JapanesePhoneme>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).GetWords)(self.as_abi() as *const _ as *mut _, input.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).GetWords)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn get_words_with_mono_ruby_option(&self, input: &HStringArg, monoRuby: bool) -> Result<Option<ComPtr<foundation::collections::IVectorView<JapanesePhoneme>>>> { unsafe { 
+    #[inline] pub fn get_words_with_mono_ruby_option(&self, input: &HStringArg, monoRuby: bool) -> Result<Option<foundation::collections::IVectorView<JapanesePhoneme>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).GetWordsWithMonoRubyOption)(self.as_abi() as *const _ as *mut _, input.get(), monoRuby, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).GetWordsWithMonoRubyOption)(self.0.as_abi() as *const _ as *mut _, input.get(), monoRuby, &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ILanguage, 3933841234, 63426, 16997, 177, 189, 196, 222, 196, 228, 240, 128);
-RT_INTERFACE!{interface ILanguage(ILanguageVtbl): IInspectable(IInspectableVtbl) [IID_ILanguage] {
+RT_INTERFACE!{interface ILanguage(ILanguageVtbl, ILanguage_Abi): IInspectable(IInspectableVtbl) [IID_ILanguage] {
     fn get_LanguageTag(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_NativeName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Script(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<ILanguage> {
+impl ILanguage {
     #[inline] pub fn get_language_tag(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LanguageTag)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LanguageTag)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_display_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_DisplayName)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_DisplayName)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_native_name(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NativeName)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NativeName)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_script(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Script)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Script)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -2520,35 +2520,35 @@ impl Language {
 }
 DEFINE_CLSID!(Language(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,76,97,110,103,117,97,103,101,0]) [CLSID_Language]);
 DEFINE_IID!(IID_ILanguage2, 1783096757, 55629, 18566, 164, 4, 165, 165, 185, 213, 180, 148);
-RT_INTERFACE!{interface ILanguage2(ILanguage2Vtbl): IInspectable(IInspectableVtbl) [IID_ILanguage2] {
+RT_INTERFACE!{interface ILanguage2(ILanguage2Vtbl, ILanguage2_Abi): IInspectable(IInspectableVtbl) [IID_ILanguage2] {
     fn get_LayoutDirection(&self, out: *mut LanguageLayoutDirection) -> HRESULT
 }}
-impl ComPtr<ILanguage2> {
+impl ILanguage2 {
     #[inline] pub fn get_layout_direction(&self) -> Result<LanguageLayoutDirection> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_LayoutDirection)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LayoutDirection)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ILanguageExtensionSubtags, 2105388869, 13965, 17252, 133, 43, 222, 201, 39, 3, 123, 133);
-RT_INTERFACE!{interface ILanguageExtensionSubtags(ILanguageExtensionSubtagsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageExtensionSubtags] {
-    fn GetExtensionSubtags(&self, singleton: HSTRING, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT
+RT_INTERFACE!{interface ILanguageExtensionSubtags(ILanguageExtensionSubtagsVtbl, ILanguageExtensionSubtags_Abi): IInspectable(IInspectableVtbl) [IID_ILanguageExtensionSubtags] {
+    fn GetExtensionSubtags(&self, singleton: HSTRING, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<ILanguageExtensionSubtags> {
-    #[inline] pub fn get_extension_subtags(&self, singleton: &HStringArg) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+impl ILanguageExtensionSubtags {
+    #[inline] pub fn get_extension_subtags(&self, singleton: &HStringArg) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).GetExtensionSubtags)(self.as_abi() as *const _ as *mut _, singleton.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).GetExtensionSubtags)(self.0.as_abi() as *const _ as *mut _, singleton.get(), &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ILanguageFactory, 2600620716, 3111, 17656, 183, 146, 151, 147, 251, 102, 198, 62);
-RT_INTERFACE!{static interface ILanguageFactory(ILanguageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFactory] {
+RT_INTERFACE!{static interface ILanguageFactory(ILanguageFactoryVtbl, ILanguageFactory_Abi): IInspectable(IInspectableVtbl) [IID_ILanguageFactory] {
     fn CreateLanguage(&self, languageTag: HSTRING, out: *mut <Language as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<ILanguageFactory> {
+impl ILanguageFactory {
     #[inline] pub fn create_language(&self, languageTag: &HStringArg) -> Result<Language> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateLanguage)(self.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateLanguage)(self.0.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
         if hr == S_OK { Ok(Language::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -2556,30 +2556,30 @@ RT_ENUM! { enum LanguageLayoutDirection: i32 {
     Ltr = 0, Rtl = 1, TtbLtr = 2, TtbRtl = 3,
 }}
 DEFINE_IID!(IID_ILanguageStatics, 2990331223, 2149, 18132, 137, 184, 213, 155, 232, 153, 15, 13);
-RT_INTERFACE!{static interface ILanguageStatics(ILanguageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics] {
+RT_INTERFACE!{static interface ILanguageStatics(ILanguageStaticsVtbl, ILanguageStatics_Abi): IInspectable(IInspectableVtbl) [IID_ILanguageStatics] {
     fn IsWellFormed(&self, languageTag: HSTRING, out: *mut bool) -> HRESULT,
     fn get_CurrentInputMethodLanguageTag(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<ILanguageStatics> {
+impl ILanguageStatics {
     #[inline] pub fn is_well_formed(&self, languageTag: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).IsWellFormed)(self.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).IsWellFormed)(self.0.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_current_input_method_language_tag(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_CurrentInputMethodLanguageTag)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CurrentInputMethodLanguageTag)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ILanguageStatics2, 806985582, 37195, 19242, 157, 110, 227, 176, 226, 125, 190, 79);
-RT_INTERFACE!{static interface ILanguageStatics2(ILanguageStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics2] {
+RT_INTERFACE!{static interface ILanguageStatics2(ILanguageStatics2Vtbl, ILanguageStatics2_Abi): IInspectable(IInspectableVtbl) [IID_ILanguageStatics2] {
     fn TrySetInputMethodLanguageTag(&self, languageTag: HSTRING, out: *mut bool) -> HRESULT
 }}
-impl ComPtr<ILanguageStatics2> {
+impl ILanguageStatics2 {
     #[inline] pub fn try_set_input_method_language_tag(&self, languageTag: &HStringArg) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).TrySetInputMethodLanguageTag)(self.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).TrySetInputMethodLanguageTag)(self.0.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -2734,7 +2734,7 @@ impl NumeralSystemIdentifiers {
 }
 DEFINE_CLSID!(NumeralSystemIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,101,114,97,108,83,121,115,116,101,109,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_NumeralSystemIdentifiers]);
 DEFINE_IID!(IID_INumeralSystemIdentifiersStatics, 2781242051, 26825, 19773, 183, 101, 151, 32, 41, 226, 29, 236);
-RT_INTERFACE!{static interface INumeralSystemIdentifiersStatics(INumeralSystemIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INumeralSystemIdentifiersStatics] {
+RT_INTERFACE!{static interface INumeralSystemIdentifiersStatics(INumeralSystemIdentifiersStaticsVtbl, INumeralSystemIdentifiersStatics_Abi): IInspectable(IInspectableVtbl) [IID_INumeralSystemIdentifiersStatics] {
     fn get_Arab(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ArabExt(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Bali(&self, out: *mut HSTRING) -> HRESULT,
@@ -2772,190 +2772,190 @@ RT_INTERFACE!{static interface INumeralSystemIdentifiersStatics(INumeralSystemId
     fn get_Tibt(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Vaii(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<INumeralSystemIdentifiersStatics> {
+impl INumeralSystemIdentifiersStatics {
     #[inline] pub fn get_arab(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Arab)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Arab)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_arab_ext(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ArabExt)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ArabExt)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_bali(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Bali)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Bali)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_beng(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Beng)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Beng)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_cham(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Cham)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Cham)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_deva(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Deva)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Deva)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_full_wide(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_FullWide)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FullWide)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_gujr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Gujr)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Gujr)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_guru(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Guru)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Guru)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_hani_dec(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_HaniDec)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_HaniDec)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_java(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Java)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Java)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_kali(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Kali)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Kali)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_khmr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Khmr)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Khmr)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_knda(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Knda)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Knda)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_lana(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Lana)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Lana)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_lana_tham(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LanaTham)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LanaTham)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_laoo(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Laoo)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Laoo)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_latn(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Latn)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Latn)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_lepc(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Lepc)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Lepc)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_limb(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Limb)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Limb)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mlym(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Mlym)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Mlym)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mong(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Mong)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Mong)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mtei(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Mtei)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Mtei)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mymr(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Mymr)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Mymr)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_mymr_shan(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MymrShan)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MymrShan)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_nkoo(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Nkoo)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Nkoo)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_olck(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Olck)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Olck)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_orya(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Orya)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Orya)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_saur(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Saur)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Saur)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_sund(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Sund)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Sund)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_talu(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Talu)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Talu)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_taml_dec(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TamlDec)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TamlDec)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_telu(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Telu)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Telu)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_thai(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Thai)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Thai)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_tibt(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Tibt)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Tibt)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_vaii(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Vaii)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Vaii)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INumeralSystemIdentifiersStatics2, 2130719272, 40411, 18996, 145, 4, 2, 96, 192, 145, 167, 199);
-RT_INTERFACE!{static interface INumeralSystemIdentifiersStatics2(INumeralSystemIdentifiersStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_INumeralSystemIdentifiersStatics2] {
+RT_INTERFACE!{static interface INumeralSystemIdentifiersStatics2(INumeralSystemIdentifiersStatics2Vtbl, INumeralSystemIdentifiersStatics2_Abi): IInspectable(IInspectableVtbl) [IID_INumeralSystemIdentifiersStatics2] {
     fn get_Brah(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Osma(&self, out: *mut HSTRING) -> HRESULT,
     fn get_MathBold(&self, out: *mut HSTRING) -> HRESULT,
@@ -2969,124 +2969,124 @@ RT_INTERFACE!{static interface INumeralSystemIdentifiersStatics2(INumeralSystemI
     fn get_ZmthSanb(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ZmthMono(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<INumeralSystemIdentifiersStatics2> {
+impl INumeralSystemIdentifiersStatics2 {
     #[inline] pub fn get_brah(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Brah)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Brah)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_osma(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Osma)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Osma)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_math_bold(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MathBold)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MathBold)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_math_dbl(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MathDbl)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MathDbl)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_math_sans(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MathSans)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MathSans)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_math_sanb(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MathSanb)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MathSanb)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_math_mono(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_MathMono)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_MathMono)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_zmth_bold(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ZmthBold)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ZmthBold)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_zmth_dbl(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ZmthDbl)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ZmthDbl)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_zmth_sans(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ZmthSans)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ZmthSans)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_zmth_sanb(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ZmthSanb)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ZmthSanb)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_zmth_mono(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ZmthMono)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ZmthMono)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ITimeZoneOnCalendar, 3141281253, 18127, 17175, 163, 245, 2, 98, 26, 213, 68, 120);
-RT_INTERFACE!{interface ITimeZoneOnCalendar(ITimeZoneOnCalendarVtbl): IInspectable(IInspectableVtbl) [IID_ITimeZoneOnCalendar] {
+RT_INTERFACE!{interface ITimeZoneOnCalendar(ITimeZoneOnCalendarVtbl, ITimeZoneOnCalendar_Abi): IInspectable(IInspectableVtbl) [IID_ITimeZoneOnCalendar] {
     fn GetTimeZone(&self, out: *mut HSTRING) -> HRESULT,
     fn ChangeTimeZone(&self, timeZoneId: HSTRING) -> HRESULT,
     fn TimeZoneAsFullString(&self, out: *mut HSTRING) -> HRESULT,
     fn TimeZoneAsString(&self, idealLength: i32, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<ITimeZoneOnCalendar> {
+impl ITimeZoneOnCalendar {
     #[inline] pub fn get_time_zone(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).GetTimeZone)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).GetTimeZone)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn change_time_zone(&self, timeZoneId: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).ChangeTimeZone)(self.as_abi() as *const _ as *mut _, timeZoneId.get());
+        let hr = ((*self.0.as_abi().lpVtbl).ChangeTimeZone)(self.0.as_abi() as *const _ as *mut _, timeZoneId.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn time_zone_as_full_string(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).TimeZoneAsFullString)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).TimeZoneAsFullString)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn time_zone_as_string(&self, idealLength: i32) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).TimeZoneAsString)(self.as_abi() as *const _ as *mut _, idealLength, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).TimeZoneAsString)(self.0.as_abi() as *const _ as *mut _, idealLength, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 pub mod collation { // Windows.Globalization.Collation
 use crate::prelude::*;
 DEFINE_IID!(IID_ICharacterGrouping, 4209467835, 32861, 19376, 149, 187, 193, 247, 195, 232, 235, 142);
-RT_INTERFACE!{interface ICharacterGrouping(ICharacterGroupingVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGrouping] {
+RT_INTERFACE!{interface ICharacterGrouping(ICharacterGroupingVtbl, ICharacterGrouping_Abi): IInspectable(IInspectableVtbl) [IID_ICharacterGrouping] {
     fn get_First(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Label(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<ICharacterGrouping> {
+impl ICharacterGrouping {
     #[inline] pub fn get_first(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_First)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_First)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_label(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Label)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Label)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 RT_CLASS!{class CharacterGrouping: ICharacterGrouping}
 DEFINE_IID!(IID_ICharacterGroupings, 3100772981, 54479, 16469, 128, 229, 206, 22, 156, 34, 100, 150);
-RT_INTERFACE!{interface ICharacterGroupings(ICharacterGroupingsVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGroupings] {
+RT_INTERFACE!{interface ICharacterGroupings(ICharacterGroupingsVtbl, ICharacterGroupings_Abi): IInspectable(IInspectableVtbl) [IID_ICharacterGroupings] {
     fn Lookup(&self, text: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<ICharacterGroupings> {
+impl ICharacterGroupings {
     #[inline] pub fn lookup(&self, text: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).Lookup)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).Lookup)(self.0.as_abi() as *const _ as *mut _, text.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3100,13 +3100,13 @@ impl CharacterGroupings {
 }
 DEFINE_CLSID!(CharacterGroupings(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,111,108,108,97,116,105,111,110,46,67,104,97,114,97,99,116,101,114,71,114,111,117,112,105,110,103,115,0]) [CLSID_CharacterGroupings]);
 DEFINE_IID!(IID_ICharacterGroupingsFactory, 2582290393, 34925, 17409, 159, 152, 105, 200, 45, 76, 47, 120);
-RT_INTERFACE!{static interface ICharacterGroupingsFactory(ICharacterGroupingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGroupingsFactory] {
+RT_INTERFACE!{static interface ICharacterGroupingsFactory(ICharacterGroupingsFactoryVtbl, ICharacterGroupingsFactory_Abi): IInspectable(IInspectableVtbl) [IID_ICharacterGroupingsFactory] {
     fn Create(&self, language: HSTRING, out: *mut <CharacterGroupings as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<ICharacterGroupingsFactory> {
+impl ICharacterGroupingsFactory {
     #[inline] pub fn create(&self, language: &HStringArg) -> Result<CharacterGroupings> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, language.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, language.get(), &mut out);
         if hr == S_OK { Ok(CharacterGroupings::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3114,14 +3114,14 @@ impl ComPtr<ICharacterGroupingsFactory> {
 pub mod datetimeformatting { // Windows.Globalization.DateTimeFormatting
 use crate::prelude::*;
 DEFINE_IID!(IID_IDateTimeFormatter, 2515454480, 29664, 20043, 161, 131, 61, 106, 208, 186, 53, 236);
-RT_INTERFACE!{interface IDateTimeFormatter(IDateTimeFormatterVtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatter] {
-    fn get_Languages(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+RT_INTERFACE!{interface IDateTimeFormatter(IDateTimeFormatterVtbl, IDateTimeFormatter_Abi): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatter] {
+    fn get_Languages(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_GeographicRegion(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Calendar(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Clock(&self, out: *mut HSTRING) -> HRESULT,
     fn get_NumeralSystem(&self, out: *mut HSTRING) -> HRESULT,
     fn put_NumeralSystem(&self, value: HSTRING) -> HRESULT,
-    fn get_Patterns(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+    fn get_Patterns(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_Template(&self, out: *mut HSTRING) -> HRESULT,
     fn Format(&self, value: foundation::DateTime, out: *mut HSTRING) -> HRESULT,
     fn get_IncludeYear(&self, out: *mut YearFormat) -> HRESULT,
@@ -3134,94 +3134,94 @@ RT_INTERFACE!{interface IDateTimeFormatter(IDateTimeFormatterVtbl): IInspectable
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ResolvedGeographicRegion(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<IDateTimeFormatter> {
-    #[inline] pub fn get_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+impl IDateTimeFormatter {
+    #[inline] pub fn get_languages(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Languages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).get_Languages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_geographic_region(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_GeographicRegion)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_GeographicRegion)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_calendar(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Calendar)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Calendar)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_clock(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Clock)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Clock)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_numeral_system(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NumeralSystem)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumeralSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_numeral_system(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_NumeralSystem)(self.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.0.as_abi().lpVtbl).put_NumeralSystem)(self.0.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
-    #[inline] pub fn get_patterns(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+    #[inline] pub fn get_patterns(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Patterns)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).get_Patterns)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_template(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Template)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Template)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn format(&self, value: foundation::DateTime) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).Format)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).Format)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_include_year(&self) -> Result<YearFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IncludeYear)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IncludeYear)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_include_month(&self) -> Result<MonthFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IncludeMonth)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IncludeMonth)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_include_day_of_week(&self) -> Result<DayOfWeekFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IncludeDayOfWeek)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IncludeDayOfWeek)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_include_day(&self) -> Result<DayFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IncludeDay)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IncludeDay)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_include_hour(&self) -> Result<HourFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IncludeHour)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IncludeHour)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_include_minute(&self) -> Result<MinuteFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IncludeMinute)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IncludeMinute)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_include_second(&self) -> Result<SecondFormat> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IncludeSecond)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IncludeSecond)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ResolvedLanguage)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ResolvedLanguage)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_resolved_geographic_region(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ResolvedGeographicRegion)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ResolvedGeographicRegion)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3232,10 +3232,10 @@ impl DateTimeFormatter {
     #[inline] pub fn create_date_time_formatter(formatTemplate: &HStringArg) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter(formatTemplate)
     }
-    #[inline] pub fn create_date_time_formatter_languages(formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<DateTimeFormatter> {
+    #[inline] pub fn create_date_time_formatter_languages(formatTemplate: &HStringArg, languages: &foundation::collections::IIterable<HString>) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_languages(formatTemplate, languages)
     }
-    #[inline] pub fn create_date_time_formatter_context(formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> {
+    #[inline] pub fn create_date_time_formatter_context(formatTemplate: &HStringArg, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_context(formatTemplate, languages, geographicRegion, calendar, clock)
     }
     #[inline] pub fn create_date_time_formatter_date(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat) -> Result<DateTimeFormatter> {
@@ -3244,10 +3244,10 @@ impl DateTimeFormatter {
     #[inline] pub fn create_date_time_formatter_time(hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_time(hourFormat, minuteFormat, secondFormat)
     }
-    #[inline] pub fn create_date_time_formatter_date_time_languages(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<DateTimeFormatter> {
+    #[inline] pub fn create_date_time_formatter_date_time_languages(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &foundation::collections::IIterable<HString>) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_date_time_languages(yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages)
     }
-    #[inline] pub fn create_date_time_formatter_date_time_context(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> {
+    #[inline] pub fn create_date_time_formatter_date_time_context(yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> {
         <Self as RtActivatable<IDateTimeFormatterFactory>>::get_activation_factory().create_date_time_formatter_date_time_context(yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages, geographicRegion, calendar, clock)
     }
     #[inline] pub fn get_long_date() -> Result<Option<DateTimeFormatter>> {
@@ -3265,89 +3265,89 @@ impl DateTimeFormatter {
 }
 DEFINE_CLSID!(DateTimeFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,68,97,116,101,84,105,109,101,70,111,114,109,97,116,116,105,110,103,46,68,97,116,101,84,105,109,101,70,111,114,109,97,116,116,101,114,0]) [CLSID_DateTimeFormatter]);
 DEFINE_IID!(IID_IDateTimeFormatter2, 667490950, 48554, 20432, 158, 54, 103, 29, 90, 165, 238, 3);
-RT_INTERFACE!{interface IDateTimeFormatter2(IDateTimeFormatter2Vtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatter2] {
+RT_INTERFACE!{interface IDateTimeFormatter2(IDateTimeFormatter2Vtbl, IDateTimeFormatter2_Abi): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatter2] {
     fn FormatUsingTimeZone(&self, datetime: foundation::DateTime, timeZoneId: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<IDateTimeFormatter2> {
+impl IDateTimeFormatter2 {
     #[inline] pub fn format_using_time_zone(&self, datetime: foundation::DateTime, timeZoneId: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).FormatUsingTimeZone)(self.as_abi() as *const _ as *mut _, datetime, timeZoneId.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).FormatUsingTimeZone)(self.0.as_abi() as *const _ as *mut _, datetime, timeZoneId.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDateTimeFormatterFactory, 3968698963, 6702, 16685, 136, 21, 59, 116, 95, 177, 162, 160);
-RT_INTERFACE!{static interface IDateTimeFormatterFactory(IDateTimeFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatterFactory] {
+RT_INTERFACE!{static interface IDateTimeFormatterFactory(IDateTimeFormatterFactoryVtbl, IDateTimeFormatterFactory_Abi): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatterFactory] {
     fn CreateDateTimeFormatter(&self, formatTemplate: HSTRING, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
-    fn CreateDateTimeFormatterLanguages(&self, formatTemplate: HSTRING, languages: *mut foundation::collections::IIterable<HString>, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
-    fn CreateDateTimeFormatterContext(&self, formatTemplate: HSTRING, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, calendar: HSTRING, clock: HSTRING, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn CreateDateTimeFormatterLanguages(&self, formatTemplate: HSTRING, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn CreateDateTimeFormatterContext(&self, formatTemplate: HSTRING, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, geographicRegion: HSTRING, calendar: HSTRING, clock: HSTRING, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
     fn CreateDateTimeFormatterDate(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
     fn CreateDateTimeFormatterTime(&self, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
-    fn CreateDateTimeFormatterDateTimeLanguages(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: *mut foundation::collections::IIterable<HString>, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
-    fn CreateDateTimeFormatterDateTimeContext(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, calendar: HSTRING, clock: HSTRING, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT
+    fn CreateDateTimeFormatterDateTimeLanguages(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
+    fn CreateDateTimeFormatterDateTimeContext(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, geographicRegion: HSTRING, calendar: HSTRING, clock: HSTRING, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<IDateTimeFormatterFactory> {
+impl IDateTimeFormatterFactory {
     #[inline] pub fn create_date_time_formatter(&self, formatTemplate: &HStringArg) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatter)(self.as_abi() as *const _ as *mut _, formatTemplate.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateDateTimeFormatter)(self.0.as_abi() as *const _ as *mut _, formatTemplate.get(), &mut out);
         if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_languages(&self, formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<DateTimeFormatter> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_languages(&self, formatTemplate: &HStringArg, languages: &foundation::collections::IIterable<HString>) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterLanguages)(self.as_abi() as *const _ as *mut _, formatTemplate.get(), languages.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateDateTimeFormatterLanguages)(self.0.as_abi() as *const _ as *mut _, formatTemplate.get(), get_abi(languages) as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_context(&self, formatTemplate: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_context(&self, formatTemplate: &HStringArg, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterContext)(self.as_abi() as *const _ as *mut _, formatTemplate.get(), languages.as_abi() as *const _ as *mut _, geographicRegion.get(), calendar.get(), clock.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateDateTimeFormatterContext)(self.0.as_abi() as *const _ as *mut _, formatTemplate.get(), get_abi(languages) as *const _ as *mut _, geographicRegion.get(), calendar.get(), clock.get(), &mut out);
         if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_date_time_formatter_date(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterDate)(self.as_abi() as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateDateTimeFormatterDate)(self.0.as_abi() as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, &mut out);
         if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
     #[inline] pub fn create_date_time_formatter_time(&self, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterTime)(self.as_abi() as *const _ as *mut _, hourFormat, minuteFormat, secondFormat, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateDateTimeFormatterTime)(self.0.as_abi() as *const _ as *mut _, hourFormat, minuteFormat, secondFormat, &mut out);
         if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_date_time_languages(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<DateTimeFormatter> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_date_time_languages(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &foundation::collections::IIterable<HString>) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterDateTimeLanguages)(self.as_abi() as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateDateTimeFormatterDateTimeLanguages)(self.0.as_abi() as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, get_abi(languages) as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_date_time_formatter_date_time_context(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> { unsafe { 
+    #[inline] pub fn create_date_time_formatter_date_time_context(&self, yearFormat: YearFormat, monthFormat: MonthFormat, dayFormat: DayFormat, dayOfWeekFormat: DayOfWeekFormat, hourFormat: HourFormat, minuteFormat: MinuteFormat, secondFormat: SecondFormat, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg, calendar: &HStringArg, clock: &HStringArg) -> Result<DateTimeFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateDateTimeFormatterDateTimeContext)(self.as_abi() as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, languages.as_abi() as *const _ as *mut _, geographicRegion.get(), calendar.get(), clock.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateDateTimeFormatterDateTimeContext)(self.0.as_abi() as *const _ as *mut _, yearFormat, monthFormat, dayFormat, dayOfWeekFormat, hourFormat, minuteFormat, secondFormat, get_abi(languages) as *const _ as *mut _, geographicRegion.get(), calendar.get(), clock.get(), &mut out);
         if hr == S_OK { Ok(DateTimeFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IDateTimeFormatterStatics, 3217942464, 57164, 18990, 144, 18, 244, 125, 175, 63, 18, 18);
-RT_INTERFACE!{static interface IDateTimeFormatterStatics(IDateTimeFormatterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatterStatics] {
+RT_INTERFACE!{static interface IDateTimeFormatterStatics(IDateTimeFormatterStaticsVtbl, IDateTimeFormatterStatics_Abi): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatterStatics] {
     fn get_LongDate(&self, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
     fn get_LongTime(&self, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
     fn get_ShortDate(&self, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
     fn get_ShortTime(&self, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<IDateTimeFormatterStatics> {
+impl IDateTimeFormatterStatics {
     #[inline] pub fn get_long_date(&self) -> Result<Option<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LongDate)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LongDate)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DateTimeFormatter::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_long_time(&self) -> Result<Option<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_LongTime)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_LongTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DateTimeFormatter::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_short_date(&self) -> Result<Option<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ShortDate)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ShortDate)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DateTimeFormatter::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_short_time(&self) -> Result<Option<DateTimeFormatter>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ShortTime)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ShortTime)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(DateTimeFormatter::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3376,7 +3376,7 @@ RT_ENUM! { enum YearFormat: i32 {
 pub mod fonts { // Windows.Globalization.Fonts
 use crate::prelude::*;
 DEFINE_IID!(IID_ILanguageFont, 2972605498, 46957, 17819, 190, 235, 144, 17, 81, 205, 119, 209);
-RT_INTERFACE!{interface ILanguageFont(ILanguageFontVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFont] {
+RT_INTERFACE!{interface ILanguageFont(ILanguageFontVtbl, ILanguageFont_Abi): IInspectable(IInspectableVtbl) [IID_ILanguageFont] {
     fn get_FontFamily(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-ui")] fn get_FontWeight(&self, out: *mut super::super::ui::text::FontWeight) -> HRESULT,
@@ -3386,36 +3386,36 @@ RT_INTERFACE!{interface ILanguageFont(ILanguageFontVtbl): IInspectable(IInspecta
     #[cfg(feature="windows-ui")] fn get_FontStyle(&self, out: *mut super::super::ui::text::FontStyle) -> HRESULT,
     fn get_ScaleFactor(&self, out: *mut f64) -> HRESULT
 }}
-impl ComPtr<ILanguageFont> {
+impl ILanguageFont {
     #[inline] pub fn get_font_family(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_FontFamily)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FontFamily)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_font_weight(&self) -> Result<super::super::ui::text::FontWeight> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FontWeight)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FontWeight)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_font_stretch(&self) -> Result<super::super::ui::text::FontStretch> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FontStretch)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FontStretch)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[cfg(feature="windows-ui")] #[inline] pub fn get_font_style(&self) -> Result<super::super::ui::text::FontStyle> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FontStyle)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FontStyle)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_scale_factor(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_ScaleFactor)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ScaleFactor)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
 RT_CLASS!{class LanguageFont: ILanguageFont}
 DEFINE_IID!(IID_ILanguageFontGroup, 4080697283, 14940, 19178, 185, 255, 179, 159, 178, 66, 247, 246);
-RT_INTERFACE!{interface ILanguageFontGroup(ILanguageFontGroupVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroup] {
+RT_INTERFACE!{interface ILanguageFontGroup(ILanguageFontGroupVtbl, ILanguageFontGroup_Abi): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroup] {
     fn get_UITextFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
     fn get_UIHeadingFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
     fn get_UITitleFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
@@ -3428,60 +3428,60 @@ RT_INTERFACE!{interface ILanguageFontGroup(ILanguageFontGroupVtbl): IInspectable
     fn get_DocumentAlternate1Font(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
     fn get_DocumentAlternate2Font(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<ILanguageFontGroup> {
+impl ILanguageFontGroup {
     #[inline] pub fn get_ui_text_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_UITextFont)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_UITextFont)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ui_heading_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_UIHeadingFont)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_UIHeadingFont)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ui_title_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_UITitleFont)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_UITitleFont)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ui_caption_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_UICaptionFont)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_UICaptionFont)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_ui_notification_heading_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_UINotificationHeadingFont)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_UINotificationHeadingFont)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_traditional_document_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_TraditionalDocumentFont)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_TraditionalDocumentFont)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_modern_document_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ModernDocumentFont)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ModernDocumentFont)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_heading_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_DocumentHeadingFont)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentHeadingFont)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_fixed_width_text_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_FixedWidthTextFont)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FixedWidthTextFont)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_alternate1_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_DocumentAlternate1Font)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentAlternate1Font)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_document_alternate2_font(&self) -> Result<Option<LanguageFont>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_DocumentAlternate2Font)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_DocumentAlternate2Font)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(LanguageFont::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3494,13 +3494,13 @@ impl LanguageFontGroup {
 }
 DEFINE_CLSID!(LanguageFontGroup(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,70,111,110,116,115,46,76,97,110,103,117,97,103,101,70,111,110,116,71,114,111,117,112,0]) [CLSID_LanguageFontGroup]);
 DEFINE_IID!(IID_ILanguageFontGroupFactory, 4239305831, 20087, 18887, 184, 86, 221, 233, 52, 252, 115, 91);
-RT_INTERFACE!{static interface ILanguageFontGroupFactory(ILanguageFontGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroupFactory] {
+RT_INTERFACE!{static interface ILanguageFontGroupFactory(ILanguageFontGroupFactoryVtbl, ILanguageFontGroupFactory_Abi): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroupFactory] {
     fn CreateLanguageFontGroup(&self, languageTag: HSTRING, out: *mut <LanguageFontGroup as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<ILanguageFontGroupFactory> {
+impl ILanguageFontGroupFactory {
     #[inline] pub fn create_language_font_group(&self, languageTag: &HStringArg) -> Result<LanguageFontGroup> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateLanguageFontGroup)(self.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateLanguageFontGroup)(self.0.as_abi() as *const _ as *mut _, languageTag.get(), &mut out);
         if hr == S_OK { Ok(LanguageFontGroup::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3508,18 +3508,18 @@ impl ComPtr<ILanguageFontGroupFactory> {
 pub mod numberformatting { // Windows.Globalization.NumberFormatting
 use crate::prelude::*;
 DEFINE_IID!(IID_ICurrencyFormatter, 292752549, 19200, 16818, 179, 50, 115, 177, 42, 73, 125, 84);
-RT_INTERFACE!{interface ICurrencyFormatter(ICurrencyFormatterVtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatter] {
+RT_INTERFACE!{interface ICurrencyFormatter(ICurrencyFormatterVtbl, ICurrencyFormatter_Abi): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatter] {
     fn get_Currency(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Currency(&self, value: HSTRING) -> HRESULT
 }}
-impl ComPtr<ICurrencyFormatter> {
+impl ICurrencyFormatter {
     #[inline] pub fn get_currency(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Currency)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Currency)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_currency(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Currency)(self.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.0.as_abi().lpVtbl).put_Currency)(self.0.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3529,46 +3529,46 @@ impl CurrencyFormatter {
     #[inline] pub fn create_currency_formatter_code(currencyCode: &HStringArg) -> Result<CurrencyFormatter> {
         <Self as RtActivatable<ICurrencyFormatterFactory>>::get_activation_factory().create_currency_formatter_code(currencyCode)
     }
-    #[inline] pub fn create_currency_formatter_code_context(currencyCode: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<CurrencyFormatter> {
+    #[inline] pub fn create_currency_formatter_code_context(currencyCode: &HStringArg, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<CurrencyFormatter> {
         <Self as RtActivatable<ICurrencyFormatterFactory>>::get_activation_factory().create_currency_formatter_code_context(currencyCode, languages, geographicRegion)
     }
 }
 DEFINE_CLSID!(CurrencyFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,67,117,114,114,101,110,99,121,70,111,114,109,97,116,116,101,114,0]) [CLSID_CurrencyFormatter]);
 DEFINE_IID!(IID_ICurrencyFormatter2, 120336157, 59322, 16791, 146, 14, 36, 124, 146, 247, 222, 166);
-RT_INTERFACE!{interface ICurrencyFormatter2(ICurrencyFormatter2Vtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatter2] {
+RT_INTERFACE!{interface ICurrencyFormatter2(ICurrencyFormatter2Vtbl, ICurrencyFormatter2_Abi): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatter2] {
     fn get_Mode(&self, out: *mut CurrencyFormatterMode) -> HRESULT,
     fn put_Mode(&self, value: CurrencyFormatterMode) -> HRESULT,
     fn ApplyRoundingForCurrency(&self, roundingAlgorithm: RoundingAlgorithm) -> HRESULT
 }}
-impl ComPtr<ICurrencyFormatter2> {
+impl ICurrencyFormatter2 {
     #[inline] pub fn get_mode(&self) -> Result<CurrencyFormatterMode> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_Mode)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Mode)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_mode(&self, value: CurrencyFormatterMode) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Mode)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_Mode)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn apply_rounding_for_currency(&self, roundingAlgorithm: RoundingAlgorithm) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).ApplyRoundingForCurrency)(self.as_abi() as *const _ as *mut _, roundingAlgorithm);
+        let hr = ((*self.0.as_abi().lpVtbl).ApplyRoundingForCurrency)(self.0.as_abi() as *const _ as *mut _, roundingAlgorithm);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ICurrencyFormatterFactory, 2261209982, 47416, 19106, 132, 176, 44, 51, 220, 91, 20, 80);
-RT_INTERFACE!{static interface ICurrencyFormatterFactory(ICurrencyFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatterFactory] {
+RT_INTERFACE!{static interface ICurrencyFormatterFactory(ICurrencyFormatterFactoryVtbl, ICurrencyFormatterFactory_Abi): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatterFactory] {
     fn CreateCurrencyFormatterCode(&self, currencyCode: HSTRING, out: *mut <CurrencyFormatter as RtType>::Abi) -> HRESULT,
-    fn CreateCurrencyFormatterCodeContext(&self, currencyCode: HSTRING, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut <CurrencyFormatter as RtType>::Abi) -> HRESULT
+    fn CreateCurrencyFormatterCodeContext(&self, currencyCode: HSTRING, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, geographicRegion: HSTRING, out: *mut <CurrencyFormatter as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<ICurrencyFormatterFactory> {
+impl ICurrencyFormatterFactory {
     #[inline] pub fn create_currency_formatter_code(&self, currencyCode: &HStringArg) -> Result<CurrencyFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateCurrencyFormatterCode)(self.as_abi() as *const _ as *mut _, currencyCode.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateCurrencyFormatterCode)(self.0.as_abi() as *const _ as *mut _, currencyCode.get(), &mut out);
         if hr == S_OK { Ok(CurrencyFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
-    #[inline] pub fn create_currency_formatter_code_context(&self, currencyCode: &HStringArg, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<CurrencyFormatter> { unsafe { 
+    #[inline] pub fn create_currency_formatter_code_context(&self, currencyCode: &HStringArg, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<CurrencyFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateCurrencyFormatterCodeContext)(self.as_abi() as *const _ as *mut _, currencyCode.get(), languages.as_abi() as *const _ as *mut _, geographicRegion.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateCurrencyFormatterCodeContext)(self.0.as_abi() as *const _ as *mut _, currencyCode.get(), get_abi(languages) as *const _ as *mut _, geographicRegion.get(), &mut out);
         if hr == S_OK { Ok(CurrencyFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3579,46 +3579,46 @@ RT_CLASS!{class DecimalFormatter: INumberFormatter}
 impl RtActivatable<IDecimalFormatterFactory> for DecimalFormatter {}
 impl RtActivatable<IActivationFactory> for DecimalFormatter {}
 impl DecimalFormatter {
-    #[inline] pub fn create_decimal_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<DecimalFormatter> {
+    #[inline] pub fn create_decimal_formatter(languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<DecimalFormatter> {
         <Self as RtActivatable<IDecimalFormatterFactory>>::get_activation_factory().create_decimal_formatter(languages, geographicRegion)
     }
 }
 DEFINE_CLSID!(DecimalFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,68,101,99,105,109,97,108,70,111,114,109,97,116,116,101,114,0]) [CLSID_DecimalFormatter]);
 DEFINE_IID!(IID_IDecimalFormatterFactory, 218205338, 58259, 18104, 184, 48, 122, 105, 200, 248, 159, 187);
-RT_INTERFACE!{static interface IDecimalFormatterFactory(IDecimalFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDecimalFormatterFactory] {
-    fn CreateDecimalFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut <DecimalFormatter as RtType>::Abi) -> HRESULT
+RT_INTERFACE!{static interface IDecimalFormatterFactory(IDecimalFormatterFactoryVtbl, IDecimalFormatterFactory_Abi): IInspectable(IInspectableVtbl) [IID_IDecimalFormatterFactory] {
+    fn CreateDecimalFormatter(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, geographicRegion: HSTRING, out: *mut <DecimalFormatter as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<IDecimalFormatterFactory> {
-    #[inline] pub fn create_decimal_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<DecimalFormatter> { unsafe { 
+impl IDecimalFormatterFactory {
+    #[inline] pub fn create_decimal_formatter(&self, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<DecimalFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreateDecimalFormatter)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, geographicRegion.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreateDecimalFormatter)(self.0.as_abi() as *const _ as *mut _, get_abi(languages) as *const _ as *mut _, geographicRegion.get(), &mut out);
         if hr == S_OK { Ok(DecimalFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IIncrementNumberRounder, 1889947640, 26283, 16725, 157, 161, 115, 158, 70, 118, 69, 67);
-RT_INTERFACE!{interface IIncrementNumberRounder(IIncrementNumberRounderVtbl): IInspectable(IInspectableVtbl) [IID_IIncrementNumberRounder] {
+RT_INTERFACE!{interface IIncrementNumberRounder(IIncrementNumberRounderVtbl, IIncrementNumberRounder_Abi): IInspectable(IInspectableVtbl) [IID_IIncrementNumberRounder] {
     fn get_RoundingAlgorithm(&self, out: *mut RoundingAlgorithm) -> HRESULT,
     fn put_RoundingAlgorithm(&self, value: RoundingAlgorithm) -> HRESULT,
     fn get_Increment(&self, out: *mut f64) -> HRESULT,
     fn put_Increment(&self, value: f64) -> HRESULT
 }}
-impl ComPtr<IIncrementNumberRounder> {
+impl IIncrementNumberRounder {
     #[inline] pub fn get_rounding_algorithm(&self) -> Result<RoundingAlgorithm> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_RoundingAlgorithm)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_RoundingAlgorithm)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_rounding_algorithm(&self, value: RoundingAlgorithm) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_RoundingAlgorithm)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_RoundingAlgorithm)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_increment(&self) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_Increment)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_Increment)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_increment(&self, value: f64) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_Increment)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_Increment)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3626,54 +3626,54 @@ RT_CLASS!{class IncrementNumberRounder: INumberRounder}
 impl RtActivatable<IActivationFactory> for IncrementNumberRounder {}
 DEFINE_CLSID!(IncrementNumberRounder(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,73,110,99,114,101,109,101,110,116,78,117,109,98,101,114,82,111,117,110,100,101,114,0]) [CLSID_IncrementNumberRounder]);
 DEFINE_IID!(IID_INumberFormatter, 2768272457, 30326, 19895, 134, 49, 27, 111, 242, 101, 202, 169);
-RT_INTERFACE!{interface INumberFormatter(INumberFormatterVtbl): IInspectable(IInspectableVtbl) [IID_INumberFormatter] {
+RT_INTERFACE!{interface INumberFormatter(INumberFormatterVtbl, INumberFormatter_Abi): IInspectable(IInspectableVtbl) [IID_INumberFormatter] {
     fn FormatInt(&self, value: i64, out: *mut HSTRING) -> HRESULT,
     fn FormatUInt(&self, value: u64, out: *mut HSTRING) -> HRESULT,
     fn FormatDouble(&self, value: f64, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<INumberFormatter> {
+impl INumberFormatter {
     #[inline] pub fn format_int(&self, value: i64) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).FormatInt)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).FormatInt)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn format_uint(&self, value: u64) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).FormatUInt)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).FormatUInt)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn format_double(&self, value: f64) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).FormatDouble)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).FormatDouble)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INumberFormatter2, 3567829488, 32976, 19213, 168, 158, 136, 44, 30, 143, 131, 16);
-RT_INTERFACE!{interface INumberFormatter2(INumberFormatter2Vtbl): IInspectable(IInspectableVtbl) [IID_INumberFormatter2] {
+RT_INTERFACE!{interface INumberFormatter2(INumberFormatter2Vtbl, INumberFormatter2_Abi): IInspectable(IInspectableVtbl) [IID_INumberFormatter2] {
     fn FormatInt(&self, value: i64, out: *mut HSTRING) -> HRESULT,
     fn FormatUInt(&self, value: u64, out: *mut HSTRING) -> HRESULT,
     fn FormatDouble(&self, value: f64, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<INumberFormatter2> {
+impl INumberFormatter2 {
     #[inline] pub fn format_int(&self, value: i64) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).FormatInt)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).FormatInt)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn format_uint(&self, value: u64) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).FormatUInt)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).FormatUInt)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn format_double(&self, value: f64) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).FormatDouble)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).FormatDouble)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INumberFormatterOptions, 2150837537, 44769, 19001, 186, 162, 7, 237, 140, 150, 218, 246);
-RT_INTERFACE!{interface INumberFormatterOptions(INumberFormatterOptionsVtbl): IInspectable(IInspectableVtbl) [IID_INumberFormatterOptions] {
-    fn get_Languages(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+RT_INTERFACE!{interface INumberFormatterOptions(INumberFormatterOptionsVtbl, INumberFormatterOptions_Abi): IInspectable(IInspectableVtbl) [IID_INumberFormatterOptions] {
+    fn get_Languages(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_GeographicRegion(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IntegerDigits(&self, out: *mut i32) -> HRESULT,
     fn put_IntegerDigits(&self, value: i32) -> HRESULT,
@@ -3688,98 +3688,98 @@ RT_INTERFACE!{interface INumberFormatterOptions(INumberFormatterOptionsVtbl): II
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ResolvedGeographicRegion(&self, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<INumberFormatterOptions> {
-    #[inline] pub fn get_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+impl INumberFormatterOptions {
+    #[inline] pub fn get_languages(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Languages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).get_Languages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_geographic_region(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_GeographicRegion)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_GeographicRegion)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_integer_digits(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IntegerDigits)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IntegerDigits)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_integer_digits(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_IntegerDigits)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_IntegerDigits)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_fraction_digits(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_FractionDigits)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_FractionDigits)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_fraction_digits(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_FractionDigits)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_FractionDigits)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_grouped(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IsGrouped)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IsGrouped)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_grouped(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_IsGrouped)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_IsGrouped)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_is_decimal_point_always_displayed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IsDecimalPointAlwaysDisplayed)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IsDecimalPointAlwaysDisplayed)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_decimal_point_always_displayed(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_IsDecimalPointAlwaysDisplayed)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_IsDecimalPointAlwaysDisplayed)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_numeral_system(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NumeralSystem)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumeralSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_numeral_system(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_NumeralSystem)(self.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.0.as_abi().lpVtbl).put_NumeralSystem)(self.0.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ResolvedLanguage)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ResolvedLanguage)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_resolved_geographic_region(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ResolvedGeographicRegion)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ResolvedGeographicRegion)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INumberParser, 3865416722, 18963, 19027, 131, 161, 57, 47, 190, 76, 255, 159);
-RT_INTERFACE!{interface INumberParser(INumberParserVtbl): IInspectable(IInspectableVtbl) [IID_INumberParser] {
-    fn ParseInt(&self, text: HSTRING, out: *mut *mut foundation::IReference<i64>) -> HRESULT,
-    fn ParseUInt(&self, text: HSTRING, out: *mut *mut foundation::IReference<u64>) -> HRESULT,
-    fn ParseDouble(&self, text: HSTRING, out: *mut *mut foundation::IReference<f64>) -> HRESULT
+RT_INTERFACE!{interface INumberParser(INumberParserVtbl, INumberParser_Abi): IInspectable(IInspectableVtbl) [IID_INumberParser] {
+    fn ParseInt(&self, text: HSTRING, out: *mut <foundation::IReference<i64> as RtType>::Abi) -> HRESULT,
+    fn ParseUInt(&self, text: HSTRING, out: *mut <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
+    fn ParseDouble(&self, text: HSTRING, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<INumberParser> {
-    #[inline] pub fn parse_int(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::IReference<i64>>>> { unsafe { 
+impl INumberParser {
+    #[inline] pub fn parse_int(&self, text: &HStringArg) -> Result<Option<foundation::IReference<i64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).ParseInt)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).ParseInt)(self.0.as_abi() as *const _ as *mut _, text.get(), &mut out);
+        if hr == S_OK { Ok(foundation::IReference::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn parse_uint(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::IReference<u64>>>> { unsafe { 
+    #[inline] pub fn parse_uint(&self, text: &HStringArg) -> Result<Option<foundation::IReference<u64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).ParseUInt)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).ParseUInt)(self.0.as_abi() as *const _ as *mut _, text.get(), &mut out);
+        if hr == S_OK { Ok(foundation::IReference::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn parse_double(&self, text: &HStringArg) -> Result<Option<ComPtr<foundation::IReference<f64>>>> { unsafe { 
+    #[inline] pub fn parse_double(&self, text: &HStringArg) -> Result<Option<foundation::IReference<f64>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).ParseDouble)(self.as_abi() as *const _ as *mut _, text.get(), &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).ParseDouble)(self.0.as_abi() as *const _ as *mut _, text.get(), &mut out);
+        if hr == S_OK { Ok(foundation::IReference::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INumberRounder, 1416872821, 14573, 17969, 184, 12, 239, 52, 252, 72, 183, 245);
-RT_INTERFACE!{interface INumberRounder(INumberRounderVtbl): IInspectable(IInspectableVtbl) [IID_INumberRounder] {
+RT_INTERFACE!{interface INumberRounder(INumberRounderVtbl, INumberRounder_Abi): IInspectable(IInspectableVtbl) [IID_INumberRounder] {
     fn RoundInt32(&self, value: i32, out: *mut i32) -> HRESULT,
     fn RoundUInt32(&self, value: u32, out: *mut u32) -> HRESULT,
     fn RoundInt64(&self, value: i64, out: *mut i64) -> HRESULT,
@@ -3787,85 +3787,85 @@ RT_INTERFACE!{interface INumberRounder(INumberRounderVtbl): IInspectable(IInspec
     fn RoundSingle(&self, value: f32, out: *mut f32) -> HRESULT,
     fn RoundDouble(&self, value: f64, out: *mut f64) -> HRESULT
 }}
-impl ComPtr<INumberRounder> {
+impl INumberRounder {
     #[inline] pub fn round_int32(&self, value: i32) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).RoundInt32)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).RoundInt32)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn round_uint32(&self, value: u32) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).RoundUInt32)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).RoundUInt32)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn round_int64(&self, value: i64) -> Result<i64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).RoundInt64)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).RoundInt64)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn round_uint64(&self, value: u64) -> Result<u64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).RoundUInt64)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).RoundUInt64)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn round_single(&self, value: f32) -> Result<f32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).RoundSingle)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).RoundSingle)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn round_double(&self, value: f64) -> Result<f64> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).RoundDouble)(self.as_abi() as *const _ as *mut _, value, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).RoundDouble)(self.0.as_abi() as *const _ as *mut _, value, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INumberRounderOption, 990413875, 25711, 20222, 141, 72, 102, 235, 46, 73, 231, 54);
-RT_INTERFACE!{interface INumberRounderOption(INumberRounderOptionVtbl): IInspectable(IInspectableVtbl) [IID_INumberRounderOption] {
-    fn get_NumberRounder(&self, out: *mut *mut INumberRounder) -> HRESULT,
-    fn put_NumberRounder(&self, value: *mut INumberRounder) -> HRESULT
+RT_INTERFACE!{interface INumberRounderOption(INumberRounderOptionVtbl, INumberRounderOption_Abi): IInspectable(IInspectableVtbl) [IID_INumberRounderOption] {
+    fn get_NumberRounder(&self, out: *mut <INumberRounder as RtType>::Abi) -> HRESULT,
+    fn put_NumberRounder(&self, value: <INumberRounder as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<INumberRounderOption> {
-    #[inline] pub fn get_number_rounder(&self) -> Result<Option<ComPtr<INumberRounder>>> { unsafe { 
+impl INumberRounderOption {
+    #[inline] pub fn get_number_rounder(&self) -> Result<Option<INumberRounder>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NumberRounder)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumberRounder)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(INumberRounder::wrap(out)) } else { err(hr) }
     }}
-    #[inline] pub fn set_number_rounder(&self, value: &ComPtr<INumberRounder>) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_NumberRounder)(self.as_abi() as *const _ as *mut _, value.as_abi() as *const _ as *mut _);
+    #[inline] pub fn set_number_rounder(&self, value: &INumberRounder) -> Result<()> { unsafe { 
+        let hr = ((*self.0.as_abi().lpVtbl).put_NumberRounder)(self.0.as_abi() as *const _ as *mut _, get_abi(value) as *const _ as *mut _);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_INumeralSystemTranslator, 687193132, 35875, 16948, 173, 46, 250, 90, 58, 66, 110, 155);
-RT_INTERFACE!{interface INumeralSystemTranslator(INumeralSystemTranslatorVtbl): IInspectable(IInspectableVtbl) [IID_INumeralSystemTranslator] {
-    fn get_Languages(&self, out: *mut *mut foundation::collections::IVectorView<HString>) -> HRESULT,
+RT_INTERFACE!{interface INumeralSystemTranslator(INumeralSystemTranslatorVtbl, INumeralSystemTranslator_Abi): IInspectable(IInspectableVtbl) [IID_INumeralSystemTranslator] {
+    fn get_Languages(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_NumeralSystem(&self, out: *mut HSTRING) -> HRESULT,
     fn put_NumeralSystem(&self, value: HSTRING) -> HRESULT,
     fn TranslateNumerals(&self, value: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<INumeralSystemTranslator> {
-    #[inline] pub fn get_languages(&self) -> Result<Option<ComPtr<foundation::collections::IVectorView<HString>>>> { unsafe { 
+impl INumeralSystemTranslator {
+    #[inline] pub fn get_languages(&self) -> Result<Option<foundation::collections::IVectorView<HString>>> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_Languages)(self.as_abi() as *const _ as *mut _, &mut out);
-        if hr == S_OK { Ok(ComPtr::wrap(out)) } else { err(hr) }
+        let hr = ((*self.0.as_abi().lpVtbl).get_Languages)(self.0.as_abi() as *const _ as *mut _, &mut out);
+        if hr == S_OK { Ok(foundation::collections::IVectorView::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_resolved_language(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_ResolvedLanguage)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_ResolvedLanguage)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_numeral_system(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_NumeralSystem)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_NumeralSystem)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn set_numeral_system(&self, value: &HStringArg) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_NumeralSystem)(self.as_abi() as *const _ as *mut _, value.get());
+        let hr = ((*self.0.as_abi().lpVtbl).put_NumeralSystem)(self.0.as_abi() as *const _ as *mut _, value.get());
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn translate_numerals(&self, value: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).TranslateNumerals)(self.as_abi() as *const _ as *mut _, value.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).TranslateNumerals)(self.0.as_abi() as *const _ as *mut _, value.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -3873,19 +3873,19 @@ RT_CLASS!{class NumeralSystemTranslator: INumeralSystemTranslator}
 impl RtActivatable<INumeralSystemTranslatorFactory> for NumeralSystemTranslator {}
 impl RtActivatable<IActivationFactory> for NumeralSystemTranslator {}
 impl NumeralSystemTranslator {
-    #[inline] pub fn create(languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<NumeralSystemTranslator> {
+    #[inline] pub fn create(languages: &foundation::collections::IIterable<HString>) -> Result<NumeralSystemTranslator> {
         <Self as RtActivatable<INumeralSystemTranslatorFactory>>::get_activation_factory().create(languages)
     }
 }
 DEFINE_CLSID!(NumeralSystemTranslator(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,78,117,109,101,114,97,108,83,121,115,116,101,109,84,114,97,110,115,108,97,116,111,114,0]) [CLSID_NumeralSystemTranslator]);
 DEFINE_IID!(IID_INumeralSystemTranslatorFactory, 2519779546, 14063, 19848, 168, 92, 111, 13, 152, 214, 32, 166);
-RT_INTERFACE!{static interface INumeralSystemTranslatorFactory(INumeralSystemTranslatorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INumeralSystemTranslatorFactory] {
-    fn Create(&self, languages: *mut foundation::collections::IIterable<HString>, out: *mut <NumeralSystemTranslator as RtType>::Abi) -> HRESULT
+RT_INTERFACE!{static interface INumeralSystemTranslatorFactory(INumeralSystemTranslatorFactoryVtbl, INumeralSystemTranslatorFactory_Abi): IInspectable(IInspectableVtbl) [IID_INumeralSystemTranslatorFactory] {
+    fn Create(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <NumeralSystemTranslator as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<INumeralSystemTranslatorFactory> {
-    #[inline] pub fn create(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>) -> Result<NumeralSystemTranslator> { unsafe { 
+impl INumeralSystemTranslatorFactory {
+    #[inline] pub fn create(&self, languages: &foundation::collections::IIterable<HString>) -> Result<NumeralSystemTranslator> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, get_abi(languages) as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(NumeralSystemTranslator::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3893,19 +3893,19 @@ RT_CLASS!{class PercentFormatter: INumberFormatter}
 impl RtActivatable<IPercentFormatterFactory> for PercentFormatter {}
 impl RtActivatable<IActivationFactory> for PercentFormatter {}
 impl PercentFormatter {
-    #[inline] pub fn create_percent_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<PercentFormatter> {
+    #[inline] pub fn create_percent_formatter(languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<PercentFormatter> {
         <Self as RtActivatable<IPercentFormatterFactory>>::get_activation_factory().create_percent_formatter(languages, geographicRegion)
     }
 }
 DEFINE_CLSID!(PercentFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,101,114,99,101,110,116,70,111,114,109,97,116,116,101,114,0]) [CLSID_PercentFormatter]);
 DEFINE_IID!(IID_IPercentFormatterFactory, 3078785775, 65236, 16408, 166, 226, 224, 153, 97, 224, 55, 101);
-RT_INTERFACE!{static interface IPercentFormatterFactory(IPercentFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPercentFormatterFactory] {
-    fn CreatePercentFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut <PercentFormatter as RtType>::Abi) -> HRESULT
+RT_INTERFACE!{static interface IPercentFormatterFactory(IPercentFormatterFactoryVtbl, IPercentFormatterFactory_Abi): IInspectable(IInspectableVtbl) [IID_IPercentFormatterFactory] {
+    fn CreatePercentFormatter(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, geographicRegion: HSTRING, out: *mut <PercentFormatter as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<IPercentFormatterFactory> {
-    #[inline] pub fn create_percent_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<PercentFormatter> { unsafe { 
+impl IPercentFormatterFactory {
+    #[inline] pub fn create_percent_formatter(&self, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<PercentFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreatePercentFormatter)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, geographicRegion.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreatePercentFormatter)(self.0.as_abi() as *const _ as *mut _, get_abi(languages) as *const _ as *mut _, geographicRegion.get(), &mut out);
         if hr == S_OK { Ok(PercentFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3913,19 +3913,19 @@ RT_CLASS!{class PermilleFormatter: INumberFormatter}
 impl RtActivatable<IPermilleFormatterFactory> for PermilleFormatter {}
 impl RtActivatable<IActivationFactory> for PermilleFormatter {}
 impl PermilleFormatter {
-    #[inline] pub fn create_permille_formatter(languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<PermilleFormatter> {
+    #[inline] pub fn create_permille_formatter(languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<PermilleFormatter> {
         <Self as RtActivatable<IPermilleFormatterFactory>>::get_activation_factory().create_permille_formatter(languages, geographicRegion)
     }
 }
 DEFINE_CLSID!(PermilleFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,101,114,109,105,108,108,101,70,111,114,109,97,116,116,101,114,0]) [CLSID_PermilleFormatter]);
 DEFINE_IID!(IID_IPermilleFormatterFactory, 725071020, 58936, 20181, 169, 152, 98, 246, 176, 106, 73, 174);
-RT_INTERFACE!{static interface IPermilleFormatterFactory(IPermilleFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPermilleFormatterFactory] {
-    fn CreatePermilleFormatter(&self, languages: *mut foundation::collections::IIterable<HString>, geographicRegion: HSTRING, out: *mut <PermilleFormatter as RtType>::Abi) -> HRESULT
+RT_INTERFACE!{static interface IPermilleFormatterFactory(IPermilleFormatterFactoryVtbl, IPermilleFormatterFactory_Abi): IInspectable(IInspectableVtbl) [IID_IPermilleFormatterFactory] {
+    fn CreatePermilleFormatter(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, geographicRegion: HSTRING, out: *mut <PermilleFormatter as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<IPermilleFormatterFactory> {
-    #[inline] pub fn create_permille_formatter(&self, languages: &ComPtr<foundation::collections::IIterable<HString>>, geographicRegion: &HStringArg) -> Result<PermilleFormatter> { unsafe { 
+impl IPermilleFormatterFactory {
+    #[inline] pub fn create_permille_formatter(&self, languages: &foundation::collections::IIterable<HString>, geographicRegion: &HStringArg) -> Result<PermilleFormatter> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).CreatePermilleFormatter)(self.as_abi() as *const _ as *mut _, languages.as_abi() as *const _ as *mut _, geographicRegion.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CreatePermilleFormatter)(self.0.as_abi() as *const _ as *mut _, get_abi(languages) as *const _ as *mut _, geographicRegion.get(), &mut out);
         if hr == S_OK { Ok(PermilleFormatter::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
@@ -3933,45 +3933,45 @@ RT_ENUM! { enum RoundingAlgorithm: i32 {
     None = 0, RoundDown = 1, RoundUp = 2, RoundTowardsZero = 3, RoundAwayFromZero = 4, RoundHalfDown = 5, RoundHalfUp = 6, RoundHalfTowardsZero = 7, RoundHalfAwayFromZero = 8, RoundHalfToEven = 9, RoundHalfToOdd = 10,
 }}
 DEFINE_IID!(IID_ISignedZeroOption, 4246527281, 2620, 18884, 166, 66, 150, 161, 86, 79, 79, 48);
-RT_INTERFACE!{interface ISignedZeroOption(ISignedZeroOptionVtbl): IInspectable(IInspectableVtbl) [IID_ISignedZeroOption] {
+RT_INTERFACE!{interface ISignedZeroOption(ISignedZeroOptionVtbl, ISignedZeroOption_Abi): IInspectable(IInspectableVtbl) [IID_ISignedZeroOption] {
     fn get_IsZeroSigned(&self, out: *mut bool) -> HRESULT,
     fn put_IsZeroSigned(&self, value: bool) -> HRESULT
 }}
-impl ComPtr<ISignedZeroOption> {
+impl ISignedZeroOption {
     #[inline] pub fn get_is_zero_signed(&self) -> Result<bool> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_IsZeroSigned)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_IsZeroSigned)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_is_zero_signed(&self, value: bool) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_IsZeroSigned)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_IsZeroSigned)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_ISignificantDigitsNumberRounder, 4120124362, 26182, 18707, 140, 118, 27, 25, 31, 249, 77, 253);
-RT_INTERFACE!{interface ISignificantDigitsNumberRounder(ISignificantDigitsNumberRounderVtbl): IInspectable(IInspectableVtbl) [IID_ISignificantDigitsNumberRounder] {
+RT_INTERFACE!{interface ISignificantDigitsNumberRounder(ISignificantDigitsNumberRounderVtbl, ISignificantDigitsNumberRounder_Abi): IInspectable(IInspectableVtbl) [IID_ISignificantDigitsNumberRounder] {
     fn get_RoundingAlgorithm(&self, out: *mut RoundingAlgorithm) -> HRESULT,
     fn put_RoundingAlgorithm(&self, value: RoundingAlgorithm) -> HRESULT,
     fn get_SignificantDigits(&self, out: *mut u32) -> HRESULT,
     fn put_SignificantDigits(&self, value: u32) -> HRESULT
 }}
-impl ComPtr<ISignificantDigitsNumberRounder> {
+impl ISignificantDigitsNumberRounder {
     #[inline] pub fn get_rounding_algorithm(&self) -> Result<RoundingAlgorithm> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_RoundingAlgorithm)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_RoundingAlgorithm)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_rounding_algorithm(&self, value: RoundingAlgorithm) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_RoundingAlgorithm)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_RoundingAlgorithm)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
     #[inline] pub fn get_significant_digits(&self) -> Result<u32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_SignificantDigits)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SignificantDigits)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_significant_digits(&self, value: u32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_SignificantDigits)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_SignificantDigits)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -3979,18 +3979,18 @@ RT_CLASS!{class SignificantDigitsNumberRounder: INumberRounder}
 impl RtActivatable<IActivationFactory> for SignificantDigitsNumberRounder {}
 DEFINE_CLSID!(SignificantDigitsNumberRounder(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,83,105,103,110,105,102,105,99,97,110,116,68,105,103,105,116,115,78,117,109,98,101,114,82,111,117,110,100,101,114,0]) [CLSID_SignificantDigitsNumberRounder]);
 DEFINE_IID!(IID_ISignificantDigitsOption, 491650269, 11587, 20200, 187, 241, 193, 178, 106, 113, 26, 88);
-RT_INTERFACE!{interface ISignificantDigitsOption(ISignificantDigitsOptionVtbl): IInspectable(IInspectableVtbl) [IID_ISignificantDigitsOption] {
+RT_INTERFACE!{interface ISignificantDigitsOption(ISignificantDigitsOptionVtbl, ISignificantDigitsOption_Abi): IInspectable(IInspectableVtbl) [IID_ISignificantDigitsOption] {
     fn get_SignificantDigits(&self, out: *mut i32) -> HRESULT,
     fn put_SignificantDigits(&self, value: i32) -> HRESULT
 }}
-impl ComPtr<ISignificantDigitsOption> {
+impl ISignificantDigitsOption {
     #[inline] pub fn get_significant_digits(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_SignificantDigits)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_SignificantDigits)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn set_significant_digits(&self, value: i32) -> Result<()> { unsafe { 
-        let hr = ((*self.as_abi().lpVtbl).put_SignificantDigits)(self.as_abi() as *const _ as *mut _, value);
+        let hr = ((*self.0.as_abi().lpVtbl).put_SignificantDigits)(self.0.as_abi() as *const _ as *mut _, value);
         if hr == S_OK { Ok(()) } else { err(hr) }
     }}
 }
@@ -4001,37 +4001,37 @@ RT_ENUM! { enum PhoneNumberFormat: i32 {
     E164 = 0, International = 1, National = 2, Rfc3966 = 3,
 }}
 DEFINE_IID!(IID_IPhoneNumberFormatter, 358003870, 47828, 19274, 144, 13, 68, 7, 173, 183, 201, 129);
-RT_INTERFACE!{interface IPhoneNumberFormatter(IPhoneNumberFormatterVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatter] {
+RT_INTERFACE!{interface IPhoneNumberFormatter(IPhoneNumberFormatterVtbl, IPhoneNumberFormatter_Abi): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatter] {
     fn Format(&self, number: <PhoneNumberInfo as RtType>::Abi, out: *mut HSTRING) -> HRESULT,
     fn FormatWithOutputFormat(&self, number: <PhoneNumberInfo as RtType>::Abi, numberFormat: PhoneNumberFormat, out: *mut HSTRING) -> HRESULT,
     fn FormatPartialString(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn FormatString(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn FormatStringWithLeftToRightMarkers(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<IPhoneNumberFormatter> {
+impl IPhoneNumberFormatter {
     #[inline] pub fn format(&self, number: &PhoneNumberInfo) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).Format)(self.as_abi() as *const _ as *mut _, number.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).Format)(self.0.as_abi() as *const _ as *mut _, get_abi(number) as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn format_with_output_format(&self, number: &PhoneNumberInfo, numberFormat: PhoneNumberFormat) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).FormatWithOutputFormat)(self.as_abi() as *const _ as *mut _, number.as_abi() as *const _ as *mut _, numberFormat, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).FormatWithOutputFormat)(self.0.as_abi() as *const _ as *mut _, get_abi(number) as *const _ as *mut _, numberFormat, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn format_partial_string(&self, number: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).FormatPartialString)(self.as_abi() as *const _ as *mut _, number.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).FormatPartialString)(self.0.as_abi() as *const _ as *mut _, number.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn format_string(&self, number: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).FormatString)(self.as_abi() as *const _ as *mut _, number.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).FormatString)(self.0.as_abi() as *const _ as *mut _, number.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn format_string_with_left_to_right_markers(&self, number: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).FormatStringWithLeftToRightMarkers)(self.as_abi() as *const _ as *mut _, number.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).FormatStringWithLeftToRightMarkers)(self.0.as_abi() as *const _ as *mut _, number.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
@@ -4054,36 +4054,36 @@ impl PhoneNumberFormatter {
 }
 DEFINE_CLSID!(PhoneNumberFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,101,114,0]) [CLSID_PhoneNumberFormatter]);
 DEFINE_IID!(IID_IPhoneNumberFormatterStatics, 1554446641, 34009, 16715, 171, 78, 160, 85, 44, 135, 134, 2);
-RT_INTERFACE!{static interface IPhoneNumberFormatterStatics(IPhoneNumberFormatterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatterStatics] {
+RT_INTERFACE!{static interface IPhoneNumberFormatterStatics(IPhoneNumberFormatterStaticsVtbl, IPhoneNumberFormatterStatics_Abi): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatterStatics] {
     fn TryCreate(&self, regionCode: HSTRING, phoneNumber: *mut <PhoneNumberFormatter as RtType>::Abi) -> HRESULT,
     fn GetCountryCodeForRegion(&self, regionCode: HSTRING, out: *mut i32) -> HRESULT,
     fn GetNationalDirectDialingPrefixForRegion(&self, regionCode: HSTRING, stripNonDigit: bool, out: *mut HSTRING) -> HRESULT,
     fn WrapWithLeftToRightMarkers(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
-impl ComPtr<IPhoneNumberFormatterStatics> {
+impl IPhoneNumberFormatterStatics {
     #[inline] pub fn try_create(&self, regionCode: &HStringArg) -> Result<Option<PhoneNumberFormatter>> { unsafe { 
         let mut phoneNumber = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).TryCreate)(self.as_abi() as *const _ as *mut _, regionCode.get(), &mut phoneNumber);
+        let hr = ((*self.0.as_abi().lpVtbl).TryCreate)(self.0.as_abi() as *const _ as *mut _, regionCode.get(), &mut phoneNumber);
         if hr == S_OK { Ok(PhoneNumberFormatter::wrap(phoneNumber)) } else { err(hr) }
     }}
     #[inline] pub fn get_country_code_for_region(&self, regionCode: &HStringArg) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).GetCountryCodeForRegion)(self.as_abi() as *const _ as *mut _, regionCode.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).GetCountryCodeForRegion)(self.0.as_abi() as *const _ as *mut _, regionCode.get(), &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_national_direct_dialing_prefix_for_region(&self, regionCode: &HStringArg, stripNonDigit: bool) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).GetNationalDirectDialingPrefixForRegion)(self.as_abi() as *const _ as *mut _, regionCode.get(), stripNonDigit, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).GetNationalDirectDialingPrefixForRegion)(self.0.as_abi() as *const _ as *mut _, regionCode.get(), stripNonDigit, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn wrap_with_left_to_right_markers(&self, number: &HStringArg) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).WrapWithLeftToRightMarkers)(self.as_abi() as *const _ as *mut _, number.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).WrapWithLeftToRightMarkers)(self.0.as_abi() as *const _ as *mut _, number.get(), &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPhoneNumberInfo, 477947101, 51380, 20131, 154, 239, 179, 66, 226, 197, 180, 23);
-RT_INTERFACE!{interface IPhoneNumberInfo(IPhoneNumberInfoVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfo] {
+RT_INTERFACE!{interface IPhoneNumberInfo(IPhoneNumberInfoVtbl, IPhoneNumberInfo_Abi): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfo] {
     fn get_CountryCode(&self, out: *mut i32) -> HRESULT,
     fn get_PhoneNumber(&self, out: *mut HSTRING) -> HRESULT,
     fn GetLengthOfGeographicalAreaCode(&self, out: *mut i32) -> HRESULT,
@@ -4093,45 +4093,45 @@ RT_INTERFACE!{interface IPhoneNumberInfo(IPhoneNumberInfoVtbl): IInspectable(IIn
     fn GetGeographicRegionCode(&self, out: *mut HSTRING) -> HRESULT,
     fn CheckNumberMatch(&self, otherNumber: <PhoneNumberInfo as RtType>::Abi, out: *mut PhoneNumberMatchResult) -> HRESULT
 }}
-impl ComPtr<IPhoneNumberInfo> {
+impl IPhoneNumberInfo {
     #[inline] pub fn get_country_code(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).get_CountryCode)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_CountryCode)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_phone_number(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).get_PhoneNumber)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).get_PhoneNumber)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_length_of_geographical_area_code(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).GetLengthOfGeographicalAreaCode)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).GetLengthOfGeographicalAreaCode)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_national_significant_number(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).GetNationalSignificantNumber)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).GetNationalSignificantNumber)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn get_length_of_national_destination_code(&self) -> Result<i32> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).GetLengthOfNationalDestinationCode)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).GetLengthOfNationalDestinationCode)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn predict_number_kind(&self) -> Result<PredictedPhoneNumberKind> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).PredictNumberKind)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).PredictNumberKind)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
     #[inline] pub fn get_geographic_region_code(&self) -> Result<HString> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).GetGeographicRegionCode)(self.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).GetGeographicRegionCode)(self.0.as_abi() as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(HString::wrap(out)) } else { err(hr) }
     }}
     #[inline] pub fn check_number_match(&self, otherNumber: &PhoneNumberInfo) -> Result<PhoneNumberMatchResult> { unsafe { 
         let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).CheckNumberMatch)(self.as_abi() as *const _ as *mut _, otherNumber.as_abi() as *const _ as *mut _, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).CheckNumberMatch)(self.0.as_abi() as *const _ as *mut _, get_abi(otherNumber) as *const _ as *mut _, &mut out);
         if hr == S_OK { Ok(out) } else { err(hr) }
     }}
 }
@@ -4151,30 +4151,30 @@ impl PhoneNumberInfo {
 }
 DEFINE_CLSID!(PhoneNumberInfo(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,73,110,102,111,0]) [CLSID_PhoneNumberInfo]);
 DEFINE_IID!(IID_IPhoneNumberInfoFactory, 2181216612, 44458, 19711, 143, 207, 23, 231, 81, 106, 40, 255);
-RT_INTERFACE!{static interface IPhoneNumberInfoFactory(IPhoneNumberInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoFactory] {
+RT_INTERFACE!{static interface IPhoneNumberInfoFactory(IPhoneNumberInfoFactoryVtbl, IPhoneNumberInfoFactory_Abi): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoFactory] {
     fn Create(&self, number: HSTRING, out: *mut <PhoneNumberInfo as RtType>::Abi) -> HRESULT
 }}
-impl ComPtr<IPhoneNumberInfoFactory> {
+impl IPhoneNumberInfoFactory {
     #[inline] pub fn create(&self, number: &HStringArg) -> Result<PhoneNumberInfo> { unsafe { 
         let mut out = null_mut();
-        let hr = ((*self.as_abi().lpVtbl).Create)(self.as_abi() as *const _ as *mut _, number.get(), &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).Create)(self.0.as_abi() as *const _ as *mut _, number.get(), &mut out);
         if hr == S_OK { Ok(PhoneNumberInfo::wrap_nonnull(out)) } else { err(hr) }
     }}
 }
 DEFINE_IID!(IID_IPhoneNumberInfoStatics, 1530875754, 34473, 16617, 134, 73, 109, 97, 22, 25, 40, 212);
-RT_INTERFACE!{static interface IPhoneNumberInfoStatics(IPhoneNumberInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoStatics] {
+RT_INTERFACE!{static interface IPhoneNumberInfoStatics(IPhoneNumberInfoStaticsVtbl, IPhoneNumberInfoStatics_Abi): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoStatics] {
     fn TryParse(&self, input: HSTRING, phoneNumber: *mut <PhoneNumberInfo as RtType>::Abi, out: *mut PhoneNumberParseResult) -> HRESULT,
     fn TryParseWithRegion(&self, input: HSTRING, regionCode: HSTRING, phoneNumber: *mut <PhoneNumberInfo as RtType>::Abi, out: *mut PhoneNumberParseResult) -> HRESULT
 }}
-impl ComPtr<IPhoneNumberInfoStatics> {
+impl IPhoneNumberInfoStatics {
     #[inline] pub fn try_parse(&self, input: &HStringArg) -> Result<(Option<PhoneNumberInfo>, PhoneNumberParseResult)> { unsafe { 
         let mut phoneNumber = null_mut(); let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).TryParse)(self.as_abi() as *const _ as *mut _, input.get(), &mut phoneNumber, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).TryParse)(self.0.as_abi() as *const _ as *mut _, input.get(), &mut phoneNumber, &mut out);
         if hr == S_OK { Ok((PhoneNumberInfo::wrap(phoneNumber), out)) } else { err(hr) }
     }}
     #[inline] pub fn try_parse_with_region(&self, input: &HStringArg, regionCode: &HStringArg) -> Result<(Option<PhoneNumberInfo>, PhoneNumberParseResult)> { unsafe { 
         let mut phoneNumber = null_mut(); let mut out = zeroed();
-        let hr = ((*self.as_abi().lpVtbl).TryParseWithRegion)(self.as_abi() as *const _ as *mut _, input.get(), regionCode.get(), &mut phoneNumber, &mut out);
+        let hr = ((*self.0.as_abi().lpVtbl).TryParseWithRegion)(self.0.as_abi() as *const _ as *mut _, input.get(), regionCode.get(), &mut phoneNumber, &mut out);
         if hr == S_OK { Ok((PhoneNumberInfo::wrap(phoneNumber), out)) } else { err(hr) }
     }}
 }

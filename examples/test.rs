@@ -62,13 +62,13 @@ fn main() {
     println!("CLS: {}",  async_op.get_runtime_class_name());
     
     let asi = async_op.query_interface::<IAsyncInfo>().unwrap();
-    println!("IAsyncInfo: {:p}, Iasync_operation: {:p}", asi, async_op);
+    println!("IAsyncInfo: {:p}, Iasync_operation: {:p}", asi.get_abi(), async_op.get_abi());
     
     let unknown = async_op.query_interface::<IUnknown>().unwrap();
-    println!("IAsyncInfo: {:p}, Iasync_operation: {:p}, IUnknown: {:p}", asi, async_op, unknown);
+    println!("IAsyncInfo: {:p}, Iasync_operation: {:p}, IUnknown: {:p}", asi.get_abi(), async_op.get_abi(), unknown.get_abi());
     
     let unknown = asi.query_interface::<IUnknown>().unwrap();
-    println!("IAsyncInfo: {:p}, Iasync_operation: {:p}, IUnknown: {:p}", asi, async_op, unknown);
+    println!("IAsyncInfo: {:p}, Iasync_operation: {:p}, IUnknown: {:p}", asi.get_abi(), async_op.get_abi(), unknown.get_abi());
     
     let id = asi.get_id().unwrap();
     println!("id: {:?}", id);
@@ -158,7 +158,7 @@ fn main() {
     let txt_file = exe_folder.create_file_async(&*FastHString::new("__test_file.txt"), CreationCollisionOption::ReplaceExisting).unwrap().blocking_get().expect("create_file_async failed").unwrap();
     println!("Created text file {}", txt_file.query_interface::<IStorageItem>().unwrap().get_path().unwrap());
     FileIO::append_text_async(&txt_file, &*FastHString::new("This is a test\nand a second line.")).unwrap().blocking_wait();
-    let mut lines: ComPtr<IVector<HString>> = FileIO::read_lines_async(&txt_file).unwrap().blocking_get().expect("read_lines_async failed").unwrap();
+    let mut lines: IVector<HString> = FileIO::read_lines_async(&txt_file).unwrap().blocking_get().expect("read_lines_async failed").unwrap();
     println!("Read {} lines from the text file", lines.get_size().expect("get_size failed"));
     // now we have an IVector that we can mess with
     lines.append(&*FastHString::new("The third line, added later")).expect("append failed");

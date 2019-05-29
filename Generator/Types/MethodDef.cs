@@ -41,7 +41,7 @@ namespace Generator.Types
             var getManyPname = GetManyParameterName;
             var output = Output;
 
-            var rawParams = new List<string> { "self.as_abi() as *const _ as *mut _" };
+            var rawParams = new List<string> { "self.0.as_abi() as *const _ as *mut _" };
             foreach (var p in def.Parameters)
             {
                 var pname = NameHelpers.PreventKeywords(NameHelpers.FirstToLower(p.Name));
@@ -112,7 +112,7 @@ namespace Generator.Types
             }
 
             return outInit + $@"
-        let hr = ((*self.as_abi().lpVtbl).{ rawName })({ String.Join(", ", rawParams) });
+        let hr = ((*self.0.as_abi().lpVtbl).{ rawName })({ String.Join(", ", rawParams) });
         if hr == S_OK {{ { outWrap } }} else {{ err(hr) }}";
         }
     }

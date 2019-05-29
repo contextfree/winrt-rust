@@ -60,7 +60,7 @@ mod comptr;
 pub use comptr::{ComPtr, ComArray};
 
 mod cominterfaces;
-pub use cominterfaces::{ComInterface, ComIid, IUnknown, IRestrictedErrorInfo, IAgileObject};
+pub use cominterfaces::{ComInterface, ComInterfaceAbi, ComIid, IUnknown, IRestrictedErrorInfo, IAgileObject};
 
 mod rt;
 pub use rt::{RtInterface, RtClassInterface, RtNamedClass, RtValueType, RtType, RtActivatable,
@@ -91,6 +91,7 @@ mod prelude {
     pub use std::mem::zeroed;
     pub use crate::guid::Guid;
     pub use crate::rt::gen::windows::foundation;
+    pub(crate) use crate::comptr::get_abi;
 
     #[inline]
     pub fn err<T>(hr: crate::result::HRESULT) -> crate::result::Result<T> {

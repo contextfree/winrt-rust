@@ -1,8 +1,18 @@
 use crate::Guid;
+use crate::ComPtr;
 use w::um::unknwnbase::IUnknownVtbl;
 
 /// Marker trait for all COM-compatible interfaces.
 pub trait ComInterface {
+    /// The type that defines the VTable of this interface.
+    type Vtbl: Sized;
+    type TAbi: Sized + ComInterfaceAbi;
+    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self;
+    fn get_abi(&self) -> *const Self::TAbi;
+}
+
+/// Marker trait for all COM-compatible interfaces.
+pub trait ComInterfaceAbi {
     /// The type that defines the VTable of this interface.
     type Vtbl: Sized;
 }
@@ -21,17 +31,49 @@ pub trait ComIid {
 DEFINE_IID!(IID_IUnknown, 0x00000000, 0x0000, 0x0000, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
 
 /// Re-export from WinAPI crate
-pub type IUnknown = w::um::unknwnbase::IUnknown;
+#[allow(non_camel_case_types)]
+pub type IUnknown_Abi = w::um::unknwnbase::IUnknown;
+#[repr(transparent)]
+pub struct IUnknown(ComPtr<IUnknown_Abi>);
 impl ComIid for IUnknown { #[inline] fn iid() -> &'static Guid { &IID_IUnknown } }
-impl ComInterface for IUnknown { type Vtbl = IUnknownVtbl; }
+impl ComInterfaceAbi for IUnknown_Abi { type Vtbl = IUnknownVtbl; }
+impl ComInterface for IUnknown {
+    type Vtbl = IUnknownVtbl;
+    type TAbi = IUnknown_Abi;
+    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IUnknown(ComPtr::wrap_nonnull(ptr)) }
+    fn get_abi(&self) -> *const Self::TAbi { self.0.as_abi() as *const _ }
+}
+
+impl IUnknown {
+    #[inline]
+    pub fn query_interface<Target>(&self) -> Option<Target> where Target: ComIid + ComInterface {
+        let iid: &'static Guid = Target::iid();
+        let mut res = std::ptr::null_mut();
+        unsafe {
+            match self.0.as_abi().QueryInterface(iid.as_ref(), &mut res as *mut _ as *mut *mut w::shared::ntdef::VOID) {
+                w::shared::winerror::S_OK => Some(Target::wrap_com(res)),
+                _ => None
+            }
+        }
+    }
+}
 
 DEFINE_IID!(IID_IRestrictedErrorInfo, 0x82BA7092, 0x4C88, 0x427D, 0xA7, 0xBC, 0x16, 0xDD, 0x93, 0xFE, 0xB6, 0x7E);
 
 /// Re-export from WinAPI crate
-pub type IRestrictedErrorInfo = w::um::restrictederrorinfo::IRestrictedErrorInfo;
+#[allow(non_camel_case_types)]
+pub type IRestrictedErrorInfo_Abi = w::um::restrictederrorinfo::IRestrictedErrorInfo;
+#[repr(transparent)]
+pub struct IRestrictedErrorInfo(ComPtr<IRestrictedErrorInfo_Abi>);
 pub type IRestrictedErrorInfoVtbl = w::um::restrictederrorinfo::IRestrictedErrorInfoVtbl;
 impl ComIid for IRestrictedErrorInfo { #[inline] fn iid() -> &'static Guid { &IID_IRestrictedErrorInfo } }
-impl ComInterface for IRestrictedErrorInfo { type Vtbl = IRestrictedErrorInfoVtbl; }
+impl ComInterfaceAbi for IRestrictedErrorInfo_Abi { type Vtbl = IRestrictedErrorInfoVtbl; }
+impl ComInterface for IRestrictedErrorInfo {
+    type Vtbl = IRestrictedErrorInfoVtbl;
+    type TAbi = IRestrictedErrorInfo_Abi;
+    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IRestrictedErrorInfo(ComPtr::wrap_nonnull(ptr)) }
+    fn get_abi(&self) -> *const Self::TAbi { self.0.as_abi() as *const _ }
+}
 
 DEFINE_IID!(IID_IAgileObject, 0x94EA2B94, 0xE9CC, 0x49E0, 0xC0, 0xFF, 0xEE, 0x64, 0xCA, 0x8F, 0x5B, 0x90);
 
@@ -39,9 +81,12 @@ DEFINE_IID!(IID_IAgileObject, 0x94EA2B94, 0xE9CC, 0x49E0, 0xC0, 0xFF, 0xEE, 0x64
 /// It inherits from `IUnknown` and does not have additional members.
 #[repr(transparent)]
 #[derive(Debug)]
-pub struct IAgileObject {
+#[allow(non_camel_case_types)]
+pub struct IAgileObject_Abi {
     lpVtbl: *const IUnknownVtbl // IAgileObject has no methods besides what IUnknown has
 }
+#[repr(transparent)]
+pub struct IAgileObject(ComPtr<IAgileObject_Abi>);
 impl std::ops::Deref for IAgileObject {
     type Target = IUnknown;
     #[inline]
@@ -56,4 +101,10 @@ impl std::ops::DerefMut for IAgileObject {
     }
 }
 impl ComIid for IAgileObject { #[inline] fn iid() -> &'static Guid { &IID_IAgileObject } }
-impl ComInterface for IAgileObject { type Vtbl = IUnknownVtbl; }
+impl ComInterfaceAbi for IAgileObject_Abi { type Vtbl = IUnknownVtbl; }
+impl ComInterface for IAgileObject {
+    type Vtbl = IUnknownVtbl;
+    type TAbi = IAgileObject_Abi;
+    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IAgileObject(ComPtr::wrap_nonnull(ptr)) }
+    fn get_abi(&self) -> *const Self::TAbi { self.0.as_abi() as *const _ }
+}

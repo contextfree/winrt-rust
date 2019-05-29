@@ -129,10 +129,10 @@ namespace Generator.Types
             {
                 switch (usage)
                 {
-                    case TypeUsage.Raw: return "*mut IInspectable";
+                    case TypeUsage.Raw: return "<IInspectable as RtType>::Abi";
                     case TypeUsage.GenericArg: return "IInspectable";
-                    case TypeUsage.In: return "&ComPtr<IInspectable>";
-                    case TypeUsage.Out: return "Option<ComPtr<IInspectable>>";
+                    case TypeUsage.In: return "&IInspectable";
+                    case TypeUsage.Out: return "Option<IInspectable>";
                     default: throw new InvalidOperationException();
                 }
             }
@@ -197,52 +197,25 @@ namespace Generator.Types
 
                 if (!t.IsValueType)
                 {
-                    if (def.Type.IsClass && !TypeHelpers.IsDelegate(def.Type))
+                    if (usage == TypeUsage.In)
                     {
-                        if (usage == TypeUsage.In)
-                        {
-                            name = $"&{ name }";
-                        }
-                        else if (usage == TypeUsage.GenericArg)
-                        {
-                            // leave name unchanged
-                        }
-                        else if (usage == TypeUsage.Raw)
-                        {
-                            name = $"<{ name } as RtType>::Abi";
-                        }
-                        else if (usage == TypeUsage.Out)
-                        {
-                            name = $"Option<{ name }>";
-                        }
-                        else if (usage == TypeUsage.OutNonNull)
-                        {
-                            // leave name unchanged
-                        }
+                        name = $"&{ name }";
                     }
-                    else
+                    else if (usage == TypeUsage.GenericArg)
                     {
-
-                        if (usage == TypeUsage.In)
-                        {
-                            name = $"&ComPtr<{ name }>";
-                        }
-                        else if (usage == TypeUsage.GenericArg)
-                        {
-                            // leave name unchanged
-                        }
-                        else if (usage == TypeUsage.Raw)
-                        {
-                            name = $"*mut { name }";
-                        }
-                        else if (usage == TypeUsage.Out)
-                        {
-                            name = $"Option<ComPtr<{ name }>>";
-                        }
-                        else if (usage == TypeUsage.OutNonNull)
-                        {
-                            name = $"ComPtr<{ name }>";
-                        }
+                        // leave name unchanged
+                    }
+                    else if (usage == TypeUsage.Raw)
+                    {
+                        name = $"<{ name } as RtType>::Abi";
+                    }
+                    else if (usage == TypeUsage.Out)
+                    {
+                        name = $"Option<{ name }>";
+                    }
+                    else if (usage == TypeUsage.OutNonNull)
+                    {
+                        // leave name unchanged
                     }
                 }
 
@@ -286,7 +259,7 @@ namespace Generator.Types
             }
             else if (t.FullName == "System.Object")
             {
-                return $"{ name }.as_abi() as *const _ as *mut _";
+                return $"get_abi({ name }) as *const _ as *mut _";
             }
             else if (t.FullName == "System.Guid")
             {
@@ -335,7 +308,7 @@ namespace Generator.Types
             }
             else // reference type
             {
-                return $"{ name }.as_abi() as *const _ as *mut _";
+                return $"get_abi({ name }) as *const _ as *mut _";
             }
         }
 
@@ -424,7 +397,7 @@ namespace Generator.Types
             }
             else if (t.FullName == "System.Object")
             {
-                string wrapFn = isNonNull ? "ComPtr::wrap_nonnull" : "ComPtr::wrap";
+                string wrapFn = isNonNull ? $"IInspectable::wrap_nonnull" : $"IInspectable::wrap";
                 return $"{ wrapFn }({ name })";
             }
             else if (t.FullName == "System.Guid")
