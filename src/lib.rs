@@ -57,7 +57,8 @@ mod bstr;
 pub use bstr::BStr;
 
 mod comptr;
-pub use comptr::{ComPtr, ComArray};
+pub(crate) use comptr::ComPtr;
+pub use comptr::ComArray;
 
 mod cominterfaces;
 pub use cominterfaces::{ComInterface, ComInterfaceAbi, ComIid, IUnknown, IRestrictedErrorInfo, IAgileObject};
@@ -81,7 +82,7 @@ mod prelude {
     pub use crate::rt::{RtType, RtActivatable, IInspectable, IInspectableVtbl, IActivationFactory, Char};
     pub use crate::rt::handler::IntoInterface;
     pub use crate::cominterfaces::{ComInterface, ComIid, IUnknown};
-    pub use crate::comptr::{ComPtr, ComArray};
+    pub use crate::comptr::ComArray;
     pub use crate::hstring::{HString, HStringArg};
     pub use crate::result::{Result, HRESULT};
     pub use w::winrt::hstring::HSTRING;
@@ -91,7 +92,7 @@ mod prelude {
     pub use std::mem::zeroed;
     pub use crate::guid::Guid;
     pub use crate::rt::gen::windows::foundation;
-    pub(crate) use crate::comptr::get_abi;
+    pub(crate) use crate::comptr::{get_abi, ComPtr};
 
     #[inline]
     pub fn err<T>(hr: crate::result::HRESULT) -> crate::result::Result<T> {
