@@ -147,16 +147,16 @@ impl<T> ComArray<T> where T: crate::RtType {
 }
 
 impl<T> Deref for ComArray<T> where T: crate::RtType {
-    type Target = [T::OutNonNull];
+    type Target = [T];
     #[inline]
-    fn deref(&self) -> &[T::OutNonNull] {
-        unsafe { std::slice::from_raw_parts(self.first.as_ptr() as *mut T::OutNonNull, self.size as usize) }
+    fn deref(&self) -> &[T] {
+        unsafe { std::slice::from_raw_parts(self.first.as_ptr() as *mut T, self.size as usize) }
     }
 }
 impl<T> DerefMut for ComArray<T> where T: crate::RtType {
     #[inline]
-    fn deref_mut(&mut self) -> &mut [T::OutNonNull] {
-        unsafe { std::slice::from_raw_parts_mut(self.first.as_ptr() as *mut T::OutNonNull, self.size as usize) }
+    fn deref_mut(&mut self) -> &mut [T] {
+        unsafe { std::slice::from_raw_parts_mut(self.first.as_ptr() as *mut T, self.size as usize) }
     }
 }
 

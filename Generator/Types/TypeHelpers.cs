@@ -72,7 +72,7 @@ namespace Generator.Types
                     case TypeUsage.Raw: return $"{ t.Name }::Abi";
                     case TypeUsage.In: return $"&{ t.Name }::In";
                     case TypeUsage.Out: return $"{ t.Name }::Out";
-                    case TypeUsage.OutNonNull: return $"{ t.Name }::OutNonNull";
+                    case TypeUsage.OutNonNull: return t.Name;
                     case TypeUsage.GenericArg: return t.Name;
                     default: throw new NotSupportedException();
                 }
