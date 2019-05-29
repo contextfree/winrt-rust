@@ -18,7 +18,7 @@ fn main() {
     let exe_path = std::env::current_exe().expect("current_exe failed");
     let exe_path_str = exe_path.to_str().expect("invalid unicode path");
 
-    let file = StorageFile::get_file_from_path_async(&*FastHString::new(&exe_path_str)).unwrap().blocking_get().expect("get_file_from_path_async failed").unwrap();
+    let file = StorageFile::get_file_from_path_async(&FastHString::new(&exe_path_str)).unwrap().blocking_get().expect("get_file_from_path_async failed").unwrap();
     println!("Dumping file: {}", file.query_interface::<IStorageItem>().unwrap().get_path().unwrap());
 
     // Open a sequential-access stream over the file.

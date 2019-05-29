@@ -14,6 +14,7 @@ fn main() {
     let base = FastHString::new("https://github.com");
     let relative = FastHString::new("contextfree/winrt-rust");
     let uri = Uri::create_with_relative_uri(&base, &relative).unwrap();
+    // let uri2 = uri.clone(); // TODO
     let to_string = uri.query_interface::<IStringable>().unwrap().to_string().unwrap();
     println!("{} -> {}", uri.get_runtime_class_name(), to_string);
     println!("TrustLevel: {:?}", uri.get_trust_level());
@@ -115,7 +116,7 @@ fn main() {
         Ok(_) => panic!("expected Error")
     };
 
-    let array = &mut [true, false, false, true];
+    let array = &[true, false, false, true];
     let boxed_array = PropertyValue::create_boolean_array(array).unwrap().unwrap();
     let boxed_array = boxed_array.query_interface::<IPropertyValue>().unwrap();
     assert_eq!(boxed_array.get_type().unwrap(), PropertyType::BooleanArray);
@@ -126,7 +127,7 @@ fn main() {
 
     let str1 = FastHString::new("foo");
     let str2 = FastHString::new("bar");
-    let array = &mut [&*str1, &*str2, &*str1, &*str2];
+    let array: &[&HStringArg] = &[&str1, &str2, &str1, &str2];
     let boxed_array = PropertyValue::create_string_array(array).unwrap().unwrap();
     let boxed_array = boxed_array.query_interface::<IPropertyValue>().unwrap();
     assert_eq!(boxed_array.get_type().unwrap(), PropertyType::StringArray);
@@ -146,7 +147,7 @@ fn main() {
     // Walk directories up to root
     let exe_path = std::env::current_exe().expect("current_exe failed");
     let exe_path_str = exe_path.to_str().expect("invalid unicode path");
-    let file = StorageFile::get_file_from_path_async(&*FastHString::new(&exe_path_str)).unwrap().blocking_get().expect("get_file_from_path_async failed").unwrap();
+    let file = StorageFile::get_file_from_path_async(&FastHString::new(&exe_path_str)).unwrap().blocking_get().expect("get_file_from_path_async failed").unwrap();
     println!("Executable file: {}", file.query_interface::<IStorageItem>().unwrap().get_path().unwrap());
     /*let mut parent = file.query_interface::<IStorageItem>().unwrap();
     loop {
@@ -155,13 +156,13 @@ fn main() {
         // ... until parent == null, but this currently does not work because we don't support methods returning null
     }*/
     let exe_folder = file.query_interface::<IStorageItem2>().unwrap().get_parent_async().unwrap().blocking_get().expect("get_parent_async failed").unwrap();    
-    let txt_file = exe_folder.create_file_async(&*FastHString::new("__test_file.txt"), CreationCollisionOption::ReplaceExisting).unwrap().blocking_get().expect("create_file_async failed").unwrap();
+    let txt_file = exe_folder.create_file_async(&FastHString::new("__test_file.txt"), CreationCollisionOption::ReplaceExisting).unwrap().blocking_get().expect("create_file_async failed").unwrap();
     println!("Created text file {}", txt_file.query_interface::<IStorageItem>().unwrap().get_path().unwrap());
-    FileIO::append_text_async(&txt_file, &*FastHString::new("This is a test\nand a second line.")).unwrap().blocking_wait();
+    FileIO::append_text_async(&txt_file, &FastHString::new("This is a test\nand a second line.")).unwrap().blocking_wait();
     let mut lines: IVector<HString> = FileIO::read_lines_async(&txt_file).unwrap().blocking_get().expect("read_lines_async failed").unwrap();
     println!("Read {} lines from the text file", lines.get_size().expect("get_size failed"));
     // now we have an IVector that we can mess with
-    lines.append(&*FastHString::new("The third line, added later")).expect("append failed");
+    lines.append(&FastHString::new("The third line, added later")).expect("append failed");
     assert_eq!(lines.get_size().unwrap(), 3);
     println!("=== Lines: ===");
     for line in &lines {
