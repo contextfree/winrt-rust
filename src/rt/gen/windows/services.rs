@@ -1,7 +1,7 @@
 pub mod cortana { // Windows.Services.Cortana
 use crate::prelude::*;
 DEFINE_IID!(IID_ICortanaActionableInsights, 2501822129, 64643, 22637, 139, 132, 36, 82, 200, 152, 22, 37);
-RT_INTERFACE!{interface ICortanaActionableInsights(ICortanaActionableInsightsVtbl): IInspectable(IInspectableVtbl) [IID_ICortanaActionableInsights] {
+RT_INTERFACE!{interface ICortanaActionableInsights(ICortanaActionableInsightsVtbl): IInspectable [IID_ICortanaActionableInsights] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut <super::super::system::User as RtType>::Abi) -> HRESULT,
     fn IsAvailableAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
@@ -68,7 +68,7 @@ impl CortanaActionableInsights {
 }
 DEFINE_CLSID!(CortanaActionableInsights(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,67,111,114,116,97,110,97,46,67,111,114,116,97,110,97,65,99,116,105,111,110,97,98,108,101,73,110,115,105,103,104,116,115,0]) [CLSID_CortanaActionableInsights]);
 DEFINE_IID!(IID_ICortanaActionableInsightsOptions, 2864888783, 38786, 21536, 184, 30, 122, 229, 106, 243, 24, 21);
-RT_INTERFACE!{interface ICortanaActionableInsightsOptions(ICortanaActionableInsightsOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ICortanaActionableInsightsOptions] {
+RT_INTERFACE!{interface ICortanaActionableInsightsOptions(ICortanaActionableInsightsOptionsVtbl): IInspectable [IID_ICortanaActionableInsightsOptions] {
     fn get_ContentSourceWebLink(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn put_ContentSourceWebLink(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_SurroundingText(&self, out: *mut HSTRING) -> HRESULT,
@@ -98,7 +98,7 @@ RT_CLASS!{class CortanaActionableInsightsOptions: ICortanaActionableInsightsOpti
 impl RtActivatable<IActivationFactory> for CortanaActionableInsightsOptions {}
 DEFINE_CLSID!(CortanaActionableInsightsOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,67,111,114,116,97,110,97,46,67,111,114,116,97,110,97,65,99,116,105,111,110,97,98,108,101,73,110,115,105,103,104,116,115,79,112,116,105,111,110,115,0]) [CLSID_CortanaActionableInsightsOptions]);
 DEFINE_IID!(IID_ICortanaActionableInsightsStatics, 3051279378, 40239, 23733, 155, 5, 53, 106, 11, 131, 108, 16);
-RT_INTERFACE!{static interface ICortanaActionableInsightsStatics(ICortanaActionableInsightsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICortanaActionableInsightsStatics] {
+RT_INTERFACE!{static interface ICortanaActionableInsightsStatics(ICortanaActionableInsightsStaticsVtbl): IInspectable [IID_ICortanaActionableInsightsStatics] {
     fn GetDefault(&self, out: *mut <CortanaActionableInsights as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: <super::super::system::User as RtType>::Abi, out: *mut <CortanaActionableInsights as RtType>::Abi) -> HRESULT
 }}
@@ -121,7 +121,7 @@ RT_ENUM! { enum CortanaPermissionsChangeResult: i32 {
     Success = 0, Unavailable = 1, DisabledByPolicy = 2,
 }}
 DEFINE_IID!(IID_ICortanaPermissionsManager, 420688096, 34453, 17290, 149, 69, 61, 164, 232, 34, 221, 180);
-RT_INTERFACE!{interface ICortanaPermissionsManager(ICortanaPermissionsManagerVtbl): IInspectable(IInspectableVtbl) [IID_ICortanaPermissionsManager] {
+RT_INTERFACE!{interface ICortanaPermissionsManager(ICortanaPermissionsManagerVtbl): IInspectable [IID_ICortanaPermissionsManager] {
     fn IsSupported(&self, out: *mut bool) -> HRESULT,
     fn ArePermissionsGrantedAsync(&self, permissions: <foundation::collections::IIterable<CortanaPermission> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn GrantPermissionsAsync(&self, permissions: <foundation::collections::IIterable<CortanaPermission> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<CortanaPermissionsChangeResult> as RtType>::Abi) -> HRESULT,
@@ -158,7 +158,7 @@ impl CortanaPermissionsManager {
 }
 DEFINE_CLSID!(CortanaPermissionsManager(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,67,111,114,116,97,110,97,46,67,111,114,116,97,110,97,80,101,114,109,105,115,115,105,111,110,115,77,97,110,97,103,101,114,0]) [CLSID_CortanaPermissionsManager]);
 DEFINE_IID!(IID_ICortanaPermissionsManagerStatics, 1991370362, 45125, 17428, 157, 109, 42, 211, 165, 254, 58, 126);
-RT_INTERFACE!{static interface ICortanaPermissionsManagerStatics(ICortanaPermissionsManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICortanaPermissionsManagerStatics] {
+RT_INTERFACE!{static interface ICortanaPermissionsManagerStatics(ICortanaPermissionsManagerStaticsVtbl): IInspectable [IID_ICortanaPermissionsManagerStatics] {
     fn GetDefault(&self, out: *mut <CortanaPermissionsManager as RtType>::Abi) -> HRESULT
 }}
 impl ICortanaPermissionsManagerStatics {
@@ -169,7 +169,7 @@ impl ICortanaPermissionsManagerStatics {
     }}
 }
 DEFINE_IID!(IID_ICortanaSettings, 1423274407, 32866, 16628, 171, 231, 222, 223, 214, 151, 176, 25);
-RT_INTERFACE!{interface ICortanaSettings(ICortanaSettingsVtbl): IInspectable(IInspectableVtbl) [IID_ICortanaSettings] {
+RT_INTERFACE!{interface ICortanaSettings(ICortanaSettingsVtbl): IInspectable [IID_ICortanaSettings] {
     fn get_HasUserConsentToVoiceActivation(&self, out: *mut bool) -> HRESULT,
     fn get_IsVoiceActivationEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_IsVoiceActivationEnabled(&self, value: bool) -> HRESULT
@@ -202,7 +202,7 @@ impl CortanaSettings {
 }
 DEFINE_CLSID!(CortanaSettings(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,67,111,114,116,97,110,97,46,67,111,114,116,97,110,97,83,101,116,116,105,110,103,115,0]) [CLSID_CortanaSettings]);
 DEFINE_IID!(IID_ICortanaSettingsStatics, 2334969214, 11968, 17517, 146, 133, 51, 240, 124, 232, 172, 4);
-RT_INTERFACE!{static interface ICortanaSettingsStatics(ICortanaSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICortanaSettingsStatics] {
+RT_INTERFACE!{static interface ICortanaSettingsStatics(ICortanaSettingsStaticsVtbl): IInspectable [IID_ICortanaSettingsStatics] {
     fn IsSupported(&self, out: *mut bool) -> HRESULT,
     fn GetDefault(&self, out: *mut <CortanaSettings as RtType>::Abi) -> HRESULT
 }}
@@ -222,7 +222,7 @@ impl ICortanaSettingsStatics {
 pub mod maps { // Windows.Services.Maps
 use crate::prelude::*;
 DEFINE_IID!(IID_IEnhancedWaypoint, 3978726516, 22803, 4582, 139, 119, 134, 243, 12, 168, 147, 211);
-RT_INTERFACE!{interface IEnhancedWaypoint(IEnhancedWaypointVtbl): IInspectable(IInspectableVtbl) [IID_IEnhancedWaypoint] {
+RT_INTERFACE!{interface IEnhancedWaypoint(IEnhancedWaypointVtbl): IInspectable [IID_IEnhancedWaypoint] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-devices")] fn get_Point(&self, out: *mut <super::super::devices::geolocation::Geopoint as RtType>::Abi) -> HRESULT,
     fn get_Kind(&self, out: *mut WaypointKind) -> HRESULT
@@ -248,7 +248,7 @@ impl EnhancedWaypoint {
 }
 DEFINE_CLSID!(EnhancedWaypoint(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,69,110,104,97,110,99,101,100,87,97,121,112,111,105,110,116,0]) [CLSID_EnhancedWaypoint]);
 DEFINE_IID!(IID_IEnhancedWaypointFactory, 2944828535, 41642, 18141, 182, 69, 35, 179, 27, 138, 166, 199);
-RT_INTERFACE!{static interface IEnhancedWaypointFactory(IEnhancedWaypointFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEnhancedWaypointFactory] {
+RT_INTERFACE!{static interface IEnhancedWaypointFactory(IEnhancedWaypointFactoryVtbl): IInspectable [IID_IEnhancedWaypointFactory] {
     #[cfg(feature="windows-devices")] fn Create(&self, point: <super::super::devices::geolocation::Geopoint as RtType>::Abi, kind: WaypointKind, out: *mut <EnhancedWaypoint as RtType>::Abi) -> HRESULT
 }}
 impl IEnhancedWaypointFactory {
@@ -259,7 +259,7 @@ impl IEnhancedWaypointFactory {
     }}
 }
 DEFINE_IID!(IID_IManeuverWarning, 3248713098, 9776, 17272, 158, 74, 110, 68, 37, 61, 206, 186);
-RT_INTERFACE!{interface IManeuverWarning(IManeuverWarningVtbl): IInspectable(IInspectableVtbl) [IID_IManeuverWarning] {
+RT_INTERFACE!{interface IManeuverWarning(IManeuverWarningVtbl): IInspectable [IID_IManeuverWarning] {
     fn get_Kind(&self, out: *mut ManeuverWarningKind) -> HRESULT,
     fn get_Severity(&self, out: *mut ManeuverWarningSeverity) -> HRESULT
 }}
@@ -283,7 +283,7 @@ RT_ENUM! { enum ManeuverWarningSeverity: i32 {
     None = 0, LowImpact = 1, Minor = 2, Moderate = 3, Serious = 4,
 }}
 DEFINE_IID!(IID_IMapAddress, 3483871603, 41908, 17556, 179, 255, 203, 169, 77, 182, 150, 153);
-RT_INTERFACE!{interface IMapAddress(IMapAddressVtbl): IInspectable(IInspectableVtbl) [IID_IMapAddress] {
+RT_INTERFACE!{interface IMapAddress(IMapAddressVtbl): IInspectable [IID_IMapAddress] {
     fn get_BuildingName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_BuildingFloor(&self, out: *mut HSTRING) -> HRESULT,
     fn get_BuildingRoom(&self, out: *mut HSTRING) -> HRESULT,
@@ -379,7 +379,7 @@ impl IMapAddress {
 }
 RT_CLASS!{class MapAddress: IMapAddress}
 DEFINE_IID!(IID_IMapAddress2, 1976397297, 58797, 17833, 191, 64, 108, 242, 86, 193, 221, 19);
-RT_INTERFACE!{interface IMapAddress2(IMapAddress2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapAddress2] {
+RT_INTERFACE!{interface IMapAddress2(IMapAddress2Vtbl): IInspectable [IID_IMapAddress2] {
     fn get_FormattedAddress(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IMapAddress2 {
@@ -390,7 +390,7 @@ impl IMapAddress2 {
     }}
 }
 DEFINE_IID!(IID_IMapLocation, 1007107927, 3492, 17128, 158, 226, 169, 111, 207, 35, 113, 220);
-RT_INTERFACE!{interface IMapLocation(IMapLocationVtbl): IInspectable(IInspectableVtbl) [IID_IMapLocation] {
+RT_INTERFACE!{interface IMapLocation(IMapLocationVtbl): IInspectable [IID_IMapLocation] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-devices")] fn get_Point(&self, out: *mut <super::super::devices::geolocation::Geopoint as RtType>::Abi) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -442,7 +442,7 @@ impl MapLocationFinder {
 }
 DEFINE_CLSID!(MapLocationFinder(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,77,97,112,76,111,99,97,116,105,111,110,70,105,110,100,101,114,0]) [CLSID_MapLocationFinder]);
 DEFINE_IID!(IID_IMapLocationFinderResult, 1139929465, 59596, 17910, 190, 210, 84, 204, 191, 150, 93, 154);
-RT_INTERFACE!{interface IMapLocationFinderResult(IMapLocationFinderResultVtbl): IInspectable(IInspectableVtbl) [IID_IMapLocationFinderResult] {
+RT_INTERFACE!{interface IMapLocationFinderResult(IMapLocationFinderResultVtbl): IInspectable [IID_IMapLocationFinderResult] {
     fn get_Locations(&self, out: *mut <foundation::collections::IVectorView<MapLocation> as RtType>::Abi) -> HRESULT,
     fn get_Status(&self, out: *mut MapLocationFinderStatus) -> HRESULT
 }}
@@ -460,7 +460,7 @@ impl IMapLocationFinderResult {
 }
 RT_CLASS!{class MapLocationFinderResult: IMapLocationFinderResult}
 DEFINE_IID!(IID_IMapLocationFinderStatics, 831183709, 7261, 20277, 162, 223, 170, 202, 148, 149, 149, 23);
-RT_INTERFACE!{static interface IMapLocationFinderStatics(IMapLocationFinderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMapLocationFinderStatics] {
+RT_INTERFACE!{static interface IMapLocationFinderStatics(IMapLocationFinderStaticsVtbl): IInspectable [IID_IMapLocationFinderStatics] {
     #[cfg(feature="windows-devices")] fn FindLocationsAtAsync(&self, queryPoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, out: *mut <foundation::IAsyncOperation<MapLocationFinderResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-devices")] fn FindLocationsAsync(&self, searchText: HSTRING, referencePoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, out: *mut <foundation::IAsyncOperation<MapLocationFinderResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-devices")] fn FindLocationsWithMaxCountAsync(&self, searchText: HSTRING, referencePoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, maxCount: u32, out: *mut <foundation::IAsyncOperation<MapLocationFinderResult> as RtType>::Abi) -> HRESULT
@@ -483,7 +483,7 @@ impl IMapLocationFinderStatics {
     }}
 }
 DEFINE_IID!(IID_IMapLocationFinderStatics2, 2509933462, 25733, 19965, 133, 26, 51, 172, 49, 126, 58, 246);
-RT_INTERFACE!{static interface IMapLocationFinderStatics2(IMapLocationFinderStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapLocationFinderStatics2] {
+RT_INTERFACE!{static interface IMapLocationFinderStatics2(IMapLocationFinderStatics2Vtbl): IInspectable [IID_IMapLocationFinderStatics2] {
     #[cfg(feature="windows-devices")] fn FindLocationsAtWithAccuracyAsync(&self, queryPoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, accuracy: MapLocationDesiredAccuracy, out: *mut <foundation::IAsyncOperation<MapLocationFinderResult> as RtType>::Abi) -> HRESULT
 }}
 impl IMapLocationFinderStatics2 {
@@ -508,7 +508,7 @@ impl MapManager {
 }
 DEFINE_CLSID!(MapManager(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,77,97,112,77,97,110,97,103,101,114,0]) [CLSID_MapManager]);
 DEFINE_IID!(IID_IMapManagerStatics, 937682197, 33460, 19796, 143, 217, 175, 38, 36, 179, 1, 28);
-RT_INTERFACE!{static interface IMapManagerStatics(IMapManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMapManagerStatics] {
+RT_INTERFACE!{static interface IMapManagerStatics(IMapManagerStaticsVtbl): IInspectable [IID_IMapManagerStatics] {
     fn ShowDownloadedMapsUI(&self) -> HRESULT,
     fn ShowMapsUpdateUI(&self) -> HRESULT
 }}
@@ -526,7 +526,7 @@ RT_ENUM! { enum MapManeuverNotices: u32 {
     None = 0, Toll = 1, Unpaved = 2,
 }}
 DEFINE_IID!(IID_IMapRoute, 4211586866, 22605, 17795, 156, 96, 100, 31, 234, 39, 67, 73);
-RT_INTERFACE!{interface IMapRoute(IMapRouteVtbl): IInspectable(IInspectableVtbl) [IID_IMapRoute] {
+RT_INTERFACE!{interface IMapRoute(IMapRouteVtbl): IInspectable [IID_IMapRoute] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-devices")] fn get_BoundingBox(&self, out: *mut <super::super::devices::geolocation::GeoboundingBox as RtType>::Abi) -> HRESULT,
     fn get_LengthInMeters(&self, out: *mut f64) -> HRESULT,
@@ -570,7 +570,7 @@ impl IMapRoute {
 }
 RT_CLASS!{class MapRoute: IMapRoute}
 DEFINE_IID!(IID_IMapRoute2, 3519403020, 8723, 19120, 162, 96, 70, 179, 129, 105, 190, 172);
-RT_INTERFACE!{interface IMapRoute2(IMapRoute2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRoute2] {
+RT_INTERFACE!{interface IMapRoute2(IMapRoute2Vtbl): IInspectable [IID_IMapRoute2] {
     fn get_ViolatedRestrictions(&self, out: *mut MapRouteRestrictions) -> HRESULT,
     fn get_HasBlockedRoads(&self, out: *mut bool) -> HRESULT
 }}
@@ -587,7 +587,7 @@ impl IMapRoute2 {
     }}
 }
 DEFINE_IID!(IID_IMapRoute3, 2240618158, 62125, 17055, 187, 55, 205, 33, 9, 79, 252, 146);
-RT_INTERFACE!{interface IMapRoute3(IMapRoute3Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRoute3] {
+RT_INTERFACE!{interface IMapRoute3(IMapRoute3Vtbl): IInspectable [IID_IMapRoute3] {
     fn get_DurationWithoutTraffic(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_TrafficCongestion(&self, out: *mut TrafficCongestion) -> HRESULT
 }}
@@ -604,7 +604,7 @@ impl IMapRoute3 {
     }}
 }
 DEFINE_IID!(IID_IMapRoute4, 913083557, 12371, 20385, 128, 255, 212, 117, 243, 237, 30, 110);
-RT_INTERFACE!{interface IMapRoute4(IMapRoute4Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRoute4] {
+RT_INTERFACE!{interface IMapRoute4(IMapRoute4Vtbl): IInspectable [IID_IMapRoute4] {
     fn get_IsScenic(&self, out: *mut bool) -> HRESULT
 }}
 impl IMapRoute4 {
@@ -615,7 +615,7 @@ impl IMapRoute4 {
     }}
 }
 DEFINE_IID!(IID_IMapRouteDrivingOptions, 1746220621, 50908, 18071, 164, 82, 177, 143, 143, 11, 103, 161);
-RT_INTERFACE!{interface IMapRouteDrivingOptions(IMapRouteDrivingOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteDrivingOptions] {
+RT_INTERFACE!{interface IMapRouteDrivingOptions(IMapRouteDrivingOptionsVtbl): IInspectable [IID_IMapRouteDrivingOptions] {
     fn get_MaxAlternateRouteCount(&self, out: *mut u32) -> HRESULT,
     fn put_MaxAlternateRouteCount(&self, value: u32) -> HRESULT,
     fn get_InitialHeading(&self, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT,
@@ -667,7 +667,7 @@ RT_CLASS!{class MapRouteDrivingOptions: IMapRouteDrivingOptions}
 impl RtActivatable<IActivationFactory> for MapRouteDrivingOptions {}
 DEFINE_CLSID!(MapRouteDrivingOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,77,97,112,82,111,117,116,101,68,114,105,118,105,110,103,79,112,116,105,111,110,115,0]) [CLSID_MapRouteDrivingOptions]);
 DEFINE_IID!(IID_IMapRouteDrivingOptions2, 903644784, 49816, 18640, 181, 173, 130, 84, 96, 100, 86, 3);
-RT_INTERFACE!{interface IMapRouteDrivingOptions2(IMapRouteDrivingOptions2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteDrivingOptions2] {
+RT_INTERFACE!{interface IMapRouteDrivingOptions2(IMapRouteDrivingOptions2Vtbl): IInspectable [IID_IMapRouteDrivingOptions2] {
     fn get_DepartureTime(&self, out: *mut <foundation::IReference<foundation::DateTime> as RtType>::Abi) -> HRESULT,
     fn put_DepartureTime(&self, value: <foundation::IReference<foundation::DateTime> as RtType>::Abi) -> HRESULT
 }}
@@ -729,7 +729,7 @@ impl MapRouteFinder {
 }
 DEFINE_CLSID!(MapRouteFinder(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,77,97,112,82,111,117,116,101,70,105,110,100,101,114,0]) [CLSID_MapRouteFinder]);
 DEFINE_IID!(IID_IMapRouteFinderResult, 2825429786, 37922, 18092, 140, 161, 177, 97, 77, 75, 251, 226);
-RT_INTERFACE!{interface IMapRouteFinderResult(IMapRouteFinderResultVtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteFinderResult] {
+RT_INTERFACE!{interface IMapRouteFinderResult(IMapRouteFinderResultVtbl): IInspectable [IID_IMapRouteFinderResult] {
     fn get_Route(&self, out: *mut <MapRoute as RtType>::Abi) -> HRESULT,
     fn get_Status(&self, out: *mut MapRouteFinderStatus) -> HRESULT
 }}
@@ -747,7 +747,7 @@ impl IMapRouteFinderResult {
 }
 RT_CLASS!{class MapRouteFinderResult: IMapRouteFinderResult}
 DEFINE_IID!(IID_IMapRouteFinderResult2, 544250989, 55564, 18120, 145, 198, 125, 75, 228, 239, 178, 21);
-RT_INTERFACE!{interface IMapRouteFinderResult2(IMapRouteFinderResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteFinderResult2] {
+RT_INTERFACE!{interface IMapRouteFinderResult2(IMapRouteFinderResult2Vtbl): IInspectable [IID_IMapRouteFinderResult2] {
     fn get_AlternateRoutes(&self, out: *mut <foundation::collections::IVectorView<MapRoute> as RtType>::Abi) -> HRESULT
 }}
 impl IMapRouteFinderResult2 {
@@ -758,7 +758,7 @@ impl IMapRouteFinderResult2 {
     }}
 }
 DEFINE_IID!(IID_IMapRouteFinderStatics, 3097871631, 7268, 19514, 129, 235, 31, 124, 21, 42, 251, 187);
-RT_INTERFACE!{static interface IMapRouteFinderStatics(IMapRouteFinderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteFinderStatics] {
+RT_INTERFACE!{static interface IMapRouteFinderStatics(IMapRouteFinderStaticsVtbl): IInspectable [IID_IMapRouteFinderStatics] {
     #[cfg(feature="windows-devices")] fn GetDrivingRouteAsync(&self, startPoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, endPoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, out: *mut <foundation::IAsyncOperation<MapRouteFinderResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-devices")] fn GetDrivingRouteWithOptimizationAsync(&self, startPoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, endPoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, optimization: MapRouteOptimization, out: *mut <foundation::IAsyncOperation<MapRouteFinderResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-devices")] fn GetDrivingRouteWithOptimizationAndRestrictionsAsync(&self, startPoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, endPoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, optimization: MapRouteOptimization, restrictions: MapRouteRestrictions, out: *mut <foundation::IAsyncOperation<MapRouteFinderResult> as RtType>::Abi) -> HRESULT,
@@ -823,7 +823,7 @@ impl IMapRouteFinderStatics {
     }}
 }
 DEFINE_IID!(IID_IMapRouteFinderStatics2, 2949393523, 30560, 18863, 179, 189, 186, 241, 53, 183, 3, 225);
-RT_INTERFACE!{static interface IMapRouteFinderStatics2(IMapRouteFinderStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteFinderStatics2] {
+RT_INTERFACE!{static interface IMapRouteFinderStatics2(IMapRouteFinderStatics2Vtbl): IInspectable [IID_IMapRouteFinderStatics2] {
     #[cfg(feature="windows-devices")] fn GetDrivingRouteWithOptionsAsync(&self, startPoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, endPoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, options: <MapRouteDrivingOptions as RtType>::Abi, out: *mut <foundation::IAsyncOperation<MapRouteFinderResult> as RtType>::Abi) -> HRESULT
 }}
 impl IMapRouteFinderStatics2 {
@@ -834,7 +834,7 @@ impl IMapRouteFinderStatics2 {
     }}
 }
 DEFINE_IID!(IID_IMapRouteFinderStatics3, 4127818036, 22803, 4582, 139, 119, 134, 243, 12, 168, 147, 211);
-RT_INTERFACE!{static interface IMapRouteFinderStatics3(IMapRouteFinderStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteFinderStatics3] {
+RT_INTERFACE!{static interface IMapRouteFinderStatics3(IMapRouteFinderStatics3Vtbl): IInspectable [IID_IMapRouteFinderStatics3] {
     fn GetDrivingRouteFromEnhancedWaypointsAsync(&self, waypoints: <foundation::collections::IIterable<EnhancedWaypoint> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<MapRouteFinderResult> as RtType>::Abi) -> HRESULT,
     fn GetDrivingRouteFromEnhancedWaypointsWithOptionsAsync(&self, waypoints: <foundation::collections::IIterable<EnhancedWaypoint> as RtType>::Abi, options: <MapRouteDrivingOptions as RtType>::Abi, out: *mut <foundation::IAsyncOperation<MapRouteFinderResult> as RtType>::Abi) -> HRESULT
 }}
@@ -854,7 +854,7 @@ RT_ENUM! { enum MapRouteFinderStatus: i32 {
     Success = 0, UnknownError = 1, InvalidCredentials = 2, NoRouteFound = 3, NoRouteFoundWithGivenOptions = 4, StartPointNotFound = 5, EndPointNotFound = 6, NoPedestrianRouteFound = 7, NetworkFailure = 8, NotSupported = 9,
 }}
 DEFINE_IID!(IID_IMapRouteLeg, 2532881142, 23482, 19735, 157, 182, 26, 38, 63, 236, 116, 113);
-RT_INTERFACE!{interface IMapRouteLeg(IMapRouteLegVtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteLeg] {
+RT_INTERFACE!{interface IMapRouteLeg(IMapRouteLegVtbl): IInspectable [IID_IMapRouteLeg] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-devices")] fn get_BoundingBox(&self, out: *mut <super::super::devices::geolocation::GeoboundingBox as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy1(&self) -> (),
@@ -892,7 +892,7 @@ impl IMapRouteLeg {
 }
 RT_CLASS!{class MapRouteLeg: IMapRouteLeg}
 DEFINE_IID!(IID_IMapRouteLeg2, 48367149, 51654, 17848, 142, 84, 26, 16, 181, 122, 23, 232);
-RT_INTERFACE!{interface IMapRouteLeg2(IMapRouteLeg2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteLeg2] {
+RT_INTERFACE!{interface IMapRouteLeg2(IMapRouteLeg2Vtbl): IInspectable [IID_IMapRouteLeg2] {
     fn get_DurationWithoutTraffic(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_TrafficCongestion(&self, out: *mut TrafficCongestion) -> HRESULT
 }}
@@ -909,7 +909,7 @@ impl IMapRouteLeg2 {
     }}
 }
 DEFINE_IID!(IID_IMapRouteManeuver, 3982235632, 42667, 19813, 160, 134, 250, 138, 126, 52, 13, 242);
-RT_INTERFACE!{interface IMapRouteManeuver(IMapRouteManeuverVtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteManeuver] {
+RT_INTERFACE!{interface IMapRouteManeuver(IMapRouteManeuverVtbl): IInspectable [IID_IMapRouteManeuver] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-devices")] fn get_StartingPoint(&self, out: *mut <super::super::devices::geolocation::Geopoint as RtType>::Abi) -> HRESULT,
     fn get_LengthInMeters(&self, out: *mut f64) -> HRESULT,
@@ -952,7 +952,7 @@ impl IMapRouteManeuver {
 }
 RT_CLASS!{class MapRouteManeuver: IMapRouteManeuver}
 DEFINE_IID!(IID_IMapRouteManeuver2, 1568394652, 31899, 16863, 131, 139, 234, 226, 30, 75, 5, 169);
-RT_INTERFACE!{interface IMapRouteManeuver2(IMapRouteManeuver2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteManeuver2] {
+RT_INTERFACE!{interface IMapRouteManeuver2(IMapRouteManeuver2Vtbl): IInspectable [IID_IMapRouteManeuver2] {
     fn get_StartHeading(&self, out: *mut f64) -> HRESULT,
     fn get_EndHeading(&self, out: *mut f64) -> HRESULT,
     fn get_StreetName(&self, out: *mut HSTRING) -> HRESULT
@@ -975,7 +975,7 @@ impl IMapRouteManeuver2 {
     }}
 }
 DEFINE_IID!(IID_IMapRouteManeuver3, 2795583711, 1155, 16742, 133, 190, 185, 147, 54, 193, 24, 117);
-RT_INTERFACE!{interface IMapRouteManeuver3(IMapRouteManeuver3Vtbl): IInspectable(IInspectableVtbl) [IID_IMapRouteManeuver3] {
+RT_INTERFACE!{interface IMapRouteManeuver3(IMapRouteManeuver3Vtbl): IInspectable [IID_IMapRouteManeuver3] {
     fn get_Warnings(&self, out: *mut <foundation::collections::IVectorView<ManeuverWarning> as RtType>::Abi) -> HRESULT
 }}
 impl IMapRouteManeuver3 {
@@ -1024,7 +1024,7 @@ RT_ENUM! { enum MapServiceDataUsagePreference: i32 {
     Default = 0, OfflineMapDataOnly = 1,
 }}
 DEFINE_IID!(IID_IMapServiceStatics, 21278085, 49228, 19677, 135, 26, 160, 114, 109, 9, 124, 212);
-RT_INTERFACE!{static interface IMapServiceStatics(IMapServiceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMapServiceStatics] {
+RT_INTERFACE!{static interface IMapServiceStatics(IMapServiceStaticsVtbl): IInspectable [IID_IMapServiceStatics] {
     fn put_ServiceToken(&self, value: HSTRING) -> HRESULT,
     fn get_ServiceToken(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -1040,7 +1040,7 @@ impl IMapServiceStatics {
     }}
 }
 DEFINE_IID!(IID_IMapServiceStatics2, 4162404077, 40069, 16553, 136, 150, 15, 195, 253, 43, 124, 42);
-RT_INTERFACE!{static interface IMapServiceStatics2(IMapServiceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMapServiceStatics2] {
+RT_INTERFACE!{static interface IMapServiceStatics2(IMapServiceStatics2Vtbl): IInspectable [IID_IMapServiceStatics2] {
     fn get_WorldViewRegionCode(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IMapServiceStatics2 {
@@ -1051,7 +1051,7 @@ impl IMapServiceStatics2 {
     }}
 }
 DEFINE_IID!(IID_IMapServiceStatics3, 168939040, 25511, 18516, 179, 85, 214, 220, 218, 34, 61, 27);
-RT_INTERFACE!{static interface IMapServiceStatics3(IMapServiceStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IMapServiceStatics3] {
+RT_INTERFACE!{static interface IMapServiceStatics3(IMapServiceStatics3Vtbl): IInspectable [IID_IMapServiceStatics3] {
     fn get_DataAttributions(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IMapServiceStatics3 {
@@ -1062,7 +1062,7 @@ impl IMapServiceStatics3 {
     }}
 }
 DEFINE_IID!(IID_IMapServiceStatics4, 143272034, 27324, 16910, 148, 95, 76, 253, 137, 198, 115, 86);
-RT_INTERFACE!{static interface IMapServiceStatics4(IMapServiceStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IMapServiceStatics4] {
+RT_INTERFACE!{static interface IMapServiceStatics4(IMapServiceStatics4Vtbl): IInspectable [IID_IMapServiceStatics4] {
     fn put_DataUsagePreference(&self, value: MapServiceDataUsagePreference) -> HRESULT,
     fn get_DataUsagePreference(&self, out: *mut MapServiceDataUsagePreference) -> HRESULT
 }}
@@ -1078,7 +1078,7 @@ impl IMapServiceStatics4 {
     }}
 }
 DEFINE_IID!(IID_IPlaceInfo, 2584219830, 12744, 20330, 159, 24, 149, 11, 76, 56, 149, 26);
-RT_INTERFACE!{interface IPlaceInfo(IPlaceInfoVtbl): IInspectable(IInspectableVtbl) [IID_IPlaceInfo] {
+RT_INTERFACE!{interface IPlaceInfo(IPlaceInfoVtbl): IInspectable [IID_IPlaceInfo] {
     fn Show(&self, selection: foundation::Rect) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-ui")] fn ShowWithPreferredPlacement(&self, selection: foundation::Rect, preferredPlacement: super::super::ui::popups::Placement) -> HRESULT,
@@ -1148,7 +1148,7 @@ impl PlaceInfo {
 }
 DEFINE_CLSID!(PlaceInfo(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,80,108,97,99,101,73,110,102,111,0]) [CLSID_PlaceInfo]);
 DEFINE_IID!(IID_IPlaceInfoCreateOptions, 3442721061, 26609, 19379, 153, 7, 236, 206, 147, 155, 3, 153);
-RT_INTERFACE!{interface IPlaceInfoCreateOptions(IPlaceInfoCreateOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaceInfoCreateOptions] {
+RT_INTERFACE!{interface IPlaceInfoCreateOptions(IPlaceInfoCreateOptionsVtbl): IInspectable [IID_IPlaceInfoCreateOptions] {
     fn put_DisplayName(&self, value: HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_DisplayAddress(&self, value: HSTRING) -> HRESULT,
@@ -1178,7 +1178,7 @@ RT_CLASS!{class PlaceInfoCreateOptions: IPlaceInfoCreateOptions}
 impl RtActivatable<IActivationFactory> for PlaceInfoCreateOptions {}
 DEFINE_CLSID!(PlaceInfoCreateOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,80,108,97,99,101,73,110,102,111,67,114,101,97,116,101,79,112,116,105,111,110,115,0]) [CLSID_PlaceInfoCreateOptions]);
 DEFINE_IID!(IID_IPlaceInfoStatics, 2193227633, 27856, 18596, 175, 217, 94, 216, 32, 151, 147, 107);
-RT_INTERFACE!{static interface IPlaceInfoStatics(IPlaceInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaceInfoStatics] {
+RT_INTERFACE!{static interface IPlaceInfoStatics(IPlaceInfoStaticsVtbl): IInspectable [IID_IPlaceInfoStatics] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-devices")] fn Create(&self, referencePoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, out: *mut <PlaceInfo as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy1(&self) -> (),
@@ -1222,7 +1222,7 @@ impl IPlaceInfoStatics {
     }}
 }
 DEFINE_IID!(IID_IPlaceInfoStatics2, 1930363465, 16455, 17571, 143, 129, 37, 80, 165, 33, 99, 112);
-RT_INTERFACE!{static interface IPlaceInfoStatics2(IPlaceInfoStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlaceInfoStatics2] {
+RT_INTERFACE!{static interface IPlaceInfoStatics2(IPlaceInfoStatics2Vtbl): IInspectable [IID_IPlaceInfoStatics2] {
     fn CreateFromAddress(&self, displayAddress: HSTRING, out: *mut <PlaceInfo as RtType>::Abi) -> HRESULT,
     fn CreateFromAddressWithName(&self, displayAddress: HSTRING, displayName: HSTRING, out: *mut <PlaceInfo as RtType>::Abi) -> HRESULT
 }}
@@ -1253,7 +1253,7 @@ RT_ENUM! { enum GuidanceAudioNotificationKind: i32 {
     Maneuver = 0, Route = 1, Gps = 2, SpeedLimit = 3, Traffic = 4, TrafficCamera = 5,
 }}
 DEFINE_IID!(IID_IGuidanceAudioNotificationRequestedEventArgs, 3391791690, 51138, 19788, 157, 124, 73, 149, 118, 188, 237, 219);
-RT_INTERFACE!{interface IGuidanceAudioNotificationRequestedEventArgs(IGuidanceAudioNotificationRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceAudioNotificationRequestedEventArgs] {
+RT_INTERFACE!{interface IGuidanceAudioNotificationRequestedEventArgs(IGuidanceAudioNotificationRequestedEventArgsVtbl): IInspectable [IID_IGuidanceAudioNotificationRequestedEventArgs] {
     fn get_AudioNotification(&self, out: *mut GuidanceAudioNotificationKind) -> HRESULT,
     fn get_AudioFilePaths(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_AudioText(&self, out: *mut HSTRING) -> HRESULT
@@ -1280,7 +1280,7 @@ RT_ENUM! { enum GuidanceAudioNotifications: u32 {
     None = 0, Maneuver = 1, Route = 2, Gps = 4, SpeedLimit = 8, Traffic = 16, TrafficCamera = 32,
 }}
 DEFINE_IID!(IID_IGuidanceLaneInfo, 2214908180, 25985, 17335, 172, 21, 201, 7, 155, 249, 13, 241);
-RT_INTERFACE!{interface IGuidanceLaneInfo(IGuidanceLaneInfoVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceLaneInfo] {
+RT_INTERFACE!{interface IGuidanceLaneInfo(IGuidanceLaneInfoVtbl): IInspectable [IID_IGuidanceLaneInfo] {
     fn get_LaneMarkers(&self, out: *mut GuidanceLaneMarkers) -> HRESULT,
     fn get_IsOnRoute(&self, out: *mut bool) -> HRESULT
 }}
@@ -1301,7 +1301,7 @@ RT_ENUM! { enum GuidanceLaneMarkers: u32 {
     None = 0, LightRight = 1, Right = 2, HardRight = 4, Straight = 8, UTurnLeft = 16, HardLeft = 32, Left = 64, LightLeft = 128, UTurnRight = 256, Unknown = 4294967295,
 }}
 DEFINE_IID!(IID_IGuidanceManeuver, 4228461164, 60617, 18728, 162, 161, 114, 50, 185, 155, 148, 161);
-RT_INTERFACE!{interface IGuidanceManeuver(IGuidanceManeuverVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceManeuver] {
+RT_INTERFACE!{interface IGuidanceManeuver(IGuidanceManeuverVtbl): IInspectable [IID_IGuidanceManeuver] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-devices")] fn get_StartLocation(&self, out: *mut <crate::windows::devices::geolocation::Geopoint as RtType>::Abi) -> HRESULT,
     fn get_DistanceFromRouteStart(&self, out: *mut i32) -> HRESULT,
@@ -1383,7 +1383,7 @@ RT_ENUM! { enum GuidanceManeuverKind: i32 {
     None = 0, GoStraight = 1, UTurnRight = 2, UTurnLeft = 3, TurnKeepRight = 4, TurnLightRight = 5, TurnRight = 6, TurnHardRight = 7, KeepMiddle = 8, TurnKeepLeft = 9, TurnLightLeft = 10, TurnLeft = 11, TurnHardLeft = 12, FreewayEnterRight = 13, FreewayEnterLeft = 14, FreewayLeaveRight = 15, FreewayLeaveLeft = 16, FreewayKeepRight = 17, FreewayKeepLeft = 18, TrafficCircleRight1 = 19, TrafficCircleRight2 = 20, TrafficCircleRight3 = 21, TrafficCircleRight4 = 22, TrafficCircleRight5 = 23, TrafficCircleRight6 = 24, TrafficCircleRight7 = 25, TrafficCircleRight8 = 26, TrafficCircleRight9 = 27, TrafficCircleRight10 = 28, TrafficCircleRight11 = 29, TrafficCircleRight12 = 30, TrafficCircleLeft1 = 31, TrafficCircleLeft2 = 32, TrafficCircleLeft3 = 33, TrafficCircleLeft4 = 34, TrafficCircleLeft5 = 35, TrafficCircleLeft6 = 36, TrafficCircleLeft7 = 37, TrafficCircleLeft8 = 38, TrafficCircleLeft9 = 39, TrafficCircleLeft10 = 40, TrafficCircleLeft11 = 41, TrafficCircleLeft12 = 42, Start = 43, End = 44, TakeFerry = 45, PassTransitStation = 46, LeaveTransitStation = 47,
 }}
 DEFINE_IID!(IID_IGuidanceMapMatchedCoordinate, 3081548136, 10514, 19097, 175, 241, 121, 134, 9, 185, 129, 254);
-RT_INTERFACE!{interface IGuidanceMapMatchedCoordinate(IGuidanceMapMatchedCoordinateVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceMapMatchedCoordinate] {
+RT_INTERFACE!{interface IGuidanceMapMatchedCoordinate(IGuidanceMapMatchedCoordinateVtbl): IInspectable [IID_IGuidanceMapMatchedCoordinate] {
     #[cfg(not(feature="windows-devices"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-devices")] fn get_Location(&self, out: *mut <crate::windows::devices::geolocation::Geopoint as RtType>::Abi) -> HRESULT,
     fn get_CurrentHeading(&self, out: *mut f64) -> HRESULT,
@@ -1423,7 +1423,7 @@ RT_ENUM! { enum GuidanceMode: i32 {
     None = 0, Simulation = 1, Navigation = 2, Tracking = 3,
 }}
 DEFINE_IID!(IID_IGuidanceNavigator, 150044407, 36415, 19866, 190, 138, 16, 143, 154, 1, 44, 103);
-RT_INTERFACE!{interface IGuidanceNavigator(IGuidanceNavigatorVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceNavigator] {
+RT_INTERFACE!{interface IGuidanceNavigator(IGuidanceNavigatorVtbl): IInspectable [IID_IGuidanceNavigator] {
     fn StartNavigating(&self, route: <GuidanceRoute as RtType>::Abi) -> HRESULT,
     fn StartSimulating(&self, route: <GuidanceRoute as RtType>::Abi, speedInMetersPerSecond: i32) -> HRESULT,
     fn StartTracking(&self) -> HRESULT,
@@ -1589,7 +1589,7 @@ impl GuidanceNavigator {
 }
 DEFINE_CLSID!(GuidanceNavigator(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,71,117,105,100,97,110,99,101,46,71,117,105,100,97,110,99,101,78,97,118,105,103,97,116,111,114,0]) [CLSID_GuidanceNavigator]);
 DEFINE_IID!(IID_IGuidanceNavigator2, 1826377937, 1052, 19443, 182, 51, 161, 1, 252, 47, 107, 87);
-RT_INTERFACE!{interface IGuidanceNavigator2(IGuidanceNavigator2Vtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceNavigator2] {
+RT_INTERFACE!{interface IGuidanceNavigator2(IGuidanceNavigator2Vtbl): IInspectable [IID_IGuidanceNavigator2] {
     fn add_AudioNotificationRequested(&self, value: <foundation::TypedEventHandler<GuidanceNavigator, GuidanceAudioNotificationRequestedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_AudioNotificationRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_IsGuidanceAudioMuted(&self, out: *mut bool) -> HRESULT,
@@ -1616,7 +1616,7 @@ impl IGuidanceNavigator2 {
     }}
 }
 DEFINE_IID!(IID_IGuidanceNavigatorStatics, 16618771, 17494, 20070, 161, 67, 58, 221, 107, 224, 132, 38);
-RT_INTERFACE!{static interface IGuidanceNavigatorStatics(IGuidanceNavigatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceNavigatorStatics] {
+RT_INTERFACE!{static interface IGuidanceNavigatorStatics(IGuidanceNavigatorStaticsVtbl): IInspectable [IID_IGuidanceNavigatorStatics] {
     fn GetCurrent(&self, out: *mut <GuidanceNavigator as RtType>::Abi) -> HRESULT
 }}
 impl IGuidanceNavigatorStatics {
@@ -1627,7 +1627,7 @@ impl IGuidanceNavigatorStatics {
     }}
 }
 DEFINE_IID!(IID_IGuidanceNavigatorStatics2, 1422246882, 30596, 19589, 140, 149, 208, 198, 239, 180, 57, 101);
-RT_INTERFACE!{static interface IGuidanceNavigatorStatics2(IGuidanceNavigatorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceNavigatorStatics2] {
+RT_INTERFACE!{static interface IGuidanceNavigatorStatics2(IGuidanceNavigatorStatics2Vtbl): IInspectable [IID_IGuidanceNavigatorStatics2] {
     fn get_UseAppProvidedVoice(&self, out: *mut bool) -> HRESULT
 }}
 impl IGuidanceNavigatorStatics2 {
@@ -1638,7 +1638,7 @@ impl IGuidanceNavigatorStatics2 {
     }}
 }
 DEFINE_IID!(IID_IGuidanceReroutedEventArgs, 291323912, 54568, 17742, 187, 148, 165, 3, 65, 210, 201, 241);
-RT_INTERFACE!{interface IGuidanceReroutedEventArgs(IGuidanceReroutedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceReroutedEventArgs] {
+RT_INTERFACE!{interface IGuidanceReroutedEventArgs(IGuidanceReroutedEventArgsVtbl): IInspectable [IID_IGuidanceReroutedEventArgs] {
     fn get_Route(&self, out: *mut <GuidanceRoute as RtType>::Abi) -> HRESULT
 }}
 impl IGuidanceReroutedEventArgs {
@@ -1650,7 +1650,7 @@ impl IGuidanceReroutedEventArgs {
 }
 RT_CLASS!{class GuidanceReroutedEventArgs: IGuidanceReroutedEventArgs}
 DEFINE_IID!(IID_IGuidanceRoadSegment, 3005700262, 48760, 19555, 175, 231, 108, 41, 87, 71, 155, 62);
-RT_INTERFACE!{interface IGuidanceRoadSegment(IGuidanceRoadSegmentVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceRoadSegment] {
+RT_INTERFACE!{interface IGuidanceRoadSegment(IGuidanceRoadSegmentVtbl): IInspectable [IID_IGuidanceRoadSegment] {
     fn get_RoadName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ShortRoadName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SpeedLimit(&self, out: *mut f64) -> HRESULT,
@@ -1711,7 +1711,7 @@ impl IGuidanceRoadSegment {
 }
 RT_CLASS!{class GuidanceRoadSegment: IGuidanceRoadSegment}
 DEFINE_IID!(IID_IGuidanceRoadSegment2, 611624477, 5923, 18929, 137, 91, 71, 162, 196, 170, 156, 85);
-RT_INTERFACE!{interface IGuidanceRoadSegment2(IGuidanceRoadSegment2Vtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceRoadSegment2] {
+RT_INTERFACE!{interface IGuidanceRoadSegment2(IGuidanceRoadSegment2Vtbl): IInspectable [IID_IGuidanceRoadSegment2] {
     fn get_IsScenic(&self, out: *mut bool) -> HRESULT
 }}
 impl IGuidanceRoadSegment2 {
@@ -1722,7 +1722,7 @@ impl IGuidanceRoadSegment2 {
     }}
 }
 DEFINE_IID!(IID_IGuidanceRoadSignpost, 4054263990, 63354, 18242, 131, 18, 83, 48, 15, 152, 69, 240);
-RT_INTERFACE!{interface IGuidanceRoadSignpost(IGuidanceRoadSignpostVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceRoadSignpost] {
+RT_INTERFACE!{interface IGuidanceRoadSignpost(IGuidanceRoadSignpostVtbl): IInspectable [IID_IGuidanceRoadSignpost] {
     fn get_ExitNumber(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Exit(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy2(&self) -> (),
@@ -1760,7 +1760,7 @@ impl IGuidanceRoadSignpost {
 }
 RT_CLASS!{class GuidanceRoadSignpost: IGuidanceRoadSignpost}
 DEFINE_IID!(IID_IGuidanceRoute, 974410845, 32794, 16573, 162, 134, 175, 178, 1, 12, 206, 108);
-RT_INTERFACE!{interface IGuidanceRoute(IGuidanceRouteVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceRoute] {
+RT_INTERFACE!{interface IGuidanceRoute(IGuidanceRouteVtbl): IInspectable [IID_IGuidanceRoute] {
     fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_Distance(&self, out: *mut i32) -> HRESULT,
     fn get_Maneuvers(&self, out: *mut <foundation::collections::IVectorView<GuidanceManeuver> as RtType>::Abi) -> HRESULT,
@@ -1820,7 +1820,7 @@ impl GuidanceRoute {
 }
 DEFINE_CLSID!(GuidanceRoute(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,71,117,105,100,97,110,99,101,46,71,117,105,100,97,110,99,101,82,111,117,116,101,0]) [CLSID_GuidanceRoute]);
 DEFINE_IID!(IID_IGuidanceRouteStatics, 4117598826, 21997, 18881, 176, 156, 75, 130, 35, 181, 13, 179);
-RT_INTERFACE!{static interface IGuidanceRouteStatics(IGuidanceRouteStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceRouteStatics] {
+RT_INTERFACE!{static interface IGuidanceRouteStatics(IGuidanceRouteStaticsVtbl): IInspectable [IID_IGuidanceRouteStatics] {
     fn CanCreateFromMapRoute(&self, mapRoute: <super::MapRoute as RtType>::Abi, out: *mut bool) -> HRESULT,
     fn TryCreateFromMapRoute(&self, mapRoute: <super::MapRoute as RtType>::Abi, out: *mut <GuidanceRoute as RtType>::Abi) -> HRESULT
 }}
@@ -1837,7 +1837,7 @@ impl IGuidanceRouteStatics {
     }}
 }
 DEFINE_IID!(IID_IGuidanceTelemetryCollector, 3676278181, 47224, 19858, 152, 221, 52, 125, 35, 211, 130, 98);
-RT_INTERFACE!{interface IGuidanceTelemetryCollector(IGuidanceTelemetryCollectorVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceTelemetryCollector] {
+RT_INTERFACE!{interface IGuidanceTelemetryCollector(IGuidanceTelemetryCollectorVtbl): IInspectable [IID_IGuidanceTelemetryCollector] {
     fn get_Enabled(&self, out: *mut bool) -> HRESULT,
     fn put_Enabled(&self, value: bool) -> HRESULT,
     fn ClearLocalData(&self) -> HRESULT,
@@ -1888,7 +1888,7 @@ impl GuidanceTelemetryCollector {
 }
 DEFINE_CLSID!(GuidanceTelemetryCollector(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,71,117,105,100,97,110,99,101,46,71,117,105,100,97,110,99,101,84,101,108,101,109,101,116,114,121,67,111,108,108,101,99,116,111,114,0]) [CLSID_GuidanceTelemetryCollector]);
 DEFINE_IID!(IID_IGuidanceTelemetryCollectorStatics, 911417415, 61792, 17659, 181, 120, 148, 87, 124, 160, 89, 144);
-RT_INTERFACE!{static interface IGuidanceTelemetryCollectorStatics(IGuidanceTelemetryCollectorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceTelemetryCollectorStatics] {
+RT_INTERFACE!{static interface IGuidanceTelemetryCollectorStatics(IGuidanceTelemetryCollectorStaticsVtbl): IInspectable [IID_IGuidanceTelemetryCollectorStatics] {
     fn GetCurrent(&self, out: *mut <GuidanceTelemetryCollector as RtType>::Abi) -> HRESULT
 }}
 impl IGuidanceTelemetryCollectorStatics {
@@ -1899,7 +1899,7 @@ impl IGuidanceTelemetryCollectorStatics {
     }}
 }
 DEFINE_IID!(IID_IGuidanceUpdatedEventArgs, 4255913483, 40589, 19939, 169, 250, 176, 99, 33, 209, 141, 185);
-RT_INTERFACE!{interface IGuidanceUpdatedEventArgs(IGuidanceUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGuidanceUpdatedEventArgs] {
+RT_INTERFACE!{interface IGuidanceUpdatedEventArgs(IGuidanceUpdatedEventArgsVtbl): IInspectable [IID_IGuidanceUpdatedEventArgs] {
     fn get_Mode(&self, out: *mut GuidanceMode) -> HRESULT,
     fn get_NextManeuver(&self, out: *mut <GuidanceManeuver as RtType>::Abi) -> HRESULT,
     fn get_NextManeuverDistance(&self, out: *mut i32) -> HRESULT,
@@ -2021,7 +2021,7 @@ impl LocalCategories {
 }
 DEFINE_CLSID!(LocalCategories(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,76,111,99,97,108,83,101,97,114,99,104,46,76,111,99,97,108,67,97,116,101,103,111,114,105,101,115,0]) [CLSID_LocalCategories]);
 DEFINE_IID!(IID_ILocalCategoriesStatics, 4103313909, 33377, 17185, 153, 116, 239, 146, 212, 154, 141, 202);
-RT_INTERFACE!{static interface ILocalCategoriesStatics(ILocalCategoriesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILocalCategoriesStatics] {
+RT_INTERFACE!{static interface ILocalCategoriesStatics(ILocalCategoriesStaticsVtbl): IInspectable [IID_ILocalCategoriesStatics] {
     fn get_BankAndCreditUnions(&self, out: *mut HSTRING) -> HRESULT,
     fn get_EatDrink(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Hospitals(&self, out: *mut HSTRING) -> HRESULT,
@@ -2074,7 +2074,7 @@ impl ILocalCategoriesStatics {
     }}
 }
 DEFINE_IID!(IID_ILocalLocation, 3138382251, 17666, 20268, 148, 169, 13, 96, 222, 14, 33, 99);
-RT_INTERFACE!{interface ILocalLocation(ILocalLocationVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocation] {
+RT_INTERFACE!{interface ILocalLocation(ILocalLocationVtbl): IInspectable [IID_ILocalLocation] {
     fn get_Address(&self, out: *mut <super::MapAddress as RtType>::Abi) -> HRESULT,
     fn get_Identifier(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Description(&self, out: *mut HSTRING) -> HRESULT,
@@ -2123,7 +2123,7 @@ impl ILocalLocation {
 }
 RT_CLASS!{class LocalLocation: ILocalLocation}
 DEFINE_IID!(IID_ILocalLocation2, 1855860860, 60597, 20476, 187, 140, 186, 80, 186, 140, 45, 198);
-RT_INTERFACE!{interface ILocalLocation2(ILocalLocation2Vtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocation2] {
+RT_INTERFACE!{interface ILocalLocation2(ILocalLocation2Vtbl): IInspectable [IID_ILocalLocation2] {
     fn get_Category(&self, out: *mut HSTRING) -> HRESULT,
     fn get_RatingInfo(&self, out: *mut <LocalLocationRatingInfo as RtType>::Abi) -> HRESULT,
     fn get_HoursOfOperation(&self, out: *mut <foundation::collections::IVectorView<LocalLocationHoursOfOperationItem> as RtType>::Abi) -> HRESULT
@@ -2154,7 +2154,7 @@ impl LocalLocationFinder {
 }
 DEFINE_CLSID!(LocalLocationFinder(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,76,111,99,97,108,83,101,97,114,99,104,46,76,111,99,97,108,76,111,99,97,116,105,111,110,70,105,110,100,101,114,0]) [CLSID_LocalLocationFinder]);
 DEFINE_IID!(IID_ILocalLocationFinderResult, 3499846854, 62264, 16785, 159, 216, 84, 64, 185, 166, 143, 82);
-RT_INTERFACE!{interface ILocalLocationFinderResult(ILocalLocationFinderResultVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationFinderResult] {
+RT_INTERFACE!{interface ILocalLocationFinderResult(ILocalLocationFinderResultVtbl): IInspectable [IID_ILocalLocationFinderResult] {
     fn get_LocalLocations(&self, out: *mut <foundation::collections::IVectorView<LocalLocation> as RtType>::Abi) -> HRESULT,
     fn get_Status(&self, out: *mut LocalLocationFinderStatus) -> HRESULT
 }}
@@ -2172,7 +2172,7 @@ impl ILocalLocationFinderResult {
 }
 RT_CLASS!{class LocalLocationFinderResult: ILocalLocationFinderResult}
 DEFINE_IID!(IID_ILocalLocationFinderStatics, 3538907972, 41182, 18634, 129, 168, 7, 199, 220, 253, 55, 171);
-RT_INTERFACE!{static interface ILocalLocationFinderStatics(ILocalLocationFinderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationFinderStatics] {
+RT_INTERFACE!{static interface ILocalLocationFinderStatics(ILocalLocationFinderStaticsVtbl): IInspectable [IID_ILocalLocationFinderStatics] {
     #[cfg(feature="windows-devices")] fn FindLocalLocationsAsync(&self, searchTerm: HSTRING, searchArea: <crate::windows::devices::geolocation::Geocircle as RtType>::Abi, localCategory: HSTRING, maxResults: u32, out: *mut <foundation::IAsyncOperation<LocalLocationFinderResult> as RtType>::Abi) -> HRESULT
 }}
 impl ILocalLocationFinderStatics {
@@ -2186,7 +2186,7 @@ RT_ENUM! { enum LocalLocationFinderStatus: i32 {
     Success = 0, UnknownError = 1, InvalidCredentials = 2, InvalidCategory = 3, InvalidSearchTerm = 4, InvalidSearchArea = 5, NetworkFailure = 6, NotSupported = 7,
 }}
 DEFINE_IID!(IID_ILocalLocationHoursOfOperationItem, 592743538, 41415, 17393, 164, 240, 16, 145, 195, 158, 198, 64);
-RT_INTERFACE!{interface ILocalLocationHoursOfOperationItem(ILocalLocationHoursOfOperationItemVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationHoursOfOperationItem] {
+RT_INTERFACE!{interface ILocalLocationHoursOfOperationItem(ILocalLocationHoursOfOperationItemVtbl): IInspectable [IID_ILocalLocationHoursOfOperationItem] {
     #[cfg(not(feature="windows-globalization"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-globalization")] fn get_Day(&self, out: *mut crate::windows::globalization::DayOfWeek) -> HRESULT,
     fn get_Start(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -2211,7 +2211,7 @@ impl ILocalLocationHoursOfOperationItem {
 }
 RT_CLASS!{class LocalLocationHoursOfOperationItem: ILocalLocationHoursOfOperationItem}
 DEFINE_IID!(IID_ILocalLocationRatingInfo, 3407719254, 13140, 17169, 139, 192, 162, 212, 213, 235, 128, 110);
-RT_INTERFACE!{interface ILocalLocationRatingInfo(ILocalLocationRatingInfoVtbl): IInspectable(IInspectableVtbl) [IID_ILocalLocationRatingInfo] {
+RT_INTERFACE!{interface ILocalLocationRatingInfo(ILocalLocationRatingInfoVtbl): IInspectable [IID_ILocalLocationRatingInfo] {
     fn get_AggregateRating(&self, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT,
     fn get_RatingCount(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_ProviderIdentifier(&self, out: *mut HSTRING) -> HRESULT
@@ -2243,7 +2243,7 @@ impl PlaceInfoHelper {
 }
 DEFINE_CLSID!(PlaceInfoHelper(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,76,111,99,97,108,83,101,97,114,99,104,46,80,108,97,99,101,73,110,102,111,72,101,108,112,101,114,0]) [CLSID_PlaceInfoHelper]);
 DEFINE_IID!(IID_IPlaceInfoHelperStatics, 3709643175, 43462, 18715, 188, 9, 232, 15, 206, 164, 142, 230);
-RT_INTERFACE!{static interface IPlaceInfoHelperStatics(IPlaceInfoHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaceInfoHelperStatics] {
+RT_INTERFACE!{static interface IPlaceInfoHelperStatics(IPlaceInfoHelperStaticsVtbl): IInspectable [IID_IPlaceInfoHelperStatics] {
     fn CreateFromLocalLocation(&self, location: <LocalLocation as RtType>::Abi, out: *mut <super::PlaceInfo as RtType>::Abi) -> HRESULT
 }}
 impl IPlaceInfoHelperStatics {
@@ -2257,7 +2257,7 @@ impl IPlaceInfoHelperStatics {
 pub mod offlinemaps { // Windows.Services.Maps.OfflineMaps
 use crate::prelude::*;
 DEFINE_IID!(IID_IOfflineMapPackage, 2811717435, 42421, 16708, 181, 37, 230, 140, 136, 98, 102, 75);
-RT_INTERFACE!{interface IOfflineMapPackage(IOfflineMapPackageVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackage] {
+RT_INTERFACE!{interface IOfflineMapPackage(IOfflineMapPackageVtbl): IInspectable [IID_IOfflineMapPackage] {
     fn get_Status(&self, out: *mut OfflineMapPackageStatus) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_EnclosingRegionName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2317,7 +2317,7 @@ impl OfflineMapPackage {
 }
 DEFINE_CLSID!(OfflineMapPackage(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,77,97,112,115,46,79,102,102,108,105,110,101,77,97,112,115,46,79,102,102,108,105,110,101,77,97,112,80,97,99,107,97,103,101,0]) [CLSID_OfflineMapPackage]);
 DEFINE_IID!(IID_IOfflineMapPackageQueryResult, 1431852049, 14817, 20033, 164, 225, 95, 72, 114, 190, 225, 153);
-RT_INTERFACE!{interface IOfflineMapPackageQueryResult(IOfflineMapPackageQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackageQueryResult] {
+RT_INTERFACE!{interface IOfflineMapPackageQueryResult(IOfflineMapPackageQueryResultVtbl): IInspectable [IID_IOfflineMapPackageQueryResult] {
     fn get_Status(&self, out: *mut OfflineMapPackageQueryStatus) -> HRESULT,
     fn get_Packages(&self, out: *mut <foundation::collections::IVectorView<OfflineMapPackage> as RtType>::Abi) -> HRESULT
 }}
@@ -2338,7 +2338,7 @@ RT_ENUM! { enum OfflineMapPackageQueryStatus: i32 {
     Success = 0, UnknownError = 1, InvalidCredentials = 2, NetworkFailure = 3,
 }}
 DEFINE_IID!(IID_IOfflineMapPackageStartDownloadResult, 3647322392, 54486, 19198, 147, 120, 62, 199, 30, 241, 28, 61);
-RT_INTERFACE!{interface IOfflineMapPackageStartDownloadResult(IOfflineMapPackageStartDownloadResultVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackageStartDownloadResult] {
+RT_INTERFACE!{interface IOfflineMapPackageStartDownloadResult(IOfflineMapPackageStartDownloadResultVtbl): IInspectable [IID_IOfflineMapPackageStartDownloadResult] {
     fn get_Status(&self, out: *mut OfflineMapPackageStartDownloadStatus) -> HRESULT
 }}
 impl IOfflineMapPackageStartDownloadResult {
@@ -2353,7 +2353,7 @@ RT_ENUM! { enum OfflineMapPackageStartDownloadStatus: i32 {
     Success = 0, UnknownError = 1, InvalidCredentials = 2, DeniedWithoutCapability = 3,
 }}
 DEFINE_IID!(IID_IOfflineMapPackageStatics, 408844578, 43057, 19120, 148, 31, 105, 152, 250, 146, 146, 133);
-RT_INTERFACE!{static interface IOfflineMapPackageStatics(IOfflineMapPackageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOfflineMapPackageStatics] {
+RT_INTERFACE!{static interface IOfflineMapPackageStatics(IOfflineMapPackageStaticsVtbl): IInspectable [IID_IOfflineMapPackageStatics] {
     #[cfg(feature="windows-devices")] fn FindPackagesAsync(&self, queryPoint: <crate::windows::devices::geolocation::Geopoint as RtType>::Abi, out: *mut <foundation::IAsyncOperation<OfflineMapPackageQueryResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-devices")] fn FindPackagesInBoundingBoxAsync(&self, queryBoundingBox: <crate::windows::devices::geolocation::GeoboundingBox as RtType>::Abi, out: *mut <foundation::IAsyncOperation<OfflineMapPackageQueryResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-devices")] fn FindPackagesInGeocircleAsync(&self, queryCircle: <crate::windows::devices::geolocation::Geocircle as RtType>::Abi, out: *mut <foundation::IAsyncOperation<OfflineMapPackageQueryResult> as RtType>::Abi) -> HRESULT
@@ -2383,7 +2383,7 @@ RT_ENUM! { enum OfflineMapPackageStatus: i32 {
 pub mod store { // Windows.Services.Store
 use crate::prelude::*;
 DEFINE_IID!(IID_IStoreAcquireLicenseResult, 4225209453, 61504, 19635, 154, 57, 41, 188, 236, 219, 226, 45);
-RT_INTERFACE!{interface IStoreAcquireLicenseResult(IStoreAcquireLicenseResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreAcquireLicenseResult] {
+RT_INTERFACE!{interface IStoreAcquireLicenseResult(IStoreAcquireLicenseResultVtbl): IInspectable [IID_IStoreAcquireLicenseResult] {
     fn get_StorePackageLicense(&self, out: *mut <StorePackageLicense as RtType>::Abi) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
@@ -2401,7 +2401,7 @@ impl IStoreAcquireLicenseResult {
 }
 RT_CLASS!{class StoreAcquireLicenseResult: IStoreAcquireLicenseResult}
 DEFINE_IID!(IID_IStoreAppLicense, 4085905886, 29632, 17870, 155, 171, 178, 254, 62, 94, 175, 211);
-RT_INTERFACE!{interface IStoreAppLicense(IStoreAppLicenseVtbl): IInspectable(IInspectableVtbl) [IID_IStoreAppLicense] {
+RT_INTERFACE!{interface IStoreAppLicense(IStoreAppLicenseVtbl): IInspectable [IID_IStoreAppLicense] {
     fn get_SkuStoreId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IsActive(&self, out: *mut bool) -> HRESULT,
     fn get_IsTrial(&self, out: *mut bool) -> HRESULT,
@@ -2461,7 +2461,7 @@ impl IStoreAppLicense {
 }
 RT_CLASS!{class StoreAppLicense: IStoreAppLicense}
 DEFINE_IID!(IID_IStoreAppLicense2, 3026611857, 17475, 16563, 153, 63, 40, 144, 68, 53, 189, 198);
-RT_INTERFACE!{interface IStoreAppLicense2(IStoreAppLicense2Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreAppLicense2] {
+RT_INTERFACE!{interface IStoreAppLicense2(IStoreAppLicense2Vtbl): IInspectable [IID_IStoreAppLicense2] {
     fn get_IsDiscLicense(&self, out: *mut bool) -> HRESULT
 }}
 impl IStoreAppLicense2 {
@@ -2472,7 +2472,7 @@ impl IStoreAppLicense2 {
     }}
 }
 DEFINE_IID!(IID_IStoreAvailability, 4194698021, 4093, 17555, 173, 67, 241, 249, 145, 143, 105, 250);
-RT_INTERFACE!{interface IStoreAvailability(IStoreAvailabilityVtbl): IInspectable(IInspectableVtbl) [IID_IStoreAvailability] {
+RT_INTERFACE!{interface IStoreAvailability(IStoreAvailabilityVtbl): IInspectable [IID_IStoreAvailability] {
     fn get_StoreId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_EndDate(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_Price(&self, out: *mut <StorePrice as RtType>::Abi) -> HRESULT,
@@ -2514,7 +2514,7 @@ impl IStoreAvailability {
 }
 RT_CLASS!{class StoreAvailability: IStoreAvailability}
 DEFINE_IID!(IID_IStoreCanAcquireLicenseResult, 979975603, 136, 18479, 134, 213, 189, 70, 82, 38, 99, 173);
-RT_INTERFACE!{interface IStoreCanAcquireLicenseResult(IStoreCanAcquireLicenseResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreCanAcquireLicenseResult] {
+RT_INTERFACE!{interface IStoreCanAcquireLicenseResult(IStoreCanAcquireLicenseResultVtbl): IInspectable [IID_IStoreCanAcquireLicenseResult] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_LicensableSku(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Status(&self, out: *mut StoreCanLicenseStatus) -> HRESULT
@@ -2541,7 +2541,7 @@ RT_ENUM! { enum StoreCanLicenseStatus: i32 {
     NotLicensableToUser = 0, Licensable = 1, LicenseActionNotApplicableToProduct = 2, NetworkError = 3, ServerError = 4,
 }}
 DEFINE_IID!(IID_IStoreCollectionData, 2326053811, 23475, 17434, 42, 180, 77, 171, 115, 213, 206, 103);
-RT_INTERFACE!{interface IStoreCollectionData(IStoreCollectionDataVtbl): IInspectable(IInspectableVtbl) [IID_IStoreCollectionData] {
+RT_INTERFACE!{interface IStoreCollectionData(IStoreCollectionDataVtbl): IInspectable [IID_IStoreCollectionData] {
     fn get_IsTrial(&self, out: *mut bool) -> HRESULT,
     fn get_CampaignId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DeveloperOfferId(&self, out: *mut HSTRING) -> HRESULT,
@@ -2595,7 +2595,7 @@ impl IStoreCollectionData {
 }
 RT_CLASS!{class StoreCollectionData: IStoreCollectionData}
 DEFINE_IID!(IID_IStoreConsumableResult, 3932007282, 27136, 16466, 190, 91, 191, 218, 180, 67, 51, 82);
-RT_INTERFACE!{interface IStoreConsumableResult(IStoreConsumableResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreConsumableResult] {
+RT_INTERFACE!{interface IStoreConsumableResult(IStoreConsumableResultVtbl): IInspectable [IID_IStoreConsumableResult] {
     fn get_Status(&self, out: *mut StoreConsumableStatus) -> HRESULT,
     fn get_TrackingId(&self, out: *mut Guid) -> HRESULT,
     fn get_BalanceRemaining(&self, out: *mut u32) -> HRESULT,
@@ -2628,7 +2628,7 @@ RT_ENUM! { enum StoreConsumableStatus: i32 {
     Succeeded = 0, InsufficentQuantity = 1, NetworkError = 2, ServerError = 3,
 }}
 DEFINE_IID!(IID_IStoreContext, 2895689406, 62717, 18706, 186, 189, 80, 53, 229, 232, 188, 171);
-RT_INTERFACE!{interface IStoreContext(IStoreContextVtbl): IInspectable(IInspectableVtbl) [IID_IStoreContext] {
+RT_INTERFACE!{interface IStoreContext(IStoreContextVtbl): IInspectable [IID_IStoreContext] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut <super::super::system::User as RtType>::Abi) -> HRESULT,
     fn add_OfflineLicensesChanged(&self, handler: <foundation::TypedEventHandler<StoreContext, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -2771,7 +2771,7 @@ impl StoreContext {
 }
 DEFINE_CLSID!(StoreContext(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,83,116,111,114,101,46,83,116,111,114,101,67,111,110,116,101,120,116,0]) [CLSID_StoreContext]);
 DEFINE_IID!(IID_IStoreContext2, 414995674, 31705, 17708, 145, 22, 59, 189, 6, 255, 198, 58);
-RT_INTERFACE!{interface IStoreContext2(IStoreContext2Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreContext2] {
+RT_INTERFACE!{interface IStoreContext2(IStoreContext2Vtbl): IInspectable [IID_IStoreContext2] {
     #[cfg(feature="windows-applicationmodel")] fn FindStoreProductForPackageAsync(&self, productKinds: <foundation::collections::IIterable<HString> as RtType>::Abi, package: <super::super::applicationmodel::Package as RtType>::Abi, out: *mut <foundation::IAsyncOperation<StoreProductResult> as RtType>::Abi) -> HRESULT
 }}
 impl IStoreContext2 {
@@ -2782,7 +2782,7 @@ impl IStoreContext2 {
     }}
 }
 DEFINE_IID!(IID_IStoreContext3, 3798083274, 6657, 18224, 133, 166, 236, 200, 150, 228, 174, 56);
-RT_INTERFACE!{interface IStoreContext3(IStoreContext3Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreContext3] {
+RT_INTERFACE!{interface IStoreContext3(IStoreContext3Vtbl): IInspectable [IID_IStoreContext3] {
     fn get_CanSilentlyDownloadStorePackageUpdates(&self, out: *mut bool) -> HRESULT,
     fn TrySilentDownloadStorePackageUpdatesAsync(&self, storePackageUpdates: <foundation::collections::IIterable<StorePackageUpdate> as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus> as RtType>::Abi) -> HRESULT,
     fn TrySilentDownloadAndInstallStorePackageUpdatesAsync(&self, storePackageUpdates: <foundation::collections::IIterable<StorePackageUpdate> as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<StorePackageUpdateResult, StorePackageUpdateStatus> as RtType>::Abi) -> HRESULT,
@@ -2874,7 +2874,7 @@ impl IStoreContext3 {
     }}
 }
 DEFINE_IID!(IID_IStoreContext4, 2946264937, 48801, 19444, 142, 116, 174, 3, 226, 6, 198, 176);
-RT_INTERFACE!{interface IStoreContext4(IStoreContext4Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreContext4] {
+RT_INTERFACE!{interface IStoreContext4(IStoreContext4Vtbl): IInspectable [IID_IStoreContext4] {
     fn RequestRateAndReviewAppAsync(&self, out: *mut <foundation::IAsyncOperation<StoreRateAndReviewResult> as RtType>::Abi) -> HRESULT,
     fn SetInstallOrderForAssociatedStoreQueueItemsAsync(&self, items: <foundation::collections::IIterable<StoreQueueItem> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<StoreQueueItem>> as RtType>::Abi) -> HRESULT
 }}
@@ -2891,7 +2891,7 @@ impl IStoreContext4 {
     }}
 }
 DEFINE_IID!(IID_IStoreContextStatics, 2617699935, 5568, 20082, 147, 48, 214, 25, 28, 235, 209, 156);
-RT_INTERFACE!{static interface IStoreContextStatics(IStoreContextStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStoreContextStatics] {
+RT_INTERFACE!{static interface IStoreContextStatics(IStoreContextStaticsVtbl): IInspectable [IID_IStoreContextStatics] {
     fn GetDefault(&self, out: *mut <StoreContext as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: <super::super::system::User as RtType>::Abi, out: *mut <StoreContext as RtType>::Abi) -> HRESULT
 }}
@@ -2911,7 +2911,7 @@ RT_ENUM! { enum StoreDurationUnit: i32 {
     Minute = 0, Hour = 1, Day = 2, Week = 3, Month = 4, Year = 5,
 }}
 DEFINE_IID!(IID_IStoreImage, 136303176, 44468, 19300, 169, 147, 120, 71, 137, 146, 110, 213);
-RT_INTERFACE!{interface IStoreImage(IStoreImageVtbl): IInspectable(IInspectableVtbl) [IID_IStoreImage] {
+RT_INTERFACE!{interface IStoreImage(IStoreImageVtbl): IInspectable [IID_IStoreImage] {
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_ImagePurposeTag(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Width(&self, out: *mut u32) -> HRESULT,
@@ -2947,7 +2947,7 @@ impl IStoreImage {
 }
 RT_CLASS!{class StoreImage: IStoreImage}
 DEFINE_IID!(IID_IStoreLicense, 651990393, 19535, 20272, 188, 137, 100, 159, 96, 227, 96, 85);
-RT_INTERFACE!{interface IStoreLicense(IStoreLicenseVtbl): IInspectable(IInspectableVtbl) [IID_IStoreLicense] {
+RT_INTERFACE!{interface IStoreLicense(IStoreLicenseVtbl): IInspectable [IID_IStoreLicense] {
     fn get_SkuStoreId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IsActive(&self, out: *mut bool) -> HRESULT,
     fn get_ExpirationDate(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -2983,7 +2983,7 @@ impl IStoreLicense {
 }
 RT_CLASS!{class StoreLicense: IStoreLicense}
 DEFINE_IID!(IID_IStorePackageInstallOptions, 490562316, 3277, 17629, 140, 89, 128, 129, 10, 114, 153, 115);
-RT_INTERFACE!{interface IStorePackageInstallOptions(IStorePackageInstallOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageInstallOptions] {
+RT_INTERFACE!{interface IStorePackageInstallOptions(IStorePackageInstallOptionsVtbl): IInspectable [IID_IStorePackageInstallOptions] {
     fn get_AllowForcedAppRestart(&self, out: *mut bool) -> HRESULT,
     fn put_AllowForcedAppRestart(&self, value: bool) -> HRESULT
 }}
@@ -3002,7 +3002,7 @@ RT_CLASS!{class StorePackageInstallOptions: IStorePackageInstallOptions}
 impl RtActivatable<IActivationFactory> for StorePackageInstallOptions {}
 DEFINE_CLSID!(StorePackageInstallOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,83,116,111,114,101,46,83,116,111,114,101,80,97,99,107,97,103,101,73,110,115,116,97,108,108,79,112,116,105,111,110,115,0]) [CLSID_StorePackageInstallOptions]);
 DEFINE_IID!(IID_IStorePackageLicense, 205936404, 5345, 18803, 189, 20, 247, 119, 36, 39, 30, 153);
-RT_INTERFACE!{interface IStorePackageLicense(IStorePackageLicenseVtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageLicense] {
+RT_INTERFACE!{interface IStorePackageLicense(IStorePackageLicenseVtbl): IInspectable [IID_IStorePackageLicense] {
     fn add_LicenseLost(&self, handler: <foundation::TypedEventHandler<StorePackageLicense, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_LicenseLost(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy2(&self) -> (),
@@ -3037,7 +3037,7 @@ impl IStorePackageLicense {
 }
 RT_CLASS!{class StorePackageLicense: IStorePackageLicense}
 DEFINE_IID!(IID_IStorePackageUpdate, 336568656, 15551, 18997, 185, 31, 72, 39, 28, 49, 176, 114);
-RT_INTERFACE!{interface IStorePackageUpdate(IStorePackageUpdateVtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageUpdate] {
+RT_INTERFACE!{interface IStorePackageUpdate(IStorePackageUpdateVtbl): IInspectable [IID_IStorePackageUpdate] {
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-applicationmodel")] fn get_Package(&self, out: *mut <super::super::applicationmodel::Package as RtType>::Abi) -> HRESULT,
     fn get_Mandatory(&self, out: *mut bool) -> HRESULT
@@ -3056,7 +3056,7 @@ impl IStorePackageUpdate {
 }
 RT_CLASS!{class StorePackageUpdate: IStorePackageUpdate}
 DEFINE_IID!(IID_IStorePackageUpdateResult, 3885056749, 25081, 18579, 180, 254, 207, 25, 22, 3, 175, 123);
-RT_INTERFACE!{interface IStorePackageUpdateResult(IStorePackageUpdateResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageUpdateResult] {
+RT_INTERFACE!{interface IStorePackageUpdateResult(IStorePackageUpdateResultVtbl): IInspectable [IID_IStorePackageUpdateResult] {
     fn get_OverallState(&self, out: *mut StorePackageUpdateState) -> HRESULT,
     fn get_StorePackageUpdateStatuses(&self, out: *mut <foundation::collections::IVectorView<StorePackageUpdateStatus> as RtType>::Abi) -> HRESULT
 }}
@@ -3074,7 +3074,7 @@ impl IStorePackageUpdateResult {
 }
 RT_CLASS!{class StorePackageUpdateResult: IStorePackageUpdateResult}
 DEFINE_IID!(IID_IStorePackageUpdateResult2, 119341358, 48226, 20270, 135, 234, 153, 216, 1, 174, 175, 152);
-RT_INTERFACE!{interface IStorePackageUpdateResult2(IStorePackageUpdateResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorePackageUpdateResult2] {
+RT_INTERFACE!{interface IStorePackageUpdateResult2(IStorePackageUpdateResult2Vtbl): IInspectable [IID_IStorePackageUpdateResult2] {
     fn get_StoreQueueItems(&self, out: *mut <foundation::collections::IVectorView<StoreQueueItem> as RtType>::Abi) -> HRESULT
 }}
 impl IStorePackageUpdateResult2 {
@@ -3091,7 +3091,7 @@ RT_STRUCT! { struct StorePackageUpdateStatus {
     PackageFamilyName: HSTRING, PackageDownloadSizeInBytes: u64, PackageBytesDownloaded: u64, PackageDownloadProgress: f64, TotalDownloadProgress: f64, PackageUpdateState: StorePackageUpdateState,
 }}
 DEFINE_IID!(IID_IStorePrice, 1438291140, 5617, 16508, 143, 6, 0, 99, 128, 244, 223, 11);
-RT_INTERFACE!{interface IStorePrice(IStorePriceVtbl): IInspectable(IInspectableVtbl) [IID_IStorePrice] {
+RT_INTERFACE!{interface IStorePrice(IStorePriceVtbl): IInspectable [IID_IStorePrice] {
     fn get_FormattedBasePrice(&self, out: *mut HSTRING) -> HRESULT,
     fn get_FormattedPrice(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IsOnSale(&self, out: *mut bool) -> HRESULT,
@@ -3133,7 +3133,7 @@ impl IStorePrice {
 }
 RT_CLASS!{class StorePrice: IStorePrice}
 DEFINE_IID!(IID_IStoreProduct, 839789650, 55136, 17674, 164, 43, 103, 209, 233, 1, 172, 144);
-RT_INTERFACE!{interface IStoreProduct(IStoreProductVtbl): IInspectable(IInspectableVtbl) [IID_IStoreProduct] {
+RT_INTERFACE!{interface IStoreProduct(IStoreProductVtbl): IInspectable [IID_IStoreProduct] {
     fn get_StoreId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Language(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -3247,7 +3247,7 @@ impl IStoreProduct {
 }
 RT_CLASS!{class StoreProduct: IStoreProduct}
 DEFINE_IID!(IID_IStoreProductOptions, 1530175737, 41235, 18449, 131, 38, 22, 25, 156, 146, 127, 49);
-RT_INTERFACE!{interface IStoreProductOptions(IStoreProductOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IStoreProductOptions] {
+RT_INTERFACE!{interface IStoreProductOptions(IStoreProductOptionsVtbl): IInspectable [IID_IStoreProductOptions] {
     fn get_ActionFilters(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT
 }}
 impl IStoreProductOptions {
@@ -3261,7 +3261,7 @@ RT_CLASS!{class StoreProductOptions: IStoreProductOptions}
 impl RtActivatable<IActivationFactory> for StoreProductOptions {}
 DEFINE_CLSID!(StoreProductOptions(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,83,116,111,114,101,46,83,116,111,114,101,80,114,111,100,117,99,116,79,112,116,105,111,110,115,0]) [CLSID_StoreProductOptions]);
 DEFINE_IID!(IID_IStoreProductPagedQueryResult, 3374782661, 19925, 18537, 164, 98, 236, 198, 135, 46, 67, 197);
-RT_INTERFACE!{interface IStoreProductPagedQueryResult(IStoreProductPagedQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreProductPagedQueryResult] {
+RT_INTERFACE!{interface IStoreProductPagedQueryResult(IStoreProductPagedQueryResultVtbl): IInspectable [IID_IStoreProductPagedQueryResult] {
     fn get_Products(&self, out: *mut <foundation::collections::IMapView<HString, StoreProduct> as RtType>::Abi) -> HRESULT,
     fn get_HasMoreResults(&self, out: *mut bool) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
@@ -3291,7 +3291,7 @@ impl IStoreProductPagedQueryResult {
 }
 RT_CLASS!{class StoreProductPagedQueryResult: IStoreProductPagedQueryResult}
 DEFINE_IID!(IID_IStoreProductQueryResult, 3624265413, 54358, 20470, 128, 73, 144, 118, 213, 22, 95, 115);
-RT_INTERFACE!{interface IStoreProductQueryResult(IStoreProductQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreProductQueryResult] {
+RT_INTERFACE!{interface IStoreProductQueryResult(IStoreProductQueryResultVtbl): IInspectable [IID_IStoreProductQueryResult] {
     fn get_Products(&self, out: *mut <foundation::collections::IMapView<HString, StoreProduct> as RtType>::Abi) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
@@ -3309,7 +3309,7 @@ impl IStoreProductQueryResult {
 }
 RT_CLASS!{class StoreProductQueryResult: IStoreProductQueryResult}
 DEFINE_IID!(IID_IStoreProductResult, 3077001075, 15495, 20193, 130, 1, 244, 40, 53, 155, 211, 175);
-RT_INTERFACE!{interface IStoreProductResult(IStoreProductResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreProductResult] {
+RT_INTERFACE!{interface IStoreProductResult(IStoreProductResultVtbl): IInspectable [IID_IStoreProductResult] {
     fn get_Product(&self, out: *mut <StoreProduct as RtType>::Abi) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
@@ -3327,7 +3327,7 @@ impl IStoreProductResult {
 }
 RT_CLASS!{class StoreProductResult: IStoreProductResult}
 DEFINE_IID!(IID_IStorePurchaseProperties, 2204268787, 65415, 17252, 165, 180, 253, 33, 83, 235, 228, 59);
-RT_INTERFACE!{interface IStorePurchaseProperties(IStorePurchasePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorePurchaseProperties] {
+RT_INTERFACE!{interface IStorePurchaseProperties(IStorePurchasePropertiesVtbl): IInspectable [IID_IStorePurchaseProperties] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Name(&self, value: HSTRING) -> HRESULT,
     fn get_ExtendedJsonData(&self, out: *mut HSTRING) -> HRESULT,
@@ -3363,7 +3363,7 @@ impl StorePurchaseProperties {
 }
 DEFINE_CLSID!(StorePurchaseProperties(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,83,116,111,114,101,46,83,116,111,114,101,80,117,114,99,104,97,115,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_StorePurchaseProperties]);
 DEFINE_IID!(IID_IStorePurchasePropertiesFactory, 2808673694, 65277, 18591, 154, 23, 34, 165, 147, 230, 139, 157);
-RT_INTERFACE!{static interface IStorePurchasePropertiesFactory(IStorePurchasePropertiesFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IStorePurchasePropertiesFactory] {
+RT_INTERFACE!{static interface IStorePurchasePropertiesFactory(IStorePurchasePropertiesFactoryVtbl): IInspectable [IID_IStorePurchasePropertiesFactory] {
     fn Create(&self, name: HSTRING, out: *mut <StorePurchaseProperties as RtType>::Abi) -> HRESULT
 }}
 impl IStorePurchasePropertiesFactory {
@@ -3374,7 +3374,7 @@ impl IStorePurchasePropertiesFactory {
     }}
 }
 DEFINE_IID!(IID_IStorePurchaseResult, 2916255058, 63850, 17981, 167, 187, 194, 11, 79, 202, 105, 82);
-RT_INTERFACE!{interface IStorePurchaseResult(IStorePurchaseResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorePurchaseResult] {
+RT_INTERFACE!{interface IStorePurchaseResult(IStorePurchaseResultVtbl): IInspectable [IID_IStorePurchaseResult] {
     fn get_Status(&self, out: *mut StorePurchaseStatus) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
@@ -3395,7 +3395,7 @@ RT_ENUM! { enum StorePurchaseStatus: i32 {
     Succeeded = 0, AlreadyPurchased = 1, NotPurchased = 2, NetworkError = 3, ServerError = 4,
 }}
 DEFINE_IID!(IID_IStoreQueueItem, 1456849707, 63536, 17043, 145, 136, 202, 210, 220, 222, 115, 87);
-RT_INTERFACE!{interface IStoreQueueItem(IStoreQueueItemVtbl): IInspectable(IInspectableVtbl) [IID_IStoreQueueItem] {
+RT_INTERFACE!{interface IStoreQueueItem(IStoreQueueItemVtbl): IInspectable [IID_IStoreQueueItem] {
     fn get_ProductId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_PackageFamilyName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_InstallKind(&self, out: *mut StoreQueueItemKind) -> HRESULT,
@@ -3447,7 +3447,7 @@ impl IStoreQueueItem {
 }
 RT_CLASS!{class StoreQueueItem: IStoreQueueItem}
 DEFINE_IID!(IID_IStoreQueueItem2, 1766399144, 6868, 17532, 173, 140, 169, 80, 53, 246, 77, 130);
-RT_INTERFACE!{interface IStoreQueueItem2(IStoreQueueItem2Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreQueueItem2] {
+RT_INTERFACE!{interface IStoreQueueItem2(IStoreQueueItem2Vtbl): IInspectable [IID_IStoreQueueItem2] {
     fn CancelInstallAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn PauseInstallAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn ResumeInstallAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
@@ -3470,7 +3470,7 @@ impl IStoreQueueItem2 {
     }}
 }
 DEFINE_IID!(IID_IStoreQueueItemCompletedEventArgs, 306700140, 46154, 17307, 187, 7, 29, 48, 3, 208, 5, 194);
-RT_INTERFACE!{interface IStoreQueueItemCompletedEventArgs(IStoreQueueItemCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IStoreQueueItemCompletedEventArgs] {
+RT_INTERFACE!{interface IStoreQueueItemCompletedEventArgs(IStoreQueueItemCompletedEventArgsVtbl): IInspectable [IID_IStoreQueueItemCompletedEventArgs] {
     fn get_Status(&self, out: *mut <StoreQueueItemStatus as RtType>::Abi) -> HRESULT
 }}
 impl IStoreQueueItemCompletedEventArgs {
@@ -3491,7 +3491,7 @@ RT_ENUM! { enum StoreQueueItemState: i32 {
     Active = 0, Completed = 1, Canceled = 2, Error = 3, Paused = 4,
 }}
 DEFINE_IID!(IID_IStoreQueueItemStatus, 2614524271, 40131, 20163, 178, 239, 123, 228, 51, 179, 1, 116);
-RT_INTERFACE!{interface IStoreQueueItemStatus(IStoreQueueItemStatusVtbl): IInspectable(IInspectableVtbl) [IID_IStoreQueueItemStatus] {
+RT_INTERFACE!{interface IStoreQueueItemStatus(IStoreQueueItemStatusVtbl): IInspectable [IID_IStoreQueueItemStatus] {
     fn get_PackageInstallState(&self, out: *mut StoreQueueItemState) -> HRESULT,
     fn get_PackageInstallExtendedState(&self, out: *mut StoreQueueItemExtendedState) -> HRESULT,
     fn get_UpdateStatus(&self, out: *mut StorePackageUpdateStatus) -> HRESULT,
@@ -3521,7 +3521,7 @@ impl IStoreQueueItemStatus {
 }
 RT_CLASS!{class StoreQueueItemStatus: IStoreQueueItemStatus}
 DEFINE_IID!(IID_IStoreRateAndReviewResult, 2636160342, 42677, 16673, 155, 97, 238, 109, 15, 189, 189, 187);
-RT_INTERFACE!{interface IStoreRateAndReviewResult(IStoreRateAndReviewResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreRateAndReviewResult] {
+RT_INTERFACE!{interface IStoreRateAndReviewResult(IStoreRateAndReviewResultVtbl): IInspectable [IID_IStoreRateAndReviewResult] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_ExtendedJsonData(&self, out: *mut HSTRING) -> HRESULT,
     fn get_WasUpdated(&self, out: *mut bool) -> HRESULT,
@@ -3562,7 +3562,7 @@ impl StoreRequestHelper {
 }
 DEFINE_CLSID!(StoreRequestHelper(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,83,116,111,114,101,46,83,116,111,114,101,82,101,113,117,101,115,116,72,101,108,112,101,114,0]) [CLSID_StoreRequestHelper]);
 DEFINE_IID!(IID_IStoreRequestHelperStatics, 1827005945, 41161, 19244, 150, 166, 161, 113, 198, 48, 3, 141);
-RT_INTERFACE!{static interface IStoreRequestHelperStatics(IStoreRequestHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStoreRequestHelperStatics] {
+RT_INTERFACE!{static interface IStoreRequestHelperStatics(IStoreRequestHelperStaticsVtbl): IInspectable [IID_IStoreRequestHelperStatics] {
     fn SendRequestAsync(&self, context: <StoreContext as RtType>::Abi, requestKind: u32, parametersAsJson: HSTRING, out: *mut <foundation::IAsyncOperation<StoreSendRequestResult> as RtType>::Abi) -> HRESULT
 }}
 impl IStoreRequestHelperStatics {
@@ -3573,7 +3573,7 @@ impl IStoreRequestHelperStatics {
     }}
 }
 DEFINE_IID!(IID_IStoreSendRequestResult, 3342515808, 33394, 17666, 138, 105, 110, 117, 21, 58, 66, 153);
-RT_INTERFACE!{interface IStoreSendRequestResult(IStoreSendRequestResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreSendRequestResult] {
+RT_INTERFACE!{interface IStoreSendRequestResult(IStoreSendRequestResultVtbl): IInspectable [IID_IStoreSendRequestResult] {
     fn get_Response(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
@@ -3591,7 +3591,7 @@ impl IStoreSendRequestResult {
 }
 RT_CLASS!{class StoreSendRequestResult: IStoreSendRequestResult}
 DEFINE_IID!(IID_IStoreSendRequestResult2, 687941999, 49328, 18896, 142, 141, 170, 148, 10, 249, 193, 11);
-RT_INTERFACE!{interface IStoreSendRequestResult2(IStoreSendRequestResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IStoreSendRequestResult2] {
+RT_INTERFACE!{interface IStoreSendRequestResult2(IStoreSendRequestResult2Vtbl): IInspectable [IID_IStoreSendRequestResult2] {
     #[cfg(feature="windows-web")] fn get_HttpStatusCode(&self, out: *mut super::super::web::http::HttpStatusCode) -> HRESULT
 }}
 impl IStoreSendRequestResult2 {
@@ -3602,7 +3602,7 @@ impl IStoreSendRequestResult2 {
     }}
 }
 DEFINE_IID!(IID_IStoreSku, 964587349, 17472, 20227, 134, 60, 145, 243, 254, 200, 61, 121);
-RT_INTERFACE!{interface IStoreSku(IStoreSkuVtbl): IInspectable(IInspectableVtbl) [IID_IStoreSku] {
+RT_INTERFACE!{interface IStoreSku(IStoreSkuVtbl): IInspectable [IID_IStoreSku] {
     fn get_StoreId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Language(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -3722,7 +3722,7 @@ impl IStoreSku {
 }
 RT_CLASS!{class StoreSku: IStoreSku}
 DEFINE_IID!(IID_IStoreSubscriptionInfo, 1099528042, 1369, 17324, 169, 198, 58, 176, 1, 31, 184, 235);
-RT_INTERFACE!{interface IStoreSubscriptionInfo(IStoreSubscriptionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IStoreSubscriptionInfo] {
+RT_INTERFACE!{interface IStoreSubscriptionInfo(IStoreSubscriptionInfoVtbl): IInspectable [IID_IStoreSubscriptionInfo] {
     fn get_BillingPeriod(&self, out: *mut u32) -> HRESULT,
     fn get_BillingPeriodUnit(&self, out: *mut StoreDurationUnit) -> HRESULT,
     fn get_HasTrialPeriod(&self, out: *mut bool) -> HRESULT,
@@ -3758,7 +3758,7 @@ impl IStoreSubscriptionInfo {
 }
 RT_CLASS!{class StoreSubscriptionInfo: IStoreSubscriptionInfo}
 DEFINE_IID!(IID_IStoreUninstallStorePackageResult, 2680830461, 4719, 19674, 184, 1, 19, 70, 184, 208, 162, 96);
-RT_INTERFACE!{interface IStoreUninstallStorePackageResult(IStoreUninstallStorePackageResultVtbl): IInspectable(IInspectableVtbl) [IID_IStoreUninstallStorePackageResult] {
+RT_INTERFACE!{interface IStoreUninstallStorePackageResult(IStoreUninstallStorePackageResultVtbl): IInspectable [IID_IStoreUninstallStorePackageResult] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_Status(&self, out: *mut StoreUninstallStorePackageStatus) -> HRESULT
 }}
@@ -3779,7 +3779,7 @@ RT_ENUM! { enum StoreUninstallStorePackageStatus: i32 {
     Succeeded = 0, CanceledByUser = 1, NetworkError = 2, UninstallNotApplicable = 3, Error = 4,
 }}
 DEFINE_IID!(IID_IStoreVideo, 4067209604, 28510, 19906, 136, 108, 60, 99, 8, 60, 47, 148);
-RT_INTERFACE!{interface IStoreVideo(IStoreVideoVtbl): IInspectable(IInspectableVtbl) [IID_IStoreVideo] {
+RT_INTERFACE!{interface IStoreVideo(IStoreVideoVtbl): IInspectable [IID_IStoreVideo] {
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_VideoPurposeTag(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Width(&self, out: *mut u32) -> HRESULT,
@@ -3824,7 +3824,7 @@ RT_CLASS!{class StoreVideo: IStoreVideo}
 pub mod targetedcontent { // Windows.Services.TargetedContent
 use crate::prelude::*;
 DEFINE_IID!(IID_ITargetedContentAction, 3613092126, 27862, 19616, 157, 143, 71, 40, 176, 183, 230, 182);
-RT_INTERFACE!{interface ITargetedContentAction(ITargetedContentActionVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentAction] {
+RT_INTERFACE!{interface ITargetedContentAction(ITargetedContentActionVtbl): IInspectable [IID_ITargetedContentAction] {
     fn InvokeAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl ITargetedContentAction {
@@ -3842,7 +3842,7 @@ RT_ENUM! { enum TargetedContentAvailability: i32 {
     None = 0, Partial = 1, All = 2,
 }}
 DEFINE_IID!(IID_ITargetedContentAvailabilityChangedEventArgs, 3774192934, 22823, 17488, 150, 92, 28, 235, 123, 236, 222, 101);
-RT_INTERFACE!{interface ITargetedContentAvailabilityChangedEventArgs(ITargetedContentAvailabilityChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentAvailabilityChangedEventArgs] {
+RT_INTERFACE!{interface ITargetedContentAvailabilityChangedEventArgs(ITargetedContentAvailabilityChangedEventArgsVtbl): IInspectable [IID_ITargetedContentAvailabilityChangedEventArgs] {
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
 impl ITargetedContentAvailabilityChangedEventArgs {
@@ -3854,7 +3854,7 @@ impl ITargetedContentAvailabilityChangedEventArgs {
 }
 RT_CLASS!{class TargetedContentAvailabilityChangedEventArgs: ITargetedContentAvailabilityChangedEventArgs}
 DEFINE_IID!(IID_ITargetedContentChangedEventArgs, 2580842697, 22654, 17798, 142, 247, 181, 76, 169, 69, 58, 22);
-RT_INTERFACE!{interface ITargetedContentChangedEventArgs(ITargetedContentChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentChangedEventArgs] {
+RT_INTERFACE!{interface ITargetedContentChangedEventArgs(ITargetedContentChangedEventArgsVtbl): IInspectable [IID_ITargetedContentChangedEventArgs] {
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT,
     fn get_HasPreviousContentExpired(&self, out: *mut bool) -> HRESULT
 }}
@@ -3872,7 +3872,7 @@ impl ITargetedContentChangedEventArgs {
 }
 RT_CLASS!{class TargetedContentChangedEventArgs: ITargetedContentChangedEventArgs}
 DEFINE_IID!(IID_ITargetedContentCollection, 759916229, 61795, 17594, 159, 110, 225, 164, 194, 187, 85, 157);
-RT_INTERFACE!{interface ITargetedContentCollection(ITargetedContentCollectionVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentCollection] {
+RT_INTERFACE!{interface ITargetedContentCollection(ITargetedContentCollectionVtbl): IInspectable [IID_ITargetedContentCollection] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn ReportInteraction(&self, interaction: TargetedContentInteraction) -> HRESULT,
     fn ReportCustomInteraction(&self, customInteractionName: HSTRING) -> HRESULT,
@@ -3918,7 +3918,7 @@ impl ITargetedContentCollection {
 }
 RT_CLASS!{class TargetedContentCollection: ITargetedContentCollection}
 DEFINE_IID!(IID_ITargetedContentContainer, 3156513993, 34871, 18370, 133, 15, 215, 157, 100, 89, 89, 38);
-RT_INTERFACE!{interface ITargetedContentContainer(ITargetedContentContainerVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentContainer] {
+RT_INTERFACE!{interface ITargetedContentContainer(ITargetedContentContainerVtbl): IInspectable [IID_ITargetedContentContainer] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_Availability(&self, out: *mut TargetedContentAvailability) -> HRESULT,
@@ -3961,7 +3961,7 @@ impl TargetedContentContainer {
 }
 DEFINE_CLSID!(TargetedContentContainer(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,84,97,114,103,101,116,101,100,67,111,110,116,101,110,116,46,84,97,114,103,101,116,101,100,67,111,110,116,101,110,116,67,111,110,116,97,105,110,101,114,0]) [CLSID_TargetedContentContainer]);
 DEFINE_IID!(IID_ITargetedContentContainerStatics, 1531439099, 8512, 19487, 167, 54, 197, 149, 131, 242, 39, 216);
-RT_INTERFACE!{static interface ITargetedContentContainerStatics(ITargetedContentContainerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentContainerStatics] {
+RT_INTERFACE!{static interface ITargetedContentContainerStatics(ITargetedContentContainerStaticsVtbl): IInspectable [IID_ITargetedContentContainerStatics] {
     fn GetAsync(&self, contentId: HSTRING, out: *mut <foundation::IAsyncOperation<TargetedContentContainer> as RtType>::Abi) -> HRESULT
 }}
 impl ITargetedContentContainerStatics {
@@ -3974,7 +3974,7 @@ impl ITargetedContentContainerStatics {
 #[cfg(feature="windows-storage")] RT_CLASS!{class TargetedContentFile: super::super::storage::streams::IRandomAccessStreamReference}
 #[cfg(not(feature="windows-storage"))] RT_CLASS!{class TargetedContentFile: IInspectable}
 DEFINE_IID!(IID_ITargetedContentImage, 2812642777, 30623, 19230, 187, 177, 142, 175, 83, 251, 234, 178);
-RT_INTERFACE!{interface ITargetedContentImage(ITargetedContentImageVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentImage] {
+RT_INTERFACE!{interface ITargetedContentImage(ITargetedContentImageVtbl): IInspectable [IID_ITargetedContentImage] {
     fn get_Height(&self, out: *mut u32) -> HRESULT,
     fn get_Width(&self, out: *mut u32) -> HRESULT
 }}
@@ -3995,7 +3995,7 @@ RT_ENUM! { enum TargetedContentInteraction: i32 {
     Impression = 0, ClickThrough = 1, Hover = 2, Like = 3, Dislike = 4, Dismiss = 5, Ineligible = 6, Accept = 7, Decline = 8, Defer = 9, Canceled = 10, Conversion = 11, Opportunity = 12,
 }}
 DEFINE_IID!(IID_ITargetedContentItem, 941002180, 10092, 19506, 150, 186, 86, 92, 110, 64, 110, 116);
-RT_INTERFACE!{interface ITargetedContentItem(ITargetedContentItemVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentItem] {
+RT_INTERFACE!{interface ITargetedContentItem(ITargetedContentItemVtbl): IInspectable [IID_ITargetedContentItem] {
     fn get_Path(&self, out: *mut HSTRING) -> HRESULT,
     fn ReportInteraction(&self, interaction: TargetedContentInteraction) -> HRESULT,
     fn ReportCustomInteraction(&self, customInteractionName: HSTRING) -> HRESULT,
@@ -4035,7 +4035,7 @@ impl ITargetedContentItem {
 }
 RT_CLASS!{class TargetedContentItem: ITargetedContentItem}
 DEFINE_IID!(IID_ITargetedContentItemState, 1939035220, 19557, 19271, 164, 65, 71, 45, 229, 60, 121, 182);
-RT_INTERFACE!{interface ITargetedContentItemState(ITargetedContentItemStateVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentItemState] {
+RT_INTERFACE!{interface ITargetedContentItemState(ITargetedContentItemStateVtbl): IInspectable [IID_ITargetedContentItemState] {
     fn get_ShouldDisplay(&self, out: *mut bool) -> HRESULT,
     fn get_AppInstallationState(&self, out: *mut TargetedContentAppInstallationState) -> HRESULT
 }}
@@ -4053,7 +4053,7 @@ impl ITargetedContentItemState {
 }
 RT_CLASS!{class TargetedContentItemState: ITargetedContentItemState}
 DEFINE_IID!(IID_ITargetedContentObject, 69040489, 8722, 17105, 157, 250, 136, 168, 227, 3, 58, 163);
-RT_INTERFACE!{interface ITargetedContentObject(ITargetedContentObjectVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentObject] {
+RT_INTERFACE!{interface ITargetedContentObject(ITargetedContentObjectVtbl): IInspectable [IID_ITargetedContentObject] {
     fn get_ObjectKind(&self, out: *mut TargetedContentObjectKind) -> HRESULT,
     fn get_Collection(&self, out: *mut <TargetedContentCollection as RtType>::Abi) -> HRESULT,
     fn get_Item(&self, out: *mut <TargetedContentItem as RtType>::Abi) -> HRESULT,
@@ -4086,7 +4086,7 @@ RT_ENUM! { enum TargetedContentObjectKind: i32 {
     Collection = 0, Item = 1, Value = 2,
 }}
 DEFINE_IID!(IID_ITargetedContentStateChangedEventArgs, 2585587517, 32883, 17430, 141, 242, 84, 104, 53, 166, 65, 79);
-RT_INTERFACE!{interface ITargetedContentStateChangedEventArgs(ITargetedContentStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentStateChangedEventArgs] {
+RT_INTERFACE!{interface ITargetedContentStateChangedEventArgs(ITargetedContentStateChangedEventArgsVtbl): IInspectable [IID_ITargetedContentStateChangedEventArgs] {
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
 impl ITargetedContentStateChangedEventArgs {
@@ -4098,7 +4098,7 @@ impl ITargetedContentStateChangedEventArgs {
 }
 RT_CLASS!{class TargetedContentStateChangedEventArgs: ITargetedContentStateChangedEventArgs}
 DEFINE_IID!(IID_ITargetedContentSubscription, 2284596297, 50770, 19578, 172, 173, 31, 127, 162, 152, 108, 115);
-RT_INTERFACE!{interface ITargetedContentSubscription(ITargetedContentSubscriptionVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentSubscription] {
+RT_INTERFACE!{interface ITargetedContentSubscription(ITargetedContentSubscriptionVtbl): IInspectable [IID_ITargetedContentSubscription] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn GetContentContainerAsync(&self, out: *mut <foundation::IAsyncOperation<TargetedContentContainer> as RtType>::Abi) -> HRESULT,
     fn add_ContentChanged(&self, handler: <foundation::TypedEventHandler<TargetedContentSubscription, TargetedContentChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -4159,7 +4159,7 @@ impl TargetedContentSubscription {
 }
 DEFINE_CLSID!(TargetedContentSubscription(&[87,105,110,100,111,119,115,46,83,101,114,118,105,99,101,115,46,84,97,114,103,101,116,101,100,67,111,110,116,101,110,116,46,84,97,114,103,101,116,101,100,67,111,110,116,101,110,116,83,117,98,115,99,114,105,112,116,105,111,110,0]) [CLSID_TargetedContentSubscription]);
 DEFINE_IID!(IID_ITargetedContentSubscriptionOptions, 1643014864, 11395, 16923, 132, 103, 65, 62, 175, 26, 235, 151);
-RT_INTERFACE!{interface ITargetedContentSubscriptionOptions(ITargetedContentSubscriptionOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentSubscriptionOptions] {
+RT_INTERFACE!{interface ITargetedContentSubscriptionOptions(ITargetedContentSubscriptionOptionsVtbl): IInspectable [IID_ITargetedContentSubscriptionOptions] {
     fn get_SubscriptionId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_AllowPartialContentAvailability(&self, out: *mut bool) -> HRESULT,
     fn put_AllowPartialContentAvailability(&self, value: bool) -> HRESULT,
@@ -4199,7 +4199,7 @@ impl ITargetedContentSubscriptionOptions {
 }
 RT_CLASS!{class TargetedContentSubscriptionOptions: ITargetedContentSubscriptionOptions}
 DEFINE_IID!(IID_ITargetedContentSubscriptionStatics, 4208852608, 13837, 18710, 181, 60, 126, 162, 112, 144, 208, 42);
-RT_INTERFACE!{static interface ITargetedContentSubscriptionStatics(ITargetedContentSubscriptionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentSubscriptionStatics] {
+RT_INTERFACE!{static interface ITargetedContentSubscriptionStatics(ITargetedContentSubscriptionStaticsVtbl): IInspectable [IID_ITargetedContentSubscriptionStatics] {
     fn GetAsync(&self, subscriptionId: HSTRING, out: *mut <foundation::IAsyncOperation<TargetedContentSubscription> as RtType>::Abi) -> HRESULT,
     fn GetOptions(&self, subscriptionId: HSTRING, out: *mut <TargetedContentSubscriptionOptions as RtType>::Abi) -> HRESULT
 }}
@@ -4216,7 +4216,7 @@ impl ITargetedContentSubscriptionStatics {
     }}
 }
 DEFINE_IID!(IID_ITargetedContentValue, 2868765875, 16917, 19448, 134, 127, 67, 240, 72, 101, 249, 191);
-RT_INTERFACE!{interface ITargetedContentValue(ITargetedContentValueVtbl): IInspectable(IInspectableVtbl) [IID_ITargetedContentValue] {
+RT_INTERFACE!{interface ITargetedContentValue(ITargetedContentValueVtbl): IInspectable [IID_ITargetedContentValue] {
     fn get_ValueKind(&self, out: *mut TargetedContentValueKind) -> HRESULT,
     fn get_Path(&self, out: *mut HSTRING) -> HRESULT,
     fn get_String(&self, out: *mut HSTRING) -> HRESULT,

@@ -1,6 +1,6 @@
 use crate::prelude::*;
 DEFINE_IID!(IID_IAsyncAction, 1516535814, 33850, 19881, 134, 91, 157, 38, 229, 223, 173, 123);
-RT_INTERFACE!{interface IAsyncAction(IAsyncActionVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncAction] {
+RT_INTERFACE!{interface IAsyncAction(IAsyncActionVtbl): IInspectable [IID_IAsyncAction] {
     fn put_Completed(&self, handler: <AsyncActionCompletedHandler as RtType>::Abi) -> HRESULT,
     fn get_Completed(&self, out: *mut <AsyncActionCompletedHandler as RtType>::Abi) -> HRESULT,
     fn GetResults(&self) -> HRESULT
@@ -41,7 +41,7 @@ impl<TProgress: RtType> AsyncActionProgressHandler<TProgress> {
     }}
 }
 DEFINE_IID!(IID_IAsyncActionWithProgress, 527282776, 59395, 18593, 149, 70, 235, 115, 83, 57, 136, 132);
-RT_INTERFACE!{interface IAsyncActionWithProgress<TProgress>(IAsyncActionWithProgressVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncActionWithProgress] {
+RT_INTERFACE!{interface IAsyncActionWithProgress<TProgress>(IAsyncActionWithProgressVtbl): IInspectable [IID_IAsyncActionWithProgress] {
     fn put_Progress(&self, handler: <AsyncActionProgressHandler<TProgress> as RtType>::Abi) -> HRESULT,
     fn get_Progress(&self, out: *mut <AsyncActionProgressHandler<TProgress> as RtType>::Abi) -> HRESULT,
     fn put_Completed(&self, handler: <AsyncActionWithProgressCompletedHandler<TProgress> as RtType>::Abi) -> HRESULT,
@@ -83,7 +83,7 @@ impl<TProgress: RtType> AsyncActionWithProgressCompletedHandler<TProgress> {
     }}
 }
 DEFINE_IID!(IID_IAsyncInfo, 54, 0, 0, 192, 0, 0, 0, 0, 0, 0, 70);
-RT_INTERFACE!{interface IAsyncInfo(IAsyncInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncInfo] {
+RT_INTERFACE!{interface IAsyncInfo(IAsyncInfoVtbl): IInspectable [IID_IAsyncInfo] {
     fn get_Id(&self, out: *mut u32) -> HRESULT,
     fn get_Status(&self, out: *mut AsyncStatus) -> HRESULT,
     fn get_ErrorCode(&self, out: *mut HResult) -> HRESULT,
@@ -116,7 +116,7 @@ impl IAsyncInfo {
     }}
 }
 DEFINE_IID!(IID_IAsyncOperation, 2680336571, 58438, 17634, 170, 97, 156, 171, 143, 99, 106, 242);
-RT_INTERFACE!{interface IAsyncOperation<TResult>(IAsyncOperationVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncOperation] {
+RT_INTERFACE!{interface IAsyncOperation<TResult>(IAsyncOperationVtbl): IInspectable [IID_IAsyncOperation] {
     fn put_Completed(&self, handler: <AsyncOperationCompletedHandler<TResult> as RtType>::Abi) -> HRESULT,
     fn get_Completed(&self, out: *mut <AsyncOperationCompletedHandler<TResult> as RtType>::Abi) -> HRESULT,
     fn GetResults(&self, out: *mut TResult::Abi) -> HRESULT
@@ -158,7 +158,7 @@ impl<TResult: RtType, TProgress: RtType> AsyncOperationProgressHandler<TResult, 
     }}
 }
 DEFINE_IID!(IID_IAsyncOperationWithProgress, 3050321623, 58007, 18831, 186, 96, 2, 137, 231, 110, 35, 221);
-RT_INTERFACE!{interface IAsyncOperationWithProgress<TResult, TProgress>(IAsyncOperationWithProgressVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncOperationWithProgress] {
+RT_INTERFACE!{interface IAsyncOperationWithProgress<TResult, TProgress>(IAsyncOperationWithProgressVtbl): IInspectable [IID_IAsyncOperationWithProgress] {
     fn put_Progress(&self, handler: <AsyncOperationProgressHandler<TResult, TProgress> as RtType>::Abi) -> HRESULT,
     fn get_Progress(&self, out: *mut <AsyncOperationProgressHandler<TResult, TProgress> as RtType>::Abi) -> HRESULT,
     fn put_Completed(&self, handler: <AsyncOperationWithProgressCompletedHandler<TResult, TProgress> as RtType>::Abi) -> HRESULT,
@@ -204,7 +204,7 @@ RT_ENUM! { enum AsyncStatus: i32 {
     Canceled = 2, Completed = 1, Error = 3, Started = 0,
 }}
 DEFINE_IID!(IID_IClosable, 819308585, 32676, 16422, 131, 187, 215, 91, 174, 78, 169, 158);
-RT_INTERFACE!{interface IClosable(IClosableVtbl): IInspectable(IInspectableVtbl) [IID_IClosable] {
+RT_INTERFACE!{interface IClosable(IClosableVtbl): IInspectable [IID_IClosable] {
     fn Close(&self) -> HRESULT
 }}
 impl IClosable {
@@ -217,7 +217,7 @@ RT_STRUCT! { struct DateTime {
     UniversalTime: i64,
 }}
 DEFINE_IID!(IID_IDeferral, 3592853298, 15231, 18087, 180, 11, 79, 220, 162, 162, 198, 147);
-RT_INTERFACE!{interface IDeferral(IDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IDeferral] {
+RT_INTERFACE!{interface IDeferral(IDeferralVtbl): IInspectable [IID_IDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl IDeferral {
@@ -245,7 +245,7 @@ impl DeferralCompletedHandler {
     }}
 }
 DEFINE_IID!(IID_IDeferralFactory, 1705110725, 16309, 18482, 140, 169, 240, 97, 178, 129, 209, 58);
-RT_INTERFACE!{static interface IDeferralFactory(IDeferralFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDeferralFactory] {
+RT_INTERFACE!{static interface IDeferralFactory(IDeferralFactoryVtbl): IInspectable [IID_IDeferralFactory] {
     fn Create(&self, handler: <DeferralCompletedHandler as RtType>::Abi, out: *mut <Deferral as RtType>::Abi) -> HRESULT
 }}
 impl IDeferralFactory {
@@ -269,7 +269,7 @@ RT_STRUCT! { struct EventRegistrationToken {
     Value: i64,
 }}
 DEFINE_IID!(IID_IGetActivationFactory, 1323011810, 38621, 18855, 148, 247, 70, 7, 221, 171, 142, 60);
-RT_INTERFACE!{interface IGetActivationFactory(IGetActivationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGetActivationFactory] {
+RT_INTERFACE!{interface IGetActivationFactory(IGetActivationFactoryVtbl): IInspectable [IID_IGetActivationFactory] {
     fn GetActivationFactory(&self, activatableClassId: HSTRING, out: *mut <IInspectable as RtType>::Abi) -> HRESULT
 }}
 impl IGetActivationFactory {
@@ -294,7 +294,7 @@ impl GuidHelper {
 }
 DEFINE_CLSID!(GuidHelper(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,71,117,105,100,72,101,108,112,101,114,0]) [CLSID_GuidHelper]);
 DEFINE_IID!(IID_IGuidHelperStatics, 1506252395, 44626, 21123, 173, 127, 161, 185, 233, 103, 138, 221);
-RT_INTERFACE!{static interface IGuidHelperStatics(IGuidHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGuidHelperStatics] {
+RT_INTERFACE!{static interface IGuidHelperStatics(IGuidHelperStaticsVtbl): IInspectable [IID_IGuidHelperStatics] {
     fn CreateNewGuid(&self, out: *mut Guid) -> HRESULT,
     fn get_Empty(&self, out: *mut Guid) -> HRESULT,
     fn Equals(&self, target: *const Guid, value: *const Guid, out: *mut bool) -> HRESULT
@@ -320,7 +320,7 @@ RT_STRUCT! { struct HResult {
     Value: i32,
 }}
 DEFINE_IID!(IID_IMemoryBuffer, 4223982890, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
-RT_INTERFACE!{interface IMemoryBuffer(IMemoryBufferVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBuffer] {
+RT_INTERFACE!{interface IMemoryBuffer(IMemoryBufferVtbl): IInspectable [IID_IMemoryBuffer] {
     fn CreateReference(&self, out: *mut <IMemoryBufferReference as RtType>::Abi) -> HRESULT
 }}
 impl IMemoryBuffer {
@@ -339,7 +339,7 @@ impl MemoryBuffer {
 }
 DEFINE_CLSID!(MemoryBuffer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,109,111,114,121,66,117,102,102,101,114,0]) [CLSID_MemoryBuffer]);
 DEFINE_IID!(IID_IMemoryBufferFactory, 4223982891, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
-RT_INTERFACE!{static interface IMemoryBufferFactory(IMemoryBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBufferFactory] {
+RT_INTERFACE!{static interface IMemoryBufferFactory(IMemoryBufferFactoryVtbl): IInspectable [IID_IMemoryBufferFactory] {
     fn Create(&self, capacity: u32, out: *mut <MemoryBuffer as RtType>::Abi) -> HRESULT
 }}
 impl IMemoryBufferFactory {
@@ -350,7 +350,7 @@ impl IMemoryBufferFactory {
     }}
 }
 DEFINE_IID!(IID_IMemoryBufferReference, 4223982889, 9307, 4580, 175, 152, 104, 148, 35, 38, 12, 248);
-RT_INTERFACE!{interface IMemoryBufferReference(IMemoryBufferReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryBufferReference] {
+RT_INTERFACE!{interface IMemoryBufferReference(IMemoryBufferReferenceVtbl): IInspectable [IID_IMemoryBufferReference] {
     fn get_Capacity(&self, out: *mut u32) -> HRESULT,
     fn add_Closed(&self, handler: <TypedEventHandler<IMemoryBufferReference, IInspectable> as RtType>::Abi, out: *mut EventRegistrationToken) -> HRESULT,
     fn remove_Closed(&self, cookie: EventRegistrationToken) -> HRESULT
@@ -378,7 +378,7 @@ RT_ENUM! { enum PropertyType: i32 {
     Empty = 0, UInt8 = 1, Int16 = 2, UInt16 = 3, Int32 = 4, UInt32 = 5, Int64 = 6, UInt64 = 7, Single = 8, Double = 9, Char16 = 10, Boolean = 11, String = 12, Inspectable = 13, DateTime = 14, TimeSpan = 15, Guid = 16, Point = 17, Size = 18, Rect = 19, OtherType = 20, UInt8Array = 1025, Int16Array = 1026, UInt16Array = 1027, Int32Array = 1028, UInt32Array = 1029, Int64Array = 1030, UInt64Array = 1031, SingleArray = 1032, DoubleArray = 1033, Char16Array = 1034, BooleanArray = 1035, StringArray = 1036, InspectableArray = 1037, DateTimeArray = 1038, TimeSpanArray = 1039, GuidArray = 1040, PointArray = 1041, SizeArray = 1042, RectArray = 1043, OtherTypeArray = 1044,
 }}
 DEFINE_IID!(IID_IPropertyValue, 1272349405, 30036, 16617, 154, 155, 130, 101, 78, 222, 126, 98);
-RT_INTERFACE!{interface IPropertyValue(IPropertyValueVtbl): IInspectable(IInspectableVtbl) [IID_IPropertyValue] {
+RT_INTERFACE!{interface IPropertyValue(IPropertyValueVtbl): IInspectable [IID_IPropertyValue] {
     fn get_Type(&self, out: *mut PropertyType) -> HRESULT,
     fn get_IsNumericScalar(&self, out: *mut bool) -> HRESULT,
     fn GetUInt8(&self, out: *mut u8) -> HRESULT,
@@ -739,7 +739,7 @@ impl PropertyValue {
 }
 DEFINE_CLSID!(PropertyValue(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,80,114,111,112,101,114,116,121,86,97,108,117,101,0]) [CLSID_PropertyValue]);
 DEFINE_IID!(IID_IPropertyValueStatics, 1654381512, 55602, 20468, 150, 185, 141, 150, 197, 193, 232, 88);
-RT_INTERFACE!{static interface IPropertyValueStatics(IPropertyValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPropertyValueStatics] {
+RT_INTERFACE!{static interface IPropertyValueStatics(IPropertyValueStaticsVtbl): IInspectable [IID_IPropertyValueStatics] {
     fn CreateEmpty(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT,
     fn CreateUInt8(&self, value: u8, out: *mut <IInspectable as RtType>::Abi) -> HRESULT,
     fn CreateInt16(&self, value: i16, out: *mut <IInspectable as RtType>::Abi) -> HRESULT,
@@ -981,7 +981,7 @@ RT_STRUCT! { struct Rect {
     X: f32, Y: f32, Width: f32, Height: f32,
 }}
 DEFINE_IID!(IID_IReference, 1640068870, 11621, 4576, 154, 232, 212, 133, 100, 1, 84, 114);
-RT_INTERFACE!{interface IReference<T>(IReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IReference] {
+RT_INTERFACE!{interface IReference<T>(IReferenceVtbl): IInspectable [IID_IReference] {
     fn get_Value(&self, out: *mut T::Abi) -> HRESULT
 }}
 impl<T: RtType> IReference<T> {
@@ -992,7 +992,7 @@ impl<T: RtType> IReference<T> {
     }}
 }
 DEFINE_IID!(IID_IReferenceArray, 1640068871, 11621, 4576, 154, 232, 212, 133, 100, 1, 84, 114);
-RT_INTERFACE!{interface IReferenceArray<T>(IReferenceArrayVtbl): IInspectable(IInspectableVtbl) [IID_IReferenceArray] {
+RT_INTERFACE!{interface IReferenceArray<T>(IReferenceArrayVtbl): IInspectable [IID_IReferenceArray] {
     fn get_Value(&self, outSize: *mut u32, out: *mut *mut T::Abi) -> HRESULT
 }}
 impl<T: RtType> IReferenceArray<T> {
@@ -1006,7 +1006,7 @@ RT_STRUCT! { struct Size {
     Width: f32, Height: f32,
 }}
 DEFINE_IID!(IID_IStringable, 2520162132, 36534, 18672, 171, 206, 193, 178, 17, 230, 39, 195);
-RT_INTERFACE!{interface IStringable(IStringableVtbl): IInspectable(IInspectableVtbl) [IID_IStringable] {
+RT_INTERFACE!{interface IStringable(IStringableVtbl): IInspectable [IID_IStringable] {
     fn ToString(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IStringable {
@@ -1048,7 +1048,7 @@ impl Uri {
 }
 DEFINE_CLSID!(Uri(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,85,114,105,0]) [CLSID_Uri]);
 DEFINE_IID!(IID_IUriEscapeStatics, 3251909306, 51236, 17490, 167, 253, 81, 43, 195, 187, 233, 161);
-RT_INTERFACE!{static interface IUriEscapeStatics(IUriEscapeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUriEscapeStatics] {
+RT_INTERFACE!{static interface IUriEscapeStatics(IUriEscapeStaticsVtbl): IInspectable [IID_IUriEscapeStatics] {
     fn UnescapeComponent(&self, toUnescape: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn EscapeComponent(&self, toEscape: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
@@ -1065,7 +1065,7 @@ impl IUriEscapeStatics {
     }}
 }
 DEFINE_IID!(IID_IUriRuntimeClass, 2654363223, 18610, 16736, 149, 111, 199, 56, 81, 32, 187, 252);
-RT_INTERFACE!{interface IUriRuntimeClass(IUriRuntimeClassVtbl): IInspectable(IInspectableVtbl) [IID_IUriRuntimeClass] {
+RT_INTERFACE!{interface IUriRuntimeClass(IUriRuntimeClassVtbl): IInspectable [IID_IUriRuntimeClass] {
     fn get_AbsoluteUri(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayUri(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Domain(&self, out: *mut HSTRING) -> HRESULT,
@@ -1172,7 +1172,7 @@ impl IUriRuntimeClass {
     }}
 }
 DEFINE_IID!(IID_IUriRuntimeClassFactory, 1151957359, 29246, 20447, 162, 24, 3, 62, 117, 176, 192, 132);
-RT_INTERFACE!{static interface IUriRuntimeClassFactory(IUriRuntimeClassFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUriRuntimeClassFactory] {
+RT_INTERFACE!{static interface IUriRuntimeClassFactory(IUriRuntimeClassFactoryVtbl): IInspectable [IID_IUriRuntimeClassFactory] {
     fn CreateUri(&self, uri: HSTRING, out: *mut <Uri as RtType>::Abi) -> HRESULT,
     fn CreateWithRelativeUri(&self, baseUri: HSTRING, relativeUri: HSTRING, out: *mut <Uri as RtType>::Abi) -> HRESULT
 }}
@@ -1189,7 +1189,7 @@ impl IUriRuntimeClassFactory {
     }}
 }
 DEFINE_IID!(IID_IUriRuntimeClassWithAbsoluteCanonicalUri, 1972213345, 8732, 18447, 163, 57, 80, 101, 102, 115, 244, 111);
-RT_INTERFACE!{interface IUriRuntimeClassWithAbsoluteCanonicalUri(IUriRuntimeClassWithAbsoluteCanonicalUriVtbl): IInspectable(IInspectableVtbl) [IID_IUriRuntimeClassWithAbsoluteCanonicalUri] {
+RT_INTERFACE!{interface IUriRuntimeClassWithAbsoluteCanonicalUri(IUriRuntimeClassWithAbsoluteCanonicalUriVtbl): IInspectable [IID_IUriRuntimeClassWithAbsoluteCanonicalUri] {
     fn get_AbsoluteCanonicalUri(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayIri(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -1214,7 +1214,7 @@ impl WwwFormUrlDecoder {
 }
 DEFINE_CLSID!(WwwFormUrlDecoder(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,87,119,119,70,111,114,109,85,114,108,68,101,99,111,100,101,114,0]) [CLSID_WwwFormUrlDecoder]);
 DEFINE_IID!(IID_IWwwFormUrlDecoderEntry, 308180017, 63096, 20110, 182, 112, 32, 169, 176, 108, 81, 45);
-RT_INTERFACE!{interface IWwwFormUrlDecoderEntry(IWwwFormUrlDecoderEntryVtbl): IInspectable(IInspectableVtbl) [IID_IWwwFormUrlDecoderEntry] {
+RT_INTERFACE!{interface IWwwFormUrlDecoderEntry(IWwwFormUrlDecoderEntryVtbl): IInspectable [IID_IWwwFormUrlDecoderEntry] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -1232,7 +1232,7 @@ impl IWwwFormUrlDecoderEntry {
 }
 RT_CLASS!{class WwwFormUrlDecoderEntry: IWwwFormUrlDecoderEntry}
 DEFINE_IID!(IID_IWwwFormUrlDecoderRuntimeClass, 3562669137, 61989, 17730, 146, 150, 14, 29, 245, 210, 84, 223);
-RT_INTERFACE!{interface IWwwFormUrlDecoderRuntimeClass(IWwwFormUrlDecoderRuntimeClassVtbl): IInspectable(IInspectableVtbl) [IID_IWwwFormUrlDecoderRuntimeClass] {
+RT_INTERFACE!{interface IWwwFormUrlDecoderRuntimeClass(IWwwFormUrlDecoderRuntimeClassVtbl): IInspectable [IID_IWwwFormUrlDecoderRuntimeClass] {
     fn GetFirstValueByName(&self, name: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
 impl IWwwFormUrlDecoderRuntimeClass {
@@ -1243,7 +1243,7 @@ impl IWwwFormUrlDecoderRuntimeClass {
     }}
 }
 DEFINE_IID!(IID_IWwwFormUrlDecoderRuntimeClassFactory, 1535929149, 9390, 16821, 161, 191, 240, 195, 213, 68, 132, 91);
-RT_INTERFACE!{static interface IWwwFormUrlDecoderRuntimeClassFactory(IWwwFormUrlDecoderRuntimeClassFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWwwFormUrlDecoderRuntimeClassFactory] {
+RT_INTERFACE!{static interface IWwwFormUrlDecoderRuntimeClassFactory(IWwwFormUrlDecoderRuntimeClassFactoryVtbl): IInspectable [IID_IWwwFormUrlDecoderRuntimeClassFactory] {
     fn CreateWwwFormUrlDecoder(&self, query: HSTRING, out: *mut <WwwFormUrlDecoder as RtType>::Abi) -> HRESULT
 }}
 impl IWwwFormUrlDecoderRuntimeClassFactory {
@@ -3412,7 +3412,7 @@ RT_ENUM! { enum CollectionChange: i32 {
     Reset = 0, ItemInserted = 1, ItemRemoved = 2, ItemChanged = 3,
 }}
 DEFINE_IID!(IID_IIterable, 4205151722, 25108, 16919, 175, 218, 127, 70, 222, 88, 105, 179);
-RT_INTERFACE!{interface IIterable<T>(IIterableVtbl): IInspectable(IInspectableVtbl) [IID_IIterable] {
+RT_INTERFACE!{interface IIterable<T>(IIterableVtbl): IInspectable [IID_IIterable] {
     fn First(&self, out: *mut <IIterator<T> as RtType>::Abi) -> HRESULT
 }}
 impl<T: RtType> IIterable<T> {
@@ -3423,7 +3423,7 @@ impl<T: RtType> IIterable<T> {
     }}
 }
 DEFINE_IID!(IID_IIterator, 1786374243, 17152, 17818, 153, 102, 203, 182, 96, 150, 62, 225);
-RT_INTERFACE!{interface IIterator<T>(IIteratorVtbl): IInspectable(IInspectableVtbl) [IID_IIterator] {
+RT_INTERFACE!{interface IIterator<T>(IIteratorVtbl): IInspectable [IID_IIterator] {
     fn get_Current(&self, out: *mut T::Abi) -> HRESULT,
     fn get_HasCurrent(&self, out: *mut bool) -> HRESULT,
     fn MoveNext(&self, out: *mut bool) -> HRESULT,
@@ -3453,7 +3453,7 @@ impl<T: RtType> IIterator<T> {
     }}
 }
 DEFINE_IID!(IID_IKeyValuePair, 45422889, 49604, 19070, 137, 64, 3, 18, 181, 193, 133, 0);
-RT_INTERFACE!{interface IKeyValuePair<K, V>(IKeyValuePairVtbl): IInspectable(IInspectableVtbl) [IID_IKeyValuePair] {
+RT_INTERFACE!{interface IKeyValuePair<K, V>(IKeyValuePairVtbl): IInspectable [IID_IKeyValuePair] {
     fn get_Key(&self, out: *mut K::Abi) -> HRESULT,
     fn get_Value(&self, out: *mut V::Abi) -> HRESULT
 }}
@@ -3470,7 +3470,7 @@ impl<K: RtType, V: RtType> IKeyValuePair<K, V> {
     }}
 }
 DEFINE_IID!(IID_IMap, 1009329662, 34073, 17857, 170, 121, 25, 123, 103, 24, 193, 193);
-RT_INTERFACE!{interface IMap<K, V>(IMapVtbl): IInspectable(IInspectableVtbl) [IID_IMap] {
+RT_INTERFACE!{interface IMap<K, V>(IMapVtbl): IInspectable [IID_IMap] {
     fn Lookup(&self, key: K::Abi, out: *mut V::Abi) -> HRESULT,
     fn get_Size(&self, out: *mut u32) -> HRESULT,
     fn HasKey(&self, key: K::Abi, out: *mut bool) -> HRESULT,
@@ -3515,7 +3515,7 @@ impl<K: RtType, V: RtType> IMap<K, V> {
     }}
 }
 DEFINE_IID!(IID_IMapChangedEventArgs, 2570712287, 1290, 19471, 170, 96, 119, 7, 95, 156, 71, 119);
-RT_INTERFACE!{interface IMapChangedEventArgs<K>(IMapChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMapChangedEventArgs] {
+RT_INTERFACE!{interface IMapChangedEventArgs<K>(IMapChangedEventArgsVtbl): IInspectable [IID_IMapChangedEventArgs] {
     fn get_CollectionChange(&self, out: *mut CollectionChange) -> HRESULT,
     fn get_Key(&self, out: *mut K::Abi) -> HRESULT
 }}
@@ -3542,7 +3542,7 @@ impl<K: RtType, V: RtType> MapChangedEventHandler<K, V> {
     }}
 }
 DEFINE_IID!(IID_IMapView, 3833646656, 41784, 19162, 173, 207, 39, 34, 114, 228, 140, 185);
-RT_INTERFACE!{interface IMapView<K, V>(IMapViewVtbl): IInspectable(IInspectableVtbl) [IID_IMapView] {
+RT_INTERFACE!{interface IMapView<K, V>(IMapViewVtbl): IInspectable [IID_IMapView] {
     fn Lookup(&self, key: K::Abi, out: *mut V::Abi) -> HRESULT,
     fn get_Size(&self, out: *mut u32) -> HRESULT,
     fn HasKey(&self, key: K::Abi, out: *mut bool) -> HRESULT,
@@ -3571,7 +3571,7 @@ impl<K: RtType, V: RtType> IMapView<K, V> {
     }}
 }
 DEFINE_IID!(IID_IObservableMap, 1709124597, 48953, 16821, 174, 188, 90, 157, 134, 94, 71, 43);
-RT_INTERFACE!{interface IObservableMap<K, V>(IObservableMapVtbl): IInspectable(IInspectableVtbl) [IID_IObservableMap] {
+RT_INTERFACE!{interface IObservableMap<K, V>(IObservableMapVtbl): IInspectable [IID_IObservableMap] {
     fn add_MapChanged(&self, vhnd: <MapChangedEventHandler<K, V> as RtType>::Abi, out: *mut super::EventRegistrationToken) -> HRESULT,
     fn remove_MapChanged(&self, token: super::EventRegistrationToken) -> HRESULT
 }}
@@ -3587,7 +3587,7 @@ impl<K: RtType, V: RtType> IObservableMap<K, V> {
     }}
 }
 DEFINE_IID!(IID_IObservableVector, 1494739795, 20660, 18957, 179, 9, 101, 134, 43, 63, 29, 188);
-RT_INTERFACE!{interface IObservableVector<T>(IObservableVectorVtbl): IInspectable(IInspectableVtbl) [IID_IObservableVector] {
+RT_INTERFACE!{interface IObservableVector<T>(IObservableVectorVtbl): IInspectable [IID_IObservableVector] {
     fn add_VectorChanged(&self, vhnd: <VectorChangedEventHandler<T> as RtType>::Abi, out: *mut super::EventRegistrationToken) -> HRESULT,
     fn remove_VectorChanged(&self, token: super::EventRegistrationToken) -> HRESULT
 }}
@@ -3603,7 +3603,7 @@ impl<T: RtType> IObservableVector<T> {
     }}
 }
 DEFINE_IID!(IID_IPropertySet, 2319707551, 62694, 17441, 172, 249, 29, 171, 41, 134, 130, 12);
-RT_INTERFACE!{interface IPropertySet(IPropertySetVtbl): IInspectable(IInspectableVtbl) [IID_IPropertySet] {
+RT_INTERFACE!{interface IPropertySet(IPropertySetVtbl): IInspectable [IID_IPropertySet] {
     
 }}
 RT_CLASS!{class PropertySet: IPropertySet}
@@ -3616,7 +3616,7 @@ RT_CLASS!{class ValueSet: IPropertySet}
 impl RtActivatable<IActivationFactory> for ValueSet {}
 DEFINE_CLSID!(ValueSet(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,67,111,108,108,101,99,116,105,111,110,115,46,86,97,108,117,101,83,101,116,0]) [CLSID_ValueSet]);
 DEFINE_IID!(IID_IVector, 2436052969, 4513, 17221, 163, 162, 78, 127, 149, 110, 34, 45);
-RT_INTERFACE!{interface IVector<T>(IVectorVtbl): IInspectable(IInspectableVtbl) [IID_IVector] {
+RT_INTERFACE!{interface IVector<T>(IVectorVtbl): IInspectable [IID_IVector] {
     fn GetAt(&self, index: u32, out: *mut T::Abi) -> HRESULT,
     fn get_Size(&self, out: *mut u32) -> HRESULT,
     fn GetView(&self, out: *mut <IVectorView<T> as RtType>::Abi) -> HRESULT,
@@ -3687,7 +3687,7 @@ impl<T: RtType> IVector<T> {
     }}
 }
 DEFINE_IID!(IID_IVectorChangedEventArgs, 1465463775, 13566, 17536, 175, 21, 7, 105, 31, 61, 93, 155);
-RT_INTERFACE!{interface IVectorChangedEventArgs(IVectorChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVectorChangedEventArgs] {
+RT_INTERFACE!{interface IVectorChangedEventArgs(IVectorChangedEventArgsVtbl): IInspectable [IID_IVectorChangedEventArgs] {
     fn get_CollectionChange(&self, out: *mut CollectionChange) -> HRESULT,
     fn get_Index(&self, out: *mut u32) -> HRESULT
 }}
@@ -3714,7 +3714,7 @@ impl<T: RtType> VectorChangedEventHandler<T> {
     }}
 }
 DEFINE_IID!(IID_IVectorView, 3152149068, 45283, 17795, 186, 239, 31, 27, 46, 72, 62, 86);
-RT_INTERFACE!{interface IVectorView<T>(IVectorViewVtbl): IInspectable(IInspectableVtbl) [IID_IVectorView] {
+RT_INTERFACE!{interface IVectorView<T>(IVectorViewVtbl): IInspectable [IID_IVectorView] {
     fn GetAt(&self, index: u32, out: *mut T::Abi) -> HRESULT,
     fn get_Size(&self, out: *mut u32) -> HRESULT,
     fn IndexOf(&self, value: T::Abi, index: *mut u32, out: *mut bool) -> HRESULT,
@@ -5705,7 +5705,7 @@ impl AsyncCausalityTracer {
 }
 DEFINE_CLSID!(AsyncCausalityTracer(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,65,115,121,110,99,67,97,117,115,97,108,105,116,121,84,114,97,99,101,114,0]) [CLSID_AsyncCausalityTracer]);
 DEFINE_IID!(IID_IAsyncCausalityTracerStatics, 1350896422, 9854, 17691, 168, 144, 171, 106, 55, 2, 69, 238);
-RT_INTERFACE!{static interface IAsyncCausalityTracerStatics(IAsyncCausalityTracerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAsyncCausalityTracerStatics] {
+RT_INTERFACE!{static interface IAsyncCausalityTracerStatics(IAsyncCausalityTracerStaticsVtbl): IInspectable [IID_IAsyncCausalityTracerStatics] {
     fn TraceOperationCreation(&self, traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, operationName: HSTRING, relatedContext: u64) -> HRESULT,
     fn TraceOperationCompletion(&self, traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, status: super::AsyncStatus) -> HRESULT,
     fn TraceOperationRelation(&self, traceLevel: CausalityTraceLevel, source: CausalitySource, platformId: Guid, operationId: u64, relation: CausalityRelation) -> HRESULT,
@@ -5758,7 +5758,7 @@ RT_ENUM! { enum CausalityTraceLevel: i32 {
     Required = 0, Important = 1, Verbose = 2,
 }}
 DEFINE_IID!(IID_IErrorDetails, 931969793, 11465, 17039, 140, 85, 44, 153, 13, 70, 62, 143);
-RT_INTERFACE!{interface IErrorDetails(IErrorDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorDetails] {
+RT_INTERFACE!{interface IErrorDetails(IErrorDetailsVtbl): IInspectable [IID_IErrorDetails] {
     fn get_Description(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LongDescription(&self, out: *mut HSTRING) -> HRESULT,
     fn get_HelpUri(&self, out: *mut <super::Uri as RtType>::Abi) -> HRESULT
@@ -5789,7 +5789,7 @@ impl ErrorDetails {
 }
 DEFINE_CLSID!(ErrorDetails(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,69,114,114,111,114,68,101,116,97,105,108,115,0]) [CLSID_ErrorDetails]);
 DEFINE_IID!(IID_IErrorDetailsStatics, 3077584720, 2845, 18120, 170, 14, 75, 129, 120, 228, 252, 233);
-RT_INTERFACE!{static interface IErrorDetailsStatics(IErrorDetailsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorDetailsStatics] {
+RT_INTERFACE!{static interface IErrorDetailsStatics(IErrorDetailsStaticsVtbl): IInspectable [IID_IErrorDetailsStatics] {
     fn CreateFromHResultAsync(&self, errorCode: i32, out: *mut <super::IAsyncOperation<ErrorDetails> as RtType>::Abi) -> HRESULT
 }}
 impl IErrorDetailsStatics {
@@ -5803,7 +5803,7 @@ RT_ENUM! { enum ErrorOptions: u32 {
     None = 0, SuppressExceptions = 1, ForceExceptions = 2, UseSetErrorInfo = 4, SuppressSetErrorInfo = 8,
 }}
 DEFINE_IID!(IID_IErrorReportingSettings, 372676498, 45118, 19361, 139, 184, 210, 143, 74, 180, 210, 192);
-RT_INTERFACE!{interface IErrorReportingSettings(IErrorReportingSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IErrorReportingSettings] {
+RT_INTERFACE!{interface IErrorReportingSettings(IErrorReportingSettingsVtbl): IInspectable [IID_IErrorReportingSettings] {
     fn SetErrorOptions(&self, value: ErrorOptions) -> HRESULT,
     fn GetErrorOptions(&self, out: *mut ErrorOptions) -> HRESULT
 }}
@@ -5819,7 +5819,7 @@ impl IErrorReportingSettings {
     }}
 }
 DEFINE_IID!(IID_IFileLoggingSession, 617038358, 65234, 16460, 137, 95, 31, 150, 153, 203, 2, 247);
-RT_INTERFACE!{interface IFileLoggingSession(IFileLoggingSessionVtbl): IInspectable(IInspectableVtbl) [IID_IFileLoggingSession] {
+RT_INTERFACE!{interface IFileLoggingSession(IFileLoggingSessionVtbl): IInspectable [IID_IFileLoggingSession] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn AddLoggingChannel(&self, loggingChannel: <ILoggingChannel as RtType>::Abi) -> HRESULT,
     fn AddLoggingChannelWithLevel(&self, loggingChannel: <ILoggingChannel as RtType>::Abi, maxLevel: LoggingLevel) -> HRESULT,
@@ -5871,7 +5871,7 @@ impl FileLoggingSession {
 }
 DEFINE_CLSID!(FileLoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,70,105,108,101,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_FileLoggingSession]);
 DEFINE_IID!(IID_IFileLoggingSessionFactory, 4003499470, 33863, 19882, 145, 51, 18, 235, 70, 246, 151, 212);
-RT_INTERFACE!{static interface IFileLoggingSessionFactory(IFileLoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileLoggingSessionFactory] {
+RT_INTERFACE!{static interface IFileLoggingSessionFactory(IFileLoggingSessionFactoryVtbl): IInspectable [IID_IFileLoggingSessionFactory] {
     fn Create(&self, name: HSTRING, out: *mut <FileLoggingSession as RtType>::Abi) -> HRESULT
 }}
 impl IFileLoggingSessionFactory {
@@ -5882,7 +5882,7 @@ impl IFileLoggingSessionFactory {
     }}
 }
 DEFINE_IID!(IID_ILogFileGeneratedEventArgs, 647927663, 3384, 19482, 181, 63, 179, 149, 216, 129, 223, 132);
-RT_INTERFACE!{interface ILogFileGeneratedEventArgs(ILogFileGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ILogFileGeneratedEventArgs] {
+RT_INTERFACE!{interface ILogFileGeneratedEventArgs(ILogFileGeneratedEventArgsVtbl): IInspectable [IID_ILogFileGeneratedEventArgs] {
     #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut <super::super::storage::StorageFile as RtType>::Abi) -> HRESULT
 }}
 impl ILogFileGeneratedEventArgs {
@@ -5894,7 +5894,7 @@ impl ILogFileGeneratedEventArgs {
 }
 RT_CLASS!{class LogFileGeneratedEventArgs: ILogFileGeneratedEventArgs}
 DEFINE_IID!(IID_ILoggingActivity, 3154323777, 46950, 19637, 152, 72, 151, 172, 107, 166, 214, 12);
-RT_INTERFACE!{interface ILoggingActivity(ILoggingActivityVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivity] {
+RT_INTERFACE!{interface ILoggingActivity(ILoggingActivityVtbl): IInspectable [IID_ILoggingActivity] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Id(&self, out: *mut Guid) -> HRESULT
 }}
@@ -5922,7 +5922,7 @@ impl LoggingActivity {
 }
 DEFINE_CLSID!(LoggingActivity(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,65,99,116,105,118,105,116,121,0]) [CLSID_LoggingActivity]);
 DEFINE_IID!(IID_ILoggingActivity2, 650287112, 25378, 17770, 175, 130, 128, 200, 100, 47, 23, 139);
-RT_INTERFACE!{interface ILoggingActivity2(ILoggingActivity2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivity2] {
+RT_INTERFACE!{interface ILoggingActivity2(ILoggingActivity2Vtbl): IInspectable [IID_ILoggingActivity2] {
     fn get_Channel(&self, out: *mut <LoggingChannel as RtType>::Abi) -> HRESULT,
     fn StopActivity(&self, stopEventName: HSTRING) -> HRESULT,
     fn StopActivityWithFields(&self, stopEventName: HSTRING, fields: <LoggingFields as RtType>::Abi) -> HRESULT,
@@ -5948,7 +5948,7 @@ impl ILoggingActivity2 {
     }}
 }
 DEFINE_IID!(IID_ILoggingActivityFactory, 1798550659, 57610, 19544, 151, 213, 16, 251, 69, 16, 116, 251);
-RT_INTERFACE!{static interface ILoggingActivityFactory(ILoggingActivityFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingActivityFactory] {
+RT_INTERFACE!{static interface ILoggingActivityFactory(ILoggingActivityFactoryVtbl): IInspectable [IID_ILoggingActivityFactory] {
     fn CreateLoggingActivity(&self, activityName: HSTRING, loggingChannel: <ILoggingChannel as RtType>::Abi, out: *mut <LoggingActivity as RtType>::Abi) -> HRESULT,
     fn CreateLoggingActivityWithLevel(&self, activityName: HSTRING, loggingChannel: <ILoggingChannel as RtType>::Abi, level: LoggingLevel, out: *mut <LoggingActivity as RtType>::Abi) -> HRESULT
 }}
@@ -5965,7 +5965,7 @@ impl ILoggingActivityFactory {
     }}
 }
 DEFINE_IID!(IID_ILoggingChannel, 3919905603, 4567, 20225, 181, 202, 207, 73, 82, 120, 192, 168);
-RT_INTERFACE!{interface ILoggingChannel(ILoggingChannelVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannel] {
+RT_INTERFACE!{interface ILoggingChannel(ILoggingChannelVtbl): IInspectable [IID_ILoggingChannel] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Enabled(&self, out: *mut bool) -> HRESULT,
     fn get_Level(&self, out: *mut LoggingLevel) -> HRESULT,
@@ -6034,7 +6034,7 @@ impl LoggingChannel {
 }
 DEFINE_CLSID!(LoggingChannel(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,0]) [CLSID_LoggingChannel]);
 DEFINE_IID!(IID_ILoggingChannel2, 2672573683, 2988, 17829, 158, 51, 186, 243, 243, 162, 70, 165);
-RT_INTERFACE!{interface ILoggingChannel2(ILoggingChannel2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannel2] {
+RT_INTERFACE!{interface ILoggingChannel2(ILoggingChannel2Vtbl): IInspectable [IID_ILoggingChannel2] {
     fn get_Id(&self, out: *mut Guid) -> HRESULT
 }}
 impl ILoggingChannel2 {
@@ -6045,7 +6045,7 @@ impl ILoggingChannel2 {
     }}
 }
 DEFINE_IID!(IID_ILoggingChannelFactory, 1323064220, 44928, 19099, 176, 220, 57, 143, 154, 229, 32, 123);
-RT_INTERFACE!{static interface ILoggingChannelFactory(ILoggingChannelFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory] {
+RT_INTERFACE!{static interface ILoggingChannelFactory(ILoggingChannelFactoryVtbl): IInspectable [IID_ILoggingChannelFactory] {
     fn Create(&self, name: HSTRING, out: *mut <LoggingChannel as RtType>::Abi) -> HRESULT
 }}
 impl ILoggingChannelFactory {
@@ -6056,7 +6056,7 @@ impl ILoggingChannelFactory {
     }}
 }
 DEFINE_IID!(IID_ILoggingChannelFactory2, 1282340317, 15143, 19913, 153, 240, 41, 156, 110, 70, 3, 161);
-RT_INTERFACE!{static interface ILoggingChannelFactory2(ILoggingChannelFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelFactory2] {
+RT_INTERFACE!{static interface ILoggingChannelFactory2(ILoggingChannelFactory2Vtbl): IInspectable [IID_ILoggingChannelFactory2] {
     fn CreateWithOptions(&self, name: HSTRING, options: <LoggingChannelOptions as RtType>::Abi, out: *mut <LoggingChannel as RtType>::Abi) -> HRESULT,
     fn CreateWithOptionsAndId(&self, name: HSTRING, options: <LoggingChannelOptions as RtType>::Abi, id: Guid, out: *mut <LoggingChannel as RtType>::Abi) -> HRESULT
 }}
@@ -6073,7 +6073,7 @@ impl ILoggingChannelFactory2 {
     }}
 }
 DEFINE_IID!(IID_ILoggingChannelOptions, 3286779903, 3771, 19027, 140, 84, 222, 194, 73, 38, 203, 44);
-RT_INTERFACE!{interface ILoggingChannelOptions(ILoggingChannelOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelOptions] {
+RT_INTERFACE!{interface ILoggingChannelOptions(ILoggingChannelOptionsVtbl): IInspectable [IID_ILoggingChannelOptions] {
     fn get_Group(&self, out: *mut Guid) -> HRESULT,
     fn put_Group(&self, value: Guid) -> HRESULT
 }}
@@ -6098,7 +6098,7 @@ impl LoggingChannelOptions {
 }
 DEFINE_CLSID!(LoggingChannelOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,67,104,97,110,110,101,108,79,112,116,105,111,110,115,0]) [CLSID_LoggingChannelOptions]);
 DEFINE_IID!(IID_ILoggingChannelOptionsFactory, 2838581722, 32687, 16785, 135, 85, 94, 134, 220, 101, 216, 150);
-RT_INTERFACE!{static interface ILoggingChannelOptionsFactory(ILoggingChannelOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingChannelOptionsFactory] {
+RT_INTERFACE!{static interface ILoggingChannelOptionsFactory(ILoggingChannelOptionsFactoryVtbl): IInspectable [IID_ILoggingChannelOptionsFactory] {
     fn Create(&self, group: Guid, out: *mut <LoggingChannelOptions as RtType>::Abi) -> HRESULT
 }}
 impl ILoggingChannelOptionsFactory {
@@ -6112,7 +6112,7 @@ RT_ENUM! { enum LoggingFieldFormat: i32 {
     Default = 0, Hidden = 1, String = 2, Boolean = 3, Hexadecimal = 4, ProcessId = 5, ThreadId = 6, Port = 7, Ipv4Address = 8, Ipv6Address = 9, SocketAddress = 10, Xml = 11, Json = 12, Win32Error = 13, NTStatus = 14, HResult = 15, FileTime = 16, Signed = 17, Unsigned = 18,
 }}
 DEFINE_IID!(IID_ILoggingFields, 3623270319, 30253, 17785, 131, 189, 82, 194, 59, 195, 51, 188);
-RT_INTERFACE!{interface ILoggingFields(ILoggingFieldsVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingFields] {
+RT_INTERFACE!{interface ILoggingFields(ILoggingFieldsVtbl): IInspectable [IID_ILoggingFields] {
     fn Clear(&self) -> HRESULT,
     fn BeginStruct(&self, name: HSTRING) -> HRESULT,
     fn BeginStructWithTags(&self, name: HSTRING, tags: i32) -> HRESULT,
@@ -6701,7 +6701,7 @@ RT_ENUM! { enum LoggingOpcode: i32 {
     Info = 0, Start = 1, Stop = 2, Reply = 6, Resume = 7, Suspend = 8, Send = 9,
 }}
 DEFINE_IID!(IID_ILoggingOptions, 2428270672, 402, 20317, 172, 38, 0, 106, 218, 202, 18, 216);
-RT_INTERFACE!{interface ILoggingOptions(ILoggingOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingOptions] {
+RT_INTERFACE!{interface ILoggingOptions(ILoggingOptionsVtbl): IInspectable [IID_ILoggingOptions] {
     fn get_Keywords(&self, out: *mut i64) -> HRESULT,
     fn put_Keywords(&self, value: i64) -> HRESULT,
     fn get_Tags(&self, out: *mut i32) -> HRESULT,
@@ -6781,7 +6781,7 @@ impl LoggingOptions {
 }
 DEFINE_CLSID!(LoggingOptions(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,79,112,116,105,111,110,115,0]) [CLSID_LoggingOptions]);
 DEFINE_IID!(IID_ILoggingOptionsFactory, 3608397515, 39083, 17995, 159, 34, 163, 38, 132, 120, 54, 138);
-RT_INTERFACE!{static interface ILoggingOptionsFactory(ILoggingOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingOptionsFactory] {
+RT_INTERFACE!{static interface ILoggingOptionsFactory(ILoggingOptionsFactoryVtbl): IInspectable [IID_ILoggingOptionsFactory] {
     fn CreateWithKeywords(&self, keywords: i64, out: *mut <LoggingOptions as RtType>::Abi) -> HRESULT
 }}
 impl ILoggingOptionsFactory {
@@ -6792,7 +6792,7 @@ impl ILoggingOptionsFactory {
     }}
 }
 DEFINE_IID!(IID_ILoggingSession, 1646392070, 37760, 19159, 186, 245, 65, 234, 147, 16, 215, 104);
-RT_INTERFACE!{interface ILoggingSession(ILoggingSessionVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingSession] {
+RT_INTERFACE!{interface ILoggingSession(ILoggingSessionVtbl): IInspectable [IID_ILoggingSession] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-storage")] fn SaveToFileAsync(&self, folder: <super::super::storage::IStorageFolder as RtType>::Abi, fileName: HSTRING, out: *mut <super::IAsyncOperation<super::super::storage::StorageFile> as RtType>::Abi) -> HRESULT,
@@ -6833,7 +6833,7 @@ impl LoggingSession {
 }
 DEFINE_CLSID!(LoggingSession(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,76,111,103,103,105,110,103,83,101,115,115,105,111,110,0]) [CLSID_LoggingSession]);
 DEFINE_IID!(IID_ILoggingSessionFactory, 1318289125, 22781, 17888, 140, 47, 161, 50, 239, 249, 92, 30);
-RT_INTERFACE!{static interface ILoggingSessionFactory(ILoggingSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingSessionFactory] {
+RT_INTERFACE!{static interface ILoggingSessionFactory(ILoggingSessionFactoryVtbl): IInspectable [IID_ILoggingSessionFactory] {
     fn Create(&self, name: HSTRING, out: *mut <LoggingSession as RtType>::Abi) -> HRESULT
 }}
 impl ILoggingSessionFactory {
@@ -6844,7 +6844,7 @@ impl ILoggingSessionFactory {
     }}
 }
 DEFINE_IID!(IID_ILoggingTarget, 1710320693, 58248, 20006, 177, 122, 245, 28, 211, 168, 57, 22);
-RT_INTERFACE!{interface ILoggingTarget(ILoggingTargetVtbl): IInspectable(IInspectableVtbl) [IID_ILoggingTarget] {
+RT_INTERFACE!{interface ILoggingTarget(ILoggingTargetVtbl): IInspectable [IID_ILoggingTarget] {
     fn IsEnabled(&self, out: *mut bool) -> HRESULT,
     fn IsEnabledWithLevel(&self, level: LoggingLevel, out: *mut bool) -> HRESULT,
     fn IsEnabledWithLevelAndKeywords(&self, level: LoggingLevel, keywords: i64, out: *mut bool) -> HRESULT,
@@ -6914,7 +6914,7 @@ RT_CLASS!{class RuntimeBrokerErrorSettings: IErrorReportingSettings}
 impl RtActivatable<IActivationFactory> for RuntimeBrokerErrorSettings {}
 DEFINE_CLSID!(RuntimeBrokerErrorSettings(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,68,105,97,103,110,111,115,116,105,99,115,46,82,117,110,116,105,109,101,66,114,111,107,101,114,69,114,114,111,114,83,101,116,116,105,110,103,115,0]) [CLSID_RuntimeBrokerErrorSettings]);
 DEFINE_IID!(IID_ITracingStatusChangedEventArgs, 1091270417, 65339, 18303, 156, 154, 210, 239, 218, 48, 45, 195);
-RT_INTERFACE!{interface ITracingStatusChangedEventArgs(ITracingStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITracingStatusChangedEventArgs] {
+RT_INTERFACE!{interface ITracingStatusChangedEventArgs(ITracingStatusChangedEventArgsVtbl): IInspectable [IID_ITracingStatusChangedEventArgs] {
     fn get_Enabled(&self, out: *mut bool) -> HRESULT,
     fn get_TraceLevel(&self, out: *mut CausalityTraceLevel) -> HRESULT
 }}
@@ -6970,7 +6970,7 @@ impl ApiInformation {
 }
 DEFINE_CLSID!(ApiInformation(&[87,105,110,100,111,119,115,46,70,111,117,110,100,97,116,105,111,110,46,77,101,116,97,100,97,116,97,46,65,112,105,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_ApiInformation]);
 DEFINE_IID!(IID_IApiInformationStatics, 2574531070, 63105, 18961, 180, 22, 193, 58, 71, 232, 186, 54);
-RT_INTERFACE!{static interface IApiInformationStatics(IApiInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApiInformationStatics] {
+RT_INTERFACE!{static interface IApiInformationStatics(IApiInformationStaticsVtbl): IInspectable [IID_IApiInformationStatics] {
     fn IsTypePresent(&self, typeName: HSTRING, out: *mut bool) -> HRESULT,
     fn IsMethodPresent(&self, typeName: HSTRING, methodName: HSTRING, out: *mut bool) -> HRESULT,
     fn IsMethodPresentWithArity(&self, typeName: HSTRING, methodName: HSTRING, inputParameterCount: u32, out: *mut bool) -> HRESULT,

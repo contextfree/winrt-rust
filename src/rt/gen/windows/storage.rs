@@ -1,6 +1,6 @@
 use crate::prelude::*;
 DEFINE_IID!(IID_IAppDataPaths, 1929500170, 31138, 18633, 158, 192, 63, 218, 9, 47, 121, 225);
-RT_INTERFACE!{interface IAppDataPaths(IAppDataPathsVtbl): IInspectable(IInspectableVtbl) [IID_IAppDataPaths] {
+RT_INTERFACE!{interface IAppDataPaths(IAppDataPathsVtbl): IInspectable [IID_IAppDataPaths] {
     fn get_Cookies(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Desktop(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Documents(&self, out: *mut HSTRING) -> HRESULT,
@@ -70,7 +70,7 @@ impl AppDataPaths {
 }
 DEFINE_CLSID!(AppDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,68,97,116,97,80,97,116,104,115,0]) [CLSID_AppDataPaths]);
 DEFINE_IID!(IID_IAppDataPathsStatics, 3639290622, 43481, 19220, 185, 153, 227, 146, 19, 121, 217, 3);
-RT_INTERFACE!{static interface IAppDataPathsStatics(IAppDataPathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppDataPathsStatics] {
+RT_INTERFACE!{static interface IAppDataPathsStatics(IAppDataPathsStaticsVtbl): IInspectable [IID_IAppDataPathsStatics] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: <super::system::User as RtType>::Abi, out: *mut <AppDataPaths as RtType>::Abi) -> HRESULT,
     fn GetDefault(&self, out: *mut <AppDataPaths as RtType>::Abi) -> HRESULT
@@ -88,7 +88,7 @@ impl IAppDataPathsStatics {
     }}
 }
 DEFINE_IID!(IID_IApplicationData, 3285872567, 46916, 19269, 176, 184, 34, 58, 9, 56, 208, 220);
-RT_INTERFACE!{interface IApplicationData(IApplicationDataVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationData] {
+RT_INTERFACE!{interface IApplicationData(IApplicationDataVtbl): IInspectable [IID_IApplicationData] {
     fn get_Version(&self, out: *mut u32) -> HRESULT,
     fn SetVersionAsync(&self, desiredVersion: u32, handler: <ApplicationDataSetVersionHandler as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn ClearAllAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -181,7 +181,7 @@ impl ApplicationData {
 }
 DEFINE_CLSID!(ApplicationData(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,108,105,99,97,116,105,111,110,68,97,116,97,0]) [CLSID_ApplicationData]);
 DEFINE_IID!(IID_IApplicationData2, 2657471849, 2979, 20018, 190, 41, 176, 45, 230, 96, 118, 56);
-RT_INTERFACE!{interface IApplicationData2(IApplicationData2Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationData2] {
+RT_INTERFACE!{interface IApplicationData2(IApplicationData2Vtbl): IInspectable [IID_IApplicationData2] {
     fn get_LocalCacheFolder(&self, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT
 }}
 impl IApplicationData2 {
@@ -192,7 +192,7 @@ impl IApplicationData2 {
     }}
 }
 DEFINE_IID!(IID_IApplicationData3, 3693227252, 10098, 19485, 170, 44, 201, 247, 67, 173, 232, 209);
-RT_INTERFACE!{interface IApplicationData3(IApplicationData3Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationData3] {
+RT_INTERFACE!{interface IApplicationData3(IApplicationData3Vtbl): IInspectable [IID_IApplicationData3] {
     fn GetPublisherCacheFolder(&self, folderName: HSTRING, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT,
     fn ClearPublisherCacheFolderAsync(&self, folderName: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn get_SharedLocalFolder(&self, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT
@@ -218,7 +218,7 @@ RT_CLASS!{class ApplicationDataCompositeValue: foundation::collections::IPropert
 impl RtActivatable<IActivationFactory> for ApplicationDataCompositeValue {}
 DEFINE_CLSID!(ApplicationDataCompositeValue(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,112,112,108,105,99,97,116,105,111,110,68,97,116,97,67,111,109,112,111,115,105,116,101,86,97,108,117,101,0]) [CLSID_ApplicationDataCompositeValue]);
 DEFINE_IID!(IID_IApplicationDataContainer, 3316579614, 62567, 16570, 133, 102, 171, 100, 10, 68, 30, 29);
-RT_INTERFACE!{interface IApplicationDataContainer(IApplicationDataContainerVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataContainer] {
+RT_INTERFACE!{interface IApplicationDataContainer(IApplicationDataContainerVtbl): IInspectable [IID_IApplicationDataContainer] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Locality(&self, out: *mut ApplicationDataLocality) -> HRESULT,
     fn get_Values(&self, out: *mut <foundation::collections::IPropertySet as RtType>::Abi) -> HRESULT,
@@ -276,7 +276,7 @@ impl ApplicationDataSetVersionHandler {
     }}
 }
 DEFINE_IID!(IID_IApplicationDataStatics, 1444025467, 59459, 17891, 148, 216, 6, 22, 158, 60, 142, 23);
-RT_INTERFACE!{static interface IApplicationDataStatics(IApplicationDataStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataStatics] {
+RT_INTERFACE!{static interface IApplicationDataStatics(IApplicationDataStaticsVtbl): IInspectable [IID_IApplicationDataStatics] {
     fn get_Current(&self, out: *mut <ApplicationData as RtType>::Abi) -> HRESULT
 }}
 impl IApplicationDataStatics {
@@ -287,7 +287,7 @@ impl IApplicationDataStatics {
     }}
 }
 DEFINE_IID!(IID_IApplicationDataStatics2, 3445645841, 53065, 16548, 164, 124, 199, 240, 219, 186, 129, 7);
-RT_INTERFACE!{static interface IApplicationDataStatics2(IApplicationDataStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataStatics2] {
+RT_INTERFACE!{static interface IApplicationDataStatics2(IApplicationDataStatics2Vtbl): IInspectable [IID_IApplicationDataStatics2] {
     #[cfg(feature="windows-system")] fn GetForUserAsync(&self, user: <super::system::User as RtType>::Abi, out: *mut <foundation::IAsyncOperation<ApplicationData> as RtType>::Abi) -> HRESULT
 }}
 impl IApplicationDataStatics2 {
@@ -309,7 +309,7 @@ impl CachedFileManager {
 }
 DEFINE_CLSID!(CachedFileManager(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,97,99,104,101,100,70,105,108,101,77,97,110,97,103,101,114,0]) [CLSID_CachedFileManager]);
 DEFINE_IID!(IID_ICachedFileManagerStatics, 2415665738, 59266, 18781, 182, 20, 101, 76, 79, 11, 35, 112);
-RT_INTERFACE!{static interface ICachedFileManagerStatics(ICachedFileManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileManagerStatics] {
+RT_INTERFACE!{static interface ICachedFileManagerStatics(ICachedFileManagerStaticsVtbl): IInspectable [IID_ICachedFileManagerStatics] {
     fn DeferUpdates(&self, file: <IStorageFile as RtType>::Abi) -> HRESULT,
     fn CompleteUpdatesAsync(&self, file: <IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<provider::FileUpdateStatus> as RtType>::Abi) -> HRESULT
 }}
@@ -358,7 +358,7 @@ impl DownloadsFolder {
 }
 DEFINE_CLSID!(DownloadsFolder(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,68,111,119,110,108,111,97,100,115,70,111,108,100,101,114,0]) [CLSID_DownloadsFolder]);
 DEFINE_IID!(IID_IDownloadsFolderStatics, 663105232, 16462, 18399, 161, 226, 227, 115, 8, 190, 123, 55);
-RT_INTERFACE!{static interface IDownloadsFolderStatics(IDownloadsFolderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDownloadsFolderStatics] {
+RT_INTERFACE!{static interface IDownloadsFolderStatics(IDownloadsFolderStaticsVtbl): IInspectable [IID_IDownloadsFolderStatics] {
     fn CreateFileAsync(&self, desiredName: HSTRING, out: *mut <foundation::IAsyncOperation<StorageFile> as RtType>::Abi) -> HRESULT,
     fn CreateFolderAsync(&self, desiredName: HSTRING, out: *mut <foundation::IAsyncOperation<StorageFolder> as RtType>::Abi) -> HRESULT,
     fn CreateFileWithCollisionOptionAsync(&self, desiredName: HSTRING, option: CreationCollisionOption, out: *mut <foundation::IAsyncOperation<StorageFile> as RtType>::Abi) -> HRESULT,
@@ -387,7 +387,7 @@ impl IDownloadsFolderStatics {
     }}
 }
 DEFINE_IID!(IID_IDownloadsFolderStatics2, 3912254909, 36600, 20366, 141, 21, 172, 14, 38, 95, 57, 13);
-RT_INTERFACE!{static interface IDownloadsFolderStatics2(IDownloadsFolderStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadsFolderStatics2] {
+RT_INTERFACE!{static interface IDownloadsFolderStatics2(IDownloadsFolderStatics2Vtbl): IInspectable [IID_IDownloadsFolderStatics2] {
     #[cfg(feature="windows-system")] fn CreateFileForUserAsync(&self, user: <super::system::User as RtType>::Abi, desiredName: HSTRING, out: *mut <foundation::IAsyncOperation<StorageFile> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-system")] fn CreateFolderForUserAsync(&self, user: <super::system::User as RtType>::Abi, desiredName: HSTRING, out: *mut <foundation::IAsyncOperation<StorageFolder> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-system")] fn CreateFileForUserWithCollisionOptionAsync(&self, user: <super::system::User as RtType>::Abi, desiredName: HSTRING, option: CreationCollisionOption, out: *mut <foundation::IAsyncOperation<StorageFile> as RtType>::Abi) -> HRESULT,
@@ -472,7 +472,7 @@ impl FileIO {
 }
 DEFINE_CLSID!(FileIO(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,70,105,108,101,73,79,0]) [CLSID_FileIO]);
 DEFINE_IID!(IID_IFileIOStatics, 2289308139, 32596, 18226, 165, 240, 94, 67, 227, 184, 194, 245);
-RT_INTERFACE!{static interface IFileIOStatics(IFileIOStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileIOStatics] {
+RT_INTERFACE!{static interface IFileIOStatics(IFileIOStaticsVtbl): IInspectable [IID_IFileIOStatics] {
     fn ReadTextAsync(&self, file: <IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<HString> as RtType>::Abi) -> HRESULT,
     fn ReadTextWithEncodingAsync(&self, file: <IStorageFile as RtType>::Abi, encoding: streams::UnicodeEncoding, out: *mut <foundation::IAsyncOperation<HString> as RtType>::Abi) -> HRESULT,
     fn WriteTextAsync(&self, file: <IStorageFile as RtType>::Abi, contents: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -622,7 +622,7 @@ impl KnownFolders {
 }
 DEFINE_CLSID!(KnownFolders(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,75,110,111,119,110,70,111,108,100,101,114,115,0]) [CLSID_KnownFolders]);
 DEFINE_IID!(IID_IKnownFoldersCameraRollStatics, 1561419366, 10216, 18735, 184, 229, 47, 144, 137, 108, 212, 205);
-RT_INTERFACE!{static interface IKnownFoldersCameraRollStatics(IKnownFoldersCameraRollStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownFoldersCameraRollStatics] {
+RT_INTERFACE!{static interface IKnownFoldersCameraRollStatics(IKnownFoldersCameraRollStaticsVtbl): IInspectable [IID_IKnownFoldersCameraRollStatics] {
     fn get_CameraRoll(&self, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT
 }}
 impl IKnownFoldersCameraRollStatics {
@@ -633,7 +633,7 @@ impl IKnownFoldersCameraRollStatics {
     }}
 }
 DEFINE_IID!(IID_IKnownFoldersPlaylistsStatics, 3671452886, 12399, 19818, 180, 150, 70, 186, 142, 177, 6, 206);
-RT_INTERFACE!{static interface IKnownFoldersPlaylistsStatics(IKnownFoldersPlaylistsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownFoldersPlaylistsStatics] {
+RT_INTERFACE!{static interface IKnownFoldersPlaylistsStatics(IKnownFoldersPlaylistsStaticsVtbl): IInspectable [IID_IKnownFoldersPlaylistsStatics] {
     fn get_Playlists(&self, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT
 }}
 impl IKnownFoldersPlaylistsStatics {
@@ -644,7 +644,7 @@ impl IKnownFoldersPlaylistsStatics {
     }}
 }
 DEFINE_IID!(IID_IKnownFoldersSavedPicturesStatics, 89953258, 9533, 18044, 182, 202, 169, 125, 161, 233, 161, 141);
-RT_INTERFACE!{static interface IKnownFoldersSavedPicturesStatics(IKnownFoldersSavedPicturesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownFoldersSavedPicturesStatics] {
+RT_INTERFACE!{static interface IKnownFoldersSavedPicturesStatics(IKnownFoldersSavedPicturesStaticsVtbl): IInspectable [IID_IKnownFoldersSavedPicturesStatics] {
     fn get_SavedPictures(&self, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT
 }}
 impl IKnownFoldersSavedPicturesStatics {
@@ -655,7 +655,7 @@ impl IKnownFoldersSavedPicturesStatics {
     }}
 }
 DEFINE_IID!(IID_IKnownFoldersStatics, 1512731936, 18434, 17709, 154, 217, 67, 81, 173, 167, 236, 53);
-RT_INTERFACE!{static interface IKnownFoldersStatics(IKnownFoldersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownFoldersStatics] {
+RT_INTERFACE!{static interface IKnownFoldersStatics(IKnownFoldersStaticsVtbl): IInspectable [IID_IKnownFoldersStatics] {
     fn get_MusicLibrary(&self, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT,
     fn get_PicturesLibrary(&self, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT,
     fn get_VideosLibrary(&self, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT,
@@ -702,7 +702,7 @@ impl IKnownFoldersStatics {
     }}
 }
 DEFINE_IID!(IID_IKnownFoldersStatics2, 424399053, 53102, 19719, 157, 83, 233, 22, 58, 37, 54, 233);
-RT_INTERFACE!{static interface IKnownFoldersStatics2(IKnownFoldersStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IKnownFoldersStatics2] {
+RT_INTERFACE!{static interface IKnownFoldersStatics2(IKnownFoldersStatics2Vtbl): IInspectable [IID_IKnownFoldersStatics2] {
     fn get_Objects3D(&self, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT,
     fn get_AppCaptures(&self, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT,
     fn get_RecordedCalls(&self, out: *mut <StorageFolder as RtType>::Abi) -> HRESULT
@@ -725,7 +725,7 @@ impl IKnownFoldersStatics2 {
     }}
 }
 DEFINE_IID!(IID_IKnownFoldersStatics3, 3306767169, 38722, 20181, 130, 61, 252, 20, 1, 20, 135, 100);
-RT_INTERFACE!{static interface IKnownFoldersStatics3(IKnownFoldersStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IKnownFoldersStatics3] {
+RT_INTERFACE!{static interface IKnownFoldersStatics3(IKnownFoldersStatics3Vtbl): IInspectable [IID_IKnownFoldersStatics3] {
     #[cfg(feature="windows-system")] fn GetFolderForUserAsync(&self, user: <super::system::User as RtType>::Abi, folderId: KnownFolderId, out: *mut <foundation::IAsyncOperation<StorageFolder> as RtType>::Abi) -> HRESULT
 }}
 impl IKnownFoldersStatics3 {
@@ -792,7 +792,7 @@ impl PathIO {
 }
 DEFINE_CLSID!(PathIO(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,97,116,104,73,79,0]) [CLSID_PathIO]);
 DEFINE_IID!(IID_IPathIOStatics, 254752600, 36551, 17281, 146, 43, 143, 108, 7, 210, 136, 243);
-RT_INTERFACE!{static interface IPathIOStatics(IPathIOStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPathIOStatics] {
+RT_INTERFACE!{static interface IPathIOStatics(IPathIOStaticsVtbl): IInspectable [IID_IPathIOStatics] {
     fn ReadTextAsync(&self, absolutePath: HSTRING, out: *mut <foundation::IAsyncOperation<HString> as RtType>::Abi) -> HRESULT,
     fn ReadTextWithEncodingAsync(&self, absolutePath: HSTRING, encoding: streams::UnicodeEncoding, out: *mut <foundation::IAsyncOperation<HString> as RtType>::Abi) -> HRESULT,
     fn WriteTextAsync(&self, absolutePath: HSTRING, contents: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -887,7 +887,7 @@ impl IPathIOStatics {
     }}
 }
 DEFINE_IID!(IID_ISetVersionDeferral, 53807266, 30746, 17274, 176, 120, 63, 50, 186, 220, 254, 71);
-RT_INTERFACE!{interface ISetVersionDeferral(ISetVersionDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ISetVersionDeferral] {
+RT_INTERFACE!{interface ISetVersionDeferral(ISetVersionDeferralVtbl): IInspectable [IID_ISetVersionDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl ISetVersionDeferral {
@@ -898,7 +898,7 @@ impl ISetVersionDeferral {
 }
 RT_CLASS!{class SetVersionDeferral: ISetVersionDeferral}
 DEFINE_IID!(IID_ISetVersionRequest, 3116854171, 4182, 20073, 131, 48, 22, 38, 25, 149, 111, 155);
-RT_INTERFACE!{interface ISetVersionRequest(ISetVersionRequestVtbl): IInspectable(IInspectableVtbl) [IID_ISetVersionRequest] {
+RT_INTERFACE!{interface ISetVersionRequest(ISetVersionRequestVtbl): IInspectable [IID_ISetVersionRequest] {
     fn get_CurrentVersion(&self, out: *mut u32) -> HRESULT,
     fn get_DesiredVersion(&self, out: *mut u32) -> HRESULT,
     fn GetDeferral(&self, out: *mut <SetVersionDeferral as RtType>::Abi) -> HRESULT
@@ -925,7 +925,7 @@ RT_ENUM! { enum StorageDeleteOption: i32 {
     Default = 0, PermanentDelete = 1,
 }}
 DEFINE_IID!(IID_IStorageFile, 4198457734, 16916, 17036, 166, 76, 20, 201, 172, 115, 21, 234);
-RT_INTERFACE!{interface IStorageFile(IStorageFileVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFile] {
+RT_INTERFACE!{interface IStorageFile(IStorageFileVtbl): IInspectable [IID_IStorageFile] {
     fn get_FileType(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ContentType(&self, out: *mut HSTRING) -> HRESULT,
     fn OpenAsync(&self, accessMode: FileAccessMode, out: *mut <foundation::IAsyncOperation<streams::IRandomAccessStream> as RtType>::Abi) -> HRESULT,
@@ -1025,7 +1025,7 @@ impl StorageFile {
 }
 DEFINE_CLSID!(StorageFile(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,70,105,108,101,0]) [CLSID_StorageFile]);
 DEFINE_IID!(IID_IStorageFile2, 2504936399, 2679, 17147, 183, 119, 194, 237, 88, 165, 46, 68);
-RT_INTERFACE!{interface IStorageFile2(IStorageFile2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFile2] {
+RT_INTERFACE!{interface IStorageFile2(IStorageFile2Vtbl): IInspectable [IID_IStorageFile2] {
     fn OpenWithOptionsAsync(&self, accessMode: FileAccessMode, options: StorageOpenOptions, out: *mut <foundation::IAsyncOperation<streams::IRandomAccessStream> as RtType>::Abi) -> HRESULT,
     fn OpenTransactedWriteWithOptionsAsync(&self, options: StorageOpenOptions, out: *mut <foundation::IAsyncOperation<StorageStreamTransaction> as RtType>::Abi) -> HRESULT
 }}
@@ -1042,7 +1042,7 @@ impl IStorageFile2 {
     }}
 }
 DEFINE_IID!(IID_IStorageFilePropertiesWithAvailability, 2949365403, 22571, 16691, 150, 72, 228, 76, 164, 110, 228, 145);
-RT_INTERFACE!{interface IStorageFilePropertiesWithAvailability(IStorageFilePropertiesWithAvailabilityVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFilePropertiesWithAvailability] {
+RT_INTERFACE!{interface IStorageFilePropertiesWithAvailability(IStorageFilePropertiesWithAvailabilityVtbl): IInspectable [IID_IStorageFilePropertiesWithAvailability] {
     fn get_IsAvailable(&self, out: *mut bool) -> HRESULT
 }}
 impl IStorageFilePropertiesWithAvailability {
@@ -1053,7 +1053,7 @@ impl IStorageFilePropertiesWithAvailability {
     }}
 }
 DEFINE_IID!(IID_IStorageFileStatics, 1501873936, 56050, 17352, 139, 180, 164, 211, 234, 207, 208, 63);
-RT_INTERFACE!{static interface IStorageFileStatics(IStorageFileStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileStatics] {
+RT_INTERFACE!{static interface IStorageFileStatics(IStorageFileStaticsVtbl): IInspectable [IID_IStorageFileStatics] {
     fn GetFileFromPathAsync(&self, path: HSTRING, out: *mut <foundation::IAsyncOperation<StorageFile> as RtType>::Abi) -> HRESULT,
     fn GetFileFromApplicationUriAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperation<StorageFile> as RtType>::Abi) -> HRESULT,
     fn CreateStreamedFileAsync(&self, displayNameWithExtension: HSTRING, dataRequested: <StreamedFileDataRequestedHandler as RtType>::Abi, thumbnail: <streams::IRandomAccessStreamReference as RtType>::Abi, out: *mut <foundation::IAsyncOperation<StorageFile> as RtType>::Abi) -> HRESULT,
@@ -1094,7 +1094,7 @@ impl IStorageFileStatics {
     }}
 }
 DEFINE_IID!(IID_IStorageFolder, 1926351736, 46063, 20341, 168, 11, 111, 217, 218, 226, 148, 75);
-RT_INTERFACE!{interface IStorageFolder(IStorageFolderVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolder] {
+RT_INTERFACE!{interface IStorageFolder(IStorageFolderVtbl): IInspectable [IID_IStorageFolder] {
     fn CreateFileAsyncOverloadDefaultOptions(&self, desiredName: HSTRING, out: *mut <foundation::IAsyncOperation<StorageFile> as RtType>::Abi) -> HRESULT,
     fn CreateFileAsync(&self, desiredName: HSTRING, options: CreationCollisionOption, out: *mut <foundation::IAsyncOperation<StorageFile> as RtType>::Abi) -> HRESULT,
     fn CreateFolderAsyncOverloadDefaultOptions(&self, desiredName: HSTRING, out: *mut <foundation::IAsyncOperation<StorageFolder> as RtType>::Abi) -> HRESULT,
@@ -1167,7 +1167,7 @@ impl StorageFolder {
 }
 DEFINE_CLSID!(StorageFolder(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,70,111,108,100,101,114,0]) [CLSID_StorageFolder]);
 DEFINE_IID!(IID_IStorageFolder2, 3894929593, 2265, 19086, 160, 172, 254, 94, 211, 203, 187, 211);
-RT_INTERFACE!{interface IStorageFolder2(IStorageFolder2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolder2] {
+RT_INTERFACE!{interface IStorageFolder2(IStorageFolder2Vtbl): IInspectable [IID_IStorageFolder2] {
     fn TryGetItemAsync(&self, name: HSTRING, out: *mut <foundation::IAsyncOperation<IStorageItem> as RtType>::Abi) -> HRESULT
 }}
 impl IStorageFolder2 {
@@ -1178,7 +1178,7 @@ impl IStorageFolder2 {
     }}
 }
 DEFINE_IID!(IID_IStorageFolder3, 2673965209, 48609, 16676, 174, 179, 176, 106, 217, 111, 152, 212);
-RT_INTERFACE!{interface IStorageFolder3(IStorageFolder3Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolder3] {
+RT_INTERFACE!{interface IStorageFolder3(IStorageFolder3Vtbl): IInspectable [IID_IStorageFolder3] {
     fn TryGetChangeTracker(&self, out: *mut <StorageLibraryChangeTracker as RtType>::Abi) -> HRESULT
 }}
 impl IStorageFolder3 {
@@ -1189,7 +1189,7 @@ impl IStorageFolder3 {
     }}
 }
 DEFINE_IID!(IID_IStorageFolderStatics, 150153215, 34261, 18617, 174, 233, 40, 81, 30, 51, 159, 159);
-RT_INTERFACE!{static interface IStorageFolderStatics(IStorageFolderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolderStatics] {
+RT_INTERFACE!{static interface IStorageFolderStatics(IStorageFolderStaticsVtbl): IInspectable [IID_IStorageFolderStatics] {
     fn GetFolderFromPathAsync(&self, path: HSTRING, out: *mut <foundation::IAsyncOperation<StorageFolder> as RtType>::Abi) -> HRESULT
 }}
 impl IStorageFolderStatics {
@@ -1200,7 +1200,7 @@ impl IStorageFolderStatics {
     }}
 }
 DEFINE_IID!(IID_IStorageItem, 1107798422, 51759, 17143, 189, 232, 139, 16, 69, 122, 127, 48);
-RT_INTERFACE!{interface IStorageItem(IStorageItemVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItem] {
+RT_INTERFACE!{interface IStorageItem(IStorageItemVtbl): IInspectable [IID_IStorageItem] {
     fn RenameAsyncOverloadDefaultOptions(&self, desiredName: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn RenameAsync(&self, desiredName: HSTRING, option: NameCollisionOption, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn DeleteAsyncOverloadDefaultOptions(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -1265,7 +1265,7 @@ impl IStorageItem {
     }}
 }
 DEFINE_IID!(IID_IStorageItem2, 1408837330, 2108, 17027, 180, 91, 129, 192, 7, 35, 126, 68);
-RT_INTERFACE!{interface IStorageItem2(IStorageItem2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageItem2] {
+RT_INTERFACE!{interface IStorageItem2(IStorageItem2Vtbl): IInspectable [IID_IStorageItem2] {
     fn GetParentAsync(&self, out: *mut <foundation::IAsyncOperation<StorageFolder> as RtType>::Abi) -> HRESULT,
     fn IsEqual(&self, item: <IStorageItem as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -1282,7 +1282,7 @@ impl IStorageItem2 {
     }}
 }
 DEFINE_IID!(IID_IStorageItemProperties, 2254849144, 32809, 18174, 167, 137, 28, 47, 62, 47, 251, 92);
-RT_INTERFACE!{interface IStorageItemProperties(IStorageItemPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemProperties] {
+RT_INTERFACE!{interface IStorageItemProperties(IStorageItemPropertiesVtbl): IInspectable [IID_IStorageItemProperties] {
     fn GetThumbnailAsyncOverloadDefaultSizeDefaultOptions(&self, mode: fileproperties::ThumbnailMode, out: *mut <foundation::IAsyncOperation<fileproperties::StorageItemThumbnail> as RtType>::Abi) -> HRESULT,
     fn GetThumbnailAsyncOverloadDefaultOptions(&self, mode: fileproperties::ThumbnailMode, requestedSize: u32, out: *mut <foundation::IAsyncOperation<fileproperties::StorageItemThumbnail> as RtType>::Abi) -> HRESULT,
     fn GetThumbnailAsync(&self, mode: fileproperties::ThumbnailMode, requestedSize: u32, options: fileproperties::ThumbnailOptions, out: *mut <foundation::IAsyncOperation<fileproperties::StorageItemThumbnail> as RtType>::Abi) -> HRESULT,
@@ -1329,7 +1329,7 @@ impl IStorageItemProperties {
     }}
 }
 DEFINE_IID!(IID_IStorageItemProperties2, 2391189841, 1209, 19410, 146, 157, 254, 243, 247, 22, 33, 208);
-RT_INTERFACE!{interface IStorageItemProperties2(IStorageItemProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemProperties2] {
+RT_INTERFACE!{interface IStorageItemProperties2(IStorageItemProperties2Vtbl): IInspectable [IID_IStorageItemProperties2] {
     fn GetScaledImageAsThumbnailAsyncOverloadDefaultSizeDefaultOptions(&self, mode: fileproperties::ThumbnailMode, out: *mut <foundation::IAsyncOperation<fileproperties::StorageItemThumbnail> as RtType>::Abi) -> HRESULT,
     fn GetScaledImageAsThumbnailAsyncOverloadDefaultOptions(&self, mode: fileproperties::ThumbnailMode, requestedSize: u32, out: *mut <foundation::IAsyncOperation<fileproperties::StorageItemThumbnail> as RtType>::Abi) -> HRESULT,
     fn GetScaledImageAsThumbnailAsync(&self, mode: fileproperties::ThumbnailMode, requestedSize: u32, options: fileproperties::ThumbnailOptions, out: *mut <foundation::IAsyncOperation<fileproperties::StorageItemThumbnail> as RtType>::Abi) -> HRESULT
@@ -1352,7 +1352,7 @@ impl IStorageItemProperties2 {
     }}
 }
 DEFINE_IID!(IID_IStorageItemPropertiesWithProvider, 2249978779, 25448, 19950, 180, 14, 116, 104, 74, 92, 231, 20);
-RT_INTERFACE!{interface IStorageItemPropertiesWithProvider(IStorageItemPropertiesWithProviderVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemPropertiesWithProvider] {
+RT_INTERFACE!{interface IStorageItemPropertiesWithProvider(IStorageItemPropertiesWithProviderVtbl): IInspectable [IID_IStorageItemPropertiesWithProvider] {
     fn get_Provider(&self, out: *mut <StorageProvider as RtType>::Abi) -> HRESULT
 }}
 impl IStorageItemPropertiesWithProvider {
@@ -1366,7 +1366,7 @@ RT_ENUM! { enum StorageItemTypes: u32 {
     None = 0, File = 1, Folder = 2,
 }}
 DEFINE_IID!(IID_IStorageLibrary, 517828867, 3678, 19820, 181, 232, 147, 24, 152, 61, 106, 3);
-RT_INTERFACE!{interface IStorageLibrary(IStorageLibraryVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibrary] {
+RT_INTERFACE!{interface IStorageLibrary(IStorageLibraryVtbl): IInspectable [IID_IStorageLibrary] {
     fn RequestAddFolderAsync(&self, out: *mut <foundation::IAsyncOperation<StorageFolder> as RtType>::Abi) -> HRESULT,
     fn RequestRemoveFolderAsync(&self, folder: <StorageFolder as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn get_Folders(&self, out: *mut <foundation::collections::IObservableVector<StorageFolder> as RtType>::Abi) -> HRESULT,
@@ -1418,7 +1418,7 @@ impl StorageLibrary {
 }
 DEFINE_CLSID!(StorageLibrary(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,111,114,97,103,101,76,105,98,114,97,114,121,0]) [CLSID_StorageLibrary]);
 DEFINE_IID!(IID_IStorageLibrary2, 1527571272, 64691, 16433, 175, 176, 166, 141, 123, 212, 69, 52);
-RT_INTERFACE!{interface IStorageLibrary2(IStorageLibrary2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibrary2] {
+RT_INTERFACE!{interface IStorageLibrary2(IStorageLibrary2Vtbl): IInspectable [IID_IStorageLibrary2] {
     fn get_ChangeTracker(&self, out: *mut <StorageLibraryChangeTracker as RtType>::Abi) -> HRESULT
 }}
 impl IStorageLibrary2 {
@@ -1429,7 +1429,7 @@ impl IStorageLibrary2 {
     }}
 }
 DEFINE_IID!(IID_IStorageLibrary3, 2317882001, 8532, 16897, 129, 19, 210, 192, 92, 225, 173, 35);
-RT_INTERFACE!{interface IStorageLibrary3(IStorageLibrary3Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibrary3] {
+RT_INTERFACE!{interface IStorageLibrary3(IStorageLibrary3Vtbl): IInspectable [IID_IStorageLibrary3] {
     fn AreFolderSuggestionsAvailableAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
 }}
 impl IStorageLibrary3 {
@@ -1440,7 +1440,7 @@ impl IStorageLibrary3 {
     }}
 }
 DEFINE_IID!(IID_IStorageLibraryChange, 9964323, 11234, 18697, 170, 72, 21, 159, 82, 3, 165, 30);
-RT_INTERFACE!{interface IStorageLibraryChange(IStorageLibraryChangeVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryChange] {
+RT_INTERFACE!{interface IStorageLibraryChange(IStorageLibraryChangeVtbl): IInspectable [IID_IStorageLibraryChange] {
     fn get_ChangeType(&self, out: *mut StorageLibraryChangeType) -> HRESULT,
     fn get_Path(&self, out: *mut HSTRING) -> HRESULT,
     fn get_PreviousPath(&self, out: *mut HSTRING) -> HRESULT,
@@ -1476,7 +1476,7 @@ impl IStorageLibraryChange {
 }
 RT_CLASS!{class StorageLibraryChange: IStorageLibraryChange}
 DEFINE_IID!(IID_IStorageLibraryChangeReader, 4060462211, 64674, 16889, 137, 84, 238, 46, 153, 30, 185, 111);
-RT_INTERFACE!{interface IStorageLibraryChangeReader(IStorageLibraryChangeReaderVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryChangeReader] {
+RT_INTERFACE!{interface IStorageLibraryChangeReader(IStorageLibraryChangeReaderVtbl): IInspectable [IID_IStorageLibraryChangeReader] {
     fn ReadBatchAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<StorageLibraryChange>> as RtType>::Abi) -> HRESULT,
     fn AcceptChangesAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
@@ -1494,7 +1494,7 @@ impl IStorageLibraryChangeReader {
 }
 RT_CLASS!{class StorageLibraryChangeReader: IStorageLibraryChangeReader}
 DEFINE_IID!(IID_IStorageLibraryChangeTracker, 2652205846, 24691, 17654, 150, 129, 116, 146, 209, 40, 108, 144);
-RT_INTERFACE!{interface IStorageLibraryChangeTracker(IStorageLibraryChangeTrackerVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryChangeTracker] {
+RT_INTERFACE!{interface IStorageLibraryChangeTracker(IStorageLibraryChangeTrackerVtbl): IInspectable [IID_IStorageLibraryChangeTracker] {
     fn GetChangeReader(&self, out: *mut <StorageLibraryChangeReader as RtType>::Abi) -> HRESULT,
     fn Enable(&self) -> HRESULT,
     fn Reset(&self) -> HRESULT
@@ -1519,7 +1519,7 @@ RT_ENUM! { enum StorageLibraryChangeType: i32 {
     Created = 0, Deleted = 1, MovedOrRenamed = 2, ContentsChanged = 3, MovedOutOfLibrary = 4, MovedIntoLibrary = 5, ContentsReplaced = 6, IndexingStatusChanged = 7, EncryptionChanged = 8, ChangeTrackingLost = 9,
 }}
 DEFINE_IID!(IID_IStorageLibraryStatics, 1107863259, 26698, 18886, 158, 89, 144, 18, 30, 224, 80, 214);
-RT_INTERFACE!{static interface IStorageLibraryStatics(IStorageLibraryStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryStatics] {
+RT_INTERFACE!{static interface IStorageLibraryStatics(IStorageLibraryStaticsVtbl): IInspectable [IID_IStorageLibraryStatics] {
     fn GetLibraryAsync(&self, libraryId: KnownLibraryId, out: *mut <foundation::IAsyncOperation<StorageLibrary> as RtType>::Abi) -> HRESULT
 }}
 impl IStorageLibraryStatics {
@@ -1530,7 +1530,7 @@ impl IStorageLibraryStatics {
     }}
 }
 DEFINE_IID!(IID_IStorageLibraryStatics2, 4289760732, 64117, 18069, 185, 209, 127, 129, 249, 120, 50, 227);
-RT_INTERFACE!{static interface IStorageLibraryStatics2(IStorageLibraryStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryStatics2] {
+RT_INTERFACE!{static interface IStorageLibraryStatics2(IStorageLibraryStatics2Vtbl): IInspectable [IID_IStorageLibraryStatics2] {
     #[cfg(feature="windows-system")] fn GetLibraryForUserAsync(&self, user: <super::system::User as RtType>::Abi, libraryId: KnownLibraryId, out: *mut <foundation::IAsyncOperation<StorageLibrary> as RtType>::Abi) -> HRESULT
 }}
 impl IStorageLibraryStatics2 {
@@ -1544,7 +1544,7 @@ RT_ENUM! { enum StorageOpenOptions: u32 {
     None = 0, AllowOnlyReaders = 1, AllowReadersAndWriters = 2,
 }}
 DEFINE_IID!(IID_IStorageProvider, 3875925716, 54392, 18390, 186, 70, 26, 142, 190, 17, 74, 32);
-RT_INTERFACE!{interface IStorageProvider(IStorageProviderVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProvider] {
+RT_INTERFACE!{interface IStorageProvider(IStorageProviderVtbl): IInspectable [IID_IStorageProvider] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -1562,7 +1562,7 @@ impl IStorageProvider {
 }
 RT_CLASS!{class StorageProvider: IStorageProvider}
 DEFINE_IID!(IID_IStorageProvider2, 17635607, 13316, 16715, 159, 215, 205, 68, 71, 46, 170, 57);
-RT_INTERFACE!{interface IStorageProvider2(IStorageProvider2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageProvider2] {
+RT_INTERFACE!{interface IStorageProvider2(IStorageProvider2Vtbl): IInspectable [IID_IStorageProvider2] {
     fn IsPropertySupportedForPartialFileAsync(&self, propertyCanonicalName: HSTRING, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
 }}
 impl IStorageProvider2 {
@@ -1573,7 +1573,7 @@ impl IStorageProvider2 {
     }}
 }
 DEFINE_IID!(IID_IStorageStreamTransaction, 4135383907, 42301, 19860, 174, 44, 103, 35, 45, 147, 172, 221);
-RT_INTERFACE!{interface IStorageStreamTransaction(IStorageStreamTransactionVtbl): IInspectable(IInspectableVtbl) [IID_IStorageStreamTransaction] {
+RT_INTERFACE!{interface IStorageStreamTransaction(IStorageStreamTransactionVtbl): IInspectable [IID_IStorageStreamTransaction] {
     fn get_Stream(&self, out: *mut <streams::IRandomAccessStream as RtType>::Abi) -> HRESULT,
     fn CommitAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
@@ -1591,7 +1591,7 @@ impl IStorageStreamTransaction {
 }
 RT_CLASS!{class StorageStreamTransaction: IStorageStreamTransaction}
 DEFINE_IID!(IID_IStreamedFileDataRequest, 376700110, 55997, 19792, 190, 238, 24, 11, 138, 129, 145, 182);
-RT_INTERFACE!{interface IStreamedFileDataRequest(IStreamedFileDataRequestVtbl): IInspectable(IInspectableVtbl) [IID_IStreamedFileDataRequest] {
+RT_INTERFACE!{interface IStreamedFileDataRequest(IStreamedFileDataRequestVtbl): IInspectable [IID_IStreamedFileDataRequest] {
     fn FailAndClose(&self, failureMode: StreamedFileFailureMode) -> HRESULT
 }}
 impl IStreamedFileDataRequest {
@@ -1615,7 +1615,7 @@ RT_ENUM! { enum StreamedFileFailureMode: i32 {
     Failed = 0, CurrentlyUnavailable = 1, Incomplete = 2,
 }}
 DEFINE_IID!(IID_ISystemAudioProperties, 1066350775, 12428, 18401, 146, 77, 134, 69, 52, 142, 93, 183);
-RT_INTERFACE!{interface ISystemAudioProperties(ISystemAudioPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemAudioProperties] {
+RT_INTERFACE!{interface ISystemAudioProperties(ISystemAudioPropertiesVtbl): IInspectable [IID_ISystemAudioProperties] {
     fn get_EncodingBitrate(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ISystemAudioProperties {
@@ -1627,7 +1627,7 @@ impl ISystemAudioProperties {
 }
 RT_CLASS!{class SystemAudioProperties: ISystemAudioProperties}
 DEFINE_IID!(IID_ISystemDataPaths, 3811229552, 55546, 17900, 169, 66, 210, 226, 111, 182, 11, 165);
-RT_INTERFACE!{interface ISystemDataPaths(ISystemDataPathsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemDataPaths] {
+RT_INTERFACE!{interface ISystemDataPaths(ISystemDataPathsVtbl): IInspectable [IID_ISystemDataPaths] {
     fn get_Fonts(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ProgramData(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Public(&self, out: *mut HSTRING) -> HRESULT,
@@ -1736,7 +1736,7 @@ impl SystemDataPaths {
 }
 DEFINE_CLSID!(SystemDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,121,115,116,101,109,68,97,116,97,80,97,116,104,115,0]) [CLSID_SystemDataPaths]);
 DEFINE_IID!(IID_ISystemDataPathsStatics, 3774443472, 39200, 19402, 179, 121, 249, 111, 223, 124, 170, 216);
-RT_INTERFACE!{static interface ISystemDataPathsStatics(ISystemDataPathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemDataPathsStatics] {
+RT_INTERFACE!{static interface ISystemDataPathsStatics(ISystemDataPathsStaticsVtbl): IInspectable [IID_ISystemDataPathsStatics] {
     fn GetDefault(&self, out: *mut <SystemDataPaths as RtType>::Abi) -> HRESULT
 }}
 impl ISystemDataPathsStatics {
@@ -1747,7 +1747,7 @@ impl ISystemDataPathsStatics {
     }}
 }
 DEFINE_IID!(IID_ISystemGPSProperties, 3237244596, 49524, 18458, 188, 37, 146, 25, 134, 246, 166, 243);
-RT_INTERFACE!{interface ISystemGPSProperties(ISystemGPSPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemGPSProperties] {
+RT_INTERFACE!{interface ISystemGPSProperties(ISystemGPSPropertiesVtbl): IInspectable [IID_ISystemGPSProperties] {
     fn get_LatitudeDecimal(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LongitudeDecimal(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -1765,7 +1765,7 @@ impl ISystemGPSProperties {
 }
 RT_CLASS!{class SystemGPSProperties: ISystemGPSProperties}
 DEFINE_IID!(IID_ISystemImageProperties, 18558512, 35641, 17160, 190, 161, 232, 170, 97, 228, 120, 38);
-RT_INTERFACE!{interface ISystemImageProperties(ISystemImagePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemImageProperties] {
+RT_INTERFACE!{interface ISystemImageProperties(ISystemImagePropertiesVtbl): IInspectable [IID_ISystemImageProperties] {
     fn get_HorizontalSize(&self, out: *mut HSTRING) -> HRESULT,
     fn get_VerticalSize(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -1783,7 +1783,7 @@ impl ISystemImageProperties {
 }
 RT_CLASS!{class SystemImageProperties: ISystemImageProperties}
 DEFINE_IID!(IID_ISystemMediaProperties, 2754294550, 33813, 16604, 140, 68, 152, 54, 29, 35, 84, 48);
-RT_INTERFACE!{interface ISystemMediaProperties(ISystemMediaPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaProperties] {
+RT_INTERFACE!{interface ISystemMediaProperties(ISystemMediaPropertiesVtbl): IInspectable [IID_ISystemMediaProperties] {
     fn get_Duration(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Producer(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Publisher(&self, out: *mut HSTRING) -> HRESULT,
@@ -1825,7 +1825,7 @@ impl ISystemMediaProperties {
 }
 RT_CLASS!{class SystemMediaProperties: ISystemMediaProperties}
 DEFINE_IID!(IID_ISystemMusicProperties, 3027863765, 26543, 19395, 141, 57, 91, 137, 2, 32, 38, 161);
-RT_INTERFACE!{interface ISystemMusicProperties(ISystemMusicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMusicProperties] {
+RT_INTERFACE!{interface ISystemMusicProperties(ISystemMusicPropertiesVtbl): IInspectable [IID_ISystemMusicProperties] {
     fn get_AlbumArtist(&self, out: *mut HSTRING) -> HRESULT,
     fn get_AlbumTitle(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Artist(&self, out: *mut HSTRING) -> HRESULT,
@@ -1879,7 +1879,7 @@ impl ISystemMusicProperties {
 }
 RT_CLASS!{class SystemMusicProperties: ISystemMusicProperties}
 DEFINE_IID!(IID_ISystemPhotoProperties, 1194654781, 43809, 17444, 183, 53, 244, 53, 58, 86, 200, 252);
-RT_INTERFACE!{interface ISystemPhotoProperties(ISystemPhotoPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemPhotoProperties] {
+RT_INTERFACE!{interface ISystemPhotoProperties(ISystemPhotoPropertiesVtbl): IInspectable [IID_ISystemPhotoProperties] {
     fn get_CameraManufacturer(&self, out: *mut HSTRING) -> HRESULT,
     fn get_CameraModel(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DateTaken(&self, out: *mut HSTRING) -> HRESULT,
@@ -1915,7 +1915,7 @@ impl ISystemPhotoProperties {
 }
 RT_CLASS!{class SystemPhotoProperties: ISystemPhotoProperties}
 DEFINE_IID!(IID_ISystemProperties, 2440720833, 34291, 19921, 176, 1, 165, 11, 253, 33, 200, 210);
-RT_INTERFACE!{static interface ISystemProperties(ISystemPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemProperties] {
+RT_INTERFACE!{static interface ISystemProperties(ISystemPropertiesVtbl): IInspectable [IID_ISystemProperties] {
     fn get_Author(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Comment(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ItemNameDisplay(&self, out: *mut HSTRING) -> HRESULT,
@@ -2042,7 +2042,7 @@ impl SystemProperties {
 }
 DEFINE_CLSID!(SystemProperties(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,121,115,116,101,109,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_SystemProperties]);
 DEFINE_IID!(IID_ISystemVideoProperties, 541128469, 26616, 17186, 155, 128, 79, 169, 254, 251, 131, 232);
-RT_INTERFACE!{interface ISystemVideoProperties(ISystemVideoPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemVideoProperties] {
+RT_INTERFACE!{interface ISystemVideoProperties(ISystemVideoPropertiesVtbl): IInspectable [IID_ISystemVideoProperties] {
     fn get_Director(&self, out: *mut HSTRING) -> HRESULT,
     fn get_FrameHeight(&self, out: *mut HSTRING) -> HRESULT,
     fn get_FrameWidth(&self, out: *mut HSTRING) -> HRESULT,
@@ -2078,7 +2078,7 @@ impl ISystemVideoProperties {
 }
 RT_CLASS!{class SystemVideoProperties: ISystemVideoProperties}
 DEFINE_IID!(IID_IUserDataPaths, 4190451986, 43972, 18175, 138, 43, 220, 157, 127, 166, 229, 47);
-RT_INTERFACE!{interface IUserDataPaths(IUserDataPathsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataPaths] {
+RT_INTERFACE!{interface IUserDataPaths(IUserDataPathsVtbl): IInspectable [IID_IUserDataPaths] {
     fn get_CameraRoll(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Cookies(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Desktop(&self, out: *mut HSTRING) -> HRESULT,
@@ -2208,7 +2208,7 @@ impl UserDataPaths {
 }
 DEFINE_CLSID!(UserDataPaths(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,85,115,101,114,68,97,116,97,80,97,116,104,115,0]) [CLSID_UserDataPaths]);
 DEFINE_IID!(IID_IUserDataPathsStatics, 28483055, 57442, 18593, 139, 12, 242, 199, 169, 202, 86, 192);
-RT_INTERFACE!{static interface IUserDataPathsStatics(IUserDataPathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDataPathsStatics] {
+RT_INTERFACE!{static interface IUserDataPathsStatics(IUserDataPathsStaticsVtbl): IInspectable [IID_IUserDataPathsStatics] {
     #[cfg(not(feature="windows-system"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: <super::system::User as RtType>::Abi, out: *mut <UserDataPaths as RtType>::Abi) -> HRESULT,
     fn GetDefault(&self, out: *mut <UserDataPaths as RtType>::Abi) -> HRESULT
@@ -2235,7 +2235,7 @@ RT_STRUCT! { struct AccessListEntry {
 }}
 RT_CLASS!{class AccessListEntryView: foundation::collections::IVectorView<AccessListEntry>}
 DEFINE_IID!(IID_IItemRemovedEventArgs, 1499954780, 21950, 19558, 186, 102, 94, 174, 167, 157, 38, 49);
-RT_INTERFACE!{interface IItemRemovedEventArgs(IItemRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IItemRemovedEventArgs] {
+RT_INTERFACE!{interface IItemRemovedEventArgs(IItemRemovedEventArgsVtbl): IInspectable [IID_IItemRemovedEventArgs] {
     fn get_RemovedEntry(&self, out: *mut AccessListEntry) -> HRESULT
 }}
 impl IItemRemovedEventArgs {
@@ -2261,7 +2261,7 @@ impl StorageApplicationPermissions {
 }
 DEFINE_CLSID!(StorageApplicationPermissions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,65,99,99,101,115,115,67,97,99,104,101,46,83,116,111,114,97,103,101,65,112,112,108,105,99,97,116,105,111,110,80,101,114,109,105,115,115,105,111,110,115,0]) [CLSID_StorageApplicationPermissions]);
 DEFINE_IID!(IID_IStorageApplicationPermissionsStatics, 1133633450, 53299, 18681, 128, 96, 62, 200, 71, 210, 227, 241);
-RT_INTERFACE!{static interface IStorageApplicationPermissionsStatics(IStorageApplicationPermissionsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageApplicationPermissionsStatics] {
+RT_INTERFACE!{static interface IStorageApplicationPermissionsStatics(IStorageApplicationPermissionsStaticsVtbl): IInspectable [IID_IStorageApplicationPermissionsStatics] {
     fn get_FutureAccessList(&self, out: *mut <StorageItemAccessList as RtType>::Abi) -> HRESULT,
     fn get_MostRecentlyUsedList(&self, out: *mut <StorageItemMostRecentlyUsedList as RtType>::Abi) -> HRESULT
 }}
@@ -2278,7 +2278,7 @@ impl IStorageApplicationPermissionsStatics {
     }}
 }
 DEFINE_IID!(IID_IStorageItemAccessList, 749729453, 56976, 18421, 178, 195, 221, 54, 201, 253, 212, 83);
-RT_INTERFACE!{interface IStorageItemAccessList(IStorageItemAccessListVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemAccessList] {
+RT_INTERFACE!{interface IStorageItemAccessList(IStorageItemAccessListVtbl): IInspectable [IID_IStorageItemAccessList] {
     fn AddOverloadDefaultMetadata(&self, file: <super::IStorageItem as RtType>::Abi, out: *mut HSTRING) -> HRESULT,
     fn Add(&self, file: <super::IStorageItem as RtType>::Abi, metadata: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn AddOrReplaceOverloadDefaultMetadata(&self, token: HSTRING, file: <super::IStorageItem as RtType>::Abi) -> HRESULT,
@@ -2376,7 +2376,7 @@ impl IStorageItemAccessList {
 }
 RT_CLASS!{class StorageItemAccessList: IStorageItemAccessList}
 DEFINE_IID!(IID_IStorageItemMostRecentlyUsedList, 23214549, 20749, 16670, 140, 241, 195, 209, 239, 250, 76, 51);
-RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList(IStorageItemMostRecentlyUsedListVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemMostRecentlyUsedList] {
+RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList(IStorageItemMostRecentlyUsedListVtbl): IInspectable [IID_IStorageItemMostRecentlyUsedList] {
     fn add_ItemRemoved(&self, handler: <foundation::TypedEventHandler<StorageItemMostRecentlyUsedList, ItemRemovedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ItemRemoved(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -2393,7 +2393,7 @@ impl IStorageItemMostRecentlyUsedList {
 }
 RT_CLASS!{class StorageItemMostRecentlyUsedList: IStorageItemMostRecentlyUsedList}
 DEFINE_IID!(IID_IStorageItemMostRecentlyUsedList2, 3662159520, 60813, 18225, 161, 219, 228, 78, 226, 32, 64, 147);
-RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList2(IStorageItemMostRecentlyUsedList2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemMostRecentlyUsedList2] {
+RT_INTERFACE!{interface IStorageItemMostRecentlyUsedList2(IStorageItemMostRecentlyUsedList2Vtbl): IInspectable [IID_IStorageItemMostRecentlyUsedList2] {
     fn AddWithMetadataAndVisibility(&self, file: <super::IStorageItem as RtType>::Abi, metadata: HSTRING, visibility: RecentStorageItemVisibility, out: *mut HSTRING) -> HRESULT,
     fn AddOrReplaceWithMetadataAndVisibility(&self, token: HSTRING, file: <super::IStorageItem as RtType>::Abi, metadata: HSTRING, visibility: RecentStorageItemVisibility) -> HRESULT
 }}
@@ -2413,7 +2413,7 @@ pub mod bulkaccess { // Windows.Storage.BulkAccess
 use crate::prelude::*;
 RT_CLASS!{class FileInformation: IStorageItemInformation}
 DEFINE_IID!(IID_IFileInformationFactory, 1075677374, 38415, 19821, 167, 208, 26, 56, 97, 231, 108, 131);
-RT_INTERFACE!{interface IFileInformationFactory(IFileInformationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileInformationFactory] {
+RT_INTERFACE!{interface IFileInformationFactory(IFileInformationFactoryVtbl): IInspectable [IID_IFileInformationFactory] {
     fn GetItemsAsync(&self, startIndex: u32, maxItemsToRetrieve: u32, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>> as RtType>::Abi) -> HRESULT,
     fn GetItemsAsyncDefaultStartAndCount(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<IStorageItemInformation>> as RtType>::Abi) -> HRESULT,
     fn GetFilesAsync(&self, startIndex: u32, maxItemsToRetrieve: u32, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<FileInformation>> as RtType>::Abi) -> HRESULT,
@@ -2489,7 +2489,7 @@ impl FileInformationFactory {
 }
 DEFINE_CLSID!(FileInformationFactory(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,66,117,108,107,65,99,99,101,115,115,46,70,105,108,101,73,110,102,111,114,109,97,116,105,111,110,70,97,99,116,111,114,121,0]) [CLSID_FileInformationFactory]);
 DEFINE_IID!(IID_IFileInformationFactoryFactory, 2229931645, 58530, 20224, 138, 250, 175, 94, 15, 130, 107, 213);
-RT_INTERFACE!{static interface IFileInformationFactoryFactory(IFileInformationFactoryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileInformationFactoryFactory] {
+RT_INTERFACE!{static interface IFileInformationFactoryFactory(IFileInformationFactoryFactoryVtbl): IInspectable [IID_IFileInformationFactoryFactory] {
     fn CreateWithMode(&self, queryResult: <super::search::IStorageQueryResultBase as RtType>::Abi, mode: super::fileproperties::ThumbnailMode, out: *mut <FileInformationFactory as RtType>::Abi) -> HRESULT,
     fn CreateWithModeAndSize(&self, queryResult: <super::search::IStorageQueryResultBase as RtType>::Abi, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, out: *mut <FileInformationFactory as RtType>::Abi) -> HRESULT,
     fn CreateWithModeAndSizeAndOptions(&self, queryResult: <super::search::IStorageQueryResultBase as RtType>::Abi, mode: super::fileproperties::ThumbnailMode, requestedThumbnailSize: u32, thumbnailOptions: super::fileproperties::ThumbnailOptions, out: *mut <FileInformationFactory as RtType>::Abi) -> HRESULT,
@@ -2519,7 +2519,7 @@ impl IFileInformationFactoryFactory {
 }
 RT_CLASS!{class FolderInformation: IStorageItemInformation}
 DEFINE_IID!(IID_IStorageItemInformation, 2275789707, 35186, 20288, 141, 224, 216, 111, 177, 121, 216, 250);
-RT_INTERFACE!{interface IStorageItemInformation(IStorageItemInformationVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemInformation] {
+RT_INTERFACE!{interface IStorageItemInformation(IStorageItemInformationVtbl): IInspectable [IID_IStorageItemInformation] {
     fn get_MusicProperties(&self, out: *mut <super::fileproperties::MusicProperties as RtType>::Abi) -> HRESULT,
     fn get_VideoProperties(&self, out: *mut <super::fileproperties::VideoProperties as RtType>::Abi) -> HRESULT,
     fn get_ImageProperties(&self, out: *mut <super::fileproperties::ImageProperties as RtType>::Abi) -> HRESULT,
@@ -2588,7 +2588,7 @@ RT_ENUM! { enum CompressAlgorithm: i32 {
     InvalidAlgorithm = 0, NullAlgorithm = 1, Mszip = 2, Xpress = 3, XpressHuff = 4, Lzms = 5,
 }}
 DEFINE_IID!(IID_ICompressor, 180577370, 22444, 20193, 183, 2, 132, 211, 157, 84, 36, 224);
-RT_INTERFACE!{interface ICompressor(ICompressorVtbl): IInspectable(IInspectableVtbl) [IID_ICompressor] {
+RT_INTERFACE!{interface ICompressor(ICompressorVtbl): IInspectable [IID_ICompressor] {
     fn FinishAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn DetachStream(&self, out: *mut <super::streams::IOutputStream as RtType>::Abi) -> HRESULT
 }}
@@ -2616,7 +2616,7 @@ impl Compressor {
 }
 DEFINE_CLSID!(Compressor(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,111,109,112,114,101,115,115,105,111,110,46,67,111,109,112,114,101,115,115,111,114,0]) [CLSID_Compressor]);
 DEFINE_IID!(IID_ICompressorFactory, 1597871780, 11515, 17452, 168, 186, 215, 209, 27, 3, 157, 160);
-RT_INTERFACE!{static interface ICompressorFactory(ICompressorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICompressorFactory] {
+RT_INTERFACE!{static interface ICompressorFactory(ICompressorFactoryVtbl): IInspectable [IID_ICompressorFactory] {
     fn CreateCompressor(&self, underlyingStream: <super::streams::IOutputStream as RtType>::Abi, out: *mut <Compressor as RtType>::Abi) -> HRESULT,
     fn CreateCompressorEx(&self, underlyingStream: <super::streams::IOutputStream as RtType>::Abi, algorithm: CompressAlgorithm, blockSize: u32, out: *mut <Compressor as RtType>::Abi) -> HRESULT
 }}
@@ -2633,7 +2633,7 @@ impl ICompressorFactory {
     }}
 }
 DEFINE_IID!(IID_IDecompressor, 3095658054, 54922, 19595, 173, 160, 78, 232, 19, 252, 82, 131);
-RT_INTERFACE!{interface IDecompressor(IDecompressorVtbl): IInspectable(IInspectableVtbl) [IID_IDecompressor] {
+RT_INTERFACE!{interface IDecompressor(IDecompressorVtbl): IInspectable [IID_IDecompressor] {
     fn DetachStream(&self, out: *mut <super::streams::IInputStream as RtType>::Abi) -> HRESULT
 }}
 impl IDecompressor {
@@ -2652,7 +2652,7 @@ impl Decompressor {
 }
 DEFINE_CLSID!(Decompressor(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,67,111,109,112,114,101,115,115,105,111,110,46,68,101,99,111,109,112,114,101,115,115,111,114,0]) [CLSID_Decompressor]);
 DEFINE_IID!(IID_IDecompressorFactory, 1396171346, 7586, 17121, 136, 52, 3, 121, 210, 141, 116, 47);
-RT_INTERFACE!{static interface IDecompressorFactory(IDecompressorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDecompressorFactory] {
+RT_INTERFACE!{static interface IDecompressorFactory(IDecompressorFactoryVtbl): IInspectable [IID_IDecompressorFactory] {
     fn CreateDecompressor(&self, underlyingStream: <super::streams::IInputStream as RtType>::Abi, out: *mut <Decompressor as RtType>::Abi) -> HRESULT
 }}
 impl IDecompressorFactory {
@@ -2666,7 +2666,7 @@ impl IDecompressorFactory {
 pub mod fileproperties { // Windows.Storage.FileProperties
 use crate::prelude::*;
 DEFINE_IID!(IID_IBasicProperties, 3495777755, 30814, 19046, 190, 2, 155, 238, 197, 138, 234, 129);
-RT_INTERFACE!{interface IBasicProperties(IBasicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IBasicProperties] {
+RT_INTERFACE!{interface IBasicProperties(IBasicPropertiesVtbl): IInspectable [IID_IBasicProperties] {
     fn get_Size(&self, out: *mut u64) -> HRESULT,
     fn get_DateModified(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_ItemDate(&self, out: *mut foundation::DateTime) -> HRESULT
@@ -2690,7 +2690,7 @@ impl IBasicProperties {
 }
 RT_CLASS!{class BasicProperties: IBasicProperties}
 DEFINE_IID!(IID_IDocumentProperties, 2125142460, 6177, 18723, 180, 169, 10, 234, 64, 77, 0, 112);
-RT_INTERFACE!{interface IDocumentProperties(IDocumentPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IDocumentProperties] {
+RT_INTERFACE!{interface IDocumentProperties(IDocumentPropertiesVtbl): IInspectable [IID_IDocumentProperties] {
     fn get_Author(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Title(&self, value: HSTRING) -> HRESULT,
@@ -2744,7 +2744,7 @@ impl GeotagHelper {
 }
 DEFINE_CLSID!(GeotagHelper(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,70,105,108,101,80,114,111,112,101,114,116,105,101,115,46,71,101,111,116,97,103,72,101,108,112,101,114,0]) [CLSID_GeotagHelper]);
 DEFINE_IID!(IID_IGeotagHelperStatics, 1095316036, 9508, 18005, 134, 166, 237, 22, 245, 252, 113, 107);
-RT_INTERFACE!{static interface IGeotagHelperStatics(IGeotagHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeotagHelperStatics] {
+RT_INTERFACE!{static interface IGeotagHelperStatics(IGeotagHelperStaticsVtbl): IInspectable [IID_IGeotagHelperStatics] {
     #[cfg(feature="windows-devices")] fn GetGeotagAsync(&self, file: <super::IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<super::super::devices::geolocation::Geopoint> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-devices")] fn SetGeotagFromGeolocatorAsync(&self, file: <super::IStorageFile as RtType>::Abi, geolocator: <super::super::devices::geolocation::Geolocator as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-devices")] fn SetGeotagAsync(&self, file: <super::IStorageFile as RtType>::Abi, geopoint: <super::super::devices::geolocation::Geopoint as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
@@ -2767,7 +2767,7 @@ impl IGeotagHelperStatics {
     }}
 }
 DEFINE_IID!(IID_IImageProperties, 1379701796, 64767, 17013, 175, 238, 236, 219, 154, 180, 121, 115);
-RT_INTERFACE!{interface IImageProperties(IImagePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IImageProperties] {
+RT_INTERFACE!{interface IImageProperties(IImagePropertiesVtbl): IInspectable [IID_IImageProperties] {
     fn get_Rating(&self, out: *mut u32) -> HRESULT,
     fn put_Rating(&self, value: u32) -> HRESULT,
     fn get_Keywords(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
@@ -2870,7 +2870,7 @@ impl IImageProperties {
 }
 RT_CLASS!{class ImageProperties: IImageProperties}
 DEFINE_IID!(IID_IMusicProperties, 3163204450, 26348, 16794, 188, 93, 202, 101, 164, 203, 70, 218);
-RT_INTERFACE!{interface IMusicProperties(IMusicPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IMusicProperties] {
+RT_INTERFACE!{interface IMusicProperties(IMusicPropertiesVtbl): IInspectable [IID_IMusicProperties] {
     fn get_Album(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Album(&self, value: HSTRING) -> HRESULT,
     fn get_Artist(&self, out: *mut HSTRING) -> HRESULT,
@@ -3023,7 +3023,7 @@ RT_ENUM! { enum PropertyPrefetchOptions: u32 {
     None = 0, MusicProperties = 1, VideoProperties = 2, ImageProperties = 4, DocumentProperties = 8, BasicProperties = 16,
 }}
 DEFINE_IID!(IID_IStorageItemContentProperties, 86592429, 48184, 18623, 133, 215, 119, 14, 14, 42, 224, 186);
-RT_INTERFACE!{interface IStorageItemContentProperties(IStorageItemContentPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemContentProperties] {
+RT_INTERFACE!{interface IStorageItemContentProperties(IStorageItemContentPropertiesVtbl): IInspectable [IID_IStorageItemContentProperties] {
     fn GetMusicPropertiesAsync(&self, out: *mut <foundation::IAsyncOperation<MusicProperties> as RtType>::Abi) -> HRESULT,
     fn GetVideoPropertiesAsync(&self, out: *mut <foundation::IAsyncOperation<VideoProperties> as RtType>::Abi) -> HRESULT,
     fn GetImagePropertiesAsync(&self, out: *mut <foundation::IAsyncOperation<ImageProperties> as RtType>::Abi) -> HRESULT,
@@ -3053,7 +3053,7 @@ impl IStorageItemContentProperties {
 }
 RT_CLASS!{class StorageItemContentProperties: IStorageItemContentProperties}
 DEFINE_IID!(IID_IStorageItemExtraProperties, 3309527474, 21709, 17195, 189, 188, 75, 25, 196, 180, 112, 215);
-RT_INTERFACE!{interface IStorageItemExtraProperties(IStorageItemExtraPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemExtraProperties] {
+RT_INTERFACE!{interface IStorageItemExtraProperties(IStorageItemExtraPropertiesVtbl): IInspectable [IID_IStorageItemExtraProperties] {
     fn RetrievePropertiesAsync(&self, propertiesToRetrieve: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IMap<HString, IInspectable>> as RtType>::Abi) -> HRESULT,
     fn SavePropertiesAsync(&self, propertiesToSave: <foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, IInspectable>> as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn SavePropertiesAsyncOverloadDefault(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
@@ -3083,7 +3083,7 @@ RT_ENUM! { enum ThumbnailOptions: u32 {
     None = 0, ReturnOnlyIfCached = 1, ResizeThumbnail = 2, UseCurrentScale = 4,
 }}
 DEFINE_IID!(IID_IThumbnailProperties, 1765659695, 56295, 18869, 179, 179, 40, 147, 172, 93, 52, 35);
-RT_INTERFACE!{interface IThumbnailProperties(IThumbnailPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IThumbnailProperties] {
+RT_INTERFACE!{interface IThumbnailProperties(IThumbnailPropertiesVtbl): IInspectable [IID_IThumbnailProperties] {
     fn get_OriginalWidth(&self, out: *mut u32) -> HRESULT,
     fn get_OriginalHeight(&self, out: *mut u32) -> HRESULT,
     fn get_ReturnedSmallerCachedSize(&self, out: *mut bool) -> HRESULT,
@@ -3118,7 +3118,7 @@ RT_ENUM! { enum VideoOrientation: i32 {
     Normal = 0, Rotate90 = 90, Rotate180 = 180, Rotate270 = 270,
 }}
 DEFINE_IID!(IID_IVideoProperties, 1905976583, 26846, 19896, 151, 222, 73, 153, 140, 5, 159, 47);
-RT_INTERFACE!{interface IVideoProperties(IVideoPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IVideoProperties] {
+RT_INTERFACE!{interface IVideoProperties(IVideoPropertiesVtbl): IInspectable [IID_IVideoProperties] {
     fn get_Rating(&self, out: *mut u32) -> HRESULT,
     fn put_Rating(&self, value: u32) -> HRESULT,
     fn get_Keywords(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
@@ -3249,7 +3249,7 @@ pub mod pickers { // Windows.Storage.Pickers
 use crate::prelude::*;
 RT_CLASS!{class FileExtensionVector: foundation::collections::IVector<HString>}
 DEFINE_IID!(IID_IFileOpenPicker, 749217674, 4805, 19551, 137, 119, 148, 84, 119, 147, 194, 65);
-RT_INTERFACE!{interface IFileOpenPicker(IFileOpenPickerVtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPicker] {
+RT_INTERFACE!{interface IFileOpenPicker(IFileOpenPickerVtbl): IInspectable [IID_IFileOpenPicker] {
     fn get_ViewMode(&self, out: *mut PickerViewMode) -> HRESULT,
     fn put_ViewMode(&self, value: PickerViewMode) -> HRESULT,
     fn get_SettingsIdentifier(&self, out: *mut HSTRING) -> HRESULT,
@@ -3325,7 +3325,7 @@ impl FileOpenPicker {
 }
 DEFINE_CLSID!(FileOpenPicker(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,105,99,107,101,114,115,46,70,105,108,101,79,112,101,110,80,105,99,107,101,114,0]) [CLSID_FileOpenPicker]);
 DEFINE_IID!(IID_IFileOpenPicker2, 2364239058, 46150, 18167, 178, 101, 144, 248, 229, 90, 214, 80);
-RT_INTERFACE!{interface IFileOpenPicker2(IFileOpenPicker2Vtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPicker2] {
+RT_INTERFACE!{interface IFileOpenPicker2(IFileOpenPicker2Vtbl): IInspectable [IID_IFileOpenPicker2] {
     fn get_ContinuationData(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT,
     fn PickSingleFileAndContinue(&self) -> HRESULT,
     fn PickMultipleFilesAndContinue(&self) -> HRESULT
@@ -3346,7 +3346,7 @@ impl IFileOpenPicker2 {
     }}
 }
 DEFINE_IID!(IID_IFileOpenPickerStatics, 1747015483, 12034, 18483, 150, 212, 171, 191, 173, 114, 182, 123);
-RT_INTERFACE!{static interface IFileOpenPickerStatics(IFileOpenPickerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPickerStatics] {
+RT_INTERFACE!{static interface IFileOpenPickerStatics(IFileOpenPickerStaticsVtbl): IInspectable [IID_IFileOpenPickerStatics] {
     fn ResumePickSingleFileAsync(&self, out: *mut <foundation::IAsyncOperation<super::StorageFile> as RtType>::Abi) -> HRESULT
 }}
 impl IFileOpenPickerStatics {
@@ -3357,7 +3357,7 @@ impl IFileOpenPickerStatics {
     }}
 }
 DEFINE_IID!(IID_IFileOpenPickerWithOperationId, 1062712681, 9506, 19621, 170, 115, 161, 85, 9, 241, 252, 191);
-RT_INTERFACE!{interface IFileOpenPickerWithOperationId(IFileOpenPickerWithOperationIdVtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPickerWithOperationId] {
+RT_INTERFACE!{interface IFileOpenPickerWithOperationId(IFileOpenPickerWithOperationIdVtbl): IInspectable [IID_IFileOpenPickerWithOperationId] {
     fn PickSingleFileAsync(&self, pickerOperationId: HSTRING, out: *mut <foundation::IAsyncOperation<super::StorageFile> as RtType>::Abi) -> HRESULT
 }}
 impl IFileOpenPickerWithOperationId {
@@ -3370,7 +3370,7 @@ impl IFileOpenPickerWithOperationId {
 RT_CLASS!{class FilePickerFileTypesOrderedMap: foundation::collections::IMap<HString, foundation::collections::IVector<HString>>}
 RT_CLASS!{class FilePickerSelectedFilesArray: foundation::collections::IVectorView<super::StorageFile>}
 DEFINE_IID!(IID_IFileSavePicker, 847708107, 24959, 19653, 175, 106, 179, 253, 242, 154, 209, 69);
-RT_INTERFACE!{interface IFileSavePicker(IFileSavePickerVtbl): IInspectable(IInspectableVtbl) [IID_IFileSavePicker] {
+RT_INTERFACE!{interface IFileSavePicker(IFileSavePickerVtbl): IInspectable [IID_IFileSavePicker] {
     fn get_SettingsIdentifier(&self, out: *mut HSTRING) -> HRESULT,
     fn put_SettingsIdentifier(&self, value: HSTRING) -> HRESULT,
     fn get_SuggestedStartLocation(&self, out: *mut PickerLocationId) -> HRESULT,
@@ -3456,7 +3456,7 @@ RT_CLASS!{class FileSavePicker: IFileSavePicker}
 impl RtActivatable<IActivationFactory> for FileSavePicker {}
 DEFINE_CLSID!(FileSavePicker(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,105,99,107,101,114,115,46,70,105,108,101,83,97,118,101,80,105,99,107,101,114,0]) [CLSID_FileSavePicker]);
 DEFINE_IID!(IID_IFileSavePicker2, 247665570, 53835, 17562, 129, 151, 232, 145, 4, 253, 66, 204);
-RT_INTERFACE!{interface IFileSavePicker2(IFileSavePicker2Vtbl): IInspectable(IInspectableVtbl) [IID_IFileSavePicker2] {
+RT_INTERFACE!{interface IFileSavePicker2(IFileSavePicker2Vtbl): IInspectable [IID_IFileSavePicker2] {
     fn get_ContinuationData(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT,
     fn PickSaveFileAndContinue(&self) -> HRESULT
 }}
@@ -3472,7 +3472,7 @@ impl IFileSavePicker2 {
     }}
 }
 DEFINE_IID!(IID_IFileSavePicker3, 1770712169, 47676, 20049, 189, 144, 74, 188, 187, 244, 207, 175);
-RT_INTERFACE!{interface IFileSavePicker3(IFileSavePicker3Vtbl): IInspectable(IInspectableVtbl) [IID_IFileSavePicker3] {
+RT_INTERFACE!{interface IFileSavePicker3(IFileSavePicker3Vtbl): IInspectable [IID_IFileSavePicker3] {
     fn get_EnterpriseId(&self, out: *mut HSTRING) -> HRESULT,
     fn put_EnterpriseId(&self, value: HSTRING) -> HRESULT
 }}
@@ -3488,7 +3488,7 @@ impl IFileSavePicker3 {
     }}
 }
 DEFINE_IID!(IID_IFolderPicker, 139425689, 62459, 16394, 153, 177, 123, 74, 119, 47, 214, 13);
-RT_INTERFACE!{interface IFolderPicker(IFolderPickerVtbl): IInspectable(IInspectableVtbl) [IID_IFolderPicker] {
+RT_INTERFACE!{interface IFolderPicker(IFolderPickerVtbl): IInspectable [IID_IFolderPicker] {
     fn get_ViewMode(&self, out: *mut PickerViewMode) -> HRESULT,
     fn put_ViewMode(&self, value: PickerViewMode) -> HRESULT,
     fn get_SettingsIdentifier(&self, out: *mut HSTRING) -> HRESULT,
@@ -3552,7 +3552,7 @@ RT_CLASS!{class FolderPicker: IFolderPicker}
 impl RtActivatable<IActivationFactory> for FolderPicker {}
 DEFINE_CLSID!(FolderPicker(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,105,99,107,101,114,115,46,70,111,108,100,101,114,80,105,99,107,101,114,0]) [CLSID_FolderPicker]);
 DEFINE_IID!(IID_IFolderPicker2, 2394143383, 56453, 17942, 190, 148, 150, 96, 136, 31, 47, 93);
-RT_INTERFACE!{interface IFolderPicker2(IFolderPicker2Vtbl): IInspectable(IInspectableVtbl) [IID_IFolderPicker2] {
+RT_INTERFACE!{interface IFolderPicker2(IFolderPicker2Vtbl): IInspectable [IID_IFolderPicker2] {
     fn get_ContinuationData(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT,
     fn PickFolderAndContinue(&self) -> HRESULT
 }}
@@ -3579,7 +3579,7 @@ RT_ENUM! { enum AddFileResult: i32 {
     Added = 0, AlreadyAdded = 1, NotAllowed = 2, Unavailable = 3,
 }}
 DEFINE_IID!(IID_IFileOpenPickerUI, 3718535696, 63956, 16580, 138, 245, 197, 182, 181, 166, 29, 29);
-RT_INTERFACE!{interface IFileOpenPickerUI(IFileOpenPickerUIVtbl): IInspectable(IInspectableVtbl) [IID_IFileOpenPickerUI] {
+RT_INTERFACE!{interface IFileOpenPickerUI(IFileOpenPickerUIVtbl): IInspectable [IID_IFileOpenPickerUI] {
     fn AddFile(&self, id: HSTRING, file: <super::super::IStorageFile as RtType>::Abi, out: *mut AddFileResult) -> HRESULT,
     fn RemoveFile(&self, id: HSTRING) -> HRESULT,
     fn ContainsFile(&self, id: HSTRING, out: *mut bool) -> HRESULT,
@@ -3659,7 +3659,7 @@ impl IFileOpenPickerUI {
 }
 RT_CLASS!{class FileOpenPickerUI: IFileOpenPickerUI}
 DEFINE_IID!(IID_IFileRemovedEventArgs, 319045031, 32714, 19499, 158, 202, 104, 144, 249, 240, 1, 133);
-RT_INTERFACE!{interface IFileRemovedEventArgs(IFileRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IFileRemovedEventArgs] {
+RT_INTERFACE!{interface IFileRemovedEventArgs(IFileRemovedEventArgsVtbl): IInspectable [IID_IFileRemovedEventArgs] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IFileRemovedEventArgs {
@@ -3671,7 +3671,7 @@ impl IFileRemovedEventArgs {
 }
 RT_CLASS!{class FileRemovedEventArgs: IFileRemovedEventArgs}
 DEFINE_IID!(IID_IFileSavePickerUI, 2522268135, 15958, 17356, 138, 57, 51, 199, 61, 157, 84, 43);
-RT_INTERFACE!{interface IFileSavePickerUI(IFileSavePickerUIVtbl): IInspectable(IInspectableVtbl) [IID_IFileSavePickerUI] {
+RT_INTERFACE!{interface IFileSavePickerUI(IFileSavePickerUIVtbl): IInspectable [IID_IFileSavePickerUI] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Title(&self, value: HSTRING) -> HRESULT,
     fn get_AllowedFileTypes(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
@@ -3737,7 +3737,7 @@ RT_ENUM! { enum FileSelectionMode: i32 {
     Single = 0, Multiple = 1,
 }}
 DEFINE_IID!(IID_IPickerClosingDeferral, 2063071006, 6759, 18993, 174, 128, 233, 7, 112, 138, 97, 155);
-RT_INTERFACE!{interface IPickerClosingDeferral(IPickerClosingDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IPickerClosingDeferral] {
+RT_INTERFACE!{interface IPickerClosingDeferral(IPickerClosingDeferralVtbl): IInspectable [IID_IPickerClosingDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl IPickerClosingDeferral {
@@ -3748,7 +3748,7 @@ impl IPickerClosingDeferral {
 }
 RT_CLASS!{class PickerClosingDeferral: IPickerClosingDeferral}
 DEFINE_IID!(IID_IPickerClosingEventArgs, 2119823908, 45874, 20242, 139, 159, 168, 194, 240, 107, 50, 205);
-RT_INTERFACE!{interface IPickerClosingEventArgs(IPickerClosingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPickerClosingEventArgs] {
+RT_INTERFACE!{interface IPickerClosingEventArgs(IPickerClosingEventArgsVtbl): IInspectable [IID_IPickerClosingEventArgs] {
     fn get_ClosingOperation(&self, out: *mut <PickerClosingOperation as RtType>::Abi) -> HRESULT,
     fn get_IsCanceled(&self, out: *mut bool) -> HRESULT
 }}
@@ -3766,7 +3766,7 @@ impl IPickerClosingEventArgs {
 }
 RT_CLASS!{class PickerClosingEventArgs: IPickerClosingEventArgs}
 DEFINE_IID!(IID_IPickerClosingOperation, 1290402692, 48878, 20025, 167, 115, 252, 95, 14, 174, 50, 141);
-RT_INTERFACE!{interface IPickerClosingOperation(IPickerClosingOperationVtbl): IInspectable(IInspectableVtbl) [IID_IPickerClosingOperation] {
+RT_INTERFACE!{interface IPickerClosingOperation(IPickerClosingOperationVtbl): IInspectable [IID_IPickerClosingOperation] {
     fn GetDeferral(&self, out: *mut <PickerClosingDeferral as RtType>::Abi) -> HRESULT,
     fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT
 }}
@@ -3787,7 +3787,7 @@ RT_ENUM! { enum SetFileNameResult: i32 {
     Succeeded = 0, NotAllowed = 1, Unavailable = 2,
 }}
 DEFINE_IID!(IID_ITargetFileRequest, 1119695701, 32648, 18315, 142, 129, 105, 11, 32, 52, 6, 120);
-RT_INTERFACE!{interface ITargetFileRequest(ITargetFileRequestVtbl): IInspectable(IInspectableVtbl) [IID_ITargetFileRequest] {
+RT_INTERFACE!{interface ITargetFileRequest(ITargetFileRequestVtbl): IInspectable [IID_ITargetFileRequest] {
     fn get_TargetFile(&self, out: *mut <super::super::IStorageFile as RtType>::Abi) -> HRESULT,
     fn put_TargetFile(&self, value: <super::super::IStorageFile as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <TargetFileRequestDeferral as RtType>::Abi) -> HRESULT
@@ -3810,7 +3810,7 @@ impl ITargetFileRequest {
 }
 RT_CLASS!{class TargetFileRequest: ITargetFileRequest}
 DEFINE_IID!(IID_ITargetFileRequestDeferral, 1257151889, 48917, 19881, 149, 246, 246, 183, 213, 88, 34, 91);
-RT_INTERFACE!{interface ITargetFileRequestDeferral(ITargetFileRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_ITargetFileRequestDeferral] {
+RT_INTERFACE!{interface ITargetFileRequestDeferral(ITargetFileRequestDeferralVtbl): IInspectable [IID_ITargetFileRequestDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl ITargetFileRequestDeferral {
@@ -3821,7 +3821,7 @@ impl ITargetFileRequestDeferral {
 }
 RT_CLASS!{class TargetFileRequestDeferral: ITargetFileRequestDeferral}
 DEFINE_IID!(IID_ITargetFileRequestedEventArgs, 2976111553, 6993, 19593, 165, 145, 15, 212, 11, 60, 87, 201);
-RT_INTERFACE!{interface ITargetFileRequestedEventArgs(ITargetFileRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITargetFileRequestedEventArgs] {
+RT_INTERFACE!{interface ITargetFileRequestedEventArgs(ITargetFileRequestedEventArgsVtbl): IInspectable [IID_ITargetFileRequestedEventArgs] {
     fn get_Request(&self, out: *mut <TargetFileRequest as RtType>::Abi) -> HRESULT
 }}
 impl ITargetFileRequestedEventArgs {
@@ -3851,7 +3851,7 @@ impl CachedFileUpdater {
 }
 DEFINE_CLSID!(CachedFileUpdater(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,67,97,99,104,101,100,70,105,108,101,85,112,100,97,116,101,114,0]) [CLSID_CachedFileUpdater]);
 DEFINE_IID!(IID_ICachedFileUpdaterStatics, 2680752416, 31695, 18568, 168, 30, 16, 45, 112, 52, 215, 206);
-RT_INTERFACE!{static interface ICachedFileUpdaterStatics(ICachedFileUpdaterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterStatics] {
+RT_INTERFACE!{static interface ICachedFileUpdaterStatics(ICachedFileUpdaterStaticsVtbl): IInspectable [IID_ICachedFileUpdaterStatics] {
     fn SetUpdateInformation(&self, file: <super::IStorageFile as RtType>::Abi, contentId: HSTRING, readMode: ReadActivationMode, writeMode: WriteActivationMode, options: CachedFileOptions) -> HRESULT
 }}
 impl ICachedFileUpdaterStatics {
@@ -3861,7 +3861,7 @@ impl ICachedFileUpdaterStatics {
     }}
 }
 DEFINE_IID!(IID_ICachedFileUpdaterUI, 2658091494, 47858, 19095, 182, 0, 147, 51, 245, 223, 128, 253);
-RT_INTERFACE!{interface ICachedFileUpdaterUI(ICachedFileUpdaterUIVtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterUI] {
+RT_INTERFACE!{interface ICachedFileUpdaterUI(ICachedFileUpdaterUIVtbl): IInspectable [IID_ICachedFileUpdaterUI] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Title(&self, value: HSTRING) -> HRESULT,
     fn get_UpdateTarget(&self, out: *mut CachedFileTarget) -> HRESULT,
@@ -3912,7 +3912,7 @@ impl ICachedFileUpdaterUI {
 }
 RT_CLASS!{class CachedFileUpdaterUI: ICachedFileUpdaterUI}
 DEFINE_IID!(IID_ICachedFileUpdaterUI2, 2287378972, 34457, 17216, 159, 73, 247, 202, 215, 254, 137, 145);
-RT_INTERFACE!{interface ICachedFileUpdaterUI2(ICachedFileUpdaterUI2Vtbl): IInspectable(IInspectableVtbl) [IID_ICachedFileUpdaterUI2] {
+RT_INTERFACE!{interface ICachedFileUpdaterUI2(ICachedFileUpdaterUI2Vtbl): IInspectable [IID_ICachedFileUpdaterUI2] {
     fn get_UpdateRequest(&self, out: *mut <FileUpdateRequest as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <FileUpdateRequestDeferral as RtType>::Abi) -> HRESULT
 }}
@@ -3929,7 +3929,7 @@ impl ICachedFileUpdaterUI2 {
     }}
 }
 DEFINE_IID!(IID_IFileUpdateRequest, 1086858550, 49662, 19859, 167, 146, 30, 115, 107, 199, 8, 55);
-RT_INTERFACE!{interface IFileUpdateRequest(IFileUpdateRequestVtbl): IInspectable(IInspectableVtbl) [IID_IFileUpdateRequest] {
+RT_INTERFACE!{interface IFileUpdateRequest(IFileUpdateRequestVtbl): IInspectable [IID_IFileUpdateRequest] {
     fn get_ContentId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_File(&self, out: *mut <super::StorageFile as RtType>::Abi) -> HRESULT,
     fn get_Status(&self, out: *mut FileUpdateStatus) -> HRESULT,
@@ -3969,7 +3969,7 @@ impl IFileUpdateRequest {
 }
 RT_CLASS!{class FileUpdateRequest: IFileUpdateRequest}
 DEFINE_IID!(IID_IFileUpdateRequest2, 2185774664, 48574, 17531, 162, 238, 122, 254, 106, 3, 42, 148);
-RT_INTERFACE!{interface IFileUpdateRequest2(IFileUpdateRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IFileUpdateRequest2] {
+RT_INTERFACE!{interface IFileUpdateRequest2(IFileUpdateRequest2Vtbl): IInspectable [IID_IFileUpdateRequest2] {
     fn get_UserInputNeededMessage(&self, out: *mut HSTRING) -> HRESULT,
     fn put_UserInputNeededMessage(&self, value: HSTRING) -> HRESULT
 }}
@@ -3985,7 +3985,7 @@ impl IFileUpdateRequest2 {
     }}
 }
 DEFINE_IID!(IID_IFileUpdateRequestDeferral, 4291746603, 35550, 17573, 187, 0, 22, 76, 78, 114, 241, 58);
-RT_INTERFACE!{interface IFileUpdateRequestDeferral(IFileUpdateRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IFileUpdateRequestDeferral] {
+RT_INTERFACE!{interface IFileUpdateRequestDeferral(IFileUpdateRequestDeferralVtbl): IInspectable [IID_IFileUpdateRequestDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl IFileUpdateRequestDeferral {
@@ -3996,7 +3996,7 @@ impl IFileUpdateRequestDeferral {
 }
 RT_CLASS!{class FileUpdateRequestDeferral: IFileUpdateRequestDeferral}
 DEFINE_IID!(IID_IFileUpdateRequestedEventArgs, 2064290626, 14597, 17293, 170, 239, 120, 174, 38, 95, 141, 210);
-RT_INTERFACE!{interface IFileUpdateRequestedEventArgs(IFileUpdateRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IFileUpdateRequestedEventArgs] {
+RT_INTERFACE!{interface IFileUpdateRequestedEventArgs(IFileUpdateRequestedEventArgsVtbl): IInspectable [IID_IFileUpdateRequestedEventArgs] {
     fn get_Request(&self, out: *mut <FileUpdateRequest as RtType>::Abi) -> HRESULT
 }}
 impl IFileUpdateRequestedEventArgs {
@@ -4014,7 +4014,7 @@ RT_ENUM! { enum ReadActivationMode: i32 {
     NotNeeded = 0, BeforeAccess = 1,
 }}
 DEFINE_IID!(IID_IStorageProviderGetContentInfoForPathResult, 627339549, 43657, 19730, 130, 227, 247, 42, 146, 227, 57, 102);
-RT_INTERFACE!{interface IStorageProviderGetContentInfoForPathResult(IStorageProviderGetContentInfoForPathResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderGetContentInfoForPathResult] {
+RT_INTERFACE!{interface IStorageProviderGetContentInfoForPathResult(IStorageProviderGetContentInfoForPathResultVtbl): IInspectable [IID_IStorageProviderGetContentInfoForPathResult] {
     fn get_Status(&self, out: *mut StorageProviderUriSourceStatus) -> HRESULT,
     fn put_Status(&self, value: StorageProviderUriSourceStatus) -> HRESULT,
     fn get_ContentUri(&self, out: *mut HSTRING) -> HRESULT,
@@ -4055,7 +4055,7 @@ RT_CLASS!{class StorageProviderGetContentInfoForPathResult: IStorageProviderGetC
 impl RtActivatable<IActivationFactory> for StorageProviderGetContentInfoForPathResult {}
 DEFINE_CLSID!(StorageProviderGetContentInfoForPathResult(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,71,101,116,67,111,110,116,101,110,116,73,110,102,111,70,111,114,80,97,116,104,82,101,115,117,108,116,0]) [CLSID_StorageProviderGetContentInfoForPathResult]);
 DEFINE_IID!(IID_IStorageProviderGetPathForContentUriResult, 1668356765, 16664, 17830, 172, 182, 34, 196, 157, 1, 159, 64);
-RT_INTERFACE!{interface IStorageProviderGetPathForContentUriResult(IStorageProviderGetPathForContentUriResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderGetPathForContentUriResult] {
+RT_INTERFACE!{interface IStorageProviderGetPathForContentUriResult(IStorageProviderGetPathForContentUriResultVtbl): IInspectable [IID_IStorageProviderGetPathForContentUriResult] {
     fn get_Status(&self, out: *mut StorageProviderUriSourceStatus) -> HRESULT,
     fn put_Status(&self, value: StorageProviderUriSourceStatus) -> HRESULT,
     fn get_Path(&self, out: *mut HSTRING) -> HRESULT,
@@ -4105,7 +4105,7 @@ impl StorageProviderItemProperties {
 }
 DEFINE_CLSID!(StorageProviderItemProperties(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,73,116,101,109,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_StorageProviderItemProperties]);
 DEFINE_IID!(IID_IStorageProviderItemPropertiesStatics, 757865623, 9988, 18217, 143, 169, 126, 107, 142, 21, 140, 47);
-RT_INTERFACE!{static interface IStorageProviderItemPropertiesStatics(IStorageProviderItemPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderItemPropertiesStatics] {
+RT_INTERFACE!{static interface IStorageProviderItemPropertiesStatics(IStorageProviderItemPropertiesStaticsVtbl): IInspectable [IID_IStorageProviderItemPropertiesStatics] {
     fn SetAsync(&self, item: <super::IStorageItem as RtType>::Abi, itemProperties: <foundation::collections::IIterable<StorageProviderItemProperty> as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl IStorageProviderItemPropertiesStatics {
@@ -4116,7 +4116,7 @@ impl IStorageProviderItemPropertiesStatics {
     }}
 }
 DEFINE_IID!(IID_IStorageProviderItemProperty, 1198306648, 29451, 16776, 183, 181, 99, 183, 22, 237, 71, 109);
-RT_INTERFACE!{interface IStorageProviderItemProperty(IStorageProviderItemPropertyVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderItemProperty] {
+RT_INTERFACE!{interface IStorageProviderItemProperty(IStorageProviderItemPropertyVtbl): IInspectable [IID_IStorageProviderItemProperty] {
     fn put_Id(&self, value: i32) -> HRESULT,
     fn get_Id(&self, out: *mut i32) -> HRESULT,
     fn put_Value(&self, value: HSTRING) -> HRESULT,
@@ -4157,7 +4157,7 @@ RT_CLASS!{class StorageProviderItemProperty: IStorageProviderItemProperty}
 impl RtActivatable<IActivationFactory> for StorageProviderItemProperty {}
 DEFINE_CLSID!(StorageProviderItemProperty(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,73,116,101,109,80,114,111,112,101,114,116,121,0]) [CLSID_StorageProviderItemProperty]);
 DEFINE_IID!(IID_IStorageProviderItemPropertyDefinition, 3316876219, 65311, 17048, 131, 30, 255, 28, 8, 8, 150, 144);
-RT_INTERFACE!{interface IStorageProviderItemPropertyDefinition(IStorageProviderItemPropertyDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderItemPropertyDefinition] {
+RT_INTERFACE!{interface IStorageProviderItemPropertyDefinition(IStorageProviderItemPropertyDefinitionVtbl): IInspectable [IID_IStorageProviderItemPropertyDefinition] {
     fn get_Id(&self, out: *mut i32) -> HRESULT,
     fn put_Id(&self, value: i32) -> HRESULT,
     fn get_DisplayNameResource(&self, out: *mut HSTRING) -> HRESULT,
@@ -4187,7 +4187,7 @@ RT_CLASS!{class StorageProviderItemPropertyDefinition: IStorageProviderItemPrope
 impl RtActivatable<IActivationFactory> for StorageProviderItemPropertyDefinition {}
 DEFINE_CLSID!(StorageProviderItemPropertyDefinition(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,73,116,101,109,80,114,111,112,101,114,116,121,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_StorageProviderItemPropertyDefinition]);
 DEFINE_IID!(IID_IStorageProviderItemPropertySource, 2406456382, 63026, 19099, 141, 153, 210, 215, 161, 29, 245, 106);
-RT_INTERFACE!{interface IStorageProviderItemPropertySource(IStorageProviderItemPropertySourceVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderItemPropertySource] {
+RT_INTERFACE!{interface IStorageProviderItemPropertySource(IStorageProviderItemPropertySourceVtbl): IInspectable [IID_IStorageProviderItemPropertySource] {
     fn GetItemProperties(&self, itemPath: HSTRING, out: *mut <foundation::collections::IIterable<StorageProviderItemProperty> as RtType>::Abi) -> HRESULT
 }}
 impl IStorageProviderItemPropertySource {
@@ -4201,7 +4201,7 @@ RT_ENUM! { enum StorageProviderPopulationPolicy: i32 {
     Full = 1, AlwaysFull = 2,
 }}
 DEFINE_IID!(IID_IStorageProviderPropertyCapabilities, 1703751438, 25527, 17767, 172, 249, 81, 171, 227, 1, 221, 165);
-RT_INTERFACE!{interface IStorageProviderPropertyCapabilities(IStorageProviderPropertyCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderPropertyCapabilities] {
+RT_INTERFACE!{interface IStorageProviderPropertyCapabilities(IStorageProviderPropertyCapabilitiesVtbl): IInspectable [IID_IStorageProviderPropertyCapabilities] {
     fn IsPropertySupported(&self, propertyCanonicalName: HSTRING, out: *mut bool) -> HRESULT
 }}
 impl IStorageProviderPropertyCapabilities {
@@ -4215,7 +4215,7 @@ RT_ENUM! { enum StorageProviderProtectionMode: i32 {
     Unknown = 0, Personal = 1,
 }}
 DEFINE_IID!(IID_IStorageProviderSyncRootInfo, 2081621444, 39417, 16812, 137, 4, 171, 5, 93, 101, 73, 38);
-RT_INTERFACE!{interface IStorageProviderSyncRootInfo(IStorageProviderSyncRootInfoVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderSyncRootInfo] {
+RT_INTERFACE!{interface IStorageProviderSyncRootInfo(IStorageProviderSyncRootInfoVtbl): IInspectable [IID_IStorageProviderSyncRootInfo] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Id(&self, value: HSTRING) -> HRESULT,
     fn get_Context(&self, out: *mut <super::streams::IBuffer as RtType>::Abi) -> HRESULT,
@@ -4394,7 +4394,7 @@ RT_CLASS!{class StorageProviderSyncRootInfo: IStorageProviderSyncRootInfo}
 impl RtActivatable<IActivationFactory> for StorageProviderSyncRootInfo {}
 DEFINE_CLSID!(StorageProviderSyncRootInfo(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,83,121,110,99,82,111,111,116,73,110,102,111,0]) [CLSID_StorageProviderSyncRootInfo]);
 DEFINE_IID!(IID_IStorageProviderSyncRootInfo2, 3478237219, 31985, 20838, 189, 186, 239, 217, 95, 82, 158, 49);
-RT_INTERFACE!{interface IStorageProviderSyncRootInfo2(IStorageProviderSyncRootInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderSyncRootInfo2] {
+RT_INTERFACE!{interface IStorageProviderSyncRootInfo2(IStorageProviderSyncRootInfo2Vtbl): IInspectable [IID_IStorageProviderSyncRootInfo2] {
     fn get_ProviderId(&self, out: *mut Guid) -> HRESULT,
     fn put_ProviderId(&self, value: Guid) -> HRESULT
 }}
@@ -4430,7 +4430,7 @@ impl StorageProviderSyncRootManager {
 }
 DEFINE_CLSID!(StorageProviderSyncRootManager(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,80,114,111,118,105,100,101,114,46,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,83,121,110,99,82,111,111,116,77,97,110,97,103,101,114,0]) [CLSID_StorageProviderSyncRootManager]);
 DEFINE_IID!(IID_IStorageProviderSyncRootManagerStatics, 1050278847, 36835, 19264, 171, 199, 246, 252, 61, 116, 201, 142);
-RT_INTERFACE!{static interface IStorageProviderSyncRootManagerStatics(IStorageProviderSyncRootManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderSyncRootManagerStatics] {
+RT_INTERFACE!{static interface IStorageProviderSyncRootManagerStatics(IStorageProviderSyncRootManagerStaticsVtbl): IInspectable [IID_IStorageProviderSyncRootManagerStatics] {
     fn Register(&self, syncRootInformation: <StorageProviderSyncRootInfo as RtType>::Abi) -> HRESULT,
     fn Unregister(&self, id: HSTRING) -> HRESULT,
     fn GetSyncRootInformationForFolder(&self, folder: <super::IStorageFolder as RtType>::Abi, out: *mut <StorageProviderSyncRootInfo as RtType>::Abi) -> HRESULT,
@@ -4463,7 +4463,7 @@ impl IStorageProviderSyncRootManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IStorageProviderUriSource, 2996307665, 35808, 18786, 139, 182, 13, 76, 46, 20, 212, 122);
-RT_INTERFACE!{interface IStorageProviderUriSource(IStorageProviderUriSourceVtbl): IInspectable(IInspectableVtbl) [IID_IStorageProviderUriSource] {
+RT_INTERFACE!{interface IStorageProviderUriSource(IStorageProviderUriSourceVtbl): IInspectable [IID_IStorageProviderUriSource] {
     fn GetPathForContentUri(&self, contentUri: HSTRING, result: <StorageProviderGetPathForContentUriResult as RtType>::Abi) -> HRESULT,
     fn GetContentInfoForPath(&self, path: HSTRING, result: <StorageProviderGetContentInfoForPathResult as RtType>::Abi) -> HRESULT
 }}
@@ -4496,7 +4496,7 @@ RT_ENUM! { enum CommonFolderQuery: i32 {
     DefaultQuery = 0, GroupByYear = 100, GroupByMonth = 101, GroupByArtist = 102, GroupByAlbum = 103, GroupByAlbumArtist = 104, GroupByComposer = 105, GroupByGenre = 106, GroupByPublishedYear = 107, GroupByRating = 108, GroupByTag = 109, GroupByAuthor = 110, GroupByType = 111,
 }}
 DEFINE_IID!(IID_IContentIndexer, 2977333133, 63128, 18818, 176, 95, 58, 110, 140, 171, 1, 162);
-RT_INTERFACE!{interface IContentIndexer(IContentIndexerVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexer] {
+RT_INTERFACE!{interface IContentIndexer(IContentIndexerVtbl): IInspectable [IID_IContentIndexer] {
     fn AddAsync(&self, indexableContent: <IIndexableContent as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn UpdateAsync(&self, indexableContent: <IIndexableContent as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn DeleteAsync(&self, contentId: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -4554,7 +4554,7 @@ impl ContentIndexer {
 }
 DEFINE_CLSID!(ContentIndexer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,67,111,110,116,101,110,116,73,110,100,101,120,101,114,0]) [CLSID_ContentIndexer]);
 DEFINE_IID!(IID_IContentIndexerQuery, 1893970168, 19452, 17034, 136, 137, 204, 81, 218, 154, 123, 157);
-RT_INTERFACE!{interface IContentIndexerQuery(IContentIndexerQueryVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexerQuery] {
+RT_INTERFACE!{interface IContentIndexerQuery(IContentIndexerQueryVtbl): IInspectable [IID_IContentIndexerQuery] {
     fn GetCountAsync(&self, out: *mut <foundation::IAsyncOperation<u32> as RtType>::Abi) -> HRESULT,
     fn GetPropertiesAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>> as RtType>::Abi) -> HRESULT,
     fn GetPropertiesRangeAsync(&self, startIndex: u32, maxItems: u32, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<foundation::collections::IMapView<HString, IInspectable>>> as RtType>::Abi) -> HRESULT,
@@ -4596,7 +4596,7 @@ impl IContentIndexerQuery {
 }
 RT_CLASS!{class ContentIndexerQuery: IContentIndexerQuery}
 DEFINE_IID!(IID_IContentIndexerQueryOperations, 679624208, 18310, 17137, 151, 48, 121, 43, 53, 102, 177, 80);
-RT_INTERFACE!{interface IContentIndexerQueryOperations(IContentIndexerQueryOperationsVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexerQueryOperations] {
+RT_INTERFACE!{interface IContentIndexerQueryOperations(IContentIndexerQueryOperationsVtbl): IInspectable [IID_IContentIndexerQueryOperations] {
     fn CreateQueryWithSortOrderAndLanguage(&self, searchFilter: HSTRING, propertiesToRetrieve: <foundation::collections::IIterable<HString> as RtType>::Abi, sortOrder: <foundation::collections::IIterable<SortEntry> as RtType>::Abi, searchFilterLanguage: HSTRING, out: *mut <ContentIndexerQuery as RtType>::Abi) -> HRESULT,
     fn CreateQueryWithSortOrder(&self, searchFilter: HSTRING, propertiesToRetrieve: <foundation::collections::IIterable<HString> as RtType>::Abi, sortOrder: <foundation::collections::IIterable<SortEntry> as RtType>::Abi, out: *mut <ContentIndexerQuery as RtType>::Abi) -> HRESULT,
     fn CreateQuery(&self, searchFilter: HSTRING, propertiesToRetrieve: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <ContentIndexerQuery as RtType>::Abi) -> HRESULT
@@ -4619,7 +4619,7 @@ impl IContentIndexerQueryOperations {
     }}
 }
 DEFINE_IID!(IID_IContentIndexerStatics, 2353562485, 45950, 19552, 155, 168, 183, 96, 253, 163, 229, 157);
-RT_INTERFACE!{static interface IContentIndexerStatics(IContentIndexerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IContentIndexerStatics] {
+RT_INTERFACE!{static interface IContentIndexerStatics(IContentIndexerStaticsVtbl): IInspectable [IID_IContentIndexerStatics] {
     fn GetIndexerWithName(&self, indexName: HSTRING, out: *mut <ContentIndexer as RtType>::Abi) -> HRESULT,
     fn GetIndexer(&self, out: *mut <ContentIndexer as RtType>::Abi) -> HRESULT
 }}
@@ -4642,7 +4642,7 @@ RT_ENUM! { enum FolderDepth: i32 {
     Shallow = 0, Deep = 1,
 }}
 DEFINE_IID!(IID_IIndexableContent, 3438387295, 54453, 18490, 176, 110, 224, 219, 30, 196, 32, 228);
-RT_INTERFACE!{interface IIndexableContent(IIndexableContentVtbl): IInspectable(IInspectableVtbl) [IID_IIndexableContent] {
+RT_INTERFACE!{interface IIndexableContent(IIndexableContentVtbl): IInspectable [IID_IIndexableContent] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Id(&self, value: HSTRING) -> HRESULT,
     fn get_Properties(&self, out: *mut <foundation::collections::IMap<HString, IInspectable> as RtType>::Abi) -> HRESULT,
@@ -4695,7 +4695,7 @@ RT_ENUM! { enum IndexerOption: i32 {
     UseIndexerWhenAvailable = 0, OnlyUseIndexer = 1, DoNotUseIndexer = 2, OnlyUseIndexerAndOptimizeForIndexedProperties = 3,
 }}
 DEFINE_IID!(IID_IQueryOptions, 509495022, 3909, 18488, 168, 233, 208, 71, 157, 68, 108, 48);
-RT_INTERFACE!{interface IQueryOptions(IQueryOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptions] {
+RT_INTERFACE!{interface IQueryOptions(IQueryOptionsVtbl): IInspectable [IID_IQueryOptions] {
     fn get_FileTypeFilter(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
     fn get_FolderDepth(&self, out: *mut FolderDepth) -> HRESULT,
     fn put_FolderDepth(&self, value: FolderDepth) -> HRESULT,
@@ -4812,7 +4812,7 @@ impl QueryOptions {
 }
 DEFINE_CLSID!(QueryOptions(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,101,97,114,99,104,46,81,117,101,114,121,79,112,116,105,111,110,115,0]) [CLSID_QueryOptions]);
 DEFINE_IID!(IID_IQueryOptionsFactory, 53354380, 43457, 20081, 128, 17, 13, 238, 157, 72, 17, 163);
-RT_INTERFACE!{static interface IQueryOptionsFactory(IQueryOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptionsFactory] {
+RT_INTERFACE!{static interface IQueryOptionsFactory(IQueryOptionsFactoryVtbl): IInspectable [IID_IQueryOptionsFactory] {
     fn CreateCommonFileQuery(&self, query: CommonFileQuery, fileTypeFilter: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <QueryOptions as RtType>::Abi) -> HRESULT,
     fn CreateCommonFolderQuery(&self, query: CommonFolderQuery, out: *mut <QueryOptions as RtType>::Abi) -> HRESULT
 }}
@@ -4829,7 +4829,7 @@ impl IQueryOptionsFactory {
     }}
 }
 DEFINE_IID!(IID_IQueryOptionsWithProviderFilter, 1537019942, 5572, 17629, 184, 154, 71, 165, 155, 125, 124, 79);
-RT_INTERFACE!{interface IQueryOptionsWithProviderFilter(IQueryOptionsWithProviderFilterVtbl): IInspectable(IInspectableVtbl) [IID_IQueryOptionsWithProviderFilter] {
+RT_INTERFACE!{interface IQueryOptionsWithProviderFilter(IQueryOptionsWithProviderFilterVtbl): IInspectable [IID_IQueryOptionsWithProviderFilter] {
     fn get_StorageProviderIdFilter(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT
 }}
 impl IQueryOptionsWithProviderFilter {
@@ -4844,7 +4844,7 @@ RT_STRUCT! { struct SortEntry {
 }}
 RT_CLASS!{class SortEntryVector: foundation::collections::IVector<SortEntry>}
 DEFINE_IID!(IID_IStorageFileQueryResult, 1392354375, 11178, 16684, 178, 159, 212, 177, 119, 142, 250, 30);
-RT_INTERFACE!{interface IStorageFileQueryResult(IStorageFileQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileQueryResult] {
+RT_INTERFACE!{interface IStorageFileQueryResult(IStorageFileQueryResultVtbl): IInspectable [IID_IStorageFileQueryResult] {
     fn GetFilesAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>> as RtType>::Abi) -> HRESULT,
     fn GetFilesAsyncDefaultStartAndCount(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFile>> as RtType>::Abi) -> HRESULT
 }}
@@ -4862,7 +4862,7 @@ impl IStorageFileQueryResult {
 }
 RT_CLASS!{class StorageFileQueryResult: IStorageFileQueryResult}
 DEFINE_IID!(IID_IStorageFileQueryResult2, 1314765277, 28993, 18116, 139, 227, 233, 220, 158, 39, 39, 92);
-RT_INTERFACE!{interface IStorageFileQueryResult2(IStorageFileQueryResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IStorageFileQueryResult2] {
+RT_INTERFACE!{interface IStorageFileQueryResult2(IStorageFileQueryResult2Vtbl): IInspectable [IID_IStorageFileQueryResult2] {
     #[cfg(feature="windows-data")] fn GetMatchingPropertiesWithRanges(&self, file: <super::StorageFile as RtType>::Abi, out: *mut <foundation::collections::IMap<HString, foundation::collections::IVectorView<super::super::data::text::TextSegment>> as RtType>::Abi) -> HRESULT
 }}
 impl IStorageFileQueryResult2 {
@@ -4873,7 +4873,7 @@ impl IStorageFileQueryResult2 {
     }}
 }
 DEFINE_IID!(IID_IStorageFolderQueryOperations, 3410218185, 17515, 19023, 190, 151, 117, 119, 113, 190, 82, 3);
-RT_INTERFACE!{interface IStorageFolderQueryOperations(IStorageFolderQueryOperationsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolderQueryOperations] {
+RT_INTERFACE!{interface IStorageFolderQueryOperations(IStorageFolderQueryOperationsVtbl): IInspectable [IID_IStorageFolderQueryOperations] {
     fn GetIndexedStateAsync(&self, out: *mut <foundation::IAsyncOperation<IndexedState> as RtType>::Abi) -> HRESULT,
     fn CreateFileQueryOverloadDefault(&self, out: *mut <StorageFileQueryResult as RtType>::Abi) -> HRESULT,
     fn CreateFileQuery(&self, query: CommonFileQuery, out: *mut <StorageFileQueryResult as RtType>::Abi) -> HRESULT,
@@ -4980,7 +4980,7 @@ impl IStorageFolderQueryOperations {
     }}
 }
 DEFINE_IID!(IID_IStorageFolderQueryResult, 1716832529, 32102, 18170, 174, 207, 228, 164, 186, 169, 58, 184);
-RT_INTERFACE!{interface IStorageFolderQueryResult(IStorageFolderQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageFolderQueryResult] {
+RT_INTERFACE!{interface IStorageFolderQueryResult(IStorageFolderQueryResultVtbl): IInspectable [IID_IStorageFolderQueryResult] {
     fn GetFoldersAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>> as RtType>::Abi) -> HRESULT,
     fn GetFoldersAsyncDefaultStartAndCount(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<super::StorageFolder>> as RtType>::Abi) -> HRESULT
 }}
@@ -4998,7 +4998,7 @@ impl IStorageFolderQueryResult {
 }
 RT_CLASS!{class StorageFolderQueryResult: IStorageFolderQueryResult}
 DEFINE_IID!(IID_IStorageItemQueryResult, 3902046329, 40280, 18360, 178, 178, 65, 176, 127, 71, 149, 249);
-RT_INTERFACE!{interface IStorageItemQueryResult(IStorageItemQueryResultVtbl): IInspectable(IInspectableVtbl) [IID_IStorageItemQueryResult] {
+RT_INTERFACE!{interface IStorageItemQueryResult(IStorageItemQueryResultVtbl): IInspectable [IID_IStorageItemQueryResult] {
     fn GetItemsAsync(&self, startIndex: u32, maxNumberOfItems: u32, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>> as RtType>::Abi) -> HRESULT,
     fn GetItemsAsyncDefaultStartAndCount(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<super::IStorageItem>> as RtType>::Abi) -> HRESULT
 }}
@@ -5016,7 +5016,7 @@ impl IStorageItemQueryResult {
 }
 RT_CLASS!{class StorageItemQueryResult: IStorageItemQueryResult}
 DEFINE_IID!(IID_IStorageLibraryChangeTrackerTriggerDetails, 499622761, 47011, 19954, 157, 97, 235, 168, 90, 3, 67, 210);
-RT_INTERFACE!{interface IStorageLibraryChangeTrackerTriggerDetails(IStorageLibraryChangeTrackerTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryChangeTrackerTriggerDetails] {
+RT_INTERFACE!{interface IStorageLibraryChangeTrackerTriggerDetails(IStorageLibraryChangeTrackerTriggerDetailsVtbl): IInspectable [IID_IStorageLibraryChangeTrackerTriggerDetails] {
     fn get_Folder(&self, out: *mut <super::StorageFolder as RtType>::Abi) -> HRESULT,
     fn get_ChangeTracker(&self, out: *mut <super::StorageLibraryChangeTracker as RtType>::Abi) -> HRESULT
 }}
@@ -5034,7 +5034,7 @@ impl IStorageLibraryChangeTrackerTriggerDetails {
 }
 RT_CLASS!{class StorageLibraryChangeTrackerTriggerDetails: IStorageLibraryChangeTrackerTriggerDetails}
 DEFINE_IID!(IID_IStorageLibraryContentChangedTriggerDetails, 708254071, 43967, 19997, 138, 165, 99, 133, 216, 136, 71, 153);
-RT_INTERFACE!{interface IStorageLibraryContentChangedTriggerDetails(IStorageLibraryContentChangedTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IStorageLibraryContentChangedTriggerDetails] {
+RT_INTERFACE!{interface IStorageLibraryContentChangedTriggerDetails(IStorageLibraryContentChangedTriggerDetailsVtbl): IInspectable [IID_IStorageLibraryContentChangedTriggerDetails] {
     fn get_Folder(&self, out: *mut <super::StorageFolder as RtType>::Abi) -> HRESULT,
     fn CreateModifiedSinceQuery(&self, lastQueryTime: foundation::DateTime, out: *mut <StorageItemQueryResult as RtType>::Abi) -> HRESULT
 }}
@@ -5052,7 +5052,7 @@ impl IStorageLibraryContentChangedTriggerDetails {
 }
 RT_CLASS!{class StorageLibraryContentChangedTriggerDetails: IStorageLibraryContentChangedTriggerDetails}
 DEFINE_IID!(IID_IStorageQueryResultBase, 3264730893, 29523, 18347, 186, 88, 140, 97, 66, 93, 197, 75);
-RT_INTERFACE!{interface IStorageQueryResultBase(IStorageQueryResultBaseVtbl): IInspectable(IInspectableVtbl) [IID_IStorageQueryResultBase] {
+RT_INTERFACE!{interface IStorageQueryResultBase(IStorageQueryResultBaseVtbl): IInspectable [IID_IStorageQueryResultBase] {
     fn GetItemCountAsync(&self, out: *mut <foundation::IAsyncOperation<u32> as RtType>::Abi) -> HRESULT,
     fn get_Folder(&self, out: *mut <super::StorageFolder as RtType>::Abi) -> HRESULT,
     fn add_ContentsChanged(&self, handler: <foundation::TypedEventHandler<IStorageQueryResultBase, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5108,7 +5108,7 @@ impl IStorageQueryResultBase {
     }}
 }
 DEFINE_IID!(IID_IValueAndLanguage, 3113306241, 41454, 19396, 146, 165, 70, 105, 104, 227, 4, 54);
-RT_INTERFACE!{interface IValueAndLanguage(IValueAndLanguageVtbl): IInspectable(IInspectableVtbl) [IID_IValueAndLanguage] {
+RT_INTERFACE!{interface IValueAndLanguage(IValueAndLanguageVtbl): IInspectable [IID_IValueAndLanguage] {
     fn get_Language(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Language(&self, value: HSTRING) -> HRESULT,
     fn get_Value(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT,
@@ -5141,7 +5141,7 @@ DEFINE_CLSID!(ValueAndLanguage(&[87,105,110,100,111,119,115,46,83,116,111,114,97
 pub mod streams { // Windows.Storage.Streams
 use crate::prelude::*;
 DEFINE_IID!(IID_IBuffer, 2421821408, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
-RT_INTERFACE!{interface IBuffer(IBufferVtbl): IInspectable(IInspectableVtbl) [IID_IBuffer] {
+RT_INTERFACE!{interface IBuffer(IBufferVtbl): IInspectable [IID_IBuffer] {
     fn get_Capacity(&self, out: *mut u32) -> HRESULT,
     fn get_Length(&self, out: *mut u32) -> HRESULT,
     fn put_Length(&self, value: u32) -> HRESULT
@@ -5178,7 +5178,7 @@ impl Buffer {
 }
 DEFINE_CLSID!(Buffer(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,66,117,102,102,101,114,0]) [CLSID_Buffer]);
 DEFINE_IID!(IID_IBufferFactory, 1907331405, 49423, 18507, 188, 80, 20, 188, 98, 59, 58, 39);
-RT_INTERFACE!{static interface IBufferFactory(IBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBufferFactory] {
+RT_INTERFACE!{static interface IBufferFactory(IBufferFactoryVtbl): IInspectable [IID_IBufferFactory] {
     fn Create(&self, capacity: u32, out: *mut <Buffer as RtType>::Abi) -> HRESULT
 }}
 impl IBufferFactory {
@@ -5189,7 +5189,7 @@ impl IBufferFactory {
     }}
 }
 DEFINE_IID!(IID_IBufferStatics, 3909215835, 55062, 18266, 169, 10, 175, 114, 41, 177, 231, 65);
-RT_INTERFACE!{static interface IBufferStatics(IBufferStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBufferStatics] {
+RT_INTERFACE!{static interface IBufferStatics(IBufferStaticsVtbl): IInspectable [IID_IBufferStatics] {
     fn CreateCopyFromMemoryBuffer(&self, input: <foundation::IMemoryBuffer as RtType>::Abi, out: *mut <Buffer as RtType>::Abi) -> HRESULT,
     fn CreateMemoryBufferOverIBuffer(&self, input: <IBuffer as RtType>::Abi, out: *mut <foundation::MemoryBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -5209,7 +5209,7 @@ RT_ENUM! { enum ByteOrder: i32 {
     LittleEndian = 0, BigEndian = 1,
 }}
 DEFINE_IID!(IID_IContentTypeProvider, 2547030181, 15257, 19945, 136, 165, 225, 29, 47, 80, 199, 149);
-RT_INTERFACE!{interface IContentTypeProvider(IContentTypeProviderVtbl): IInspectable(IInspectableVtbl) [IID_IContentTypeProvider] {
+RT_INTERFACE!{interface IContentTypeProvider(IContentTypeProviderVtbl): IInspectable [IID_IContentTypeProvider] {
     fn get_ContentType(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IContentTypeProvider {
@@ -5220,7 +5220,7 @@ impl IContentTypeProvider {
     }}
 }
 DEFINE_IID!(IID_IDataReader, 3803512873, 46273, 17172, 164, 184, 251, 129, 58, 47, 39, 94);
-RT_INTERFACE!{interface IDataReader(IDataReaderVtbl): IInspectable(IInspectableVtbl) [IID_IDataReader] {
+RT_INTERFACE!{interface IDataReader(IDataReaderVtbl): IInspectable [IID_IDataReader] {
     fn get_UnconsumedBufferLength(&self, out: *mut u32) -> HRESULT,
     fn get_UnicodeEncoding(&self, out: *mut UnicodeEncoding) -> HRESULT,
     fn put_UnicodeEncoding(&self, value: UnicodeEncoding) -> HRESULT,
@@ -5389,7 +5389,7 @@ impl DataReader {
 }
 DEFINE_CLSID!(DataReader(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,82,101,97,100,101,114,0]) [CLSID_DataReader]);
 DEFINE_IID!(IID_IDataReaderFactory, 3612506183, 22490, 19989, 145, 76, 6, 128, 102, 153, 160, 152);
-RT_INTERFACE!{static interface IDataReaderFactory(IDataReaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderFactory] {
+RT_INTERFACE!{static interface IDataReaderFactory(IDataReaderFactoryVtbl): IInspectable [IID_IDataReaderFactory] {
     fn CreateDataReader(&self, inputStream: <IInputStream as RtType>::Abi, out: *mut <DataReader as RtType>::Abi) -> HRESULT
 }}
 impl IDataReaderFactory {
@@ -5401,7 +5401,7 @@ impl IDataReaderFactory {
 }
 RT_CLASS!{class DataReaderLoadOperation: foundation::IAsyncOperation<u32>}
 DEFINE_IID!(IID_IDataReaderStatics, 301776840, 63802, 18203, 177, 33, 243, 121, 227, 73, 49, 60);
-RT_INTERFACE!{static interface IDataReaderStatics(IDataReaderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDataReaderStatics] {
+RT_INTERFACE!{static interface IDataReaderStatics(IDataReaderStaticsVtbl): IInspectable [IID_IDataReaderStatics] {
     fn FromBuffer(&self, buffer: <IBuffer as RtType>::Abi, out: *mut <DataReader as RtType>::Abi) -> HRESULT
 }}
 impl IDataReaderStatics {
@@ -5412,7 +5412,7 @@ impl IDataReaderStatics {
     }}
 }
 DEFINE_IID!(IID_IDataWriter, 1689817701, 54081, 18722, 179, 138, 221, 74, 248, 128, 140, 78);
-RT_INTERFACE!{interface IDataWriter(IDataWriterVtbl): IInspectable(IInspectableVtbl) [IID_IDataWriter] {
+RT_INTERFACE!{interface IDataWriter(IDataWriterVtbl): IInspectable [IID_IDataWriter] {
     fn get_UnstoredBufferLength(&self, out: *mut u32) -> HRESULT,
     fn get_UnicodeEncoding(&self, out: *mut UnicodeEncoding) -> HRESULT,
     fn put_UnicodeEncoding(&self, value: UnicodeEncoding) -> HRESULT,
@@ -5570,7 +5570,7 @@ impl DataWriter {
 }
 DEFINE_CLSID!(DataWriter(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,68,97,116,97,87,114,105,116,101,114,0]) [CLSID_DataWriter]);
 DEFINE_IID!(IID_IDataWriterFactory, 864839618, 35716, 19499, 156, 80, 123, 135, 103, 132, 122, 31);
-RT_INTERFACE!{static interface IDataWriterFactory(IDataWriterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataWriterFactory] {
+RT_INTERFACE!{static interface IDataWriterFactory(IDataWriterFactoryVtbl): IInspectable [IID_IDataWriterFactory] {
     fn CreateDataWriter(&self, outputStream: <IOutputStream as RtType>::Abi, out: *mut <DataWriter as RtType>::Abi) -> HRESULT
 }}
 impl IDataWriterFactory {
@@ -5616,7 +5616,7 @@ impl FileRandomAccessStream {
 }
 DEFINE_CLSID!(FileRandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,70,105,108,101,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_FileRandomAccessStream]);
 DEFINE_IID!(IID_IFileRandomAccessStreamStatics, 1934950663, 15191, 19293, 131, 69, 85, 77, 47, 198, 33, 240);
-RT_INTERFACE!{static interface IFileRandomAccessStreamStatics(IFileRandomAccessStreamStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileRandomAccessStreamStatics] {
+RT_INTERFACE!{static interface IFileRandomAccessStreamStatics(IFileRandomAccessStreamStaticsVtbl): IInspectable [IID_IFileRandomAccessStreamStatics] {
     fn OpenAsync(&self, filePath: HSTRING, accessMode: super::FileAccessMode, out: *mut <foundation::IAsyncOperation<IRandomAccessStream> as RtType>::Abi) -> HRESULT,
     fn OpenWithOptionsAsync(&self, filePath: HSTRING, accessMode: super::FileAccessMode, sharingOptions: super::StorageOpenOptions, openDisposition: FileOpenDisposition, out: *mut <foundation::IAsyncOperation<IRandomAccessStream> as RtType>::Abi) -> HRESULT,
     fn OpenTransactedWriteAsync(&self, filePath: HSTRING, out: *mut <foundation::IAsyncOperation<super::StorageStreamTransaction> as RtType>::Abi) -> HRESULT,
@@ -5672,7 +5672,7 @@ RT_CLASS!{class InMemoryRandomAccessStream: IRandomAccessStream}
 impl RtActivatable<IActivationFactory> for InMemoryRandomAccessStream {}
 DEFINE_CLSID!(InMemoryRandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,73,110,77,101,109,111,114,121,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_InMemoryRandomAccessStream]);
 DEFINE_IID!(IID_IInputStream, 2421821410, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
-RT_INTERFACE!{interface IInputStream(IInputStreamVtbl): IInspectable(IInspectableVtbl) [IID_IInputStream] {
+RT_INTERFACE!{interface IInputStream(IInputStreamVtbl): IInspectable [IID_IInputStream] {
     fn ReadAsync(&self, buffer: <IBuffer as RtType>::Abi, count: u32, options: InputStreamOptions, out: *mut <foundation::IAsyncOperationWithProgress<IBuffer, u32> as RtType>::Abi) -> HRESULT
 }}
 impl IInputStream {
@@ -5687,7 +5687,7 @@ RT_ENUM! { enum InputStreamOptions: u32 {
 }}
 RT_CLASS!{class InputStreamOverStream: IInputStream}
 DEFINE_IID!(IID_IInputStreamReference, 1133681944, 24265, 19290, 145, 156, 66, 5, 176, 200, 4, 182);
-RT_INTERFACE!{interface IInputStreamReference(IInputStreamReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IInputStreamReference] {
+RT_INTERFACE!{interface IInputStreamReference(IInputStreamReferenceVtbl): IInspectable [IID_IInputStreamReference] {
     fn OpenSequentialReadAsync(&self, out: *mut <foundation::IAsyncOperation<IInputStream> as RtType>::Abi) -> HRESULT
 }}
 impl IInputStreamReference {
@@ -5698,7 +5698,7 @@ impl IInputStreamReference {
     }}
 }
 DEFINE_IID!(IID_IOutputStream, 2421821414, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
-RT_INTERFACE!{interface IOutputStream(IOutputStreamVtbl): IInspectable(IInspectableVtbl) [IID_IOutputStream] {
+RT_INTERFACE!{interface IOutputStream(IOutputStreamVtbl): IInspectable [IID_IOutputStream] {
     fn WriteAsync(&self, buffer: <IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<u32, u32> as RtType>::Abi) -> HRESULT,
     fn FlushAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
 }}
@@ -5716,7 +5716,7 @@ impl IOutputStream {
 }
 RT_CLASS!{class OutputStreamOverStream: IOutputStream}
 DEFINE_IID!(IID_IRandomAccessStream, 2421821409, 48211, 4575, 140, 73, 0, 30, 79, 198, 134, 218);
-RT_INTERFACE!{interface IRandomAccessStream(IRandomAccessStreamVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStream] {
+RT_INTERFACE!{interface IRandomAccessStream(IRandomAccessStreamVtbl): IInspectable [IID_IRandomAccessStream] {
     fn get_Size(&self, out: *mut u64) -> HRESULT,
     fn put_Size(&self, value: u64) -> HRESULT,
     fn GetInputStreamAt(&self, position: u64, out: *mut <IInputStream as RtType>::Abi) -> HRESULT,
@@ -5788,7 +5788,7 @@ impl RandomAccessStream {
 DEFINE_CLSID!(RandomAccessStream(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,0]) [CLSID_RandomAccessStream]);
 RT_CLASS!{class RandomAccessStreamOverStream: IRandomAccessStream}
 DEFINE_IID!(IID_IRandomAccessStreamReference, 871248180, 7638, 20026, 128, 103, 209, 193, 98, 232, 100, 43);
-RT_INTERFACE!{interface IRandomAccessStreamReference(IRandomAccessStreamReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamReference] {
+RT_INTERFACE!{interface IRandomAccessStreamReference(IRandomAccessStreamReferenceVtbl): IInspectable [IID_IRandomAccessStreamReference] {
     fn OpenReadAsync(&self, out: *mut <foundation::IAsyncOperation<IRandomAccessStreamWithContentType> as RtType>::Abi) -> HRESULT
 }}
 impl IRandomAccessStreamReference {
@@ -5813,7 +5813,7 @@ impl RandomAccessStreamReference {
 }
 DEFINE_CLSID!(RandomAccessStreamReference(&[87,105,110,100,111,119,115,46,83,116,111,114,97,103,101,46,83,116,114,101,97,109,115,46,82,97,110,100,111,109,65,99,99,101,115,115,83,116,114,101,97,109,82,101,102,101,114,101,110,99,101,0]) [CLSID_RandomAccessStreamReference]);
 DEFINE_IID!(IID_IRandomAccessStreamReferenceStatics, 2238908892, 16319, 20093, 152, 111, 239, 59, 26, 7, 169, 100);
-RT_INTERFACE!{static interface IRandomAccessStreamReferenceStatics(IRandomAccessStreamReferenceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamReferenceStatics] {
+RT_INTERFACE!{static interface IRandomAccessStreamReferenceStatics(IRandomAccessStreamReferenceStaticsVtbl): IInspectable [IID_IRandomAccessStreamReferenceStatics] {
     fn CreateFromFile(&self, file: <super::IStorageFile as RtType>::Abi, out: *mut <RandomAccessStreamReference as RtType>::Abi) -> HRESULT,
     fn CreateFromUri(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <RandomAccessStreamReference as RtType>::Abi) -> HRESULT,
     fn CreateFromStream(&self, stream: <IRandomAccessStream as RtType>::Abi, out: *mut <RandomAccessStreamReference as RtType>::Abi) -> HRESULT
@@ -5836,7 +5836,7 @@ impl IRandomAccessStreamReferenceStatics {
     }}
 }
 DEFINE_IID!(IID_IRandomAccessStreamStatics, 1380773327, 28201, 19685, 149, 115, 107, 117, 61, 182, 108, 58);
-RT_INTERFACE!{static interface IRandomAccessStreamStatics(IRandomAccessStreamStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamStatics] {
+RT_INTERFACE!{static interface IRandomAccessStreamStatics(IRandomAccessStreamStaticsVtbl): IInspectable [IID_IRandomAccessStreamStatics] {
     fn CopyAsync(&self, source: <IInputStream as RtType>::Abi, destination: <IOutputStream as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<u64, u64> as RtType>::Abi) -> HRESULT,
     fn CopySizeAsync(&self, source: <IInputStream as RtType>::Abi, destination: <IOutputStream as RtType>::Abi, bytesToCopy: u64, out: *mut <foundation::IAsyncOperationWithProgress<u64, u64> as RtType>::Abi) -> HRESULT,
     fn CopyAndCloseAsync(&self, source: <IInputStream as RtType>::Abi, destination: <IOutputStream as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<u64, u64> as RtType>::Abi) -> HRESULT
@@ -5859,7 +5859,7 @@ impl IRandomAccessStreamStatics {
     }}
 }
 DEFINE_IID!(IID_IRandomAccessStreamWithContentType, 3424995367, 19261, 17295, 146, 50, 16, 199, 107, 199, 224, 56);
-RT_INTERFACE!{interface IRandomAccessStreamWithContentType(IRandomAccessStreamWithContentTypeVtbl): IInspectable(IInspectableVtbl) [IID_IRandomAccessStreamWithContentType] {
+RT_INTERFACE!{interface IRandomAccessStreamWithContentType(IRandomAccessStreamWithContentTypeVtbl): IInspectable [IID_IRandomAccessStreamWithContentType] {
     
 }}
 RT_ENUM! { enum UnicodeEncoding: i32 {

@@ -1,6 +1,6 @@
 use crate::prelude::*;
 DEFINE_IID!(IID_IMdmAlert, 2969289511, 10433, 19282, 165, 72, 197, 128, 124, 175, 112, 182);
-RT_INTERFACE!{interface IMdmAlert(IMdmAlertVtbl): IInspectable(IInspectableVtbl) [IID_IMdmAlert] {
+RT_INTERFACE!{interface IMdmAlert(IMdmAlertVtbl): IInspectable [IID_IMdmAlert] {
     fn get_Data(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Data(&self, value: HSTRING) -> HRESULT,
     fn get_Format(&self, out: *mut MdmAlertDataType) -> HRESULT,
@@ -86,7 +86,7 @@ RT_ENUM! { enum MdmAlertMark: i32 {
     None = 0, Fatal = 1, Critical = 2, Warning = 3, Informational = 4,
 }}
 DEFINE_IID!(IID_IMdmSession, 4270403916, 36708, 18327, 169, 215, 157, 136, 248, 106, 225, 102);
-RT_INTERFACE!{interface IMdmSession(IMdmSessionVtbl): IInspectable(IInspectableVtbl) [IID_IMdmSession] {
+RT_INTERFACE!{interface IMdmSession(IMdmSessionVtbl): IInspectable [IID_IMdmSession] {
     fn get_Alerts(&self, out: *mut <foundation::collections::IVectorView<MdmAlert> as RtType>::Abi) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -156,7 +156,7 @@ impl MdmSessionManager {
 }
 DEFINE_CLSID!(MdmSessionManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,77,100,109,83,101,115,115,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MdmSessionManager]);
 DEFINE_IID!(IID_IMdmSessionManagerStatics, 3477789017, 63301, 19321, 155, 92, 222, 11, 248, 239, 228, 75);
-RT_INTERFACE!{static interface IMdmSessionManagerStatics(IMdmSessionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMdmSessionManagerStatics] {
+RT_INTERFACE!{static interface IMdmSessionManagerStatics(IMdmSessionManagerStaticsVtbl): IInspectable [IID_IMdmSessionManagerStatics] {
     fn get_SessionIds(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn TryCreateSession(&self, out: *mut <MdmSession as RtType>::Abi) -> HRESULT,
     fn DeleteSessionById(&self, sessionId: HSTRING) -> HRESULT,
@@ -189,7 +189,7 @@ RT_ENUM! { enum MdmSessionState: i32 {
 pub mod core { // Windows.Management.Core
 use crate::prelude::*;
 DEFINE_IID!(IID_IApplicationDataManager, 1959855154, 11929, 16384, 154, 58, 100, 48, 126, 133, 129, 41);
-RT_INTERFACE!{interface IApplicationDataManager(IApplicationDataManagerVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataManager] {
+RT_INTERFACE!{interface IApplicationDataManager(IApplicationDataManagerVtbl): IInspectable [IID_IApplicationDataManager] {
     
 }}
 RT_CLASS!{class ApplicationDataManager: IApplicationDataManager}
@@ -201,7 +201,7 @@ impl ApplicationDataManager {
 }
 DEFINE_CLSID!(ApplicationDataManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,67,111,114,101,46,65,112,112,108,105,99,97,116,105,111,110,68,97,116,97,77,97,110,97,103,101,114,0]) [CLSID_ApplicationDataManager]);
 DEFINE_IID!(IID_IApplicationDataManagerStatics, 504914659, 27022, 18849, 151, 82, 222, 233, 73, 37, 185, 179);
-RT_INTERFACE!{static interface IApplicationDataManagerStatics(IApplicationDataManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationDataManagerStatics] {
+RT_INTERFACE!{static interface IApplicationDataManagerStatics(IApplicationDataManagerStaticsVtbl): IInspectable [IID_IApplicationDataManagerStatics] {
     #[cfg(feature="windows-storage")] fn CreateForPackageFamily(&self, packageFamilyName: HSTRING, out: *mut <super::super::storage::ApplicationData as RtType>::Abi) -> HRESULT
 }}
 impl IApplicationDataManagerStatics {
@@ -227,7 +227,7 @@ RT_ENUM! { enum DeploymentProgressState: i32 {
     Queued = 0, Processing = 1,
 }}
 DEFINE_IID!(IID_IDeploymentResult, 627292590, 46973, 19487, 138, 123, 32, 230, 173, 81, 94, 243);
-RT_INTERFACE!{interface IDeploymentResult(IDeploymentResultVtbl): IInspectable(IInspectableVtbl) [IID_IDeploymentResult] {
+RT_INTERFACE!{interface IDeploymentResult(IDeploymentResultVtbl): IInspectable [IID_IDeploymentResult] {
     fn get_ErrorText(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
     fn get_ExtendedErrorCode(&self, out: *mut foundation::HResult) -> HRESULT
@@ -251,7 +251,7 @@ impl IDeploymentResult {
 }
 RT_CLASS!{class DeploymentResult: IDeploymentResult}
 DEFINE_IID!(IID_IDeploymentResult2, 4228804956, 23041, 19415, 188, 241, 56, 28, 140, 130, 224, 74);
-RT_INTERFACE!{interface IDeploymentResult2(IDeploymentResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IDeploymentResult2] {
+RT_INTERFACE!{interface IDeploymentResult2(IDeploymentResult2Vtbl): IInspectable [IID_IDeploymentResult2] {
     fn get_IsRegistered(&self, out: *mut bool) -> HRESULT
 }}
 impl IDeploymentResult2 {
@@ -265,7 +265,7 @@ RT_ENUM! { enum PackageInstallState: i32 {
     NotInstalled = 0, Staged = 1, Installed = 2, Paused = 6,
 }}
 DEFINE_IID!(IID_IPackageManager, 2591902565, 24207, 20423, 162, 229, 127, 105, 37, 203, 139, 83);
-RT_INTERFACE!{interface IPackageManager(IPackageManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager] {
+RT_INTERFACE!{interface IPackageManager(IPackageManagerVtbl): IInspectable [IID_IPackageManager] {
     fn AddPackageAsync(&self, packageUri: <foundation::Uri as RtType>::Abi, dependencyPackageUris: <foundation::collections::IIterable<foundation::Uri> as RtType>::Abi, deploymentOptions: DeploymentOptions, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
     fn UpdatePackageAsync(&self, packageUri: <foundation::Uri as RtType>::Abi, dependencyPackageUris: <foundation::collections::IIterable<foundation::Uri> as RtType>::Abi, deploymentOptions: DeploymentOptions, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
     fn RemovePackageAsync(&self, packageFullName: HSTRING, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
@@ -368,7 +368,7 @@ RT_CLASS!{class PackageManager: IPackageManager}
 impl RtActivatable<IActivationFactory> for PackageManager {}
 DEFINE_CLSID!(PackageManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,68,101,112,108,111,121,109,101,110,116,46,80,97,99,107,97,103,101,77,97,110,97,103,101,114,0]) [CLSID_PackageManager]);
 DEFINE_IID!(IID_IPackageManager2, 4155166861, 2112, 18162, 181, 216, 202, 212, 118, 147, 160, 149);
-RT_INTERFACE!{interface IPackageManager2(IPackageManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager2] {
+RT_INTERFACE!{interface IPackageManager2(IPackageManager2Vtbl): IInspectable [IID_IPackageManager2] {
     fn RemovePackageWithOptionsAsync(&self, packageFullName: HSTRING, removalOptions: RemovalOptions, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
     fn StagePackageWithOptionsAsync(&self, packageUri: <foundation::Uri as RtType>::Abi, dependencyPackageUris: <foundation::collections::IIterable<foundation::Uri> as RtType>::Abi, deploymentOptions: DeploymentOptions, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
     fn RegisterPackageByFullNameAsync(&self, mainPackageFullName: HSTRING, dependencyPackageFullNames: <foundation::collections::IIterable<HString> as RtType>::Abi, deploymentOptions: DeploymentOptions, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
@@ -439,7 +439,7 @@ impl IPackageManager2 {
     }}
 }
 DEFINE_IID!(IID_IPackageManager3, 3668810056, 14065, 16807, 145, 136, 188, 38, 62, 13, 203, 114);
-RT_INTERFACE!{interface IPackageManager3(IPackageManager3Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager3] {
+RT_INTERFACE!{interface IPackageManager3(IPackageManager3Vtbl): IInspectable [IID_IPackageManager3] {
     fn AddPackageVolumeAsync(&self, packageStorePath: HSTRING, out: *mut <foundation::IAsyncOperation<PackageVolume> as RtType>::Abi) -> HRESULT,
     fn AddPackageToVolumeAsync(&self, packageUri: <foundation::Uri as RtType>::Abi, dependencyPackageUris: <foundation::collections::IIterable<foundation::Uri> as RtType>::Abi, deploymentOptions: DeploymentOptions, targetVolume: <PackageVolume as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
     fn ClearPackageStatus(&self, packageFullName: HSTRING, status: PackageStatus) -> HRESULT,
@@ -531,7 +531,7 @@ impl IPackageManager3 {
     }}
 }
 DEFINE_IID!(IID_IPackageManager4, 1014077795, 47798, 18111, 143, 247, 218, 71, 25, 35, 10, 230);
-RT_INTERFACE!{interface IPackageManager4(IPackageManager4Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager4] {
+RT_INTERFACE!{interface IPackageManager4(IPackageManager4Vtbl): IInspectable [IID_IPackageManager4] {
     fn GetPackageVolumesAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<PackageVolume>> as RtType>::Abi) -> HRESULT
 }}
 impl IPackageManager4 {
@@ -542,7 +542,7 @@ impl IPackageManager4 {
     }}
 }
 DEFINE_IID!(IID_IPackageManager5, 1897869591, 6909, 17171, 151, 140, 155, 182, 225, 184, 100, 167);
-RT_INTERFACE!{interface IPackageManager5(IPackageManager5Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager5] {
+RT_INTERFACE!{interface IPackageManager5(IPackageManager5Vtbl): IInspectable [IID_IPackageManager5] {
     fn AddPackageToVolumeAndOptionalPackagesAsync(&self, packageUri: <foundation::Uri as RtType>::Abi, dependencyPackageUris: <foundation::collections::IIterable<foundation::Uri> as RtType>::Abi, deploymentOptions: DeploymentOptions, targetVolume: <PackageVolume as RtType>::Abi, optionalPackageFamilyNames: <foundation::collections::IIterable<HString> as RtType>::Abi, externalPackageUris: <foundation::collections::IIterable<foundation::Uri> as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
     fn StagePackageToVolumeAndOptionalPackagesAsync(&self, packageUri: <foundation::Uri as RtType>::Abi, dependencyPackageUris: <foundation::collections::IIterable<foundation::Uri> as RtType>::Abi, deploymentOptions: DeploymentOptions, targetVolume: <PackageVolume as RtType>::Abi, optionalPackageFamilyNames: <foundation::collections::IIterable<HString> as RtType>::Abi, externalPackageUris: <foundation::collections::IIterable<foundation::Uri> as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
     fn RegisterPackageByFamilyNameAndOptionalPackagesAsync(&self, mainPackageFamilyName: HSTRING, dependencyPackageFamilyNames: <foundation::collections::IIterable<HString> as RtType>::Abi, deploymentOptions: DeploymentOptions, appDataVolume: <PackageVolume as RtType>::Abi, optionalPackageFamilyNames: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
@@ -571,7 +571,7 @@ impl IPackageManager5 {
     }}
 }
 DEFINE_IID!(IID_IPackageManager6, 138930441, 21453, 20047, 131, 46, 87, 209, 128, 246, 228, 71);
-RT_INTERFACE!{interface IPackageManager6(IPackageManager6Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager6] {
+RT_INTERFACE!{interface IPackageManager6(IPackageManager6Vtbl): IInspectable [IID_IPackageManager6] {
     fn ProvisionPackageForAllUsersAsync(&self, packageFamilyName: HSTRING, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
     fn AddPackageByAppInstallerFileAsync(&self, appInstallerFileUri: <foundation::Uri as RtType>::Abi, options: AddPackageByAppInstallerOptions, targetVolume: <PackageVolume as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
     fn RequestAddPackageByAppInstallerFileAsync(&self, appInstallerFileUri: <foundation::Uri as RtType>::Abi, options: AddPackageByAppInstallerOptions, targetVolume: <PackageVolume as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT,
@@ -612,7 +612,7 @@ impl IPackageManager6 {
     }}
 }
 DEFINE_IID!(IID_IPackageManager7, 4068889844, 11175, 19328, 136, 214, 190, 21, 249, 162, 63, 186);
-RT_INTERFACE!{interface IPackageManager7(IPackageManager7Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager7] {
+RT_INTERFACE!{interface IPackageManager7(IPackageManager7Vtbl): IInspectable [IID_IPackageManager7] {
     fn RequestAddPackageAndRelatedSetAsync(&self, packageUri: <foundation::Uri as RtType>::Abi, dependencyPackageUris: <foundation::collections::IIterable<foundation::Uri> as RtType>::Abi, deploymentOptions: DeploymentOptions, targetVolume: <PackageVolume as RtType>::Abi, optionalPackageFamilyNames: <foundation::collections::IIterable<HString> as RtType>::Abi, relatedPackageUris: <foundation::collections::IIterable<foundation::Uri> as RtType>::Abi, packageUrisToInstall: <foundation::collections::IIterable<foundation::Uri> as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT
 }}
 impl IPackageManager7 {
@@ -623,7 +623,7 @@ impl IPackageManager7 {
     }}
 }
 DEFINE_IID!(IID_IPackageManager8, 3092730672, 4760, 20194, 128, 238, 127, 101, 156, 93, 39, 130);
-RT_INTERFACE!{interface IPackageManager8(IPackageManager8Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageManager8] {
+RT_INTERFACE!{interface IPackageManager8(IPackageManager8Vtbl): IInspectable [IID_IPackageManager8] {
     fn DeprovisionPackageForAllUsersAsync(&self, packageFamilyName: HSTRING, out: *mut <foundation::IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> as RtType>::Abi) -> HRESULT
 }}
 impl IPackageManager8 {
@@ -634,7 +634,7 @@ impl IPackageManager8 {
     }}
 }
 DEFINE_IID!(IID_IPackageManagerDebugSettings, 442570371, 43400, 20431, 143, 15, 206, 23, 88, 152, 232, 235);
-RT_INTERFACE!{interface IPackageManagerDebugSettings(IPackageManagerDebugSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IPackageManagerDebugSettings] {
+RT_INTERFACE!{interface IPackageManagerDebugSettings(IPackageManagerDebugSettingsVtbl): IInspectable [IID_IPackageManagerDebugSettings] {
     #[cfg(feature="windows-applicationmodel")] fn SetContentGroupStateAsync(&self, package: <super::super::applicationmodel::Package as RtType>::Abi, contentGroupName: HSTRING, state: super::super::applicationmodel::PackageContentGroupState, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-applicationmodel")] fn SetContentGroupStateWithPercentageAsync(&self, package: <super::super::applicationmodel::Package as RtType>::Abi, contentGroupName: HSTRING, state: super::super::applicationmodel::PackageContentGroupState, completionPercentage: f64, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
@@ -661,7 +661,7 @@ RT_ENUM! { enum PackageTypes: u32 {
     None = 0, Main = 1, Framework = 2, Resource = 4, Bundle = 8, Xap = 16, Optional = 32,
 }}
 DEFINE_IID!(IID_IPackageUserInformation, 4130878499, 64009, 19644, 144, 85, 21, 202, 39, 94, 46, 126);
-RT_INTERFACE!{interface IPackageUserInformation(IPackageUserInformationVtbl): IInspectable(IInspectableVtbl) [IID_IPackageUserInformation] {
+RT_INTERFACE!{interface IPackageUserInformation(IPackageUserInformationVtbl): IInspectable [IID_IPackageUserInformation] {
     fn get_UserSecurityId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_InstallState(&self, out: *mut PackageInstallState) -> HRESULT
 }}
@@ -679,7 +679,7 @@ impl IPackageUserInformation {
 }
 RT_CLASS!{class PackageUserInformation: IPackageUserInformation}
 DEFINE_IID!(IID_IPackageVolume, 3475403459, 6720, 17488, 151, 57, 42, 206, 46, 137, 136, 83);
-RT_INTERFACE!{interface IPackageVolume(IPackageVolumeVtbl): IInspectable(IInspectableVtbl) [IID_IPackageVolume] {
+RT_INTERFACE!{interface IPackageVolume(IPackageVolumeVtbl): IInspectable [IID_IPackageVolume] {
     fn get_IsOffline(&self, out: *mut bool) -> HRESULT,
     fn get_IsSystemVolume(&self, out: *mut bool) -> HRESULT,
     fn get_MountPoint(&self, out: *mut HSTRING) -> HRESULT,
@@ -805,7 +805,7 @@ impl IPackageVolume {
 }
 RT_CLASS!{class PackageVolume: IPackageVolume}
 DEFINE_IID!(IID_IPackageVolume2, 1185664814, 40404, 18338, 171, 140, 198, 64, 131, 73, 188, 216);
-RT_INTERFACE!{interface IPackageVolume2(IPackageVolume2Vtbl): IInspectable(IInspectableVtbl) [IID_IPackageVolume2] {
+RT_INTERFACE!{interface IPackageVolume2(IPackageVolume2Vtbl): IInspectable [IID_IPackageVolume2] {
     fn get_IsFullTrustPackageSupported(&self, out: *mut bool) -> HRESULT,
     fn get_IsAppxInstallSupported(&self, out: *mut bool) -> HRESULT,
     fn GetAvailableSpaceAsync(&self, out: *mut <foundation::IAsyncOperation<u64> as RtType>::Abi) -> HRESULT
@@ -841,7 +841,7 @@ impl ClassicAppManager {
 }
 DEFINE_CLSID!(ClassicAppManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,68,101,112,108,111,121,109,101,110,116,46,80,114,101,118,105,101,119,46,67,108,97,115,115,105,99,65,112,112,77,97,110,97,103,101,114,0]) [CLSID_ClassicAppManager]);
 DEFINE_IID!(IID_IClassicAppManagerStatics, 3808089704, 34860, 20275, 176, 53, 13, 247, 185, 13, 103, 230);
-RT_INTERFACE!{static interface IClassicAppManagerStatics(IClassicAppManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IClassicAppManagerStatics] {
+RT_INTERFACE!{static interface IClassicAppManagerStatics(IClassicAppManagerStaticsVtbl): IInspectable [IID_IClassicAppManagerStatics] {
     fn FindInstalledApp(&self, appUninstallKey: HSTRING, out: *mut <InstalledClassicAppInfo as RtType>::Abi) -> HRESULT
 }}
 impl IClassicAppManagerStatics {
@@ -852,7 +852,7 @@ impl IClassicAppManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IInstalledClassicAppInfo, 175979939, 26064, 16518, 128, 214, 6, 16, 215, 96, 32, 125);
-RT_INTERFACE!{interface IInstalledClassicAppInfo(IInstalledClassicAppInfoVtbl): IInspectable(IInspectableVtbl) [IID_IInstalledClassicAppInfo] {
+RT_INTERFACE!{interface IInstalledClassicAppInfo(IInstalledClassicAppInfoVtbl): IInspectable [IID_IInstalledClassicAppInfo] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayVersion(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -885,7 +885,7 @@ impl NamedPolicy {
 }
 DEFINE_CLSID!(NamedPolicy(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,80,111,108,105,99,105,101,115,46,78,97,109,101,100,80,111,108,105,99,121,0]) [CLSID_NamedPolicy]);
 DEFINE_IID!(IID_INamedPolicyData, 953987480, 38316, 16503, 166, 67, 128, 120, 202, 226, 100, 0);
-RT_INTERFACE!{interface INamedPolicyData(INamedPolicyDataVtbl): IInspectable(IInspectableVtbl) [IID_INamedPolicyData] {
+RT_INTERFACE!{interface INamedPolicyData(INamedPolicyDataVtbl): IInspectable [IID_INamedPolicyData] {
     fn get_Area(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Kind(&self, out: *mut NamedPolicyKind) -> HRESULT,
@@ -973,7 +973,7 @@ RT_ENUM! { enum NamedPolicyKind: i32 {
     Invalid = 0, Binary = 1, Boolean = 2, Int32 = 3, Int64 = 4, String = 5,
 }}
 DEFINE_IID!(IID_INamedPolicyStatics, 2138651623, 30404, 16472, 140, 173, 103, 102, 44, 208, 95, 13);
-RT_INTERFACE!{static interface INamedPolicyStatics(INamedPolicyStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INamedPolicyStatics] {
+RT_INTERFACE!{static interface INamedPolicyStatics(INamedPolicyStaticsVtbl): IInspectable [IID_INamedPolicyStatics] {
     fn GetPolicyFromPath(&self, area: HSTRING, name: HSTRING, out: *mut <NamedPolicyData as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-system")] fn GetPolicyFromPathForUser(&self, user: <super::super::system::User as RtType>::Abi, area: HSTRING, name: HSTRING, out: *mut <NamedPolicyData as RtType>::Abi) -> HRESULT
 }}
@@ -993,7 +993,7 @@ impl INamedPolicyStatics {
 pub mod update { // Windows.Management.Update
 use crate::prelude::*;
 DEFINE_IID!(IID_IPreviewBuildsManager, 4194819425, 32335, 23031, 124, 159, 222, 249, 5, 28, 95, 98);
-RT_INTERFACE!{interface IPreviewBuildsManager(IPreviewBuildsManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPreviewBuildsManager] {
+RT_INTERFACE!{interface IPreviewBuildsManager(IPreviewBuildsManagerVtbl): IInspectable [IID_IPreviewBuildsManager] {
     fn get_ArePreviewBuildsAllowed(&self, out: *mut bool) -> HRESULT,
     fn put_ArePreviewBuildsAllowed(&self, value: bool) -> HRESULT,
     fn GetCurrentState(&self, out: *mut <PreviewBuildsState as RtType>::Abi) -> HRESULT,
@@ -1032,7 +1032,7 @@ impl PreviewBuildsManager {
 }
 DEFINE_CLSID!(PreviewBuildsManager(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,85,112,100,97,116,101,46,80,114,101,118,105,101,119,66,117,105,108,100,115,77,97,110,97,103,101,114,0]) [CLSID_PreviewBuildsManager]);
 DEFINE_IID!(IID_IPreviewBuildsManagerStatics, 1044523143, 45330, 23152, 125, 161, 151, 215, 141, 50, 170, 41);
-RT_INTERFACE!{static interface IPreviewBuildsManagerStatics(IPreviewBuildsManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPreviewBuildsManagerStatics] {
+RT_INTERFACE!{static interface IPreviewBuildsManagerStatics(IPreviewBuildsManagerStaticsVtbl): IInspectable [IID_IPreviewBuildsManagerStatics] {
     fn GetDefault(&self, out: *mut <PreviewBuildsManager as RtType>::Abi) -> HRESULT,
     fn IsSupported(&self, out: *mut bool) -> HRESULT
 }}
@@ -1049,7 +1049,7 @@ impl IPreviewBuildsManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IPreviewBuildsState, 2733805630, 45603, 24419, 117, 70, 62, 142, 172, 7, 10, 46);
-RT_INTERFACE!{interface IPreviewBuildsState(IPreviewBuildsStateVtbl): IInspectable(IInspectableVtbl) [IID_IPreviewBuildsState] {
+RT_INTERFACE!{interface IPreviewBuildsState(IPreviewBuildsStateVtbl): IInspectable [IID_IPreviewBuildsState] {
     fn get_Properties(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT
 }}
 impl IPreviewBuildsState {
@@ -1064,7 +1064,7 @@ RT_CLASS!{class PreviewBuildsState: IPreviewBuildsState}
 pub mod workplace { // Windows.Management.Workplace
 use crate::prelude::*;
 DEFINE_IID!(IID_IMdmAllowPolicyStatics, 3281455591, 29724, 16882, 164, 182, 49, 76, 49, 80, 37, 134);
-RT_INTERFACE!{static interface IMdmAllowPolicyStatics(IMdmAllowPolicyStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMdmAllowPolicyStatics] {
+RT_INTERFACE!{static interface IMdmAllowPolicyStatics(IMdmAllowPolicyStaticsVtbl): IInspectable [IID_IMdmAllowPolicyStatics] {
     fn IsBrowserAllowed(&self, out: *mut bool) -> HRESULT,
     fn IsCameraAllowed(&self, out: *mut bool) -> HRESULT,
     fn IsMicrosoftAccountAllowed(&self, out: *mut bool) -> HRESULT,
@@ -1114,7 +1114,7 @@ impl MdmPolicy {
 }
 DEFINE_CLSID!(MdmPolicy(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,87,111,114,107,112,108,97,99,101,46,77,100,109,80,111,108,105,99,121,0]) [CLSID_MdmPolicy]);
 DEFINE_IID!(IID_IMdmPolicyStatics2, 3382474022, 980, 18937, 169, 147, 67, 239, 204, 210, 101, 196);
-RT_INTERFACE!{static interface IMdmPolicyStatics2(IMdmPolicyStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMdmPolicyStatics2] {
+RT_INTERFACE!{static interface IMdmPolicyStatics2(IMdmPolicyStatics2Vtbl): IInspectable [IID_IMdmPolicyStatics2] {
     fn GetMessagingSyncPolicy(&self, out: *mut MessagingSyncPolicy) -> HRESULT
 }}
 impl IMdmPolicyStatics2 {
@@ -1136,7 +1136,7 @@ impl WorkplaceSettings {
 }
 DEFINE_CLSID!(WorkplaceSettings(&[87,105,110,100,111,119,115,46,77,97,110,97,103,101,109,101,110,116,46,87,111,114,107,112,108,97,99,101,46,87,111,114,107,112,108,97,99,101,83,101,116,116,105,110,103,115,0]) [CLSID_WorkplaceSettings]);
 DEFINE_IID!(IID_IWorkplaceSettingsStatics, 3831984125, 11666, 19464, 186, 212, 246, 89, 11, 84, 166, 211);
-RT_INTERFACE!{static interface IWorkplaceSettingsStatics(IWorkplaceSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWorkplaceSettingsStatics] {
+RT_INTERFACE!{static interface IWorkplaceSettingsStatics(IWorkplaceSettingsStaticsVtbl): IInspectable [IID_IWorkplaceSettingsStatics] {
     fn get_IsMicrosoftAccountOptional(&self, out: *mut bool) -> HRESULT
 }}
 impl IWorkplaceSettingsStatics {

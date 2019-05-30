@@ -1,6 +1,6 @@
 use crate::prelude::*;
 DEFINE_IID!(IID_IUriToStreamResolver, 2964039786, 39659, 19770, 149, 144, 0, 62, 60, 167, 226, 144);
-RT_INTERFACE!{interface IUriToStreamResolver(IUriToStreamResolverVtbl): IInspectable(IInspectableVtbl) [IID_IUriToStreamResolver] {
+RT_INTERFACE!{interface IUriToStreamResolver(IUriToStreamResolverVtbl): IInspectable [IID_IUriToStreamResolver] {
     #[cfg(feature="windows-storage")] fn UriToStreamAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperation<super::storage::streams::IInputStream> as RtType>::Abi) -> HRESULT
 }}
 impl IUriToStreamResolver {
@@ -19,7 +19,7 @@ impl WebError {
 }
 DEFINE_CLSID!(WebError(&[87,105,110,100,111,119,115,46,87,101,98,46,87,101,98,69,114,114,111,114,0]) [CLSID_WebError]);
 DEFINE_IID!(IID_IWebErrorStatics, 4267796326, 48935, 16484, 135, 183, 101, 99, 187, 17, 206, 46);
-RT_INTERFACE!{static interface IWebErrorStatics(IWebErrorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebErrorStatics] {
+RT_INTERFACE!{static interface IWebErrorStatics(IWebErrorStaticsVtbl): IInspectable [IID_IWebErrorStatics] {
     fn GetStatus(&self, hresult: i32, out: *mut WebErrorStatus) -> HRESULT
 }}
 impl IWebErrorStatics {
@@ -35,7 +35,7 @@ RT_ENUM! { enum WebErrorStatus: i32 {
 pub mod atompub { // Windows.Web.AtomPub
 use crate::prelude::*;
 DEFINE_IID!(IID_IAtomPubClient, 892939320, 52717, 19788, 150, 55, 5, 241, 92, 28, 148, 6);
-RT_INTERFACE!{interface IAtomPubClient(IAtomPubClientVtbl): IInspectable(IInspectableVtbl) [IID_IAtomPubClient] {
+RT_INTERFACE!{interface IAtomPubClient(IAtomPubClientVtbl): IInspectable [IID_IAtomPubClient] {
     fn RetrieveServiceDocumentAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<ServiceDocument, super::syndication::RetrievalProgress> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-storage")] fn RetrieveMediaResourceAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<super::super::storage::streams::IInputStream, super::syndication::RetrievalProgress> as RtType>::Abi) -> HRESULT,
@@ -117,7 +117,7 @@ impl AtomPubClient {
 }
 DEFINE_CLSID!(AtomPubClient(&[87,105,110,100,111,119,115,46,87,101,98,46,65,116,111,109,80,117,98,46,65,116,111,109,80,117,98,67,108,105,101,110,116,0]) [CLSID_AtomPubClient]);
 DEFINE_IID!(IID_IAtomPubClientFactory, 1238716434, 22475, 19422, 171, 159, 38, 16, 177, 114, 119, 123);
-RT_INTERFACE!{static interface IAtomPubClientFactory(IAtomPubClientFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAtomPubClientFactory] {
+RT_INTERFACE!{static interface IAtomPubClientFactory(IAtomPubClientFactoryVtbl): IInspectable [IID_IAtomPubClientFactory] {
     #[cfg(feature="windows-security")] fn CreateAtomPubClientWithCredentials(&self, serverCredential: <super::super::security::credentials::PasswordCredential as RtType>::Abi, out: *mut <AtomPubClient as RtType>::Abi) -> HRESULT
 }}
 impl IAtomPubClientFactory {
@@ -128,7 +128,7 @@ impl IAtomPubClientFactory {
     }}
 }
 DEFINE_IID!(IID_IResourceCollection, 2136987145, 48264, 16852, 136, 250, 61, 230, 112, 77, 66, 142);
-RT_INTERFACE!{interface IResourceCollection(IResourceCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IResourceCollection] {
+RT_INTERFACE!{interface IResourceCollection(IResourceCollectionVtbl): IInspectable [IID_IResourceCollection] {
     fn get_Title(&self, out: *mut <super::syndication::ISyndicationText as RtType>::Abi) -> HRESULT,
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_Categories(&self, out: *mut <foundation::collections::IVectorView<super::syndication::SyndicationCategory> as RtType>::Abi) -> HRESULT,
@@ -158,7 +158,7 @@ impl IResourceCollection {
 }
 RT_CLASS!{class ResourceCollection: IResourceCollection}
 DEFINE_IID!(IID_IServiceDocument, 2340341617, 10931, 19902, 139, 204, 119, 143, 146, 183, 94, 81);
-RT_INTERFACE!{interface IServiceDocument(IServiceDocumentVtbl): IInspectable(IInspectableVtbl) [IID_IServiceDocument] {
+RT_INTERFACE!{interface IServiceDocument(IServiceDocumentVtbl): IInspectable [IID_IServiceDocument] {
     fn get_Workspaces(&self, out: *mut <foundation::collections::IVectorView<Workspace> as RtType>::Abi) -> HRESULT
 }}
 impl IServiceDocument {
@@ -170,7 +170,7 @@ impl IServiceDocument {
 }
 RT_CLASS!{class ServiceDocument: IServiceDocument}
 DEFINE_IID!(IID_IWorkspace, 3021841979, 42168, 16438, 137, 197, 131, 195, 18, 102, 186, 73);
-RT_INTERFACE!{interface IWorkspace(IWorkspaceVtbl): IInspectable(IInspectableVtbl) [IID_IWorkspace] {
+RT_INTERFACE!{interface IWorkspace(IWorkspaceVtbl): IInspectable [IID_IWorkspace] {
     fn get_Title(&self, out: *mut <super::syndication::ISyndicationText as RtType>::Abi) -> HRESULT,
     fn get_Collections(&self, out: *mut <foundation::collections::IVectorView<ResourceCollection> as RtType>::Abi) -> HRESULT
 }}
@@ -202,7 +202,7 @@ impl HttpBufferContent {
 }
 DEFINE_CLSID!(HttpBufferContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,66,117,102,102,101,114,67,111,110,116,101,110,116,0]) [CLSID_HttpBufferContent]);
 DEFINE_IID!(IID_IHttpBufferContentFactory, 3156263315, 50207, 20471, 145, 35, 100, 53, 115, 110, 173, 194);
-RT_INTERFACE!{static interface IHttpBufferContentFactory(IHttpBufferContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpBufferContentFactory] {
+RT_INTERFACE!{static interface IHttpBufferContentFactory(IHttpBufferContentFactoryVtbl): IInspectable [IID_IHttpBufferContentFactory] {
     #[cfg(feature="windows-storage")] fn CreateFromBuffer(&self, content: <super::super::storage::streams::IBuffer as RtType>::Abi, out: *mut <HttpBufferContent as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateFromBufferWithOffset(&self, content: <super::super::storage::streams::IBuffer as RtType>::Abi, offset: u32, count: u32, out: *mut <HttpBufferContent as RtType>::Abi) -> HRESULT
 }}
@@ -219,7 +219,7 @@ impl IHttpBufferContentFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpClient, 2144997713, 13684, 18560, 168, 186, 230, 177, 224, 6, 31, 61);
-RT_INTERFACE!{interface IHttpClient(IHttpClientVtbl): IInspectable(IInspectableVtbl) [IID_IHttpClient] {
+RT_INTERFACE!{interface IHttpClient(IHttpClientVtbl): IInspectable [IID_IHttpClient] {
     fn DeleteAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> as RtType>::Abi) -> HRESULT,
     fn GetAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> as RtType>::Abi) -> HRESULT,
     fn GetWithOptionAsync(&self, uri: <foundation::Uri as RtType>::Abi, completionOption: HttpCompletionOption, out: *mut <foundation::IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> as RtType>::Abi) -> HRESULT,
@@ -301,7 +301,7 @@ impl HttpClient {
 }
 DEFINE_CLSID!(HttpClient(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,67,108,105,101,110,116,0]) [CLSID_HttpClient]);
 DEFINE_IID!(IID_IHttpClientFactory, 3272363722, 58362, 20377, 175, 180, 99, 204, 101, 0, 148, 98);
-RT_INTERFACE!{static interface IHttpClientFactory(IHttpClientFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpClientFactory] {
+RT_INTERFACE!{static interface IHttpClientFactory(IHttpClientFactoryVtbl): IInspectable [IID_IHttpClientFactory] {
     fn Create(&self, filter: <filters::IHttpFilter as RtType>::Abi, out: *mut <HttpClient as RtType>::Abi) -> HRESULT
 }}
 impl IHttpClientFactory {
@@ -315,7 +315,7 @@ RT_ENUM! { enum HttpCompletionOption: i32 {
     ResponseContentRead = 0, ResponseHeadersRead = 1,
 }}
 DEFINE_IID!(IID_IHttpContent, 1796514881, 64423, 19410, 175, 10, 131, 157, 231, 194, 149, 218);
-RT_INTERFACE!{interface IHttpContent(IHttpContentVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContent] {
+RT_INTERFACE!{interface IHttpContent(IHttpContentVtbl): IInspectable [IID_IHttpContent] {
     fn get_Headers(&self, out: *mut <headers::HttpContentHeaderCollection as RtType>::Abi) -> HRESULT,
     fn BufferAllAsync(&self, out: *mut <foundation::IAsyncOperationWithProgress<u64, u64> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn ReadAsBufferAsync(&self, out: *mut <foundation::IAsyncOperationWithProgress<super::super::storage::streams::IBuffer, u64> as RtType>::Abi) -> HRESULT,
@@ -362,7 +362,7 @@ impl IHttpContent {
     }}
 }
 DEFINE_IID!(IID_IHttpCookie, 525633762, 52269, 18297, 134, 167, 136, 241, 6, 135, 210, 73);
-RT_INTERFACE!{interface IHttpCookie(IHttpCookieVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookie] {
+RT_INTERFACE!{interface IHttpCookie(IHttpCookieVtbl): IInspectable [IID_IHttpCookie] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Domain(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Path(&self, out: *mut HSTRING) -> HRESULT,
@@ -438,7 +438,7 @@ impl HttpCookie {
 DEFINE_CLSID!(HttpCookie(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,67,111,111,107,105,101,0]) [CLSID_HttpCookie]);
 RT_CLASS!{class HttpCookieCollection: foundation::collections::IVectorView<HttpCookie>}
 DEFINE_IID!(IID_IHttpCookieFactory, 1778746793, 37660, 19665, 169, 109, 194, 23, 1, 120, 92, 95);
-RT_INTERFACE!{static interface IHttpCookieFactory(IHttpCookieFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookieFactory] {
+RT_INTERFACE!{static interface IHttpCookieFactory(IHttpCookieFactoryVtbl): IInspectable [IID_IHttpCookieFactory] {
     fn Create(&self, name: HSTRING, domain: HSTRING, path: HSTRING, out: *mut <HttpCookie as RtType>::Abi) -> HRESULT
 }}
 impl IHttpCookieFactory {
@@ -449,7 +449,7 @@ impl IHttpCookieFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpCookieManager, 2051217280, 52559, 20055, 168, 74, 91, 10, 83, 214, 187, 150);
-RT_INTERFACE!{interface IHttpCookieManager(IHttpCookieManagerVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookieManager] {
+RT_INTERFACE!{interface IHttpCookieManager(IHttpCookieManagerVtbl): IInspectable [IID_IHttpCookieManager] {
     fn SetCookie(&self, cookie: <HttpCookie as RtType>::Abi, out: *mut bool) -> HRESULT,
     fn SetCookieWithThirdParty(&self, cookie: <HttpCookie as RtType>::Abi, thirdParty: bool, out: *mut bool) -> HRESULT,
     fn DeleteCookie(&self, cookie: <HttpCookie as RtType>::Abi) -> HRESULT,
@@ -486,7 +486,7 @@ impl HttpFormUrlEncodedContent {
 }
 DEFINE_CLSID!(HttpFormUrlEncodedContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,70,111,114,109,85,114,108,69,110,99,111,100,101,100,67,111,110,116,101,110,116,0]) [CLSID_HttpFormUrlEncodedContent]);
 DEFINE_IID!(IID_IHttpFormUrlEncodedContentFactory, 1139807116, 12147, 17154, 181, 243, 234, 233, 35, 138, 94, 1);
-RT_INTERFACE!{static interface IHttpFormUrlEncodedContentFactory(IHttpFormUrlEncodedContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpFormUrlEncodedContentFactory] {
+RT_INTERFACE!{static interface IHttpFormUrlEncodedContentFactory(IHttpFormUrlEncodedContentFactoryVtbl): IInspectable [IID_IHttpFormUrlEncodedContentFactory] {
     fn Create(&self, content: <foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, HString>> as RtType>::Abi, out: *mut <HttpFormUrlEncodedContent as RtType>::Abi) -> HRESULT
 }}
 impl IHttpFormUrlEncodedContentFactory {
@@ -497,7 +497,7 @@ impl IHttpFormUrlEncodedContentFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpMethod, 1921859618, 28685, 20448, 175, 165, 64, 41, 156, 88, 219, 253);
-RT_INTERFACE!{interface IHttpMethod(IHttpMethodVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMethod] {
+RT_INTERFACE!{interface IHttpMethod(IHttpMethodVtbl): IInspectable [IID_IHttpMethod] {
     fn get_Method(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IHttpMethod {
@@ -538,7 +538,7 @@ impl HttpMethod {
 }
 DEFINE_CLSID!(HttpMethod(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,77,101,116,104,111,100,0]) [CLSID_HttpMethod]);
 DEFINE_IID!(IID_IHttpMethodFactory, 1011994893, 14039, 16632, 168, 109, 231, 89, 202, 242, 248, 63);
-RT_INTERFACE!{static interface IHttpMethodFactory(IHttpMethodFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMethodFactory] {
+RT_INTERFACE!{static interface IHttpMethodFactory(IHttpMethodFactoryVtbl): IInspectable [IID_IHttpMethodFactory] {
     fn Create(&self, method: HSTRING, out: *mut <HttpMethod as RtType>::Abi) -> HRESULT
 }}
 impl IHttpMethodFactory {
@@ -549,7 +549,7 @@ impl IHttpMethodFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpMethodStatics, 1691447792, 55706, 16723, 141, 198, 214, 140, 196, 204, 227, 23);
-RT_INTERFACE!{static interface IHttpMethodStatics(IHttpMethodStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMethodStatics] {
+RT_INTERFACE!{static interface IHttpMethodStatics(IHttpMethodStaticsVtbl): IInspectable [IID_IHttpMethodStatics] {
     fn get_Delete(&self, out: *mut <HttpMethod as RtType>::Abi) -> HRESULT,
     fn get_Get(&self, out: *mut <HttpMethod as RtType>::Abi) -> HRESULT,
     fn get_Head(&self, out: *mut <HttpMethod as RtType>::Abi) -> HRESULT,
@@ -596,7 +596,7 @@ impl IHttpMethodStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpMultipartContent, 3750849279, 39206, 19145, 170, 241, 224, 208, 78, 240, 155, 185);
-RT_INTERFACE!{interface IHttpMultipartContent(IHttpMultipartContentVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMultipartContent] {
+RT_INTERFACE!{interface IHttpMultipartContent(IHttpMultipartContentVtbl): IInspectable [IID_IHttpMultipartContent] {
     fn Add(&self, content: <IHttpContent as RtType>::Abi) -> HRESULT
 }}
 impl IHttpMultipartContent {
@@ -618,7 +618,7 @@ impl HttpMultipartContent {
 }
 DEFINE_CLSID!(HttpMultipartContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,77,117,108,116,105,112,97,114,116,67,111,110,116,101,110,116,0]) [CLSID_HttpMultipartContent]);
 DEFINE_IID!(IID_IHttpMultipartContentFactory, 2125737570, 546, 20256, 179, 114, 71, 213, 219, 93, 51, 180);
-RT_INTERFACE!{static interface IHttpMultipartContentFactory(IHttpMultipartContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMultipartContentFactory] {
+RT_INTERFACE!{static interface IHttpMultipartContentFactory(IHttpMultipartContentFactoryVtbl): IInspectable [IID_IHttpMultipartContentFactory] {
     fn CreateWithSubtype(&self, subtype: HSTRING, out: *mut <HttpMultipartContent as RtType>::Abi) -> HRESULT,
     fn CreateWithSubtypeAndBoundary(&self, subtype: HSTRING, boundary: HSTRING, out: *mut <HttpMultipartContent as RtType>::Abi) -> HRESULT
 }}
@@ -635,7 +635,7 @@ impl IHttpMultipartContentFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpMultipartFormDataContent, 1691564002, 59751, 17956, 182, 209, 207, 116, 96, 74, 74, 66);
-RT_INTERFACE!{interface IHttpMultipartFormDataContent(IHttpMultipartFormDataContentVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMultipartFormDataContent] {
+RT_INTERFACE!{interface IHttpMultipartFormDataContent(IHttpMultipartFormDataContentVtbl): IInspectable [IID_IHttpMultipartFormDataContent] {
     fn Add(&self, content: <IHttpContent as RtType>::Abi) -> HRESULT,
     fn AddWithName(&self, content: <IHttpContent as RtType>::Abi, name: HSTRING) -> HRESULT,
     fn AddWithNameAndFileName(&self, content: <IHttpContent as RtType>::Abi, name: HSTRING, fileName: HSTRING) -> HRESULT
@@ -664,7 +664,7 @@ impl HttpMultipartFormDataContent {
 }
 DEFINE_CLSID!(HttpMultipartFormDataContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,77,117,108,116,105,112,97,114,116,70,111,114,109,68,97,116,97,67,111,110,116,101,110,116,0]) [CLSID_HttpMultipartFormDataContent]);
 DEFINE_IID!(IID_IHttpMultipartFormDataContentFactory, 2689430289, 20503, 17954, 147, 168, 73, 178, 74, 79, 203, 252);
-RT_INTERFACE!{static interface IHttpMultipartFormDataContentFactory(IHttpMultipartFormDataContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMultipartFormDataContentFactory] {
+RT_INTERFACE!{static interface IHttpMultipartFormDataContentFactory(IHttpMultipartFormDataContentFactoryVtbl): IInspectable [IID_IHttpMultipartFormDataContentFactory] {
     fn CreateWithBoundary(&self, boundary: HSTRING, out: *mut <HttpMultipartFormDataContent as RtType>::Abi) -> HRESULT
 }}
 impl IHttpMultipartFormDataContentFactory {
@@ -681,7 +681,7 @@ RT_ENUM! { enum HttpProgressStage: i32 {
     None = 0, DetectingProxy = 10, ResolvingName = 20, ConnectingToServer = 30, NegotiatingSsl = 40, SendingHeaders = 50, SendingContent = 60, WaitingForResponse = 70, ReceivingHeaders = 80, ReceivingContent = 90,
 }}
 DEFINE_IID!(IID_IHttpRequestMessage, 4118162236, 29908, 18449, 181, 220, 159, 139, 78, 47, 154, 191);
-RT_INTERFACE!{interface IHttpRequestMessage(IHttpRequestMessageVtbl): IInspectable(IInspectableVtbl) [IID_IHttpRequestMessage] {
+RT_INTERFACE!{interface IHttpRequestMessage(IHttpRequestMessageVtbl): IInspectable [IID_IHttpRequestMessage] {
     fn get_Content(&self, out: *mut <IHttpContent as RtType>::Abi) -> HRESULT,
     fn put_Content(&self, value: <IHttpContent as RtType>::Abi) -> HRESULT,
     fn get_Headers(&self, out: *mut <headers::HttpRequestHeaderCollection as RtType>::Abi) -> HRESULT,
@@ -746,7 +746,7 @@ impl HttpRequestMessage {
 }
 DEFINE_CLSID!(HttpRequestMessage(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,82,101,113,117,101,115,116,77,101,115,115,97,103,101,0]) [CLSID_HttpRequestMessage]);
 DEFINE_IID!(IID_IHttpRequestMessageFactory, 1538038094, 14470, 16686, 174, 195, 82, 236, 127, 37, 97, 111);
-RT_INTERFACE!{static interface IHttpRequestMessageFactory(IHttpRequestMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpRequestMessageFactory] {
+RT_INTERFACE!{static interface IHttpRequestMessageFactory(IHttpRequestMessageFactoryVtbl): IInspectable [IID_IHttpRequestMessageFactory] {
     fn Create(&self, method: <HttpMethod as RtType>::Abi, uri: <foundation::Uri as RtType>::Abi, out: *mut <HttpRequestMessage as RtType>::Abi) -> HRESULT
 }}
 impl IHttpRequestMessageFactory {
@@ -757,7 +757,7 @@ impl IHttpRequestMessageFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpResponseMessage, 4276224251, 34404, 17632, 149, 217, 66, 105, 97, 153, 191, 252);
-RT_INTERFACE!{interface IHttpResponseMessage(IHttpResponseMessageVtbl): IInspectable(IInspectableVtbl) [IID_IHttpResponseMessage] {
+RT_INTERFACE!{interface IHttpResponseMessage(IHttpResponseMessageVtbl): IInspectable [IID_IHttpResponseMessage] {
     fn get_Content(&self, out: *mut <IHttpContent as RtType>::Abi) -> HRESULT,
     fn put_Content(&self, value: <IHttpContent as RtType>::Abi) -> HRESULT,
     fn get_Headers(&self, out: *mut <headers::HttpResponseHeaderCollection as RtType>::Abi) -> HRESULT,
@@ -855,7 +855,7 @@ impl HttpResponseMessage {
 }
 DEFINE_CLSID!(HttpResponseMessage(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,82,101,115,112,111,110,115,101,77,101,115,115,97,103,101,0]) [CLSID_HttpResponseMessage]);
 DEFINE_IID!(IID_IHttpResponseMessageFactory, 1386786713, 61589, 17370, 182, 15, 124, 252, 43, 199, 234, 47);
-RT_INTERFACE!{static interface IHttpResponseMessageFactory(IHttpResponseMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpResponseMessageFactory] {
+RT_INTERFACE!{static interface IHttpResponseMessageFactory(IHttpResponseMessageFactoryVtbl): IInspectable [IID_IHttpResponseMessageFactory] {
     fn Create(&self, statusCode: HttpStatusCode, out: *mut <HttpResponseMessage as RtType>::Abi) -> HRESULT
 }}
 impl IHttpResponseMessageFactory {
@@ -880,7 +880,7 @@ impl HttpStreamContent {
 }
 DEFINE_CLSID!(HttpStreamContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,83,116,114,101,97,109,67,111,110,116,101,110,116,0]) [CLSID_HttpStreamContent]);
 DEFINE_IID!(IID_IHttpStreamContentFactory, 4091956637, 63269, 16510, 148, 47, 14, 218, 24, 152, 9, 244);
-RT_INTERFACE!{static interface IHttpStreamContentFactory(IHttpStreamContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpStreamContentFactory] {
+RT_INTERFACE!{static interface IHttpStreamContentFactory(IHttpStreamContentFactoryVtbl): IInspectable [IID_IHttpStreamContentFactory] {
     #[cfg(feature="windows-storage")] fn CreateFromInputStream(&self, content: <super::super::storage::streams::IInputStream as RtType>::Abi, out: *mut <HttpStreamContent as RtType>::Abi) -> HRESULT
 }}
 impl IHttpStreamContentFactory {
@@ -905,7 +905,7 @@ impl HttpStringContent {
 }
 DEFINE_CLSID!(HttpStringContent(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,116,116,112,83,116,114,105,110,103,67,111,110,116,101,110,116,0]) [CLSID_HttpStringContent]);
 DEFINE_IID!(IID_IHttpStringContentFactory, 1180999003, 11923, 18667, 142, 97, 25, 103, 120, 120, 229, 127);
-RT_INTERFACE!{static interface IHttpStringContentFactory(IHttpStringContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpStringContentFactory] {
+RT_INTERFACE!{static interface IHttpStringContentFactory(IHttpStringContentFactoryVtbl): IInspectable [IID_IHttpStringContentFactory] {
     fn CreateFromString(&self, content: HSTRING, out: *mut <HttpStringContent as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateFromStringWithEncoding(&self, content: HSTRING, encoding: super::super::storage::streams::UnicodeEncoding, out: *mut <HttpStringContent as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateFromStringWithEncodingAndMediaType(&self, content: HSTRING, encoding: super::super::storage::streams::UnicodeEncoding, mediaType: HSTRING, out: *mut <HttpStringContent as RtType>::Abi) -> HRESULT
@@ -928,7 +928,7 @@ impl IHttpStringContentFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpTransportInformation, 1880256920, 50855, 20176, 131, 58, 131, 253, 139, 143, 23, 141);
-RT_INTERFACE!{interface IHttpTransportInformation(IHttpTransportInformationVtbl): IInspectable(IInspectableVtbl) [IID_IHttpTransportInformation] {
+RT_INTERFACE!{interface IHttpTransportInformation(IHttpTransportInformationVtbl): IInspectable [IID_IHttpTransportInformation] {
     #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-networking"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-networking")] fn get_ServerCertificateErrorSeverity(&self, out: *mut super::super::networking::sockets::SocketSslErrorSeverity) -> HRESULT,
@@ -964,7 +964,7 @@ RT_ENUM! { enum HttpVersion: i32 {
 pub mod diagnostics { // Windows.Web.Http.Diagnostics
 use crate::prelude::*;
 DEFINE_IID!(IID_IHttpDiagnosticProvider, 3179353345, 41046, 19769, 177, 116, 131, 59, 123, 3, 176, 44);
-RT_INTERFACE!{interface IHttpDiagnosticProvider(IHttpDiagnosticProviderVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProvider] {
+RT_INTERFACE!{interface IHttpDiagnosticProvider(IHttpDiagnosticProviderVtbl): IInspectable [IID_IHttpDiagnosticProvider] {
     fn Start(&self) -> HRESULT,
     fn Stop(&self) -> HRESULT,
     fn add_RequestSent(&self, handler: <foundation::TypedEventHandler<HttpDiagnosticProvider, HttpDiagnosticProviderRequestSentEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -1020,7 +1020,7 @@ impl HttpDiagnosticProvider {
 }
 DEFINE_CLSID!(HttpDiagnosticProvider(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,68,105,97,103,110,111,115,116,105,99,115,46,72,116,116,112,68,105,97,103,110,111,115,116,105,99,80,114,111,118,105,100,101,114,0]) [CLSID_HttpDiagnosticProvider]);
 DEFINE_IID!(IID_IHttpDiagnosticProviderRequestResponseCompletedEventArgs, 1935644910, 38134, 17714, 178, 110, 97, 225, 177, 228, 239, 212);
-RT_INTERFACE!{interface IHttpDiagnosticProviderRequestResponseCompletedEventArgs(IHttpDiagnosticProviderRequestResponseCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderRequestResponseCompletedEventArgs] {
+RT_INTERFACE!{interface IHttpDiagnosticProviderRequestResponseCompletedEventArgs(IHttpDiagnosticProviderRequestResponseCompletedEventArgsVtbl): IInspectable [IID_IHttpDiagnosticProviderRequestResponseCompletedEventArgs] {
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
     fn get_Timestamps(&self, out: *mut <HttpDiagnosticProviderRequestResponseTimestamps as RtType>::Abi) -> HRESULT,
     fn get_RequestedUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
@@ -1068,7 +1068,7 @@ impl IHttpDiagnosticProviderRequestResponseCompletedEventArgs {
 }
 RT_CLASS!{class HttpDiagnosticProviderRequestResponseCompletedEventArgs: IHttpDiagnosticProviderRequestResponseCompletedEventArgs}
 DEFINE_IID!(IID_IHttpDiagnosticProviderRequestResponseTimestamps, 3769622032, 21967, 19457, 145, 212, 162, 5, 87, 216, 73, 240);
-RT_INTERFACE!{interface IHttpDiagnosticProviderRequestResponseTimestamps(IHttpDiagnosticProviderRequestResponseTimestampsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderRequestResponseTimestamps] {
+RT_INTERFACE!{interface IHttpDiagnosticProviderRequestResponseTimestamps(IHttpDiagnosticProviderRequestResponseTimestampsVtbl): IInspectable [IID_IHttpDiagnosticProviderRequestResponseTimestamps] {
     fn get_CacheCheckedTimestamp(&self, out: *mut <foundation::IReference<foundation::DateTime> as RtType>::Abi) -> HRESULT,
     fn get_ConnectionInitiatedTimestamp(&self, out: *mut <foundation::IReference<foundation::DateTime> as RtType>::Abi) -> HRESULT,
     fn get_NameResolvedTimestamp(&self, out: *mut <foundation::IReference<foundation::DateTime> as RtType>::Abi) -> HRESULT,
@@ -1128,7 +1128,7 @@ impl IHttpDiagnosticProviderRequestResponseTimestamps {
 }
 RT_CLASS!{class HttpDiagnosticProviderRequestResponseTimestamps: IHttpDiagnosticProviderRequestResponseTimestamps}
 DEFINE_IID!(IID_IHttpDiagnosticProviderRequestSentEventArgs, 1062311632, 19487, 20158, 165, 122, 6, 147, 7, 113, 197, 13);
-RT_INTERFACE!{interface IHttpDiagnosticProviderRequestSentEventArgs(IHttpDiagnosticProviderRequestSentEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderRequestSentEventArgs] {
+RT_INTERFACE!{interface IHttpDiagnosticProviderRequestSentEventArgs(IHttpDiagnosticProviderRequestSentEventArgsVtbl): IInspectable [IID_IHttpDiagnosticProviderRequestSentEventArgs] {
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
     fn get_Message(&self, out: *mut <super::HttpRequestMessage as RtType>::Abi) -> HRESULT,
@@ -1176,7 +1176,7 @@ impl IHttpDiagnosticProviderRequestSentEventArgs {
 }
 RT_CLASS!{class HttpDiagnosticProviderRequestSentEventArgs: IHttpDiagnosticProviderRequestSentEventArgs}
 DEFINE_IID!(IID_IHttpDiagnosticProviderResponseReceivedEventArgs, 2694993516, 43871, 19814, 187, 45, 8, 76, 244, 22, 53, 208);
-RT_INTERFACE!{interface IHttpDiagnosticProviderResponseReceivedEventArgs(IHttpDiagnosticProviderResponseReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderResponseReceivedEventArgs] {
+RT_INTERFACE!{interface IHttpDiagnosticProviderResponseReceivedEventArgs(IHttpDiagnosticProviderResponseReceivedEventArgsVtbl): IInspectable [IID_IHttpDiagnosticProviderResponseReceivedEventArgs] {
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_ActivityId(&self, out: *mut Guid) -> HRESULT,
     fn get_Message(&self, out: *mut <super::HttpResponseMessage as RtType>::Abi) -> HRESULT
@@ -1200,7 +1200,7 @@ impl IHttpDiagnosticProviderResponseReceivedEventArgs {
 }
 RT_CLASS!{class HttpDiagnosticProviderResponseReceivedEventArgs: IHttpDiagnosticProviderResponseReceivedEventArgs}
 DEFINE_IID!(IID_IHttpDiagnosticProviderStatics, 1535266497, 27244, 18380, 175, 236, 30, 134, 188, 38, 5, 59);
-RT_INTERFACE!{static interface IHttpDiagnosticProviderStatics(IHttpDiagnosticProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticProviderStatics] {
+RT_INTERFACE!{static interface IHttpDiagnosticProviderStatics(IHttpDiagnosticProviderStaticsVtbl): IInspectable [IID_IHttpDiagnosticProviderStatics] {
     #[cfg(feature="windows-system")] fn CreateFromProcessDiagnosticInfo(&self, processDiagnosticInfo: <crate::windows::system::diagnostics::ProcessDiagnosticInfo as RtType>::Abi, out: *mut <HttpDiagnosticProvider as RtType>::Abi) -> HRESULT
 }}
 impl IHttpDiagnosticProviderStatics {
@@ -1214,7 +1214,7 @@ RT_ENUM! { enum HttpDiagnosticRequestInitiator: i32 {
     ParsedElement = 0, Script = 1, Image = 2, Link = 3, Style = 4, XmlHttpRequest = 5, Media = 6, HtmlDownload = 7, Prefetch = 8, Other = 9, CrossOriginPreFlight = 10, Fetch = 11, Beacon = 12,
 }}
 DEFINE_IID!(IID_IHttpDiagnosticSourceLocation, 1420415584, 34912, 16959, 182, 250, 215, 119, 22, 246, 71, 167);
-RT_INTERFACE!{interface IHttpDiagnosticSourceLocation(IHttpDiagnosticSourceLocationVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDiagnosticSourceLocation] {
+RT_INTERFACE!{interface IHttpDiagnosticSourceLocation(IHttpDiagnosticSourceLocationVtbl): IInspectable [IID_IHttpDiagnosticSourceLocation] {
     fn get_SourceUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_LineNumber(&self, out: *mut u64) -> HRESULT,
     fn get_ColumnNumber(&self, out: *mut u64) -> HRESULT
@@ -1241,7 +1241,7 @@ RT_CLASS!{class HttpDiagnosticSourceLocation: IHttpDiagnosticSourceLocation}
 pub mod filters { // Windows.Web.Http.Filters
 use crate::prelude::*;
 DEFINE_IID!(IID_IHttpBaseProtocolFilter, 1908972297, 57649, 19284, 165, 60, 235, 67, 255, 55, 233, 187);
-RT_INTERFACE!{interface IHttpBaseProtocolFilter(IHttpBaseProtocolFilterVtbl): IInspectable(IInspectableVtbl) [IID_IHttpBaseProtocolFilter] {
+RT_INTERFACE!{interface IHttpBaseProtocolFilter(IHttpBaseProtocolFilterVtbl): IInspectable [IID_IHttpBaseProtocolFilter] {
     fn get_AllowAutoRedirect(&self, out: *mut bool) -> HRESULT,
     fn put_AllowAutoRedirect(&self, value: bool) -> HRESULT,
     fn get_AllowUI(&self, out: *mut bool) -> HRESULT,
@@ -1362,7 +1362,7 @@ RT_CLASS!{class HttpBaseProtocolFilter: IHttpBaseProtocolFilter}
 impl RtActivatable<IActivationFactory> for HttpBaseProtocolFilter {}
 DEFINE_CLSID!(HttpBaseProtocolFilter(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,70,105,108,116,101,114,115,46,72,116,116,112,66,97,115,101,80,114,111,116,111,99,111,108,70,105,108,116,101,114,0]) [CLSID_HttpBaseProtocolFilter]);
 DEFINE_IID!(IID_IHttpBaseProtocolFilter2, 784531475, 37927, 18688, 160, 23, 250, 125, 163, 181, 201, 174);
-RT_INTERFACE!{interface IHttpBaseProtocolFilter2(IHttpBaseProtocolFilter2Vtbl): IInspectable(IInspectableVtbl) [IID_IHttpBaseProtocolFilter2] {
+RT_INTERFACE!{interface IHttpBaseProtocolFilter2(IHttpBaseProtocolFilter2Vtbl): IInspectable [IID_IHttpBaseProtocolFilter2] {
     fn get_MaxVersion(&self, out: *mut super::HttpVersion) -> HRESULT,
     fn put_MaxVersion(&self, value: super::HttpVersion) -> HRESULT
 }}
@@ -1378,7 +1378,7 @@ impl IHttpBaseProtocolFilter2 {
     }}
 }
 DEFINE_IID!(IID_IHttpBaseProtocolFilter3, 3560918348, 48450, 17326, 135, 23, 173, 44, 143, 75, 41, 55);
-RT_INTERFACE!{interface IHttpBaseProtocolFilter3(IHttpBaseProtocolFilter3Vtbl): IInspectable(IInspectableVtbl) [IID_IHttpBaseProtocolFilter3] {
+RT_INTERFACE!{interface IHttpBaseProtocolFilter3(IHttpBaseProtocolFilter3Vtbl): IInspectable [IID_IHttpBaseProtocolFilter3] {
     fn get_CookieUsageBehavior(&self, out: *mut HttpCookieUsageBehavior) -> HRESULT,
     fn put_CookieUsageBehavior(&self, value: HttpCookieUsageBehavior) -> HRESULT
 }}
@@ -1394,7 +1394,7 @@ impl IHttpBaseProtocolFilter3 {
     }}
 }
 DEFINE_IID!(IID_IHttpBaseProtocolFilter4, 2682481871, 10627, 18579, 148, 31, 235, 81, 140, 168, 206, 249);
-RT_INTERFACE!{interface IHttpBaseProtocolFilter4(IHttpBaseProtocolFilter4Vtbl): IInspectable(IInspectableVtbl) [IID_IHttpBaseProtocolFilter4] {
+RT_INTERFACE!{interface IHttpBaseProtocolFilter4(IHttpBaseProtocolFilter4Vtbl): IInspectable [IID_IHttpBaseProtocolFilter4] {
     fn add_ServerCustomValidationRequested(&self, eventHandler: <foundation::TypedEventHandler<HttpBaseProtocolFilter, HttpServerCustomValidationRequestedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ServerCustomValidationRequested(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
     fn ClearAuthenticationCache(&self) -> HRESULT
@@ -1415,7 +1415,7 @@ impl IHttpBaseProtocolFilter4 {
     }}
 }
 DEFINE_IID!(IID_IHttpCacheControl, 3346930868, 15594, 20149, 172, 133, 4, 225, 134, 230, 58, 183);
-RT_INTERFACE!{interface IHttpCacheControl(IHttpCacheControlVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCacheControl] {
+RT_INTERFACE!{interface IHttpCacheControl(IHttpCacheControlVtbl): IInspectable [IID_IHttpCacheControl] {
     fn get_ReadBehavior(&self, out: *mut HttpCacheReadBehavior) -> HRESULT,
     fn put_ReadBehavior(&self, value: HttpCacheReadBehavior) -> HRESULT,
     fn get_WriteBehavior(&self, out: *mut HttpCacheWriteBehavior) -> HRESULT,
@@ -1452,7 +1452,7 @@ RT_ENUM! { enum HttpCookieUsageBehavior: i32 {
     Default = 0, NoCookies = 1,
 }}
 DEFINE_IID!(IID_IHttpFilter, 2764795349, 2306, 17310, 191, 215, 225, 37, 82, 177, 101, 206);
-RT_INTERFACE!{interface IHttpFilter(IHttpFilterVtbl): IInspectable(IInspectableVtbl) [IID_IHttpFilter] {
+RT_INTERFACE!{interface IHttpFilter(IHttpFilterVtbl): IInspectable [IID_IHttpFilter] {
     fn SendRequestAsync(&self, request: <super::HttpRequestMessage as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<super::HttpResponseMessage, super::HttpProgress> as RtType>::Abi) -> HRESULT
 }}
 impl IHttpFilter {
@@ -1463,7 +1463,7 @@ impl IHttpFilter {
     }}
 }
 DEFINE_IID!(IID_IHttpServerCustomValidationRequestedEventArgs, 828767794, 59357, 18615, 163, 97, 147, 156, 117, 14, 99, 204);
-RT_INTERFACE!{interface IHttpServerCustomValidationRequestedEventArgs(IHttpServerCustomValidationRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpServerCustomValidationRequestedEventArgs] {
+RT_INTERFACE!{interface IHttpServerCustomValidationRequestedEventArgs(IHttpServerCustomValidationRequestedEventArgsVtbl): IInspectable [IID_IHttpServerCustomValidationRequestedEventArgs] {
     fn get_RequestMessage(&self, out: *mut <super::HttpRequestMessage as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut <crate::windows::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
@@ -1517,7 +1517,7 @@ RT_CLASS!{class HttpServerCustomValidationRequestedEventArgs: IHttpServerCustomV
 pub mod headers { // Windows.Web.Http.Headers
 use crate::prelude::*;
 DEFINE_IID!(IID_IHttpCacheDirectiveHeaderValueCollection, 2589485961, 54736, 20414, 189, 157, 181, 179, 99, 104, 17, 180);
-RT_INTERFACE!{interface IHttpCacheDirectiveHeaderValueCollection(IHttpCacheDirectiveHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCacheDirectiveHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpCacheDirectiveHeaderValueCollection(IHttpCacheDirectiveHeaderValueCollectionVtbl): IInspectable [IID_IHttpCacheDirectiveHeaderValueCollection] {
     fn get_MaxAge(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn put_MaxAge(&self, value: <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_MaxStale(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
@@ -1578,7 +1578,7 @@ impl IHttpCacheDirectiveHeaderValueCollection {
 }
 RT_CLASS!{class HttpCacheDirectiveHeaderValueCollection: IHttpCacheDirectiveHeaderValueCollection}
 DEFINE_IID!(IID_IHttpChallengeHeaderValue, 959668655, 3965, 18464, 159, 221, 162, 185, 86, 238, 174, 171);
-RT_INTERFACE!{interface IHttpChallengeHeaderValue(IHttpChallengeHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpChallengeHeaderValue] {
+RT_INTERFACE!{interface IHttpChallengeHeaderValue(IHttpChallengeHeaderValueVtbl): IInspectable [IID_IHttpChallengeHeaderValue] {
     fn get_Parameters(&self, out: *mut <foundation::collections::IVector<HttpNameValueHeaderValue> as RtType>::Abi) -> HRESULT,
     fn get_Scheme(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Token(&self, out: *mut HSTRING) -> HRESULT
@@ -1619,7 +1619,7 @@ impl HttpChallengeHeaderValue {
 }
 DEFINE_CLSID!(HttpChallengeHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,104,97,108,108,101,110,103,101,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpChallengeHeaderValue]);
 DEFINE_IID!(IID_IHttpChallengeHeaderValueCollection, 3399376769, 44768, 17235, 161, 11, 230, 37, 186, 189, 100, 194);
-RT_INTERFACE!{interface IHttpChallengeHeaderValueCollection(IHttpChallengeHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpChallengeHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpChallengeHeaderValueCollection(IHttpChallengeHeaderValueCollectionVtbl): IInspectable [IID_IHttpChallengeHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -1636,7 +1636,7 @@ impl IHttpChallengeHeaderValueCollection {
 }
 RT_CLASS!{class HttpChallengeHeaderValueCollection: IHttpChallengeHeaderValueCollection}
 DEFINE_IID!(IID_IHttpChallengeHeaderValueFactory, 3293758545, 55708, 16554, 147, 153, 144, 238, 185, 143, 198, 19);
-RT_INTERFACE!{static interface IHttpChallengeHeaderValueFactory(IHttpChallengeHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpChallengeHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpChallengeHeaderValueFactory(IHttpChallengeHeaderValueFactoryVtbl): IInspectable [IID_IHttpChallengeHeaderValueFactory] {
     fn CreateFromScheme(&self, scheme: HSTRING, out: *mut <HttpChallengeHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromSchemeWithToken(&self, scheme: HSTRING, token: HSTRING, out: *mut <HttpChallengeHeaderValue as RtType>::Abi) -> HRESULT
 }}
@@ -1653,7 +1653,7 @@ impl IHttpChallengeHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpChallengeHeaderValueStatics, 4090727026, 64513, 19713, 160, 8, 252, 183, 196, 89, 214, 53);
-RT_INTERFACE!{static interface IHttpChallengeHeaderValueStatics(IHttpChallengeHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpChallengeHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpChallengeHeaderValueStatics(IHttpChallengeHeaderValueStaticsVtbl): IInspectable [IID_IHttpChallengeHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpChallengeHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, challengeHeaderValue: *mut <HttpChallengeHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -1670,7 +1670,7 @@ impl IHttpChallengeHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpConnectionOptionHeaderValue, 3410686586, 20112, 17899, 141, 205, 253, 20, 8, 244, 196, 79);
-RT_INTERFACE!{interface IHttpConnectionOptionHeaderValue(IHttpConnectionOptionHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpConnectionOptionHeaderValue] {
+RT_INTERFACE!{interface IHttpConnectionOptionHeaderValue(IHttpConnectionOptionHeaderValueVtbl): IInspectable [IID_IHttpConnectionOptionHeaderValue] {
     fn get_Token(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IHttpConnectionOptionHeaderValue {
@@ -1696,7 +1696,7 @@ impl HttpConnectionOptionHeaderValue {
 }
 DEFINE_CLSID!(HttpConnectionOptionHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,110,101,99,116,105,111,110,79,112,116,105,111,110,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpConnectionOptionHeaderValue]);
 DEFINE_IID!(IID_IHttpConnectionOptionHeaderValueCollection, 3841289245, 20802, 19968, 142, 15, 1, 149, 9, 51, 118, 41);
-RT_INTERFACE!{interface IHttpConnectionOptionHeaderValueCollection(IHttpConnectionOptionHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpConnectionOptionHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpConnectionOptionHeaderValueCollection(IHttpConnectionOptionHeaderValueCollectionVtbl): IInspectable [IID_IHttpConnectionOptionHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -1713,7 +1713,7 @@ impl IHttpConnectionOptionHeaderValueCollection {
 }
 RT_CLASS!{class HttpConnectionOptionHeaderValueCollection: IHttpConnectionOptionHeaderValueCollection}
 DEFINE_IID!(IID_IHttpConnectionOptionHeaderValueFactory, 3644640286, 2941, 19519, 165, 141, 162, 161, 189, 234, 188, 10);
-RT_INTERFACE!{static interface IHttpConnectionOptionHeaderValueFactory(IHttpConnectionOptionHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpConnectionOptionHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpConnectionOptionHeaderValueFactory(IHttpConnectionOptionHeaderValueFactoryVtbl): IInspectable [IID_IHttpConnectionOptionHeaderValueFactory] {
     fn Create(&self, token: HSTRING, out: *mut <HttpConnectionOptionHeaderValue as RtType>::Abi) -> HRESULT
 }}
 impl IHttpConnectionOptionHeaderValueFactory {
@@ -1724,7 +1724,7 @@ impl IHttpConnectionOptionHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpConnectionOptionHeaderValueStatics, 2863095095, 43334, 19231, 133, 175, 72, 182, 139, 60, 80, 189);
-RT_INTERFACE!{static interface IHttpConnectionOptionHeaderValueStatics(IHttpConnectionOptionHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpConnectionOptionHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpConnectionOptionHeaderValueStatics(IHttpConnectionOptionHeaderValueStaticsVtbl): IInspectable [IID_IHttpConnectionOptionHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpConnectionOptionHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, connectionOptionHeaderValue: *mut <HttpConnectionOptionHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -1741,7 +1741,7 @@ impl IHttpConnectionOptionHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpContentCodingHeaderValue, 3170367786, 37750, 19845, 188, 204, 159, 79, 154, 202, 180, 52);
-RT_INTERFACE!{interface IHttpContentCodingHeaderValue(IHttpContentCodingHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingHeaderValue] {
+RT_INTERFACE!{interface IHttpContentCodingHeaderValue(IHttpContentCodingHeaderValueVtbl): IInspectable [IID_IHttpContentCodingHeaderValue] {
     fn get_ContentCoding(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IHttpContentCodingHeaderValue {
@@ -1767,7 +1767,7 @@ impl HttpContentCodingHeaderValue {
 }
 DEFINE_CLSID!(HttpContentCodingHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,67,111,100,105,110,103,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpContentCodingHeaderValue]);
 DEFINE_IID!(IID_IHttpContentCodingHeaderValueCollection, 2099386145, 42715, 17262, 142, 131, 145, 89, 97, 146, 129, 156);
-RT_INTERFACE!{interface IHttpContentCodingHeaderValueCollection(IHttpContentCodingHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpContentCodingHeaderValueCollection(IHttpContentCodingHeaderValueCollectionVtbl): IInspectable [IID_IHttpContentCodingHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -1784,7 +1784,7 @@ impl IHttpContentCodingHeaderValueCollection {
 }
 RT_CLASS!{class HttpContentCodingHeaderValueCollection: IHttpContentCodingHeaderValueCollection}
 DEFINE_IID!(IID_IHttpContentCodingHeaderValueFactory, 3309120471, 13099, 17232, 133, 16, 46, 103, 162, 40, 154, 90);
-RT_INTERFACE!{static interface IHttpContentCodingHeaderValueFactory(IHttpContentCodingHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpContentCodingHeaderValueFactory(IHttpContentCodingHeaderValueFactoryVtbl): IInspectable [IID_IHttpContentCodingHeaderValueFactory] {
     fn Create(&self, contentCoding: HSTRING, out: *mut <HttpContentCodingHeaderValue as RtType>::Abi) -> HRESULT
 }}
 impl IHttpContentCodingHeaderValueFactory {
@@ -1795,7 +1795,7 @@ impl IHttpContentCodingHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpContentCodingHeaderValueStatics, 2497208366, 63935, 17143, 170, 70, 237, 39, 42, 65, 226, 18);
-RT_INTERFACE!{static interface IHttpContentCodingHeaderValueStatics(IHttpContentCodingHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpContentCodingHeaderValueStatics(IHttpContentCodingHeaderValueStaticsVtbl): IInspectable [IID_IHttpContentCodingHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpContentCodingHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, contentCodingHeaderValue: *mut <HttpContentCodingHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -1812,7 +1812,7 @@ impl IHttpContentCodingHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpContentCodingWithQualityHeaderValue, 2488474837, 35603, 19827, 134, 81, 247, 107, 56, 248, 132, 149);
-RT_INTERFACE!{interface IHttpContentCodingWithQualityHeaderValue(IHttpContentCodingWithQualityHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingWithQualityHeaderValue] {
+RT_INTERFACE!{interface IHttpContentCodingWithQualityHeaderValue(IHttpContentCodingWithQualityHeaderValueVtbl): IInspectable [IID_IHttpContentCodingWithQualityHeaderValue] {
     fn get_ContentCoding(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Quality(&self, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT
 }}
@@ -1847,7 +1847,7 @@ impl HttpContentCodingWithQualityHeaderValue {
 }
 DEFINE_CLSID!(HttpContentCodingWithQualityHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,67,111,100,105,110,103,87,105,116,104,81,117,97,108,105,116,121,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpContentCodingWithQualityHeaderValue]);
 DEFINE_IID!(IID_IHttpContentCodingWithQualityHeaderValueCollection, 2081256766, 59545, 17272, 181, 200, 65, 45, 130, 7, 17, 204);
-RT_INTERFACE!{interface IHttpContentCodingWithQualityHeaderValueCollection(IHttpContentCodingWithQualityHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingWithQualityHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpContentCodingWithQualityHeaderValueCollection(IHttpContentCodingWithQualityHeaderValueCollectionVtbl): IInspectable [IID_IHttpContentCodingWithQualityHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -1864,7 +1864,7 @@ impl IHttpContentCodingWithQualityHeaderValueCollection {
 }
 RT_CLASS!{class HttpContentCodingWithQualityHeaderValueCollection: IHttpContentCodingWithQualityHeaderValueCollection}
 DEFINE_IID!(IID_IHttpContentCodingWithQualityHeaderValueFactory, 3294555674, 50515, 18172, 173, 226, 215, 92, 29, 83, 223, 123);
-RT_INTERFACE!{static interface IHttpContentCodingWithQualityHeaderValueFactory(IHttpContentCodingWithQualityHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingWithQualityHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpContentCodingWithQualityHeaderValueFactory(IHttpContentCodingWithQualityHeaderValueFactoryVtbl): IInspectable [IID_IHttpContentCodingWithQualityHeaderValueFactory] {
     fn CreateFromValue(&self, contentCoding: HSTRING, out: *mut <HttpContentCodingWithQualityHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromValueWithQuality(&self, contentCoding: HSTRING, quality: f64, out: *mut <HttpContentCodingWithQualityHeaderValue as RtType>::Abi) -> HRESULT
 }}
@@ -1881,7 +1881,7 @@ impl IHttpContentCodingWithQualityHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpContentCodingWithQualityHeaderValueStatics, 3905500540, 36745, 18433, 142, 117, 76, 154, 191, 195, 222, 113);
-RT_INTERFACE!{static interface IHttpContentCodingWithQualityHeaderValueStatics(IHttpContentCodingWithQualityHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentCodingWithQualityHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpContentCodingWithQualityHeaderValueStatics(IHttpContentCodingWithQualityHeaderValueStaticsVtbl): IInspectable [IID_IHttpContentCodingWithQualityHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpContentCodingWithQualityHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, contentCodingWithQualityHeaderValue: *mut <HttpContentCodingWithQualityHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -1898,7 +1898,7 @@ impl IHttpContentCodingWithQualityHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpContentDispositionHeaderValue, 4070764252, 9769, 19273, 153, 8, 150, 161, 104, 233, 54, 94);
-RT_INTERFACE!{interface IHttpContentDispositionHeaderValue(IHttpContentDispositionHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentDispositionHeaderValue] {
+RT_INTERFACE!{interface IHttpContentDispositionHeaderValue(IHttpContentDispositionHeaderValueVtbl): IInspectable [IID_IHttpContentDispositionHeaderValue] {
     fn get_DispositionType(&self, out: *mut HSTRING) -> HRESULT,
     fn put_DispositionType(&self, value: HSTRING) -> HRESULT,
     fn get_FileName(&self, out: *mut HSTRING) -> HRESULT,
@@ -1979,7 +1979,7 @@ impl HttpContentDispositionHeaderValue {
 }
 DEFINE_CLSID!(HttpContentDispositionHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,68,105,115,112,111,115,105,116,105,111,110,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpContentDispositionHeaderValue]);
 DEFINE_IID!(IID_IHttpContentDispositionHeaderValueFactory, 2568338372, 17772, 20097, 130, 149, 178, 171, 60, 188, 245, 69);
-RT_INTERFACE!{static interface IHttpContentDispositionHeaderValueFactory(IHttpContentDispositionHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentDispositionHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpContentDispositionHeaderValueFactory(IHttpContentDispositionHeaderValueFactoryVtbl): IInspectable [IID_IHttpContentDispositionHeaderValueFactory] {
     fn Create(&self, dispositionType: HSTRING, out: *mut <HttpContentDispositionHeaderValue as RtType>::Abi) -> HRESULT
 }}
 impl IHttpContentDispositionHeaderValueFactory {
@@ -1990,7 +1990,7 @@ impl IHttpContentDispositionHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpContentDispositionHeaderValueStatics, 700801127, 23095, 18148, 176, 116, 197, 23, 125, 105, 202, 102);
-RT_INTERFACE!{static interface IHttpContentDispositionHeaderValueStatics(IHttpContentDispositionHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentDispositionHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpContentDispositionHeaderValueStatics(IHttpContentDispositionHeaderValueStaticsVtbl): IInspectable [IID_IHttpContentDispositionHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpContentDispositionHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, contentDispositionHeaderValue: *mut <HttpContentDispositionHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -2007,7 +2007,7 @@ impl IHttpContentDispositionHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpContentHeaderCollection, 1080109636, 18350, 19326, 145, 36, 105, 98, 139, 100, 170, 24);
-RT_INTERFACE!{interface IHttpContentHeaderCollection(IHttpContentHeaderCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentHeaderCollection] {
+RT_INTERFACE!{interface IHttpContentHeaderCollection(IHttpContentHeaderCollectionVtbl): IInspectable [IID_IHttpContentHeaderCollection] {
     fn get_ContentDisposition(&self, out: *mut <HttpContentDispositionHeaderValue as RtType>::Abi) -> HRESULT,
     fn put_ContentDisposition(&self, value: <HttpContentDispositionHeaderValue as RtType>::Abi) -> HRESULT,
     fn get_ContentEncoding(&self, out: *mut <HttpContentCodingHeaderValueCollection as RtType>::Abi) -> HRESULT,
@@ -2128,7 +2128,7 @@ RT_CLASS!{class HttpContentHeaderCollection: IHttpContentHeaderCollection}
 impl RtActivatable<IActivationFactory> for HttpContentHeaderCollection {}
 DEFINE_CLSID!(HttpContentHeaderCollection(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,72,101,97,100,101,114,67,111,108,108,101,99,116,105,111,110,0]) [CLSID_HttpContentHeaderCollection]);
 DEFINE_IID!(IID_IHttpContentRangeHeaderValue, 81356755, 42230, 18780, 149, 48, 133, 121, 252, 186, 138, 169);
-RT_INTERFACE!{interface IHttpContentRangeHeaderValue(IHttpContentRangeHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentRangeHeaderValue] {
+RT_INTERFACE!{interface IHttpContentRangeHeaderValue(IHttpContentRangeHeaderValueVtbl): IInspectable [IID_IHttpContentRangeHeaderValue] {
     fn get_FirstBytePosition(&self, out: *mut <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
     fn get_LastBytePosition(&self, out: *mut <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
     fn get_Length(&self, out: *mut <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
@@ -2183,7 +2183,7 @@ impl HttpContentRangeHeaderValue {
 }
 DEFINE_CLSID!(HttpContentRangeHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,110,116,101,110,116,82,97,110,103,101,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpContentRangeHeaderValue]);
 DEFINE_IID!(IID_IHttpContentRangeHeaderValueFactory, 1062983313, 41020, 17494, 154, 111, 239, 39, 236, 208, 60, 174);
-RT_INTERFACE!{static interface IHttpContentRangeHeaderValueFactory(IHttpContentRangeHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentRangeHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpContentRangeHeaderValueFactory(IHttpContentRangeHeaderValueFactoryVtbl): IInspectable [IID_IHttpContentRangeHeaderValueFactory] {
     fn CreateFromLength(&self, length: u64, out: *mut <HttpContentRangeHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromRange(&self, from: u64, to: u64, out: *mut <HttpContentRangeHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromRangeWithLength(&self, from: u64, to: u64, length: u64, out: *mut <HttpContentRangeHeaderValue as RtType>::Abi) -> HRESULT
@@ -2206,7 +2206,7 @@ impl IHttpContentRangeHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpContentRangeHeaderValueStatics, 2158184138, 5964, 20398, 130, 28, 19, 76, 210, 148, 170, 56);
-RT_INTERFACE!{static interface IHttpContentRangeHeaderValueStatics(IHttpContentRangeHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpContentRangeHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpContentRangeHeaderValueStatics(IHttpContentRangeHeaderValueStaticsVtbl): IInspectable [IID_IHttpContentRangeHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpContentRangeHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, contentRangeHeaderValue: *mut <HttpContentRangeHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -2223,7 +2223,7 @@ impl IHttpContentRangeHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpCookiePairHeaderValue, 3419693591, 19241, 16683, 189, 144, 179, 216, 20, 171, 142, 27);
-RT_INTERFACE!{interface IHttpCookiePairHeaderValue(IHttpCookiePairHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookiePairHeaderValue] {
+RT_INTERFACE!{interface IHttpCookiePairHeaderValue(IHttpCookiePairHeaderValueVtbl): IInspectable [IID_IHttpCookiePairHeaderValue] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Value(&self, value: HSTRING) -> HRESULT
@@ -2263,7 +2263,7 @@ impl HttpCookiePairHeaderValue {
 }
 DEFINE_CLSID!(HttpCookiePairHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,111,111,107,105,101,80,97,105,114,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpCookiePairHeaderValue]);
 DEFINE_IID!(IID_IHttpCookiePairHeaderValueCollection, 4092871504, 22558, 20172, 159, 89, 229, 7, 208, 79, 6, 230);
-RT_INTERFACE!{interface IHttpCookiePairHeaderValueCollection(IHttpCookiePairHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookiePairHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpCookiePairHeaderValueCollection(IHttpCookiePairHeaderValueCollectionVtbl): IInspectable [IID_IHttpCookiePairHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -2280,7 +2280,7 @@ impl IHttpCookiePairHeaderValueCollection {
 }
 RT_CLASS!{class HttpCookiePairHeaderValueCollection: IHttpCookiePairHeaderValueCollection}
 DEFINE_IID!(IID_IHttpCookiePairHeaderValueFactory, 1667117679, 5231, 20310, 170, 33, 44, 183, 214, 213, 139, 30);
-RT_INTERFACE!{static interface IHttpCookiePairHeaderValueFactory(IHttpCookiePairHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookiePairHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpCookiePairHeaderValueFactory(IHttpCookiePairHeaderValueFactoryVtbl): IInspectable [IID_IHttpCookiePairHeaderValueFactory] {
     fn CreateFromName(&self, name: HSTRING, out: *mut <HttpCookiePairHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromNameWithValue(&self, name: HSTRING, value: HSTRING, out: *mut <HttpCookiePairHeaderValue as RtType>::Abi) -> HRESULT
 }}
@@ -2297,7 +2297,7 @@ impl IHttpCookiePairHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpCookiePairHeaderValueStatics, 1854303560, 1711, 17506, 129, 88, 153, 56, 141, 93, 202, 129);
-RT_INTERFACE!{static interface IHttpCookiePairHeaderValueStatics(IHttpCookiePairHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCookiePairHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpCookiePairHeaderValueStatics(IHttpCookiePairHeaderValueStaticsVtbl): IInspectable [IID_IHttpCookiePairHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpCookiePairHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, cookiePairHeaderValue: *mut <HttpCookiePairHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -2314,7 +2314,7 @@ impl IHttpCookiePairHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpCredentialsHeaderValue, 3276587979, 21550, 16759, 166, 199, 182, 116, 206, 25, 63, 191);
-RT_INTERFACE!{interface IHttpCredentialsHeaderValue(IHttpCredentialsHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCredentialsHeaderValue] {
+RT_INTERFACE!{interface IHttpCredentialsHeaderValue(IHttpCredentialsHeaderValueVtbl): IInspectable [IID_IHttpCredentialsHeaderValue] {
     fn get_Parameters(&self, out: *mut <foundation::collections::IVector<HttpNameValueHeaderValue> as RtType>::Abi) -> HRESULT,
     fn get_Scheme(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Token(&self, out: *mut HSTRING) -> HRESULT
@@ -2355,7 +2355,7 @@ impl HttpCredentialsHeaderValue {
 }
 DEFINE_CLSID!(HttpCredentialsHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,67,114,101,100,101,110,116,105,97,108,115,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpCredentialsHeaderValue]);
 DEFINE_IID!(IID_IHttpCredentialsHeaderValueFactory, 4062027409, 19740, 16770, 191, 209, 52, 71, 10, 98, 249, 80);
-RT_INTERFACE!{static interface IHttpCredentialsHeaderValueFactory(IHttpCredentialsHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCredentialsHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpCredentialsHeaderValueFactory(IHttpCredentialsHeaderValueFactoryVtbl): IInspectable [IID_IHttpCredentialsHeaderValueFactory] {
     fn CreateFromScheme(&self, scheme: HSTRING, out: *mut <HttpCredentialsHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromSchemeWithToken(&self, scheme: HSTRING, token: HSTRING, out: *mut <HttpCredentialsHeaderValue as RtType>::Abi) -> HRESULT
 }}
@@ -2372,7 +2372,7 @@ impl IHttpCredentialsHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpCredentialsHeaderValueStatics, 2795187174, 52876, 17475, 163, 90, 27, 114, 123, 19, 16, 54);
-RT_INTERFACE!{static interface IHttpCredentialsHeaderValueStatics(IHttpCredentialsHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpCredentialsHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpCredentialsHeaderValueStatics(IHttpCredentialsHeaderValueStaticsVtbl): IInspectable [IID_IHttpCredentialsHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpCredentialsHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, credentialsHeaderValue: *mut <HttpCredentialsHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -2389,7 +2389,7 @@ impl IHttpCredentialsHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpDateOrDeltaHeaderValue, 3942427242, 50396, 18914, 162, 125, 4, 58, 223, 88, 103, 163);
-RT_INTERFACE!{interface IHttpDateOrDeltaHeaderValue(IHttpDateOrDeltaHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDateOrDeltaHeaderValue] {
+RT_INTERFACE!{interface IHttpDateOrDeltaHeaderValue(IHttpDateOrDeltaHeaderValueVtbl): IInspectable [IID_IHttpDateOrDeltaHeaderValue] {
     fn get_Date(&self, out: *mut <foundation::IReference<foundation::DateTime> as RtType>::Abi) -> HRESULT,
     fn get_Delta(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT
 }}
@@ -2417,7 +2417,7 @@ impl HttpDateOrDeltaHeaderValue {
 }
 DEFINE_CLSID!(HttpDateOrDeltaHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,68,97,116,101,79,114,68,101,108,116,97,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpDateOrDeltaHeaderValue]);
 DEFINE_IID!(IID_IHttpDateOrDeltaHeaderValueStatics, 2082888104, 26226, 20112, 154, 154, 243, 151, 102, 247, 245, 118);
-RT_INTERFACE!{static interface IHttpDateOrDeltaHeaderValueStatics(IHttpDateOrDeltaHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpDateOrDeltaHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpDateOrDeltaHeaderValueStatics(IHttpDateOrDeltaHeaderValueStaticsVtbl): IInspectable [IID_IHttpDateOrDeltaHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpDateOrDeltaHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, dateOrDeltaHeaderValue: *mut <HttpDateOrDeltaHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -2434,7 +2434,7 @@ impl IHttpDateOrDeltaHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpExpectationHeaderValue, 1290110413, 15001, 17327, 162, 230, 236, 35, 47, 234, 150, 88);
-RT_INTERFACE!{interface IHttpExpectationHeaderValue(IHttpExpectationHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpExpectationHeaderValue] {
+RT_INTERFACE!{interface IHttpExpectationHeaderValue(IHttpExpectationHeaderValueVtbl): IInspectable [IID_IHttpExpectationHeaderValue] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Value(&self, value: HSTRING) -> HRESULT,
@@ -2480,7 +2480,7 @@ impl HttpExpectationHeaderValue {
 }
 DEFINE_CLSID!(HttpExpectationHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,69,120,112,101,99,116,97,116,105,111,110,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpExpectationHeaderValue]);
 DEFINE_IID!(IID_IHttpExpectationHeaderValueCollection, 3884261811, 41186, 19140, 158, 102, 121, 112, 108, 185, 253, 88);
-RT_INTERFACE!{interface IHttpExpectationHeaderValueCollection(IHttpExpectationHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpExpectationHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpExpectationHeaderValueCollection(IHttpExpectationHeaderValueCollectionVtbl): IInspectable [IID_IHttpExpectationHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -2497,7 +2497,7 @@ impl IHttpExpectationHeaderValueCollection {
 }
 RT_CLASS!{class HttpExpectationHeaderValueCollection: IHttpExpectationHeaderValueCollection}
 DEFINE_IID!(IID_IHttpExpectationHeaderValueFactory, 1319269835, 54590, 18536, 136, 86, 30, 33, 165, 3, 13, 192);
-RT_INTERFACE!{static interface IHttpExpectationHeaderValueFactory(IHttpExpectationHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpExpectationHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpExpectationHeaderValueFactory(IHttpExpectationHeaderValueFactoryVtbl): IInspectable [IID_IHttpExpectationHeaderValueFactory] {
     fn CreateFromName(&self, name: HSTRING, out: *mut <HttpExpectationHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromNameWithValue(&self, name: HSTRING, value: HSTRING, out: *mut <HttpExpectationHeaderValue as RtType>::Abi) -> HRESULT
 }}
@@ -2514,7 +2514,7 @@ impl IHttpExpectationHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpExpectationHeaderValueStatics, 806988770, 53221, 18235, 165, 127, 251, 165, 177, 78, 178, 87);
-RT_INTERFACE!{static interface IHttpExpectationHeaderValueStatics(IHttpExpectationHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpExpectationHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpExpectationHeaderValueStatics(IHttpExpectationHeaderValueStaticsVtbl): IInspectable [IID_IHttpExpectationHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpExpectationHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, expectationHeaderValue: *mut <HttpExpectationHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -2531,7 +2531,7 @@ impl IHttpExpectationHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpLanguageHeaderValueCollection, 2663218339, 33305, 17654, 153, 2, 140, 86, 223, 211, 52, 12);
-RT_INTERFACE!{interface IHttpLanguageHeaderValueCollection(IHttpLanguageHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpLanguageHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpLanguageHeaderValueCollection(IHttpLanguageHeaderValueCollectionVtbl): IInspectable [IID_IHttpLanguageHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -2548,7 +2548,7 @@ impl IHttpLanguageHeaderValueCollection {
 }
 RT_CLASS!{class HttpLanguageHeaderValueCollection: IHttpLanguageHeaderValueCollection}
 DEFINE_IID!(IID_IHttpLanguageRangeWithQualityHeaderValue, 1918296322, 128, 19892, 160, 131, 125, 231, 178, 229, 186, 76);
-RT_INTERFACE!{interface IHttpLanguageRangeWithQualityHeaderValue(IHttpLanguageRangeWithQualityHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpLanguageRangeWithQualityHeaderValue] {
+RT_INTERFACE!{interface IHttpLanguageRangeWithQualityHeaderValue(IHttpLanguageRangeWithQualityHeaderValueVtbl): IInspectable [IID_IHttpLanguageRangeWithQualityHeaderValue] {
     fn get_LanguageRange(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Quality(&self, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT
 }}
@@ -2583,7 +2583,7 @@ impl HttpLanguageRangeWithQualityHeaderValue {
 }
 DEFINE_CLSID!(HttpLanguageRangeWithQualityHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,76,97,110,103,117,97,103,101,82,97,110,103,101,87,105,116,104,81,117,97,108,105,116,121,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpLanguageRangeWithQualityHeaderValue]);
 DEFINE_IID!(IID_IHttpLanguageRangeWithQualityHeaderValueCollection, 2287819453, 19279, 18442, 137, 206, 138, 237, 206, 230, 227, 160);
-RT_INTERFACE!{interface IHttpLanguageRangeWithQualityHeaderValueCollection(IHttpLanguageRangeWithQualityHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpLanguageRangeWithQualityHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpLanguageRangeWithQualityHeaderValueCollection(IHttpLanguageRangeWithQualityHeaderValueCollectionVtbl): IInspectable [IID_IHttpLanguageRangeWithQualityHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -2600,7 +2600,7 @@ impl IHttpLanguageRangeWithQualityHeaderValueCollection {
 }
 RT_CLASS!{class HttpLanguageRangeWithQualityHeaderValueCollection: IHttpLanguageRangeWithQualityHeaderValueCollection}
 DEFINE_IID!(IID_IHttpLanguageRangeWithQualityHeaderValueFactory, 2075670896, 30735, 19587, 159, 228, 220, 48, 135, 246, 189, 85);
-RT_INTERFACE!{static interface IHttpLanguageRangeWithQualityHeaderValueFactory(IHttpLanguageRangeWithQualityHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpLanguageRangeWithQualityHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpLanguageRangeWithQualityHeaderValueFactory(IHttpLanguageRangeWithQualityHeaderValueFactoryVtbl): IInspectable [IID_IHttpLanguageRangeWithQualityHeaderValueFactory] {
     fn CreateFromLanguageRange(&self, languageRange: HSTRING, out: *mut <HttpLanguageRangeWithQualityHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromLanguageRangeWithQuality(&self, languageRange: HSTRING, quality: f64, out: *mut <HttpLanguageRangeWithQualityHeaderValue as RtType>::Abi) -> HRESULT
 }}
@@ -2617,7 +2617,7 @@ impl IHttpLanguageRangeWithQualityHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpLanguageRangeWithQualityHeaderValueStatics, 625074502, 62216, 18165, 182, 149, 66, 245, 64, 36, 236, 104);
-RT_INTERFACE!{static interface IHttpLanguageRangeWithQualityHeaderValueStatics(IHttpLanguageRangeWithQualityHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpLanguageRangeWithQualityHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpLanguageRangeWithQualityHeaderValueStatics(IHttpLanguageRangeWithQualityHeaderValueStaticsVtbl): IInspectable [IID_IHttpLanguageRangeWithQualityHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpLanguageRangeWithQualityHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, languageRangeWithQualityHeaderValue: *mut <HttpLanguageRangeWithQualityHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -2634,7 +2634,7 @@ impl IHttpLanguageRangeWithQualityHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpMediaTypeHeaderValue, 380798259, 59176, 20427, 189, 176, 8, 164, 49, 161, 72, 68);
-RT_INTERFACE!{interface IHttpMediaTypeHeaderValue(IHttpMediaTypeHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMediaTypeHeaderValue] {
+RT_INTERFACE!{interface IHttpMediaTypeHeaderValue(IHttpMediaTypeHeaderValueVtbl): IInspectable [IID_IHttpMediaTypeHeaderValue] {
     fn get_CharSet(&self, out: *mut HSTRING) -> HRESULT,
     fn put_CharSet(&self, value: HSTRING) -> HRESULT,
     fn get_MediaType(&self, out: *mut HSTRING) -> HRESULT,
@@ -2682,7 +2682,7 @@ impl HttpMediaTypeHeaderValue {
 }
 DEFINE_CLSID!(HttpMediaTypeHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,77,101,100,105,97,84,121,112,101,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpMediaTypeHeaderValue]);
 DEFINE_IID!(IID_IHttpMediaTypeHeaderValueFactory, 3201779624, 52503, 17117, 147, 103, 171, 156, 91, 86, 221, 125);
-RT_INTERFACE!{static interface IHttpMediaTypeHeaderValueFactory(IHttpMediaTypeHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMediaTypeHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpMediaTypeHeaderValueFactory(IHttpMediaTypeHeaderValueFactoryVtbl): IInspectable [IID_IHttpMediaTypeHeaderValueFactory] {
     fn Create(&self, mediaType: HSTRING, out: *mut <HttpMediaTypeHeaderValue as RtType>::Abi) -> HRESULT
 }}
 impl IHttpMediaTypeHeaderValueFactory {
@@ -2693,7 +2693,7 @@ impl IHttpMediaTypeHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpMediaTypeHeaderValueStatics, 3763176415, 7489, 19852, 162, 222, 111, 210, 237, 135, 57, 155);
-RT_INTERFACE!{static interface IHttpMediaTypeHeaderValueStatics(IHttpMediaTypeHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMediaTypeHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpMediaTypeHeaderValueStatics(IHttpMediaTypeHeaderValueStaticsVtbl): IInspectable [IID_IHttpMediaTypeHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpMediaTypeHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, mediaTypeHeaderValue: *mut <HttpMediaTypeHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -2710,7 +2710,7 @@ impl IHttpMediaTypeHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpMediaTypeWithQualityHeaderValue, 411917874, 30398, 17568, 177, 205, 32, 116, 189, 237, 45, 222);
-RT_INTERFACE!{interface IHttpMediaTypeWithQualityHeaderValue(IHttpMediaTypeWithQualityHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMediaTypeWithQualityHeaderValue] {
+RT_INTERFACE!{interface IHttpMediaTypeWithQualityHeaderValue(IHttpMediaTypeWithQualityHeaderValueVtbl): IInspectable [IID_IHttpMediaTypeWithQualityHeaderValue] {
     fn get_CharSet(&self, out: *mut HSTRING) -> HRESULT,
     fn put_CharSet(&self, value: HSTRING) -> HRESULT,
     fn get_MediaType(&self, out: *mut HSTRING) -> HRESULT,
@@ -2772,7 +2772,7 @@ impl HttpMediaTypeWithQualityHeaderValue {
 }
 DEFINE_CLSID!(HttpMediaTypeWithQualityHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,77,101,100,105,97,84,121,112,101,87,105,116,104,81,117,97,108,105,116,121,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpMediaTypeWithQualityHeaderValue]);
 DEFINE_IID!(IID_IHttpMediaTypeWithQualityHeaderValueCollection, 1007446899, 4930, 17799, 160, 86, 24, 208, 47, 246, 113, 101);
-RT_INTERFACE!{interface IHttpMediaTypeWithQualityHeaderValueCollection(IHttpMediaTypeWithQualityHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMediaTypeWithQualityHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpMediaTypeWithQualityHeaderValueCollection(IHttpMediaTypeWithQualityHeaderValueCollectionVtbl): IInspectable [IID_IHttpMediaTypeWithQualityHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -2789,7 +2789,7 @@ impl IHttpMediaTypeWithQualityHeaderValueCollection {
 }
 RT_CLASS!{class HttpMediaTypeWithQualityHeaderValueCollection: IHttpMediaTypeWithQualityHeaderValueCollection}
 DEFINE_IID!(IID_IHttpMediaTypeWithQualityHeaderValueFactory, 1282220276, 37975, 17638, 163, 35, 209, 34, 185, 88, 120, 11);
-RT_INTERFACE!{static interface IHttpMediaTypeWithQualityHeaderValueFactory(IHttpMediaTypeWithQualityHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMediaTypeWithQualityHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpMediaTypeWithQualityHeaderValueFactory(IHttpMediaTypeWithQualityHeaderValueFactoryVtbl): IInspectable [IID_IHttpMediaTypeWithQualityHeaderValueFactory] {
     fn CreateFromMediaType(&self, mediaType: HSTRING, out: *mut <HttpMediaTypeWithQualityHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromMediaTypeWithQuality(&self, mediaType: HSTRING, quality: f64, out: *mut <HttpMediaTypeWithQualityHeaderValue as RtType>::Abi) -> HRESULT
 }}
@@ -2806,7 +2806,7 @@ impl IHttpMediaTypeWithQualityHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpMediaTypeWithQualityHeaderValueStatics, 1527188697, 46432, 20424, 152, 53, 126, 108, 10, 101, 123, 36);
-RT_INTERFACE!{static interface IHttpMediaTypeWithQualityHeaderValueStatics(IHttpMediaTypeWithQualityHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMediaTypeWithQualityHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpMediaTypeWithQualityHeaderValueStatics(IHttpMediaTypeWithQualityHeaderValueStaticsVtbl): IInspectable [IID_IHttpMediaTypeWithQualityHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpMediaTypeWithQualityHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, mediaTypeWithQualityHeaderValue: *mut <HttpMediaTypeWithQualityHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -2823,7 +2823,7 @@ impl IHttpMediaTypeWithQualityHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpMethodHeaderValueCollection, 1136410612, 24857, 19167, 147, 140, 52, 191, 255, 207, 146, 237);
-RT_INTERFACE!{interface IHttpMethodHeaderValueCollection(IHttpMethodHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpMethodHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpMethodHeaderValueCollection(IHttpMethodHeaderValueCollectionVtbl): IInspectable [IID_IHttpMethodHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -2840,7 +2840,7 @@ impl IHttpMethodHeaderValueCollection {
 }
 RT_CLASS!{class HttpMethodHeaderValueCollection: IHttpMethodHeaderValueCollection}
 DEFINE_IID!(IID_IHttpNameValueHeaderValue, 3636098147, 23450, 19739, 147, 249, 170, 91, 68, 236, 253, 223);
-RT_INTERFACE!{interface IHttpNameValueHeaderValue(IHttpNameValueHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpNameValueHeaderValue] {
+RT_INTERFACE!{interface IHttpNameValueHeaderValue(IHttpNameValueHeaderValueVtbl): IInspectable [IID_IHttpNameValueHeaderValue] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Value(&self, value: HSTRING) -> HRESULT
@@ -2880,7 +2880,7 @@ impl HttpNameValueHeaderValue {
 }
 DEFINE_CLSID!(HttpNameValueHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,78,97,109,101,86,97,108,117,101,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpNameValueHeaderValue]);
 DEFINE_IID!(IID_IHttpNameValueHeaderValueFactory, 1997415015, 52216, 18230, 169, 37, 147, 251, 225, 12, 124, 168);
-RT_INTERFACE!{static interface IHttpNameValueHeaderValueFactory(IHttpNameValueHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpNameValueHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpNameValueHeaderValueFactory(IHttpNameValueHeaderValueFactoryVtbl): IInspectable [IID_IHttpNameValueHeaderValueFactory] {
     fn CreateFromName(&self, name: HSTRING, out: *mut <HttpNameValueHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromNameWithValue(&self, name: HSTRING, value: HSTRING, out: *mut <HttpNameValueHeaderValue as RtType>::Abi) -> HRESULT
 }}
@@ -2897,7 +2897,7 @@ impl IHttpNameValueHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpNameValueHeaderValueStatics, 4292084495, 4400, 16722, 134, 89, 37, 105, 9, 169, 209, 21);
-RT_INTERFACE!{static interface IHttpNameValueHeaderValueStatics(IHttpNameValueHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpNameValueHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpNameValueHeaderValueStatics(IHttpNameValueHeaderValueStaticsVtbl): IInspectable [IID_IHttpNameValueHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpNameValueHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, nameValueHeaderValue: *mut <HttpNameValueHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -2914,7 +2914,7 @@ impl IHttpNameValueHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpProductHeaderValue, 4110347779, 60372, 16736, 185, 255, 128, 124, 81, 131, 182, 230);
-RT_INTERFACE!{interface IHttpProductHeaderValue(IHttpProductHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpProductHeaderValue] {
+RT_INTERFACE!{interface IHttpProductHeaderValue(IHttpProductHeaderValueVtbl): IInspectable [IID_IHttpProductHeaderValue] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Version(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -2949,7 +2949,7 @@ impl HttpProductHeaderValue {
 }
 DEFINE_CLSID!(HttpProductHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,80,114,111,100,117,99,116,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpProductHeaderValue]);
 DEFINE_IID!(IID_IHttpProductHeaderValueFactory, 1629136117, 33468, 17147, 151, 123, 220, 0, 83, 110, 94, 134);
-RT_INTERFACE!{static interface IHttpProductHeaderValueFactory(IHttpProductHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpProductHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpProductHeaderValueFactory(IHttpProductHeaderValueFactoryVtbl): IInspectable [IID_IHttpProductHeaderValueFactory] {
     fn CreateFromName(&self, productName: HSTRING, out: *mut <HttpProductHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromNameWithVersion(&self, productName: HSTRING, productVersion: HSTRING, out: *mut <HttpProductHeaderValue as RtType>::Abi) -> HRESULT
 }}
@@ -2966,7 +2966,7 @@ impl IHttpProductHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpProductHeaderValueStatics, 2428714537, 48892, 17207, 190, 98, 73, 240, 151, 151, 95, 83);
-RT_INTERFACE!{static interface IHttpProductHeaderValueStatics(IHttpProductHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpProductHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpProductHeaderValueStatics(IHttpProductHeaderValueStaticsVtbl): IInspectable [IID_IHttpProductHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpProductHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, productHeaderValue: *mut <HttpProductHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -2983,7 +2983,7 @@ impl IHttpProductHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpProductInfoHeaderValue, 454723378, 19509, 18538, 150, 111, 100, 100, 137, 25, 142, 77);
-RT_INTERFACE!{interface IHttpProductInfoHeaderValue(IHttpProductInfoHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpProductInfoHeaderValue] {
+RT_INTERFACE!{interface IHttpProductInfoHeaderValue(IHttpProductInfoHeaderValueVtbl): IInspectable [IID_IHttpProductInfoHeaderValue] {
     fn get_Product(&self, out: *mut <HttpProductHeaderValue as RtType>::Abi) -> HRESULT,
     fn get_Comment(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -3018,7 +3018,7 @@ impl HttpProductInfoHeaderValue {
 }
 DEFINE_CLSID!(HttpProductInfoHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,80,114,111,100,117,99,116,73,110,102,111,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpProductInfoHeaderValue]);
 DEFINE_IID!(IID_IHttpProductInfoHeaderValueCollection, 2273179466, 54939, 17656, 173, 79, 69, 58, 249, 196, 46, 208);
-RT_INTERFACE!{interface IHttpProductInfoHeaderValueCollection(IHttpProductInfoHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpProductInfoHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpProductInfoHeaderValueCollection(IHttpProductInfoHeaderValueCollectionVtbl): IInspectable [IID_IHttpProductInfoHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -3035,7 +3035,7 @@ impl IHttpProductInfoHeaderValueCollection {
 }
 RT_CLASS!{class HttpProductInfoHeaderValueCollection: IHttpProductInfoHeaderValueCollection}
 DEFINE_IID!(IID_IHttpProductInfoHeaderValueFactory, 606212030, 60094, 17508, 180, 96, 236, 1, 11, 124, 65, 226);
-RT_INTERFACE!{static interface IHttpProductInfoHeaderValueFactory(IHttpProductInfoHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpProductInfoHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpProductInfoHeaderValueFactory(IHttpProductInfoHeaderValueFactoryVtbl): IInspectable [IID_IHttpProductInfoHeaderValueFactory] {
     fn CreateFromComment(&self, productComment: HSTRING, out: *mut <HttpProductInfoHeaderValue as RtType>::Abi) -> HRESULT,
     fn CreateFromNameWithVersion(&self, productName: HSTRING, productVersion: HSTRING, out: *mut <HttpProductInfoHeaderValue as RtType>::Abi) -> HRESULT
 }}
@@ -3052,7 +3052,7 @@ impl IHttpProductInfoHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpProductInfoHeaderValueStatics, 3682588759, 12922, 20083, 129, 229, 112, 89, 163, 2, 176, 66);
-RT_INTERFACE!{static interface IHttpProductInfoHeaderValueStatics(IHttpProductInfoHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpProductInfoHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpProductInfoHeaderValueStatics(IHttpProductInfoHeaderValueStaticsVtbl): IInspectable [IID_IHttpProductInfoHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpProductInfoHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, productInfoHeaderValue: *mut <HttpProductInfoHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -3069,7 +3069,7 @@ impl IHttpProductInfoHeaderValueStatics {
     }}
 }
 DEFINE_IID!(IID_IHttpRequestHeaderCollection, 2940220059, 46404, 18075, 134, 185, 172, 61, 70, 111, 234, 54);
-RT_INTERFACE!{interface IHttpRequestHeaderCollection(IHttpRequestHeaderCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpRequestHeaderCollection] {
+RT_INTERFACE!{interface IHttpRequestHeaderCollection(IHttpRequestHeaderCollectionVtbl): IInspectable [IID_IHttpRequestHeaderCollection] {
     fn get_Accept(&self, out: *mut <HttpMediaTypeWithQualityHeaderValueCollection as RtType>::Abi) -> HRESULT,
     fn get_AcceptEncoding(&self, out: *mut <HttpContentCodingWithQualityHeaderValueCollection as RtType>::Abi) -> HRESULT,
     fn get_AcceptLanguage(&self, out: *mut <HttpLanguageRangeWithQualityHeaderValueCollection as RtType>::Abi) -> HRESULT,
@@ -3241,7 +3241,7 @@ impl IHttpRequestHeaderCollection {
 }
 RT_CLASS!{class HttpRequestHeaderCollection: IHttpRequestHeaderCollection}
 DEFINE_IID!(IID_IHttpResponseHeaderCollection, 2056849769, 64063, 16877, 170, 198, 191, 149, 121, 117, 193, 107);
-RT_INTERFACE!{interface IHttpResponseHeaderCollection(IHttpResponseHeaderCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpResponseHeaderCollection] {
+RT_INTERFACE!{interface IHttpResponseHeaderCollection(IHttpResponseHeaderCollectionVtbl): IInspectable [IID_IHttpResponseHeaderCollection] {
     fn get_Age(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn put_Age(&self, value: <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_Allow(&self, out: *mut <HttpMethodHeaderValueCollection as RtType>::Abi) -> HRESULT,
@@ -3338,7 +3338,7 @@ impl IHttpResponseHeaderCollection {
 }
 RT_CLASS!{class HttpResponseHeaderCollection: IHttpResponseHeaderCollection}
 DEFINE_IID!(IID_IHttpTransferCodingHeaderValue, 1131361017, 15853, 17085, 179, 138, 84, 150, 162, 81, 28, 230);
-RT_INTERFACE!{interface IHttpTransferCodingHeaderValue(IHttpTransferCodingHeaderValueVtbl): IInspectable(IInspectableVtbl) [IID_IHttpTransferCodingHeaderValue] {
+RT_INTERFACE!{interface IHttpTransferCodingHeaderValue(IHttpTransferCodingHeaderValueVtbl): IInspectable [IID_IHttpTransferCodingHeaderValue] {
     fn get_Parameters(&self, out: *mut <foundation::collections::IVector<HttpNameValueHeaderValue> as RtType>::Abi) -> HRESULT,
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -3370,7 +3370,7 @@ impl HttpTransferCodingHeaderValue {
 }
 DEFINE_CLSID!(HttpTransferCodingHeaderValue(&[87,105,110,100,111,119,115,46,87,101,98,46,72,116,116,112,46,72,101,97,100,101,114,115,46,72,116,116,112,84,114,97,110,115,102,101,114,67,111,100,105,110,103,72,101,97,100,101,114,86,97,108,117,101,0]) [CLSID_HttpTransferCodingHeaderValue]);
 DEFINE_IID!(IID_IHttpTransferCodingHeaderValueCollection, 539790388, 11267, 18872, 150, 101, 115, 226, 124, 178, 252, 121);
-RT_INTERFACE!{interface IHttpTransferCodingHeaderValueCollection(IHttpTransferCodingHeaderValueCollectionVtbl): IInspectable(IInspectableVtbl) [IID_IHttpTransferCodingHeaderValueCollection] {
+RT_INTERFACE!{interface IHttpTransferCodingHeaderValueCollection(IHttpTransferCodingHeaderValueCollectionVtbl): IInspectable [IID_IHttpTransferCodingHeaderValueCollection] {
     fn ParseAdd(&self, input: HSTRING) -> HRESULT,
     fn TryParseAdd(&self, input: HSTRING, out: *mut bool) -> HRESULT
 }}
@@ -3387,7 +3387,7 @@ impl IHttpTransferCodingHeaderValueCollection {
 }
 RT_CLASS!{class HttpTransferCodingHeaderValueCollection: IHttpTransferCodingHeaderValueCollection}
 DEFINE_IID!(IID_IHttpTransferCodingHeaderValueFactory, 3143819260, 58209, 20232, 142, 79, 201, 231, 35, 222, 112, 59);
-RT_INTERFACE!{static interface IHttpTransferCodingHeaderValueFactory(IHttpTransferCodingHeaderValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHttpTransferCodingHeaderValueFactory] {
+RT_INTERFACE!{static interface IHttpTransferCodingHeaderValueFactory(IHttpTransferCodingHeaderValueFactoryVtbl): IInspectable [IID_IHttpTransferCodingHeaderValueFactory] {
     fn Create(&self, input: HSTRING, out: *mut <HttpTransferCodingHeaderValue as RtType>::Abi) -> HRESULT
 }}
 impl IHttpTransferCodingHeaderValueFactory {
@@ -3398,7 +3398,7 @@ impl IHttpTransferCodingHeaderValueFactory {
     }}
 }
 DEFINE_IID!(IID_IHttpTransferCodingHeaderValueStatics, 1790478634, 6808, 19762, 169, 6, 116, 112, 169, 135, 92, 229);
-RT_INTERFACE!{static interface IHttpTransferCodingHeaderValueStatics(IHttpTransferCodingHeaderValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHttpTransferCodingHeaderValueStatics] {
+RT_INTERFACE!{static interface IHttpTransferCodingHeaderValueStatics(IHttpTransferCodingHeaderValueStaticsVtbl): IInspectable [IID_IHttpTransferCodingHeaderValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <HttpTransferCodingHeaderValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, transferCodingHeaderValue: *mut <HttpTransferCodingHeaderValue as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -3422,7 +3422,7 @@ RT_STRUCT! { struct RetrievalProgress {
     BytesRetrieved: u32, TotalBytesToRetrieve: u32,
 }}
 DEFINE_IID!(IID_ISyndicationAttribute, 1911093609, 21102, 16385, 154, 145, 232, 79, 131, 22, 26, 177);
-RT_INTERFACE!{interface ISyndicationAttribute(ISyndicationAttributeVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationAttribute] {
+RT_INTERFACE!{interface ISyndicationAttribute(ISyndicationAttributeVtbl): IInspectable [IID_ISyndicationAttribute] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Name(&self, value: HSTRING) -> HRESULT,
     fn get_Namespace(&self, out: *mut HSTRING) -> HRESULT,
@@ -3469,7 +3469,7 @@ impl SyndicationAttribute {
 }
 DEFINE_CLSID!(SyndicationAttribute(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,65,116,116,114,105,98,117,116,101,0]) [CLSID_SyndicationAttribute]);
 DEFINE_IID!(IID_ISyndicationAttributeFactory, 1649350041, 60734, 16911, 190, 134, 100, 4, 20, 136, 110, 75);
-RT_INTERFACE!{static interface ISyndicationAttributeFactory(ISyndicationAttributeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationAttributeFactory] {
+RT_INTERFACE!{static interface ISyndicationAttributeFactory(ISyndicationAttributeFactoryVtbl): IInspectable [IID_ISyndicationAttributeFactory] {
     fn CreateSyndicationAttribute(&self, attributeName: HSTRING, attributeNamespace: HSTRING, attributeValue: HSTRING, out: *mut <SyndicationAttribute as RtType>::Abi) -> HRESULT
 }}
 impl ISyndicationAttributeFactory {
@@ -3480,7 +3480,7 @@ impl ISyndicationAttributeFactory {
     }}
 }
 DEFINE_IID!(IID_ISyndicationCategory, 2266325615, 3258, 19071, 137, 255, 236, 181, 40, 20, 35, 182);
-RT_INTERFACE!{interface ISyndicationCategory(ISyndicationCategoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationCategory] {
+RT_INTERFACE!{interface ISyndicationCategory(ISyndicationCategoryVtbl): IInspectable [IID_ISyndicationCategory] {
     fn get_Label(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Label(&self, value: HSTRING) -> HRESULT,
     fn get_Scheme(&self, out: *mut HSTRING) -> HRESULT,
@@ -3530,7 +3530,7 @@ impl SyndicationCategory {
 }
 DEFINE_CLSID!(SyndicationCategory(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,67,97,116,101,103,111,114,121,0]) [CLSID_SyndicationCategory]);
 DEFINE_IID!(IID_ISyndicationCategoryFactory, 2873262127, 18912, 17701, 138, 178, 171, 69, 192, 37, 40, 255);
-RT_INTERFACE!{static interface ISyndicationCategoryFactory(ISyndicationCategoryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationCategoryFactory] {
+RT_INTERFACE!{static interface ISyndicationCategoryFactory(ISyndicationCategoryFactoryVtbl): IInspectable [IID_ISyndicationCategoryFactory] {
     fn CreateSyndicationCategory(&self, term: HSTRING, out: *mut <SyndicationCategory as RtType>::Abi) -> HRESULT,
     fn CreateSyndicationCategoryEx(&self, term: HSTRING, scheme: HSTRING, label: HSTRING, out: *mut <SyndicationCategory as RtType>::Abi) -> HRESULT
 }}
@@ -3547,7 +3547,7 @@ impl ISyndicationCategoryFactory {
     }}
 }
 DEFINE_IID!(IID_ISyndicationClient, 2652416439, 29257, 19269, 178, 41, 125, 248, 149, 165, 161, 245);
-RT_INTERFACE!{interface ISyndicationClient(ISyndicationClientVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationClient] {
+RT_INTERFACE!{interface ISyndicationClient(ISyndicationClientVtbl): IInspectable [IID_ISyndicationClient] {
     #[cfg(not(feature="windows-security"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-security")] fn get_ServerCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy1(&self) -> (),
@@ -3631,7 +3631,7 @@ impl SyndicationClient {
 }
 DEFINE_CLSID!(SyndicationClient(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,67,108,105,101,110,116,0]) [CLSID_SyndicationClient]);
 DEFINE_IID!(IID_ISyndicationClientFactory, 784642860, 42907, 16660, 178, 154, 5, 223, 251, 175, 185, 164);
-RT_INTERFACE!{static interface ISyndicationClientFactory(ISyndicationClientFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationClientFactory] {
+RT_INTERFACE!{static interface ISyndicationClientFactory(ISyndicationClientFactoryVtbl): IInspectable [IID_ISyndicationClientFactory] {
     #[cfg(feature="windows-security")] fn CreateSyndicationClient(&self, serverCredential: <super::super::security::credentials::PasswordCredential as RtType>::Abi, out: *mut <SyndicationClient as RtType>::Abi) -> HRESULT
 }}
 impl ISyndicationClientFactory {
@@ -3642,7 +3642,7 @@ impl ISyndicationClientFactory {
     }}
 }
 DEFINE_IID!(IID_ISyndicationContent, 1178730238, 3669, 16592, 184, 208, 106, 44, 203, 169, 252, 124);
-RT_INTERFACE!{interface ISyndicationContent(ISyndicationContentVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationContent] {
+RT_INTERFACE!{interface ISyndicationContent(ISyndicationContentVtbl): IInspectable [IID_ISyndicationContent] {
     fn get_SourceUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn put_SourceUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT
 }}
@@ -3670,7 +3670,7 @@ impl SyndicationContent {
 }
 DEFINE_CLSID!(SyndicationContent(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,67,111,110,116,101,110,116,0]) [CLSID_SyndicationContent]);
 DEFINE_IID!(IID_ISyndicationContentFactory, 1026538387, 38176, 16755, 147, 136, 126, 45, 243, 36, 168, 160);
-RT_INTERFACE!{static interface ISyndicationContentFactory(ISyndicationContentFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationContentFactory] {
+RT_INTERFACE!{static interface ISyndicationContentFactory(ISyndicationContentFactoryVtbl): IInspectable [IID_ISyndicationContentFactory] {
     fn CreateSyndicationContent(&self, text: HSTRING, type_: SyndicationTextType, out: *mut <SyndicationContent as RtType>::Abi) -> HRESULT,
     fn CreateSyndicationContentWithSourceUri(&self, sourceUri: <foundation::Uri as RtType>::Abi, out: *mut <SyndicationContent as RtType>::Abi) -> HRESULT
 }}
@@ -3695,7 +3695,7 @@ impl SyndicationError {
 }
 DEFINE_CLSID!(SyndicationError(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,69,114,114,111,114,0]) [CLSID_SyndicationError]);
 DEFINE_IID!(IID_ISyndicationErrorStatics, 532357985, 17863, 18483, 138, 160, 190, 95, 59, 88, 167, 244);
-RT_INTERFACE!{static interface ISyndicationErrorStatics(ISyndicationErrorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationErrorStatics] {
+RT_INTERFACE!{static interface ISyndicationErrorStatics(ISyndicationErrorStaticsVtbl): IInspectable [IID_ISyndicationErrorStatics] {
     fn GetStatus(&self, hresult: i32, out: *mut SyndicationErrorStatus) -> HRESULT
 }}
 impl ISyndicationErrorStatics {
@@ -3709,7 +3709,7 @@ RT_ENUM! { enum SyndicationErrorStatus: i32 {
     Unknown = 0, MissingRequiredElement = 1, MissingRequiredAttribute = 2, InvalidXml = 3, UnexpectedContent = 4, UnsupportedFormat = 5,
 }}
 DEFINE_IID!(IID_ISyndicationFeed, 2147368146, 23398, 19810, 132, 3, 27, 193, 13, 145, 13, 107);
-RT_INTERFACE!{interface ISyndicationFeed(ISyndicationFeedVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationFeed] {
+RT_INTERFACE!{interface ISyndicationFeed(ISyndicationFeedVtbl): IInspectable [IID_ISyndicationFeed] {
     fn get_Authors(&self, out: *mut <foundation::collections::IVector<SyndicationPerson> as RtType>::Abi) -> HRESULT,
     fn get_Categories(&self, out: *mut <foundation::collections::IVector<SyndicationCategory> as RtType>::Abi) -> HRESULT,
     fn get_Contributors(&self, out: *mut <foundation::collections::IVector<SyndicationPerson> as RtType>::Abi) -> HRESULT,
@@ -3881,7 +3881,7 @@ impl SyndicationFeed {
 }
 DEFINE_CLSID!(SyndicationFeed(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,70,101,101,100,0]) [CLSID_SyndicationFeed]);
 DEFINE_IID!(IID_ISyndicationFeedFactory, 591864370, 35817, 18615, 137, 52, 98, 5, 19, 29, 147, 87);
-RT_INTERFACE!{static interface ISyndicationFeedFactory(ISyndicationFeedFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationFeedFactory] {
+RT_INTERFACE!{static interface ISyndicationFeedFactory(ISyndicationFeedFactoryVtbl): IInspectable [IID_ISyndicationFeedFactory] {
     fn CreateSyndicationFeed(&self, title: HSTRING, subtitle: HSTRING, uri: <foundation::Uri as RtType>::Abi, out: *mut <SyndicationFeed as RtType>::Abi) -> HRESULT
 }}
 impl ISyndicationFeedFactory {
@@ -3895,7 +3895,7 @@ RT_ENUM! { enum SyndicationFormat: i32 {
     Atom10 = 0, Rss20 = 1, Rss10 = 2, Rss092 = 3, Rss091 = 4, Atom03 = 5,
 }}
 DEFINE_IID!(IID_ISyndicationGenerator, 2540221305, 64299, 20333, 180, 28, 8, 138, 88, 104, 130, 92);
-RT_INTERFACE!{interface ISyndicationGenerator(ISyndicationGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationGenerator] {
+RT_INTERFACE!{interface ISyndicationGenerator(ISyndicationGeneratorVtbl): IInspectable [IID_ISyndicationGenerator] {
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Text(&self, value: HSTRING) -> HRESULT,
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
@@ -3942,7 +3942,7 @@ impl SyndicationGenerator {
 }
 DEFINE_CLSID!(SyndicationGenerator(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_SyndicationGenerator]);
 DEFINE_IID!(IID_ISyndicationGeneratorFactory, 2738914275, 7718, 19900, 186, 157, 26, 184, 75, 239, 249, 123);
-RT_INTERFACE!{static interface ISyndicationGeneratorFactory(ISyndicationGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationGeneratorFactory] {
+RT_INTERFACE!{static interface ISyndicationGeneratorFactory(ISyndicationGeneratorFactoryVtbl): IInspectable [IID_ISyndicationGeneratorFactory] {
     fn CreateSyndicationGenerator(&self, text: HSTRING, out: *mut <SyndicationGenerator as RtType>::Abi) -> HRESULT
 }}
 impl ISyndicationGeneratorFactory {
@@ -3953,7 +3953,7 @@ impl ISyndicationGeneratorFactory {
     }}
 }
 DEFINE_IID!(IID_ISyndicationItem, 1418573955, 50052, 17857, 138, 232, 163, 120, 196, 236, 72, 108);
-RT_INTERFACE!{interface ISyndicationItem(ISyndicationItemVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationItem] {
+RT_INTERFACE!{interface ISyndicationItem(ISyndicationItemVtbl): IInspectable [IID_ISyndicationItem] {
     fn get_Authors(&self, out: *mut <foundation::collections::IVector<SyndicationPerson> as RtType>::Abi) -> HRESULT,
     fn get_Categories(&self, out: *mut <foundation::collections::IVector<SyndicationCategory> as RtType>::Abi) -> HRESULT,
     fn get_Contributors(&self, out: *mut <foundation::collections::IVector<SyndicationPerson> as RtType>::Abi) -> HRESULT,
@@ -4124,7 +4124,7 @@ impl SyndicationItem {
 }
 DEFINE_CLSID!(SyndicationItem(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,73,116,101,109,0]) [CLSID_SyndicationItem]);
 DEFINE_IID!(IID_ISyndicationItemFactory, 622674767, 32184, 18554, 133, 228, 16, 209, 145, 230, 110, 187);
-RT_INTERFACE!{static interface ISyndicationItemFactory(ISyndicationItemFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationItemFactory] {
+RT_INTERFACE!{static interface ISyndicationItemFactory(ISyndicationItemFactoryVtbl): IInspectable [IID_ISyndicationItemFactory] {
     fn CreateSyndicationItem(&self, title: HSTRING, content: <SyndicationContent as RtType>::Abi, uri: <foundation::Uri as RtType>::Abi, out: *mut <SyndicationItem as RtType>::Abi) -> HRESULT
 }}
 impl ISyndicationItemFactory {
@@ -4135,7 +4135,7 @@ impl ISyndicationItemFactory {
     }}
 }
 DEFINE_IID!(IID_ISyndicationLink, 659897021, 41230, 16821, 134, 189, 151, 89, 8, 110, 176, 197);
-RT_INTERFACE!{interface ISyndicationLink(ISyndicationLinkVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationLink] {
+RT_INTERFACE!{interface ISyndicationLink(ISyndicationLinkVtbl): IInspectable [IID_ISyndicationLink] {
     fn get_Length(&self, out: *mut u32) -> HRESULT,
     fn put_Length(&self, value: u32) -> HRESULT,
     fn get_MediaType(&self, out: *mut HSTRING) -> HRESULT,
@@ -4218,7 +4218,7 @@ impl SyndicationLink {
 }
 DEFINE_CLSID!(SyndicationLink(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,76,105,110,107,0]) [CLSID_SyndicationLink]);
 DEFINE_IID!(IID_ISyndicationLinkFactory, 1591239636, 21813, 18604, 152, 212, 193, 144, 153, 80, 128, 179);
-RT_INTERFACE!{static interface ISyndicationLinkFactory(ISyndicationLinkFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationLinkFactory] {
+RT_INTERFACE!{static interface ISyndicationLinkFactory(ISyndicationLinkFactoryVtbl): IInspectable [IID_ISyndicationLinkFactory] {
     fn CreateSyndicationLink(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <SyndicationLink as RtType>::Abi) -> HRESULT,
     fn CreateSyndicationLinkEx(&self, uri: <foundation::Uri as RtType>::Abi, relationship: HSTRING, title: HSTRING, mediaType: HSTRING, length: u32, out: *mut <SyndicationLink as RtType>::Abi) -> HRESULT
 }}
@@ -4235,7 +4235,7 @@ impl ISyndicationLinkFactory {
     }}
 }
 DEFINE_IID!(IID_ISyndicationNode, 1966927736, 20984, 17856, 169, 245, 241, 113, 157, 236, 63, 178);
-RT_INTERFACE!{interface ISyndicationNode(ISyndicationNodeVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationNode] {
+RT_INTERFACE!{interface ISyndicationNode(ISyndicationNodeVtbl): IInspectable [IID_ISyndicationNode] {
     fn get_NodeName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_NodeName(&self, value: HSTRING) -> HRESULT,
     fn get_NodeNamespace(&self, out: *mut HSTRING) -> HRESULT,
@@ -4322,7 +4322,7 @@ impl SyndicationNode {
 }
 DEFINE_CLSID!(SyndicationNode(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,78,111,100,101,0]) [CLSID_SyndicationNode]);
 DEFINE_IID!(IID_ISyndicationNodeFactory, 311435656, 19147, 18856, 183, 119, 165, 235, 146, 225, 138, 121);
-RT_INTERFACE!{static interface ISyndicationNodeFactory(ISyndicationNodeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationNodeFactory] {
+RT_INTERFACE!{static interface ISyndicationNodeFactory(ISyndicationNodeFactoryVtbl): IInspectable [IID_ISyndicationNodeFactory] {
     fn CreateSyndicationNode(&self, nodeName: HSTRING, nodeNamespace: HSTRING, nodeValue: HSTRING, out: *mut <SyndicationNode as RtType>::Abi) -> HRESULT
 }}
 impl ISyndicationNodeFactory {
@@ -4333,7 +4333,7 @@ impl ISyndicationNodeFactory {
     }}
 }
 DEFINE_IID!(IID_ISyndicationPerson, 4196328922, 42950, 17687, 160, 150, 1, 67, 250, 242, 147, 39);
-RT_INTERFACE!{interface ISyndicationPerson(ISyndicationPersonVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationPerson] {
+RT_INTERFACE!{interface ISyndicationPerson(ISyndicationPersonVtbl): IInspectable [IID_ISyndicationPerson] {
     fn get_Email(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Email(&self, value: HSTRING) -> HRESULT,
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -4383,7 +4383,7 @@ impl SyndicationPerson {
 }
 DEFINE_CLSID!(SyndicationPerson(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,80,101,114,115,111,110,0]) [CLSID_SyndicationPerson]);
 DEFINE_IID!(IID_ISyndicationPersonFactory, 3707013229, 8861, 19288, 164, 155, 243, 210, 240, 245, 201, 159);
-RT_INTERFACE!{static interface ISyndicationPersonFactory(ISyndicationPersonFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationPersonFactory] {
+RT_INTERFACE!{static interface ISyndicationPersonFactory(ISyndicationPersonFactoryVtbl): IInspectable [IID_ISyndicationPersonFactory] {
     fn CreateSyndicationPerson(&self, name: HSTRING, out: *mut <SyndicationPerson as RtType>::Abi) -> HRESULT,
     fn CreateSyndicationPersonEx(&self, name: HSTRING, email: HSTRING, uri: <foundation::Uri as RtType>::Abi, out: *mut <SyndicationPerson as RtType>::Abi) -> HRESULT
 }}
@@ -4400,7 +4400,7 @@ impl ISyndicationPersonFactory {
     }}
 }
 DEFINE_IID!(IID_ISyndicationText, 3117178496, 12602, 16529, 162, 166, 36, 62, 14, 233, 35, 249);
-RT_INTERFACE!{interface ISyndicationText(ISyndicationTextVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationText] {
+RT_INTERFACE!{interface ISyndicationText(ISyndicationTextVtbl): IInspectable [IID_ISyndicationText] {
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Text(&self, value: HSTRING) -> HRESULT,
     fn get_Type(&self, out: *mut HSTRING) -> HRESULT,
@@ -4450,7 +4450,7 @@ impl SyndicationText {
 }
 DEFINE_CLSID!(SyndicationText(&[87,105,110,100,111,119,115,46,87,101,98,46,83,121,110,100,105,99,97,116,105,111,110,46,83,121,110,100,105,99,97,116,105,111,110,84,101,120,116,0]) [CLSID_SyndicationText]);
 DEFINE_IID!(IID_ISyndicationTextFactory, 4000531191, 4550, 19237, 171, 98, 229, 150, 189, 22, 41, 70);
-RT_INTERFACE!{static interface ISyndicationTextFactory(ISyndicationTextFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISyndicationTextFactory] {
+RT_INTERFACE!{static interface ISyndicationTextFactory(ISyndicationTextFactoryVtbl): IInspectable [IID_ISyndicationTextFactory] {
     fn CreateSyndicationText(&self, text: HSTRING, out: *mut <SyndicationText as RtType>::Abi) -> HRESULT,
     fn CreateSyndicationTextEx(&self, text: HSTRING, type_: SyndicationTextType, out: *mut <SyndicationText as RtType>::Abi) -> HRESULT
 }}
@@ -4476,7 +4476,7 @@ RT_STRUCT! { struct TransferProgress {
 pub mod ui { // Windows.Web.UI
 use crate::prelude::*;
 DEFINE_IID!(IID_IWebViewControl, 1066537750, 48240, 19418, 145, 54, 201, 67, 112, 137, 159, 171);
-RT_INTERFACE!{interface IWebViewControl(IWebViewControlVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControl] {
+RT_INTERFACE!{interface IWebViewControl(IWebViewControlVtbl): IInspectable [IID_IWebViewControl] {
     fn get_Source(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn put_Source(&self, source: <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_DocumentTitle(&self, out: *mut HSTRING) -> HRESULT,
@@ -4800,7 +4800,7 @@ impl IWebViewControl {
     }}
 }
 DEFINE_IID!(IID_IWebViewControl2, 1295779577, 51423, 16844, 139, 213, 42, 148, 123, 32, 69, 3);
-RT_INTERFACE!{interface IWebViewControl2(IWebViewControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControl2] {
+RT_INTERFACE!{interface IWebViewControl2(IWebViewControl2Vtbl): IInspectable [IID_IWebViewControl2] {
     fn AddInitializeScript(&self, script: HSTRING) -> HRESULT
 }}
 impl IWebViewControl2 {
@@ -4810,7 +4810,7 @@ impl IWebViewControl2 {
     }}
 }
 DEFINE_IID!(IID_IWebViewControlContentLoadingEventArgs, 2587872434, 47547, 16459, 162, 43, 102, 220, 205, 18, 80, 198);
-RT_INTERFACE!{interface IWebViewControlContentLoadingEventArgs(IWebViewControlContentLoadingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlContentLoadingEventArgs] {
+RT_INTERFACE!{interface IWebViewControlContentLoadingEventArgs(IWebViewControlContentLoadingEventArgsVtbl): IInspectable [IID_IWebViewControlContentLoadingEventArgs] {
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
 }}
 impl IWebViewControlContentLoadingEventArgs {
@@ -4822,7 +4822,7 @@ impl IWebViewControlContentLoadingEventArgs {
 }
 RT_CLASS!{class WebViewControlContentLoadingEventArgs: IWebViewControlContentLoadingEventArgs}
 DEFINE_IID!(IID_IWebViewControlDeferredPermissionRequest, 753093088, 55129, 17500, 153, 38, 137, 149, 41, 143, 21, 43);
-RT_INTERFACE!{interface IWebViewControlDeferredPermissionRequest(IWebViewControlDeferredPermissionRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlDeferredPermissionRequest] {
+RT_INTERFACE!{interface IWebViewControlDeferredPermissionRequest(IWebViewControlDeferredPermissionRequestVtbl): IInspectable [IID_IWebViewControlDeferredPermissionRequest] {
     fn get_Id(&self, out: *mut u32) -> HRESULT,
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_PermissionType(&self, out: *mut WebViewControlPermissionType) -> HRESULT,
@@ -4856,7 +4856,7 @@ impl IWebViewControlDeferredPermissionRequest {
 }
 RT_CLASS!{class WebViewControlDeferredPermissionRequest: IWebViewControlDeferredPermissionRequest}
 DEFINE_IID!(IID_IWebViewControlDOMContentLoadedEventArgs, 3196829704, 38209, 17733, 159, 242, 45, 245, 133, 178, 159, 125);
-RT_INTERFACE!{interface IWebViewControlDOMContentLoadedEventArgs(IWebViewControlDOMContentLoadedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlDOMContentLoadedEventArgs] {
+RT_INTERFACE!{interface IWebViewControlDOMContentLoadedEventArgs(IWebViewControlDOMContentLoadedEventArgsVtbl): IInspectable [IID_IWebViewControlDOMContentLoadedEventArgs] {
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
 }}
 impl IWebViewControlDOMContentLoadedEventArgs {
@@ -4868,7 +4868,7 @@ impl IWebViewControlDOMContentLoadedEventArgs {
 }
 RT_CLASS!{class WebViewControlDOMContentLoadedEventArgs: IWebViewControlDOMContentLoadedEventArgs}
 DEFINE_IID!(IID_IWebViewControlLongRunningScriptDetectedEventArgs, 711875514, 39092, 17852, 187, 235, 15, 105, 206, 73, 197, 153);
-RT_INTERFACE!{interface IWebViewControlLongRunningScriptDetectedEventArgs(IWebViewControlLongRunningScriptDetectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlLongRunningScriptDetectedEventArgs] {
+RT_INTERFACE!{interface IWebViewControlLongRunningScriptDetectedEventArgs(IWebViewControlLongRunningScriptDetectedEventArgsVtbl): IInspectable [IID_IWebViewControlLongRunningScriptDetectedEventArgs] {
     fn get_ExecutionTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_StopPageScriptExecution(&self, out: *mut bool) -> HRESULT,
     fn put_StopPageScriptExecution(&self, value: bool) -> HRESULT
@@ -4891,7 +4891,7 @@ impl IWebViewControlLongRunningScriptDetectedEventArgs {
 }
 RT_CLASS!{class WebViewControlLongRunningScriptDetectedEventArgs: IWebViewControlLongRunningScriptDetectedEventArgs}
 DEFINE_IID!(IID_IWebViewControlNavigationCompletedEventArgs, 541104408, 18965, 19526, 165, 93, 247, 158, 219, 11, 222, 139);
-RT_INTERFACE!{interface IWebViewControlNavigationCompletedEventArgs(IWebViewControlNavigationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlNavigationCompletedEventArgs] {
+RT_INTERFACE!{interface IWebViewControlNavigationCompletedEventArgs(IWebViewControlNavigationCompletedEventArgsVtbl): IInspectable [IID_IWebViewControlNavigationCompletedEventArgs] {
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_IsSuccess(&self, out: *mut bool) -> HRESULT,
     fn get_WebErrorStatus(&self, out: *mut super::WebErrorStatus) -> HRESULT
@@ -4915,7 +4915,7 @@ impl IWebViewControlNavigationCompletedEventArgs {
 }
 RT_CLASS!{class WebViewControlNavigationCompletedEventArgs: IWebViewControlNavigationCompletedEventArgs}
 DEFINE_IID!(IID_IWebViewControlNavigationStartingEventArgs, 210786245, 2568, 16839, 134, 59, 113, 227, 169, 84, 145, 55);
-RT_INTERFACE!{interface IWebViewControlNavigationStartingEventArgs(IWebViewControlNavigationStartingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlNavigationStartingEventArgs] {
+RT_INTERFACE!{interface IWebViewControlNavigationStartingEventArgs(IWebViewControlNavigationStartingEventArgsVtbl): IInspectable [IID_IWebViewControlNavigationStartingEventArgs] {
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_Cancel(&self, out: *mut bool) -> HRESULT,
     fn put_Cancel(&self, value: bool) -> HRESULT
@@ -4938,7 +4938,7 @@ impl IWebViewControlNavigationStartingEventArgs {
 }
 RT_CLASS!{class WebViewControlNavigationStartingEventArgs: IWebViewControlNavigationStartingEventArgs}
 DEFINE_IID!(IID_IWebViewControlNewWindowRequestedEventArgs, 1039420347, 41252, 18133, 160, 131, 208, 44, 172, 223, 245, 173);
-RT_INTERFACE!{interface IWebViewControlNewWindowRequestedEventArgs(IWebViewControlNewWindowRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlNewWindowRequestedEventArgs] {
+RT_INTERFACE!{interface IWebViewControlNewWindowRequestedEventArgs(IWebViewControlNewWindowRequestedEventArgsVtbl): IInspectable [IID_IWebViewControlNewWindowRequestedEventArgs] {
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_Referrer(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
@@ -4967,7 +4967,7 @@ impl IWebViewControlNewWindowRequestedEventArgs {
 }
 RT_CLASS!{class WebViewControlNewWindowRequestedEventArgs: IWebViewControlNewWindowRequestedEventArgs}
 DEFINE_IID!(IID_IWebViewControlNewWindowRequestedEventArgs2, 3040631974, 10926, 19452, 146, 185, 195, 14, 146, 180, 128, 152);
-RT_INTERFACE!{interface IWebViewControlNewWindowRequestedEventArgs2(IWebViewControlNewWindowRequestedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlNewWindowRequestedEventArgs2] {
+RT_INTERFACE!{interface IWebViewControlNewWindowRequestedEventArgs2(IWebViewControlNewWindowRequestedEventArgs2Vtbl): IInspectable [IID_IWebViewControlNewWindowRequestedEventArgs2] {
     fn get_NewWindow(&self, out: *mut <IWebViewControl as RtType>::Abi) -> HRESULT,
     fn put_NewWindow(&self, value: <IWebViewControl as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -4989,7 +4989,7 @@ impl IWebViewControlNewWindowRequestedEventArgs2 {
     }}
 }
 DEFINE_IID!(IID_IWebViewControlPermissionRequest, 3854336876, 61999, 16610, 149, 178, 119, 41, 248, 64, 235, 127);
-RT_INTERFACE!{interface IWebViewControlPermissionRequest(IWebViewControlPermissionRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlPermissionRequest] {
+RT_INTERFACE!{interface IWebViewControlPermissionRequest(IWebViewControlPermissionRequestVtbl): IInspectable [IID_IWebViewControlPermissionRequest] {
     fn get_Id(&self, out: *mut u32) -> HRESULT,
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_PermissionType(&self, out: *mut WebViewControlPermissionType) -> HRESULT,
@@ -5034,7 +5034,7 @@ impl IWebViewControlPermissionRequest {
 }
 RT_CLASS!{class WebViewControlPermissionRequest: IWebViewControlPermissionRequest}
 DEFINE_IID!(IID_IWebViewControlPermissionRequestedEventArgs, 656428369, 9352, 19653, 150, 142, 10, 119, 30, 89, 193, 71);
-RT_INTERFACE!{interface IWebViewControlPermissionRequestedEventArgs(IWebViewControlPermissionRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlPermissionRequestedEventArgs] {
+RT_INTERFACE!{interface IWebViewControlPermissionRequestedEventArgs(IWebViewControlPermissionRequestedEventArgsVtbl): IInspectable [IID_IWebViewControlPermissionRequestedEventArgs] {
     fn get_PermissionRequest(&self, out: *mut <WebViewControlPermissionRequest as RtType>::Abi) -> HRESULT
 }}
 impl IWebViewControlPermissionRequestedEventArgs {
@@ -5052,7 +5052,7 @@ RT_ENUM! { enum WebViewControlPermissionType: i32 {
     Geolocation = 0, UnlimitedIndexedDBQuota = 1, Media = 2, PointerLock = 3, WebNotifications = 4, Screen = 5, ImmersiveView = 6,
 }}
 DEFINE_IID!(IID_IWebViewControlScriptNotifyEventArgs, 1226696059, 28489, 16827, 181, 145, 81, 184, 91, 129, 112, 55);
-RT_INTERFACE!{interface IWebViewControlScriptNotifyEventArgs(IWebViewControlScriptNotifyEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlScriptNotifyEventArgs] {
+RT_INTERFACE!{interface IWebViewControlScriptNotifyEventArgs(IWebViewControlScriptNotifyEventArgsVtbl): IInspectable [IID_IWebViewControlScriptNotifyEventArgs] {
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -5070,7 +5070,7 @@ impl IWebViewControlScriptNotifyEventArgs {
 }
 RT_CLASS!{class WebViewControlScriptNotifyEventArgs: IWebViewControlScriptNotifyEventArgs}
 DEFINE_IID!(IID_IWebViewControlSettings, 3382083519, 24216, 19709, 140, 206, 39, 176, 145, 30, 61, 232);
-RT_INTERFACE!{interface IWebViewControlSettings(IWebViewControlSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlSettings] {
+RT_INTERFACE!{interface IWebViewControlSettings(IWebViewControlSettingsVtbl): IInspectable [IID_IWebViewControlSettings] {
     fn put_IsJavaScriptEnabled(&self, value: bool) -> HRESULT,
     fn get_IsJavaScriptEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_IsIndexedDBEnabled(&self, value: bool) -> HRESULT,
@@ -5109,7 +5109,7 @@ impl IWebViewControlSettings {
 }
 RT_CLASS!{class WebViewControlSettings: IWebViewControlSettings}
 DEFINE_IID!(IID_IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs, 3820493124, 58620, 17372, 148, 202, 249, 128, 243, 11, 197, 29);
-RT_INTERFACE!{interface IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs(IWebViewControlUnsupportedUriSchemeIdentifiedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs] {
+RT_INTERFACE!{interface IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs(IWebViewControlUnsupportedUriSchemeIdentifiedEventArgsVtbl): IInspectable [IID_IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs] {
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT
@@ -5132,7 +5132,7 @@ impl IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs {
 }
 RT_CLASS!{class WebViewControlUnsupportedUriSchemeIdentifiedEventArgs: IWebViewControlUnsupportedUriSchemeIdentifiedEventArgs}
 DEFINE_IID!(IID_IWebViewControlUnviewableContentIdentifiedEventArgs, 1251377371, 35058, 20000, 182, 147, 180, 226, 223, 74, 165, 129);
-RT_INTERFACE!{interface IWebViewControlUnviewableContentIdentifiedEventArgs(IWebViewControlUnviewableContentIdentifiedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlUnviewableContentIdentifiedEventArgs] {
+RT_INTERFACE!{interface IWebViewControlUnviewableContentIdentifiedEventArgs(IWebViewControlUnviewableContentIdentifiedEventArgsVtbl): IInspectable [IID_IWebViewControlUnviewableContentIdentifiedEventArgs] {
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_Referrer(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_MediaType(&self, out: *mut HSTRING) -> HRESULT
@@ -5156,7 +5156,7 @@ impl IWebViewControlUnviewableContentIdentifiedEventArgs {
 }
 RT_CLASS!{class WebViewControlUnviewableContentIdentifiedEventArgs: IWebViewControlUnviewableContentIdentifiedEventArgs}
 DEFINE_IID!(IID_IWebViewControlWebResourceRequestedEventArgs, 1154896461, 21924, 19851, 137, 28, 147, 29, 142, 37, 212, 46);
-RT_INTERFACE!{interface IWebViewControlWebResourceRequestedEventArgs(IWebViewControlWebResourceRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlWebResourceRequestedEventArgs] {
+RT_INTERFACE!{interface IWebViewControlWebResourceRequestedEventArgs(IWebViewControlWebResourceRequestedEventArgsVtbl): IInspectable [IID_IWebViewControlWebResourceRequestedEventArgs] {
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT,
     fn get_Request(&self, out: *mut <super::http::HttpRequestMessage as RtType>::Abi) -> HRESULT,
     fn put_Response(&self, value: <super::http::HttpResponseMessage as RtType>::Abi) -> HRESULT,
@@ -5188,7 +5188,7 @@ pub mod interop { // Windows.Web.UI.Interop
 use crate::prelude::*;
 RT_CLASS!{class WebViewControl: super::IWebViewControl}
 DEFINE_IID!(IID_IWebViewControlAcceleratorKeyPressedEventArgs, 2007147838, 31860, 17277, 162, 144, 58, 192, 216, 205, 86, 85);
-RT_INTERFACE!{interface IWebViewControlAcceleratorKeyPressedEventArgs(IWebViewControlAcceleratorKeyPressedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlAcceleratorKeyPressedEventArgs] {
+RT_INTERFACE!{interface IWebViewControlAcceleratorKeyPressedEventArgs(IWebViewControlAcceleratorKeyPressedEventArgsVtbl): IInspectable [IID_IWebViewControlAcceleratorKeyPressedEventArgs] {
     #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-ui")] fn get_EventType(&self, out: *mut crate::windows::ui::core::CoreAcceleratorKeyEventType) -> HRESULT,
     #[cfg(not(feature="windows-system"))] fn __Dummy1(&self) -> (),
@@ -5238,7 +5238,7 @@ RT_ENUM! { enum WebViewControlMoveFocusReason: i32 {
     Programmatic = 0, Next = 1, Previous = 2,
 }}
 DEFINE_IID!(IID_IWebViewControlMoveFocusRequestedEventArgs, 1797927949, 19408, 16478, 183, 193, 30, 114, 164, 146, 244, 70);
-RT_INTERFACE!{interface IWebViewControlMoveFocusRequestedEventArgs(IWebViewControlMoveFocusRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlMoveFocusRequestedEventArgs] {
+RT_INTERFACE!{interface IWebViewControlMoveFocusRequestedEventArgs(IWebViewControlMoveFocusRequestedEventArgsVtbl): IInspectable [IID_IWebViewControlMoveFocusRequestedEventArgs] {
     fn get_Reason(&self, out: *mut WebViewControlMoveFocusReason) -> HRESULT
 }}
 impl IWebViewControlMoveFocusRequestedEventArgs {
@@ -5250,7 +5250,7 @@ impl IWebViewControlMoveFocusRequestedEventArgs {
 }
 RT_CLASS!{class WebViewControlMoveFocusRequestedEventArgs: IWebViewControlMoveFocusRequestedEventArgs}
 DEFINE_IID!(IID_IWebViewControlProcess, 46605292, 39126, 16970, 182, 62, 198, 19, 108, 54, 160, 242);
-RT_INTERFACE!{interface IWebViewControlProcess(IWebViewControlProcessVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlProcess] {
+RT_INTERFACE!{interface IWebViewControlProcess(IWebViewControlProcessVtbl): IInspectable [IID_IWebViewControlProcess] {
     fn get_ProcessId(&self, out: *mut u32) -> HRESULT,
     fn get_EnterpriseId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IsPrivateNetworkClientServerCapabilityEnabled(&self, out: *mut bool) -> HRESULT,
@@ -5313,7 +5313,7 @@ RT_ENUM! { enum WebViewControlProcessCapabilityState: i32 {
     Default = 0, Disabled = 1, Enabled = 2,
 }}
 DEFINE_IID!(IID_IWebViewControlProcessFactory, 1203133689, 41682, 17724, 176, 151, 246, 119, 157, 75, 142, 2);
-RT_INTERFACE!{static interface IWebViewControlProcessFactory(IWebViewControlProcessFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlProcessFactory] {
+RT_INTERFACE!{static interface IWebViewControlProcessFactory(IWebViewControlProcessFactoryVtbl): IInspectable [IID_IWebViewControlProcessFactory] {
     fn CreateWithOptions(&self, processOptions: <WebViewControlProcessOptions as RtType>::Abi, out: *mut <WebViewControlProcess as RtType>::Abi) -> HRESULT
 }}
 impl IWebViewControlProcessFactory {
@@ -5324,7 +5324,7 @@ impl IWebViewControlProcessFactory {
     }}
 }
 DEFINE_IID!(IID_IWebViewControlProcessOptions, 483029671, 15318, 18470, 130, 97, 108, 129, 137, 80, 93, 137);
-RT_INTERFACE!{interface IWebViewControlProcessOptions(IWebViewControlProcessOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlProcessOptions] {
+RT_INTERFACE!{interface IWebViewControlProcessOptions(IWebViewControlProcessOptionsVtbl): IInspectable [IID_IWebViewControlProcessOptions] {
     fn put_EnterpriseId(&self, value: HSTRING) -> HRESULT,
     fn get_EnterpriseId(&self, out: *mut HSTRING) -> HRESULT,
     fn put_PrivateNetworkClientServerCapability(&self, value: WebViewControlProcessCapabilityState) -> HRESULT,
@@ -5354,7 +5354,7 @@ RT_CLASS!{class WebViewControlProcessOptions: IWebViewControlProcessOptions}
 impl RtActivatable<IActivationFactory> for WebViewControlProcessOptions {}
 DEFINE_CLSID!(WebViewControlProcessOptions(&[87,105,110,100,111,119,115,46,87,101,98,46,85,73,46,73,110,116,101,114,111,112,46,87,101,98,86,105,101,119,67,111,110,116,114,111,108,80,114,111,99,101,115,115,79,112,116,105,111,110,115,0]) [CLSID_WebViewControlProcessOptions]);
 DEFINE_IID!(IID_IWebViewControlSite, 322914246, 4828, 18584, 189, 71, 4, 150, 125, 230, 72, 186);
-RT_INTERFACE!{interface IWebViewControlSite(IWebViewControlSiteVtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlSite] {
+RT_INTERFACE!{interface IWebViewControlSite(IWebViewControlSiteVtbl): IInspectable [IID_IWebViewControlSite] {
     fn get_Process(&self, out: *mut <WebViewControlProcess as RtType>::Abi) -> HRESULT,
     fn put_Scale(&self, value: f64) -> HRESULT,
     fn get_Scale(&self, out: *mut f64) -> HRESULT,
@@ -5430,7 +5430,7 @@ impl IWebViewControlSite {
     }}
 }
 DEFINE_IID!(IID_IWebViewControlSite2, 3510316607, 18670, 18224, 130, 67, 210, 237, 12, 5, 96, 106);
-RT_INTERFACE!{interface IWebViewControlSite2(IWebViewControlSite2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebViewControlSite2] {
+RT_INTERFACE!{interface IWebViewControlSite2(IWebViewControlSite2Vtbl): IInspectable [IID_IWebViewControlSite2] {
     fn add_GotFocus(&self, handler: <foundation::TypedEventHandler<WebViewControl, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_GotFocus(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_LostFocus(&self, handler: <foundation::TypedEventHandler<WebViewControl, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,

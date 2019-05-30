@@ -1,12 +1,11 @@
 use std::ptr;
 
-use super::{ComInterface, HString, HStringReference, HStringArg, ComPtr, ComArray, ComIid, Guid};
+use super::{ComInterface, HString, HStringReference, HStringArg, ComPtr, ComArray, ComIid, Guid, IUnknown};
 use crate::HRESULT;
 
 use w::shared::ntdef::{VOID, ULONG};
 use w::shared::winerror::{S_OK, S_FALSE, CO_E_NOTINITIALIZED, REGDB_E_CLASSNOTREG};
 use w::shared::guiddef::IID;
-use w::um::unknwnbase::IUnknownVtbl;
 use w::winrt::hstring::HSTRING;
 use w::winrt::roapi::{RO_INIT_MULTITHREADED, RO_INIT_SINGLETHREADED, RoInitialize, RoUninitialize, RoGetActivationFactory};
 use w::um::combaseapi::CoIncrementMTAUsage;
@@ -300,12 +299,12 @@ macro_rules! RT_INTERFACE {
     };
 
     // version with no methods
-    ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident) : $pinterface:ident [$iid:ident]
         {}
     ) => {
         #[repr(transparent)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl {
-            pub parent: $pvtbl
+            pub parent: <<$pinterface as ComInterface>::TAbi as crate::ComInterfaceAbi>::Vtbl
         }
         $(#[$attr])* #[repr(transparent)] #[derive(Clone)]
         pub struct $interface(ComPtr<crate::comptr::ComAbi<$vtbl>>);
@@ -343,14 +342,14 @@ macro_rules! RT_INTERFACE {
     };
 
     // version with methods, but without generic parameters
-    ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident) : $pinterface:ident [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl {
-            pub parent: $pvtbl
+            pub parent: <<$pinterface as ComInterface>::TAbi as crate::ComInterfaceAbi>::Vtbl
             $(, $(#[cfg($cond_attr)])* pub $method: unsafe extern "system" fn(
                 This: *mut $interface
                 $(,$p: $t)*
@@ -392,14 +391,14 @@ macro_rules! RT_INTERFACE {
     };
     // The $iid is actually not necessary, because it refers to the uninstantiated version of the interface,
     // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces).
-    ($(#[$attr:meta])* basic $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl<$t1> where $t1: RtType {
-            pub parent: $pvtbl
+            pub parent: <<$pinterface as ComInterface>::TAbi as crate::ComInterfaceAbi>::Vtbl
             $(, $(#[cfg($cond_attr)])* pub $method: unsafe extern "system" fn(
                 This: *mut $interface<$t1>
                 $(,$p: $t)*
@@ -437,14 +436,14 @@ macro_rules! RT_INTERFACE {
         }
     };
 
-    ($(#[$attr:meta])* basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
     ) => {
         #[repr(C)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl<$t1, $t2> where $t1: RtType, $t2: RtType {
-            pub parent: $pvtbl
+            pub parent: <<$pinterface as ComInterface>::TAbi as crate::ComInterfaceAbi>::Vtbl
             $(, $(#[cfg($cond_attr)])* pub $method: unsafe extern "system" fn(
                 This: *mut $interface<$t1, $t2>
                 $(,$p: $t)*
@@ -488,7 +487,7 @@ macro_rules! RT_DELEGATE {
     (delegate $interface:ident ($vtbl:ident, $imp:ident) [$iid:ident] {
         $(#[cfg($cond_attr:meta)])* fn Invoke(&self $(,$p:ident : $t:ty)*) -> HRESULT
     }) => {
-        RT_INTERFACE!{basic $interface($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
+        RT_INTERFACE!{basic $interface($vtbl) : IUnknown [$iid] {
             $(#[cfg($cond_attr)])* fn Invoke(&self $(,$p : $t)*) -> HRESULT
         }}
 
@@ -558,7 +557,7 @@ macro_rules! RT_DELEGATE {
     (delegate $interface:ident<$($ht:ident),+> ($vtbl:ident, $imp:ident) [$iid:ident] {
         $(#[cfg($cond_attr:meta)])* fn Invoke(&self $(,$p:ident : $t:ty)*) -> HRESULT
     }) => {
-        RT_INTERFACE!{basic $interface<$($ht),+>($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
+        RT_INTERFACE!{basic $interface<$($ht),+>($vtbl) : IUnknown [$iid] {
             $(#[cfg($cond_attr)])* fn Invoke(&self $(,$p : $t)*) -> HRESULT
         }}
 
@@ -721,7 +720,7 @@ pub(crate) mod gen; // import auto-generated definitions (has to come after macr
 DEFINE_IID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
 RT_INTERFACE!{
 /// The `IInspectable` interface is the base interface for all Windows Runtime classes.
-interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectable]  {
+interface IInspectable(IInspectableVtbl): IUnknown [IID_IInspectable]  {
     fn GetIids(&self, iidCount: *mut ULONG, iids: *mut *mut IID) -> HRESULT,
     fn GetRuntimeClassName(&self, className: *mut HSTRING) -> HRESULT,
     fn GetTrustLevel(&self, trustLevel: *mut crate::TrustLevel) -> HRESULT
@@ -761,7 +760,7 @@ RT_INTERFACE!{
 /// Enables classes to be activated using a default constructor.
 /// This interface should not be used directly, but the `new()` method of
 /// the `RtDefaultConstructible` trait should be used instead.
-interface IActivationFactory(IActivationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IActivationFactory]  {
+interface IActivationFactory(IActivationFactoryVtbl): IInspectable [IID_IActivationFactory]  {
     fn ActivateInstance(&self, instance: *mut <IInspectable as RtType>::Abi) -> HRESULT
 }}
 
@@ -778,7 +777,7 @@ impl IActivationFactory {
 DEFINE_IID!(IID_IMemoryBufferByteAccess, 0x5b0d3235, 0x4dba, 0x4d44, 0x86, 0x5e, 0x8f, 0x1d, 0x0e, 0x4f, 0xd0, 0x4d);
 RT_INTERFACE!{
 /// Provides direct byte access to the memory buffer underlying an `IMemoryBuffer`.
-interface IMemoryBufferByteAccess(IMemoryBufferByteAccessVtbl) : IUnknown(IUnknownVtbl) [IID_IMemoryBufferByteAccess]  {
+interface IMemoryBufferByteAccess(IMemoryBufferByteAccessVtbl) : IUnknown [IID_IMemoryBufferByteAccess]  {
     fn GetBuffer(&self, value: *mut *mut u8, capacity: *mut u32) -> HRESULT
 }}
 

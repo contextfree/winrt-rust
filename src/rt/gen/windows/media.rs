@@ -1,6 +1,6 @@
 use crate::prelude::*;
 DEFINE_IID!(IID_IAudioBuffer, 890722343, 29259, 19562, 177, 48, 246, 83, 127, 154, 224, 208);
-RT_INTERFACE!{interface IAudioBuffer(IAudioBufferVtbl): IInspectable(IInspectableVtbl) [IID_IAudioBuffer] {
+RT_INTERFACE!{interface IAudioBuffer(IAudioBufferVtbl): IInspectable [IID_IAudioBuffer] {
     fn get_Capacity(&self, out: *mut u32) -> HRESULT,
     fn get_Length(&self, out: *mut u32) -> HRESULT,
     fn put_Length(&self, value: u32) -> HRESULT
@@ -26,7 +26,7 @@ RT_ENUM! { enum AudioBufferAccessMode: i32 {
     Read = 0, ReadWrite = 1, Write = 2,
 }}
 DEFINE_IID!(IID_IAudioFrame, 3815424772, 43698, 17015, 158, 208, 67, 206, 223, 142, 41, 198);
-RT_INTERFACE!{interface IAudioFrame(IAudioFrameVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFrame] {
+RT_INTERFACE!{interface IAudioFrame(IAudioFrameVtbl): IInspectable [IID_IAudioFrame] {
     fn LockBuffer(&self, mode: AudioBufferAccessMode, out: *mut <AudioBuffer as RtType>::Abi) -> HRESULT
 }}
 impl IAudioFrame {
@@ -45,7 +45,7 @@ impl AudioFrame {
 }
 DEFINE_CLSID!(AudioFrame(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,70,114,97,109,101,0]) [CLSID_AudioFrame]);
 DEFINE_IID!(IID_IAudioFrameFactory, 2443774686, 9250, 16550, 185, 173, 48, 208, 36, 4, 49, 125);
-RT_INTERFACE!{static interface IAudioFrameFactory(IAudioFrameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFrameFactory] {
+RT_INTERFACE!{static interface IAudioFrameFactory(IAudioFrameFactoryVtbl): IInspectable [IID_IAudioFrameFactory] {
     fn Create(&self, capacity: u32, out: *mut <AudioFrame as RtType>::Abi) -> HRESULT
 }}
 impl IAudioFrameFactory {
@@ -59,7 +59,7 @@ RT_ENUM! { enum AudioProcessing: i32 {
     Default = 0, Raw = 1,
 }}
 DEFINE_IID!(IID_IAutoRepeatModeChangeRequestedEventArgs, 3927146234, 55378, 17294, 136, 43, 201, 144, 16, 154, 120, 244);
-RT_INTERFACE!{interface IAutoRepeatModeChangeRequestedEventArgs(IAutoRepeatModeChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAutoRepeatModeChangeRequestedEventArgs] {
+RT_INTERFACE!{interface IAutoRepeatModeChangeRequestedEventArgs(IAutoRepeatModeChangeRequestedEventArgsVtbl): IInspectable [IID_IAutoRepeatModeChangeRequestedEventArgs] {
     fn get_RequestedAutoRepeatMode(&self, out: *mut MediaPlaybackAutoRepeatMode) -> HRESULT
 }}
 impl IAutoRepeatModeChangeRequestedEventArgs {
@@ -71,7 +71,7 @@ impl IAutoRepeatModeChangeRequestedEventArgs {
 }
 RT_CLASS!{class AutoRepeatModeChangeRequestedEventArgs: IAutoRepeatModeChangeRequestedEventArgs}
 DEFINE_IID!(IID_IImageDisplayProperties, 3440101359, 21735, 16671, 153, 51, 240, 233, 139, 10, 150, 210);
-RT_INTERFACE!{interface IImageDisplayProperties(IImageDisplayPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IImageDisplayProperties] {
+RT_INTERFACE!{interface IImageDisplayProperties(IImageDisplayPropertiesVtbl): IInspectable [IID_IImageDisplayProperties] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Title(&self, value: HSTRING) -> HRESULT,
     fn get_Subtitle(&self, out: *mut HSTRING) -> HRESULT,
@@ -99,7 +99,7 @@ impl IImageDisplayProperties {
 }
 RT_CLASS!{class ImageDisplayProperties: IImageDisplayProperties}
 DEFINE_IID!(IID_IMediaControl, 2565995489, 31373, 17099, 182, 254, 143, 230, 152, 38, 79, 19);
-RT_INTERFACE!{static interface IMediaControl(IMediaControlVtbl): IInspectable(IInspectableVtbl) [IID_IMediaControl] {
+RT_INTERFACE!{static interface IMediaControl(IMediaControlVtbl): IInspectable [IID_IMediaControl] {
     fn add_SoundLevelChanged(&self, handler: <foundation::EventHandler<IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SoundLevelChanged(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
     fn add_PlayPressed(&self, handler: <foundation::EventHandler<IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -390,7 +390,7 @@ impl MediaControl {
 }
 DEFINE_CLSID!(MediaControl(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,67,111,110,116,114,111,108,0]) [CLSID_MediaControl]);
 DEFINE_IID!(IID_IMediaExtension, 126963992, 17887, 17451, 138, 63, 247, 130, 106, 99, 112, 171);
-RT_INTERFACE!{interface IMediaExtension(IMediaExtensionVtbl): IInspectable(IInspectableVtbl) [IID_IMediaExtension] {
+RT_INTERFACE!{interface IMediaExtension(IMediaExtensionVtbl): IInspectable [IID_IMediaExtension] {
     fn SetProperties(&self, configuration: <foundation::collections::IPropertySet as RtType>::Abi) -> HRESULT
 }}
 impl IMediaExtension {
@@ -400,7 +400,7 @@ impl IMediaExtension {
     }}
 }
 DEFINE_IID!(IID_IMediaExtensionManager, 1243998965, 9261, 19963, 151, 244, 105, 183, 196, 37, 118, 255);
-RT_INTERFACE!{interface IMediaExtensionManager(IMediaExtensionManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaExtensionManager] {
+RT_INTERFACE!{interface IMediaExtensionManager(IMediaExtensionManagerVtbl): IInspectable [IID_IMediaExtensionManager] {
     fn RegisterSchemeHandler(&self, activatableClassId: HSTRING, scheme: HSTRING) -> HRESULT,
     fn RegisterSchemeHandlerWithSettings(&self, activatableClassId: HSTRING, scheme: HSTRING, configuration: <foundation::collections::IPropertySet as RtType>::Abi) -> HRESULT,
     fn RegisterByteStreamHandler(&self, activatableClassId: HSTRING, fileExtension: HSTRING, mimeType: HSTRING) -> HRESULT,
@@ -468,7 +468,7 @@ RT_CLASS!{class MediaExtensionManager: IMediaExtensionManager}
 impl RtActivatable<IActivationFactory> for MediaExtensionManager {}
 DEFINE_CLSID!(MediaExtensionManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,69,120,116,101,110,115,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MediaExtensionManager]);
 DEFINE_IID!(IID_IMediaExtensionManager2, 1540276039, 16451, 20461, 172, 175, 84, 236, 41, 223, 177, 247);
-RT_INTERFACE!{interface IMediaExtensionManager2(IMediaExtensionManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaExtensionManager2] {
+RT_INTERFACE!{interface IMediaExtensionManager2(IMediaExtensionManager2Vtbl): IInspectable [IID_IMediaExtensionManager2] {
     #[cfg(feature="windows-applicationmodel")] fn RegisterMediaExtensionForAppService(&self, extension: <IMediaExtension as RtType>::Abi, connection: <super::applicationmodel::appservice::AppServiceConnection as RtType>::Abi) -> HRESULT
 }}
 impl IMediaExtensionManager2 {
@@ -478,7 +478,7 @@ impl IMediaExtensionManager2 {
     }}
 }
 DEFINE_IID!(IID_IMediaFrame, 3216322444, 22851, 18392, 142, 16, 5, 48, 138, 165, 251, 208);
-RT_INTERFACE!{interface IMediaFrame(IMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrame] {
+RT_INTERFACE!{interface IMediaFrame(IMediaFrameVtbl): IInspectable [IID_IMediaFrame] {
     fn get_Type(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IsReadOnly(&self, out: *mut bool) -> HRESULT,
     fn put_RelativeTime(&self, value: <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
@@ -545,7 +545,7 @@ impl IMediaFrame {
     }}
 }
 DEFINE_IID!(IID_IMediaMarker, 402906872, 56485, 19311, 156, 32, 227, 211, 192, 100, 54, 37);
-RT_INTERFACE!{interface IMediaMarker(IMediaMarkerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaMarker] {
+RT_INTERFACE!{interface IMediaMarker(IMediaMarkerVtbl): IInspectable [IID_IMediaMarker] {
     fn get_Time(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_MediaMarkerType(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT
@@ -568,7 +568,7 @@ impl IMediaMarker {
     }}
 }
 DEFINE_IID!(IID_IMediaMarkers, 2951393673, 63709, 18030, 170, 16, 146, 11, 82, 53, 63, 223);
-RT_INTERFACE!{interface IMediaMarkers(IMediaMarkersVtbl): IInspectable(IInspectableVtbl) [IID_IMediaMarkers] {
+RT_INTERFACE!{interface IMediaMarkers(IMediaMarkersVtbl): IInspectable [IID_IMediaMarkers] {
     fn get_Markers(&self, out: *mut <foundation::collections::IVectorView<IMediaMarker> as RtType>::Abi) -> HRESULT
 }}
 impl IMediaMarkers {
@@ -587,7 +587,7 @@ impl MediaMarkerTypes {
 }
 DEFINE_CLSID!(MediaMarkerTypes(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,77,97,114,107,101,114,84,121,112,101,115,0]) [CLSID_MediaMarkerTypes]);
 DEFINE_IID!(IID_IMediaMarkerTypesStatics, 3139010624, 18479, 18243, 136, 50, 69, 133, 56, 33, 236, 224);
-RT_INTERFACE!{static interface IMediaMarkerTypesStatics(IMediaMarkerTypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaMarkerTypesStatics] {
+RT_INTERFACE!{static interface IMediaMarkerTypesStatics(IMediaMarkerTypesStaticsVtbl): IInspectable [IID_IMediaMarkerTypesStatics] {
     fn get_Bookmark(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IMediaMarkerTypesStatics {
@@ -607,7 +607,7 @@ RT_ENUM! { enum MediaPlaybackType: i32 {
     Unknown = 0, Music = 1, Video = 2, Image = 3,
 }}
 DEFINE_IID!(IID_IMediaProcessingTriggerDetails, 3951387820, 41809, 20302, 180, 240, 155, 242, 64, 137, 147, 219);
-RT_INTERFACE!{interface IMediaProcessingTriggerDetails(IMediaProcessingTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProcessingTriggerDetails] {
+RT_INTERFACE!{interface IMediaProcessingTriggerDetails(IMediaProcessingTriggerDetailsVtbl): IInspectable [IID_IMediaProcessingTriggerDetails] {
     fn get_Arguments(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT
 }}
 impl IMediaProcessingTriggerDetails {
@@ -619,7 +619,7 @@ impl IMediaProcessingTriggerDetails {
 }
 RT_CLASS!{class MediaProcessingTriggerDetails: IMediaProcessingTriggerDetails}
 DEFINE_IID!(IID_IMediaTimelineController, 2396217843, 2936, 17248, 191, 113, 12, 132, 25, 153, 234, 27);
-RT_INTERFACE!{interface IMediaTimelineController(IMediaTimelineControllerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaTimelineController] {
+RT_INTERFACE!{interface IMediaTimelineController(IMediaTimelineControllerVtbl): IInspectable [IID_IMediaTimelineController] {
     fn Start(&self) -> HRESULT,
     fn Resume(&self) -> HRESULT,
     fn Pause(&self) -> HRESULT,
@@ -692,7 +692,7 @@ RT_CLASS!{class MediaTimelineController: IMediaTimelineController}
 impl RtActivatable<IActivationFactory> for MediaTimelineController {}
 DEFINE_CLSID!(MediaTimelineController(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,84,105,109,101,108,105,110,101,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_MediaTimelineController]);
 DEFINE_IID!(IID_IMediaTimelineController2, 4017416760, 40562, 19961, 131, 85, 110, 144, 200, 27, 186, 221);
-RT_INTERFACE!{interface IMediaTimelineController2(IMediaTimelineController2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaTimelineController2] {
+RT_INTERFACE!{interface IMediaTimelineController2(IMediaTimelineController2Vtbl): IInspectable [IID_IMediaTimelineController2] {
     fn get_Duration(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn put_Duration(&self, value: <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_IsLoopingEnabled(&self, out: *mut bool) -> HRESULT,
@@ -741,7 +741,7 @@ impl IMediaTimelineController2 {
     }}
 }
 DEFINE_IID!(IID_IMediaTimelineControllerFailedEventArgs, 2283927581, 15991, 17403, 190, 38, 79, 200, 122, 4, 72, 52);
-RT_INTERFACE!{interface IMediaTimelineControllerFailedEventArgs(IMediaTimelineControllerFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaTimelineControllerFailedEventArgs] {
+RT_INTERFACE!{interface IMediaTimelineControllerFailedEventArgs(IMediaTimelineControllerFailedEventArgsVtbl): IInspectable [IID_IMediaTimelineControllerFailedEventArgs] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl IMediaTimelineControllerFailedEventArgs {
@@ -759,7 +759,7 @@ RT_STRUCT! { struct MediaTimeRange {
     Start: foundation::TimeSpan, End: foundation::TimeSpan,
 }}
 DEFINE_IID!(IID_IMusicDisplayProperties, 1807682649, 53408, 19750, 146, 160, 249, 120, 225, 209, 142, 123);
-RT_INTERFACE!{interface IMusicDisplayProperties(IMusicDisplayPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IMusicDisplayProperties] {
+RT_INTERFACE!{interface IMusicDisplayProperties(IMusicDisplayPropertiesVtbl): IInspectable [IID_IMusicDisplayProperties] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Title(&self, value: HSTRING) -> HRESULT,
     fn get_AlbumArtist(&self, out: *mut HSTRING) -> HRESULT,
@@ -798,7 +798,7 @@ impl IMusicDisplayProperties {
 }
 RT_CLASS!{class MusicDisplayProperties: IMusicDisplayProperties}
 DEFINE_IID!(IID_IMusicDisplayProperties2, 3572834, 38867, 17593, 176, 15, 0, 138, 252, 239, 175, 24);
-RT_INTERFACE!{interface IMusicDisplayProperties2(IMusicDisplayProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IMusicDisplayProperties2] {
+RT_INTERFACE!{interface IMusicDisplayProperties2(IMusicDisplayProperties2Vtbl): IInspectable [IID_IMusicDisplayProperties2] {
     fn get_AlbumTitle(&self, out: *mut HSTRING) -> HRESULT,
     fn put_AlbumTitle(&self, value: HSTRING) -> HRESULT,
     fn get_TrackNumber(&self, out: *mut u32) -> HRESULT,
@@ -831,7 +831,7 @@ impl IMusicDisplayProperties2 {
     }}
 }
 DEFINE_IID!(IID_IMusicDisplayProperties3, 1303714497, 1665, 20108, 148, 1, 184, 21, 157, 158, 239, 199);
-RT_INTERFACE!{interface IMusicDisplayProperties3(IMusicDisplayProperties3Vtbl): IInspectable(IInspectableVtbl) [IID_IMusicDisplayProperties3] {
+RT_INTERFACE!{interface IMusicDisplayProperties3(IMusicDisplayProperties3Vtbl): IInspectable [IID_IMusicDisplayProperties3] {
     fn get_AlbumTrackCount(&self, out: *mut u32) -> HRESULT,
     fn put_AlbumTrackCount(&self, value: u32) -> HRESULT
 }}
@@ -847,7 +847,7 @@ impl IMusicDisplayProperties3 {
     }}
 }
 DEFINE_IID!(IID_IPlaybackPositionChangeRequestedEventArgs, 3024699272, 60200, 18785, 156, 20, 51, 94, 68, 243, 225, 37);
-RT_INTERFACE!{interface IPlaybackPositionChangeRequestedEventArgs(IPlaybackPositionChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackPositionChangeRequestedEventArgs] {
+RT_INTERFACE!{interface IPlaybackPositionChangeRequestedEventArgs(IPlaybackPositionChangeRequestedEventArgsVtbl): IInspectable [IID_IPlaybackPositionChangeRequestedEventArgs] {
     fn get_RequestedPlaybackPosition(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
 impl IPlaybackPositionChangeRequestedEventArgs {
@@ -859,7 +859,7 @@ impl IPlaybackPositionChangeRequestedEventArgs {
 }
 RT_CLASS!{class PlaybackPositionChangeRequestedEventArgs: IPlaybackPositionChangeRequestedEventArgs}
 DEFINE_IID!(IID_IPlaybackRateChangeRequestedEventArgs, 753058847, 15574, 20343, 155, 167, 235, 39, 194, 106, 33, 64);
-RT_INTERFACE!{interface IPlaybackRateChangeRequestedEventArgs(IPlaybackRateChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackRateChangeRequestedEventArgs] {
+RT_INTERFACE!{interface IPlaybackRateChangeRequestedEventArgs(IPlaybackRateChangeRequestedEventArgsVtbl): IInspectable [IID_IPlaybackRateChangeRequestedEventArgs] {
     fn get_RequestedPlaybackRate(&self, out: *mut f64) -> HRESULT
 }}
 impl IPlaybackRateChangeRequestedEventArgs {
@@ -871,7 +871,7 @@ impl IPlaybackRateChangeRequestedEventArgs {
 }
 RT_CLASS!{class PlaybackRateChangeRequestedEventArgs: IPlaybackRateChangeRequestedEventArgs}
 DEFINE_IID!(IID_IShuffleEnabledChangeRequestedEventArgs, 1236636670, 20432, 18022, 163, 20, 192, 224, 25, 64, 211, 2);
-RT_INTERFACE!{interface IShuffleEnabledChangeRequestedEventArgs(IShuffleEnabledChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IShuffleEnabledChangeRequestedEventArgs] {
+RT_INTERFACE!{interface IShuffleEnabledChangeRequestedEventArgs(IShuffleEnabledChangeRequestedEventArgsVtbl): IInspectable [IID_IShuffleEnabledChangeRequestedEventArgs] {
     fn get_RequestedShuffleEnabled(&self, out: *mut bool) -> HRESULT
 }}
 impl IShuffleEnabledChangeRequestedEventArgs {
@@ -886,7 +886,7 @@ RT_ENUM! { enum SoundLevel: i32 {
     Muted = 0, Low = 1, Full = 2,
 }}
 DEFINE_IID!(IID_ISystemMediaTransportControls, 2583314420, 5954, 17062, 144, 46, 8, 125, 65, 249, 101, 236);
-RT_INTERFACE!{interface ISystemMediaTransportControls(ISystemMediaTransportControlsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControls] {
+RT_INTERFACE!{interface ISystemMediaTransportControls(ISystemMediaTransportControlsVtbl): IInspectable [IID_ISystemMediaTransportControls] {
     fn get_PlaybackStatus(&self, out: *mut MediaPlaybackStatus) -> HRESULT,
     fn put_PlaybackStatus(&self, value: MediaPlaybackStatus) -> HRESULT,
     fn get_DisplayUpdater(&self, out: *mut <SystemMediaTransportControlsDisplayUpdater as RtType>::Abi) -> HRESULT,
@@ -1065,7 +1065,7 @@ impl SystemMediaTransportControls {
 }
 DEFINE_CLSID!(SystemMediaTransportControls(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,121,115,116,101,109,77,101,100,105,97,84,114,97,110,115,112,111,114,116,67,111,110,116,114,111,108,115,0]) [CLSID_SystemMediaTransportControls]);
 DEFINE_IID!(IID_ISystemMediaTransportControls2, 3935884022, 32572, 19186, 165, 134, 114, 136, 152, 8, 239, 177);
-RT_INTERFACE!{interface ISystemMediaTransportControls2(ISystemMediaTransportControls2Vtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControls2] {
+RT_INTERFACE!{interface ISystemMediaTransportControls2(ISystemMediaTransportControls2Vtbl): IInspectable [IID_ISystemMediaTransportControls2] {
     fn get_AutoRepeatMode(&self, out: *mut MediaPlaybackAutoRepeatMode) -> HRESULT,
     fn put_AutoRepeatMode(&self, value: MediaPlaybackAutoRepeatMode) -> HRESULT,
     fn get_ShuffleEnabled(&self, out: *mut bool) -> HRESULT,
@@ -1155,7 +1155,7 @@ RT_ENUM! { enum SystemMediaTransportControlsButton: i32 {
     Play = 0, Pause = 1, Stop = 2, Record = 3, FastForward = 4, Rewind = 5, Next = 6, Previous = 7, ChannelUp = 8, ChannelDown = 9,
 }}
 DEFINE_IID!(IID_ISystemMediaTransportControlsButtonPressedEventArgs, 3086250262, 42351, 19912, 158, 17, 146, 3, 31, 74, 135, 194);
-RT_INTERFACE!{interface ISystemMediaTransportControlsButtonPressedEventArgs(ISystemMediaTransportControlsButtonPressedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControlsButtonPressedEventArgs] {
+RT_INTERFACE!{interface ISystemMediaTransportControlsButtonPressedEventArgs(ISystemMediaTransportControlsButtonPressedEventArgsVtbl): IInspectable [IID_ISystemMediaTransportControlsButtonPressedEventArgs] {
     fn get_Button(&self, out: *mut SystemMediaTransportControlsButton) -> HRESULT
 }}
 impl ISystemMediaTransportControlsButtonPressedEventArgs {
@@ -1167,7 +1167,7 @@ impl ISystemMediaTransportControlsButtonPressedEventArgs {
 }
 RT_CLASS!{class SystemMediaTransportControlsButtonPressedEventArgs: ISystemMediaTransportControlsButtonPressedEventArgs}
 DEFINE_IID!(IID_ISystemMediaTransportControlsDisplayUpdater, 2327561534, 64085, 20175, 173, 142, 201, 132, 229, 221, 21, 80);
-RT_INTERFACE!{interface ISystemMediaTransportControlsDisplayUpdater(ISystemMediaTransportControlsDisplayUpdaterVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControlsDisplayUpdater] {
+RT_INTERFACE!{interface ISystemMediaTransportControlsDisplayUpdater(ISystemMediaTransportControlsDisplayUpdaterVtbl): IInspectable [IID_ISystemMediaTransportControlsDisplayUpdater] {
     fn get_Type(&self, out: *mut MediaPlaybackType) -> HRESULT,
     fn put_Type(&self, value: MediaPlaybackType) -> HRESULT,
     fn get_AppMediaId(&self, out: *mut HSTRING) -> HRESULT,
@@ -1246,7 +1246,7 @@ RT_ENUM! { enum SystemMediaTransportControlsProperty: i32 {
     SoundLevel = 0,
 }}
 DEFINE_IID!(IID_ISystemMediaTransportControlsPropertyChangedEventArgs, 3502901558, 13211, 19635, 142, 235, 115, 118, 7, 245, 110, 8);
-RT_INTERFACE!{interface ISystemMediaTransportControlsPropertyChangedEventArgs(ISystemMediaTransportControlsPropertyChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControlsPropertyChangedEventArgs] {
+RT_INTERFACE!{interface ISystemMediaTransportControlsPropertyChangedEventArgs(ISystemMediaTransportControlsPropertyChangedEventArgsVtbl): IInspectable [IID_ISystemMediaTransportControlsPropertyChangedEventArgs] {
     fn get_Property(&self, out: *mut SystemMediaTransportControlsProperty) -> HRESULT
 }}
 impl ISystemMediaTransportControlsPropertyChangedEventArgs {
@@ -1258,7 +1258,7 @@ impl ISystemMediaTransportControlsPropertyChangedEventArgs {
 }
 RT_CLASS!{class SystemMediaTransportControlsPropertyChangedEventArgs: ISystemMediaTransportControlsPropertyChangedEventArgs}
 DEFINE_IID!(IID_ISystemMediaTransportControlsStatics, 1136277514, 60580, 18482, 145, 171, 212, 21, 250, 228, 132, 198);
-RT_INTERFACE!{static interface ISystemMediaTransportControlsStatics(ISystemMediaTransportControlsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControlsStatics] {
+RT_INTERFACE!{static interface ISystemMediaTransportControlsStatics(ISystemMediaTransportControlsStaticsVtbl): IInspectable [IID_ISystemMediaTransportControlsStatics] {
     fn GetForCurrentView(&self, out: *mut <SystemMediaTransportControls as RtType>::Abi) -> HRESULT
 }}
 impl ISystemMediaTransportControlsStatics {
@@ -1269,7 +1269,7 @@ impl ISystemMediaTransportControlsStatics {
     }}
 }
 DEFINE_IID!(IID_ISystemMediaTransportControlsTimelineProperties, 1361391978, 50082, 18267, 133, 7, 147, 83, 77, 200, 143, 21);
-RT_INTERFACE!{interface ISystemMediaTransportControlsTimelineProperties(ISystemMediaTransportControlsTimelinePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMediaTransportControlsTimelineProperties] {
+RT_INTERFACE!{interface ISystemMediaTransportControlsTimelineProperties(ISystemMediaTransportControlsTimelinePropertiesVtbl): IInspectable [IID_ISystemMediaTransportControlsTimelineProperties] {
     fn get_StartTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_StartTime(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_EndTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -1332,7 +1332,7 @@ RT_CLASS!{class SystemMediaTransportControlsTimelineProperties: ISystemMediaTran
 impl RtActivatable<IActivationFactory> for SystemMediaTransportControlsTimelineProperties {}
 DEFINE_CLSID!(SystemMediaTransportControlsTimelineProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,121,115,116,101,109,77,101,100,105,97,84,114,97,110,115,112,111,114,116,67,111,110,116,114,111,108,115,84,105,109,101,108,105,110,101,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_SystemMediaTransportControlsTimelineProperties]);
 DEFINE_IID!(IID_IVideoDisplayProperties, 1443495345, 23853, 18546, 129, 112, 69, 222, 229, 188, 47, 92);
-RT_INTERFACE!{interface IVideoDisplayProperties(IVideoDisplayPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IVideoDisplayProperties] {
+RT_INTERFACE!{interface IVideoDisplayProperties(IVideoDisplayPropertiesVtbl): IInspectable [IID_IVideoDisplayProperties] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Title(&self, value: HSTRING) -> HRESULT,
     fn get_Subtitle(&self, out: *mut HSTRING) -> HRESULT,
@@ -1360,7 +1360,7 @@ impl IVideoDisplayProperties {
 }
 RT_CLASS!{class VideoDisplayProperties: IVideoDisplayProperties}
 DEFINE_IID!(IID_IVideoDisplayProperties2, 3021005262, 43858, 16811, 164, 134, 204, 16, 250, 177, 82, 249);
-RT_INTERFACE!{interface IVideoDisplayProperties2(IVideoDisplayProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoDisplayProperties2] {
+RT_INTERFACE!{interface IVideoDisplayProperties2(IVideoDisplayProperties2Vtbl): IInspectable [IID_IVideoDisplayProperties2] {
     fn get_Genres(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT
 }}
 impl IVideoDisplayProperties2 {
@@ -1379,7 +1379,7 @@ impl VideoEffects {
 }
 DEFINE_CLSID!(VideoEffects(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,69,102,102,101,99,116,115,0]) [CLSID_VideoEffects]);
 DEFINE_IID!(IID_IVideoEffectsStatics, 533571048, 47857, 17697, 152, 12, 59, 206, 187, 68, 207, 56);
-RT_INTERFACE!{static interface IVideoEffectsStatics(IVideoEffectsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVideoEffectsStatics] {
+RT_INTERFACE!{static interface IVideoEffectsStatics(IVideoEffectsStaticsVtbl): IInspectable [IID_IVideoEffectsStatics] {
     fn get_VideoStabilization(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IVideoEffectsStatics {
@@ -1390,7 +1390,7 @@ impl IVideoEffectsStatics {
     }}
 }
 DEFINE_IID!(IID_IVideoFrame, 213935653, 37116, 19602, 189, 149, 125, 237, 33, 129, 157, 28);
-RT_INTERFACE!{interface IVideoFrame(IVideoFrameVtbl): IInspectable(IInspectableVtbl) [IID_IVideoFrame] {
+RT_INTERFACE!{interface IVideoFrame(IVideoFrameVtbl): IInspectable [IID_IVideoFrame] {
     #[cfg(feature="windows-graphics")] fn get_SoftwareBitmap(&self, out: *mut <super::graphics::imaging::SoftwareBitmap as RtType>::Abi) -> HRESULT,
     fn CopyToAsync(&self, frame: <VideoFrame as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn get_Direct3DSurface(&self, out: *mut <super::graphics::directx::direct3d11::IDirect3DSurface as RtType>::Abi) -> HRESULT
@@ -1437,7 +1437,7 @@ impl VideoFrame {
 }
 DEFINE_CLSID!(VideoFrame(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,86,105,100,101,111,70,114,97,109,101,0]) [CLSID_VideoFrame]);
 DEFINE_IID!(IID_IVideoFrame2, 943162381, 13164, 17254, 141, 70, 6, 7, 152, 115, 108, 93);
-RT_INTERFACE!{interface IVideoFrame2(IVideoFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoFrame2] {
+RT_INTERFACE!{interface IVideoFrame2(IVideoFrame2Vtbl): IInspectable [IID_IVideoFrame2] {
     #[cfg(feature="windows-graphics")] fn CopyToWithBoundsAsync(&self, frame: <VideoFrame as RtType>::Abi, sourceBounds: <foundation::IReference<super::graphics::imaging::BitmapBounds> as RtType>::Abi, destinationBounds: <foundation::IReference<super::graphics::imaging::BitmapBounds> as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl IVideoFrame2 {
@@ -1448,7 +1448,7 @@ impl IVideoFrame2 {
     }}
 }
 DEFINE_IID!(IID_IVideoFrameFactory, 21720425, 8744, 19602, 146, 255, 80, 195, 128, 211, 231, 118);
-RT_INTERFACE!{static interface IVideoFrameFactory(IVideoFrameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoFrameFactory] {
+RT_INTERFACE!{static interface IVideoFrameFactory(IVideoFrameFactoryVtbl): IInspectable [IID_IVideoFrameFactory] {
     #[cfg(feature="windows-graphics")] fn Create(&self, format: super::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, out: *mut <VideoFrame as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn CreateWithAlpha(&self, format: super::graphics::imaging::BitmapPixelFormat, width: i32, height: i32, alpha: super::graphics::imaging::BitmapAlphaMode, out: *mut <VideoFrame as RtType>::Abi) -> HRESULT
 }}
@@ -1465,7 +1465,7 @@ impl IVideoFrameFactory {
     }}
 }
 DEFINE_IID!(IID_IVideoFrameStatics, 2871678319, 24849, 19251, 142, 195, 43, 32, 154, 2, 225, 122);
-RT_INTERFACE!{static interface IVideoFrameStatics(IVideoFrameStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVideoFrameStatics] {
+RT_INTERFACE!{static interface IVideoFrameStatics(IVideoFrameStaticsVtbl): IInspectable [IID_IVideoFrameStatics] {
     #[cfg(feature="windows-graphics")] fn CreateAsDirect3D11SurfaceBacked(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, out: *mut <VideoFrame as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn CreateAsDirect3D11SurfaceBackedWithDevice(&self, format: super::graphics::directx::DirectXPixelFormat, width: i32, height: i32, device: <super::graphics::directx::direct3d11::IDirect3DDevice as RtType>::Abi, out: *mut <VideoFrame as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn CreateWithSoftwareBitmap(&self, bitmap: <super::graphics::imaging::SoftwareBitmap as RtType>::Abi, out: *mut <VideoFrame as RtType>::Abi) -> HRESULT,
@@ -1496,7 +1496,7 @@ impl IVideoFrameStatics {
 pub mod appbroadcasting { // Windows.Media.AppBroadcasting
 use crate::prelude::*;
 DEFINE_IID!(IID_IAppBroadcastingMonitor, 16341608, 35079, 18592, 184, 239, 36, 210, 8, 19, 117, 66);
-RT_INTERFACE!{interface IAppBroadcastingMonitor(IAppBroadcastingMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastingMonitor] {
+RT_INTERFACE!{interface IAppBroadcastingMonitor(IAppBroadcastingMonitorVtbl): IInspectable [IID_IAppBroadcastingMonitor] {
     fn get_IsCurrentAppBroadcasting(&self, out: *mut bool) -> HRESULT,
     fn add_IsCurrentAppBroadcastingChanged(&self, handler: <foundation::TypedEventHandler<AppBroadcastingMonitor, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_IsCurrentAppBroadcastingChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
@@ -1521,7 +1521,7 @@ RT_CLASS!{class AppBroadcastingMonitor: IAppBroadcastingMonitor}
 impl RtActivatable<IActivationFactory> for AppBroadcastingMonitor {}
 DEFINE_CLSID!(AppBroadcastingMonitor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,77,111,110,105,116,111,114,0]) [CLSID_AppBroadcastingMonitor]);
 DEFINE_IID!(IID_IAppBroadcastingStatus, 304473311, 929, 17144, 139, 128, 201, 34, 140, 217, 207, 46);
-RT_INTERFACE!{interface IAppBroadcastingStatus(IAppBroadcastingStatusVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastingStatus] {
+RT_INTERFACE!{interface IAppBroadcastingStatus(IAppBroadcastingStatusVtbl): IInspectable [IID_IAppBroadcastingStatus] {
     fn get_CanStartBroadcast(&self, out: *mut bool) -> HRESULT,
     fn get_Details(&self, out: *mut <AppBroadcastingStatusDetails as RtType>::Abi) -> HRESULT
 }}
@@ -1539,7 +1539,7 @@ impl IAppBroadcastingStatus {
 }
 RT_CLASS!{class AppBroadcastingStatus: IAppBroadcastingStatus}
 DEFINE_IID!(IID_IAppBroadcastingStatusDetails, 110996900, 46451, 20028, 142, 25, 27, 175, 172, 208, 151, 19);
-RT_INTERFACE!{interface IAppBroadcastingStatusDetails(IAppBroadcastingStatusDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastingStatusDetails] {
+RT_INTERFACE!{interface IAppBroadcastingStatusDetails(IAppBroadcastingStatusDetailsVtbl): IInspectable [IID_IAppBroadcastingStatusDetails] {
     fn get_IsAnyAppBroadcasting(&self, out: *mut bool) -> HRESULT,
     fn get_IsCaptureResourceUnavailable(&self, out: *mut bool) -> HRESULT,
     fn get_IsGameStreamInProgress(&self, out: *mut bool) -> HRESULT,
@@ -1593,7 +1593,7 @@ impl IAppBroadcastingStatusDetails {
 }
 RT_CLASS!{class AppBroadcastingStatusDetails: IAppBroadcastingStatusDetails}
 DEFINE_IID!(IID_IAppBroadcastingUI, 3849297807, 61081, 19914, 163, 195, 112, 175, 61, 180, 79, 95);
-RT_INTERFACE!{interface IAppBroadcastingUI(IAppBroadcastingUIVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastingUI] {
+RT_INTERFACE!{interface IAppBroadcastingUI(IAppBroadcastingUIVtbl): IInspectable [IID_IAppBroadcastingUI] {
     fn GetStatus(&self, out: *mut <AppBroadcastingStatus as RtType>::Abi) -> HRESULT,
     fn ShowBroadcastUI(&self) -> HRESULT
 }}
@@ -1620,7 +1620,7 @@ impl AppBroadcastingUI {
 }
 DEFINE_CLSID!(AppBroadcastingUI(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,46,65,112,112,66,114,111,97,100,99,97,115,116,105,110,103,85,73,0]) [CLSID_AppBroadcastingUI]);
 DEFINE_IID!(IID_IAppBroadcastingUIStatics, 1437116317, 9163, 17785, 156, 52, 136, 111, 224, 44, 4, 90);
-RT_INTERFACE!{static interface IAppBroadcastingUIStatics(IAppBroadcastingUIStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastingUIStatics] {
+RT_INTERFACE!{static interface IAppBroadcastingUIStatics(IAppBroadcastingUIStaticsVtbl): IInspectable [IID_IAppBroadcastingUIStatics] {
     fn GetDefault(&self, out: *mut <AppBroadcastingUI as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: <super::super::system::User as RtType>::Abi, out: *mut <AppBroadcastingUI as RtType>::Abi) -> HRESULT
 }}
@@ -1640,7 +1640,7 @@ impl IAppBroadcastingUIStatics {
 pub mod apprecording { // Windows.Media.AppRecording
 use crate::prelude::*;
 DEFINE_IID!(IID_IAppRecordingManager, 3890372726, 41028, 18658, 165, 18, 48, 148, 213, 116, 199, 204);
-RT_INTERFACE!{interface IAppRecordingManager(IAppRecordingManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingManager] {
+RT_INTERFACE!{interface IAppRecordingManager(IAppRecordingManagerVtbl): IInspectable [IID_IAppRecordingManager] {
     fn GetStatus(&self, out: *mut <AppRecordingStatus as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn StartRecordingToFileAsync(&self, file: <super::super::storage::StorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<AppRecordingResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn RecordTimeSpanToFileAsync(&self, startTime: foundation::DateTime, duration: foundation::TimeSpan, file: <super::super::storage::StorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<AppRecordingResult> as RtType>::Abi) -> HRESULT,
@@ -1683,7 +1683,7 @@ impl AppRecordingManager {
 }
 DEFINE_CLSID!(AppRecordingManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,112,112,82,101,99,111,114,100,105,110,103,46,65,112,112,82,101,99,111,114,100,105,110,103,77,97,110,97,103,101,114,0]) [CLSID_AppRecordingManager]);
 DEFINE_IID!(IID_IAppRecordingManagerStatics, 1357318647, 14542, 19411, 157, 178, 231, 43, 190, 157, 225, 29);
-RT_INTERFACE!{static interface IAppRecordingManagerStatics(IAppRecordingManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingManagerStatics] {
+RT_INTERFACE!{static interface IAppRecordingManagerStatics(IAppRecordingManagerStaticsVtbl): IInspectable [IID_IAppRecordingManagerStatics] {
     fn GetDefault(&self, out: *mut <AppRecordingManager as RtType>::Abi) -> HRESULT
 }}
 impl IAppRecordingManagerStatics {
@@ -1694,7 +1694,7 @@ impl IAppRecordingManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IAppRecordingResult, 982517860, 50797, 18169, 178, 217, 91, 194, 218, 208, 112, 215);
-RT_INTERFACE!{interface IAppRecordingResult(IAppRecordingResultVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingResult] {
+RT_INTERFACE!{interface IAppRecordingResult(IAppRecordingResultVtbl): IInspectable [IID_IAppRecordingResult] {
     fn get_Succeeded(&self, out: *mut bool) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -1724,7 +1724,7 @@ impl IAppRecordingResult {
 }
 RT_CLASS!{class AppRecordingResult: IAppRecordingResult}
 DEFINE_IID!(IID_IAppRecordingSavedScreenshotInfo, 2607033610, 6298, 19712, 191, 37, 225, 187, 18, 73, 213, 148);
-RT_INTERFACE!{interface IAppRecordingSavedScreenshotInfo(IAppRecordingSavedScreenshotInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingSavedScreenshotInfo] {
+RT_INTERFACE!{interface IAppRecordingSavedScreenshotInfo(IAppRecordingSavedScreenshotInfoVtbl): IInspectable [IID_IAppRecordingSavedScreenshotInfo] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut <super::super::storage::StorageFile as RtType>::Abi) -> HRESULT,
     fn get_MediaEncodingSubtype(&self, out: *mut HSTRING) -> HRESULT
@@ -1746,7 +1746,7 @@ RT_ENUM! { enum AppRecordingSaveScreenshotOption: i32 {
     None = 0, HdrContentVisible = 1,
 }}
 DEFINE_IID!(IID_IAppRecordingSaveScreenshotResult, 2623245578, 2747, 17495, 170, 238, 36, 249, 193, 46, 199, 120);
-RT_INTERFACE!{interface IAppRecordingSaveScreenshotResult(IAppRecordingSaveScreenshotResultVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingSaveScreenshotResult] {
+RT_INTERFACE!{interface IAppRecordingSaveScreenshotResult(IAppRecordingSaveScreenshotResultVtbl): IInspectable [IID_IAppRecordingSaveScreenshotResult] {
     fn get_Succeeded(&self, out: *mut bool) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_SavedScreenshotInfos(&self, out: *mut <foundation::collections::IVectorView<AppRecordingSavedScreenshotInfo> as RtType>::Abi) -> HRESULT
@@ -1770,7 +1770,7 @@ impl IAppRecordingSaveScreenshotResult {
 }
 RT_CLASS!{class AppRecordingSaveScreenshotResult: IAppRecordingSaveScreenshotResult}
 DEFINE_IID!(IID_IAppRecordingStatus, 487376940, 48152, 19338, 166, 239, 18, 126, 250, 179, 181, 217);
-RT_INTERFACE!{interface IAppRecordingStatus(IAppRecordingStatusVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingStatus] {
+RT_INTERFACE!{interface IAppRecordingStatus(IAppRecordingStatusVtbl): IInspectable [IID_IAppRecordingStatus] {
     fn get_CanRecord(&self, out: *mut bool) -> HRESULT,
     fn get_CanRecordTimeSpan(&self, out: *mut bool) -> HRESULT,
     fn get_HistoricalBufferDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -1800,7 +1800,7 @@ impl IAppRecordingStatus {
 }
 RT_CLASS!{class AppRecordingStatus: IAppRecordingStatus}
 DEFINE_IID!(IID_IAppRecordingStatusDetails, 3040389552, 5357, 17426, 172, 69, 109, 103, 44, 156, 153, 73);
-RT_INTERFACE!{interface IAppRecordingStatusDetails(IAppRecordingStatusDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IAppRecordingStatusDetails] {
+RT_INTERFACE!{interface IAppRecordingStatusDetails(IAppRecordingStatusDetailsVtbl): IInspectable [IID_IAppRecordingStatusDetails] {
     fn get_IsAnyAppBroadcasting(&self, out: *mut bool) -> HRESULT,
     fn get_IsCaptureResourceUnavailable(&self, out: *mut bool) -> HRESULT,
     fn get_IsGameStreamInProgress(&self, out: *mut bool) -> HRESULT,
@@ -1863,7 +1863,7 @@ RT_CLASS!{class AppRecordingStatusDetails: IAppRecordingStatusDetails}
 pub mod audio { // Windows.Media.Audio
 use crate::prelude::*;
 DEFINE_IID!(IID_IAudioDeviceInputNode, 2954587105, 28494, 18914, 172, 1, 85, 157, 98, 190, 179, 169);
-RT_INTERFACE!{interface IAudioDeviceInputNode(IAudioDeviceInputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceInputNode] {
+RT_INTERFACE!{interface IAudioDeviceInputNode(IAudioDeviceInputNodeVtbl): IInspectable [IID_IAudioDeviceInputNode] {
     #[cfg(feature="windows-devices")] fn get_Device(&self, out: *mut <super::super::devices::enumeration::DeviceInformation as RtType>::Abi) -> HRESULT
 }}
 impl IAudioDeviceInputNode {
@@ -1878,7 +1878,7 @@ RT_ENUM! { enum AudioDeviceNodeCreationStatus: i32 {
     Success = 0, DeviceNotAvailable = 1, FormatNotSupported = 2, UnknownFailure = 3, AccessDenied = 4,
 }}
 DEFINE_IID!(IID_IAudioDeviceOutputNode, 909040639, 65308, 17460, 158, 15, 189, 46, 245, 34, 172, 130);
-RT_INTERFACE!{interface IAudioDeviceOutputNode(IAudioDeviceOutputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceOutputNode] {
+RT_INTERFACE!{interface IAudioDeviceOutputNode(IAudioDeviceOutputNodeVtbl): IInspectable [IID_IAudioDeviceOutputNode] {
     #[cfg(feature="windows-devices")] fn get_Device(&self, out: *mut <super::super::devices::enumeration::DeviceInformation as RtType>::Abi) -> HRESULT
 }}
 impl IAudioDeviceOutputNode {
@@ -1890,7 +1890,7 @@ impl IAudioDeviceOutputNode {
 }
 RT_CLASS!{class AudioDeviceOutputNode: IAudioDeviceOutputNode}
 DEFINE_IID!(IID_IAudioFileInputNode, 2421909448, 28517, 19668, 136, 144, 70, 148, 132, 60, 39, 109);
-RT_INTERFACE!{interface IAudioFileInputNode(IAudioFileInputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFileInputNode] {
+RT_INTERFACE!{interface IAudioFileInputNode(IAudioFileInputNodeVtbl): IInspectable [IID_IAudioFileInputNode] {
     fn put_PlaybackSpeedFactor(&self, value: f64) -> HRESULT,
     fn get_PlaybackSpeedFactor(&self, out: *mut f64) -> HRESULT,
     fn get_Position(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -1978,7 +1978,7 @@ RT_ENUM! { enum AudioFileNodeCreationStatus: i32 {
     Success = 0, FileNotFound = 1, InvalidFileType = 2, FormatNotSupported = 3, UnknownFailure = 4,
 }}
 DEFINE_IID!(IID_IAudioFileOutputNode, 1356863872, 20838, 16531, 128, 248, 173, 160, 0, 137, 233, 207);
-RT_INTERFACE!{interface IAudioFileOutputNode(IAudioFileOutputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFileOutputNode] {
+RT_INTERFACE!{interface IAudioFileOutputNode(IAudioFileOutputNodeVtbl): IInspectable [IID_IAudioFileOutputNode] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut <super::super::storage::IStorageFile as RtType>::Abi) -> HRESULT,
     fn get_FileEncodingProfile(&self, out: *mut <super::mediaproperties::MediaEncodingProfile as RtType>::Abi) -> HRESULT,
@@ -2003,7 +2003,7 @@ impl IAudioFileOutputNode {
 }
 RT_CLASS!{class AudioFileOutputNode: IAudioFileOutputNode}
 DEFINE_IID!(IID_IAudioFrameCompletedEventArgs, 3699147422, 520, 17668, 165, 168, 240, 242, 104, 146, 10, 101);
-RT_INTERFACE!{interface IAudioFrameCompletedEventArgs(IAudioFrameCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFrameCompletedEventArgs] {
+RT_INTERFACE!{interface IAudioFrameCompletedEventArgs(IAudioFrameCompletedEventArgsVtbl): IInspectable [IID_IAudioFrameCompletedEventArgs] {
     fn get_Frame(&self, out: *mut <super::AudioFrame as RtType>::Abi) -> HRESULT
 }}
 impl IAudioFrameCompletedEventArgs {
@@ -2015,7 +2015,7 @@ impl IAudioFrameCompletedEventArgs {
 }
 RT_CLASS!{class AudioFrameCompletedEventArgs: IAudioFrameCompletedEventArgs}
 DEFINE_IID!(IID_IAudioFrameInputNode, 28468935, 64918, 20469, 163, 197, 210, 122, 155, 244, 66, 55);
-RT_INTERFACE!{interface IAudioFrameInputNode(IAudioFrameInputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFrameInputNode] {
+RT_INTERFACE!{interface IAudioFrameInputNode(IAudioFrameInputNodeVtbl): IInspectable [IID_IAudioFrameInputNode] {
     fn put_PlaybackSpeedFactor(&self, value: f64) -> HRESULT,
     fn get_PlaybackSpeedFactor(&self, out: *mut f64) -> HRESULT,
     fn AddFrame(&self, frame: <super::AudioFrame as RtType>::Abi) -> HRESULT,
@@ -2070,7 +2070,7 @@ impl IAudioFrameInputNode {
 }
 RT_CLASS!{class AudioFrameInputNode: IAudioFrameInputNode}
 DEFINE_IID!(IID_IAudioFrameOutputNode, 3091674907, 12953, 17909, 136, 179, 201, 209, 42, 63, 28, 200);
-RT_INTERFACE!{interface IAudioFrameOutputNode(IAudioFrameOutputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioFrameOutputNode] {
+RT_INTERFACE!{interface IAudioFrameOutputNode(IAudioFrameOutputNodeVtbl): IInspectable [IID_IAudioFrameOutputNode] {
     fn GetFrame(&self, out: *mut <super::AudioFrame as RtType>::Abi) -> HRESULT
 }}
 impl IAudioFrameOutputNode {
@@ -2082,7 +2082,7 @@ impl IAudioFrameOutputNode {
 }
 RT_CLASS!{class AudioFrameOutputNode: IAudioFrameOutputNode}
 DEFINE_IID!(IID_IAudioGraph, 450129645, 58508, 19988, 150, 96, 44, 79, 131, 233, 205, 216);
-RT_INTERFACE!{interface IAudioGraph(IAudioGraphVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraph] {
+RT_INTERFACE!{interface IAudioGraph(IAudioGraphVtbl): IInspectable [IID_IAudioGraph] {
     fn CreateFrameInputNode(&self, out: *mut <AudioFrameInputNode as RtType>::Abi) -> HRESULT,
     fn CreateFrameInputNodeWithFormat(&self, encodingProperties: <super::mediaproperties::AudioEncodingProperties as RtType>::Abi, out: *mut <AudioFrameInputNode as RtType>::Abi) -> HRESULT,
     fn CreateDeviceInputNodeAsync(&self, category: super::capture::MediaCategory, out: *mut <foundation::IAsyncOperation<CreateAudioDeviceInputNodeResult> as RtType>::Abi) -> HRESULT,
@@ -2262,7 +2262,7 @@ impl AudioGraph {
 }
 DEFINE_CLSID!(AudioGraph(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,71,114,97,112,104,0]) [CLSID_AudioGraph]);
 DEFINE_IID!(IID_IAudioGraph2, 1313618901, 20417, 17910, 169, 71, 60, 211, 143, 79, 216, 57);
-RT_INTERFACE!{interface IAudioGraph2(IAudioGraph2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraph2] {
+RT_INTERFACE!{interface IAudioGraph2(IAudioGraph2Vtbl): IInspectable [IID_IAudioGraph2] {
     fn CreateFrameInputNodeWithFormatAndEmitter(&self, encodingProperties: <super::mediaproperties::AudioEncodingProperties as RtType>::Abi, emitter: <AudioNodeEmitter as RtType>::Abi, out: *mut <AudioFrameInputNode as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-devices")] fn CreateDeviceInputNodeWithFormatAndEmitterOnDeviceAsync(&self, category: super::capture::MediaCategory, encodingProperties: <super::mediaproperties::AudioEncodingProperties as RtType>::Abi, device: <super::super::devices::enumeration::DeviceInformation as RtType>::Abi, emitter: <AudioNodeEmitter as RtType>::Abi, out: *mut <foundation::IAsyncOperation<CreateAudioDeviceInputNodeResult> as RtType>::Abi) -> HRESULT,
@@ -2299,7 +2299,7 @@ impl IAudioGraph2 {
     }}
 }
 DEFINE_IID!(IID_IAudioGraph3, 3721209262, 4485, 17063, 131, 29, 106, 155, 15, 200, 104, 32);
-RT_INTERFACE!{interface IAudioGraph3(IAudioGraph3Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraph3] {
+RT_INTERFACE!{interface IAudioGraph3(IAudioGraph3Vtbl): IInspectable [IID_IAudioGraph3] {
     fn CreateMediaSourceAudioInputNodeAsync(&self, mediaSource: <super::core::MediaSource as RtType>::Abi, out: *mut <foundation::IAsyncOperation<CreateMediaSourceAudioInputNodeResult> as RtType>::Abi) -> HRESULT,
     fn CreateMediaSourceAudioInputNodeWithEmitterAsync(&self, mediaSource: <super::core::MediaSource as RtType>::Abi, emitter: <AudioNodeEmitter as RtType>::Abi, out: *mut <foundation::IAsyncOperation<CreateMediaSourceAudioInputNodeResult> as RtType>::Abi) -> HRESULT
 }}
@@ -2317,7 +2317,7 @@ impl IAudioGraph3 {
 }
 RT_CLASS!{class AudioGraphBatchUpdater: foundation::IClosable}
 DEFINE_IID!(IID_IAudioGraphConnection, 1982886125, 53326, 20396, 178, 51, 96, 11, 66, 237, 212, 105);
-RT_INTERFACE!{interface IAudioGraphConnection(IAudioGraphConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphConnection] {
+RT_INTERFACE!{interface IAudioGraphConnection(IAudioGraphConnectionVtbl): IInspectable [IID_IAudioGraphConnection] {
     fn get_Destination(&self, out: *mut <IAudioNode as RtType>::Abi) -> HRESULT,
     fn put_Gain(&self, value: f64) -> HRESULT,
     fn get_Gain(&self, out: *mut f64) -> HRESULT
@@ -2343,7 +2343,7 @@ RT_ENUM! { enum AudioGraphCreationStatus: i32 {
     Success = 0, DeviceNotAvailable = 1, FormatNotSupported = 2, UnknownFailure = 3,
 }}
 DEFINE_IID!(IID_IAudioGraphSettings, 492397695, 59134, 17960, 132, 248, 157, 139, 219, 162, 87, 133);
-RT_INTERFACE!{interface IAudioGraphSettings(IAudioGraphSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphSettings] {
+RT_INTERFACE!{interface IAudioGraphSettings(IAudioGraphSettingsVtbl): IInspectable [IID_IAudioGraphSettings] {
     fn get_EncodingProperties(&self, out: *mut <super::mediaproperties::AudioEncodingProperties as RtType>::Abi) -> HRESULT,
     fn put_EncodingProperties(&self, value: <super::mediaproperties::AudioEncodingProperties as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy2(&self) -> (),
@@ -2424,7 +2424,7 @@ impl AudioGraphSettings {
 }
 DEFINE_CLSID!(AudioGraphSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,71,114,97,112,104,83,101,116,116,105,110,103,115,0]) [CLSID_AudioGraphSettings]);
 DEFINE_IID!(IID_IAudioGraphSettings2, 1922144135, 19883, 18147, 180, 201, 216, 225, 162, 99, 96, 98);
-RT_INTERFACE!{interface IAudioGraphSettings2(IAudioGraphSettings2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphSettings2] {
+RT_INTERFACE!{interface IAudioGraphSettings2(IAudioGraphSettings2Vtbl): IInspectable [IID_IAudioGraphSettings2] {
     fn put_MaxPlaybackSpeedFactor(&self, value: f64) -> HRESULT,
     fn get_MaxPlaybackSpeedFactor(&self, out: *mut f64) -> HRESULT
 }}
@@ -2440,7 +2440,7 @@ impl IAudioGraphSettings2 {
     }}
 }
 DEFINE_IID!(IID_IAudioGraphSettingsFactory, 2782469318, 49899, 19041, 162, 20, 29, 102, 215, 95, 131, 218);
-RT_INTERFACE!{static interface IAudioGraphSettingsFactory(IAudioGraphSettingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphSettingsFactory] {
+RT_INTERFACE!{static interface IAudioGraphSettingsFactory(IAudioGraphSettingsFactoryVtbl): IInspectable [IID_IAudioGraphSettingsFactory] {
     fn Create(&self, audioRenderCategory: super::render::AudioRenderCategory, out: *mut <AudioGraphSettings as RtType>::Abi) -> HRESULT
 }}
 impl IAudioGraphSettingsFactory {
@@ -2451,7 +2451,7 @@ impl IAudioGraphSettingsFactory {
     }}
 }
 DEFINE_IID!(IID_IAudioGraphStatics, 1995190578, 57689, 19127, 168, 42, 23, 190, 180, 179, 30, 148);
-RT_INTERFACE!{static interface IAudioGraphStatics(IAudioGraphStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphStatics] {
+RT_INTERFACE!{static interface IAudioGraphStatics(IAudioGraphStaticsVtbl): IInspectable [IID_IAudioGraphStatics] {
     fn CreateAsync(&self, settings: <AudioGraphSettings as RtType>::Abi, out: *mut <foundation::IAsyncOperation<CreateAudioGraphResult> as RtType>::Abi) -> HRESULT
 }}
 impl IAudioGraphStatics {
@@ -2465,7 +2465,7 @@ RT_ENUM! { enum AudioGraphUnrecoverableError: i32 {
     None = 0, AudioDeviceLost = 1, AudioSessionDisconnected = 2, UnknownFailure = 3,
 }}
 DEFINE_IID!(IID_IAudioGraphUnrecoverableErrorOccurredEventArgs, 3285830624, 16374, 20403, 178, 98, 80, 212, 53, 197, 84, 35);
-RT_INTERFACE!{interface IAudioGraphUnrecoverableErrorOccurredEventArgs(IAudioGraphUnrecoverableErrorOccurredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioGraphUnrecoverableErrorOccurredEventArgs] {
+RT_INTERFACE!{interface IAudioGraphUnrecoverableErrorOccurredEventArgs(IAudioGraphUnrecoverableErrorOccurredEventArgsVtbl): IInspectable [IID_IAudioGraphUnrecoverableErrorOccurredEventArgs] {
     fn get_Error(&self, out: *mut AudioGraphUnrecoverableError) -> HRESULT
 }}
 impl IAudioGraphUnrecoverableErrorOccurredEventArgs {
@@ -2477,7 +2477,7 @@ impl IAudioGraphUnrecoverableErrorOccurredEventArgs {
 }
 RT_CLASS!{class AudioGraphUnrecoverableErrorOccurredEventArgs: IAudioGraphUnrecoverableErrorOccurredEventArgs}
 DEFINE_IID!(IID_IAudioInputNode, 3511156828, 33832, 18308, 183, 253, 169, 157, 70, 140, 93, 32);
-RT_INTERFACE!{interface IAudioInputNode(IAudioInputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioInputNode] {
+RT_INTERFACE!{interface IAudioInputNode(IAudioInputNodeVtbl): IInspectable [IID_IAudioInputNode] {
     fn get_OutgoingConnections(&self, out: *mut <foundation::collections::IVectorView<AudioGraphConnection> as RtType>::Abi) -> HRESULT,
     fn AddOutgoingConnection(&self, destination: <IAudioNode as RtType>::Abi) -> HRESULT,
     fn AddOutgoingConnectionWithGain(&self, destination: <IAudioNode as RtType>::Abi, gain: f64) -> HRESULT,
@@ -2503,7 +2503,7 @@ impl IAudioInputNode {
     }}
 }
 DEFINE_IID!(IID_IAudioInputNode2, 2421249719, 51816, 19565, 168, 188, 227, 238, 23, 254, 63, 210);
-RT_INTERFACE!{interface IAudioInputNode2(IAudioInputNode2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioInputNode2] {
+RT_INTERFACE!{interface IAudioInputNode2(IAudioInputNode2Vtbl): IInspectable [IID_IAudioInputNode2] {
     fn get_Emitter(&self, out: *mut <AudioNodeEmitter as RtType>::Abi) -> HRESULT
 }}
 impl IAudioInputNode2 {
@@ -2514,7 +2514,7 @@ impl IAudioInputNode2 {
     }}
 }
 DEFINE_IID!(IID_IAudioNode, 356031871, 56280, 18457, 191, 3, 102, 142, 147, 87, 205, 109);
-RT_INTERFACE!{interface IAudioNode(IAudioNodeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNode] {
+RT_INTERFACE!{interface IAudioNode(IAudioNodeVtbl): IInspectable [IID_IAudioNode] {
     fn get_EffectDefinitions(&self, out: *mut <foundation::collections::IVector<super::effects::IAudioEffectDefinition> as RtType>::Abi) -> HRESULT,
     fn put_OutgoingGain(&self, value: f64) -> HRESULT,
     fn get_OutgoingGain(&self, out: *mut f64) -> HRESULT,
@@ -2578,7 +2578,7 @@ impl IAudioNode {
     }}
 }
 DEFINE_IID!(IID_IAudioNodeEmitter, 913741597, 34826, 18360, 173, 247, 19, 35, 169, 217, 101, 190);
-RT_INTERFACE!{interface IAudioNodeEmitter(IAudioNodeEmitterVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitter] {
+RT_INTERFACE!{interface IAudioNodeEmitter(IAudioNodeEmitterVtbl): IInspectable [IID_IAudioNodeEmitter] {
     fn get_Position(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
     fn put_Position(&self, value: foundation::numerics::Vector3) -> HRESULT,
     fn get_Direction(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
@@ -2676,7 +2676,7 @@ impl AudioNodeEmitter {
 }
 DEFINE_CLSID!(AudioNodeEmitter(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,69,109,105,116,116,101,114,0]) [CLSID_AudioNodeEmitter]);
 DEFINE_IID!(IID_IAudioNodeEmitter2, 1253502667, 60457, 18424, 129, 140, 182, 182, 96, 165, 174, 177);
-RT_INTERFACE!{interface IAudioNodeEmitter2(IAudioNodeEmitter2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitter2] {
+RT_INTERFACE!{interface IAudioNodeEmitter2(IAudioNodeEmitter2Vtbl): IInspectable [IID_IAudioNodeEmitter2] {
     fn get_SpatialAudioModel(&self, out: *mut SpatialAudioModel) -> HRESULT,
     fn put_SpatialAudioModel(&self, value: SpatialAudioModel) -> HRESULT
 }}
@@ -2692,7 +2692,7 @@ impl IAudioNodeEmitter2 {
     }}
 }
 DEFINE_IID!(IID_IAudioNodeEmitterConeProperties, 3919260910, 714, 17269, 147, 38, 12, 106, 228, 188, 223, 181);
-RT_INTERFACE!{interface IAudioNodeEmitterConeProperties(IAudioNodeEmitterConePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitterConeProperties] {
+RT_INTERFACE!{interface IAudioNodeEmitterConeProperties(IAudioNodeEmitterConePropertiesVtbl): IInspectable [IID_IAudioNodeEmitterConeProperties] {
     fn get_InnerAngle(&self, out: *mut f64) -> HRESULT,
     fn get_OuterAngle(&self, out: *mut f64) -> HRESULT,
     fn get_OuterAngleGain(&self, out: *mut f64) -> HRESULT
@@ -2719,7 +2719,7 @@ RT_ENUM! { enum AudioNodeEmitterDecayKind: i32 {
     Natural = 0, Custom = 1,
 }}
 DEFINE_IID!(IID_IAudioNodeEmitterDecayModel, 488463095, 3411, 20393, 189, 132, 213, 129, 106, 134, 243, 255);
-RT_INTERFACE!{interface IAudioNodeEmitterDecayModel(IAudioNodeEmitterDecayModelVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitterDecayModel] {
+RT_INTERFACE!{interface IAudioNodeEmitterDecayModel(IAudioNodeEmitterDecayModelVtbl): IInspectable [IID_IAudioNodeEmitterDecayModel] {
     fn get_Kind(&self, out: *mut AudioNodeEmitterDecayKind) -> HRESULT,
     fn get_MinGain(&self, out: *mut f64) -> HRESULT,
     fn get_MaxGain(&self, out: *mut f64) -> HRESULT,
@@ -2759,7 +2759,7 @@ impl AudioNodeEmitterDecayModel {
 }
 DEFINE_CLSID!(AudioNodeEmitterDecayModel(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,69,109,105,116,116,101,114,68,101,99,97,121,77,111,100,101,108,0]) [CLSID_AudioNodeEmitterDecayModel]);
 DEFINE_IID!(IID_IAudioNodeEmitterDecayModelStatics, 3346562216, 61816, 17967, 188, 129, 141, 213, 203, 229, 218, 232);
-RT_INTERFACE!{static interface IAudioNodeEmitterDecayModelStatics(IAudioNodeEmitterDecayModelStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitterDecayModelStatics] {
+RT_INTERFACE!{static interface IAudioNodeEmitterDecayModelStatics(IAudioNodeEmitterDecayModelStaticsVtbl): IInspectable [IID_IAudioNodeEmitterDecayModelStatics] {
     fn CreateNatural(&self, minGain: f64, maxGain: f64, unityGainDistance: f64, cutoffDistance: f64, out: *mut <AudioNodeEmitterDecayModel as RtType>::Abi) -> HRESULT,
     fn CreateCustom(&self, minGain: f64, maxGain: f64, out: *mut <AudioNodeEmitterDecayModel as RtType>::Abi) -> HRESULT
 }}
@@ -2776,7 +2776,7 @@ impl IAudioNodeEmitterDecayModelStatics {
     }}
 }
 DEFINE_IID!(IID_IAudioNodeEmitterFactory, 4257761434, 27350, 19684, 183, 247, 169, 147, 112, 223, 126, 233);
-RT_INTERFACE!{static interface IAudioNodeEmitterFactory(IAudioNodeEmitterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitterFactory] {
+RT_INTERFACE!{static interface IAudioNodeEmitterFactory(IAudioNodeEmitterFactoryVtbl): IInspectable [IID_IAudioNodeEmitterFactory] {
     fn CreateAudioNodeEmitter(&self, shape: <AudioNodeEmitterShape as RtType>::Abi, decayModel: <AudioNodeEmitterDecayModel as RtType>::Abi, settings: AudioNodeEmitterSettings, out: *mut <AudioNodeEmitter as RtType>::Abi) -> HRESULT
 }}
 impl IAudioNodeEmitterFactory {
@@ -2787,7 +2787,7 @@ impl IAudioNodeEmitterFactory {
     }}
 }
 DEFINE_IID!(IID_IAudioNodeEmitterNaturalDecayModelProperties, 1217612751, 53036, 20220, 147, 49, 117, 189, 34, 223, 31, 12);
-RT_INTERFACE!{interface IAudioNodeEmitterNaturalDecayModelProperties(IAudioNodeEmitterNaturalDecayModelPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitterNaturalDecayModelProperties] {
+RT_INTERFACE!{interface IAudioNodeEmitterNaturalDecayModelProperties(IAudioNodeEmitterNaturalDecayModelPropertiesVtbl): IInspectable [IID_IAudioNodeEmitterNaturalDecayModelProperties] {
     fn get_UnityGainDistance(&self, out: *mut f64) -> HRESULT,
     fn get_CutoffDistance(&self, out: *mut f64) -> HRESULT
 }}
@@ -2808,7 +2808,7 @@ RT_ENUM! { enum AudioNodeEmitterSettings: u32 {
     None = 0, DisableDoppler = 1,
 }}
 DEFINE_IID!(IID_IAudioNodeEmitterShape, 3926069701, 59197, 17596, 133, 156, 69, 85, 59, 188, 72, 40);
-RT_INTERFACE!{interface IAudioNodeEmitterShape(IAudioNodeEmitterShapeVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitterShape] {
+RT_INTERFACE!{interface IAudioNodeEmitterShape(IAudioNodeEmitterShapeVtbl): IInspectable [IID_IAudioNodeEmitterShape] {
     fn get_Kind(&self, out: *mut AudioNodeEmitterShapeKind) -> HRESULT,
     fn get_ConeProperties(&self, out: *mut <AudioNodeEmitterConeProperties as RtType>::Abi) -> HRESULT
 }}
@@ -2839,7 +2839,7 @@ RT_ENUM! { enum AudioNodeEmitterShapeKind: i32 {
     Omnidirectional = 0, Cone = 1,
 }}
 DEFINE_IID!(IID_IAudioNodeEmitterShapeStatics, 1471883121, 65445, 19334, 167, 121, 226, 100, 174, 185, 20, 95);
-RT_INTERFACE!{static interface IAudioNodeEmitterShapeStatics(IAudioNodeEmitterShapeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeEmitterShapeStatics] {
+RT_INTERFACE!{static interface IAudioNodeEmitterShapeStatics(IAudioNodeEmitterShapeStaticsVtbl): IInspectable [IID_IAudioNodeEmitterShapeStatics] {
     fn CreateCone(&self, innerAngle: f64, outerAngle: f64, outerAngleGain: f64, out: *mut <AudioNodeEmitterShape as RtType>::Abi) -> HRESULT,
     fn CreateOmnidirectional(&self, out: *mut <AudioNodeEmitterShape as RtType>::Abi) -> HRESULT
 }}
@@ -2856,7 +2856,7 @@ impl IAudioNodeEmitterShapeStatics {
     }}
 }
 DEFINE_IID!(IID_IAudioNodeListener, 3648138774, 3082, 16858, 183, 85, 108, 119, 131, 95, 177, 235);
-RT_INTERFACE!{interface IAudioNodeListener(IAudioNodeListenerVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeListener] {
+RT_INTERFACE!{interface IAudioNodeListener(IAudioNodeListenerVtbl): IInspectable [IID_IAudioNodeListener] {
     fn get_Position(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
     fn put_Position(&self, value: foundation::numerics::Vector3) -> HRESULT,
     fn get_Orientation(&self, out: *mut foundation::numerics::Quaternion) -> HRESULT,
@@ -2908,7 +2908,7 @@ RT_CLASS!{class AudioNodeListener: IAudioNodeListener}
 impl RtActivatable<IActivationFactory> for AudioNodeListener {}
 DEFINE_CLSID!(AudioNodeListener(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,78,111,100,101,76,105,115,116,101,110,101,114,0]) [CLSID_AudioNodeListener]);
 DEFINE_IID!(IID_IAudioNodeWithListener, 235901052, 31231, 17732, 158, 235, 1, 37, 123, 21, 16, 90);
-RT_INTERFACE!{interface IAudioNodeWithListener(IAudioNodeWithListenerVtbl): IInspectable(IInspectableVtbl) [IID_IAudioNodeWithListener] {
+RT_INTERFACE!{interface IAudioNodeWithListener(IAudioNodeWithListenerVtbl): IInspectable [IID_IAudioNodeWithListener] {
     fn put_Listener(&self, value: <AudioNodeListener as RtType>::Abi) -> HRESULT,
     fn get_Listener(&self, out: *mut <AudioNodeListener as RtType>::Abi) -> HRESULT
 }}
@@ -2924,7 +2924,7 @@ impl IAudioNodeWithListener {
     }}
 }
 DEFINE_IID!(IID_IAudioStateMonitor, 487838006, 409, 19676, 184, 78, 231, 44, 43, 88, 30, 206);
-RT_INTERFACE!{interface IAudioStateMonitor(IAudioStateMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IAudioStateMonitor] {
+RT_INTERFACE!{interface IAudioStateMonitor(IAudioStateMonitorVtbl): IInspectable [IID_IAudioStateMonitor] {
     fn add_SoundLevelChanged(&self, handler: <foundation::TypedEventHandler<AudioStateMonitor, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SoundLevelChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_SoundLevel(&self, out: *mut super::SoundLevel) -> HRESULT
@@ -2975,7 +2975,7 @@ impl AudioStateMonitor {
 }
 DEFINE_CLSID!(AudioStateMonitor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,65,117,100,105,111,83,116,97,116,101,77,111,110,105,116,111,114,0]) [CLSID_AudioStateMonitor]);
 DEFINE_IID!(IID_IAudioStateMonitorStatics, 1668606540, 6971, 16385, 148, 217, 221, 34, 83, 48, 250, 64);
-RT_INTERFACE!{static interface IAudioStateMonitorStatics(IAudioStateMonitorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioStateMonitorStatics] {
+RT_INTERFACE!{static interface IAudioStateMonitorStatics(IAudioStateMonitorStaticsVtbl): IInspectable [IID_IAudioStateMonitorStatics] {
     fn CreateForRenderMonitoring(&self, out: *mut <AudioStateMonitor as RtType>::Abi) -> HRESULT,
     fn CreateForRenderMonitoringWithCategory(&self, category: super::render::AudioRenderCategory, out: *mut <AudioStateMonitor as RtType>::Abi) -> HRESULT,
     fn CreateForRenderMonitoringWithCategoryAndDeviceRole(&self, category: super::render::AudioRenderCategory, role: super::devices::AudioDeviceRole, out: *mut <AudioStateMonitor as RtType>::Abi) -> HRESULT,
@@ -3029,7 +3029,7 @@ impl IAudioStateMonitorStatics {
 }
 RT_CLASS!{class AudioSubmixNode: IAudioInputNode}
 DEFINE_IID!(IID_ICreateAudioDeviceInputNodeResult, 384747432, 7335, 16623, 145, 164, 211, 70, 224, 170, 27, 186);
-RT_INTERFACE!{interface ICreateAudioDeviceInputNodeResult(ICreateAudioDeviceInputNodeResultVtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioDeviceInputNodeResult] {
+RT_INTERFACE!{interface ICreateAudioDeviceInputNodeResult(ICreateAudioDeviceInputNodeResultVtbl): IInspectable [IID_ICreateAudioDeviceInputNodeResult] {
     fn get_Status(&self, out: *mut AudioDeviceNodeCreationStatus) -> HRESULT,
     fn get_DeviceInputNode(&self, out: *mut <AudioDeviceInputNode as RtType>::Abi) -> HRESULT
 }}
@@ -3047,7 +3047,7 @@ impl ICreateAudioDeviceInputNodeResult {
 }
 RT_CLASS!{class CreateAudioDeviceInputNodeResult: ICreateAudioDeviceInputNodeResult}
 DEFINE_IID!(IID_ICreateAudioDeviceInputNodeResult2, 2451335630, 16181, 16839, 150, 34, 121, 246, 8, 186, 237, 194);
-RT_INTERFACE!{interface ICreateAudioDeviceInputNodeResult2(ICreateAudioDeviceInputNodeResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioDeviceInputNodeResult2] {
+RT_INTERFACE!{interface ICreateAudioDeviceInputNodeResult2(ICreateAudioDeviceInputNodeResult2Vtbl): IInspectable [IID_ICreateAudioDeviceInputNodeResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl ICreateAudioDeviceInputNodeResult2 {
@@ -3058,7 +3058,7 @@ impl ICreateAudioDeviceInputNodeResult2 {
     }}
 }
 DEFINE_IID!(IID_ICreateAudioDeviceOutputNodeResult, 4151799079, 7578, 18423, 156, 212, 40, 89, 204, 27, 123, 255);
-RT_INTERFACE!{interface ICreateAudioDeviceOutputNodeResult(ICreateAudioDeviceOutputNodeResultVtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioDeviceOutputNodeResult] {
+RT_INTERFACE!{interface ICreateAudioDeviceOutputNodeResult(ICreateAudioDeviceOutputNodeResultVtbl): IInspectable [IID_ICreateAudioDeviceOutputNodeResult] {
     fn get_Status(&self, out: *mut AudioDeviceNodeCreationStatus) -> HRESULT,
     fn get_DeviceOutputNode(&self, out: *mut <AudioDeviceOutputNode as RtType>::Abi) -> HRESULT
 }}
@@ -3076,7 +3076,7 @@ impl ICreateAudioDeviceOutputNodeResult {
 }
 RT_CLASS!{class CreateAudioDeviceOutputNodeResult: ICreateAudioDeviceOutputNodeResult}
 DEFINE_IID!(IID_ICreateAudioDeviceOutputNodeResult2, 1214523039, 48590, 19121, 189, 56, 251, 174, 147, 174, 218, 202);
-RT_INTERFACE!{interface ICreateAudioDeviceOutputNodeResult2(ICreateAudioDeviceOutputNodeResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioDeviceOutputNodeResult2] {
+RT_INTERFACE!{interface ICreateAudioDeviceOutputNodeResult2(ICreateAudioDeviceOutputNodeResult2Vtbl): IInspectable [IID_ICreateAudioDeviceOutputNodeResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl ICreateAudioDeviceOutputNodeResult2 {
@@ -3087,7 +3087,7 @@ impl ICreateAudioDeviceOutputNodeResult2 {
     }}
 }
 DEFINE_IID!(IID_ICreateAudioFileInputNodeResult, 3464746524, 58007, 19536, 156, 231, 28, 122, 105, 214, 189, 9);
-RT_INTERFACE!{interface ICreateAudioFileInputNodeResult(ICreateAudioFileInputNodeResultVtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioFileInputNodeResult] {
+RT_INTERFACE!{interface ICreateAudioFileInputNodeResult(ICreateAudioFileInputNodeResultVtbl): IInspectable [IID_ICreateAudioFileInputNodeResult] {
     fn get_Status(&self, out: *mut AudioFileNodeCreationStatus) -> HRESULT,
     fn get_FileInputNode(&self, out: *mut <AudioFileInputNode as RtType>::Abi) -> HRESULT
 }}
@@ -3105,7 +3105,7 @@ impl ICreateAudioFileInputNodeResult {
 }
 RT_CLASS!{class CreateAudioFileInputNodeResult: ICreateAudioFileInputNodeResult}
 DEFINE_IID!(IID_ICreateAudioFileInputNodeResult2, 4178059296, 15744, 20448, 129, 193, 118, 143, 234, 124, 167, 224);
-RT_INTERFACE!{interface ICreateAudioFileInputNodeResult2(ICreateAudioFileInputNodeResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioFileInputNodeResult2] {
+RT_INTERFACE!{interface ICreateAudioFileInputNodeResult2(ICreateAudioFileInputNodeResult2Vtbl): IInspectable [IID_ICreateAudioFileInputNodeResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl ICreateAudioFileInputNodeResult2 {
@@ -3116,7 +3116,7 @@ impl ICreateAudioFileInputNodeResult2 {
     }}
 }
 DEFINE_IID!(IID_ICreateAudioFileOutputNodeResult, 1205254779, 59657, 17727, 134, 110, 85, 64, 205, 167, 52, 255);
-RT_INTERFACE!{interface ICreateAudioFileOutputNodeResult(ICreateAudioFileOutputNodeResultVtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioFileOutputNodeResult] {
+RT_INTERFACE!{interface ICreateAudioFileOutputNodeResult(ICreateAudioFileOutputNodeResultVtbl): IInspectable [IID_ICreateAudioFileOutputNodeResult] {
     fn get_Status(&self, out: *mut AudioFileNodeCreationStatus) -> HRESULT,
     fn get_FileOutputNode(&self, out: *mut <AudioFileOutputNode as RtType>::Abi) -> HRESULT
 }}
@@ -3134,7 +3134,7 @@ impl ICreateAudioFileOutputNodeResult {
 }
 RT_CLASS!{class CreateAudioFileOutputNodeResult: ICreateAudioFileOutputNodeResult}
 DEFINE_IID!(IID_ICreateAudioFileOutputNodeResult2, 2667689229, 13080, 18355, 166, 10, 27, 73, 43, 231, 252, 13);
-RT_INTERFACE!{interface ICreateAudioFileOutputNodeResult2(ICreateAudioFileOutputNodeResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioFileOutputNodeResult2] {
+RT_INTERFACE!{interface ICreateAudioFileOutputNodeResult2(ICreateAudioFileOutputNodeResult2Vtbl): IInspectable [IID_ICreateAudioFileOutputNodeResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl ICreateAudioFileOutputNodeResult2 {
@@ -3145,7 +3145,7 @@ impl ICreateAudioFileOutputNodeResult2 {
     }}
 }
 DEFINE_IID!(IID_ICreateAudioGraphResult, 1414786942, 31710, 19318, 187, 93, 72, 247, 156, 252, 140, 11);
-RT_INTERFACE!{interface ICreateAudioGraphResult(ICreateAudioGraphResultVtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioGraphResult] {
+RT_INTERFACE!{interface ICreateAudioGraphResult(ICreateAudioGraphResultVtbl): IInspectable [IID_ICreateAudioGraphResult] {
     fn get_Status(&self, out: *mut AudioGraphCreationStatus) -> HRESULT,
     fn get_Graph(&self, out: *mut <AudioGraph as RtType>::Abi) -> HRESULT
 }}
@@ -3163,7 +3163,7 @@ impl ICreateAudioGraphResult {
 }
 RT_CLASS!{class CreateAudioGraphResult: ICreateAudioGraphResult}
 DEFINE_IID!(IID_ICreateAudioGraphResult2, 1836289532, 35014, 20427, 165, 52, 133, 206, 221, 64, 80, 161);
-RT_INTERFACE!{interface ICreateAudioGraphResult2(ICreateAudioGraphResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateAudioGraphResult2] {
+RT_INTERFACE!{interface ICreateAudioGraphResult2(ICreateAudioGraphResult2Vtbl): IInspectable [IID_ICreateAudioGraphResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl ICreateAudioGraphResult2 {
@@ -3174,7 +3174,7 @@ impl ICreateAudioGraphResult2 {
     }}
 }
 DEFINE_IID!(IID_ICreateMediaSourceAudioInputNodeResult, 1185306787, 21440, 19801, 158, 81, 204, 29, 16, 68, 164, 196);
-RT_INTERFACE!{interface ICreateMediaSourceAudioInputNodeResult(ICreateMediaSourceAudioInputNodeResultVtbl): IInspectable(IInspectableVtbl) [IID_ICreateMediaSourceAudioInputNodeResult] {
+RT_INTERFACE!{interface ICreateMediaSourceAudioInputNodeResult(ICreateMediaSourceAudioInputNodeResultVtbl): IInspectable [IID_ICreateMediaSourceAudioInputNodeResult] {
     fn get_Status(&self, out: *mut MediaSourceAudioInputNodeCreationStatus) -> HRESULT,
     fn get_Node(&self, out: *mut <MediaSourceAudioInputNode as RtType>::Abi) -> HRESULT
 }}
@@ -3192,7 +3192,7 @@ impl ICreateMediaSourceAudioInputNodeResult {
 }
 RT_CLASS!{class CreateMediaSourceAudioInputNodeResult: ICreateMediaSourceAudioInputNodeResult}
 DEFINE_IID!(IID_ICreateMediaSourceAudioInputNodeResult2, 1666272488, 27162, 18915, 151, 236, 40, 253, 91, 225, 20, 229);
-RT_INTERFACE!{interface ICreateMediaSourceAudioInputNodeResult2(ICreateMediaSourceAudioInputNodeResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ICreateMediaSourceAudioInputNodeResult2] {
+RT_INTERFACE!{interface ICreateMediaSourceAudioInputNodeResult2(ICreateMediaSourceAudioInputNodeResult2Vtbl): IInspectable [IID_ICreateMediaSourceAudioInputNodeResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl ICreateMediaSourceAudioInputNodeResult2 {
@@ -3203,7 +3203,7 @@ impl ICreateMediaSourceAudioInputNodeResult2 {
     }}
 }
 DEFINE_IID!(IID_IEchoEffectDefinition, 239943594, 14008, 19601, 185, 218, 17, 244, 74, 138, 102, 16);
-RT_INTERFACE!{interface IEchoEffectDefinition(IEchoEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IEchoEffectDefinition] {
+RT_INTERFACE!{interface IEchoEffectDefinition(IEchoEffectDefinitionVtbl): IInspectable [IID_IEchoEffectDefinition] {
     fn put_WetDryMix(&self, value: f64) -> HRESULT,
     fn get_WetDryMix(&self, out: *mut f64) -> HRESULT,
     fn put_Feedback(&self, value: f64) -> HRESULT,
@@ -3249,7 +3249,7 @@ impl EchoEffectDefinition {
 }
 DEFINE_CLSID!(EchoEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,69,99,104,111,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_EchoEffectDefinition]);
 DEFINE_IID!(IID_IEchoEffectDefinitionFactory, 223224407, 43762, 20102, 165, 76, 251, 121, 219, 143, 108, 18);
-RT_INTERFACE!{static interface IEchoEffectDefinitionFactory(IEchoEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEchoEffectDefinitionFactory] {
+RT_INTERFACE!{static interface IEchoEffectDefinitionFactory(IEchoEffectDefinitionFactoryVtbl): IInspectable [IID_IEchoEffectDefinitionFactory] {
     fn Create(&self, audioGraph: <AudioGraph as RtType>::Abi, out: *mut <EchoEffectDefinition as RtType>::Abi) -> HRESULT
 }}
 impl IEchoEffectDefinitionFactory {
@@ -3260,7 +3260,7 @@ impl IEchoEffectDefinitionFactory {
     }}
 }
 DEFINE_IID!(IID_IEqualizerBand, 3221903978, 9773, 19333, 155, 183, 67, 40, 11, 98, 237, 12);
-RT_INTERFACE!{interface IEqualizerBand(IEqualizerBandVtbl): IInspectable(IInspectableVtbl) [IID_IEqualizerBand] {
+RT_INTERFACE!{interface IEqualizerBand(IEqualizerBandVtbl): IInspectable [IID_IEqualizerBand] {
     fn get_Bandwidth(&self, out: *mut f64) -> HRESULT,
     fn put_Bandwidth(&self, value: f64) -> HRESULT,
     fn get_FrequencyCenter(&self, out: *mut f64) -> HRESULT,
@@ -3299,7 +3299,7 @@ impl IEqualizerBand {
 }
 RT_CLASS!{class EqualizerBand: IEqualizerBand}
 DEFINE_IID!(IID_IEqualizerEffectDefinition, 37711647, 33790, 17562, 168, 34, 198, 150, 68, 45, 22, 176);
-RT_INTERFACE!{interface IEqualizerEffectDefinition(IEqualizerEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IEqualizerEffectDefinition] {
+RT_INTERFACE!{interface IEqualizerEffectDefinition(IEqualizerEffectDefinitionVtbl): IInspectable [IID_IEqualizerEffectDefinition] {
     fn get_Bands(&self, out: *mut <foundation::collections::IVectorView<EqualizerBand> as RtType>::Abi) -> HRESULT
 }}
 impl IEqualizerEffectDefinition {
@@ -3318,7 +3318,7 @@ impl EqualizerEffectDefinition {
 }
 DEFINE_CLSID!(EqualizerEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,69,113,117,97,108,105,122,101,114,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_EqualizerEffectDefinition]);
 DEFINE_IID!(IID_IEqualizerEffectDefinitionFactory, 3532091332, 54288, 20149, 158, 105, 201, 170, 18, 119, 234, 240);
-RT_INTERFACE!{static interface IEqualizerEffectDefinitionFactory(IEqualizerEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEqualizerEffectDefinitionFactory] {
+RT_INTERFACE!{static interface IEqualizerEffectDefinitionFactory(IEqualizerEffectDefinitionFactoryVtbl): IInspectable [IID_IEqualizerEffectDefinitionFactory] {
     fn Create(&self, audioGraph: <AudioGraph as RtType>::Abi, out: *mut <EqualizerEffectDefinition as RtType>::Abi) -> HRESULT
 }}
 impl IEqualizerEffectDefinitionFactory {
@@ -3329,7 +3329,7 @@ impl IEqualizerEffectDefinitionFactory {
     }}
 }
 DEFINE_IID!(IID_IFrameInputNodeQuantumStartedEventArgs, 1033622680, 41734, 20230, 189, 159, 233, 239, 200, 34, 99, 4);
-RT_INTERFACE!{interface IFrameInputNodeQuantumStartedEventArgs(IFrameInputNodeQuantumStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IFrameInputNodeQuantumStartedEventArgs] {
+RT_INTERFACE!{interface IFrameInputNodeQuantumStartedEventArgs(IFrameInputNodeQuantumStartedEventArgsVtbl): IInspectable [IID_IFrameInputNodeQuantumStartedEventArgs] {
     fn get_RequiredSamples(&self, out: *mut i32) -> HRESULT
 }}
 impl IFrameInputNodeQuantumStartedEventArgs {
@@ -3341,7 +3341,7 @@ impl IFrameInputNodeQuantumStartedEventArgs {
 }
 RT_CLASS!{class FrameInputNodeQuantumStartedEventArgs: IFrameInputNodeQuantumStartedEventArgs}
 DEFINE_IID!(IID_ILimiterEffectDefinition, 1802853657, 9731, 18362, 189, 235, 57, 5, 94, 52, 134, 220);
-RT_INTERFACE!{interface ILimiterEffectDefinition(ILimiterEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_ILimiterEffectDefinition] {
+RT_INTERFACE!{interface ILimiterEffectDefinition(ILimiterEffectDefinitionVtbl): IInspectable [IID_ILimiterEffectDefinition] {
     fn put_Release(&self, value: u32) -> HRESULT,
     fn get_Release(&self, out: *mut u32) -> HRESULT,
     fn put_Loudness(&self, value: u32) -> HRESULT,
@@ -3376,7 +3376,7 @@ impl LimiterEffectDefinition {
 }
 DEFINE_CLSID!(LimiterEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,76,105,109,105,116,101,114,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_LimiterEffectDefinition]);
 DEFINE_IID!(IID_ILimiterEffectDefinitionFactory, 3971671793, 25087, 17903, 184, 245, 72, 101, 154, 87, 199, 45);
-RT_INTERFACE!{static interface ILimiterEffectDefinitionFactory(ILimiterEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILimiterEffectDefinitionFactory] {
+RT_INTERFACE!{static interface ILimiterEffectDefinitionFactory(ILimiterEffectDefinitionFactoryVtbl): IInspectable [IID_ILimiterEffectDefinitionFactory] {
     fn Create(&self, audioGraph: <AudioGraph as RtType>::Abi, out: *mut <LimiterEffectDefinition as RtType>::Abi) -> HRESULT
 }}
 impl ILimiterEffectDefinitionFactory {
@@ -3387,7 +3387,7 @@ impl ILimiterEffectDefinitionFactory {
     }}
 }
 DEFINE_IID!(IID_IMediaSourceAudioInputNode, 2581108795, 43146, 16449, 142, 79, 221, 186, 192, 201, 31, 211);
-RT_INTERFACE!{interface IMediaSourceAudioInputNode(IMediaSourceAudioInputNodeVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceAudioInputNode] {
+RT_INTERFACE!{interface IMediaSourceAudioInputNode(IMediaSourceAudioInputNodeVtbl): IInspectable [IID_IMediaSourceAudioInputNode] {
     fn put_PlaybackSpeedFactor(&self, value: f64) -> HRESULT,
     fn get_PlaybackSpeedFactor(&self, out: *mut f64) -> HRESULT,
     fn get_Position(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -3480,7 +3480,7 @@ RT_ENUM! { enum QuantumSizeSelectionMode: i32 {
     SystemDefault = 0, LowestLatency = 1, ClosestToDesired = 2,
 }}
 DEFINE_IID!(IID_IReverbEffectDefinition, 1174841993, 62819, 19722, 143, 110, 240, 205, 223, 243, 93, 132);
-RT_INTERFACE!{interface IReverbEffectDefinition(IReverbEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IReverbEffectDefinition] {
+RT_INTERFACE!{interface IReverbEffectDefinition(IReverbEffectDefinitionVtbl): IInspectable [IID_IReverbEffectDefinition] {
     fn put_WetDryMix(&self, value: f64) -> HRESULT,
     fn get_WetDryMix(&self, out: *mut f64) -> HRESULT,
     fn put_ReflectionsDelay(&self, value: u32) -> HRESULT,
@@ -3746,7 +3746,7 @@ impl ReverbEffectDefinition {
 }
 DEFINE_CLSID!(ReverbEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,82,101,118,101,114,98,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_ReverbEffectDefinition]);
 DEFINE_IID!(IID_IReverbEffectDefinitionFactory, 2815806462, 4107, 20464, 157, 166, 220, 78, 5, 167, 89, 240);
-RT_INTERFACE!{static interface IReverbEffectDefinitionFactory(IReverbEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IReverbEffectDefinitionFactory] {
+RT_INTERFACE!{static interface IReverbEffectDefinitionFactory(IReverbEffectDefinitionFactoryVtbl): IInspectable [IID_IReverbEffectDefinitionFactory] {
     fn Create(&self, audioGraph: <AudioGraph as RtType>::Abi, out: *mut <ReverbEffectDefinition as RtType>::Abi) -> HRESULT
 }}
 impl IReverbEffectDefinitionFactory {
@@ -3757,7 +3757,7 @@ impl IReverbEffectDefinitionFactory {
     }}
 }
 DEFINE_IID!(IID_ISetDefaultSpatialAudioFormatResult, 472556817, 5120, 24176, 158, 169, 174, 21, 18, 65, 232, 234);
-RT_INTERFACE!{interface ISetDefaultSpatialAudioFormatResult(ISetDefaultSpatialAudioFormatResultVtbl): IInspectable(IInspectableVtbl) [IID_ISetDefaultSpatialAudioFormatResult] {
+RT_INTERFACE!{interface ISetDefaultSpatialAudioFormatResult(ISetDefaultSpatialAudioFormatResultVtbl): IInspectable [IID_ISetDefaultSpatialAudioFormatResult] {
     fn get_Status(&self, out: *mut SetDefaultSpatialAudioFormatStatus) -> HRESULT
 }}
 impl ISetDefaultSpatialAudioFormatResult {
@@ -3772,7 +3772,7 @@ RT_ENUM! { enum SetDefaultSpatialAudioFormatStatus: i32 {
     Succeeded = 0, AccessDenied = 1, LicenseExpired = 2, LicenseNotValidForAudioEndpoint = 3, NotSupportedOnAudioEndpoint = 4, UnknownError = 5,
 }}
 DEFINE_IID!(IID_ISpatialAudioDeviceConfiguration, 4001562676, 25039, 22345, 157, 164, 16, 240, 254, 2, 129, 153);
-RT_INTERFACE!{interface ISpatialAudioDeviceConfiguration(ISpatialAudioDeviceConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAudioDeviceConfiguration] {
+RT_INTERFACE!{interface ISpatialAudioDeviceConfiguration(ISpatialAudioDeviceConfigurationVtbl): IInspectable [IID_ISpatialAudioDeviceConfiguration] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IsSpatialAudioSupported(&self, out: *mut bool) -> HRESULT,
     fn IsSpatialAudioFormatSupported(&self, subtype: HSTRING, out: *mut bool) -> HRESULT,
@@ -3832,7 +3832,7 @@ impl SpatialAudioDeviceConfiguration {
 }
 DEFINE_CLSID!(SpatialAudioDeviceConfiguration(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,83,112,97,116,105,97,108,65,117,100,105,111,68,101,118,105,99,101,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_SpatialAudioDeviceConfiguration]);
 DEFINE_IID!(IID_ISpatialAudioDeviceConfigurationStatics, 1052999547, 37741, 19972, 151, 40, 40, 39, 217, 247, 88, 196);
-RT_INTERFACE!{static interface ISpatialAudioDeviceConfigurationStatics(ISpatialAudioDeviceConfigurationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAudioDeviceConfigurationStatics] {
+RT_INTERFACE!{static interface ISpatialAudioDeviceConfigurationStatics(ISpatialAudioDeviceConfigurationStaticsVtbl): IInspectable [IID_ISpatialAudioDeviceConfigurationStatics] {
     fn GetForDeviceId(&self, deviceId: HSTRING, out: *mut <SpatialAudioDeviceConfiguration as RtType>::Abi) -> HRESULT
 }}
 impl ISpatialAudioDeviceConfigurationStatics {
@@ -3843,7 +3843,7 @@ impl ISpatialAudioDeviceConfigurationStatics {
     }}
 }
 DEFINE_IID!(IID_ISpatialAudioFormatConfiguration, 853477800, 20720, 21397, 153, 35, 125, 68, 202, 113, 237, 109);
-RT_INTERFACE!{interface ISpatialAudioFormatConfiguration(ISpatialAudioFormatConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAudioFormatConfiguration] {
+RT_INTERFACE!{interface ISpatialAudioFormatConfiguration(ISpatialAudioFormatConfigurationVtbl): IInspectable [IID_ISpatialAudioFormatConfiguration] {
     fn ReportLicenseChangedAsync(&self, subtype: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn ReportConfigurationChangedAsync(&self, subtype: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn get_MixedRealityExclusiveModePolicy(&self, out: *mut MixedRealitySpatialAudioFormatPolicy) -> HRESULT,
@@ -3879,7 +3879,7 @@ impl SpatialAudioFormatConfiguration {
 }
 DEFINE_CLSID!(SpatialAudioFormatConfiguration(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,83,112,97,116,105,97,108,65,117,100,105,111,70,111,114,109,97,116,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_SpatialAudioFormatConfiguration]);
 DEFINE_IID!(IID_ISpatialAudioFormatConfigurationStatics, 727707505, 26569, 20063, 163, 91, 65, 104, 7, 17, 248, 199);
-RT_INTERFACE!{static interface ISpatialAudioFormatConfigurationStatics(ISpatialAudioFormatConfigurationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAudioFormatConfigurationStatics] {
+RT_INTERFACE!{static interface ISpatialAudioFormatConfigurationStatics(ISpatialAudioFormatConfigurationStaticsVtbl): IInspectable [IID_ISpatialAudioFormatConfigurationStatics] {
     fn GetDefault(&self, out: *mut <SpatialAudioFormatConfiguration as RtType>::Abi) -> HRESULT
 }}
 impl ISpatialAudioFormatConfigurationStatics {
@@ -3913,7 +3913,7 @@ impl SpatialAudioFormatSubtype {
 }
 DEFINE_CLSID!(SpatialAudioFormatSubtype(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,65,117,100,105,111,46,83,112,97,116,105,97,108,65,117,100,105,111,70,111,114,109,97,116,83,117,98,116,121,112,101,0]) [CLSID_SpatialAudioFormatSubtype]);
 DEFINE_IID!(IID_ISpatialAudioFormatSubtypeStatics, 3017706055, 33774, 16998, 169, 69, 190, 223, 80, 122, 254, 237);
-RT_INTERFACE!{static interface ISpatialAudioFormatSubtypeStatics(ISpatialAudioFormatSubtypeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAudioFormatSubtypeStatics] {
+RT_INTERFACE!{static interface ISpatialAudioFormatSubtypeStatics(ISpatialAudioFormatSubtypeStaticsVtbl): IInspectable [IID_ISpatialAudioFormatSubtypeStatics] {
     fn get_WindowsSonic(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DolbyAtmosForHeadphones(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DolbyAtmosForHomeTheater(&self, out: *mut HSTRING) -> HRESULT,
@@ -3960,7 +3960,7 @@ RT_ENUM! { enum SpatialAudioModel: i32 {
 pub mod capture { // Windows.Media.Capture
 use crate::prelude::*;
 DEFINE_IID!(IID_IAdvancedCapturedPhoto, 4034032267, 45714, 17553, 157, 65, 153, 128, 122, 85, 11, 191);
-RT_INTERFACE!{interface IAdvancedCapturedPhoto(IAdvancedCapturedPhotoVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedCapturedPhoto] {
+RT_INTERFACE!{interface IAdvancedCapturedPhoto(IAdvancedCapturedPhotoVtbl): IInspectable [IID_IAdvancedCapturedPhoto] {
     fn get_Frame(&self, out: *mut <CapturedFrame as RtType>::Abi) -> HRESULT,
     fn get_Mode(&self, out: *mut super::devices::AdvancedPhotoMode) -> HRESULT,
     fn get_Context(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT
@@ -3984,7 +3984,7 @@ impl IAdvancedCapturedPhoto {
 }
 RT_CLASS!{class AdvancedCapturedPhoto: IAdvancedCapturedPhoto}
 DEFINE_IID!(IID_IAdvancedCapturedPhoto2, 416247000, 53246, 17112, 129, 4, 1, 123, 179, 24, 244, 161);
-RT_INTERFACE!{interface IAdvancedCapturedPhoto2(IAdvancedCapturedPhoto2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedCapturedPhoto2] {
+RT_INTERFACE!{interface IAdvancedCapturedPhoto2(IAdvancedCapturedPhoto2Vtbl): IInspectable [IID_IAdvancedCapturedPhoto2] {
     fn get_FrameBoundsRelativeToReferencePhoto(&self, out: *mut <foundation::IReference<foundation::Rect> as RtType>::Abi) -> HRESULT
 }}
 impl IAdvancedCapturedPhoto2 {
@@ -3995,7 +3995,7 @@ impl IAdvancedCapturedPhoto2 {
     }}
 }
 DEFINE_IID!(IID_IAdvancedPhotoCapture, 2214570746, 26215, 17628, 151, 60, 166, 188, 229, 150, 170, 15);
-RT_INTERFACE!{interface IAdvancedPhotoCapture(IAdvancedPhotoCaptureVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedPhotoCapture] {
+RT_INTERFACE!{interface IAdvancedPhotoCapture(IAdvancedPhotoCaptureVtbl): IInspectable [IID_IAdvancedPhotoCapture] {
     fn CaptureAsync(&self, out: *mut <foundation::IAsyncOperation<AdvancedCapturedPhoto> as RtType>::Abi) -> HRESULT,
     fn CaptureWithContextAsync(&self, context: <IInspectable as RtType>::Abi, out: *mut <foundation::IAsyncOperation<AdvancedCapturedPhoto> as RtType>::Abi) -> HRESULT,
     fn add_OptionalReferencePhotoCaptured(&self, handler: <foundation::TypedEventHandler<AdvancedPhotoCapture, OptionalReferencePhotoCapturedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -4041,7 +4041,7 @@ impl IAdvancedPhotoCapture {
 }
 RT_CLASS!{class AdvancedPhotoCapture: IAdvancedPhotoCapture}
 DEFINE_IID!(IID_IAppBroadcastBackgroundService, 3134318378, 64148, 18169, 149, 252, 215, 21, 17, 205, 167, 11);
-RT_INTERFACE!{interface IAppBroadcastBackgroundService(IAppBroadcastBackgroundServiceVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastBackgroundService] {
+RT_INTERFACE!{interface IAppBroadcastBackgroundService(IAppBroadcastBackgroundServiceVtbl): IInspectable [IID_IAppBroadcastBackgroundService] {
     fn put_PlugInState(&self, value: AppBroadcastPlugInState) -> HRESULT,
     fn get_PlugInState(&self, out: *mut AppBroadcastPlugInState) -> HRESULT,
     fn put_SignInInfo(&self, value: <AppBroadcastBackgroundServiceSignInInfo as RtType>::Abi) -> HRESULT,
@@ -4125,7 +4125,7 @@ impl IAppBroadcastBackgroundService {
 }
 RT_CLASS!{class AppBroadcastBackgroundService: IAppBroadcastBackgroundService}
 DEFINE_IID!(IID_IAppBroadcastBackgroundService2, 4237085631, 21833, 19335, 149, 159, 35, 202, 64, 31, 212, 115);
-RT_INTERFACE!{interface IAppBroadcastBackgroundService2(IAppBroadcastBackgroundService2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastBackgroundService2] {
+RT_INTERFACE!{interface IAppBroadcastBackgroundService2(IAppBroadcastBackgroundService2Vtbl): IInspectable [IID_IAppBroadcastBackgroundService2] {
     fn put_BroadcastTitle(&self, value: HSTRING) -> HRESULT,
     fn get_BroadcastLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn put_BroadcastLanguage(&self, value: HSTRING) -> HRESULT,
@@ -4190,7 +4190,7 @@ impl IAppBroadcastBackgroundService2 {
     }}
 }
 DEFINE_IID!(IID_IAppBroadcastBackgroundServiceSignInInfo, 1584616053, 35016, 20170, 137, 186, 72, 37, 152, 93, 184, 128);
-RT_INTERFACE!{interface IAppBroadcastBackgroundServiceSignInInfo(IAppBroadcastBackgroundServiceSignInInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastBackgroundServiceSignInInfo] {
+RT_INTERFACE!{interface IAppBroadcastBackgroundServiceSignInInfo(IAppBroadcastBackgroundServiceSignInInfoVtbl): IInspectable [IID_IAppBroadcastBackgroundServiceSignInInfo] {
     fn get_SignInState(&self, out: *mut AppBroadcastSignInState) -> HRESULT,
     fn put_OAuthRequestUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_OAuthRequestUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
@@ -4253,7 +4253,7 @@ impl IAppBroadcastBackgroundServiceSignInInfo {
 }
 RT_CLASS!{class AppBroadcastBackgroundServiceSignInInfo: IAppBroadcastBackgroundServiceSignInInfo}
 DEFINE_IID!(IID_IAppBroadcastBackgroundServiceSignInInfo2, 2432968796, 25295, 19004, 167, 238, 174, 181, 7, 64, 70, 69);
-RT_INTERFACE!{interface IAppBroadcastBackgroundServiceSignInInfo2(IAppBroadcastBackgroundServiceSignInInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastBackgroundServiceSignInInfo2] {
+RT_INTERFACE!{interface IAppBroadcastBackgroundServiceSignInInfo2(IAppBroadcastBackgroundServiceSignInInfo2Vtbl): IInspectable [IID_IAppBroadcastBackgroundServiceSignInInfo2] {
     fn add_UserNameChanged(&self, handler: <foundation::TypedEventHandler<AppBroadcastBackgroundServiceSignInInfo, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_UserNameChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -4269,7 +4269,7 @@ impl IAppBroadcastBackgroundServiceSignInInfo2 {
     }}
 }
 DEFINE_IID!(IID_IAppBroadcastBackgroundServiceStreamInfo, 836502204, 39178, 18692, 170, 150, 254, 54, 67, 129, 241, 54);
-RT_INTERFACE!{interface IAppBroadcastBackgroundServiceStreamInfo(IAppBroadcastBackgroundServiceStreamInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastBackgroundServiceStreamInfo] {
+RT_INTERFACE!{interface IAppBroadcastBackgroundServiceStreamInfo(IAppBroadcastBackgroundServiceStreamInfoVtbl): IInspectable [IID_IAppBroadcastBackgroundServiceStreamInfo] {
     fn get_StreamState(&self, out: *mut AppBroadcastStreamState) -> HRESULT,
     fn put_DesiredVideoEncodingBitrate(&self, value: u64) -> HRESULT,
     fn get_DesiredVideoEncodingBitrate(&self, out: *mut u64) -> HRESULT,
@@ -4353,7 +4353,7 @@ impl IAppBroadcastBackgroundServiceStreamInfo {
 }
 RT_CLASS!{class AppBroadcastBackgroundServiceStreamInfo: IAppBroadcastBackgroundServiceStreamInfo}
 DEFINE_IID!(IID_IAppBroadcastBackgroundServiceStreamInfo2, 3172900717, 38108, 20430, 149, 65, 169, 241, 41, 89, 99, 52);
-RT_INTERFACE!{interface IAppBroadcastBackgroundServiceStreamInfo2(IAppBroadcastBackgroundServiceStreamInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastBackgroundServiceStreamInfo2] {
+RT_INTERFACE!{interface IAppBroadcastBackgroundServiceStreamInfo2(IAppBroadcastBackgroundServiceStreamInfo2Vtbl): IInspectable [IID_IAppBroadcastBackgroundServiceStreamInfo2] {
     fn ReportProblemWithStream(&self) -> HRESULT
 }}
 impl IAppBroadcastBackgroundServiceStreamInfo2 {
@@ -4366,7 +4366,7 @@ RT_ENUM! { enum AppBroadcastCameraCaptureState: i32 {
     Stopped = 0, Started = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IAppBroadcastCameraCaptureStateChangedEventArgs, 506678480, 47234, 19336, 134, 146, 5, 153, 154, 206, 183, 15);
-RT_INTERFACE!{interface IAppBroadcastCameraCaptureStateChangedEventArgs(IAppBroadcastCameraCaptureStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastCameraCaptureStateChangedEventArgs] {
+RT_INTERFACE!{interface IAppBroadcastCameraCaptureStateChangedEventArgs(IAppBroadcastCameraCaptureStateChangedEventArgsVtbl): IInspectable [IID_IAppBroadcastCameraCaptureStateChangedEventArgs] {
     fn get_State(&self, out: *mut AppBroadcastCameraCaptureState) -> HRESULT,
     fn get_ErrorCode(&self, out: *mut u32) -> HRESULT
 }}
@@ -4396,7 +4396,7 @@ RT_ENUM! { enum AppBroadcastExitBroadcastModeReason: i32 {
     NormalExit = 0, UserCanceled = 1, AuthorizationFail = 2, ForegroundAppActivated = 3,
 }}
 DEFINE_IID!(IID_IAppBroadcastGlobalSettings, 2999658405, 28924, 19991, 128, 189, 107, 160, 253, 63, 243, 160);
-RT_INTERFACE!{interface IAppBroadcastGlobalSettings(IAppBroadcastGlobalSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastGlobalSettings] {
+RT_INTERFACE!{interface IAppBroadcastGlobalSettings(IAppBroadcastGlobalSettingsVtbl): IInspectable [IID_IAppBroadcastGlobalSettings] {
     fn get_IsBroadcastEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_IsDisabledByPolicy(&self, out: *mut bool) -> HRESULT,
     fn get_IsGpuConstrained(&self, out: *mut bool) -> HRESULT,
@@ -4536,7 +4536,7 @@ impl IAppBroadcastGlobalSettings {
 }
 RT_CLASS!{class AppBroadcastGlobalSettings: IAppBroadcastGlobalSettings}
 DEFINE_IID!(IID_IAppBroadcastHeartbeatRequestedEventArgs, 3466936963, 61009, 19903, 148, 114, 121, 169, 237, 78, 33, 101);
-RT_INTERFACE!{interface IAppBroadcastHeartbeatRequestedEventArgs(IAppBroadcastHeartbeatRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastHeartbeatRequestedEventArgs] {
+RT_INTERFACE!{interface IAppBroadcastHeartbeatRequestedEventArgs(IAppBroadcastHeartbeatRequestedEventArgsVtbl): IInspectable [IID_IAppBroadcastHeartbeatRequestedEventArgs] {
     fn put_Handled(&self, value: bool) -> HRESULT,
     fn get_Handled(&self, out: *mut bool) -> HRESULT
 }}
@@ -4570,7 +4570,7 @@ impl AppBroadcastManager {
 }
 DEFINE_CLSID!(AppBroadcastManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,66,114,111,97,100,99,97,115,116,77,97,110,97,103,101,114,0]) [CLSID_AppBroadcastManager]);
 DEFINE_IID!(IID_IAppBroadcastManagerStatics, 911081867, 7758, 16671, 171, 62, 146, 149, 152, 68, 193, 86);
-RT_INTERFACE!{static interface IAppBroadcastManagerStatics(IAppBroadcastManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastManagerStatics] {
+RT_INTERFACE!{static interface IAppBroadcastManagerStatics(IAppBroadcastManagerStaticsVtbl): IInspectable [IID_IAppBroadcastManagerStatics] {
     fn GetGlobalSettings(&self, out: *mut <AppBroadcastGlobalSettings as RtType>::Abi) -> HRESULT,
     fn ApplyGlobalSettings(&self, value: <AppBroadcastGlobalSettings as RtType>::Abi) -> HRESULT,
     fn GetProviderSettings(&self, out: *mut <AppBroadcastProviderSettings as RtType>::Abi) -> HRESULT,
@@ -4600,7 +4600,7 @@ RT_ENUM! { enum AppBroadcastMicrophoneCaptureState: i32 {
     Stopped = 0, Started = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IAppBroadcastMicrophoneCaptureStateChangedEventArgs, 2825573865, 37952, 18696, 157, 9, 101, 183, 227, 21, 215, 149);
-RT_INTERFACE!{interface IAppBroadcastMicrophoneCaptureStateChangedEventArgs(IAppBroadcastMicrophoneCaptureStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastMicrophoneCaptureStateChangedEventArgs] {
+RT_INTERFACE!{interface IAppBroadcastMicrophoneCaptureStateChangedEventArgs(IAppBroadcastMicrophoneCaptureStateChangedEventArgsVtbl): IInspectable [IID_IAppBroadcastMicrophoneCaptureStateChangedEventArgs] {
     fn get_State(&self, out: *mut AppBroadcastMicrophoneCaptureState) -> HRESULT,
     fn get_ErrorCode(&self, out: *mut u32) -> HRESULT
 }}
@@ -4618,7 +4618,7 @@ impl IAppBroadcastMicrophoneCaptureStateChangedEventArgs {
 }
 RT_CLASS!{class AppBroadcastMicrophoneCaptureStateChangedEventArgs: IAppBroadcastMicrophoneCaptureStateChangedEventArgs}
 DEFINE_IID!(IID_IAppBroadcastPlugIn, 1376525926, 25875, 17780, 172, 84, 35, 183, 151, 41, 97, 91);
-RT_INTERFACE!{interface IAppBroadcastPlugIn(IAppBroadcastPlugInVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPlugIn] {
+RT_INTERFACE!{interface IAppBroadcastPlugIn(IAppBroadcastPlugInVtbl): IInspectable [IID_IAppBroadcastPlugIn] {
     fn get_AppId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ProviderSettings(&self, out: *mut <AppBroadcastProviderSettings as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -4649,7 +4649,7 @@ impl IAppBroadcastPlugIn {
 }
 RT_CLASS!{class AppBroadcastPlugIn: IAppBroadcastPlugIn}
 DEFINE_IID!(IID_IAppBroadcastPlugInManager, 3847281017, 10145, 18855, 187, 244, 215, 169, 233, 208, 118, 104);
-RT_INTERFACE!{interface IAppBroadcastPlugInManager(IAppBroadcastPlugInManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPlugInManager] {
+RT_INTERFACE!{interface IAppBroadcastPlugInManager(IAppBroadcastPlugInManagerVtbl): IInspectable [IID_IAppBroadcastPlugInManager] {
     fn get_IsBroadcastProviderAvailable(&self, out: *mut bool) -> HRESULT,
     fn get_PlugInList(&self, out: *mut <foundation::collections::IVectorView<AppBroadcastPlugIn> as RtType>::Abi) -> HRESULT,
     fn get_DefaultPlugIn(&self, out: *mut <AppBroadcastPlugIn as RtType>::Abi) -> HRESULT,
@@ -4688,7 +4688,7 @@ impl AppBroadcastPlugInManager {
 }
 DEFINE_CLSID!(AppBroadcastPlugInManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,66,114,111,97,100,99,97,115,116,80,108,117,103,73,110,77,97,110,97,103,101,114,0]) [CLSID_AppBroadcastPlugInManager]);
 DEFINE_IID!(IID_IAppBroadcastPlugInManagerStatics, 4066663456, 23670, 19676, 147, 100, 130, 254, 158, 182, 83, 77);
-RT_INTERFACE!{static interface IAppBroadcastPlugInManagerStatics(IAppBroadcastPlugInManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPlugInManagerStatics] {
+RT_INTERFACE!{static interface IAppBroadcastPlugInManagerStatics(IAppBroadcastPlugInManagerStaticsVtbl): IInspectable [IID_IAppBroadcastPlugInManagerStatics] {
     fn GetDefault(&self, out: *mut <AppBroadcastPlugInManager as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: <super::super::system::User as RtType>::Abi, out: *mut <AppBroadcastPlugInManager as RtType>::Abi) -> HRESULT
 }}
@@ -4708,7 +4708,7 @@ RT_ENUM! { enum AppBroadcastPlugInState: i32 {
     Unknown = 0, Initialized = 1, MicrosoftSignInRequired = 2, OAuthSignInRequired = 3, ProviderSignInRequired = 4, InBandwidthTest = 5, ReadyToBroadcast = 6,
 }}
 DEFINE_IID!(IID_IAppBroadcastPlugInStateChangedEventArgs, 1216467186, 43973, 20422, 132, 176, 137, 55, 11, 180, 114, 18);
-RT_INTERFACE!{interface IAppBroadcastPlugInStateChangedEventArgs(IAppBroadcastPlugInStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPlugInStateChangedEventArgs] {
+RT_INTERFACE!{interface IAppBroadcastPlugInStateChangedEventArgs(IAppBroadcastPlugInStateChangedEventArgsVtbl): IInspectable [IID_IAppBroadcastPlugInStateChangedEventArgs] {
     fn get_PlugInState(&self, out: *mut AppBroadcastPlugInState) -> HRESULT
 }}
 impl IAppBroadcastPlugInStateChangedEventArgs {
@@ -4720,7 +4720,7 @@ impl IAppBroadcastPlugInStateChangedEventArgs {
 }
 RT_CLASS!{class AppBroadcastPlugInStateChangedEventArgs: IAppBroadcastPlugInStateChangedEventArgs}
 DEFINE_IID!(IID_IAppBroadcastPreview, 347475802, 28234, 19328, 161, 79, 103, 238, 119, 209, 83, 231);
-RT_INTERFACE!{interface IAppBroadcastPreview(IAppBroadcastPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPreview] {
+RT_INTERFACE!{interface IAppBroadcastPreview(IAppBroadcastPreviewVtbl): IInspectable [IID_IAppBroadcastPreview] {
     fn StopPreview(&self) -> HRESULT,
     fn get_PreviewState(&self, out: *mut AppBroadcastPreviewState) -> HRESULT,
     fn get_ErrorCode(&self, out: *mut <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
@@ -4763,7 +4763,7 @@ RT_ENUM! { enum AppBroadcastPreviewState: i32 {
     Started = 0, Stopped = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IAppBroadcastPreviewStateChangedEventArgs, 1515713246, 36330, 20102, 144, 173, 3, 252, 38, 185, 101, 60);
-RT_INTERFACE!{interface IAppBroadcastPreviewStateChangedEventArgs(IAppBroadcastPreviewStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPreviewStateChangedEventArgs] {
+RT_INTERFACE!{interface IAppBroadcastPreviewStateChangedEventArgs(IAppBroadcastPreviewStateChangedEventArgsVtbl): IInspectable [IID_IAppBroadcastPreviewStateChangedEventArgs] {
     fn get_PreviewState(&self, out: *mut AppBroadcastPreviewState) -> HRESULT,
     fn get_ErrorCode(&self, out: *mut u32) -> HRESULT
 }}
@@ -4781,7 +4781,7 @@ impl IAppBroadcastPreviewStateChangedEventArgs {
 }
 RT_CLASS!{class AppBroadcastPreviewStateChangedEventArgs: IAppBroadcastPreviewStateChangedEventArgs}
 DEFINE_IID!(IID_IAppBroadcastPreviewStreamReader, 2451737936, 56127, 16552, 140, 212, 244, 227, 113, 221, 171, 55);
-RT_INTERFACE!{interface IAppBroadcastPreviewStreamReader(IAppBroadcastPreviewStreamReaderVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPreviewStreamReader] {
+RT_INTERFACE!{interface IAppBroadcastPreviewStreamReader(IAppBroadcastPreviewStreamReaderVtbl): IInspectable [IID_IAppBroadcastPreviewStreamReader] {
     fn get_VideoWidth(&self, out: *mut u32) -> HRESULT,
     fn get_VideoHeight(&self, out: *mut u32) -> HRESULT,
     fn get_VideoStride(&self, out: *mut u32) -> HRESULT,
@@ -4836,7 +4836,7 @@ impl IAppBroadcastPreviewStreamReader {
 }
 RT_CLASS!{class AppBroadcastPreviewStreamReader: IAppBroadcastPreviewStreamReader}
 DEFINE_IID!(IID_IAppBroadcastPreviewStreamVideoFrame, 17809057, 38142, 17561, 184, 192, 141, 36, 66, 121, 251, 18);
-RT_INTERFACE!{interface IAppBroadcastPreviewStreamVideoFrame(IAppBroadcastPreviewStreamVideoFrameVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPreviewStreamVideoFrame] {
+RT_INTERFACE!{interface IAppBroadcastPreviewStreamVideoFrame(IAppBroadcastPreviewStreamVideoFrameVtbl): IInspectable [IID_IAppBroadcastPreviewStreamVideoFrame] {
     fn get_VideoHeader(&self, out: *mut <AppBroadcastPreviewStreamVideoHeader as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_VideoBuffer(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -4854,7 +4854,7 @@ impl IAppBroadcastPreviewStreamVideoFrame {
 }
 RT_CLASS!{class AppBroadcastPreviewStreamVideoFrame: IAppBroadcastPreviewStreamVideoFrame}
 DEFINE_IID!(IID_IAppBroadcastPreviewStreamVideoHeader, 2347720979, 55940, 17561, 167, 171, 135, 17, 140, 180, 161, 87);
-RT_INTERFACE!{interface IAppBroadcastPreviewStreamVideoHeader(IAppBroadcastPreviewStreamVideoHeaderVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastPreviewStreamVideoHeader] {
+RT_INTERFACE!{interface IAppBroadcastPreviewStreamVideoHeader(IAppBroadcastPreviewStreamVideoHeaderVtbl): IInspectable [IID_IAppBroadcastPreviewStreamVideoHeader] {
     fn get_AbsoluteTimestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_RelativeTimestamp(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -4884,7 +4884,7 @@ impl IAppBroadcastPreviewStreamVideoHeader {
 }
 RT_CLASS!{class AppBroadcastPreviewStreamVideoHeader: IAppBroadcastPreviewStreamVideoHeader}
 DEFINE_IID!(IID_IAppBroadcastProviderSettings, 3272335202, 39240, 17807, 173, 80, 170, 6, 236, 3, 218, 8);
-RT_INTERFACE!{interface IAppBroadcastProviderSettings(IAppBroadcastProviderSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastProviderSettings] {
+RT_INTERFACE!{interface IAppBroadcastProviderSettings(IAppBroadcastProviderSettingsVtbl): IInspectable [IID_IAppBroadcastProviderSettings] {
     fn put_DefaultBroadcastTitle(&self, value: HSTRING) -> HRESULT,
     fn get_DefaultBroadcastTitle(&self, out: *mut HSTRING) -> HRESULT,
     fn put_AudioEncodingBitrate(&self, value: u32) -> HRESULT,
@@ -4967,7 +4967,7 @@ impl IAppBroadcastProviderSettings {
 }
 RT_CLASS!{class AppBroadcastProviderSettings: IAppBroadcastProviderSettings}
 DEFINE_IID!(IID_IAppBroadcastServices, 2254484694, 38555, 20028, 172, 58, 139, 4, 46, 228, 238, 99);
-RT_INTERFACE!{interface IAppBroadcastServices(IAppBroadcastServicesVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastServices] {
+RT_INTERFACE!{interface IAppBroadcastServices(IAppBroadcastServicesVtbl): IInspectable [IID_IAppBroadcastServices] {
     fn get_CaptureTargetType(&self, out: *mut AppBroadcastCaptureTargetType) -> HRESULT,
     fn put_CaptureTargetType(&self, value: AppBroadcastCaptureTargetType) -> HRESULT,
     fn get_BroadcastTitle(&self, out: *mut HSTRING) -> HRESULT,
@@ -5062,7 +5062,7 @@ RT_ENUM! { enum AppBroadcastSignInState: i32 {
     NotSignedIn = 0, MicrosoftSignInInProgress = 1, MicrosoftSignInComplete = 2, OAuthSignInInProgress = 3, OAuthSignInComplete = 4,
 }}
 DEFINE_IID!(IID_IAppBroadcastSignInStateChangedEventArgs, 45519524, 22809, 19102, 141, 94, 201, 187, 13, 211, 55, 122);
-RT_INTERFACE!{interface IAppBroadcastSignInStateChangedEventArgs(IAppBroadcastSignInStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastSignInStateChangedEventArgs] {
+RT_INTERFACE!{interface IAppBroadcastSignInStateChangedEventArgs(IAppBroadcastSignInStateChangedEventArgsVtbl): IInspectable [IID_IAppBroadcastSignInStateChangedEventArgs] {
     fn get_SignInState(&self, out: *mut AppBroadcastSignInState) -> HRESULT,
     fn get_Result(&self, out: *mut AppBroadcastSignInResult) -> HRESULT
 }}
@@ -5080,7 +5080,7 @@ impl IAppBroadcastSignInStateChangedEventArgs {
 }
 RT_CLASS!{class AppBroadcastSignInStateChangedEventArgs: IAppBroadcastSignInStateChangedEventArgs}
 DEFINE_IID!(IID_IAppBroadcastState, 3993503085, 32921, 19933, 146, 46, 197, 109, 172, 88, 171, 251);
-RT_INTERFACE!{interface IAppBroadcastState(IAppBroadcastStateVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastState] {
+RT_INTERFACE!{interface IAppBroadcastState(IAppBroadcastStateVtbl): IInspectable [IID_IAppBroadcastState] {
     fn get_IsCaptureTargetRunning(&self, out: *mut bool) -> HRESULT,
     fn get_ViewerCount(&self, out: *mut u32) -> HRESULT,
     fn get_ShouldCaptureMicrophone(&self, out: *mut bool) -> HRESULT,
@@ -5286,7 +5286,7 @@ impl IAppBroadcastState {
 }
 RT_CLASS!{class AppBroadcastState: IAppBroadcastState}
 DEFINE_IID!(IID_IAppBroadcastStreamAudioFrame, 4020980424, 8634, 17727, 139, 183, 94, 147, 138, 46, 154, 116);
-RT_INTERFACE!{interface IAppBroadcastStreamAudioFrame(IAppBroadcastStreamAudioFrameVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamAudioFrame] {
+RT_INTERFACE!{interface IAppBroadcastStreamAudioFrame(IAppBroadcastStreamAudioFrameVtbl): IInspectable [IID_IAppBroadcastStreamAudioFrame] {
     fn get_AudioHeader(&self, out: *mut <AppBroadcastStreamAudioHeader as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_AudioBuffer(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -5304,7 +5304,7 @@ impl IAppBroadcastStreamAudioFrame {
 }
 RT_CLASS!{class AppBroadcastStreamAudioFrame: IAppBroadcastStreamAudioFrame}
 DEFINE_IID!(IID_IAppBroadcastStreamAudioHeader, 3206653296, 27512, 16918, 159, 7, 90, 255, 82, 86, 241, 183);
-RT_INTERFACE!{interface IAppBroadcastStreamAudioHeader(IAppBroadcastStreamAudioHeaderVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamAudioHeader] {
+RT_INTERFACE!{interface IAppBroadcastStreamAudioHeader(IAppBroadcastStreamAudioHeaderVtbl): IInspectable [IID_IAppBroadcastStreamAudioHeader] {
     fn get_AbsoluteTimestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_RelativeTimestamp(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -5340,7 +5340,7 @@ impl IAppBroadcastStreamAudioHeader {
 }
 RT_CLASS!{class AppBroadcastStreamAudioHeader: IAppBroadcastStreamAudioHeader}
 DEFINE_IID!(IID_IAppBroadcastStreamReader, 3006840057, 13156, 17504, 181, 241, 60, 194, 121, 106, 138, 162);
-RT_INTERFACE!{interface IAppBroadcastStreamReader(IAppBroadcastStreamReaderVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamReader] {
+RT_INTERFACE!{interface IAppBroadcastStreamReader(IAppBroadcastStreamReaderVtbl): IInspectable [IID_IAppBroadcastStreamReader] {
     fn get_AudioChannels(&self, out: *mut u32) -> HRESULT,
     fn get_AudioSampleRate(&self, out: *mut u32) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -5426,7 +5426,7 @@ RT_ENUM! { enum AppBroadcastStreamState: i32 {
     Initializing = 0, StreamReady = 1, Started = 2, Paused = 3, Terminated = 4,
 }}
 DEFINE_IID!(IID_IAppBroadcastStreamStateChangedEventArgs, 1359521587, 53256, 19081, 147, 190, 88, 174, 217, 97, 55, 78);
-RT_INTERFACE!{interface IAppBroadcastStreamStateChangedEventArgs(IAppBroadcastStreamStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamStateChangedEventArgs] {
+RT_INTERFACE!{interface IAppBroadcastStreamStateChangedEventArgs(IAppBroadcastStreamStateChangedEventArgsVtbl): IInspectable [IID_IAppBroadcastStreamStateChangedEventArgs] {
     fn get_StreamState(&self, out: *mut AppBroadcastStreamState) -> HRESULT
 }}
 impl IAppBroadcastStreamStateChangedEventArgs {
@@ -5438,7 +5438,7 @@ impl IAppBroadcastStreamStateChangedEventArgs {
 }
 RT_CLASS!{class AppBroadcastStreamStateChangedEventArgs: IAppBroadcastStreamStateChangedEventArgs}
 DEFINE_IID!(IID_IAppBroadcastStreamVideoFrame, 261607211, 51684, 20104, 129, 148, 216, 20, 203, 213, 133, 216);
-RT_INTERFACE!{interface IAppBroadcastStreamVideoFrame(IAppBroadcastStreamVideoFrameVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamVideoFrame] {
+RT_INTERFACE!{interface IAppBroadcastStreamVideoFrame(IAppBroadcastStreamVideoFrameVtbl): IInspectable [IID_IAppBroadcastStreamVideoFrame] {
     fn get_VideoHeader(&self, out: *mut <AppBroadcastStreamVideoHeader as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_VideoBuffer(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -5456,7 +5456,7 @@ impl IAppBroadcastStreamVideoFrame {
 }
 RT_CLASS!{class AppBroadcastStreamVideoFrame: IAppBroadcastStreamVideoFrame}
 DEFINE_IID!(IID_IAppBroadcastStreamVideoHeader, 194952910, 32306, 17197, 140, 162, 54, 191, 16, 185, 244, 98);
-RT_INTERFACE!{interface IAppBroadcastStreamVideoHeader(IAppBroadcastStreamVideoHeaderVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastStreamVideoHeader] {
+RT_INTERFACE!{interface IAppBroadcastStreamVideoHeader(IAppBroadcastStreamVideoHeaderVtbl): IInspectable [IID_IAppBroadcastStreamVideoHeader] {
     fn get_AbsoluteTimestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_RelativeTimestamp(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -5501,7 +5501,7 @@ RT_ENUM! { enum AppBroadcastTerminationReason: i32 {
     NormalTermination = 0, LostConnectionToService = 1, NoNetworkConnectivity = 2, ServiceAbort = 3, ServiceError = 4, ServiceUnavailable = 5, InternalError = 6, UnsupportedFormat = 7, BackgroundTaskTerminated = 8, BackgroundTaskUnresponsive = 9,
 }}
 DEFINE_IID!(IID_IAppBroadcastTriggerDetails, 3739986741, 60510, 19855, 177, 192, 93, 166, 232, 199, 86, 56);
-RT_INTERFACE!{interface IAppBroadcastTriggerDetails(IAppBroadcastTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastTriggerDetails] {
+RT_INTERFACE!{interface IAppBroadcastTriggerDetails(IAppBroadcastTriggerDetailsVtbl): IInspectable [IID_IAppBroadcastTriggerDetails] {
     fn get_BackgroundService(&self, out: *mut <AppBroadcastBackgroundService as RtType>::Abi) -> HRESULT
 }}
 impl IAppBroadcastTriggerDetails {
@@ -5519,7 +5519,7 @@ RT_ENUM! { enum AppBroadcastVideoEncodingResolutionMode: i32 {
     Custom = 0, Auto = 1,
 }}
 DEFINE_IID!(IID_IAppBroadcastViewerCountChangedEventArgs, 3873511461, 21505, 19166, 139, 210, 193, 78, 206, 230, 128, 125);
-RT_INTERFACE!{interface IAppBroadcastViewerCountChangedEventArgs(IAppBroadcastViewerCountChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppBroadcastViewerCountChangedEventArgs] {
+RT_INTERFACE!{interface IAppBroadcastViewerCountChangedEventArgs(IAppBroadcastViewerCountChangedEventArgsVtbl): IInspectable [IID_IAppBroadcastViewerCountChangedEventArgs] {
     fn get_ViewerCount(&self, out: *mut u32) -> HRESULT
 }}
 impl IAppBroadcastViewerCountChangedEventArgs {
@@ -5531,7 +5531,7 @@ impl IAppBroadcastViewerCountChangedEventArgs {
 }
 RT_CLASS!{class AppBroadcastViewerCountChangedEventArgs: IAppBroadcastViewerCountChangedEventArgs}
 DEFINE_IID!(IID_IAppCapture, 2538198099, 41626, 17901, 143, 41, 34, 208, 153, 66, 207, 247);
-RT_INTERFACE!{interface IAppCapture(IAppCaptureVtbl): IInspectable(IInspectableVtbl) [IID_IAppCapture] {
+RT_INTERFACE!{interface IAppCapture(IAppCaptureVtbl): IInspectable [IID_IAppCapture] {
     fn get_IsCapturingAudio(&self, out: *mut bool) -> HRESULT,
     fn get_IsCapturingVideo(&self, out: *mut bool) -> HRESULT,
     fn add_CapturingChanged(&self, handler: <foundation::TypedEventHandler<AppCapture, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5571,7 +5571,7 @@ impl AppCapture {
 }
 DEFINE_CLSID!(AppCapture(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,67,97,112,116,117,114,101,0]) [CLSID_AppCapture]);
 DEFINE_IID!(IID_IAppCaptureAlternateShortcutKeys, 434692335, 9068, 16633, 179, 143, 155, 125, 214, 93, 28, 204);
-RT_INTERFACE!{interface IAppCaptureAlternateShortcutKeys(IAppCaptureAlternateShortcutKeysVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureAlternateShortcutKeys] {
+RT_INTERFACE!{interface IAppCaptureAlternateShortcutKeys(IAppCaptureAlternateShortcutKeysVtbl): IInspectable [IID_IAppCaptureAlternateShortcutKeys] {
     #[cfg(feature="windows-system")] fn put_ToggleGameBarKey(&self, value: super::super::system::VirtualKey) -> HRESULT,
     #[cfg(feature="windows-system")] fn get_ToggleGameBarKey(&self, out: *mut super::super::system::VirtualKey) -> HRESULT,
     #[cfg(feature="windows-system")] fn put_ToggleGameBarKeyModifiers(&self, value: super::super::system::VirtualKeyModifiers) -> HRESULT,
@@ -5687,7 +5687,7 @@ impl IAppCaptureAlternateShortcutKeys {
 }
 RT_CLASS!{class AppCaptureAlternateShortcutKeys: IAppCaptureAlternateShortcutKeys}
 DEFINE_IID!(IID_IAppCaptureAlternateShortcutKeys2, 3278278800, 56599, 18416, 149, 229, 206, 66, 40, 108, 243, 56);
-RT_INTERFACE!{interface IAppCaptureAlternateShortcutKeys2(IAppCaptureAlternateShortcutKeys2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureAlternateShortcutKeys2] {
+RT_INTERFACE!{interface IAppCaptureAlternateShortcutKeys2(IAppCaptureAlternateShortcutKeys2Vtbl): IInspectable [IID_IAppCaptureAlternateShortcutKeys2] {
     #[cfg(feature="windows-system")] fn put_ToggleMicrophoneCaptureKey(&self, value: super::super::system::VirtualKey) -> HRESULT,
     #[cfg(feature="windows-system")] fn get_ToggleMicrophoneCaptureKey(&self, out: *mut super::super::system::VirtualKey) -> HRESULT,
     #[cfg(feature="windows-system")] fn put_ToggleMicrophoneCaptureKeyModifiers(&self, value: super::super::system::VirtualKeyModifiers) -> HRESULT,
@@ -5714,7 +5714,7 @@ impl IAppCaptureAlternateShortcutKeys2 {
     }}
 }
 DEFINE_IID!(IID_IAppCaptureAlternateShortcutKeys3, 2072069260, 16782, 18076, 164, 154, 69, 181, 151, 200, 38, 182);
-RT_INTERFACE!{interface IAppCaptureAlternateShortcutKeys3(IAppCaptureAlternateShortcutKeys3Vtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureAlternateShortcutKeys3] {
+RT_INTERFACE!{interface IAppCaptureAlternateShortcutKeys3(IAppCaptureAlternateShortcutKeys3Vtbl): IInspectable [IID_IAppCaptureAlternateShortcutKeys3] {
     #[cfg(feature="windows-system")] fn put_ToggleCameraCaptureKey(&self, value: super::super::system::VirtualKey) -> HRESULT,
     #[cfg(feature="windows-system")] fn get_ToggleCameraCaptureKey(&self, out: *mut super::super::system::VirtualKey) -> HRESULT,
     #[cfg(feature="windows-system")] fn put_ToggleCameraCaptureKeyModifiers(&self, value: super::super::system::VirtualKeyModifiers) -> HRESULT,
@@ -5763,7 +5763,7 @@ impl IAppCaptureAlternateShortcutKeys3 {
     }}
 }
 DEFINE_IID!(IID_IAppCaptureDurationGeneratedEventArgs, 3254081083, 65441, 17609, 151, 95, 39, 251, 235, 85, 59, 53);
-RT_INTERFACE!{interface IAppCaptureDurationGeneratedEventArgs(IAppCaptureDurationGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureDurationGeneratedEventArgs] {
+RT_INTERFACE!{interface IAppCaptureDurationGeneratedEventArgs(IAppCaptureDurationGeneratedEventArgsVtbl): IInspectable [IID_IAppCaptureDurationGeneratedEventArgs] {
     fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
 impl IAppCaptureDurationGeneratedEventArgs {
@@ -5775,7 +5775,7 @@ impl IAppCaptureDurationGeneratedEventArgs {
 }
 RT_CLASS!{class AppCaptureDurationGeneratedEventArgs: IAppCaptureDurationGeneratedEventArgs}
 DEFINE_IID!(IID_IAppCaptureFileGeneratedEventArgs, 1099561972, 18014, 17855, 144, 127, 22, 91, 63, 178, 55, 88);
-RT_INTERFACE!{interface IAppCaptureFileGeneratedEventArgs(IAppCaptureFileGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureFileGeneratedEventArgs] {
+RT_INTERFACE!{interface IAppCaptureFileGeneratedEventArgs(IAppCaptureFileGeneratedEventArgsVtbl): IInspectable [IID_IAppCaptureFileGeneratedEventArgs] {
     #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut <super::super::storage::StorageFile as RtType>::Abi) -> HRESULT
 }}
 impl IAppCaptureFileGeneratedEventArgs {
@@ -5801,7 +5801,7 @@ impl AppCaptureManager {
 }
 DEFINE_CLSID!(AppCaptureManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,65,112,112,67,97,112,116,117,114,101,77,97,110,97,103,101,114,0]) [CLSID_AppCaptureManager]);
 DEFINE_IID!(IID_IAppCaptureManagerStatics, 2107522727, 25218, 18229, 141, 78, 170, 69, 249, 15, 103, 35);
-RT_INTERFACE!{static interface IAppCaptureManagerStatics(IAppCaptureManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureManagerStatics] {
+RT_INTERFACE!{static interface IAppCaptureManagerStatics(IAppCaptureManagerStaticsVtbl): IInspectable [IID_IAppCaptureManagerStatics] {
     fn GetCurrentSettings(&self, out: *mut <AppCaptureSettings as RtType>::Abi) -> HRESULT,
     fn ApplySettings(&self, appCaptureSettings: <AppCaptureSettings as RtType>::Abi) -> HRESULT
 }}
@@ -5820,7 +5820,7 @@ RT_ENUM! { enum AppCaptureMetadataPriority: i32 {
     Informational = 0, Important = 1,
 }}
 DEFINE_IID!(IID_IAppCaptureMetadataWriter, 3771615351, 39599, 18100, 173, 49, 106, 96, 180, 65, 199, 128);
-RT_INTERFACE!{interface IAppCaptureMetadataWriter(IAppCaptureMetadataWriterVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureMetadataWriter] {
+RT_INTERFACE!{interface IAppCaptureMetadataWriter(IAppCaptureMetadataWriterVtbl): IInspectable [IID_IAppCaptureMetadataWriter] {
     fn AddStringEvent(&self, name: HSTRING, value: HSTRING, priority: AppCaptureMetadataPriority) -> HRESULT,
     fn AddInt32Event(&self, name: HSTRING, value: i32, priority: AppCaptureMetadataPriority) -> HRESULT,
     fn AddDoubleEvent(&self, name: HSTRING, value: f64, priority: AppCaptureMetadataPriority) -> HRESULT,
@@ -5888,7 +5888,7 @@ RT_ENUM! { enum AppCaptureMicrophoneCaptureState: i32 {
     Stopped = 0, Started = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IAppCaptureMicrophoneCaptureStateChangedEventArgs, 843916446, 17852, 19509, 188, 53, 228, 105, 252, 122, 105, 224);
-RT_INTERFACE!{interface IAppCaptureMicrophoneCaptureStateChangedEventArgs(IAppCaptureMicrophoneCaptureStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureMicrophoneCaptureStateChangedEventArgs] {
+RT_INTERFACE!{interface IAppCaptureMicrophoneCaptureStateChangedEventArgs(IAppCaptureMicrophoneCaptureStateChangedEventArgsVtbl): IInspectable [IID_IAppCaptureMicrophoneCaptureStateChangedEventArgs] {
     fn get_State(&self, out: *mut AppCaptureMicrophoneCaptureState) -> HRESULT,
     fn get_ErrorCode(&self, out: *mut u32) -> HRESULT
 }}
@@ -5909,7 +5909,7 @@ RT_ENUM! { enum AppCaptureRecordingState: i32 {
     InProgress = 0, Completed = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IAppCaptureRecordingStateChangedEventArgs, 620529426, 58117, 18701, 180, 21, 107, 28, 144, 73, 115, 107);
-RT_INTERFACE!{interface IAppCaptureRecordingStateChangedEventArgs(IAppCaptureRecordingStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureRecordingStateChangedEventArgs] {
+RT_INTERFACE!{interface IAppCaptureRecordingStateChangedEventArgs(IAppCaptureRecordingStateChangedEventArgsVtbl): IInspectable [IID_IAppCaptureRecordingStateChangedEventArgs] {
     fn get_State(&self, out: *mut AppCaptureRecordingState) -> HRESULT,
     fn get_ErrorCode(&self, out: *mut u32) -> HRESULT
 }}
@@ -5927,7 +5927,7 @@ impl IAppCaptureRecordingStateChangedEventArgs {
 }
 RT_CLASS!{class AppCaptureRecordingStateChangedEventArgs: IAppCaptureRecordingStateChangedEventArgs}
 DEFINE_IID!(IID_IAppCaptureRecordOperation, 3328188585, 5432, 18780, 155, 187, 43, 168, 112, 236, 88, 97);
-RT_INTERFACE!{interface IAppCaptureRecordOperation(IAppCaptureRecordOperationVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureRecordOperation] {
+RT_INTERFACE!{interface IAppCaptureRecordOperation(IAppCaptureRecordOperationVtbl): IInspectable [IID_IAppCaptureRecordOperation] {
     fn StopRecording(&self) -> HRESULT,
     fn get_State(&self, out: *mut AppCaptureRecordingState) -> HRESULT,
     fn get_ErrorCode(&self, out: *mut <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
@@ -6002,7 +6002,7 @@ impl IAppCaptureRecordOperation {
 }
 RT_CLASS!{class AppCaptureRecordOperation: IAppCaptureRecordOperation}
 DEFINE_IID!(IID_IAppCaptureServices, 1157546165, 13557, 20248, 174, 140, 185, 18, 58, 187, 252, 13);
-RT_INTERFACE!{interface IAppCaptureServices(IAppCaptureServicesVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureServices] {
+RT_INTERFACE!{interface IAppCaptureServices(IAppCaptureServicesVtbl): IInspectable [IID_IAppCaptureServices] {
     fn Record(&self, out: *mut <AppCaptureRecordOperation as RtType>::Abi) -> HRESULT,
     fn RecordTimeSpan(&self, startTime: foundation::DateTime, duration: foundation::TimeSpan, out: *mut <AppCaptureRecordOperation as RtType>::Abi) -> HRESULT,
     fn get_CanCapture(&self, out: *mut bool) -> HRESULT,
@@ -6032,7 +6032,7 @@ impl IAppCaptureServices {
 }
 RT_CLASS!{class AppCaptureServices: IAppCaptureServices}
 DEFINE_IID!(IID_IAppCaptureSettings, 342375046, 34823, 18643, 136, 58, 151, 14, 228, 83, 42, 57);
-RT_INTERFACE!{interface IAppCaptureSettings(IAppCaptureSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureSettings] {
+RT_INTERFACE!{interface IAppCaptureSettings(IAppCaptureSettingsVtbl): IInspectable [IID_IAppCaptureSettings] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn put_AppCaptureDestinationFolder(&self, value: <super::super::storage::StorageFolder as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -6242,7 +6242,7 @@ impl IAppCaptureSettings {
 }
 RT_CLASS!{class AppCaptureSettings: IAppCaptureSettings}
 DEFINE_IID!(IID_IAppCaptureSettings2, 4239970023, 57963, 18287, 155, 26, 236, 52, 45, 42, 143, 222);
-RT_INTERFACE!{interface IAppCaptureSettings2(IAppCaptureSettings2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureSettings2] {
+RT_INTERFACE!{interface IAppCaptureSettings2(IAppCaptureSettings2Vtbl): IInspectable [IID_IAppCaptureSettings2] {
     fn get_IsGpuConstrained(&self, out: *mut bool) -> HRESULT,
     fn get_AlternateShortcutKeys(&self, out: *mut <AppCaptureAlternateShortcutKeys as RtType>::Abi) -> HRESULT
 }}
@@ -6259,7 +6259,7 @@ impl IAppCaptureSettings2 {
     }}
 }
 DEFINE_IID!(IID_IAppCaptureSettings3, 2838823678, 35010, 17110, 170, 170, 64, 254, 255, 215, 90, 236);
-RT_INTERFACE!{interface IAppCaptureSettings3(IAppCaptureSettings3Vtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureSettings3] {
+RT_INTERFACE!{interface IAppCaptureSettings3(IAppCaptureSettings3Vtbl): IInspectable [IID_IAppCaptureSettings3] {
     fn put_IsMicrophoneCaptureEnabled(&self, value: bool) -> HRESULT,
     fn get_IsMicrophoneCaptureEnabled(&self, out: *mut bool) -> HRESULT
 }}
@@ -6275,7 +6275,7 @@ impl IAppCaptureSettings3 {
     }}
 }
 DEFINE_IID!(IID_IAppCaptureSettings4, 130185036, 6785, 18479, 162, 68, 4, 157, 149, 242, 91, 11);
-RT_INTERFACE!{interface IAppCaptureSettings4(IAppCaptureSettings4Vtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureSettings4] {
+RT_INTERFACE!{interface IAppCaptureSettings4(IAppCaptureSettings4Vtbl): IInspectable [IID_IAppCaptureSettings4] {
     fn put_IsMicrophoneCaptureEnabledByDefault(&self, value: bool) -> HRESULT,
     fn get_IsMicrophoneCaptureEnabledByDefault(&self, out: *mut bool) -> HRESULT,
     fn put_SystemAudioGain(&self, value: f64) -> HRESULT,
@@ -6324,7 +6324,7 @@ impl IAppCaptureSettings4 {
     }}
 }
 DEFINE_IID!(IID_IAppCaptureSettings5, 411649314, 45288, 19360, 143, 19, 62, 170, 95, 164, 1, 59);
-RT_INTERFACE!{interface IAppCaptureSettings5(IAppCaptureSettings5Vtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureSettings5] {
+RT_INTERFACE!{interface IAppCaptureSettings5(IAppCaptureSettings5Vtbl): IInspectable [IID_IAppCaptureSettings5] {
     fn put_IsEchoCancellationEnabled(&self, value: bool) -> HRESULT,
     fn get_IsEchoCancellationEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_IsCursorImageCaptureEnabled(&self, value: bool) -> HRESULT,
@@ -6351,7 +6351,7 @@ impl IAppCaptureSettings5 {
     }}
 }
 DEFINE_IID!(IID_IAppCaptureState, 1930642290, 54507, 17614, 149, 56, 70, 95, 80, 106, 196, 234);
-RT_INTERFACE!{interface IAppCaptureState(IAppCaptureStateVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureState] {
+RT_INTERFACE!{interface IAppCaptureState(IAppCaptureStateVtbl): IInspectable [IID_IAppCaptureState] {
     fn get_IsTargetRunning(&self, out: *mut bool) -> HRESULT,
     fn get_IsHistoricalCaptureEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_ShouldCaptureMicrophone(&self, out: *mut bool) -> HRESULT,
@@ -6419,7 +6419,7 @@ impl IAppCaptureState {
 }
 RT_CLASS!{class AppCaptureState: IAppCaptureState}
 DEFINE_IID!(IID_IAppCaptureStatics, 4179811692, 2686, 20084, 139, 32, 156, 31, 144, 45, 8, 161);
-RT_INTERFACE!{static interface IAppCaptureStatics(IAppCaptureStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureStatics] {
+RT_INTERFACE!{static interface IAppCaptureStatics(IAppCaptureStaticsVtbl): IInspectable [IID_IAppCaptureStatics] {
     fn GetForCurrentView(&self, out: *mut <AppCapture as RtType>::Abi) -> HRESULT
 }}
 impl IAppCaptureStatics {
@@ -6430,7 +6430,7 @@ impl IAppCaptureStatics {
     }}
 }
 DEFINE_IID!(IID_IAppCaptureStatics2, 3000533460, 33644, 19876, 175, 215, 250, 204, 4, 30, 28, 243);
-RT_INTERFACE!{static interface IAppCaptureStatics2(IAppCaptureStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppCaptureStatics2] {
+RT_INTERFACE!{static interface IAppCaptureStatics2(IAppCaptureStatics2Vtbl): IInspectable [IID_IAppCaptureStatics2] {
     fn SetAllowedAsync(&self, allowed: bool, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl IAppCaptureStatics2 {
@@ -6450,7 +6450,7 @@ RT_ENUM! { enum AppCaptureVideoEncodingResolutionMode: i32 {
     Custom = 0, High = 1, Standard = 2,
 }}
 DEFINE_IID!(IID_ICameraCaptureUI, 1213756736, 28563, 19380, 184, 243, 232, 158, 72, 148, 140, 145);
-RT_INTERFACE!{interface ICameraCaptureUI(ICameraCaptureUIVtbl): IInspectable(IInspectableVtbl) [IID_ICameraCaptureUI] {
+RT_INTERFACE!{interface ICameraCaptureUI(ICameraCaptureUIVtbl): IInspectable [IID_ICameraCaptureUI] {
     fn get_PhotoSettings(&self, out: *mut <CameraCaptureUIPhotoCaptureSettings as RtType>::Abi) -> HRESULT,
     fn get_VideoSettings(&self, out: *mut <CameraCaptureUIVideoCaptureSettings as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CaptureFileAsync(&self, mode: CameraCaptureUIMode, out: *mut <foundation::IAsyncOperation<super::super::storage::StorageFile> as RtType>::Abi) -> HRESULT
@@ -6485,7 +6485,7 @@ RT_ENUM! { enum CameraCaptureUIMode: i32 {
     PhotoOrVideo = 0, Photo = 1, Video = 2,
 }}
 DEFINE_IID!(IID_ICameraCaptureUIPhotoCaptureSettings, 3119890071, 13426, 18088, 138, 158, 4, 206, 66, 204, 201, 125);
-RT_INTERFACE!{interface ICameraCaptureUIPhotoCaptureSettings(ICameraCaptureUIPhotoCaptureSettingsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraCaptureUIPhotoCaptureSettings] {
+RT_INTERFACE!{interface ICameraCaptureUIPhotoCaptureSettings(ICameraCaptureUIPhotoCaptureSettingsVtbl): IInspectable [IID_ICameraCaptureUIPhotoCaptureSettings] {
     fn get_Format(&self, out: *mut CameraCaptureUIPhotoFormat) -> HRESULT,
     fn put_Format(&self, value: CameraCaptureUIPhotoFormat) -> HRESULT,
     fn get_MaxResolution(&self, out: *mut CameraCaptureUIMaxPhotoResolution) -> HRESULT,
@@ -6549,7 +6549,7 @@ RT_ENUM! { enum CameraCaptureUIPhotoFormat: i32 {
     Jpeg = 0, Png = 1, JpegXR = 2,
 }}
 DEFINE_IID!(IID_ICameraCaptureUIVideoCaptureSettings, 1693003039, 41613, 16986, 184, 79, 229, 104, 51, 95, 242, 78);
-RT_INTERFACE!{interface ICameraCaptureUIVideoCaptureSettings(ICameraCaptureUIVideoCaptureSettingsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraCaptureUIVideoCaptureSettings] {
+RT_INTERFACE!{interface ICameraCaptureUIVideoCaptureSettings(ICameraCaptureUIVideoCaptureSettingsVtbl): IInspectable [IID_ICameraCaptureUIVideoCaptureSettings] {
     fn get_Format(&self, out: *mut CameraCaptureUIVideoFormat) -> HRESULT,
     fn put_Format(&self, value: CameraCaptureUIVideoFormat) -> HRESULT,
     fn get_MaxResolution(&self, out: *mut CameraCaptureUIMaxVideoResolution) -> HRESULT,
@@ -6610,7 +6610,7 @@ impl CameraOptionsUI {
 }
 DEFINE_CLSID!(CameraOptionsUI(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,67,97,109,101,114,97,79,112,116,105,111,110,115,85,73,0]) [CLSID_CameraOptionsUI]);
 DEFINE_IID!(IID_ICameraOptionsUIStatics, 990731828, 14598, 19325, 148, 108, 123, 222, 132, 68, 153, 174);
-RT_INTERFACE!{static interface ICameraOptionsUIStatics(ICameraOptionsUIStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraOptionsUIStatics] {
+RT_INTERFACE!{static interface ICameraOptionsUIStatics(ICameraOptionsUIStaticsVtbl): IInspectable [IID_ICameraOptionsUIStatics] {
     fn Show(&self, mediaCapture: <MediaCapture as RtType>::Abi) -> HRESULT
 }}
 impl ICameraOptionsUIStatics {
@@ -6620,7 +6620,7 @@ impl ICameraOptionsUIStatics {
     }}
 }
 DEFINE_IID!(IID_ICapturedFrame, 500358687, 22299, 17624, 142, 128, 160, 138, 21, 120, 118, 110);
-RT_INTERFACE!{interface ICapturedFrame(ICapturedFrameVtbl): IInspectable(IInspectableVtbl) [IID_ICapturedFrame] {
+RT_INTERFACE!{interface ICapturedFrame(ICapturedFrameVtbl): IInspectable [IID_ICapturedFrame] {
     fn get_Width(&self, out: *mut u32) -> HRESULT,
     fn get_Height(&self, out: *mut u32) -> HRESULT
 }}
@@ -6638,7 +6638,7 @@ impl ICapturedFrame {
 }
 RT_CLASS!{class CapturedFrame: ICapturedFrame}
 DEFINE_IID!(IID_ICapturedFrame2, 1413457617, 48504, 18534, 173, 218, 36, 49, 75, 198, 93, 234);
-RT_INTERFACE!{interface ICapturedFrame2(ICapturedFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_ICapturedFrame2] {
+RT_INTERFACE!{interface ICapturedFrame2(ICapturedFrame2Vtbl): IInspectable [IID_ICapturedFrame2] {
     fn get_ControlValues(&self, out: *mut <CapturedFrameControlValues as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn get_BitmapProperties(&self, out: *mut <super::super::graphics::imaging::BitmapPropertySet as RtType>::Abi) -> HRESULT
 }}
@@ -6655,7 +6655,7 @@ impl ICapturedFrame2 {
     }}
 }
 DEFINE_IID!(IID_ICapturedFrameControlValues, 2428918655, 19981, 19620, 136, 45, 122, 20, 79, 237, 10, 144);
-RT_INTERFACE!{interface ICapturedFrameControlValues(ICapturedFrameControlValuesVtbl): IInspectable(IInspectableVtbl) [IID_ICapturedFrameControlValues] {
+RT_INTERFACE!{interface ICapturedFrameControlValues(ICapturedFrameControlValuesVtbl): IInspectable [IID_ICapturedFrameControlValues] {
     fn get_Exposure(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_ExposureCompensation(&self, out: *mut <foundation::IReference<f32> as RtType>::Abi) -> HRESULT,
     fn get_IsoSpeed(&self, out: *mut <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
@@ -6715,7 +6715,7 @@ impl ICapturedFrameControlValues {
 }
 RT_CLASS!{class CapturedFrameControlValues: ICapturedFrameControlValues}
 DEFINE_IID!(IID_ICapturedFrameControlValues2, 1342909320, 1746, 19111, 167, 219, 211, 122, 247, 51, 33, 216);
-RT_INTERFACE!{interface ICapturedFrameControlValues2(ICapturedFrameControlValues2Vtbl): IInspectable(IInspectableVtbl) [IID_ICapturedFrameControlValues2] {
+RT_INTERFACE!{interface ICapturedFrameControlValues2(ICapturedFrameControlValues2Vtbl): IInspectable [IID_ICapturedFrameControlValues2] {
     fn get_FocusState(&self, out: *mut <foundation::IReference<super::devices::MediaCaptureFocusState> as RtType>::Abi) -> HRESULT,
     fn get_IsoDigitalGain(&self, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT,
     fn get_IsoAnalogGain(&self, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT,
@@ -6750,7 +6750,7 @@ impl ICapturedFrameControlValues2 {
     }}
 }
 DEFINE_IID!(IID_ICapturedFrameWithSoftwareBitmap, 3046017902, 34051, 18869, 158, 134, 137, 125, 38, 163, 255, 61);
-RT_INTERFACE!{interface ICapturedFrameWithSoftwareBitmap(ICapturedFrameWithSoftwareBitmapVtbl): IInspectable(IInspectableVtbl) [IID_ICapturedFrameWithSoftwareBitmap] {
+RT_INTERFACE!{interface ICapturedFrameWithSoftwareBitmap(ICapturedFrameWithSoftwareBitmapVtbl): IInspectable [IID_ICapturedFrameWithSoftwareBitmap] {
     #[cfg(feature="windows-graphics")] fn get_SoftwareBitmap(&self, out: *mut <super::super::graphics::imaging::SoftwareBitmap as RtType>::Abi) -> HRESULT
 }}
 impl ICapturedFrameWithSoftwareBitmap {
@@ -6761,7 +6761,7 @@ impl ICapturedFrameWithSoftwareBitmap {
     }}
 }
 DEFINE_IID!(IID_ICapturedPhoto, 2966322778, 53196, 19820, 138, 209, 8, 105, 32, 138, 202, 22);
-RT_INTERFACE!{interface ICapturedPhoto(ICapturedPhotoVtbl): IInspectable(IInspectableVtbl) [IID_ICapturedPhoto] {
+RT_INTERFACE!{interface ICapturedPhoto(ICapturedPhotoVtbl): IInspectable [IID_ICapturedPhoto] {
     fn get_Frame(&self, out: *mut <CapturedFrame as RtType>::Abi) -> HRESULT,
     fn get_Thumbnail(&self, out: *mut <CapturedFrame as RtType>::Abi) -> HRESULT
 }}
@@ -6788,7 +6788,7 @@ RT_ENUM! { enum GameBarCommandOrigin: i32 {
     ShortcutKey = 0, Cortana = 1, AppCommand = 2,
 }}
 DEFINE_IID!(IID_IGameBarServices, 767470935, 20646, 18846, 140, 108, 211, 48, 167, 49, 23, 150);
-RT_INTERFACE!{interface IGameBarServices(IGameBarServicesVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarServices] {
+RT_INTERFACE!{interface IGameBarServices(IGameBarServicesVtbl): IInspectable [IID_IGameBarServices] {
     fn get_TargetCapturePolicy(&self, out: *mut GameBarTargetCapturePolicy) -> HRESULT,
     fn EnableCapture(&self) -> HRESULT,
     fn DisableCapture(&self) -> HRESULT,
@@ -6845,7 +6845,7 @@ impl IGameBarServices {
 }
 RT_CLASS!{class GameBarServices: IGameBarServices}
 DEFINE_IID!(IID_IGameBarServicesCommandEventArgs, 2806130354, 61814, 20431, 143, 187, 207, 105, 139, 46, 184, 224);
-RT_INTERFACE!{interface IGameBarServicesCommandEventArgs(IGameBarServicesCommandEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarServicesCommandEventArgs] {
+RT_INTERFACE!{interface IGameBarServicesCommandEventArgs(IGameBarServicesCommandEventArgsVtbl): IInspectable [IID_IGameBarServicesCommandEventArgs] {
     fn get_Command(&self, out: *mut GameBarCommand) -> HRESULT,
     fn get_Origin(&self, out: *mut GameBarCommandOrigin) -> HRESULT
 }}
@@ -6866,7 +6866,7 @@ RT_ENUM! { enum GameBarServicesDisplayMode: i32 {
     Windowed = 0, FullScreenExclusive = 1,
 }}
 DEFINE_IID!(IID_IGameBarServicesManager, 978033914, 32651, 19552, 157, 187, 11, 205, 38, 45, 255, 198);
-RT_INTERFACE!{interface IGameBarServicesManager(IGameBarServicesManagerVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarServicesManager] {
+RT_INTERFACE!{interface IGameBarServicesManager(IGameBarServicesManagerVtbl): IInspectable [IID_IGameBarServicesManager] {
     fn add_GameBarServicesCreated(&self, value: <foundation::TypedEventHandler<GameBarServicesManager, GameBarServicesManagerGameBarServicesCreatedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_GameBarServicesCreated(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -6890,7 +6890,7 @@ impl GameBarServicesManager {
 }
 DEFINE_CLSID!(GameBarServicesManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,71,97,109,101,66,97,114,83,101,114,118,105,99,101,115,77,97,110,97,103,101,114,0]) [CLSID_GameBarServicesManager]);
 DEFINE_IID!(IID_IGameBarServicesManagerGameBarServicesCreatedEventArgs, 3991780764, 5182, 18851, 165, 234, 11, 25, 149, 200, 212, 110);
-RT_INTERFACE!{interface IGameBarServicesManagerGameBarServicesCreatedEventArgs(IGameBarServicesManagerGameBarServicesCreatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarServicesManagerGameBarServicesCreatedEventArgs] {
+RT_INTERFACE!{interface IGameBarServicesManagerGameBarServicesCreatedEventArgs(IGameBarServicesManagerGameBarServicesCreatedEventArgsVtbl): IInspectable [IID_IGameBarServicesManagerGameBarServicesCreatedEventArgs] {
     fn get_GameBarServices(&self, out: *mut <GameBarServices as RtType>::Abi) -> HRESULT
 }}
 impl IGameBarServicesManagerGameBarServicesCreatedEventArgs {
@@ -6902,7 +6902,7 @@ impl IGameBarServicesManagerGameBarServicesCreatedEventArgs {
 }
 RT_CLASS!{class GameBarServicesManagerGameBarServicesCreatedEventArgs: IGameBarServicesManagerGameBarServicesCreatedEventArgs}
 DEFINE_IID!(IID_IGameBarServicesManagerStatics, 885110294, 65317, 18322, 152, 242, 211, 117, 63, 21, 172, 19);
-RT_INTERFACE!{static interface IGameBarServicesManagerStatics(IGameBarServicesManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarServicesManagerStatics] {
+RT_INTERFACE!{static interface IGameBarServicesManagerStatics(IGameBarServicesManagerStaticsVtbl): IInspectable [IID_IGameBarServicesManagerStatics] {
     fn GetDefault(&self, out: *mut <GameBarServicesManager as RtType>::Abi) -> HRESULT
 }}
 impl IGameBarServicesManagerStatics {
@@ -6913,7 +6913,7 @@ impl IGameBarServicesManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IGameBarServicesTargetInfo, 3022008210, 5649, 19973, 182, 239, 223, 215, 55, 174, 51, 176);
-RT_INTERFACE!{interface IGameBarServicesTargetInfo(IGameBarServicesTargetInfoVtbl): IInspectable(IInspectableVtbl) [IID_IGameBarServicesTargetInfo] {
+RT_INTERFACE!{interface IGameBarServicesTargetInfo(IGameBarServicesTargetInfoVtbl): IInspectable [IID_IGameBarServicesTargetInfo] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_AppId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TitleId(&self, out: *mut HSTRING) -> HRESULT,
@@ -6949,7 +6949,7 @@ RT_ENUM! { enum KnownVideoProfile: i32 {
     VideoRecording = 0, HighQualityPhoto = 1, BalancedVideoAndPhoto = 2, VideoConferencing = 3, PhotoSequence = 4, HighFrameRate = 5, VariablePhotoSequence = 6, HdrWithWcgVideo = 7, HdrWithWcgPhoto = 8, VideoHdr8 = 9,
 }}
 DEFINE_IID!(IID_ILowLagMediaRecording, 1103674103, 65343, 18928, 164, 119, 241, 149, 227, 206, 81, 8);
-RT_INTERFACE!{interface ILowLagMediaRecording(ILowLagMediaRecordingVtbl): IInspectable(IInspectableVtbl) [IID_ILowLagMediaRecording] {
+RT_INTERFACE!{interface ILowLagMediaRecording(ILowLagMediaRecordingVtbl): IInspectable [IID_ILowLagMediaRecording] {
     fn StartAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn StopAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn FinishAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
@@ -6973,7 +6973,7 @@ impl ILowLagMediaRecording {
 }
 RT_CLASS!{class LowLagMediaRecording: ILowLagMediaRecording}
 DEFINE_IID!(IID_ILowLagMediaRecording2, 1667876696, 22084, 16866, 151, 175, 142, 245, 106, 37, 226, 37);
-RT_INTERFACE!{interface ILowLagMediaRecording2(ILowLagMediaRecording2Vtbl): IInspectable(IInspectableVtbl) [IID_ILowLagMediaRecording2] {
+RT_INTERFACE!{interface ILowLagMediaRecording2(ILowLagMediaRecording2Vtbl): IInspectable [IID_ILowLagMediaRecording2] {
     fn PauseAsync(&self, behavior: super::devices::MediaCapturePauseBehavior, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn ResumeAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
@@ -6990,7 +6990,7 @@ impl ILowLagMediaRecording2 {
     }}
 }
 DEFINE_IID!(IID_ILowLagMediaRecording3, 1546890002, 18679, 18394, 180, 30, 144, 136, 10, 95, 224, 236);
-RT_INTERFACE!{interface ILowLagMediaRecording3(ILowLagMediaRecording3Vtbl): IInspectable(IInspectableVtbl) [IID_ILowLagMediaRecording3] {
+RT_INTERFACE!{interface ILowLagMediaRecording3(ILowLagMediaRecording3Vtbl): IInspectable [IID_ILowLagMediaRecording3] {
     fn PauseWithResultAsync(&self, behavior: super::devices::MediaCapturePauseBehavior, out: *mut <foundation::IAsyncOperation<MediaCapturePauseResult> as RtType>::Abi) -> HRESULT,
     fn StopWithResultAsync(&self, out: *mut <foundation::IAsyncOperation<MediaCaptureStopResult> as RtType>::Abi) -> HRESULT
 }}
@@ -7007,7 +7007,7 @@ impl ILowLagMediaRecording3 {
     }}
 }
 DEFINE_IID!(IID_ILowLagPhotoCapture, 2742178231, 27460, 18237, 143, 36, 247, 3, 214, 192, 236, 68);
-RT_INTERFACE!{interface ILowLagPhotoCapture(ILowLagPhotoCaptureVtbl): IInspectable(IInspectableVtbl) [IID_ILowLagPhotoCapture] {
+RT_INTERFACE!{interface ILowLagPhotoCapture(ILowLagPhotoCaptureVtbl): IInspectable [IID_ILowLagPhotoCapture] {
     fn CaptureAsync(&self, out: *mut <foundation::IAsyncOperation<CapturedPhoto> as RtType>::Abi) -> HRESULT,
     fn FinishAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
@@ -7025,7 +7025,7 @@ impl ILowLagPhotoCapture {
 }
 RT_CLASS!{class LowLagPhotoCapture: ILowLagPhotoCapture}
 DEFINE_IID!(IID_ILowLagPhotoSequenceCapture, 2093172411, 47529, 19601, 143, 250, 40, 126, 156, 102, 134, 105);
-RT_INTERFACE!{interface ILowLagPhotoSequenceCapture(ILowLagPhotoSequenceCaptureVtbl): IInspectable(IInspectableVtbl) [IID_ILowLagPhotoSequenceCapture] {
+RT_INTERFACE!{interface ILowLagPhotoSequenceCapture(ILowLagPhotoSequenceCaptureVtbl): IInspectable [IID_ILowLagPhotoSequenceCapture] {
     fn StartAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn StopAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn FinishAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -7060,7 +7060,7 @@ impl ILowLagPhotoSequenceCapture {
 }
 RT_CLASS!{class LowLagPhotoSequenceCapture: ILowLagPhotoSequenceCapture}
 DEFINE_IID!(IID_IMediaCapture, 3323657140, 64272, 18996, 172, 24, 202, 128, 217, 200, 231, 238);
-RT_INTERFACE!{interface IMediaCapture(IMediaCaptureVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCapture] {
+RT_INTERFACE!{interface IMediaCapture(IMediaCaptureVtbl): IInspectable [IID_IMediaCapture] {
     fn InitializeAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn InitializeWithSettingsAsync(&self, mediaCaptureInitializationSettings: <MediaCaptureInitializationSettings as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -7237,7 +7237,7 @@ impl MediaCapture {
 }
 DEFINE_CLSID!(MediaCapture(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,77,101,100,105,97,67,97,112,116,117,114,101,0]) [CLSID_MediaCapture]);
 DEFINE_IID!(IID_IMediaCapture2, 2630255200, 32161, 16451, 182, 82, 33, 184, 135, 141, 175, 249);
-RT_INTERFACE!{interface IMediaCapture2(IMediaCapture2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCapture2] {
+RT_INTERFACE!{interface IMediaCapture2(IMediaCapture2Vtbl): IInspectable [IID_IMediaCapture2] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn PrepareLowLagRecordToStorageFileAsync(&self, encodingProfile: <super::mediaproperties::MediaEncodingProfile as RtType>::Abi, file: <super::super::storage::IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<LowLagMediaRecording> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -7286,7 +7286,7 @@ impl IMediaCapture2 {
     }}
 }
 DEFINE_IID!(IID_IMediaCapture3, 3558043440, 5476, 18030, 188, 10, 175, 148, 224, 42, 176, 22);
-RT_INTERFACE!{interface IMediaCapture3(IMediaCapture3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCapture3] {
+RT_INTERFACE!{interface IMediaCapture3(IMediaCapture3Vtbl): IInspectable [IID_IMediaCapture3] {
     fn PrepareVariablePhotoSequenceCaptureAsync(&self, type_: <super::mediaproperties::ImageEncodingProperties as RtType>::Abi, out: *mut <foundation::IAsyncOperation<core::VariablePhotoSequenceCapture> as RtType>::Abi) -> HRESULT,
     fn add_FocusChanged(&self, handler: <foundation::TypedEventHandler<MediaCapture, MediaCaptureFocusChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_FocusChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
@@ -7319,7 +7319,7 @@ impl IMediaCapture3 {
     }}
 }
 DEFINE_IID!(IID_IMediaCapture4, 3134025686, 64264, 18759, 174, 162, 206, 20, 239, 240, 206, 19);
-RT_INTERFACE!{interface IMediaCapture4(IMediaCapture4Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCapture4] {
+RT_INTERFACE!{interface IMediaCapture4(IMediaCapture4Vtbl): IInspectable [IID_IMediaCapture4] {
     fn AddAudioEffectAsync(&self, definition: <super::effects::IAudioEffectDefinition as RtType>::Abi, out: *mut <foundation::IAsyncOperation<super::IMediaExtension> as RtType>::Abi) -> HRESULT,
     fn AddVideoEffectAsync(&self, definition: <super::effects::IVideoEffectDefinition as RtType>::Abi, mediaStreamType: MediaStreamType, out: *mut <foundation::IAsyncOperation<super::IMediaExtension> as RtType>::Abi) -> HRESULT,
     fn PauseRecordAsync(&self, behavior: super::devices::MediaCapturePauseBehavior, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -7400,7 +7400,7 @@ impl IMediaCapture4 {
     }}
 }
 DEFINE_IID!(IID_IMediaCapture5, 3665329186, 15003, 18208, 167, 30, 151, 144, 10, 49, 110, 90);
-RT_INTERFACE!{interface IMediaCapture5(IMediaCapture5Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCapture5] {
+RT_INTERFACE!{interface IMediaCapture5(IMediaCapture5Vtbl): IInspectable [IID_IMediaCapture5] {
     fn RemoveEffectAsync(&self, effect: <super::IMediaExtension as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn PauseRecordWithResultAsync(&self, behavior: super::devices::MediaCapturePauseBehavior, out: *mut <foundation::IAsyncOperation<MediaCapturePauseResult> as RtType>::Abi) -> HRESULT,
     fn StopRecordWithResultAsync(&self, out: *mut <foundation::IAsyncOperation<MediaCaptureStopResult> as RtType>::Abi) -> HRESULT,
@@ -7447,7 +7447,7 @@ impl IMediaCapture5 {
     }}
 }
 DEFINE_IID!(IID_IMediaCapture6, 579422397, 19232, 19377, 159, 214, 165, 131, 33, 42, 16, 18);
-RT_INTERFACE!{interface IMediaCapture6(IMediaCapture6Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCapture6] {
+RT_INTERFACE!{interface IMediaCapture6(IMediaCapture6Vtbl): IInspectable [IID_IMediaCapture6] {
     fn add_CaptureDeviceExclusiveControlStatusChanged(&self, handler: <foundation::TypedEventHandler<MediaCapture, MediaCaptureDeviceExclusiveControlStatusChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_CaptureDeviceExclusiveControlStatusChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn CreateMultiSourceFrameReaderAsync(&self, inputSources: <foundation::collections::IIterable<frames::MediaFrameSource> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<frames::MultiSourceMediaFrameReader> as RtType>::Abi) -> HRESULT
@@ -7472,7 +7472,7 @@ RT_ENUM! { enum MediaCaptureDeviceExclusiveControlStatus: i32 {
     ExclusiveControlAvailable = 0, SharedReadOnlyAvailable = 1,
 }}
 DEFINE_IID!(IID_IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs, 2637140493, 42376, 17350, 137, 214, 90, 211, 34, 175, 0, 106);
-RT_INTERFACE!{interface IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs(IMediaCaptureDeviceExclusiveControlStatusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs] {
+RT_INTERFACE!{interface IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs(IMediaCaptureDeviceExclusiveControlStatusChangedEventArgsVtbl): IInspectable [IID_IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Status(&self, out: *mut MediaCaptureDeviceExclusiveControlStatus) -> HRESULT
 }}
@@ -7490,7 +7490,7 @@ impl IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs {
 }
 RT_CLASS!{class MediaCaptureDeviceExclusiveControlStatusChangedEventArgs: IMediaCaptureDeviceExclusiveControlStatusChangedEventArgs}
 DEFINE_IID!(IID_IMediaCaptureFailedEventArgs, 2164122612, 21700, 17088, 141, 25, 206, 161, 168, 124, 161, 139);
-RT_INTERFACE!{interface IMediaCaptureFailedEventArgs(IMediaCaptureFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureFailedEventArgs] {
+RT_INTERFACE!{interface IMediaCaptureFailedEventArgs(IMediaCaptureFailedEventArgsVtbl): IInspectable [IID_IMediaCaptureFailedEventArgs] {
     fn get_Message(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Code(&self, out: *mut u32) -> HRESULT
 }}
@@ -7518,7 +7518,7 @@ impl MediaCaptureFailedEventHandler {
     }}
 }
 DEFINE_IID!(IID_IMediaCaptureFocusChangedEventArgs, 2179054719, 8823, 18750, 171, 238, 211, 244, 79, 249, 140, 4);
-RT_INTERFACE!{interface IMediaCaptureFocusChangedEventArgs(IMediaCaptureFocusChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureFocusChangedEventArgs] {
+RT_INTERFACE!{interface IMediaCaptureFocusChangedEventArgs(IMediaCaptureFocusChangedEventArgsVtbl): IInspectable [IID_IMediaCaptureFocusChangedEventArgs] {
     fn get_FocusState(&self, out: *mut super::devices::MediaCaptureFocusState) -> HRESULT
 }}
 impl IMediaCaptureFocusChangedEventArgs {
@@ -7530,7 +7530,7 @@ impl IMediaCaptureFocusChangedEventArgs {
 }
 RT_CLASS!{class MediaCaptureFocusChangedEventArgs: IMediaCaptureFocusChangedEventArgs}
 DEFINE_IID!(IID_IMediaCaptureInitializationSettings, 2541927024, 60005, 18688, 147, 86, 140, 168, 135, 114, 104, 132);
-RT_INTERFACE!{interface IMediaCaptureInitializationSettings(IMediaCaptureInitializationSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureInitializationSettings] {
+RT_INTERFACE!{interface IMediaCaptureInitializationSettings(IMediaCaptureInitializationSettingsVtbl): IInspectable [IID_IMediaCaptureInitializationSettings] {
     fn put_AudioDeviceId(&self, value: HSTRING) -> HRESULT,
     fn get_AudioDeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn put_VideoDeviceId(&self, value: HSTRING) -> HRESULT,
@@ -7582,7 +7582,7 @@ RT_CLASS!{class MediaCaptureInitializationSettings: IMediaCaptureInitializationS
 impl RtActivatable<IActivationFactory> for MediaCaptureInitializationSettings {}
 DEFINE_CLSID!(MediaCaptureInitializationSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,77,101,100,105,97,67,97,112,116,117,114,101,73,110,105,116,105,97,108,105,122,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_MediaCaptureInitializationSettings]);
 DEFINE_IID!(IID_IMediaCaptureInitializationSettings2, 1078855206, 51676, 17385, 174, 228, 230, 191, 27, 87, 180, 76);
-RT_INTERFACE!{interface IMediaCaptureInitializationSettings2(IMediaCaptureInitializationSettings2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureInitializationSettings2] {
+RT_INTERFACE!{interface IMediaCaptureInitializationSettings2(IMediaCaptureInitializationSettings2Vtbl): IInspectable [IID_IMediaCaptureInitializationSettings2] {
     fn put_MediaCategory(&self, value: MediaCategory) -> HRESULT,
     fn get_MediaCategory(&self, out: *mut MediaCategory) -> HRESULT,
     fn put_AudioProcessing(&self, value: super::AudioProcessing) -> HRESULT,
@@ -7609,7 +7609,7 @@ impl IMediaCaptureInitializationSettings2 {
     }}
 }
 DEFINE_IID!(IID_IMediaCaptureInitializationSettings3, 1096831389, 48712, 18224, 129, 4, 12, 246, 233, 233, 121, 72);
-RT_INTERFACE!{interface IMediaCaptureInitializationSettings3(IMediaCaptureInitializationSettings3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureInitializationSettings3] {
+RT_INTERFACE!{interface IMediaCaptureInitializationSettings3(IMediaCaptureInitializationSettings3Vtbl): IInspectable [IID_IMediaCaptureInitializationSettings3] {
     fn put_AudioSource(&self, value: <super::core::IMediaSource as RtType>::Abi) -> HRESULT,
     fn get_AudioSource(&self, out: *mut <super::core::IMediaSource as RtType>::Abi) -> HRESULT,
     fn put_VideoSource(&self, value: <super::core::IMediaSource as RtType>::Abi) -> HRESULT,
@@ -7636,7 +7636,7 @@ impl IMediaCaptureInitializationSettings3 {
     }}
 }
 DEFINE_IID!(IID_IMediaCaptureInitializationSettings4, 4110591287, 19639, 19752, 149, 237, 79, 159, 1, 46, 5, 24);
-RT_INTERFACE!{interface IMediaCaptureInitializationSettings4(IMediaCaptureInitializationSettings4Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureInitializationSettings4] {
+RT_INTERFACE!{interface IMediaCaptureInitializationSettings4(IMediaCaptureInitializationSettings4Vtbl): IInspectable [IID_IMediaCaptureInitializationSettings4] {
     fn get_VideoProfile(&self, out: *mut <MediaCaptureVideoProfile as RtType>::Abi) -> HRESULT,
     fn put_VideoProfile(&self, value: <MediaCaptureVideoProfile as RtType>::Abi) -> HRESULT,
     fn get_PreviewMediaDescription(&self, out: *mut <MediaCaptureVideoProfileMediaDescription as RtType>::Abi) -> HRESULT,
@@ -7685,7 +7685,7 @@ impl IMediaCaptureInitializationSettings4 {
     }}
 }
 DEFINE_IID!(IID_IMediaCaptureInitializationSettings5, 3584222136, 9766, 20116, 183, 179, 83, 8, 160, 246, 75, 26);
-RT_INTERFACE!{interface IMediaCaptureInitializationSettings5(IMediaCaptureInitializationSettings5Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureInitializationSettings5] {
+RT_INTERFACE!{interface IMediaCaptureInitializationSettings5(IMediaCaptureInitializationSettings5Vtbl): IInspectable [IID_IMediaCaptureInitializationSettings5] {
     fn get_SourceGroup(&self, out: *mut <frames::MediaFrameSourceGroup as RtType>::Abi) -> HRESULT,
     fn put_SourceGroup(&self, value: <frames::MediaFrameSourceGroup as RtType>::Abi) -> HRESULT,
     fn get_SharingMode(&self, out: *mut MediaCaptureSharingMode) -> HRESULT,
@@ -7723,7 +7723,7 @@ impl IMediaCaptureInitializationSettings5 {
     }}
 }
 DEFINE_IID!(IID_IMediaCaptureInitializationSettings6, 3001183047, 15793, 19763, 171, 99, 15, 250, 9, 5, 101, 133);
-RT_INTERFACE!{interface IMediaCaptureInitializationSettings6(IMediaCaptureInitializationSettings6Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureInitializationSettings6] {
+RT_INTERFACE!{interface IMediaCaptureInitializationSettings6(IMediaCaptureInitializationSettings6Vtbl): IInspectable [IID_IMediaCaptureInitializationSettings6] {
     fn get_AlwaysPlaySystemShutterSound(&self, out: *mut bool) -> HRESULT,
     fn put_AlwaysPlaySystemShutterSound(&self, value: bool) -> HRESULT
 }}
@@ -7742,7 +7742,7 @@ RT_ENUM! { enum MediaCaptureMemoryPreference: i32 {
     Auto = 0, Cpu = 1,
 }}
 DEFINE_IID!(IID_IMediaCapturePauseResult, 2932112547, 17527, 19204, 160, 111, 44, 28, 81, 130, 254, 157);
-RT_INTERFACE!{interface IMediaCapturePauseResult(IMediaCapturePauseResultVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCapturePauseResult] {
+RT_INTERFACE!{interface IMediaCapturePauseResult(IMediaCapturePauseResultVtbl): IInspectable [IID_IMediaCapturePauseResult] {
     fn get_LastFrame(&self, out: *mut <super::VideoFrame as RtType>::Abi) -> HRESULT,
     fn get_RecordDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
@@ -7760,7 +7760,7 @@ impl IMediaCapturePauseResult {
 }
 RT_CLASS!{class MediaCapturePauseResult: IMediaCapturePauseResult}
 DEFINE_IID!(IID_IMediaCaptureSettings, 495168254, 27973, 17527, 141, 196, 172, 91, 192, 28, 64, 145);
-RT_INTERFACE!{interface IMediaCaptureSettings(IMediaCaptureSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureSettings] {
+RT_INTERFACE!{interface IMediaCaptureSettings(IMediaCaptureSettingsVtbl): IInspectable [IID_IMediaCaptureSettings] {
     fn get_AudioDeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_VideoDeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_StreamingCaptureMode(&self, out: *mut StreamingCaptureMode) -> HRESULT,
@@ -7796,7 +7796,7 @@ impl IMediaCaptureSettings {
 }
 RT_CLASS!{class MediaCaptureSettings: IMediaCaptureSettings}
 DEFINE_IID!(IID_IMediaCaptureSettings2, 1872657659, 64159, 19219, 156, 190, 90, 185, 79, 31, 52, 147);
-RT_INTERFACE!{interface IMediaCaptureSettings2(IMediaCaptureSettings2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureSettings2] {
+RT_INTERFACE!{interface IMediaCaptureSettings2(IMediaCaptureSettings2Vtbl): IInspectable [IID_IMediaCaptureSettings2] {
     fn get_ConcurrentRecordAndPhotoSupported(&self, out: *mut bool) -> HRESULT,
     fn get_ConcurrentRecordAndPhotoSequenceSupported(&self, out: *mut bool) -> HRESULT,
     fn get_CameraSoundRequiredForRegion(&self, out: *mut bool) -> HRESULT,
@@ -7849,7 +7849,7 @@ impl IMediaCaptureSettings2 {
     }}
 }
 DEFINE_IID!(IID_IMediaCaptureSettings3, 809265090, 32856, 19227, 184, 119, 140, 46, 243, 82, 132, 64);
-RT_INTERFACE!{interface IMediaCaptureSettings3(IMediaCaptureSettings3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureSettings3] {
+RT_INTERFACE!{interface IMediaCaptureSettings3(IMediaCaptureSettings3Vtbl): IInspectable [IID_IMediaCaptureSettings3] {
     #[cfg(feature="windows-graphics")] fn get_Direct3D11Device(&self, out: *mut <super::super::graphics::directx::direct3d11::IDirect3DDevice as RtType>::Abi) -> HRESULT
 }}
 impl IMediaCaptureSettings3 {
@@ -7863,7 +7863,7 @@ RT_ENUM! { enum MediaCaptureSharingMode: i32 {
     ExclusiveControl = 0, SharedReadOnly = 1,
 }}
 DEFINE_IID!(IID_IMediaCaptureStatics, 2901377535, 39405, 17989, 150, 94, 25, 37, 207, 198, 56, 52);
-RT_INTERFACE!{static interface IMediaCaptureStatics(IMediaCaptureStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureStatics] {
+RT_INTERFACE!{static interface IMediaCaptureStatics(IMediaCaptureStaticsVtbl): IInspectable [IID_IMediaCaptureStatics] {
     fn IsVideoProfileSupported(&self, videoDeviceId: HSTRING, out: *mut bool) -> HRESULT,
     fn FindAllVideoProfiles(&self, videoDeviceId: HSTRING, out: *mut <foundation::collections::IVectorView<MediaCaptureVideoProfile> as RtType>::Abi) -> HRESULT,
     fn FindConcurrentProfiles(&self, videoDeviceId: HSTRING, out: *mut <foundation::collections::IVectorView<MediaCaptureVideoProfile> as RtType>::Abi) -> HRESULT,
@@ -7892,7 +7892,7 @@ impl IMediaCaptureStatics {
     }}
 }
 DEFINE_IID!(IID_IMediaCaptureStopResult, 4191906346, 41106, 19153, 151, 212, 242, 1, 249, 208, 130, 219);
-RT_INTERFACE!{interface IMediaCaptureStopResult(IMediaCaptureStopResultVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureStopResult] {
+RT_INTERFACE!{interface IMediaCaptureStopResult(IMediaCaptureStopResultVtbl): IInspectable [IID_IMediaCaptureStopResult] {
     fn get_LastFrame(&self, out: *mut <super::VideoFrame as RtType>::Abi) -> HRESULT,
     fn get_RecordDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
@@ -7913,7 +7913,7 @@ RT_ENUM! { enum MediaCaptureThermalStatus: i32 {
     Normal = 0, Overheated = 1,
 }}
 DEFINE_IID!(IID_IMediaCaptureVideoPreview, 661811315, 21662, 17535, 162, 10, 79, 3, 196, 121, 216, 192);
-RT_INTERFACE!{interface IMediaCaptureVideoPreview(IMediaCaptureVideoPreviewVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureVideoPreview] {
+RT_INTERFACE!{interface IMediaCaptureVideoPreview(IMediaCaptureVideoPreviewVtbl): IInspectable [IID_IMediaCaptureVideoPreview] {
     fn StartPreviewAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn StartPreviewToCustomSinkAsync(&self, encodingProfile: <super::mediaproperties::MediaEncodingProfile as RtType>::Abi, customMediaSink: <super::IMediaExtension as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn StartPreviewToCustomSinkIdAsync(&self, encodingProfile: <super::mediaproperties::MediaEncodingProfile as RtType>::Abi, customSinkActivationId: HSTRING, customSinkSettings: <foundation::collections::IPropertySet as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -7942,7 +7942,7 @@ impl IMediaCaptureVideoPreview {
     }}
 }
 DEFINE_IID!(IID_IMediaCaptureVideoProfile, 564163519, 41966, 20175, 158, 246, 80, 176, 188, 78, 19, 5);
-RT_INTERFACE!{interface IMediaCaptureVideoProfile(IMediaCaptureVideoProfileVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureVideoProfile] {
+RT_INTERFACE!{interface IMediaCaptureVideoProfile(IMediaCaptureVideoProfileVtbl): IInspectable [IID_IMediaCaptureVideoProfile] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_VideoDeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SupportedPreviewMediaDescription(&self, out: *mut <foundation::collections::IVectorView<MediaCaptureVideoProfileMediaDescription> as RtType>::Abi) -> HRESULT,
@@ -7984,7 +7984,7 @@ impl IMediaCaptureVideoProfile {
 }
 RT_CLASS!{class MediaCaptureVideoProfile: IMediaCaptureVideoProfile}
 DEFINE_IID!(IID_IMediaCaptureVideoProfile2, 2547894623, 38094, 18063, 147, 22, 252, 91, 194, 99, 143, 107);
-RT_INTERFACE!{interface IMediaCaptureVideoProfile2(IMediaCaptureVideoProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureVideoProfile2] {
+RT_INTERFACE!{interface IMediaCaptureVideoProfile2(IMediaCaptureVideoProfile2Vtbl): IInspectable [IID_IMediaCaptureVideoProfile2] {
     fn get_FrameSourceInfos(&self, out: *mut <foundation::collections::IVectorView<frames::MediaFrameSourceInfo> as RtType>::Abi) -> HRESULT,
     fn get_Properties(&self, out: *mut <foundation::collections::IMapView<Guid, IInspectable> as RtType>::Abi) -> HRESULT
 }}
@@ -8001,7 +8001,7 @@ impl IMediaCaptureVideoProfile2 {
     }}
 }
 DEFINE_IID!(IID_IMediaCaptureVideoProfileMediaDescription, 2148708335, 46737, 18943, 131, 242, 193, 231, 110, 170, 234, 27);
-RT_INTERFACE!{interface IMediaCaptureVideoProfileMediaDescription(IMediaCaptureVideoProfileMediaDescriptionVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureVideoProfileMediaDescription] {
+RT_INTERFACE!{interface IMediaCaptureVideoProfileMediaDescription(IMediaCaptureVideoProfileMediaDescriptionVtbl): IInspectable [IID_IMediaCaptureVideoProfileMediaDescription] {
     fn get_Width(&self, out: *mut u32) -> HRESULT,
     fn get_Height(&self, out: *mut u32) -> HRESULT,
     fn get_FrameRate(&self, out: *mut f64) -> HRESULT,
@@ -8037,7 +8037,7 @@ impl IMediaCaptureVideoProfileMediaDescription {
 }
 RT_CLASS!{class MediaCaptureVideoProfileMediaDescription: IMediaCaptureVideoProfileMediaDescription}
 DEFINE_IID!(IID_IMediaCaptureVideoProfileMediaDescription2, 3332828947, 12845, 16698, 184, 90, 104, 168, 142, 2, 244, 233);
-RT_INTERFACE!{interface IMediaCaptureVideoProfileMediaDescription2(IMediaCaptureVideoProfileMediaDescription2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaCaptureVideoProfileMediaDescription2] {
+RT_INTERFACE!{interface IMediaCaptureVideoProfileMediaDescription2(IMediaCaptureVideoProfileMediaDescription2Vtbl): IInspectable [IID_IMediaCaptureVideoProfileMediaDescription2] {
     fn get_Subtype(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Properties(&self, out: *mut <foundation::collections::IMapView<Guid, IInspectable> as RtType>::Abi) -> HRESULT
 }}
@@ -8060,7 +8060,7 @@ RT_ENUM! { enum MediaStreamType: i32 {
     VideoPreview = 0, VideoRecord = 1, Audio = 2, Photo = 3,
 }}
 DEFINE_IID!(IID_IOptionalReferencePhotoCapturedEventArgs, 1192200371, 7789, 16465, 156, 139, 241, 216, 90, 240, 71, 183);
-RT_INTERFACE!{interface IOptionalReferencePhotoCapturedEventArgs(IOptionalReferencePhotoCapturedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IOptionalReferencePhotoCapturedEventArgs] {
+RT_INTERFACE!{interface IOptionalReferencePhotoCapturedEventArgs(IOptionalReferencePhotoCapturedEventArgsVtbl): IInspectable [IID_IOptionalReferencePhotoCapturedEventArgs] {
     fn get_Frame(&self, out: *mut <CapturedFrame as RtType>::Abi) -> HRESULT,
     fn get_Context(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT
 }}
@@ -8078,7 +8078,7 @@ impl IOptionalReferencePhotoCapturedEventArgs {
 }
 RT_CLASS!{class OptionalReferencePhotoCapturedEventArgs: IOptionalReferencePhotoCapturedEventArgs}
 DEFINE_IID!(IID_IPhotoCapturedEventArgs, 926677953, 38990, 20464, 191, 133, 28, 0, 170, 188, 90, 69);
-RT_INTERFACE!{interface IPhotoCapturedEventArgs(IPhotoCapturedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoCapturedEventArgs] {
+RT_INTERFACE!{interface IPhotoCapturedEventArgs(IPhotoCapturedEventArgsVtbl): IInspectable [IID_IPhotoCapturedEventArgs] {
     fn get_Frame(&self, out: *mut <CapturedFrame as RtType>::Abi) -> HRESULT,
     fn get_Thumbnail(&self, out: *mut <CapturedFrame as RtType>::Abi) -> HRESULT,
     fn get_CaptureTimeOffset(&self, out: *mut foundation::TimeSpan) -> HRESULT
@@ -8105,7 +8105,7 @@ RT_ENUM! { enum PhotoCaptureSource: i32 {
     Auto = 0, VideoPreview = 1, Photo = 2,
 }}
 DEFINE_IID!(IID_IPhotoConfirmationCapturedEventArgs, 2873570930, 49802, 18471, 143, 141, 54, 54, 211, 190, 181, 30);
-RT_INTERFACE!{interface IPhotoConfirmationCapturedEventArgs(IPhotoConfirmationCapturedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoConfirmationCapturedEventArgs] {
+RT_INTERFACE!{interface IPhotoConfirmationCapturedEventArgs(IPhotoConfirmationCapturedEventArgsVtbl): IInspectable [IID_IPhotoConfirmationCapturedEventArgs] {
     fn get_Frame(&self, out: *mut <CapturedFrame as RtType>::Abi) -> HRESULT,
     fn get_CaptureTimeOffset(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
@@ -8145,7 +8145,7 @@ RT_ENUM! { enum VideoRotation: i32 {
     None = 0, Clockwise90Degrees = 1, Clockwise180Degrees = 2, Clockwise270Degrees = 3,
 }}
 DEFINE_IID!(IID_IVideoStreamConfiguration, 3631680111, 17296, 19294, 173, 62, 15, 138, 240, 150, 52, 144);
-RT_INTERFACE!{interface IVideoStreamConfiguration(IVideoStreamConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IVideoStreamConfiguration] {
+RT_INTERFACE!{interface IVideoStreamConfiguration(IVideoStreamConfigurationVtbl): IInspectable [IID_IVideoStreamConfiguration] {
     fn get_InputProperties(&self, out: *mut <super::mediaproperties::VideoEncodingProperties as RtType>::Abi) -> HRESULT,
     fn get_OutputProperties(&self, out: *mut <super::mediaproperties::VideoEncodingProperties as RtType>::Abi) -> HRESULT
 }}
@@ -8168,7 +8168,7 @@ RT_STRUCT! { struct WhiteBalanceGain {
 pub mod core { // Windows.Media.Capture.Core
 use crate::prelude::*;
 DEFINE_IID!(IID_IVariablePhotoCapturedEventArgs, 3521858652, 6995, 20042, 139, 92, 219, 120, 135, 172, 148, 155);
-RT_INTERFACE!{interface IVariablePhotoCapturedEventArgs(IVariablePhotoCapturedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVariablePhotoCapturedEventArgs] {
+RT_INTERFACE!{interface IVariablePhotoCapturedEventArgs(IVariablePhotoCapturedEventArgsVtbl): IInspectable [IID_IVariablePhotoCapturedEventArgs] {
     fn get_Frame(&self, out: *mut <super::CapturedFrame as RtType>::Abi) -> HRESULT,
     fn get_CaptureTimeOffset(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_UsedFrameControllerIndex(&self, out: *mut <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
@@ -8198,7 +8198,7 @@ impl IVariablePhotoCapturedEventArgs {
 }
 RT_CLASS!{class VariablePhotoCapturedEventArgs: IVariablePhotoCapturedEventArgs}
 DEFINE_IID!(IID_IVariablePhotoSequenceCapture, 3490786589, 798, 16449, 166, 214, 189, 116, 36, 118, 168, 238);
-RT_INTERFACE!{interface IVariablePhotoSequenceCapture(IVariablePhotoSequenceCaptureVtbl): IInspectable(IInspectableVtbl) [IID_IVariablePhotoSequenceCapture] {
+RT_INTERFACE!{interface IVariablePhotoSequenceCapture(IVariablePhotoSequenceCaptureVtbl): IInspectable [IID_IVariablePhotoSequenceCapture] {
     fn StartAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn StopAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn FinishAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -8244,7 +8244,7 @@ impl IVariablePhotoSequenceCapture {
 }
 RT_CLASS!{class VariablePhotoSequenceCapture: IVariablePhotoSequenceCapture}
 DEFINE_IID!(IID_IVariablePhotoSequenceCapture2, 4264321724, 20656, 17379, 145, 124, 227, 185, 39, 152, 148, 47);
-RT_INTERFACE!{interface IVariablePhotoSequenceCapture2(IVariablePhotoSequenceCapture2Vtbl): IInspectable(IInspectableVtbl) [IID_IVariablePhotoSequenceCapture2] {
+RT_INTERFACE!{interface IVariablePhotoSequenceCapture2(IVariablePhotoSequenceCapture2Vtbl): IInspectable [IID_IVariablePhotoSequenceCapture2] {
     fn UpdateSettingsAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl IVariablePhotoSequenceCapture2 {
@@ -8258,7 +8258,7 @@ impl IVariablePhotoSequenceCapture2 {
 pub mod frames { // Windows.Media.Capture.Frames
 use crate::prelude::*;
 DEFINE_IID!(IID_IAudioMediaFrame, 2745827071, 32801, 17435, 154, 70, 231, 240, 19, 123, 121, 129);
-RT_INTERFACE!{interface IAudioMediaFrame(IAudioMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IAudioMediaFrame] {
+RT_INTERFACE!{interface IAudioMediaFrame(IAudioMediaFrameVtbl): IInspectable [IID_IAudioMediaFrame] {
     fn get_FrameReference(&self, out: *mut <MediaFrameReference as RtType>::Abi) -> HRESULT,
     fn get_AudioEncodingProperties(&self, out: *mut <super::super::mediaproperties::AudioEncodingProperties as RtType>::Abi) -> HRESULT,
     fn GetAudioFrame(&self, out: *mut <super::super::AudioFrame as RtType>::Abi) -> HRESULT
@@ -8282,7 +8282,7 @@ impl IAudioMediaFrame {
 }
 RT_CLASS!{class AudioMediaFrame: IAudioMediaFrame}
 DEFINE_IID!(IID_IBufferMediaFrame, 3048297415, 39812, 16482, 183, 156, 163, 101, 178, 89, 104, 84);
-RT_INTERFACE!{interface IBufferMediaFrame(IBufferMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IBufferMediaFrame] {
+RT_INTERFACE!{interface IBufferMediaFrame(IBufferMediaFrameVtbl): IInspectable [IID_IBufferMediaFrame] {
     fn get_FrameReference(&self, out: *mut <MediaFrameReference as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_Buffer(&self, out: *mut <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -8300,7 +8300,7 @@ impl IBufferMediaFrame {
 }
 RT_CLASS!{class BufferMediaFrame: IBufferMediaFrame}
 DEFINE_IID!(IID_IDepthMediaFrame, 1192451663, 34121, 17856, 146, 91, 128, 211, 94, 253, 177, 10);
-RT_INTERFACE!{interface IDepthMediaFrame(IDepthMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IDepthMediaFrame] {
+RT_INTERFACE!{interface IDepthMediaFrame(IDepthMediaFrameVtbl): IInspectable [IID_IDepthMediaFrame] {
     fn get_FrameReference(&self, out: *mut <MediaFrameReference as RtType>::Abi) -> HRESULT,
     fn get_VideoMediaFrame(&self, out: *mut <VideoMediaFrame as RtType>::Abi) -> HRESULT,
     fn get_DepthFormat(&self, out: *mut <DepthMediaFrameFormat as RtType>::Abi) -> HRESULT,
@@ -8330,7 +8330,7 @@ impl IDepthMediaFrame {
 }
 RT_CLASS!{class DepthMediaFrame: IDepthMediaFrame}
 DEFINE_IID!(IID_IDepthMediaFrame2, 1825195837, 50340, 16758, 176, 205, 51, 234, 227, 179, 90, 163);
-RT_INTERFACE!{interface IDepthMediaFrame2(IDepthMediaFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_IDepthMediaFrame2] {
+RT_INTERFACE!{interface IDepthMediaFrame2(IDepthMediaFrame2Vtbl): IInspectable [IID_IDepthMediaFrame2] {
     fn get_MaxReliableDepth(&self, out: *mut u32) -> HRESULT,
     fn get_MinReliableDepth(&self, out: *mut u32) -> HRESULT
 }}
@@ -8347,7 +8347,7 @@ impl IDepthMediaFrame2 {
     }}
 }
 DEFINE_IID!(IID_IDepthMediaFrameFormat, 3272789824, 55081, 17726, 135, 128, 46, 4, 241, 64, 210, 142);
-RT_INTERFACE!{interface IDepthMediaFrameFormat(IDepthMediaFrameFormatVtbl): IInspectable(IInspectableVtbl) [IID_IDepthMediaFrameFormat] {
+RT_INTERFACE!{interface IDepthMediaFrameFormat(IDepthMediaFrameFormatVtbl): IInspectable [IID_IDepthMediaFrameFormat] {
     fn get_VideoFormat(&self, out: *mut <VideoMediaFrameFormat as RtType>::Abi) -> HRESULT,
     fn get_DepthScaleInMeters(&self, out: *mut f64) -> HRESULT
 }}
@@ -8365,7 +8365,7 @@ impl IDepthMediaFrameFormat {
 }
 RT_CLASS!{class DepthMediaFrameFormat: IDepthMediaFrameFormat}
 DEFINE_IID!(IID_IInfraredMediaFrame, 1070675203, 75, 20238, 145, 172, 70, 82, 153, 180, 22, 88);
-RT_INTERFACE!{interface IInfraredMediaFrame(IInfraredMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IInfraredMediaFrame] {
+RT_INTERFACE!{interface IInfraredMediaFrame(IInfraredMediaFrameVtbl): IInspectable [IID_IInfraredMediaFrame] {
     fn get_FrameReference(&self, out: *mut <MediaFrameReference as RtType>::Abi) -> HRESULT,
     fn get_VideoMediaFrame(&self, out: *mut <VideoMediaFrame as RtType>::Abi) -> HRESULT,
     fn get_IsIlluminated(&self, out: *mut bool) -> HRESULT
@@ -8389,12 +8389,12 @@ impl IInfraredMediaFrame {
 }
 RT_CLASS!{class InfraredMediaFrame: IInfraredMediaFrame}
 DEFINE_IID!(IID_IMediaFrameArrivedEventArgs, 188943069, 42128, 17461, 173, 161, 154, 255, 213, 82, 57, 247);
-RT_INTERFACE!{interface IMediaFrameArrivedEventArgs(IMediaFrameArrivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameArrivedEventArgs] {
+RT_INTERFACE!{interface IMediaFrameArrivedEventArgs(IMediaFrameArrivedEventArgsVtbl): IInspectable [IID_IMediaFrameArrivedEventArgs] {
     
 }}
 RT_CLASS!{class MediaFrameArrivedEventArgs: IMediaFrameArrivedEventArgs}
 DEFINE_IID!(IID_IMediaFrameFormat, 1905273678, 45689, 19095, 169, 219, 189, 90, 47, 183, 143, 57);
-RT_INTERFACE!{interface IMediaFrameFormat(IMediaFrameFormatVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameFormat] {
+RT_INTERFACE!{interface IMediaFrameFormat(IMediaFrameFormatVtbl): IInspectable [IID_IMediaFrameFormat] {
     fn get_MajorType(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Subtype(&self, out: *mut HSTRING) -> HRESULT,
     fn get_FrameRate(&self, out: *mut <super::super::mediaproperties::MediaRatio as RtType>::Abi) -> HRESULT,
@@ -8430,7 +8430,7 @@ impl IMediaFrameFormat {
 }
 RT_CLASS!{class MediaFrameFormat: IMediaFrameFormat}
 DEFINE_IID!(IID_IMediaFrameFormat2, 1669686080, 24199, 19472, 134, 209, 109, 240, 151, 166, 198, 168);
-RT_INTERFACE!{interface IMediaFrameFormat2(IMediaFrameFormat2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameFormat2] {
+RT_INTERFACE!{interface IMediaFrameFormat2(IMediaFrameFormat2Vtbl): IInspectable [IID_IMediaFrameFormat2] {
     fn get_AudioEncodingProperties(&self, out: *mut <super::super::mediaproperties::AudioEncodingProperties as RtType>::Abi) -> HRESULT
 }}
 impl IMediaFrameFormat2 {
@@ -8441,7 +8441,7 @@ impl IMediaFrameFormat2 {
     }}
 }
 DEFINE_IID!(IID_IMediaFrameReader, 3838395285, 8232, 18669, 144, 176, 209, 193, 177, 98, 226, 76);
-RT_INTERFACE!{interface IMediaFrameReader(IMediaFrameReaderVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameReader] {
+RT_INTERFACE!{interface IMediaFrameReader(IMediaFrameReaderVtbl): IInspectable [IID_IMediaFrameReader] {
     fn add_FrameArrived(&self, handler: <foundation::TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_FrameArrived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn TryAcquireLatestFrame(&self, out: *mut <MediaFrameReference as RtType>::Abi) -> HRESULT,
@@ -8476,7 +8476,7 @@ impl IMediaFrameReader {
 }
 RT_CLASS!{class MediaFrameReader: IMediaFrameReader}
 DEFINE_IID!(IID_IMediaFrameReader2, 2266048435, 34097, 16464, 135, 204, 161, 55, 51, 207, 62, 155);
-RT_INTERFACE!{interface IMediaFrameReader2(IMediaFrameReader2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameReader2] {
+RT_INTERFACE!{interface IMediaFrameReader2(IMediaFrameReader2Vtbl): IInspectable [IID_IMediaFrameReader2] {
     fn put_AcquisitionMode(&self, value: MediaFrameReaderAcquisitionMode) -> HRESULT,
     fn get_AcquisitionMode(&self, out: *mut MediaFrameReaderAcquisitionMode) -> HRESULT
 }}
@@ -8498,7 +8498,7 @@ RT_ENUM! { enum MediaFrameReaderStartStatus: i32 {
     Success = 0, UnknownFailure = 1, DeviceNotAvailable = 2, OutputFormatNotSupported = 3, ExclusiveControlNotAvailable = 4,
 }}
 DEFINE_IID!(IID_IMediaFrameReference, 4139288129, 61660, 16452, 141, 201, 150, 28, 237, 208, 91, 173);
-RT_INTERFACE!{interface IMediaFrameReference(IMediaFrameReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameReference] {
+RT_INTERFACE!{interface IMediaFrameReference(IMediaFrameReferenceVtbl): IInspectable [IID_IMediaFrameReference] {
     fn get_SourceKind(&self, out: *mut MediaFrameSourceKind) -> HRESULT,
     fn get_Format(&self, out: *mut <MediaFrameFormat as RtType>::Abi) -> HRESULT,
     fn get_SystemRelativeTime(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
@@ -8552,7 +8552,7 @@ impl IMediaFrameReference {
 }
 RT_CLASS!{class MediaFrameReference: IMediaFrameReference}
 DEFINE_IID!(IID_IMediaFrameReference2, 3720101580, 54706, 18927, 131, 106, 148, 125, 152, 155, 128, 193);
-RT_INTERFACE!{interface IMediaFrameReference2(IMediaFrameReference2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameReference2] {
+RT_INTERFACE!{interface IMediaFrameReference2(IMediaFrameReference2Vtbl): IInspectable [IID_IMediaFrameReference2] {
     fn get_AudioMediaFrame(&self, out: *mut <AudioMediaFrame as RtType>::Abi) -> HRESULT
 }}
 impl IMediaFrameReference2 {
@@ -8563,7 +8563,7 @@ impl IMediaFrameReference2 {
     }}
 }
 DEFINE_IID!(IID_IMediaFrameSource, 3598199123, 37083, 18088, 138, 221, 42, 168, 132, 168, 210, 83);
-RT_INTERFACE!{interface IMediaFrameSource(IMediaFrameSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSource] {
+RT_INTERFACE!{interface IMediaFrameSource(IMediaFrameSourceVtbl): IInspectable [IID_IMediaFrameSource] {
     fn get_Info(&self, out: *mut <MediaFrameSourceInfo as RtType>::Abi) -> HRESULT,
     fn get_Controller(&self, out: *mut <MediaFrameSourceController as RtType>::Abi) -> HRESULT,
     fn get_SupportedFormats(&self, out: *mut <foundation::collections::IVectorView<MediaFrameFormat> as RtType>::Abi) -> HRESULT,
@@ -8616,7 +8616,7 @@ impl IMediaFrameSource {
 }
 RT_CLASS!{class MediaFrameSource: IMediaFrameSource}
 DEFINE_IID!(IID_IMediaFrameSourceController, 1829201461, 12653, 19343, 183, 182, 238, 176, 74, 140, 101, 37);
-RT_INTERFACE!{interface IMediaFrameSourceController(IMediaFrameSourceControllerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceController] {
+RT_INTERFACE!{interface IMediaFrameSourceController(IMediaFrameSourceControllerVtbl): IInspectable [IID_IMediaFrameSourceController] {
     fn GetPropertyAsync(&self, propertyId: HSTRING, out: *mut <foundation::IAsyncOperation<MediaFrameSourceGetPropertyResult> as RtType>::Abi) -> HRESULT,
     fn SetPropertyAsync(&self, propertyId: HSTRING, propertyValue: <IInspectable as RtType>::Abi, out: *mut <foundation::IAsyncOperation<MediaFrameSourceSetPropertyStatus> as RtType>::Abi) -> HRESULT,
     fn get_VideoDeviceController(&self, out: *mut <super::super::devices::VideoDeviceController as RtType>::Abi) -> HRESULT
@@ -8640,7 +8640,7 @@ impl IMediaFrameSourceController {
 }
 RT_CLASS!{class MediaFrameSourceController: IMediaFrameSourceController}
 DEFINE_IID!(IID_IMediaFrameSourceController2, 4022640596, 64754, 18947, 180, 228, 172, 150, 40, 115, 155, 238);
-RT_INTERFACE!{interface IMediaFrameSourceController2(IMediaFrameSourceController2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceController2] {
+RT_INTERFACE!{interface IMediaFrameSourceController2(IMediaFrameSourceController2Vtbl): IInspectable [IID_IMediaFrameSourceController2] {
     fn GetPropertyByExtendedIdAsync(&self, extendedPropertyIdSize: u32, extendedPropertyId: *mut u8, maxPropertyValueSize: <foundation::IReference<u32> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<MediaFrameSourceGetPropertyResult> as RtType>::Abi) -> HRESULT,
     fn SetPropertyByExtendedIdAsync(&self, extendedPropertyIdSize: u32, extendedPropertyId: *mut u8, propertyValueSize: u32, propertyValue: *mut u8, out: *mut <foundation::IAsyncOperation<MediaFrameSourceSetPropertyStatus> as RtType>::Abi) -> HRESULT
 }}
@@ -8657,7 +8657,7 @@ impl IMediaFrameSourceController2 {
     }}
 }
 DEFINE_IID!(IID_IMediaFrameSourceController3, 520943637, 9316, 18001, 177, 232, 74, 130, 219, 219, 84, 222);
-RT_INTERFACE!{interface IMediaFrameSourceController3(IMediaFrameSourceController3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceController3] {
+RT_INTERFACE!{interface IMediaFrameSourceController3(IMediaFrameSourceController3Vtbl): IInspectable [IID_IMediaFrameSourceController3] {
     fn get_AudioDeviceController(&self, out: *mut <super::super::devices::AudioDeviceController as RtType>::Abi) -> HRESULT
 }}
 impl IMediaFrameSourceController3 {
@@ -8668,7 +8668,7 @@ impl IMediaFrameSourceController3 {
     }}
 }
 DEFINE_IID!(IID_IMediaFrameSourceGetPropertyResult, 143005378, 14948, 19413, 189, 43, 231, 200, 152, 210, 243, 122);
-RT_INTERFACE!{interface IMediaFrameSourceGetPropertyResult(IMediaFrameSourceGetPropertyResultVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceGetPropertyResult] {
+RT_INTERFACE!{interface IMediaFrameSourceGetPropertyResult(IMediaFrameSourceGetPropertyResultVtbl): IInspectable [IID_IMediaFrameSourceGetPropertyResult] {
     fn get_Status(&self, out: *mut MediaFrameSourceGetPropertyStatus) -> HRESULT,
     fn get_Value(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT
 }}
@@ -8689,7 +8689,7 @@ RT_ENUM! { enum MediaFrameSourceGetPropertyStatus: i32 {
     Success = 0, UnknownFailure = 1, NotSupported = 2, DeviceNotAvailable = 3, MaxPropertyValueSizeTooSmall = 4, MaxPropertyValueSizeRequired = 5,
 }}
 DEFINE_IID!(IID_IMediaFrameSourceGroup, 2137021319, 18482, 19295, 174, 61, 65, 47, 170, 179, 125, 52);
-RT_INTERFACE!{interface IMediaFrameSourceGroup(IMediaFrameSourceGroupVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceGroup] {
+RT_INTERFACE!{interface IMediaFrameSourceGroup(IMediaFrameSourceGroupVtbl): IInspectable [IID_IMediaFrameSourceGroup] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SourceInfos(&self, out: *mut <foundation::collections::IVectorView<MediaFrameSourceInfo> as RtType>::Abi) -> HRESULT
@@ -8726,7 +8726,7 @@ impl MediaFrameSourceGroup {
 }
 DEFINE_CLSID!(MediaFrameSourceGroup(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,112,116,117,114,101,46,70,114,97,109,101,115,46,77,101,100,105,97,70,114,97,109,101,83,111,117,114,99,101,71,114,111,117,112,0]) [CLSID_MediaFrameSourceGroup]);
 DEFINE_IID!(IID_IMediaFrameSourceGroupStatics, 474529733, 17263, 17672, 148, 207, 213, 216, 183, 50, 100, 69);
-RT_INTERFACE!{static interface IMediaFrameSourceGroupStatics(IMediaFrameSourceGroupStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceGroupStatics] {
+RT_INTERFACE!{static interface IMediaFrameSourceGroupStatics(IMediaFrameSourceGroupStaticsVtbl): IInspectable [IID_IMediaFrameSourceGroupStatics] {
     fn FindAllAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<MediaFrameSourceGroup>> as RtType>::Abi) -> HRESULT,
     fn FromIdAsync(&self, id: HSTRING, out: *mut <foundation::IAsyncOperation<MediaFrameSourceGroup> as RtType>::Abi) -> HRESULT,
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT
@@ -8749,7 +8749,7 @@ impl IMediaFrameSourceGroupStatics {
     }}
 }
 DEFINE_IID!(IID_IMediaFrameSourceInfo, 2277362125, 17921, 16527, 145, 207, 3, 131, 24, 205, 10, 243);
-RT_INTERFACE!{interface IMediaFrameSourceInfo(IMediaFrameSourceInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceInfo] {
+RT_INTERFACE!{interface IMediaFrameSourceInfo(IMediaFrameSourceInfoVtbl): IInspectable [IID_IMediaFrameSourceInfo] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_MediaStreamType(&self, out: *mut super::MediaStreamType) -> HRESULT,
     fn get_SourceKind(&self, out: *mut MediaFrameSourceKind) -> HRESULT,
@@ -8798,7 +8798,7 @@ impl IMediaFrameSourceInfo {
 }
 RT_CLASS!{class MediaFrameSourceInfo: IMediaFrameSourceInfo}
 DEFINE_IID!(IID_IMediaFrameSourceInfo2, 425359445, 25687, 17094, 167, 105, 25, 182, 91, 211, 46, 110);
-RT_INTERFACE!{interface IMediaFrameSourceInfo2(IMediaFrameSourceInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaFrameSourceInfo2] {
+RT_INTERFACE!{interface IMediaFrameSourceInfo2(IMediaFrameSourceInfo2Vtbl): IInspectable [IID_IMediaFrameSourceInfo2] {
     fn get_ProfileId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_VideoProfileMediaDescription(&self, out: *mut <foundation::collections::IVectorView<super::MediaCaptureVideoProfileMediaDescription> as RtType>::Abi) -> HRESULT
 }}
@@ -8821,12 +8821,12 @@ RT_ENUM! { enum MediaFrameSourceSetPropertyStatus: i32 {
     Success = 0, UnknownFailure = 1, NotSupported = 2, InvalidValue = 3, DeviceNotAvailable = 4, NotInControl = 5,
 }}
 DEFINE_IID!(IID_IMultiSourceMediaFrameArrivedEventArgs, 1662082561, 53073, 18685, 170, 176, 109, 105, 62, 180, 129, 39);
-RT_INTERFACE!{interface IMultiSourceMediaFrameArrivedEventArgs(IMultiSourceMediaFrameArrivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMultiSourceMediaFrameArrivedEventArgs] {
+RT_INTERFACE!{interface IMultiSourceMediaFrameArrivedEventArgs(IMultiSourceMediaFrameArrivedEventArgsVtbl): IInspectable [IID_IMultiSourceMediaFrameArrivedEventArgs] {
     
 }}
 RT_CLASS!{class MultiSourceMediaFrameArrivedEventArgs: IMultiSourceMediaFrameArrivedEventArgs}
 DEFINE_IID!(IID_IMultiSourceMediaFrameReader, 2366915586, 63331, 18573, 152, 242, 180, 55, 188, 240, 117, 231);
-RT_INTERFACE!{interface IMultiSourceMediaFrameReader(IMultiSourceMediaFrameReaderVtbl): IInspectable(IInspectableVtbl) [IID_IMultiSourceMediaFrameReader] {
+RT_INTERFACE!{interface IMultiSourceMediaFrameReader(IMultiSourceMediaFrameReaderVtbl): IInspectable [IID_IMultiSourceMediaFrameReader] {
     fn add_FrameArrived(&self, handler: <foundation::TypedEventHandler<MultiSourceMediaFrameReader, MultiSourceMediaFrameArrivedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_FrameArrived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn TryAcquireLatestFrame(&self, out: *mut <MultiSourceMediaFrameReference as RtType>::Abi) -> HRESULT,
@@ -8861,7 +8861,7 @@ impl IMultiSourceMediaFrameReader {
 }
 RT_CLASS!{class MultiSourceMediaFrameReader: IMultiSourceMediaFrameReader}
 DEFINE_IID!(IID_IMultiSourceMediaFrameReader2, 4015819453, 64604, 19563, 157, 129, 60, 185, 204, 99, 124, 38);
-RT_INTERFACE!{interface IMultiSourceMediaFrameReader2(IMultiSourceMediaFrameReader2Vtbl): IInspectable(IInspectableVtbl) [IID_IMultiSourceMediaFrameReader2] {
+RT_INTERFACE!{interface IMultiSourceMediaFrameReader2(IMultiSourceMediaFrameReader2Vtbl): IInspectable [IID_IMultiSourceMediaFrameReader2] {
     fn put_AcquisitionMode(&self, value: MediaFrameReaderAcquisitionMode) -> HRESULT,
     fn get_AcquisitionMode(&self, out: *mut MediaFrameReaderAcquisitionMode) -> HRESULT
 }}
@@ -8880,7 +8880,7 @@ RT_ENUM! { enum MultiSourceMediaFrameReaderStartStatus: i32 {
     Success = 0, NotSupported = 1, InsufficientResources = 2, DeviceNotAvailable = 3, UnknownFailure = 4,
 }}
 DEFINE_IID!(IID_IMultiSourceMediaFrameReference, 563497754, 32738, 17622, 146, 229, 41, 142, 109, 40, 16, 233);
-RT_INTERFACE!{interface IMultiSourceMediaFrameReference(IMultiSourceMediaFrameReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IMultiSourceMediaFrameReference] {
+RT_INTERFACE!{interface IMultiSourceMediaFrameReference(IMultiSourceMediaFrameReferenceVtbl): IInspectable [IID_IMultiSourceMediaFrameReference] {
     fn TryGetFrameReferenceBySourceId(&self, sourceId: HSTRING, out: *mut <MediaFrameReference as RtType>::Abi) -> HRESULT
 }}
 impl IMultiSourceMediaFrameReference {
@@ -8892,7 +8892,7 @@ impl IMultiSourceMediaFrameReference {
 }
 RT_CLASS!{class MultiSourceMediaFrameReference: IMultiSourceMediaFrameReference}
 DEFINE_IID!(IID_IVideoMediaFrame, 14503115, 12989, 20449, 160, 19, 124, 193, 60, 245, 219, 207);
-RT_INTERFACE!{interface IVideoMediaFrame(IVideoMediaFrameVtbl): IInspectable(IInspectableVtbl) [IID_IVideoMediaFrame] {
+RT_INTERFACE!{interface IVideoMediaFrame(IVideoMediaFrameVtbl): IInspectable [IID_IVideoMediaFrame] {
     fn get_FrameReference(&self, out: *mut <MediaFrameReference as RtType>::Abi) -> HRESULT,
     fn get_VideoFormat(&self, out: *mut <VideoMediaFrameFormat as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy2(&self) -> (),
@@ -8948,7 +8948,7 @@ impl IVideoMediaFrame {
 }
 RT_CLASS!{class VideoMediaFrame: IVideoMediaFrame}
 DEFINE_IID!(IID_IVideoMediaFrameFormat, 1174568896, 55067, 17863, 143, 20, 109, 154, 10, 230, 4, 228);
-RT_INTERFACE!{interface IVideoMediaFrameFormat(IVideoMediaFrameFormatVtbl): IInspectable(IInspectableVtbl) [IID_IVideoMediaFrameFormat] {
+RT_INTERFACE!{interface IVideoMediaFrameFormat(IVideoMediaFrameFormatVtbl): IInspectable [IID_IVideoMediaFrameFormat] {
     fn get_MediaFrameFormat(&self, out: *mut <MediaFrameFormat as RtType>::Abi) -> HRESULT,
     fn get_DepthFormat(&self, out: *mut <DepthMediaFrameFormat as RtType>::Abi) -> HRESULT,
     fn get_Width(&self, out: *mut u32) -> HRESULT,
@@ -8982,7 +8982,7 @@ RT_CLASS!{class VideoMediaFrameFormat: IVideoMediaFrameFormat}
 pub mod casting { // Windows.Media.Casting
 use crate::prelude::*;
 DEFINE_IID!(IID_ICastingConnection, 3449099859, 49905, 17560, 139, 120, 95, 180, 205, 54, 64, 221);
-RT_INTERFACE!{interface ICastingConnection(ICastingConnectionVtbl): IInspectable(IInspectableVtbl) [IID_ICastingConnection] {
+RT_INTERFACE!{interface ICastingConnection(ICastingConnectionVtbl): IInspectable [IID_ICastingConnection] {
     fn get_State(&self, out: *mut CastingConnectionState) -> HRESULT,
     fn get_Device(&self, out: *mut <CastingDevice as RtType>::Abi) -> HRESULT,
     fn get_Source(&self, out: *mut <CastingSource as RtType>::Abi) -> HRESULT,
@@ -9045,7 +9045,7 @@ impl ICastingConnection {
 }
 RT_CLASS!{class CastingConnection: ICastingConnection}
 DEFINE_IID!(IID_ICastingConnectionErrorOccurredEventArgs, 2818260073, 34585, 20224, 129, 251, 150, 24, 99, 199, 154, 50);
-RT_INTERFACE!{interface ICastingConnectionErrorOccurredEventArgs(ICastingConnectionErrorOccurredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICastingConnectionErrorOccurredEventArgs] {
+RT_INTERFACE!{interface ICastingConnectionErrorOccurredEventArgs(ICastingConnectionErrorOccurredEventArgsVtbl): IInspectable [IID_ICastingConnectionErrorOccurredEventArgs] {
     fn get_ErrorStatus(&self, out: *mut CastingConnectionErrorStatus) -> HRESULT,
     fn get_Message(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -9069,7 +9069,7 @@ RT_ENUM! { enum CastingConnectionState: i32 {
     Disconnected = 0, Connected = 1, Rendering = 2, Disconnecting = 3, Connecting = 4,
 }}
 DEFINE_IID!(IID_ICastingDevice, 3732020355, 19011, 19153, 166, 210, 36, 146, 167, 150, 195, 242);
-RT_INTERFACE!{interface ICastingDevice(ICastingDeviceVtbl): IInspectable(IInspectableVtbl) [IID_ICastingDevice] {
+RT_INTERFACE!{interface ICastingDevice(ICastingDeviceVtbl): IInspectable [IID_ICastingDevice] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_FriendlyName(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -9122,7 +9122,7 @@ impl CastingDevice {
 }
 DEFINE_CLSID!(CastingDevice(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,115,116,105,110,103,46,67,97,115,116,105,110,103,68,101,118,105,99,101,0]) [CLSID_CastingDevice]);
 DEFINE_IID!(IID_ICastingDevicePicker, 3704854820, 1425, 18878, 170, 203, 75, 130, 238, 117, 106, 149);
-RT_INTERFACE!{interface ICastingDevicePicker(ICastingDevicePickerVtbl): IInspectable(IInspectableVtbl) [IID_ICastingDevicePicker] {
+RT_INTERFACE!{interface ICastingDevicePicker(ICastingDevicePickerVtbl): IInspectable [IID_ICastingDevicePicker] {
     fn get_Filter(&self, out: *mut <CastingDevicePickerFilter as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-devices")] fn get_Appearance(&self, out: *mut <super::super::devices::enumeration::DevicePickerAppearance as RtType>::Abi) -> HRESULT,
@@ -9181,7 +9181,7 @@ RT_CLASS!{class CastingDevicePicker: ICastingDevicePicker}
 impl RtActivatable<IActivationFactory> for CastingDevicePicker {}
 DEFINE_CLSID!(CastingDevicePicker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,97,115,116,105,110,103,46,67,97,115,116,105,110,103,68,101,118,105,99,101,80,105,99,107,101,114,0]) [CLSID_CastingDevicePicker]);
 DEFINE_IID!(IID_ICastingDevicePickerFilter, 3196871068, 46435, 17236, 174, 51, 159, 218, 173, 140, 98, 145);
-RT_INTERFACE!{interface ICastingDevicePickerFilter(ICastingDevicePickerFilterVtbl): IInspectable(IInspectableVtbl) [IID_ICastingDevicePickerFilter] {
+RT_INTERFACE!{interface ICastingDevicePickerFilter(ICastingDevicePickerFilterVtbl): IInspectable [IID_ICastingDevicePickerFilter] {
     fn get_SupportsAudio(&self, out: *mut bool) -> HRESULT,
     fn put_SupportsAudio(&self, value: bool) -> HRESULT,
     fn get_SupportsVideo(&self, out: *mut bool) -> HRESULT,
@@ -9226,7 +9226,7 @@ impl ICastingDevicePickerFilter {
 }
 RT_CLASS!{class CastingDevicePickerFilter: ICastingDevicePickerFilter}
 DEFINE_IID!(IID_ICastingDeviceSelectedEventArgs, 3695419014, 56663, 19725, 148, 0, 175, 69, 228, 251, 54, 99);
-RT_INTERFACE!{interface ICastingDeviceSelectedEventArgs(ICastingDeviceSelectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICastingDeviceSelectedEventArgs] {
+RT_INTERFACE!{interface ICastingDeviceSelectedEventArgs(ICastingDeviceSelectedEventArgsVtbl): IInspectable [IID_ICastingDeviceSelectedEventArgs] {
     fn get_SelectedCastingDevice(&self, out: *mut <CastingDevice as RtType>::Abi) -> HRESULT
 }}
 impl ICastingDeviceSelectedEventArgs {
@@ -9238,7 +9238,7 @@ impl ICastingDeviceSelectedEventArgs {
 }
 RT_CLASS!{class CastingDeviceSelectedEventArgs: ICastingDeviceSelectedEventArgs}
 DEFINE_IID!(IID_ICastingDeviceStatics, 3889780951, 19731, 16951, 163, 101, 76, 79, 106, 76, 253, 47);
-RT_INTERFACE!{static interface ICastingDeviceStatics(ICastingDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICastingDeviceStatics] {
+RT_INTERFACE!{static interface ICastingDeviceStatics(ICastingDeviceStaticsVtbl): IInspectable [IID_ICastingDeviceStatics] {
     fn GetDeviceSelector(&self, type_: CastingPlaybackTypes, out: *mut HSTRING) -> HRESULT,
     fn GetDeviceSelectorFromCastingSourceAsync(&self, castingSource: <CastingSource as RtType>::Abi, out: *mut <foundation::IAsyncOperation<HString> as RtType>::Abi) -> HRESULT,
     fn FromIdAsync(&self, value: HSTRING, out: *mut <foundation::IAsyncOperation<CastingDevice> as RtType>::Abi) -> HRESULT,
@@ -9270,7 +9270,7 @@ RT_ENUM! { enum CastingPlaybackTypes: u32 {
     None = 0, Audio = 1, Video = 2, Picture = 4,
 }}
 DEFINE_IID!(IID_ICastingSource, 4096387698, 13415, 18406, 160, 39, 82, 41, 35, 233, 215, 39);
-RT_INTERFACE!{interface ICastingSource(ICastingSourceVtbl): IInspectable(IInspectableVtbl) [IID_ICastingSource] {
+RT_INTERFACE!{interface ICastingSource(ICastingSourceVtbl): IInspectable [IID_ICastingSource] {
     fn get_PreferredSourceUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn put_PreferredSourceUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT
 }}
@@ -9340,7 +9340,7 @@ impl ClosedCaptionProperties {
 }
 DEFINE_CLSID!(ClosedCaptionProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,108,111,115,101,100,67,97,112,116,105,111,110,105,110,103,46,67,108,111,115,101,100,67,97,112,116,105,111,110,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ClosedCaptionProperties]);
 DEFINE_IID!(IID_IClosedCaptionPropertiesStatics, 279584644, 52272, 16705, 181, 3, 82, 114, 40, 158, 12, 32);
-RT_INTERFACE!{static interface IClosedCaptionPropertiesStatics(IClosedCaptionPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IClosedCaptionPropertiesStatics] {
+RT_INTERFACE!{static interface IClosedCaptionPropertiesStatics(IClosedCaptionPropertiesStaticsVtbl): IInspectable [IID_IClosedCaptionPropertiesStatics] {
     fn get_FontColor(&self, out: *mut ClosedCaptionColor) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-ui")] fn get_ComputedFontColor(&self, out: *mut super::super::ui::Color) -> HRESULT,
@@ -9432,7 +9432,7 @@ RT_ENUM! { enum ContentAccessRestrictionLevel: i32 {
     Allow = 0, Warn = 1, Block = 2, Hide = 3,
 }}
 DEFINE_IID!(IID_IContentRestrictionsBrowsePolicy, 2348888996, 17454, 17946, 135, 87, 250, 210, 245, 189, 55, 228);
-RT_INTERFACE!{interface IContentRestrictionsBrowsePolicy(IContentRestrictionsBrowsePolicyVtbl): IInspectable(IInspectableVtbl) [IID_IContentRestrictionsBrowsePolicy] {
+RT_INTERFACE!{interface IContentRestrictionsBrowsePolicy(IContentRestrictionsBrowsePolicyVtbl): IInspectable [IID_IContentRestrictionsBrowsePolicy] {
     fn get_GeographicRegion(&self, out: *mut HSTRING) -> HRESULT,
     fn get_MaxBrowsableAgeRating(&self, out: *mut <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
     fn get_PreferredAgeRating(&self, out: *mut <foundation::IReference<u32> as RtType>::Abi) -> HRESULT
@@ -9459,7 +9459,7 @@ RT_ENUM! { enum RatedContentCategory: i32 {
     General = 0, Application = 1, Game = 2, Movie = 3, Television = 4, Music = 5,
 }}
 DEFINE_IID!(IID_IRatedContentDescription, 1766352607, 26290, 19907, 150, 177, 240, 144, 238, 222, 226, 85);
-RT_INTERFACE!{interface IRatedContentDescription(IRatedContentDescriptionVtbl): IInspectable(IInspectableVtbl) [IID_IRatedContentDescription] {
+RT_INTERFACE!{interface IRatedContentDescription(IRatedContentDescriptionVtbl): IInspectable [IID_IRatedContentDescription] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Id(&self, value: HSTRING) -> HRESULT,
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -9529,7 +9529,7 @@ impl RatedContentDescription {
 }
 DEFINE_CLSID!(RatedContentDescription(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,110,116,101,110,116,82,101,115,116,114,105,99,116,105,111,110,115,46,82,97,116,101,100,67,111,110,116,101,110,116,68,101,115,99,114,105,112,116,105,111,110,0]) [CLSID_RatedContentDescription]);
 DEFINE_IID!(IID_IRatedContentDescriptionFactory, 775479138, 39824, 20390, 137, 193, 75, 141, 47, 251, 53, 115);
-RT_INTERFACE!{static interface IRatedContentDescriptionFactory(IRatedContentDescriptionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRatedContentDescriptionFactory] {
+RT_INTERFACE!{static interface IRatedContentDescriptionFactory(IRatedContentDescriptionFactoryVtbl): IInspectable [IID_IRatedContentDescriptionFactory] {
     fn Create(&self, id: HSTRING, title: HSTRING, category: RatedContentCategory, out: *mut <RatedContentDescription as RtType>::Abi) -> HRESULT
 }}
 impl IRatedContentDescriptionFactory {
@@ -9540,7 +9540,7 @@ impl IRatedContentDescriptionFactory {
     }}
 }
 DEFINE_IID!(IID_IRatedContentRestrictions, 1065296843, 47623, 17409, 164, 157, 139, 146, 34, 32, 87, 35);
-RT_INTERFACE!{interface IRatedContentRestrictions(IRatedContentRestrictionsVtbl): IInspectable(IInspectableVtbl) [IID_IRatedContentRestrictions] {
+RT_INTERFACE!{interface IRatedContentRestrictions(IRatedContentRestrictionsVtbl): IInspectable [IID_IRatedContentRestrictions] {
     fn GetBrowsePolicyAsync(&self, out: *mut <foundation::IAsyncOperation<ContentRestrictionsBrowsePolicy> as RtType>::Abi) -> HRESULT,
     fn GetRestrictionLevelAsync(&self, ratedContentDescription: <RatedContentDescription as RtType>::Abi, out: *mut <foundation::IAsyncOperation<ContentAccessRestrictionLevel> as RtType>::Abi) -> HRESULT,
     fn RequestContentAccessAsync(&self, ratedContentDescription: <RatedContentDescription as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
@@ -9583,7 +9583,7 @@ impl RatedContentRestrictions {
 }
 DEFINE_CLSID!(RatedContentRestrictions(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,110,116,101,110,116,82,101,115,116,114,105,99,116,105,111,110,115,46,82,97,116,101,100,67,111,110,116,101,110,116,82,101,115,116,114,105,99,116,105,111,110,115,0]) [CLSID_RatedContentRestrictions]);
 DEFINE_IID!(IID_IRatedContentRestrictionsFactory, 4216007062, 50109, 18704, 150, 25, 151, 207, 208, 105, 77, 86);
-RT_INTERFACE!{static interface IRatedContentRestrictionsFactory(IRatedContentRestrictionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRatedContentRestrictionsFactory] {
+RT_INTERFACE!{static interface IRatedContentRestrictionsFactory(IRatedContentRestrictionsFactoryVtbl): IInspectable [IID_IRatedContentRestrictionsFactory] {
     fn CreateWithMaxAgeRating(&self, maxAgeRating: u32, out: *mut <RatedContentRestrictions as RtType>::Abi) -> HRESULT
 }}
 impl IRatedContentRestrictionsFactory {
@@ -9597,12 +9597,12 @@ impl IRatedContentRestrictionsFactory {
 pub mod control { // Windows.Media.Control
 use crate::prelude::*;
 DEFINE_IID!(IID_ICurrentSessionChangedEventArgs, 1768540985, 3066, 24544, 141, 115, 9, 204, 94, 84, 8, 225);
-RT_INTERFACE!{interface ICurrentSessionChangedEventArgs(ICurrentSessionChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICurrentSessionChangedEventArgs] {
+RT_INTERFACE!{interface ICurrentSessionChangedEventArgs(ICurrentSessionChangedEventArgsVtbl): IInspectable [IID_ICurrentSessionChangedEventArgs] {
     
 }}
 RT_CLASS!{class CurrentSessionChangedEventArgs: ICurrentSessionChangedEventArgs}
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSession, 1900595253, 39700, 23266, 171, 133, 220, 155, 28, 20, 225, 168);
-RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSession(IGlobalSystemMediaTransportControlsSessionVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSession] {
+RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSession(IGlobalSystemMediaTransportControlsSessionVtbl): IInspectable [IID_IGlobalSystemMediaTransportControlsSession] {
     fn get_SourceAppUserModelId(&self, out: *mut HSTRING) -> HRESULT,
     fn TryGetMediaPropertiesAsync(&self, out: *mut <foundation::IAsyncOperation<GlobalSystemMediaTransportControlsSessionMediaProperties> as RtType>::Abi) -> HRESULT,
     fn GetTimelineProperties(&self, out: *mut <GlobalSystemMediaTransportControlsSessionTimelineProperties as RtType>::Abi) -> HRESULT,
@@ -9755,7 +9755,7 @@ impl IGlobalSystemMediaTransportControlsSession {
 }
 RT_CLASS!{class GlobalSystemMediaTransportControlsSession: IGlobalSystemMediaTransportControlsSession}
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSessionManager, 3402534572, 59502, 20554, 171, 49, 95, 248, 255, 27, 206, 73);
-RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionManager(IGlobalSystemMediaTransportControlsSessionManagerVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSessionManager] {
+RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionManager(IGlobalSystemMediaTransportControlsSessionManagerVtbl): IInspectable [IID_IGlobalSystemMediaTransportControlsSessionManager] {
     fn GetCurrentSession(&self, out: *mut <GlobalSystemMediaTransportControlsSession as RtType>::Abi) -> HRESULT,
     fn GetSessions(&self, out: *mut <foundation::collections::IVectorView<GlobalSystemMediaTransportControlsSession> as RtType>::Abi) -> HRESULT,
     fn add_CurrentSessionChanged(&self, handler: <foundation::TypedEventHandler<GlobalSystemMediaTransportControlsSessionManager, CurrentSessionChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -9802,7 +9802,7 @@ impl GlobalSystemMediaTransportControlsSessionManager {
 }
 DEFINE_CLSID!(GlobalSystemMediaTransportControlsSessionManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,110,116,114,111,108,46,71,108,111,98,97,108,83,121,115,116,101,109,77,101,100,105,97,84,114,97,110,115,112,111,114,116,67,111,110,116,114,111,108,115,83,101,115,115,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_GlobalSystemMediaTransportControlsSessionManager]);
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSessionManagerStatics, 542164206, 4512, 22494, 174, 215, 201, 124, 112, 51, 130, 69);
-RT_INTERFACE!{static interface IGlobalSystemMediaTransportControlsSessionManagerStatics(IGlobalSystemMediaTransportControlsSessionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSessionManagerStatics] {
+RT_INTERFACE!{static interface IGlobalSystemMediaTransportControlsSessionManagerStatics(IGlobalSystemMediaTransportControlsSessionManagerStaticsVtbl): IInspectable [IID_IGlobalSystemMediaTransportControlsSessionManagerStatics] {
     fn RequestAsync(&self, out: *mut <foundation::IAsyncOperation<GlobalSystemMediaTransportControlsSessionManager> as RtType>::Abi) -> HRESULT
 }}
 impl IGlobalSystemMediaTransportControlsSessionManagerStatics {
@@ -9813,7 +9813,7 @@ impl IGlobalSystemMediaTransportControlsSessionManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSessionMediaProperties, 1753574646, 44468, 21682, 172, 22, 5, 131, 121, 7, 172, 182);
-RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionMediaProperties(IGlobalSystemMediaTransportControlsSessionMediaPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSessionMediaProperties] {
+RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionMediaProperties(IGlobalSystemMediaTransportControlsSessionMediaPropertiesVtbl): IInspectable [IID_IGlobalSystemMediaTransportControlsSessionMediaProperties] {
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Subtitle(&self, out: *mut HSTRING) -> HRESULT,
     fn get_AlbumArtist(&self, out: *mut HSTRING) -> HRESULT,
@@ -9879,7 +9879,7 @@ impl IGlobalSystemMediaTransportControlsSessionMediaProperties {
 }
 RT_CLASS!{class GlobalSystemMediaTransportControlsSessionMediaProperties: IGlobalSystemMediaTransportControlsSessionMediaProperties}
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSessionPlaybackControls, 1694606310, 48250, 20538, 187, 27, 104, 241, 88, 243, 251, 3);
-RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionPlaybackControls(IGlobalSystemMediaTransportControlsSessionPlaybackControlsVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSessionPlaybackControls] {
+RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionPlaybackControls(IGlobalSystemMediaTransportControlsSessionPlaybackControlsVtbl): IInspectable [IID_IGlobalSystemMediaTransportControlsSessionPlaybackControls] {
     fn get_IsPlayEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_IsPauseEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_IsStopEnabled(&self, out: *mut bool) -> HRESULT,
@@ -9975,7 +9975,7 @@ impl IGlobalSystemMediaTransportControlsSessionPlaybackControls {
 }
 RT_CLASS!{class GlobalSystemMediaTransportControlsSessionPlaybackControls: IGlobalSystemMediaTransportControlsSessionPlaybackControls}
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSessionPlaybackInfo, 2494871247, 59578, 20909, 135, 167, 193, 10, 222, 16, 97, 39);
-RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionPlaybackInfo(IGlobalSystemMediaTransportControlsSessionPlaybackInfoVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSessionPlaybackInfo] {
+RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionPlaybackInfo(IGlobalSystemMediaTransportControlsSessionPlaybackInfoVtbl): IInspectable [IID_IGlobalSystemMediaTransportControlsSessionPlaybackInfo] {
     fn get_Controls(&self, out: *mut <GlobalSystemMediaTransportControlsSessionPlaybackControls as RtType>::Abi) -> HRESULT,
     fn get_PlaybackStatus(&self, out: *mut GlobalSystemMediaTransportControlsSessionPlaybackStatus) -> HRESULT,
     fn get_PlaybackType(&self, out: *mut <foundation::IReference<super::MediaPlaybackType> as RtType>::Abi) -> HRESULT,
@@ -10020,7 +10020,7 @@ RT_ENUM! { enum GlobalSystemMediaTransportControlsSessionPlaybackStatus: i32 {
     Closed = 0, Opened = 1, Changing = 2, Stopped = 3, Playing = 4, Paused = 5,
 }}
 DEFINE_IID!(IID_IGlobalSystemMediaTransportControlsSessionTimelineProperties, 3991093558, 28453, 22669, 142, 207, 234, 91, 103, 53, 170, 165);
-RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionTimelineProperties(IGlobalSystemMediaTransportControlsSessionTimelinePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalSystemMediaTransportControlsSessionTimelineProperties] {
+RT_INTERFACE!{interface IGlobalSystemMediaTransportControlsSessionTimelineProperties(IGlobalSystemMediaTransportControlsSessionTimelinePropertiesVtbl): IInspectable [IID_IGlobalSystemMediaTransportControlsSessionTimelineProperties] {
     fn get_StartTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_EndTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_MinSeekTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -10062,22 +10062,22 @@ impl IGlobalSystemMediaTransportControlsSessionTimelineProperties {
 }
 RT_CLASS!{class GlobalSystemMediaTransportControlsSessionTimelineProperties: IGlobalSystemMediaTransportControlsSessionTimelineProperties}
 DEFINE_IID!(IID_IMediaPropertiesChangedEventArgs, 2100773323, 44528, 23791, 145, 186, 207, 171, 205, 215, 118, 120);
-RT_INTERFACE!{interface IMediaPropertiesChangedEventArgs(IMediaPropertiesChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPropertiesChangedEventArgs] {
+RT_INTERFACE!{interface IMediaPropertiesChangedEventArgs(IMediaPropertiesChangedEventArgsVtbl): IInspectable [IID_IMediaPropertiesChangedEventArgs] {
     
 }}
 RT_CLASS!{class MediaPropertiesChangedEventArgs: IMediaPropertiesChangedEventArgs}
 DEFINE_IID!(IID_IPlaybackInfoChangedEventArgs, 2020038338, 48141, 20645, 136, 7, 5, 66, 145, 254, 241, 57);
-RT_INTERFACE!{interface IPlaybackInfoChangedEventArgs(IPlaybackInfoChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackInfoChangedEventArgs] {
+RT_INTERFACE!{interface IPlaybackInfoChangedEventArgs(IPlaybackInfoChangedEventArgsVtbl): IInspectable [IID_IPlaybackInfoChangedEventArgs] {
     
 }}
 RT_CLASS!{class PlaybackInfoChangedEventArgs: IPlaybackInfoChangedEventArgs}
 DEFINE_IID!(IID_ISessionsChangedEventArgs, 3153120562, 17092, 23128, 179, 23, 243, 75, 191, 189, 38, 224);
-RT_INTERFACE!{interface ISessionsChangedEventArgs(ISessionsChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISessionsChangedEventArgs] {
+RT_INTERFACE!{interface ISessionsChangedEventArgs(ISessionsChangedEventArgsVtbl): IInspectable [IID_ISessionsChangedEventArgs] {
     
 }}
 RT_CLASS!{class SessionsChangedEventArgs: ISessionsChangedEventArgs}
 DEFINE_IID!(IID_ITimelinePropertiesChangedEventArgs, 688077359, 51491, 23159, 188, 175, 5, 95, 244, 21, 173, 50);
-RT_INTERFACE!{interface ITimelinePropertiesChangedEventArgs(ITimelinePropertiesChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITimelinePropertiesChangedEventArgs] {
+RT_INTERFACE!{interface ITimelinePropertiesChangedEventArgs(ITimelinePropertiesChangedEventArgsVtbl): IInspectable [IID_ITimelinePropertiesChangedEventArgs] {
     
 }}
 RT_CLASS!{class TimelinePropertiesChangedEventArgs: ITimelinePropertiesChangedEventArgs}
@@ -10091,7 +10091,7 @@ RT_ENUM! { enum AudioDecoderDegradationReason: i32 {
     None = 0, LicensingRequirement = 1, SpatialAudioNotSupported = 2,
 }}
 DEFINE_IID!(IID_IAudioStreamDescriptor, 506893028, 16423, 18503, 167, 11, 223, 29, 154, 42, 123, 4);
-RT_INTERFACE!{interface IAudioStreamDescriptor(IAudioStreamDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IAudioStreamDescriptor] {
+RT_INTERFACE!{interface IAudioStreamDescriptor(IAudioStreamDescriptorVtbl): IInspectable [IID_IAudioStreamDescriptor] {
     fn get_EncodingProperties(&self, out: *mut <super::mediaproperties::AudioEncodingProperties as RtType>::Abi) -> HRESULT
 }}
 impl IAudioStreamDescriptor {
@@ -10110,7 +10110,7 @@ impl AudioStreamDescriptor {
 }
 DEFINE_CLSID!(AudioStreamDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,65,117,100,105,111,83,116,114,101,97,109,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_AudioStreamDescriptor]);
 DEFINE_IID!(IID_IAudioStreamDescriptor2, 778629622, 42056, 18811, 136, 64, 133, 8, 38, 101, 172, 249);
-RT_INTERFACE!{interface IAudioStreamDescriptor2(IAudioStreamDescriptor2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioStreamDescriptor2] {
+RT_INTERFACE!{interface IAudioStreamDescriptor2(IAudioStreamDescriptor2Vtbl): IInspectable [IID_IAudioStreamDescriptor2] {
     fn put_LeadingEncoderPadding(&self, value: <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
     fn get_LeadingEncoderPadding(&self, out: *mut <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
     fn put_TrailingEncoderPadding(&self, value: <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
@@ -10137,7 +10137,7 @@ impl IAudioStreamDescriptor2 {
     }}
 }
 DEFINE_IID!(IID_IAudioStreamDescriptor3, 1294077345, 36483, 17647, 137, 115, 47, 99, 233, 147, 243, 107);
-RT_INTERFACE!{interface IAudioStreamDescriptor3(IAudioStreamDescriptor3Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioStreamDescriptor3] {
+RT_INTERFACE!{interface IAudioStreamDescriptor3(IAudioStreamDescriptor3Vtbl): IInspectable [IID_IAudioStreamDescriptor3] {
     fn Copy(&self, out: *mut <AudioStreamDescriptor as RtType>::Abi) -> HRESULT
 }}
 impl IAudioStreamDescriptor3 {
@@ -10148,7 +10148,7 @@ impl IAudioStreamDescriptor3 {
     }}
 }
 DEFINE_IID!(IID_IAudioStreamDescriptorFactory, 1250348702, 19633, 17280, 142, 12, 131, 80, 75, 127, 91, 243);
-RT_INTERFACE!{static interface IAudioStreamDescriptorFactory(IAudioStreamDescriptorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAudioStreamDescriptorFactory] {
+RT_INTERFACE!{static interface IAudioStreamDescriptorFactory(IAudioStreamDescriptorFactoryVtbl): IInspectable [IID_IAudioStreamDescriptorFactory] {
     fn Create(&self, encodingProperties: <super::mediaproperties::AudioEncodingProperties as RtType>::Abi, out: *mut <AudioStreamDescriptor as RtType>::Abi) -> HRESULT
 }}
 impl IAudioStreamDescriptorFactory {
@@ -10159,7 +10159,7 @@ impl IAudioStreamDescriptorFactory {
     }}
 }
 DEFINE_IID!(IID_IAudioTrack, 4063981175, 16119, 16606, 185, 67, 6, 139, 19, 33, 112, 29);
-RT_INTERFACE!{interface IAudioTrack(IAudioTrackVtbl): IInspectable(IInspectableVtbl) [IID_IAudioTrack] {
+RT_INTERFACE!{interface IAudioTrack(IAudioTrackVtbl): IInspectable [IID_IAudioTrack] {
     fn add_OpenFailed(&self, handler: <foundation::TypedEventHandler<AudioTrack, AudioTrackOpenFailedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_OpenFailed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn GetEncodingProperties(&self, out: *mut <super::mediaproperties::AudioEncodingProperties as RtType>::Abi) -> HRESULT,
@@ -10200,7 +10200,7 @@ impl IAudioTrack {
 }
 RT_CLASS!{class AudioTrack: IMediaTrack}
 DEFINE_IID!(IID_IAudioTrackOpenFailedEventArgs, 4007508409, 47996, 16658, 191, 118, 147, 132, 103, 111, 130, 75);
-RT_INTERFACE!{interface IAudioTrackOpenFailedEventArgs(IAudioTrackOpenFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioTrackOpenFailedEventArgs] {
+RT_INTERFACE!{interface IAudioTrackOpenFailedEventArgs(IAudioTrackOpenFailedEventArgsVtbl): IInspectable [IID_IAudioTrackOpenFailedEventArgs] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl IAudioTrackOpenFailedEventArgs {
@@ -10212,7 +10212,7 @@ impl IAudioTrackOpenFailedEventArgs {
 }
 RT_CLASS!{class AudioTrackOpenFailedEventArgs: IAudioTrackOpenFailedEventArgs}
 DEFINE_IID!(IID_IAudioTrackSupportInfo, 395046903, 52281, 17574, 185, 81, 74, 86, 83, 240, 115, 250);
-RT_INTERFACE!{interface IAudioTrackSupportInfo(IAudioTrackSupportInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAudioTrackSupportInfo] {
+RT_INTERFACE!{interface IAudioTrackSupportInfo(IAudioTrackSupportInfoVtbl): IInspectable [IID_IAudioTrackSupportInfo] {
     fn get_DecoderStatus(&self, out: *mut MediaDecoderStatus) -> HRESULT,
     fn get_Degradation(&self, out: *mut AudioDecoderDegradation) -> HRESULT,
     fn get_DegradationReason(&self, out: *mut AudioDecoderDegradationReason) -> HRESULT,
@@ -10242,7 +10242,7 @@ impl IAudioTrackSupportInfo {
 }
 RT_CLASS!{class AudioTrackSupportInfo: IAudioTrackSupportInfo}
 DEFINE_IID!(IID_IChapterCue, 1923710977, 54154, 19466, 143, 166, 117, 205, 218, 244, 102, 76);
-RT_INTERFACE!{interface IChapterCue(IChapterCueVtbl): IInspectable(IInspectableVtbl) [IID_IChapterCue] {
+RT_INTERFACE!{interface IChapterCue(IChapterCueVtbl): IInspectable [IID_IChapterCue] {
     fn put_Title(&self, value: HSTRING) -> HRESULT,
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -10264,7 +10264,7 @@ RT_ENUM! { enum CodecCategory: i32 {
     Encoder = 0, Decoder = 1,
 }}
 DEFINE_IID!(IID_ICodecInfo, 1374199685, 60055, 18844, 134, 172, 76, 229, 231, 63, 58, 66);
-RT_INTERFACE!{interface ICodecInfo(ICodecInfoVtbl): IInspectable(IInspectableVtbl) [IID_ICodecInfo] {
+RT_INTERFACE!{interface ICodecInfo(ICodecInfoVtbl): IInspectable [IID_ICodecInfo] {
     fn get_Kind(&self, out: *mut CodecKind) -> HRESULT,
     fn get_Category(&self, out: *mut CodecCategory) -> HRESULT,
     fn get_Subtypes(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
@@ -10303,7 +10303,7 @@ RT_ENUM! { enum CodecKind: i32 {
     Audio = 0, Video = 1,
 }}
 DEFINE_IID!(IID_ICodecQuery, 573216058, 44897, 19972, 128, 138, 164, 99, 78, 47, 58, 196);
-RT_INTERFACE!{interface ICodecQuery(ICodecQueryVtbl): IInspectable(IInspectableVtbl) [IID_ICodecQuery] {
+RT_INTERFACE!{interface ICodecQuery(ICodecQueryVtbl): IInspectable [IID_ICodecQuery] {
     fn FindAllAsync(&self, kind: CodecKind, category: CodecCategory, subType: HSTRING, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<CodecInfo>> as RtType>::Abi) -> HRESULT
 }}
 impl ICodecQuery {
@@ -10475,7 +10475,7 @@ impl CodecSubtypes {
 }
 DEFINE_CLSID!(CodecSubtypes(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,67,111,100,101,99,83,117,98,116,121,112,101,115,0]) [CLSID_CodecSubtypes]);
 DEFINE_IID!(IID_ICodecSubtypesStatics, 2792015090, 34955, 16932, 140, 246, 42, 141, 78, 176, 35, 130);
-RT_INTERFACE!{static interface ICodecSubtypesStatics(ICodecSubtypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICodecSubtypesStatics] {
+RT_INTERFACE!{static interface ICodecSubtypesStatics(ICodecSubtypesStaticsVtbl): IInspectable [IID_ICodecSubtypesStatics] {
     fn get_VideoFormatDV25(&self, out: *mut HSTRING) -> HRESULT,
     fn get_VideoFormatDV50(&self, out: *mut HSTRING) -> HRESULT,
     fn get_VideoFormatDvc(&self, out: *mut HSTRING) -> HRESULT,
@@ -10786,7 +10786,7 @@ impl ICodecSubtypesStatics {
     }}
 }
 DEFINE_IID!(IID_IDataCue, 2088724333, 8124, 20013, 154, 135, 238, 56, 189, 29, 198, 55);
-RT_INTERFACE!{interface IDataCue(IDataCueVtbl): IInspectable(IInspectableVtbl) [IID_IDataCue] {
+RT_INTERFACE!{interface IDataCue(IDataCueVtbl): IInspectable [IID_IDataCue] {
     #[cfg(feature="windows-storage")] fn put_Data(&self, value: <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -10805,7 +10805,7 @@ RT_CLASS!{class DataCue: IDataCue}
 impl RtActivatable<IActivationFactory> for DataCue {}
 DEFINE_CLSID!(DataCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,68,97,116,97,67,117,101,0]) [CLSID_DataCue]);
 DEFINE_IID!(IID_IDataCue2, 3159759637, 38386, 18920, 150, 241, 141, 213, 218, 198, 141, 147);
-RT_INTERFACE!{interface IDataCue2(IDataCue2Vtbl): IInspectable(IInspectableVtbl) [IID_IDataCue2] {
+RT_INTERFACE!{interface IDataCue2(IDataCue2Vtbl): IInspectable [IID_IDataCue2] {
     fn get_Properties(&self, out: *mut <foundation::collections::PropertySet as RtType>::Abi) -> HRESULT
 }}
 impl IDataCue2 {
@@ -10816,7 +10816,7 @@ impl IDataCue2 {
     }}
 }
 DEFINE_IID!(IID_IFaceDetectedEventArgs, 428966950, 50779, 18106, 133, 248, 19, 136, 5, 118, 201, 10);
-RT_INTERFACE!{interface IFaceDetectedEventArgs(IFaceDetectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IFaceDetectedEventArgs] {
+RT_INTERFACE!{interface IFaceDetectedEventArgs(IFaceDetectedEventArgsVtbl): IInspectable [IID_IFaceDetectedEventArgs] {
     fn get_ResultFrame(&self, out: *mut <FaceDetectionEffectFrame as RtType>::Abi) -> HRESULT
 }}
 impl IFaceDetectedEventArgs {
@@ -10828,7 +10828,7 @@ impl IFaceDetectedEventArgs {
 }
 RT_CLASS!{class FaceDetectedEventArgs: IFaceDetectedEventArgs}
 DEFINE_IID!(IID_IFaceDetectionEffect, 2920672210, 1346, 17065, 188, 144, 242, 131, 162, 159, 70, 193);
-RT_INTERFACE!{interface IFaceDetectionEffect(IFaceDetectionEffectVtbl): IInspectable(IInspectableVtbl) [IID_IFaceDetectionEffect] {
+RT_INTERFACE!{interface IFaceDetectionEffect(IFaceDetectionEffectVtbl): IInspectable [IID_IFaceDetectionEffect] {
     fn put_Enabled(&self, value: bool) -> HRESULT,
     fn get_Enabled(&self, out: *mut bool) -> HRESULT,
     fn put_DesiredDetectionInterval(&self, value: foundation::TimeSpan) -> HRESULT,
@@ -10867,7 +10867,7 @@ impl IFaceDetectionEffect {
 }
 RT_CLASS!{class FaceDetectionEffect: IFaceDetectionEffect}
 DEFINE_IID!(IID_IFaceDetectionEffectDefinition, 1138532481, 47176, 20275, 183, 2, 31, 210, 98, 79, 176, 22);
-RT_INTERFACE!{interface IFaceDetectionEffectDefinition(IFaceDetectionEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IFaceDetectionEffectDefinition] {
+RT_INTERFACE!{interface IFaceDetectionEffectDefinition(IFaceDetectionEffectDefinitionVtbl): IInspectable [IID_IFaceDetectionEffectDefinition] {
     fn put_DetectionMode(&self, value: FaceDetectionMode) -> HRESULT,
     fn get_DetectionMode(&self, out: *mut FaceDetectionMode) -> HRESULT,
     fn put_SynchronousDetectionEnabled(&self, value: bool) -> HRESULT,
@@ -10897,7 +10897,7 @@ RT_CLASS!{class FaceDetectionEffectDefinition: super::effects::IVideoEffectDefin
 impl RtActivatable<IActivationFactory> for FaceDetectionEffectDefinition {}
 DEFINE_CLSID!(FaceDetectionEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,70,97,99,101,68,101,116,101,99,116,105,111,110,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_FaceDetectionEffectDefinition]);
 DEFINE_IID!(IID_IFaceDetectionEffectFrame, 2326825363, 24008, 17531, 162, 71, 82, 112, 189, 128, 46, 206);
-RT_INTERFACE!{interface IFaceDetectionEffectFrame(IFaceDetectionEffectFrameVtbl): IInspectable(IInspectableVtbl) [IID_IFaceDetectionEffectFrame] {
+RT_INTERFACE!{interface IFaceDetectionEffectFrame(IFaceDetectionEffectFrameVtbl): IInspectable [IID_IFaceDetectionEffectFrame] {
     fn get_DetectedFaces(&self, out: *mut <foundation::collections::IVectorView<super::faceanalysis::DetectedFace> as RtType>::Abi) -> HRESULT
 }}
 impl IFaceDetectionEffectFrame {
@@ -10912,7 +10912,7 @@ RT_ENUM! { enum FaceDetectionMode: i32 {
     HighPerformance = 0, Balanced = 1, HighQuality = 2,
 }}
 DEFINE_IID!(IID_IHighDynamicRangeControl, 1441900462, 55639, 19913, 157, 28, 133, 83, 168, 42, 125, 153);
-RT_INTERFACE!{interface IHighDynamicRangeControl(IHighDynamicRangeControlVtbl): IInspectable(IInspectableVtbl) [IID_IHighDynamicRangeControl] {
+RT_INTERFACE!{interface IHighDynamicRangeControl(IHighDynamicRangeControlVtbl): IInspectable [IID_IHighDynamicRangeControl] {
     fn put_Enabled(&self, value: bool) -> HRESULT,
     fn get_Enabled(&self, out: *mut bool) -> HRESULT
 }}
@@ -10929,7 +10929,7 @@ impl IHighDynamicRangeControl {
 }
 RT_CLASS!{class HighDynamicRangeControl: IHighDynamicRangeControl}
 DEFINE_IID!(IID_IHighDynamicRangeOutput, 257392747, 9531, 16665, 187, 64, 58, 144, 229, 19, 132, 247);
-RT_INTERFACE!{interface IHighDynamicRangeOutput(IHighDynamicRangeOutputVtbl): IInspectable(IInspectableVtbl) [IID_IHighDynamicRangeOutput] {
+RT_INTERFACE!{interface IHighDynamicRangeOutput(IHighDynamicRangeOutputVtbl): IInspectable [IID_IHighDynamicRangeOutput] {
     fn get_Certainty(&self, out: *mut f64) -> HRESULT,
     fn get_FrameControllers(&self, out: *mut <foundation::collections::IVectorView<super::devices::core::FrameController> as RtType>::Abi) -> HRESULT
 }}
@@ -10947,7 +10947,7 @@ impl IHighDynamicRangeOutput {
 }
 RT_CLASS!{class HighDynamicRangeOutput: IHighDynamicRangeOutput}
 DEFINE_IID!(IID_IImageCue, 1384284802, 13947, 17419, 145, 22, 60, 132, 87, 13, 210, 112);
-RT_INTERFACE!{interface IImageCue(IImageCueVtbl): IInspectable(IInspectableVtbl) [IID_IImageCue] {
+RT_INTERFACE!{interface IImageCue(IImageCueVtbl): IInspectable [IID_IImageCue] {
     fn get_Position(&self, out: *mut TimedTextPoint) -> HRESULT,
     fn put_Position(&self, value: TimedTextPoint) -> HRESULT,
     fn get_Extent(&self, out: *mut TimedTextSize) -> HRESULT,
@@ -10988,7 +10988,7 @@ RT_CLASS!{class ImageCue: IImageCue}
 impl RtActivatable<IActivationFactory> for ImageCue {}
 DEFINE_CLSID!(ImageCue(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,73,109,97,103,101,67,117,101,0]) [CLSID_ImageCue]);
 DEFINE_IID!(IID_IInitializeMediaStreamSourceRequestedEventArgs, 633095649, 39688, 19502, 168, 85, 69, 66, 241, 167, 93, 235);
-RT_INTERFACE!{interface IInitializeMediaStreamSourceRequestedEventArgs(IInitializeMediaStreamSourceRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IInitializeMediaStreamSourceRequestedEventArgs] {
+RT_INTERFACE!{interface IInitializeMediaStreamSourceRequestedEventArgs(IInitializeMediaStreamSourceRequestedEventArgsVtbl): IInspectable [IID_IInitializeMediaStreamSourceRequestedEventArgs] {
     fn get_Source(&self, out: *mut <MediaStreamSource as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_RandomAccessStream(&self, out: *mut <super::super::storage::streams::IRandomAccessStream as RtType>::Abi) -> HRESULT,
@@ -11027,7 +11027,7 @@ impl LowLightFusion {
 }
 DEFINE_CLSID!(LowLightFusion(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,76,111,119,76,105,103,104,116,70,117,115,105,111,110,0]) [CLSID_LowLightFusion]);
 DEFINE_IID!(IID_ILowLightFusionResult, 2028846645, 10144, 17120, 156, 211, 115, 141, 32, 137, 222, 156);
-RT_INTERFACE!{interface ILowLightFusionResult(ILowLightFusionResultVtbl): IInspectable(IInspectableVtbl) [IID_ILowLightFusionResult] {
+RT_INTERFACE!{interface ILowLightFusionResult(ILowLightFusionResultVtbl): IInspectable [IID_ILowLightFusionResult] {
     #[cfg(feature="windows-graphics")] fn get_Frame(&self, out: *mut <super::super::graphics::imaging::SoftwareBitmap as RtType>::Abi) -> HRESULT
 }}
 impl ILowLightFusionResult {
@@ -11039,7 +11039,7 @@ impl ILowLightFusionResult {
 }
 RT_CLASS!{class LowLightFusionResult: ILowLightFusionResult}
 DEFINE_IID!(IID_ILowLightFusionStatics, 1392836973, 49822, 16610, 135, 169, 158, 31, 210, 241, 146, 245);
-RT_INTERFACE!{static interface ILowLightFusionStatics(ILowLightFusionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILowLightFusionStatics] {
+RT_INTERFACE!{static interface ILowLightFusionStatics(ILowLightFusionStaticsVtbl): IInspectable [IID_ILowLightFusionStatics] {
     #[cfg(feature="windows-graphics")] fn get_SupportedBitmapPixelFormats(&self, out: *mut <foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat> as RtType>::Abi) -> HRESULT,
     fn get_MaxSupportedFrameCount(&self, out: *mut i32) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn FuseAsync(&self, frameSet: <foundation::collections::IIterable<super::super::graphics::imaging::SoftwareBitmap> as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<LowLightFusionResult, f64> as RtType>::Abi) -> HRESULT
@@ -11062,7 +11062,7 @@ impl ILowLightFusionStatics {
     }}
 }
 DEFINE_IID!(IID_IMediaBinder, 729694378, 56839, 16975, 131, 241, 241, 222, 70, 196, 250, 46);
-RT_INTERFACE!{interface IMediaBinder(IMediaBinderVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBinder] {
+RT_INTERFACE!{interface IMediaBinder(IMediaBinderVtbl): IInspectable [IID_IMediaBinder] {
     fn add_Binding(&self, handler: <foundation::TypedEventHandler<MediaBinder, MediaBindingEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Binding(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_Token(&self, out: *mut HSTRING) -> HRESULT,
@@ -11098,7 +11098,7 @@ RT_CLASS!{class MediaBinder: IMediaBinder}
 impl RtActivatable<IActivationFactory> for MediaBinder {}
 DEFINE_CLSID!(MediaBinder(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,66,105,110,100,101,114,0]) [CLSID_MediaBinder]);
 DEFINE_IID!(IID_IMediaBindingEventArgs, 3055333978, 7021, 17968, 168, 109, 47, 8, 55, 247, 18, 229);
-RT_INTERFACE!{interface IMediaBindingEventArgs(IMediaBindingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBindingEventArgs] {
+RT_INTERFACE!{interface IMediaBindingEventArgs(IMediaBindingEventArgsVtbl): IInspectable [IID_IMediaBindingEventArgs] {
     fn add_Canceled(&self, handler: <foundation::TypedEventHandler<MediaBindingEventArgs, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Canceled(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_MediaBinder(&self, out: *mut <MediaBinder as RtType>::Abi) -> HRESULT,
@@ -11142,7 +11142,7 @@ impl IMediaBindingEventArgs {
 }
 RT_CLASS!{class MediaBindingEventArgs: IMediaBindingEventArgs}
 DEFINE_IID!(IID_IMediaBindingEventArgs2, 73714923, 47962, 18479, 184, 186, 240, 40, 76, 105, 101, 103);
-RT_INTERFACE!{interface IMediaBindingEventArgs2(IMediaBindingEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaBindingEventArgs2] {
+RT_INTERFACE!{interface IMediaBindingEventArgs2(IMediaBindingEventArgs2Vtbl): IInspectable [IID_IMediaBindingEventArgs2] {
     fn SetAdaptiveMediaSource(&self, mediaSource: <super::streaming::adaptive::AdaptiveMediaSource as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn SetStorageFile(&self, file: <super::super::storage::IStorageFile as RtType>::Abi) -> HRESULT
 }}
@@ -11157,7 +11157,7 @@ impl IMediaBindingEventArgs2 {
     }}
 }
 DEFINE_IID!(IID_IMediaBindingEventArgs3, 4176168798, 6590, 17660, 165, 237, 122, 186, 49, 80, 55, 249);
-RT_INTERFACE!{interface IMediaBindingEventArgs3(IMediaBindingEventArgs3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaBindingEventArgs3] {
+RT_INTERFACE!{interface IMediaBindingEventArgs3(IMediaBindingEventArgs3Vtbl): IInspectable [IID_IMediaBindingEventArgs3] {
     #[cfg(feature="windows-networking")] fn SetDownloadOperation(&self, downloadOperation: <super::super::networking::backgroundtransfer::DownloadOperation as RtType>::Abi) -> HRESULT
 }}
 impl IMediaBindingEventArgs3 {
@@ -11167,7 +11167,7 @@ impl IMediaBindingEventArgs3 {
     }}
 }
 DEFINE_IID!(IID_IMediaCue, 3352387165, 23004, 17183, 160, 238, 39, 116, 67, 35, 179, 109);
-RT_INTERFACE!{interface IMediaCue(IMediaCueVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCue] {
+RT_INTERFACE!{interface IMediaCue(IMediaCueVtbl): IInspectable [IID_IMediaCue] {
     fn put_StartTime(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_StartTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_Duration(&self, value: foundation::TimeSpan) -> HRESULT,
@@ -11205,7 +11205,7 @@ impl IMediaCue {
     }}
 }
 DEFINE_IID!(IID_IMediaCueEventArgs, 3509536759, 24484, 20072, 159, 229, 50, 22, 13, 206, 229, 126);
-RT_INTERFACE!{interface IMediaCueEventArgs(IMediaCueEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCueEventArgs] {
+RT_INTERFACE!{interface IMediaCueEventArgs(IMediaCueEventArgsVtbl): IInspectable [IID_IMediaCueEventArgs] {
     fn get_Cue(&self, out: *mut <IMediaCue as RtType>::Abi) -> HRESULT
 }}
 impl IMediaCueEventArgs {
@@ -11220,7 +11220,7 @@ RT_ENUM! { enum MediaDecoderStatus: i32 {
     FullySupported = 0, UnsupportedSubtype = 1, UnsupportedEncoderProperties = 2, Degraded = 3,
 }}
 DEFINE_IID!(IID_IMediaSource, 3888100761, 41117, 19489, 188, 223, 32, 175, 79, 134, 179, 217);
-RT_INTERFACE!{interface IMediaSource(IMediaSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSource] {
+RT_INTERFACE!{interface IMediaSource(IMediaSourceVtbl): IInspectable [IID_IMediaSource] {
     
 }}
 RT_CLASS!{class MediaSource: IMediaSource2}
@@ -11265,7 +11265,7 @@ impl MediaSource {
 }
 DEFINE_CLSID!(MediaSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,111,117,114,99,101,0]) [CLSID_MediaSource]);
 DEFINE_IID!(IID_IMediaSource2, 783683656, 25951, 19511, 184, 19, 180, 228, 93, 250, 10, 190);
-RT_INTERFACE!{interface IMediaSource2(IMediaSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaSource2] {
+RT_INTERFACE!{interface IMediaSource2(IMediaSource2Vtbl): IInspectable [IID_IMediaSource2] {
     fn add_OpenOperationCompleted(&self, handler: <foundation::TypedEventHandler<MediaSource, MediaSourceOpenOperationCompletedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_OpenOperationCompleted(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_CustomProperties(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT,
@@ -11311,7 +11311,7 @@ impl IMediaSource2 {
     }}
 }
 DEFINE_IID!(IID_IMediaSource3, 3047099803, 19310, 16877, 187, 180, 124, 117, 9, 169, 148, 173);
-RT_INTERFACE!{interface IMediaSource3(IMediaSource3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaSource3] {
+RT_INTERFACE!{interface IMediaSource3(IMediaSource3Vtbl): IInspectable [IID_IMediaSource3] {
     fn add_StateChanged(&self, handler: <foundation::TypedEventHandler<MediaSource, MediaSourceStateChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_StateChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_State(&self, out: *mut MediaSourceState) -> HRESULT,
@@ -11338,7 +11338,7 @@ impl IMediaSource3 {
     }}
 }
 DEFINE_IID!(IID_IMediaSource4, 3182406999, 36607, 19555, 133, 166, 132, 222, 10, 227, 228, 242);
-RT_INTERFACE!{interface IMediaSource4(IMediaSource4Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaSource4] {
+RT_INTERFACE!{interface IMediaSource4(IMediaSource4Vtbl): IInspectable [IID_IMediaSource4] {
     fn get_AdaptiveMediaSource(&self, out: *mut <super::streaming::adaptive::AdaptiveMediaSource as RtType>::Abi) -> HRESULT,
     fn get_MediaStreamSource(&self, out: *mut <MediaStreamSource as RtType>::Abi) -> HRESULT,
     fn get_MseStreamSource(&self, out: *mut <MseStreamSource as RtType>::Abi) -> HRESULT,
@@ -11373,7 +11373,7 @@ impl IMediaSource4 {
     }}
 }
 DEFINE_IID!(IID_IMediaSource5, 857350830, 60718, 18978, 148, 200, 183, 67, 169, 43, 48, 34);
-RT_INTERFACE!{interface IMediaSource5(IMediaSource5Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaSource5] {
+RT_INTERFACE!{interface IMediaSource5(IMediaSource5Vtbl): IInspectable [IID_IMediaSource5] {
     #[cfg(feature="windows-networking")] fn get_DownloadOperation(&self, out: *mut <super::super::networking::backgroundtransfer::DownloadOperation as RtType>::Abi) -> HRESULT
 }}
 impl IMediaSource5 {
@@ -11384,7 +11384,7 @@ impl IMediaSource5 {
     }}
 }
 DEFINE_IID!(IID_IMediaSourceAppServiceConnection, 1642195607, 6422, 18448, 183, 244, 182, 66, 190, 130, 149, 150);
-RT_INTERFACE!{interface IMediaSourceAppServiceConnection(IMediaSourceAppServiceConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceAppServiceConnection] {
+RT_INTERFACE!{interface IMediaSourceAppServiceConnection(IMediaSourceAppServiceConnectionVtbl): IInspectable [IID_IMediaSourceAppServiceConnection] {
     fn add_InitializeMediaStreamSourceRequested(&self, handler: <foundation::TypedEventHandler<MediaSourceAppServiceConnection, InitializeMediaStreamSourceRequestedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_InitializeMediaStreamSourceRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn Start(&self) -> HRESULT
@@ -11413,7 +11413,7 @@ impl MediaSourceAppServiceConnection {
 }
 DEFINE_CLSID!(MediaSourceAppServiceConnection(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,111,117,114,99,101,65,112,112,83,101,114,118,105,99,101,67,111,110,110,101,99,116,105,111,110,0]) [CLSID_MediaSourceAppServiceConnection]);
 DEFINE_IID!(IID_IMediaSourceAppServiceConnectionFactory, 1706627819, 32953, 17657, 156, 30, 225, 32, 246, 217, 40, 56);
-RT_INTERFACE!{static interface IMediaSourceAppServiceConnectionFactory(IMediaSourceAppServiceConnectionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceAppServiceConnectionFactory] {
+RT_INTERFACE!{static interface IMediaSourceAppServiceConnectionFactory(IMediaSourceAppServiceConnectionFactoryVtbl): IInspectable [IID_IMediaSourceAppServiceConnectionFactory] {
     #[cfg(feature="windows-applicationmodel")] fn Create(&self, appServiceConnection: <super::super::applicationmodel::appservice::AppServiceConnection as RtType>::Abi, out: *mut <MediaSourceAppServiceConnection as RtType>::Abi) -> HRESULT
 }}
 impl IMediaSourceAppServiceConnectionFactory {
@@ -11424,7 +11424,7 @@ impl IMediaSourceAppServiceConnectionFactory {
     }}
 }
 DEFINE_IID!(IID_IMediaSourceError, 1544194405, 14277, 20125, 141, 33, 28, 222, 233, 12, 236, 198);
-RT_INTERFACE!{interface IMediaSourceError(IMediaSourceErrorVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceError] {
+RT_INTERFACE!{interface IMediaSourceError(IMediaSourceErrorVtbl): IInspectable [IID_IMediaSourceError] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl IMediaSourceError {
@@ -11436,7 +11436,7 @@ impl IMediaSourceError {
 }
 RT_CLASS!{class MediaSourceError: IMediaSourceError}
 DEFINE_IID!(IID_IMediaSourceOpenOperationCompletedEventArgs, 4234685675, 57985, 18300, 168, 224, 26, 205, 101, 65, 20, 200);
-RT_INTERFACE!{interface IMediaSourceOpenOperationCompletedEventArgs(IMediaSourceOpenOperationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceOpenOperationCompletedEventArgs] {
+RT_INTERFACE!{interface IMediaSourceOpenOperationCompletedEventArgs(IMediaSourceOpenOperationCompletedEventArgsVtbl): IInspectable [IID_IMediaSourceOpenOperationCompletedEventArgs] {
     fn get_Error(&self, out: *mut <MediaSourceError as RtType>::Abi) -> HRESULT
 }}
 impl IMediaSourceOpenOperationCompletedEventArgs {
@@ -11451,7 +11451,7 @@ RT_ENUM! { enum MediaSourceState: i32 {
     Initial = 0, Opening = 1, Opened = 2, Failed = 3, Closed = 4,
 }}
 DEFINE_IID!(IID_IMediaSourceStateChangedEventArgs, 170962818, 36977, 19372, 188, 57, 202, 42, 147, 183, 23, 169);
-RT_INTERFACE!{interface IMediaSourceStateChangedEventArgs(IMediaSourceStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceStateChangedEventArgs] {
+RT_INTERFACE!{interface IMediaSourceStateChangedEventArgs(IMediaSourceStateChangedEventArgsVtbl): IInspectable [IID_IMediaSourceStateChangedEventArgs] {
     fn get_OldState(&self, out: *mut MediaSourceState) -> HRESULT,
     fn get_NewState(&self, out: *mut MediaSourceState) -> HRESULT
 }}
@@ -11469,7 +11469,7 @@ impl IMediaSourceStateChangedEventArgs {
 }
 RT_CLASS!{class MediaSourceStateChangedEventArgs: IMediaSourceStateChangedEventArgs}
 DEFINE_IID!(IID_IMediaSourceStatics, 4152192932, 18002, 16654, 177, 216, 233, 165, 226, 69, 164, 92);
-RT_INTERFACE!{static interface IMediaSourceStatics(IMediaSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceStatics] {
+RT_INTERFACE!{static interface IMediaSourceStatics(IMediaSourceStaticsVtbl): IInspectable [IID_IMediaSourceStatics] {
     fn CreateFromAdaptiveMediaSource(&self, mediaSource: <super::streaming::adaptive::AdaptiveMediaSource as RtType>::Abi, out: *mut <MediaSource as RtType>::Abi) -> HRESULT,
     fn CreateFromMediaStreamSource(&self, mediaSource: <MediaStreamSource as RtType>::Abi, out: *mut <MediaSource as RtType>::Abi) -> HRESULT,
     fn CreateFromMseStreamSource(&self, mediaSource: <MseStreamSource as RtType>::Abi, out: *mut <MediaSource as RtType>::Abi) -> HRESULT,
@@ -11525,7 +11525,7 @@ impl IMediaSourceStatics {
     }}
 }
 DEFINE_IID!(IID_IMediaSourceStatics2, 4007748004, 32531, 18582, 184, 203, 223, 13, 229, 188, 185, 241);
-RT_INTERFACE!{static interface IMediaSourceStatics2(IMediaSourceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceStatics2] {
+RT_INTERFACE!{static interface IMediaSourceStatics2(IMediaSourceStatics2Vtbl): IInspectable [IID_IMediaSourceStatics2] {
     fn CreateFromMediaBinder(&self, binder: <MediaBinder as RtType>::Abi, out: *mut <MediaSource as RtType>::Abi) -> HRESULT
 }}
 impl IMediaSourceStatics2 {
@@ -11536,7 +11536,7 @@ impl IMediaSourceStatics2 {
     }}
 }
 DEFINE_IID!(IID_IMediaSourceStatics3, 1161441494, 11242, 16674, 159, 115, 234, 206, 4, 82, 110, 53);
-RT_INTERFACE!{static interface IMediaSourceStatics3(IMediaSourceStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceStatics3] {
+RT_INTERFACE!{static interface IMediaSourceStatics3(IMediaSourceStatics3Vtbl): IInspectable [IID_IMediaSourceStatics3] {
     fn CreateFromMediaFrameSource(&self, frameSource: <super::capture::frames::MediaFrameSource as RtType>::Abi, out: *mut <MediaSource as RtType>::Abi) -> HRESULT
 }}
 impl IMediaSourceStatics3 {
@@ -11547,7 +11547,7 @@ impl IMediaSourceStatics3 {
     }}
 }
 DEFINE_IID!(IID_IMediaSourceStatics4, 672873468, 58634, 17448, 165, 0, 156, 78, 217, 24, 211, 240);
-RT_INTERFACE!{static interface IMediaSourceStatics4(IMediaSourceStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaSourceStatics4] {
+RT_INTERFACE!{static interface IMediaSourceStatics4(IMediaSourceStatics4Vtbl): IInspectable [IID_IMediaSourceStatics4] {
     #[cfg(feature="windows-networking")] fn CreateFromDownloadOperation(&self, downloadOperation: <super::super::networking::backgroundtransfer::DownloadOperation as RtType>::Abi, out: *mut <MediaSource as RtType>::Abi) -> HRESULT
 }}
 impl IMediaSourceStatics4 {
@@ -11561,7 +11561,7 @@ RT_ENUM! { enum MediaSourceStatus: i32 {
     FullySupported = 0, Unknown = 1,
 }}
 DEFINE_IID!(IID_IMediaStreamDescriptor, 2163306094, 37623, 17694, 151, 210, 175, 216, 7, 66, 218, 112);
-RT_INTERFACE!{interface IMediaStreamDescriptor(IMediaStreamDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamDescriptor] {
+RT_INTERFACE!{interface IMediaStreamDescriptor(IMediaStreamDescriptorVtbl): IInspectable [IID_IMediaStreamDescriptor] {
     fn get_IsSelected(&self, out: *mut bool) -> HRESULT,
     fn put_Name(&self, value: HSTRING) -> HRESULT,
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
@@ -11594,7 +11594,7 @@ impl IMediaStreamDescriptor {
     }}
 }
 DEFINE_IID!(IID_IMediaStreamDescriptor2, 1349714191, 59570, 16497, 176, 11, 235, 243, 55, 167, 107, 88);
-RT_INTERFACE!{interface IMediaStreamDescriptor2(IMediaStreamDescriptor2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamDescriptor2] {
+RT_INTERFACE!{interface IMediaStreamDescriptor2(IMediaStreamDescriptor2Vtbl): IInspectable [IID_IMediaStreamDescriptor2] {
     fn put_Label(&self, value: HSTRING) -> HRESULT,
     fn get_Label(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -11610,7 +11610,7 @@ impl IMediaStreamDescriptor2 {
     }}
 }
 DEFINE_IID!(IID_IMediaStreamSample, 1552791079, 19328, 17249, 152, 55, 108, 183, 72, 26, 217, 214);
-RT_INTERFACE!{interface IMediaStreamSample(IMediaStreamSampleVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSample] {
+RT_INTERFACE!{interface IMediaStreamSample(IMediaStreamSampleVtbl): IInspectable [IID_IMediaStreamSample] {
     fn add_Processed(&self, handler: <foundation::TypedEventHandler<MediaStreamSample, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Processed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -11710,7 +11710,7 @@ impl MediaStreamSample {
 }
 DEFINE_CLSID!(MediaStreamSample(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,116,114,101,97,109,83,97,109,112,108,101,0]) [CLSID_MediaStreamSample]);
 DEFINE_IID!(IID_IMediaStreamSample2, 1158121105, 64744, 18246, 161, 200, 16, 194, 93, 61, 124, 211);
-RT_INTERFACE!{interface IMediaStreamSample2(IMediaStreamSample2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSample2] {
+RT_INTERFACE!{interface IMediaStreamSample2(IMediaStreamSample2Vtbl): IInspectable [IID_IMediaStreamSample2] {
     #[cfg(feature="windows-graphics")] fn get_Direct3D11Surface(&self, out: *mut <super::super::graphics::directx::direct3d11::IDirect3DSurface as RtType>::Abi) -> HRESULT
 }}
 impl IMediaStreamSample2 {
@@ -11722,7 +11722,7 @@ impl IMediaStreamSample2 {
 }
 RT_CLASS!{class MediaStreamSamplePropertySet: foundation::collections::IMap<Guid, IInspectable>}
 DEFINE_IID!(IID_IMediaStreamSampleProtectionProperties, 1320714898, 60639, 18750, 132, 29, 221, 74, 221, 124, 172, 162);
-RT_INTERFACE!{interface IMediaStreamSampleProtectionProperties(IMediaStreamSampleProtectionPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSampleProtectionProperties] {
+RT_INTERFACE!{interface IMediaStreamSampleProtectionProperties(IMediaStreamSampleProtectionPropertiesVtbl): IInspectable [IID_IMediaStreamSampleProtectionProperties] {
     fn SetKeyIdentifier(&self, valueSize: u32, value: *mut u8) -> HRESULT,
     fn GetKeyIdentifier(&self, valueSize: *mut u32, value: *mut *mut u8) -> HRESULT,
     fn SetInitializationVector(&self, valueSize: u32, value: *mut u8) -> HRESULT,
@@ -11761,7 +11761,7 @@ impl IMediaStreamSampleProtectionProperties {
 }
 RT_CLASS!{class MediaStreamSampleProtectionProperties: IMediaStreamSampleProtectionProperties}
 DEFINE_IID!(IID_IMediaStreamSampleStatics, 3755942287, 42703, 17785, 190, 65, 115, 221, 148, 26, 217, 114);
-RT_INTERFACE!{static interface IMediaStreamSampleStatics(IMediaStreamSampleStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSampleStatics] {
+RT_INTERFACE!{static interface IMediaStreamSampleStatics(IMediaStreamSampleStaticsVtbl): IInspectable [IID_IMediaStreamSampleStatics] {
     #[cfg(feature="windows-storage")] fn CreateFromBuffer(&self, buffer: <super::super::storage::streams::IBuffer as RtType>::Abi, timestamp: foundation::TimeSpan, out: *mut <MediaStreamSample as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateFromStreamAsync(&self, stream: <super::super::storage::streams::IInputStream as RtType>::Abi, count: u32, timestamp: foundation::TimeSpan, out: *mut <foundation::IAsyncOperation<MediaStreamSample> as RtType>::Abi) -> HRESULT
 }}
@@ -11778,7 +11778,7 @@ impl IMediaStreamSampleStatics {
     }}
 }
 DEFINE_IID!(IID_IMediaStreamSampleStatics2, 2667484449, 27974, 18764, 162, 248, 214, 98, 146, 46, 45, 215);
-RT_INTERFACE!{static interface IMediaStreamSampleStatics2(IMediaStreamSampleStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSampleStatics2] {
+RT_INTERFACE!{static interface IMediaStreamSampleStatics2(IMediaStreamSampleStatics2Vtbl): IInspectable [IID_IMediaStreamSampleStatics2] {
     #[cfg(feature="windows-graphics")] fn CreateFromDirect3D11Surface(&self, surface: <super::super::graphics::directx::direct3d11::IDirect3DSurface as RtType>::Abi, timestamp: foundation::TimeSpan, out: *mut <MediaStreamSample as RtType>::Abi) -> HRESULT
 }}
 impl IMediaStreamSampleStatics2 {
@@ -11789,7 +11789,7 @@ impl IMediaStreamSampleStatics2 {
     }}
 }
 DEFINE_IID!(IID_IMediaStreamSource, 923981123, 17899, 16696, 170, 98, 192, 30, 38, 243, 132, 63);
-RT_INTERFACE!{interface IMediaStreamSource(IMediaStreamSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSource] {
+RT_INTERFACE!{interface IMediaStreamSource(IMediaStreamSourceVtbl): IInspectable [IID_IMediaStreamSource] {
     fn add_Closed(&self, handler: <foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceClosedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Closed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_Starting(&self, handler: <foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceStartingEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -11951,7 +11951,7 @@ impl MediaStreamSource {
 }
 DEFINE_CLSID!(MediaStreamSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,101,100,105,97,83,116,114,101,97,109,83,111,117,114,99,101,0]) [CLSID_MediaStreamSource]);
 DEFINE_IID!(IID_IMediaStreamSource2, 3965046957, 11882, 20340, 173, 187, 181, 98, 209, 83, 56, 73);
-RT_INTERFACE!{interface IMediaStreamSource2(IMediaStreamSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSource2] {
+RT_INTERFACE!{interface IMediaStreamSource2(IMediaStreamSource2Vtbl): IInspectable [IID_IMediaStreamSource2] {
     fn add_SampleRendered(&self, handler: <foundation::TypedEventHandler<MediaStreamSource, MediaStreamSourceSampleRenderedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SampleRendered(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -11967,7 +11967,7 @@ impl IMediaStreamSource2 {
     }}
 }
 DEFINE_IID!(IID_IMediaStreamSource3, 1781147462, 15837, 19935, 161, 33, 148, 4, 94, 207, 148, 64);
-RT_INTERFACE!{interface IMediaStreamSource3(IMediaStreamSource3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSource3] {
+RT_INTERFACE!{interface IMediaStreamSource3(IMediaStreamSource3Vtbl): IInspectable [IID_IMediaStreamSource3] {
     fn put_MaxSupportedPlaybackRate(&self, value: <foundation::IReference<f64> as RtType>::Abi) -> HRESULT,
     fn get_MaxSupportedPlaybackRate(&self, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT
 }}
@@ -11983,7 +11983,7 @@ impl IMediaStreamSource3 {
     }}
 }
 DEFINE_IID!(IID_IMediaStreamSource4, 487390379, 33549, 16764, 163, 169, 36, 84, 253, 100, 21, 199);
-RT_INTERFACE!{interface IMediaStreamSource4(IMediaStreamSource4Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSource4] {
+RT_INTERFACE!{interface IMediaStreamSource4(IMediaStreamSource4Vtbl): IInspectable [IID_IMediaStreamSource4] {
     fn put_IsLive(&self, value: bool) -> HRESULT,
     fn get_IsLive(&self, out: *mut bool) -> HRESULT
 }}
@@ -11999,7 +11999,7 @@ impl IMediaStreamSource4 {
     }}
 }
 DEFINE_IID!(IID_IMediaStreamSourceClosedEventArgs, 3448536754, 18454, 20004, 136, 240, 73, 30, 247, 56, 100, 6);
-RT_INTERFACE!{interface IMediaStreamSourceClosedEventArgs(IMediaStreamSourceClosedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceClosedEventArgs] {
+RT_INTERFACE!{interface IMediaStreamSourceClosedEventArgs(IMediaStreamSourceClosedEventArgsVtbl): IInspectable [IID_IMediaStreamSourceClosedEventArgs] {
     fn get_Request(&self, out: *mut <MediaStreamSourceClosedRequest as RtType>::Abi) -> HRESULT
 }}
 impl IMediaStreamSourceClosedEventArgs {
@@ -12014,7 +12014,7 @@ RT_ENUM! { enum MediaStreamSourceClosedReason: i32 {
     Done = 0, UnknownError = 1, AppReportedError = 2, UnsupportedProtectionSystem = 3, ProtectionSystemFailure = 4, UnsupportedEncodingFormat = 5, MissingSampleRequestedEventHandler = 6,
 }}
 DEFINE_IID!(IID_IMediaStreamSourceClosedRequest, 2424045801, 6307, 18769, 136, 122, 44, 30, 235, 213, 198, 158);
-RT_INTERFACE!{interface IMediaStreamSourceClosedRequest(IMediaStreamSourceClosedRequestVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceClosedRequest] {
+RT_INTERFACE!{interface IMediaStreamSourceClosedRequest(IMediaStreamSourceClosedRequestVtbl): IInspectable [IID_IMediaStreamSourceClosedRequest] {
     fn get_Reason(&self, out: *mut MediaStreamSourceClosedReason) -> HRESULT
 }}
 impl IMediaStreamSourceClosedRequest {
@@ -12029,7 +12029,7 @@ RT_ENUM! { enum MediaStreamSourceErrorStatus: i32 {
     Other = 0, OutOfMemory = 1, FailedToOpenFile = 2, FailedToConnectToServer = 3, ConnectionToServerLost = 4, UnspecifiedNetworkError = 5, DecodeError = 6, UnsupportedMediaFormat = 7,
 }}
 DEFINE_IID!(IID_IMediaStreamSourceFactory, 4017610969, 53592, 19322, 134, 63, 32, 51, 66, 251, 253, 65);
-RT_INTERFACE!{static interface IMediaStreamSourceFactory(IMediaStreamSourceFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceFactory] {
+RT_INTERFACE!{static interface IMediaStreamSourceFactory(IMediaStreamSourceFactoryVtbl): IInspectable [IID_IMediaStreamSourceFactory] {
     fn CreateFromDescriptor(&self, descriptor: <IMediaStreamDescriptor as RtType>::Abi, out: *mut <MediaStreamSource as RtType>::Abi) -> HRESULT,
     fn CreateFromDescriptors(&self, descriptor: <IMediaStreamDescriptor as RtType>::Abi, descriptor2: <IMediaStreamDescriptor as RtType>::Abi, out: *mut <MediaStreamSource as RtType>::Abi) -> HRESULT
 }}
@@ -12046,7 +12046,7 @@ impl IMediaStreamSourceFactory {
     }}
 }
 DEFINE_IID!(IID_IMediaStreamSourceSampleRenderedEventArgs, 2640935685, 54514, 19578, 157, 254, 141, 108, 208, 179, 238, 132);
-RT_INTERFACE!{interface IMediaStreamSourceSampleRenderedEventArgs(IMediaStreamSourceSampleRenderedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSampleRenderedEventArgs] {
+RT_INTERFACE!{interface IMediaStreamSourceSampleRenderedEventArgs(IMediaStreamSourceSampleRenderedEventArgsVtbl): IInspectable [IID_IMediaStreamSourceSampleRenderedEventArgs] {
     fn get_SampleLag(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
 impl IMediaStreamSourceSampleRenderedEventArgs {
@@ -12058,7 +12058,7 @@ impl IMediaStreamSourceSampleRenderedEventArgs {
 }
 RT_CLASS!{class MediaStreamSourceSampleRenderedEventArgs: IMediaStreamSourceSampleRenderedEventArgs}
 DEFINE_IID!(IID_IMediaStreamSourceSampleRequest, 1303593385, 13569, 19867, 131, 249, 143, 35, 92, 130, 37, 50);
-RT_INTERFACE!{interface IMediaStreamSourceSampleRequest(IMediaStreamSourceSampleRequestVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSampleRequest] {
+RT_INTERFACE!{interface IMediaStreamSourceSampleRequest(IMediaStreamSourceSampleRequestVtbl): IInspectable [IID_IMediaStreamSourceSampleRequest] {
     fn get_StreamDescriptor(&self, out: *mut <IMediaStreamDescriptor as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <MediaStreamSourceSampleRequestDeferral as RtType>::Abi) -> HRESULT,
     fn put_Sample(&self, value: <MediaStreamSample as RtType>::Abi) -> HRESULT,
@@ -12092,7 +12092,7 @@ impl IMediaStreamSourceSampleRequest {
 }
 RT_CLASS!{class MediaStreamSourceSampleRequest: IMediaStreamSourceSampleRequest}
 DEFINE_IID!(IID_IMediaStreamSourceSampleRequestDeferral, 2023083010, 63874, 17352, 157, 22, 198, 45, 153, 147, 25, 190);
-RT_INTERFACE!{interface IMediaStreamSourceSampleRequestDeferral(IMediaStreamSourceSampleRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSampleRequestDeferral] {
+RT_INTERFACE!{interface IMediaStreamSourceSampleRequestDeferral(IMediaStreamSourceSampleRequestDeferralVtbl): IInspectable [IID_IMediaStreamSourceSampleRequestDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl IMediaStreamSourceSampleRequestDeferral {
@@ -12103,7 +12103,7 @@ impl IMediaStreamSourceSampleRequestDeferral {
 }
 RT_CLASS!{class MediaStreamSourceSampleRequestDeferral: IMediaStreamSourceSampleRequestDeferral}
 DEFINE_IID!(IID_IMediaStreamSourceSampleRequestedEventArgs, 284801950, 29125, 18735, 132, 127, 13, 161, 243, 94, 129, 248);
-RT_INTERFACE!{interface IMediaStreamSourceSampleRequestedEventArgs(IMediaStreamSourceSampleRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSampleRequestedEventArgs] {
+RT_INTERFACE!{interface IMediaStreamSourceSampleRequestedEventArgs(IMediaStreamSourceSampleRequestedEventArgsVtbl): IInspectable [IID_IMediaStreamSourceSampleRequestedEventArgs] {
     fn get_Request(&self, out: *mut <MediaStreamSourceSampleRequest as RtType>::Abi) -> HRESULT
 }}
 impl IMediaStreamSourceSampleRequestedEventArgs {
@@ -12115,7 +12115,7 @@ impl IMediaStreamSourceSampleRequestedEventArgs {
 }
 RT_CLASS!{class MediaStreamSourceSampleRequestedEventArgs: IMediaStreamSourceSampleRequestedEventArgs}
 DEFINE_IID!(IID_IMediaStreamSourceStartingEventArgs, 4094978290, 49780, 18752, 165, 187, 40, 165, 114, 69, 47, 167);
-RT_INTERFACE!{interface IMediaStreamSourceStartingEventArgs(IMediaStreamSourceStartingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceStartingEventArgs] {
+RT_INTERFACE!{interface IMediaStreamSourceStartingEventArgs(IMediaStreamSourceStartingEventArgsVtbl): IInspectable [IID_IMediaStreamSourceStartingEventArgs] {
     fn get_Request(&self, out: *mut <MediaStreamSourceStartingRequest as RtType>::Abi) -> HRESULT
 }}
 impl IMediaStreamSourceStartingEventArgs {
@@ -12127,7 +12127,7 @@ impl IMediaStreamSourceStartingEventArgs {
 }
 RT_CLASS!{class MediaStreamSourceStartingEventArgs: IMediaStreamSourceStartingEventArgs}
 DEFINE_IID!(IID_IMediaStreamSourceStartingRequest, 714118116, 13764, 19227, 167, 145, 13, 153, 219, 86, 221, 29);
-RT_INTERFACE!{interface IMediaStreamSourceStartingRequest(IMediaStreamSourceStartingRequestVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceStartingRequest] {
+RT_INTERFACE!{interface IMediaStreamSourceStartingRequest(IMediaStreamSourceStartingRequestVtbl): IInspectable [IID_IMediaStreamSourceStartingRequest] {
     fn get_StartPosition(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <MediaStreamSourceStartingRequestDeferral as RtType>::Abi) -> HRESULT,
     fn SetActualStartPosition(&self, position: foundation::TimeSpan) -> HRESULT
@@ -12150,7 +12150,7 @@ impl IMediaStreamSourceStartingRequest {
 }
 RT_CLASS!{class MediaStreamSourceStartingRequest: IMediaStreamSourceStartingRequest}
 DEFINE_IID!(IID_IMediaStreamSourceStartingRequestDeferral, 1058231973, 25408, 19908, 153, 16, 6, 142, 217, 245, 152, 248);
-RT_INTERFACE!{interface IMediaStreamSourceStartingRequestDeferral(IMediaStreamSourceStartingRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceStartingRequestDeferral] {
+RT_INTERFACE!{interface IMediaStreamSourceStartingRequestDeferral(IMediaStreamSourceStartingRequestDeferralVtbl): IInspectable [IID_IMediaStreamSourceStartingRequestDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl IMediaStreamSourceStartingRequestDeferral {
@@ -12161,7 +12161,7 @@ impl IMediaStreamSourceStartingRequestDeferral {
 }
 RT_CLASS!{class MediaStreamSourceStartingRequestDeferral: IMediaStreamSourceStartingRequestDeferral}
 DEFINE_IID!(IID_IMediaStreamSourceSwitchStreamsRequest, 1102610574, 14505, 20163, 155, 160, 182, 155, 133, 80, 30, 144);
-RT_INTERFACE!{interface IMediaStreamSourceSwitchStreamsRequest(IMediaStreamSourceSwitchStreamsRequestVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSwitchStreamsRequest] {
+RT_INTERFACE!{interface IMediaStreamSourceSwitchStreamsRequest(IMediaStreamSourceSwitchStreamsRequestVtbl): IInspectable [IID_IMediaStreamSourceSwitchStreamsRequest] {
     fn get_OldStreamDescriptor(&self, out: *mut <IMediaStreamDescriptor as RtType>::Abi) -> HRESULT,
     fn get_NewStreamDescriptor(&self, out: *mut <IMediaStreamDescriptor as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <MediaStreamSourceSwitchStreamsRequestDeferral as RtType>::Abi) -> HRESULT
@@ -12185,7 +12185,7 @@ impl IMediaStreamSourceSwitchStreamsRequest {
 }
 RT_CLASS!{class MediaStreamSourceSwitchStreamsRequest: IMediaStreamSourceSwitchStreamsRequest}
 DEFINE_IID!(IID_IMediaStreamSourceSwitchStreamsRequestDeferral, 3202603061, 42245, 20378, 185, 67, 43, 140, 177, 180, 187, 217);
-RT_INTERFACE!{interface IMediaStreamSourceSwitchStreamsRequestDeferral(IMediaStreamSourceSwitchStreamsRequestDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSwitchStreamsRequestDeferral] {
+RT_INTERFACE!{interface IMediaStreamSourceSwitchStreamsRequestDeferral(IMediaStreamSourceSwitchStreamsRequestDeferralVtbl): IInspectable [IID_IMediaStreamSourceSwitchStreamsRequestDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl IMediaStreamSourceSwitchStreamsRequestDeferral {
@@ -12196,7 +12196,7 @@ impl IMediaStreamSourceSwitchStreamsRequestDeferral {
 }
 RT_CLASS!{class MediaStreamSourceSwitchStreamsRequestDeferral: IMediaStreamSourceSwitchStreamsRequestDeferral}
 DEFINE_IID!(IID_IMediaStreamSourceSwitchStreamsRequestedEventArgs, 1109404530, 28321, 18039, 152, 30, 53, 10, 13, 164, 18, 170);
-RT_INTERFACE!{interface IMediaStreamSourceSwitchStreamsRequestedEventArgs(IMediaStreamSourceSwitchStreamsRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaStreamSourceSwitchStreamsRequestedEventArgs] {
+RT_INTERFACE!{interface IMediaStreamSourceSwitchStreamsRequestedEventArgs(IMediaStreamSourceSwitchStreamsRequestedEventArgsVtbl): IInspectable [IID_IMediaStreamSourceSwitchStreamsRequestedEventArgs] {
     fn get_Request(&self, out: *mut <MediaStreamSourceSwitchStreamsRequest as RtType>::Abi) -> HRESULT
 }}
 impl IMediaStreamSourceSwitchStreamsRequestedEventArgs {
@@ -12208,7 +12208,7 @@ impl IMediaStreamSourceSwitchStreamsRequestedEventArgs {
 }
 RT_CLASS!{class MediaStreamSourceSwitchStreamsRequestedEventArgs: IMediaStreamSourceSwitchStreamsRequestedEventArgs}
 DEFINE_IID!(IID_IMediaTrack, 65141500, 51505, 18714, 180, 107, 193, 14, 232, 194, 86, 183);
-RT_INTERFACE!{interface IMediaTrack(IMediaTrackVtbl): IInspectable(IInspectableVtbl) [IID_IMediaTrack] {
+RT_INTERFACE!{interface IMediaTrack(IMediaTrackVtbl): IInspectable [IID_IMediaTrack] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Language(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TrackKind(&self, out: *mut MediaTrackKind) -> HRESULT,
@@ -12254,7 +12254,7 @@ RT_ENUM! { enum MseReadyState: i32 {
     Closed = 0, Open = 1, Ended = 2,
 }}
 DEFINE_IID!(IID_IMseSourceBuffer, 203072483, 57229, 16505, 163, 254, 104, 73, 24, 75, 78, 47);
-RT_INTERFACE!{interface IMseSourceBuffer(IMseSourceBufferVtbl): IInspectable(IInspectableVtbl) [IID_IMseSourceBuffer] {
+RT_INTERFACE!{interface IMseSourceBuffer(IMseSourceBufferVtbl): IInspectable [IID_IMseSourceBuffer] {
     fn add_UpdateStarting(&self, handler: <foundation::TypedEventHandler<MseSourceBuffer, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_UpdateStarting(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_Updated(&self, handler: <foundation::TypedEventHandler<MseSourceBuffer, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -12399,7 +12399,7 @@ impl IMseSourceBuffer {
 }
 RT_CLASS!{class MseSourceBuffer: IMseSourceBuffer}
 DEFINE_IID!(IID_IMseSourceBufferList, 2516248807, 43239, 20159, 137, 39, 20, 94, 148, 11, 165, 17);
-RT_INTERFACE!{interface IMseSourceBufferList(IMseSourceBufferListVtbl): IInspectable(IInspectableVtbl) [IID_IMseSourceBufferList] {
+RT_INTERFACE!{interface IMseSourceBufferList(IMseSourceBufferListVtbl): IInspectable [IID_IMseSourceBufferList] {
     fn add_SourceBufferAdded(&self, handler: <foundation::TypedEventHandler<MseSourceBufferList, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SourceBufferAdded(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_SourceBufferRemoved(&self, handler: <foundation::TypedEventHandler<MseSourceBufferList, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -12433,7 +12433,7 @@ impl IMseSourceBufferList {
 }
 RT_CLASS!{class MseSourceBufferList: IMseSourceBufferList}
 DEFINE_IID!(IID_IMseStreamSource, 2964593037, 756, 18723, 136, 221, 129, 188, 63, 54, 15, 250);
-RT_INTERFACE!{interface IMseStreamSource(IMseStreamSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMseStreamSource] {
+RT_INTERFACE!{interface IMseStreamSource(IMseStreamSourceVtbl): IInspectable [IID_IMseStreamSource] {
     fn add_Opened(&self, handler: <foundation::TypedEventHandler<MseStreamSource, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Opened(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_Ended(&self, handler: <foundation::TypedEventHandler<MseStreamSource, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -12525,7 +12525,7 @@ impl MseStreamSource {
 }
 DEFINE_CLSID!(MseStreamSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,77,115,101,83,116,114,101,97,109,83,111,117,114,99,101,0]) [CLSID_MseStreamSource]);
 DEFINE_IID!(IID_IMseStreamSource2, 1727364407, 63975, 16778, 156, 222, 160, 32, 233, 86, 85, 43);
-RT_INTERFACE!{interface IMseStreamSource2(IMseStreamSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IMseStreamSource2] {
+RT_INTERFACE!{interface IMseStreamSource2(IMseStreamSource2Vtbl): IInspectable [IID_IMseStreamSource2] {
     fn get_LiveSeekableRange(&self, out: *mut <foundation::IReference<MseTimeRange> as RtType>::Abi) -> HRESULT,
     fn put_LiveSeekableRange(&self, value: <foundation::IReference<MseTimeRange> as RtType>::Abi) -> HRESULT
 }}
@@ -12541,7 +12541,7 @@ impl IMseStreamSource2 {
     }}
 }
 DEFINE_IID!(IID_IMseStreamSourceStatics, 1180460957, 54640, 17358, 186, 33, 11, 255, 95, 63, 189, 10);
-RT_INTERFACE!{static interface IMseStreamSourceStatics(IMseStreamSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMseStreamSourceStatics] {
+RT_INTERFACE!{static interface IMseStreamSourceStatics(IMseStreamSourceStaticsVtbl): IInspectable [IID_IMseStreamSourceStatics] {
     fn IsContentTypeSupported(&self, contentType: HSTRING, out: *mut bool) -> HRESULT
 }}
 impl IMseStreamSourceStatics {
@@ -12555,7 +12555,7 @@ RT_STRUCT! { struct MseTimeRange {
     Start: foundation::TimeSpan, End: foundation::TimeSpan,
 }}
 DEFINE_IID!(IID_ISceneAnalysisEffect, 3226182425, 51777, 18451, 191, 253, 123, 8, 176, 237, 37, 87);
-RT_INTERFACE!{interface ISceneAnalysisEffect(ISceneAnalysisEffectVtbl): IInspectable(IInspectableVtbl) [IID_ISceneAnalysisEffect] {
+RT_INTERFACE!{interface ISceneAnalysisEffect(ISceneAnalysisEffectVtbl): IInspectable [IID_ISceneAnalysisEffect] {
     fn get_HighDynamicRangeAnalyzer(&self, out: *mut <HighDynamicRangeControl as RtType>::Abi) -> HRESULT,
     fn put_DesiredAnalysisInterval(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_DesiredAnalysisInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -12592,7 +12592,7 @@ RT_CLASS!{class SceneAnalysisEffectDefinition: super::effects::IVideoEffectDefin
 impl RtActivatable<IActivationFactory> for SceneAnalysisEffectDefinition {}
 DEFINE_CLSID!(SceneAnalysisEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,83,99,101,110,101,65,110,97,108,121,115,105,115,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_SceneAnalysisEffectDefinition]);
 DEFINE_IID!(IID_ISceneAnalysisEffectFrame, 3635482188, 32729, 17121, 133, 235, 101, 114, 194, 151, 201, 135);
-RT_INTERFACE!{interface ISceneAnalysisEffectFrame(ISceneAnalysisEffectFrameVtbl): IInspectable(IInspectableVtbl) [IID_ISceneAnalysisEffectFrame] {
+RT_INTERFACE!{interface ISceneAnalysisEffectFrame(ISceneAnalysisEffectFrameVtbl): IInspectable [IID_ISceneAnalysisEffectFrame] {
     fn get_FrameControlValues(&self, out: *mut <super::capture::CapturedFrameControlValues as RtType>::Abi) -> HRESULT,
     fn get_HighDynamicRange(&self, out: *mut <HighDynamicRangeOutput as RtType>::Abi) -> HRESULT
 }}
@@ -12610,7 +12610,7 @@ impl ISceneAnalysisEffectFrame {
 }
 RT_CLASS!{class SceneAnalysisEffectFrame: ISceneAnalysisEffectFrame}
 DEFINE_IID!(IID_ISceneAnalysisEffectFrame2, 760097214, 1567, 18350, 153, 21, 2, 82, 75, 95, 154, 95);
-RT_INTERFACE!{interface ISceneAnalysisEffectFrame2(ISceneAnalysisEffectFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_ISceneAnalysisEffectFrame2] {
+RT_INTERFACE!{interface ISceneAnalysisEffectFrame2(ISceneAnalysisEffectFrame2Vtbl): IInspectable [IID_ISceneAnalysisEffectFrame2] {
     fn get_AnalysisRecommendation(&self, out: *mut SceneAnalysisRecommendation) -> HRESULT
 }}
 impl ISceneAnalysisEffectFrame2 {
@@ -12624,7 +12624,7 @@ RT_ENUM! { enum SceneAnalysisRecommendation: i32 {
     Standard = 0, Hdr = 1, LowLight = 2,
 }}
 DEFINE_IID!(IID_ISceneAnalyzedEventArgs, 342594952, 10321, 17892, 173, 85, 68, 207, 141, 248, 219, 77);
-RT_INTERFACE!{interface ISceneAnalyzedEventArgs(ISceneAnalyzedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISceneAnalyzedEventArgs] {
+RT_INTERFACE!{interface ISceneAnalyzedEventArgs(ISceneAnalyzedEventArgsVtbl): IInspectable [IID_ISceneAnalyzedEventArgs] {
     fn get_ResultFrame(&self, out: *mut <SceneAnalysisEffectFrame as RtType>::Abi) -> HRESULT
 }}
 impl ISceneAnalyzedEventArgs {
@@ -12636,7 +12636,7 @@ impl ISceneAnalyzedEventArgs {
 }
 RT_CLASS!{class SceneAnalyzedEventArgs: ISceneAnalyzedEventArgs}
 DEFINE_IID!(IID_ISingleSelectMediaTrackList, 1998614303, 49999, 18767, 128, 119, 43, 173, 159, 244, 236, 241);
-RT_INTERFACE!{interface ISingleSelectMediaTrackList(ISingleSelectMediaTrackListVtbl): IInspectable(IInspectableVtbl) [IID_ISingleSelectMediaTrackList] {
+RT_INTERFACE!{interface ISingleSelectMediaTrackList(ISingleSelectMediaTrackListVtbl): IInspectable [IID_ISingleSelectMediaTrackList] {
     fn add_SelectedIndexChanged(&self, handler: <foundation::TypedEventHandler<ISingleSelectMediaTrackList, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SelectedIndexChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn put_SelectedIndex(&self, value: i32) -> HRESULT,
@@ -12663,7 +12663,7 @@ impl ISingleSelectMediaTrackList {
     }}
 }
 DEFINE_IID!(IID_ISpeechCue, 2934068444, 5925, 19373, 128, 67, 169, 132, 153, 176, 23, 162);
-RT_INTERFACE!{interface ISpeechCue(ISpeechCueVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechCue] {
+RT_INTERFACE!{interface ISpeechCue(ISpeechCueVtbl): IInspectable [IID_ISpeechCue] {
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Text(&self, value: HSTRING) -> HRESULT,
     fn get_StartPositionInInput(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
@@ -12707,7 +12707,7 @@ RT_ENUM! { enum TimedMetadataKind: i32 {
     Caption = 0, Chapter = 1, Custom = 2, Data = 3, Description = 4, Subtitle = 5, ImageSubtitle = 6, Speech = 7,
 }}
 DEFINE_IID!(IID_ITimedMetadataStreamDescriptor, 322123455, 10602, 17982, 159, 249, 1, 205, 37, 105, 20, 8);
-RT_INTERFACE!{interface ITimedMetadataStreamDescriptor(ITimedMetadataStreamDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataStreamDescriptor] {
+RT_INTERFACE!{interface ITimedMetadataStreamDescriptor(ITimedMetadataStreamDescriptorVtbl): IInspectable [IID_ITimedMetadataStreamDescriptor] {
     fn get_EncodingProperties(&self, out: *mut <super::mediaproperties::TimedMetadataEncodingProperties as RtType>::Abi) -> HRESULT,
     fn Copy(&self, out: *mut <TimedMetadataStreamDescriptor as RtType>::Abi) -> HRESULT
 }}
@@ -12732,7 +12732,7 @@ impl TimedMetadataStreamDescriptor {
 }
 DEFINE_CLSID!(TimedMetadataStreamDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,77,101,116,97,100,97,116,97,83,116,114,101,97,109,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_TimedMetadataStreamDescriptor]);
 DEFINE_IID!(IID_ITimedMetadataStreamDescriptorFactory, 3223838256, 29538, 20473, 152, 177, 45, 253, 11, 141, 28, 174);
-RT_INTERFACE!{static interface ITimedMetadataStreamDescriptorFactory(ITimedMetadataStreamDescriptorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataStreamDescriptorFactory] {
+RT_INTERFACE!{static interface ITimedMetadataStreamDescriptorFactory(ITimedMetadataStreamDescriptorFactoryVtbl): IInspectable [IID_ITimedMetadataStreamDescriptorFactory] {
     fn Create(&self, encodingProperties: <super::mediaproperties::TimedMetadataEncodingProperties as RtType>::Abi, out: *mut <TimedMetadataStreamDescriptor as RtType>::Abi) -> HRESULT
 }}
 impl ITimedMetadataStreamDescriptorFactory {
@@ -12743,7 +12743,7 @@ impl ITimedMetadataStreamDescriptorFactory {
     }}
 }
 DEFINE_IID!(IID_ITimedMetadataTrack, 2657807774, 63098, 18857, 179, 48, 207, 3, 176, 233, 207, 7);
-RT_INTERFACE!{interface ITimedMetadataTrack(ITimedMetadataTrackVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataTrack] {
+RT_INTERFACE!{interface ITimedMetadataTrack(ITimedMetadataTrackVtbl): IInspectable [IID_ITimedMetadataTrack] {
     fn add_CueEntered(&self, handler: <foundation::TypedEventHandler<TimedMetadataTrack, MediaCueEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_CueEntered(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_CueExited(&self, handler: <foundation::TypedEventHandler<TimedMetadataTrack, MediaCueEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -12823,7 +12823,7 @@ impl TimedMetadataTrack {
 }
 DEFINE_CLSID!(TimedMetadataTrack(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,77,101,116,97,100,97,116,97,84,114,97,99,107,0]) [CLSID_TimedMetadataTrack]);
 DEFINE_IID!(IID_ITimedMetadataTrack2, 565491272, 40861, 16570, 168, 243, 26, 146, 117, 58, 239, 11);
-RT_INTERFACE!{interface ITimedMetadataTrack2(ITimedMetadataTrack2Vtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataTrack2] {
+RT_INTERFACE!{interface ITimedMetadataTrack2(ITimedMetadataTrack2Vtbl): IInspectable [IID_ITimedMetadataTrack2] {
     fn get_PlaybackItem(&self, out: *mut <super::playback::MediaPlaybackItem as RtType>::Abi) -> HRESULT,
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -12840,7 +12840,7 @@ impl ITimedMetadataTrack2 {
     }}
 }
 DEFINE_IID!(IID_ITimedMetadataTrackError, 3010885909, 16660, 18457, 185, 217, 221, 118, 8, 158, 114, 248);
-RT_INTERFACE!{interface ITimedMetadataTrackError(ITimedMetadataTrackErrorVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataTrackError] {
+RT_INTERFACE!{interface ITimedMetadataTrackError(ITimedMetadataTrackErrorVtbl): IInspectable [IID_ITimedMetadataTrackError] {
     fn get_ErrorCode(&self, out: *mut TimedMetadataTrackErrorCode) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
@@ -12861,7 +12861,7 @@ RT_ENUM! { enum TimedMetadataTrackErrorCode: i32 {
     None = 0, DataFormatError = 1, NetworkError = 2, InternalError = 3,
 }}
 DEFINE_IID!(IID_ITimedMetadataTrackFactory, 2379576849, 38835, 19999, 133, 44, 15, 72, 44, 129, 173, 38);
-RT_INTERFACE!{static interface ITimedMetadataTrackFactory(ITimedMetadataTrackFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataTrackFactory] {
+RT_INTERFACE!{static interface ITimedMetadataTrackFactory(ITimedMetadataTrackFactoryVtbl): IInspectable [IID_ITimedMetadataTrackFactory] {
     fn Create(&self, id: HSTRING, language: HSTRING, kind: TimedMetadataKind, out: *mut <TimedMetadataTrack as RtType>::Abi) -> HRESULT
 }}
 impl ITimedMetadataTrackFactory {
@@ -12872,7 +12872,7 @@ impl ITimedMetadataTrackFactory {
     }}
 }
 DEFINE_IID!(IID_ITimedMetadataTrackFailedEventArgs, 2776615377, 26505, 19789, 176, 127, 132, 180, 243, 26, 203, 112);
-RT_INTERFACE!{interface ITimedMetadataTrackFailedEventArgs(ITimedMetadataTrackFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataTrackFailedEventArgs] {
+RT_INTERFACE!{interface ITimedMetadataTrackFailedEventArgs(ITimedMetadataTrackFailedEventArgsVtbl): IInspectable [IID_ITimedMetadataTrackFailedEventArgs] {
     fn get_Error(&self, out: *mut <TimedMetadataTrackError as RtType>::Abi) -> HRESULT
 }}
 impl ITimedMetadataTrackFailedEventArgs {
@@ -12884,7 +12884,7 @@ impl ITimedMetadataTrackFailedEventArgs {
 }
 RT_CLASS!{class TimedMetadataTrackFailedEventArgs: ITimedMetadataTrackFailedEventArgs}
 DEFINE_IID!(IID_ITimedMetadataTrackProvider, 998187044, 63310, 19166, 147, 197, 33, 157, 160, 91, 104, 86);
-RT_INTERFACE!{interface ITimedMetadataTrackProvider(ITimedMetadataTrackProviderVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataTrackProvider] {
+RT_INTERFACE!{interface ITimedMetadataTrackProvider(ITimedMetadataTrackProviderVtbl): IInspectable [IID_ITimedMetadataTrackProvider] {
     fn get_TimedMetadataTracks(&self, out: *mut <foundation::collections::IVectorView<TimedMetadataTrack> as RtType>::Abi) -> HRESULT
 }}
 impl ITimedMetadataTrackProvider {
@@ -12895,7 +12895,7 @@ impl ITimedMetadataTrackProvider {
     }}
 }
 DEFINE_IID!(IID_ITimedTextCue, 1372036689, 15238, 18765, 179, 89, 187, 46, 167, 172, 169, 169);
-RT_INTERFACE!{interface ITimedTextCue(ITimedTextCueVtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextCue] {
+RT_INTERFACE!{interface ITimedTextCue(ITimedTextCueVtbl): IInspectable [IID_ITimedTextCue] {
     fn get_CueRegion(&self, out: *mut <TimedTextRegion as RtType>::Abi) -> HRESULT,
     fn put_CueRegion(&self, value: <TimedTextRegion as RtType>::Abi) -> HRESULT,
     fn get_CueStyle(&self, out: *mut <TimedTextStyle as RtType>::Abi) -> HRESULT,
@@ -12943,7 +12943,7 @@ RT_ENUM! { enum TimedTextFontStyle: i32 {
     Normal = 0, Oblique = 1, Italic = 2,
 }}
 DEFINE_IID!(IID_ITimedTextLine, 2542632162, 29448, 19558, 190, 80, 101, 119, 114, 137, 245, 223);
-RT_INTERFACE!{interface ITimedTextLine(ITimedTextLineVtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextLine] {
+RT_INTERFACE!{interface ITimedTextLine(ITimedTextLineVtbl): IInspectable [IID_ITimedTextLine] {
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Text(&self, value: HSTRING) -> HRESULT,
     fn get_Subformats(&self, out: *mut <foundation::collections::IVector<TimedTextSubformat> as RtType>::Abi) -> HRESULT
@@ -12977,7 +12977,7 @@ RT_STRUCT! { struct TimedTextPoint {
     X: f64, Y: f64, Unit: TimedTextUnit,
 }}
 DEFINE_IID!(IID_ITimedTextRegion, 516982815, 35334, 16930, 159, 89, 178, 27, 244, 1, 36, 180);
-RT_INTERFACE!{interface ITimedTextRegion(ITimedTextRegionVtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextRegion] {
+RT_INTERFACE!{interface ITimedTextRegion(ITimedTextRegionVtbl): IInspectable [IID_ITimedTextRegion] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Name(&self, value: HSTRING) -> HRESULT,
     fn get_Position(&self, out: *mut TimedTextPoint) -> HRESULT,
@@ -13125,7 +13125,7 @@ RT_STRUCT! { struct TimedTextSize {
     Height: f64, Width: f64, Unit: TimedTextUnit,
 }}
 DEFINE_IID!(IID_ITimedTextSource, 3303906214, 4127, 16461, 169, 73, 130, 243, 63, 205, 147, 183);
-RT_INTERFACE!{interface ITimedTextSource(ITimedTextSourceVtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextSource] {
+RT_INTERFACE!{interface ITimedTextSource(ITimedTextSourceVtbl): IInspectable [IID_ITimedTextSource] {
     fn add_Resolved(&self, handler: <foundation::TypedEventHandler<TimedTextSource, TimedTextSourceResolveResultEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Resolved(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -13171,7 +13171,7 @@ impl TimedTextSource {
 }
 DEFINE_CLSID!(TimedTextSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,83,111,117,114,99,101,0]) [CLSID_TimedTextSource]);
 DEFINE_IID!(IID_ITimedTextSourceResolveResultEventArgs, 1217428636, 56536, 19507, 154, 211, 108, 220, 231, 177, 197, 102);
-RT_INTERFACE!{interface ITimedTextSourceResolveResultEventArgs(ITimedTextSourceResolveResultEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextSourceResolveResultEventArgs] {
+RT_INTERFACE!{interface ITimedTextSourceResolveResultEventArgs(ITimedTextSourceResolveResultEventArgsVtbl): IInspectable [IID_ITimedTextSourceResolveResultEventArgs] {
     fn get_Error(&self, out: *mut <TimedMetadataTrackError as RtType>::Abi) -> HRESULT,
     fn get_Tracks(&self, out: *mut <foundation::collections::IVectorView<TimedMetadataTrack> as RtType>::Abi) -> HRESULT
 }}
@@ -13189,7 +13189,7 @@ impl ITimedTextSourceResolveResultEventArgs {
 }
 RT_CLASS!{class TimedTextSourceResolveResultEventArgs: ITimedTextSourceResolveResultEventArgs}
 DEFINE_IID!(IID_ITimedTextSourceStatics, 2117146707, 39610, 19140, 187, 152, 47, 177, 118, 195, 191, 221);
-RT_INTERFACE!{static interface ITimedTextSourceStatics(ITimedTextSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextSourceStatics] {
+RT_INTERFACE!{static interface ITimedTextSourceStatics(ITimedTextSourceStaticsVtbl): IInspectable [IID_ITimedTextSourceStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn CreateFromStream(&self, stream: <super::super::storage::streams::IRandomAccessStream as RtType>::Abi, out: *mut <TimedTextSource as RtType>::Abi) -> HRESULT,
     fn CreateFromUri(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <TimedTextSource as RtType>::Abi) -> HRESULT,
@@ -13220,7 +13220,7 @@ impl ITimedTextSourceStatics {
     }}
 }
 DEFINE_IID!(IID_ITimedTextSourceStatics2, 3060495874, 37438, 17402, 150, 51, 88, 112, 117, 129, 45, 181);
-RT_INTERFACE!{static interface ITimedTextSourceStatics2(ITimedTextSourceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextSourceStatics2] {
+RT_INTERFACE!{static interface ITimedTextSourceStatics2(ITimedTextSourceStatics2Vtbl): IInspectable [IID_ITimedTextSourceStatics2] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn CreateFromStreamWithIndex(&self, stream: <super::super::storage::streams::IRandomAccessStream as RtType>::Abi, indexStream: <super::super::storage::streams::IRandomAccessStream as RtType>::Abi, out: *mut <TimedTextSource as RtType>::Abi) -> HRESULT,
     fn CreateFromUriWithIndex(&self, uri: <foundation::Uri as RtType>::Abi, indexUri: <foundation::Uri as RtType>::Abi, out: *mut <TimedTextSource as RtType>::Abi) -> HRESULT,
@@ -13251,7 +13251,7 @@ impl ITimedTextSourceStatics2 {
     }}
 }
 DEFINE_IID!(IID_ITimedTextStyle, 464664653, 43045, 16578, 167, 245, 40, 30, 174, 223, 59, 85);
-RT_INTERFACE!{interface ITimedTextStyle(ITimedTextStyleVtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextStyle] {
+RT_INTERFACE!{interface ITimedTextStyle(ITimedTextStyleVtbl): IInspectable [IID_ITimedTextStyle] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Name(&self, value: HSTRING) -> HRESULT,
     fn get_FontFamily(&self, out: *mut HSTRING) -> HRESULT,
@@ -13397,7 +13397,7 @@ RT_CLASS!{class TimedTextStyle: ITimedTextStyle}
 impl RtActivatable<IActivationFactory> for TimedTextStyle {}
 DEFINE_CLSID!(TimedTextStyle(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,84,105,109,101,100,84,101,120,116,83,116,121,108,101,0]) [CLSID_TimedTextStyle]);
 DEFINE_IID!(IID_ITimedTextStyle2, 1700743469, 24849, 18311, 137, 204, 104, 111, 236, 229, 126, 20);
-RT_INTERFACE!{interface ITimedTextStyle2(ITimedTextStyle2Vtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextStyle2] {
+RT_INTERFACE!{interface ITimedTextStyle2(ITimedTextStyle2Vtbl): IInspectable [IID_ITimedTextStyle2] {
     fn get_FontStyle(&self, out: *mut TimedTextFontStyle) -> HRESULT,
     fn put_FontStyle(&self, value: TimedTextFontStyle) -> HRESULT,
     fn get_IsUnderlineEnabled(&self, out: *mut bool) -> HRESULT,
@@ -13446,7 +13446,7 @@ impl ITimedTextStyle2 {
     }}
 }
 DEFINE_IID!(IID_ITimedTextSubformat, 3608367151, 12897, 18210, 160, 194, 185, 55, 178, 57, 15, 20);
-RT_INTERFACE!{interface ITimedTextSubformat(ITimedTextSubformatVtbl): IInspectable(IInspectableVtbl) [IID_ITimedTextSubformat] {
+RT_INTERFACE!{interface ITimedTextSubformat(ITimedTextSubformatVtbl): IInspectable [IID_ITimedTextSubformat] {
     fn get_StartIndex(&self, out: *mut i32) -> HRESULT,
     fn put_StartIndex(&self, value: i32) -> HRESULT,
     fn get_Length(&self, out: *mut i32) -> HRESULT,
@@ -13499,7 +13499,7 @@ RT_ENUM! { enum TimedTextWritingMode: i32 {
     LeftRightTopBottom = 0, RightLeftTopBottom = 1, TopBottomRightLeft = 2, TopBottomLeftRight = 3, LeftRight = 4, RightLeft = 5, TopBottom = 6,
 }}
 DEFINE_IID!(IID_IVideoStabilizationEffect, 134784592, 38552, 20055, 135, 123, 189, 124, 178, 238, 15, 138);
-RT_INTERFACE!{interface IVideoStabilizationEffect(IVideoStabilizationEffectVtbl): IInspectable(IInspectableVtbl) [IID_IVideoStabilizationEffect] {
+RT_INTERFACE!{interface IVideoStabilizationEffect(IVideoStabilizationEffectVtbl): IInspectable [IID_IVideoStabilizationEffect] {
     fn put_Enabled(&self, value: bool) -> HRESULT,
     fn get_Enabled(&self, out: *mut bool) -> HRESULT,
     fn add_EnabledChanged(&self, handler: <foundation::TypedEventHandler<VideoStabilizationEffect, VideoStabilizationEffectEnabledChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -13536,7 +13536,7 @@ RT_CLASS!{class VideoStabilizationEffectDefinition: super::effects::IVideoEffect
 impl RtActivatable<IActivationFactory> for VideoStabilizationEffectDefinition {}
 DEFINE_CLSID!(VideoStabilizationEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,86,105,100,101,111,83,116,97,98,105,108,105,122,97,116,105,111,110,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoStabilizationEffectDefinition]);
 DEFINE_IID!(IID_IVideoStabilizationEffectEnabledChangedEventArgs, 410976040, 26555, 18195, 185, 0, 65, 104, 218, 22, 69, 41);
-RT_INTERFACE!{interface IVideoStabilizationEffectEnabledChangedEventArgs(IVideoStabilizationEffectEnabledChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVideoStabilizationEffectEnabledChangedEventArgs] {
+RT_INTERFACE!{interface IVideoStabilizationEffectEnabledChangedEventArgs(IVideoStabilizationEffectEnabledChangedEventArgsVtbl): IInspectable [IID_IVideoStabilizationEffectEnabledChangedEventArgs] {
     fn get_Reason(&self, out: *mut VideoStabilizationEffectEnabledChangedReason) -> HRESULT
 }}
 impl IVideoStabilizationEffectEnabledChangedEventArgs {
@@ -13551,7 +13551,7 @@ RT_ENUM! { enum VideoStabilizationEffectEnabledChangedReason: i32 {
     Programmatic = 0, PixelRateTooHigh = 1, RunningSlowly = 2,
 }}
 DEFINE_IID!(IID_IVideoStreamDescriptor, 317590869, 39979, 17472, 128, 87, 44, 122, 144, 240, 203, 236);
-RT_INTERFACE!{interface IVideoStreamDescriptor(IVideoStreamDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_IVideoStreamDescriptor] {
+RT_INTERFACE!{interface IVideoStreamDescriptor(IVideoStreamDescriptorVtbl): IInspectable [IID_IVideoStreamDescriptor] {
     fn get_EncodingProperties(&self, out: *mut <super::mediaproperties::VideoEncodingProperties as RtType>::Abi) -> HRESULT
 }}
 impl IVideoStreamDescriptor {
@@ -13570,7 +13570,7 @@ impl VideoStreamDescriptor {
 }
 DEFINE_CLSID!(VideoStreamDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,86,105,100,101,111,83,116,114,101,97,109,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_VideoStreamDescriptor]);
 DEFINE_IID!(IID_IVideoStreamDescriptor2, 2335206928, 17726, 16520, 131, 45, 195, 111, 164, 249, 74, 243);
-RT_INTERFACE!{interface IVideoStreamDescriptor2(IVideoStreamDescriptor2Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoStreamDescriptor2] {
+RT_INTERFACE!{interface IVideoStreamDescriptor2(IVideoStreamDescriptor2Vtbl): IInspectable [IID_IVideoStreamDescriptor2] {
     fn Copy(&self, out: *mut <VideoStreamDescriptor as RtType>::Abi) -> HRESULT
 }}
 impl IVideoStreamDescriptor2 {
@@ -13581,7 +13581,7 @@ impl IVideoStreamDescriptor2 {
     }}
 }
 DEFINE_IID!(IID_IVideoStreamDescriptorFactory, 1229911761, 47989, 17362, 158, 94, 123, 121, 163, 175, 206, 212);
-RT_INTERFACE!{static interface IVideoStreamDescriptorFactory(IVideoStreamDescriptorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoStreamDescriptorFactory] {
+RT_INTERFACE!{static interface IVideoStreamDescriptorFactory(IVideoStreamDescriptorFactoryVtbl): IInspectable [IID_IVideoStreamDescriptorFactory] {
     fn Create(&self, encodingProperties: <super::mediaproperties::VideoEncodingProperties as RtType>::Abi, out: *mut <VideoStreamDescriptor as RtType>::Abi) -> HRESULT
 }}
 impl IVideoStreamDescriptorFactory {
@@ -13592,7 +13592,7 @@ impl IVideoStreamDescriptorFactory {
     }}
 }
 DEFINE_IID!(IID_IVideoTrack, 2582886387, 58008, 17302, 187, 106, 165, 27, 230, 162, 162, 10);
-RT_INTERFACE!{interface IVideoTrack(IVideoTrackVtbl): IInspectable(IInspectableVtbl) [IID_IVideoTrack] {
+RT_INTERFACE!{interface IVideoTrack(IVideoTrackVtbl): IInspectable [IID_IVideoTrack] {
     fn add_OpenFailed(&self, handler: <foundation::TypedEventHandler<VideoTrack, VideoTrackOpenFailedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_OpenFailed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn GetEncodingProperties(&self, out: *mut <super::mediaproperties::VideoEncodingProperties as RtType>::Abi) -> HRESULT,
@@ -13633,7 +13633,7 @@ impl IVideoTrack {
 }
 RT_CLASS!{class VideoTrack: IMediaTrack}
 DEFINE_IID!(IID_IVideoTrackOpenFailedEventArgs, 1987699249, 1273, 19586, 164, 238, 134, 2, 200, 187, 71, 84);
-RT_INTERFACE!{interface IVideoTrackOpenFailedEventArgs(IVideoTrackOpenFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVideoTrackOpenFailedEventArgs] {
+RT_INTERFACE!{interface IVideoTrackOpenFailedEventArgs(IVideoTrackOpenFailedEventArgsVtbl): IInspectable [IID_IVideoTrackOpenFailedEventArgs] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl IVideoTrackOpenFailedEventArgs {
@@ -13645,7 +13645,7 @@ impl IVideoTrackOpenFailedEventArgs {
 }
 RT_CLASS!{class VideoTrackOpenFailedEventArgs: IVideoTrackOpenFailedEventArgs}
 DEFINE_IID!(IID_IVideoTrackSupportInfo, 1270166688, 64607, 17677, 143, 240, 119, 141, 89, 4, 134, 222);
-RT_INTERFACE!{interface IVideoTrackSupportInfo(IVideoTrackSupportInfoVtbl): IInspectable(IInspectableVtbl) [IID_IVideoTrackSupportInfo] {
+RT_INTERFACE!{interface IVideoTrackSupportInfo(IVideoTrackSupportInfoVtbl): IInspectable [IID_IVideoTrackSupportInfo] {
     fn get_DecoderStatus(&self, out: *mut MediaDecoderStatus) -> HRESULT,
     fn get_MediaSourceStatus(&self, out: *mut MediaSourceStatus) -> HRESULT
 }}
@@ -13679,7 +13679,7 @@ impl SoundLevelBroker {
 }
 DEFINE_CLSID!(SoundLevelBroker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,67,111,114,101,46,80,114,101,118,105,101,119,46,83,111,117,110,100,76,101,118,101,108,66,114,111,107,101,114,0]) [CLSID_SoundLevelBroker]);
 DEFINE_IID!(IID_ISoundLevelBrokerStatics, 1784887649, 56301, 17996, 160, 154, 51, 65, 47, 92, 170, 63);
-RT_INTERFACE!{static interface ISoundLevelBrokerStatics(ISoundLevelBrokerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISoundLevelBrokerStatics] {
+RT_INTERFACE!{static interface ISoundLevelBrokerStatics(ISoundLevelBrokerStaticsVtbl): IInspectable [IID_ISoundLevelBrokerStatics] {
     fn get_SoundLevel(&self, out: *mut super::super::SoundLevel) -> HRESULT,
     fn add_SoundLevelChanged(&self, handler: <foundation::EventHandler<IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SoundLevelChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
@@ -13705,7 +13705,7 @@ impl ISoundLevelBrokerStatics {
 pub mod devices { // Windows.Media.Devices
 use crate::prelude::*;
 DEFINE_IID!(IID_IAdvancedPhotoCaptureSettings, 150177338, 24, 17499, 147, 210, 100, 109, 28, 94, 208, 92);
-RT_INTERFACE!{interface IAdvancedPhotoCaptureSettings(IAdvancedPhotoCaptureSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedPhotoCaptureSettings] {
+RT_INTERFACE!{interface IAdvancedPhotoCaptureSettings(IAdvancedPhotoCaptureSettingsVtbl): IInspectable [IID_IAdvancedPhotoCaptureSettings] {
     fn get_Mode(&self, out: *mut AdvancedPhotoMode) -> HRESULT,
     fn put_Mode(&self, value: AdvancedPhotoMode) -> HRESULT
 }}
@@ -13724,7 +13724,7 @@ RT_CLASS!{class AdvancedPhotoCaptureSettings: IAdvancedPhotoCaptureSettings}
 impl RtActivatable<IActivationFactory> for AdvancedPhotoCaptureSettings {}
 DEFINE_CLSID!(AdvancedPhotoCaptureSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,65,100,118,97,110,99,101,100,80,104,111,116,111,67,97,112,116,117,114,101,83,101,116,116,105,110,103,115,0]) [CLSID_AdvancedPhotoCaptureSettings]);
 DEFINE_IID!(IID_IAdvancedPhotoControl, 3316733062, 36865, 18050, 147, 9, 104, 234, 224, 8, 14, 236);
-RT_INTERFACE!{interface IAdvancedPhotoControl(IAdvancedPhotoControlVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedPhotoControl] {
+RT_INTERFACE!{interface IAdvancedPhotoControl(IAdvancedPhotoControlVtbl): IInspectable [IID_IAdvancedPhotoControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_SupportedModes(&self, out: *mut <foundation::collections::IVectorView<AdvancedPhotoMode> as RtType>::Abi) -> HRESULT,
     fn get_Mode(&self, out: *mut AdvancedPhotoMode) -> HRESULT,
@@ -13756,7 +13756,7 @@ RT_ENUM! { enum AdvancedPhotoMode: i32 {
     Auto = 0, Standard = 1, Hdr = 2, LowLight = 3,
 }}
 DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController, 3731879123, 11158, 17795, 128, 171, 181, 176, 29, 198, 168, 215);
-RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController(IAdvancedVideoCaptureDeviceControllerVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedVideoCaptureDeviceController] {
+RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController(IAdvancedVideoCaptureDeviceControllerVtbl): IInspectable [IID_IAdvancedVideoCaptureDeviceController] {
     fn SetDeviceProperty(&self, propertyId: HSTRING, propertyValue: <IInspectable as RtType>::Abi) -> HRESULT,
     fn GetDeviceProperty(&self, propertyId: HSTRING, out: *mut <IInspectable as RtType>::Abi) -> HRESULT
 }}
@@ -13772,7 +13772,7 @@ impl IAdvancedVideoCaptureDeviceController {
     }}
 }
 DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController2, 2344177551, 61722, 17371, 180, 2, 17, 147, 11, 128, 174, 86);
-RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController2(IAdvancedVideoCaptureDeviceController2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedVideoCaptureDeviceController2] {
+RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController2(IAdvancedVideoCaptureDeviceController2Vtbl): IInspectable [IID_IAdvancedVideoCaptureDeviceController2] {
     fn get_LowLagPhotoSequence(&self, out: *mut <LowLagPhotoSequenceControl as RtType>::Abi) -> HRESULT,
     fn get_LowLagPhoto(&self, out: *mut <LowLagPhotoControl as RtType>::Abi) -> HRESULT,
     fn get_SceneModeControl(&self, out: *mut <SceneModeControl as RtType>::Abi) -> HRESULT,
@@ -13854,7 +13854,7 @@ impl IAdvancedVideoCaptureDeviceController2 {
     }}
 }
 DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController3, 2844495668, 60941, 18188, 185, 240, 66, 41, 196, 187, 208, 137);
-RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController3(IAdvancedVideoCaptureDeviceController3Vtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedVideoCaptureDeviceController3] {
+RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController3(IAdvancedVideoCaptureDeviceController3Vtbl): IInspectable [IID_IAdvancedVideoCaptureDeviceController3] {
     fn get_VariablePhotoSequenceController(&self, out: *mut <core::VariablePhotoSequenceController as RtType>::Abi) -> HRESULT,
     fn get_PhotoConfirmationControl(&self, out: *mut <PhotoConfirmationControl as RtType>::Abi) -> HRESULT,
     fn get_ZoomControl(&self, out: *mut <ZoomControl as RtType>::Abi) -> HRESULT
@@ -13877,7 +13877,7 @@ impl IAdvancedVideoCaptureDeviceController3 {
     }}
 }
 DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController4, 3936337839, 54129, 16835, 154, 23, 130, 74, 135, 235, 223, 210);
-RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController4(IAdvancedVideoCaptureDeviceController4Vtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedVideoCaptureDeviceController4] {
+RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController4(IAdvancedVideoCaptureDeviceController4Vtbl): IInspectable [IID_IAdvancedVideoCaptureDeviceController4] {
     fn get_ExposurePriorityVideoControl(&self, out: *mut <ExposurePriorityVideoControl as RtType>::Abi) -> HRESULT,
     fn get_DesiredOptimization(&self, out: *mut MediaCaptureOptimization) -> HRESULT,
     fn put_DesiredOptimization(&self, value: MediaCaptureOptimization) -> HRESULT,
@@ -13917,7 +13917,7 @@ impl IAdvancedVideoCaptureDeviceController4 {
     }}
 }
 DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController5, 860957463, 47563, 18979, 184, 117, 249, 234, 171, 83, 84, 146);
-RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController5(IAdvancedVideoCaptureDeviceController5Vtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedVideoCaptureDeviceController5] {
+RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController5(IAdvancedVideoCaptureDeviceController5Vtbl): IInspectable [IID_IAdvancedVideoCaptureDeviceController5] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn GetDevicePropertyById(&self, propertyId: HSTRING, maxPropertyValueSize: <foundation::IReference<u32> as RtType>::Abi, out: *mut <VideoDeviceControllerGetDevicePropertyResult as RtType>::Abi) -> HRESULT,
     fn SetDevicePropertyById(&self, propertyId: HSTRING, propertyValue: <IInspectable as RtType>::Abi, out: *mut VideoDeviceControllerSetDevicePropertyStatus) -> HRESULT,
@@ -13952,7 +13952,7 @@ impl IAdvancedVideoCaptureDeviceController5 {
     }}
 }
 DEFINE_IID!(IID_IAdvancedVideoCaptureDeviceController6, 3059104339, 26785, 17591, 159, 137, 181, 250, 151, 172, 12, 190);
-RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController6(IAdvancedVideoCaptureDeviceController6Vtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedVideoCaptureDeviceController6] {
+RT_INTERFACE!{interface IAdvancedVideoCaptureDeviceController6(IAdvancedVideoCaptureDeviceController6Vtbl): IInspectable [IID_IAdvancedVideoCaptureDeviceController6] {
     fn get_VideoTemporalDenoisingControl(&self, out: *mut <VideoTemporalDenoisingControl as RtType>::Abi) -> HRESULT
 }}
 impl IAdvancedVideoCaptureDeviceController6 {
@@ -13963,7 +13963,7 @@ impl IAdvancedVideoCaptureDeviceController6 {
     }}
 }
 DEFINE_IID!(IID_IAudioDeviceController, 3990135688, 31175, 20348, 144, 232, 239, 147, 75, 33, 88, 10);
-RT_INTERFACE!{interface IAudioDeviceController(IAudioDeviceControllerVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceController] {
+RT_INTERFACE!{interface IAudioDeviceController(IAudioDeviceControllerVtbl): IInspectable [IID_IAudioDeviceController] {
     fn put_Muted(&self, value: bool) -> HRESULT,
     fn get_Muted(&self, out: *mut bool) -> HRESULT,
     fn put_VolumePercent(&self, value: f32) -> HRESULT,
@@ -13991,7 +13991,7 @@ impl IAudioDeviceController {
 }
 RT_CLASS!{class AudioDeviceController: IAudioDeviceController}
 DEFINE_IID!(IID_IAudioDeviceModule, 2261756982, 18369, 19251, 152, 82, 135, 115, 236, 75, 225, 35);
-RT_INTERFACE!{interface IAudioDeviceModule(IAudioDeviceModuleVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceModule] {
+RT_INTERFACE!{interface IAudioDeviceModule(IAudioDeviceModuleVtbl): IInspectable [IID_IAudioDeviceModule] {
     fn get_ClassId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_InstanceId(&self, out: *mut u32) -> HRESULT,
@@ -14033,7 +14033,7 @@ impl IAudioDeviceModule {
 }
 RT_CLASS!{class AudioDeviceModule: IAudioDeviceModule}
 DEFINE_IID!(IID_IAudioDeviceModuleNotificationEventArgs, 3823357103, 8780, 18622, 149, 107, 154, 19, 19, 78, 150, 232);
-RT_INTERFACE!{interface IAudioDeviceModuleNotificationEventArgs(IAudioDeviceModuleNotificationEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceModuleNotificationEventArgs] {
+RT_INTERFACE!{interface IAudioDeviceModuleNotificationEventArgs(IAudioDeviceModuleNotificationEventArgsVtbl): IInspectable [IID_IAudioDeviceModuleNotificationEventArgs] {
     fn get_Module(&self, out: *mut <AudioDeviceModule as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_NotificationData(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -14051,7 +14051,7 @@ impl IAudioDeviceModuleNotificationEventArgs {
 }
 RT_CLASS!{class AudioDeviceModuleNotificationEventArgs: IAudioDeviceModuleNotificationEventArgs}
 DEFINE_IID!(IID_IAudioDeviceModulesManager, 1789135949, 38410, 19740, 179, 24, 0, 34, 96, 69, 71, 237);
-RT_INTERFACE!{interface IAudioDeviceModulesManager(IAudioDeviceModulesManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceModulesManager] {
+RT_INTERFACE!{interface IAudioDeviceModulesManager(IAudioDeviceModulesManagerVtbl): IInspectable [IID_IAudioDeviceModulesManager] {
     fn add_ModuleNotificationReceived(&self, handler: <foundation::TypedEventHandler<AudioDeviceModulesManager, AudioDeviceModuleNotificationEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ModuleNotificationReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn FindAllById(&self, moduleId: HSTRING, out: *mut <foundation::collections::IVectorView<AudioDeviceModule> as RtType>::Abi) -> HRESULT,
@@ -14087,7 +14087,7 @@ impl AudioDeviceModulesManager {
 }
 DEFINE_CLSID!(AudioDeviceModulesManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,65,117,100,105,111,68,101,118,105,99,101,77,111,100,117,108,101,115,77,97,110,97,103,101,114,0]) [CLSID_AudioDeviceModulesManager]);
 DEFINE_IID!(IID_IAudioDeviceModulesManagerFactory, 2377135728, 58957, 18291, 150, 192, 188, 126, 191, 14, 6, 63);
-RT_INTERFACE!{static interface IAudioDeviceModulesManagerFactory(IAudioDeviceModulesManagerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAudioDeviceModulesManagerFactory] {
+RT_INTERFACE!{static interface IAudioDeviceModulesManagerFactory(IAudioDeviceModulesManagerFactoryVtbl): IInspectable [IID_IAudioDeviceModulesManagerFactory] {
     fn Create(&self, deviceId: HSTRING, out: *mut <AudioDeviceModulesManager as RtType>::Abi) -> HRESULT
 }}
 impl IAudioDeviceModulesManagerFactory {
@@ -14104,7 +14104,7 @@ RT_ENUM! { enum AutoFocusRange: i32 {
     FullRange = 0, Macro = 1, Normal = 2,
 }}
 DEFINE_IID!(IID_ICallControl, 2770391254, 44685, 17883, 128, 17, 202, 73, 211, 179, 229, 120);
-RT_INTERFACE!{interface ICallControl(ICallControlVtbl): IInspectable(IInspectableVtbl) [IID_ICallControl] {
+RT_INTERFACE!{interface ICallControl(ICallControlVtbl): IInspectable [IID_ICallControl] {
     fn IndicateNewIncomingCall(&self, enableRinger: bool, callerId: HSTRING, out: *mut u64) -> HRESULT,
     fn IndicateNewOutgoingCall(&self, out: *mut u64) -> HRESULT,
     fn IndicateActiveCall(&self, callToken: u64) -> HRESULT,
@@ -14224,7 +14224,7 @@ impl CallControlEventHandler {
     }}
 }
 DEFINE_IID!(IID_ICallControlStatics, 60054229, 34219, 16609, 175, 25, 86, 201, 67, 3, 176, 25);
-RT_INTERFACE!{static interface ICallControlStatics(ICallControlStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICallControlStatics] {
+RT_INTERFACE!{static interface ICallControlStatics(ICallControlStaticsVtbl): IInspectable [IID_ICallControlStatics] {
     fn GetDefault(&self, out: *mut <CallControl as RtType>::Abi) -> HRESULT,
     fn FromId(&self, deviceId: HSTRING, out: *mut <CallControl as RtType>::Abi) -> HRESULT
 }}
@@ -14254,7 +14254,7 @@ RT_ENUM! { enum ColorTemperaturePreset: i32 {
 }}
 RT_CLASS!{class DefaultAudioCaptureDeviceChangedEventArgs: IDefaultAudioDeviceChangedEventArgs}
 DEFINE_IID!(IID_IDefaultAudioDeviceChangedEventArgs, 286230575, 7173, 18007, 161, 142, 71, 201, 182, 159, 7, 171);
-RT_INTERFACE!{interface IDefaultAudioDeviceChangedEventArgs(IDefaultAudioDeviceChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDefaultAudioDeviceChangedEventArgs] {
+RT_INTERFACE!{interface IDefaultAudioDeviceChangedEventArgs(IDefaultAudioDeviceChangedEventArgsVtbl): IInspectable [IID_IDefaultAudioDeviceChangedEventArgs] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Role(&self, out: *mut AudioDeviceRole) -> HRESULT
 }}
@@ -14272,7 +14272,7 @@ impl IDefaultAudioDeviceChangedEventArgs {
 }
 RT_CLASS!{class DefaultAudioRenderDeviceChangedEventArgs: IDefaultAudioDeviceChangedEventArgs}
 DEFINE_IID!(IID_IDialRequestedEventArgs, 58430110, 38204, 17030, 136, 102, 79, 15, 55, 108, 133, 90);
-RT_INTERFACE!{interface IDialRequestedEventArgs(IDialRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDialRequestedEventArgs] {
+RT_INTERFACE!{interface IDialRequestedEventArgs(IDialRequestedEventArgsVtbl): IInspectable [IID_IDialRequestedEventArgs] {
     fn Handled(&self) -> HRESULT,
     fn get_Contact(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT
 }}
@@ -14299,7 +14299,7 @@ impl DialRequestedEventHandler {
     }}
 }
 DEFINE_IID!(IID_IExposureCompensationControl, 2177427508, 56556, 16401, 166, 16, 31, 56, 71, 230, 74, 202);
-RT_INTERFACE!{interface IExposureCompensationControl(IExposureCompensationControlVtbl): IInspectable(IInspectableVtbl) [IID_IExposureCompensationControl] {
+RT_INTERFACE!{interface IExposureCompensationControl(IExposureCompensationControlVtbl): IInspectable [IID_IExposureCompensationControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_Min(&self, out: *mut f32) -> HRESULT,
     fn get_Max(&self, out: *mut f32) -> HRESULT,
@@ -14341,7 +14341,7 @@ impl IExposureCompensationControl {
 }
 RT_CLASS!{class ExposureCompensationControl: IExposureCompensationControl}
 DEFINE_IID!(IID_IExposureControl, 166251490, 44438, 20264, 160, 224, 150, 237, 126, 27, 95, 210);
-RT_INTERFACE!{interface IExposureControl(IExposureControlVtbl): IInspectable(IInspectableVtbl) [IID_IExposureControl] {
+RT_INTERFACE!{interface IExposureControl(IExposureControlVtbl): IInspectable [IID_IExposureControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_Auto(&self, out: *mut bool) -> HRESULT,
     fn SetAutoAsync(&self, value: bool, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -14395,7 +14395,7 @@ impl IExposureControl {
 }
 RT_CLASS!{class ExposureControl: IExposureControl}
 DEFINE_IID!(IID_IExposurePriorityVideoControl, 749879459, 20840, 17009, 158, 165, 71, 98, 26, 152, 163, 82);
-RT_INTERFACE!{interface IExposurePriorityVideoControl(IExposurePriorityVideoControlVtbl): IInspectable(IInspectableVtbl) [IID_IExposurePriorityVideoControl] {
+RT_INTERFACE!{interface IExposurePriorityVideoControl(IExposurePriorityVideoControlVtbl): IInspectable [IID_IExposurePriorityVideoControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_Enabled(&self, out: *mut bool) -> HRESULT,
     fn put_Enabled(&self, value: bool) -> HRESULT
@@ -14418,7 +14418,7 @@ impl IExposurePriorityVideoControl {
 }
 RT_CLASS!{class ExposurePriorityVideoControl: IExposurePriorityVideoControl}
 DEFINE_IID!(IID_IFlashControl, 3740540350, 32104, 17891, 140, 15, 190, 123, 179, 40, 55, 208);
-RT_INTERFACE!{interface IFlashControl(IFlashControlVtbl): IInspectable(IInspectableVtbl) [IID_IFlashControl] {
+RT_INTERFACE!{interface IFlashControl(IFlashControlVtbl): IInspectable [IID_IFlashControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_PowerSupported(&self, out: *mut bool) -> HRESULT,
     fn get_RedEyeReductionSupported(&self, out: *mut bool) -> HRESULT,
@@ -14486,7 +14486,7 @@ impl IFlashControl {
 }
 RT_CLASS!{class FlashControl: IFlashControl}
 DEFINE_IID!(IID_IFlashControl2, 2099891358, 30177, 19191, 189, 125, 78, 56, 225, 192, 108, 214);
-RT_INTERFACE!{interface IFlashControl2(IFlashControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IFlashControl2] {
+RT_INTERFACE!{interface IFlashControl2(IFlashControl2Vtbl): IInspectable [IID_IFlashControl2] {
     fn get_AssistantLightSupported(&self, out: *mut bool) -> HRESULT,
     fn get_AssistantLightEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_AssistantLightEnabled(&self, value: bool) -> HRESULT
@@ -14508,7 +14508,7 @@ impl IFlashControl2 {
     }}
 }
 DEFINE_IID!(IID_IFocusControl, 3235416566, 21032, 17491, 177, 83, 133, 96, 101, 146, 178, 56);
-RT_INTERFACE!{interface IFocusControl(IFocusControlVtbl): IInspectable(IInspectableVtbl) [IID_IFocusControl] {
+RT_INTERFACE!{interface IFocusControl(IFocusControlVtbl): IInspectable [IID_IFocusControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_SupportedPresets(&self, out: *mut <foundation::collections::IVectorView<FocusPreset> as RtType>::Abi) -> HRESULT,
     fn get_Preset(&self, out: *mut FocusPreset) -> HRESULT,
@@ -14580,7 +14580,7 @@ impl IFocusControl {
 }
 RT_CLASS!{class FocusControl: IFocusControl}
 DEFINE_IID!(IID_IFocusControl2, 1065156424, 50484, 20126, 148, 195, 82, 239, 42, 253, 93, 7);
-RT_INTERFACE!{interface IFocusControl2(IFocusControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IFocusControl2] {
+RT_INTERFACE!{interface IFocusControl2(IFocusControl2Vtbl): IInspectable [IID_IFocusControl2] {
     fn get_FocusChangedSupported(&self, out: *mut bool) -> HRESULT,
     fn get_WaitForFocusSupported(&self, out: *mut bool) -> HRESULT,
     fn get_SupportedFocusModes(&self, out: *mut <foundation::collections::IVectorView<FocusMode> as RtType>::Abi) -> HRESULT,
@@ -14650,7 +14650,7 @@ RT_ENUM! { enum FocusPreset: i32 {
     Auto = 0, Manual = 1, AutoMacro = 2, AutoNormal = 3, AutoInfinity = 4, AutoHyperfocal = 5,
 }}
 DEFINE_IID!(IID_IFocusSettings, 2039844715, 12899, 17013, 133, 214, 174, 174, 137, 28, 150, 238);
-RT_INTERFACE!{interface IFocusSettings(IFocusSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IFocusSettings] {
+RT_INTERFACE!{interface IFocusSettings(IFocusSettingsVtbl): IInspectable [IID_IFocusSettings] {
     fn get_Mode(&self, out: *mut FocusMode) -> HRESULT,
     fn put_Mode(&self, value: FocusMode) -> HRESULT,
     fn get_AutoFocusRange(&self, out: *mut AutoFocusRange) -> HRESULT,
@@ -14724,7 +14724,7 @@ RT_CLASS!{class FocusSettings: IFocusSettings}
 impl RtActivatable<IActivationFactory> for FocusSettings {}
 DEFINE_CLSID!(FocusSettings(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,70,111,99,117,115,83,101,116,116,105,110,103,115,0]) [CLSID_FocusSettings]);
 DEFINE_IID!(IID_IHdrVideoControl, 1440277200, 12480, 17343, 155, 154, 151, 153, 215, 12, 237, 148);
-RT_INTERFACE!{interface IHdrVideoControl(IHdrVideoControlVtbl): IInspectable(IInspectableVtbl) [IID_IHdrVideoControl] {
+RT_INTERFACE!{interface IHdrVideoControl(IHdrVideoControlVtbl): IInspectable [IID_IHdrVideoControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_SupportedModes(&self, out: *mut <foundation::collections::IVectorView<HdrVideoMode> as RtType>::Abi) -> HRESULT,
     fn get_Mode(&self, out: *mut HdrVideoMode) -> HRESULT,
@@ -14756,7 +14756,7 @@ RT_ENUM! { enum HdrVideoMode: i32 {
     Off = 0, On = 1, Auto = 2,
 }}
 DEFINE_IID!(IID_IIsoSpeedControl, 666288930, 9645, 20251, 170, 171, 82, 74, 179, 118, 202, 51);
-RT_INTERFACE!{interface IIsoSpeedControl(IIsoSpeedControlVtbl): IInspectable(IInspectableVtbl) [IID_IIsoSpeedControl] {
+RT_INTERFACE!{interface IIsoSpeedControl(IIsoSpeedControlVtbl): IInspectable [IID_IIsoSpeedControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_SupportedPresets(&self, out: *mut <foundation::collections::IVectorView<IsoSpeedPreset> as RtType>::Abi) -> HRESULT,
     fn get_Preset(&self, out: *mut IsoSpeedPreset) -> HRESULT,
@@ -14786,7 +14786,7 @@ impl IIsoSpeedControl {
 }
 RT_CLASS!{class IsoSpeedControl: IIsoSpeedControl}
 DEFINE_IID!(IID_IIsoSpeedControl2, 1863678194, 28023, 20362, 140, 47, 97, 48, 182, 57, 80, 83);
-RT_INTERFACE!{interface IIsoSpeedControl2(IIsoSpeedControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IIsoSpeedControl2] {
+RT_INTERFACE!{interface IIsoSpeedControl2(IIsoSpeedControl2Vtbl): IInspectable [IID_IIsoSpeedControl2] {
     fn get_Min(&self, out: *mut u32) -> HRESULT,
     fn get_Max(&self, out: *mut u32) -> HRESULT,
     fn get_Step(&self, out: *mut u32) -> HRESULT,
@@ -14836,7 +14836,7 @@ RT_ENUM! { enum IsoSpeedPreset: i32 {
     Auto = 0, Iso50 = 1, Iso80 = 2, Iso100 = 3, Iso200 = 4, Iso400 = 5, Iso800 = 6, Iso1600 = 7, Iso3200 = 8, Iso6400 = 9, Iso12800 = 10, Iso25600 = 11,
 }}
 DEFINE_IID!(IID_IKeypadPressedEventArgs, 3550755072, 46330, 18893, 148, 66, 137, 175, 101, 104, 246, 1);
-RT_INTERFACE!{interface IKeypadPressedEventArgs(IKeypadPressedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IKeypadPressedEventArgs] {
+RT_INTERFACE!{interface IKeypadPressedEventArgs(IKeypadPressedEventArgsVtbl): IInspectable [IID_IKeypadPressedEventArgs] {
     fn get_TelephonyKey(&self, out: *mut TelephonyKey) -> HRESULT
 }}
 impl IKeypadPressedEventArgs {
@@ -14858,7 +14858,7 @@ impl KeypadPressedEventHandler {
     }}
 }
 DEFINE_IID!(IID_ILowLagPhotoControl, 1834765776, 64223, 16733, 174, 230, 59, 170, 82, 147, 0, 201);
-RT_INTERFACE!{interface ILowLagPhotoControl(ILowLagPhotoControlVtbl): IInspectable(IInspectableVtbl) [IID_ILowLagPhotoControl] {
+RT_INTERFACE!{interface ILowLagPhotoControl(ILowLagPhotoControlVtbl): IInspectable [IID_ILowLagPhotoControl] {
     fn GetHighestConcurrentFrameRate(&self, captureProperties: <super::mediaproperties::IMediaEncodingProperties as RtType>::Abi, out: *mut <super::mediaproperties::MediaRatio as RtType>::Abi) -> HRESULT,
     fn GetCurrentFrameRate(&self, out: *mut <super::mediaproperties::MediaRatio as RtType>::Abi) -> HRESULT,
     fn get_ThumbnailEnabled(&self, out: *mut bool) -> HRESULT,
@@ -14915,7 +14915,7 @@ impl ILowLagPhotoControl {
 }
 RT_CLASS!{class LowLagPhotoControl: ILowLagPhotoControl}
 DEFINE_IID!(IID_ILowLagPhotoSequenceControl, 1037013149, 27926, 16540, 186, 254, 185, 165, 148, 198, 253, 230);
-RT_INTERFACE!{interface ILowLagPhotoSequenceControl(ILowLagPhotoSequenceControlVtbl): IInspectable(IInspectableVtbl) [IID_ILowLagPhotoSequenceControl] {
+RT_INTERFACE!{interface ILowLagPhotoSequenceControl(ILowLagPhotoSequenceControlVtbl): IInspectable [IID_ILowLagPhotoSequenceControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_MaxPastPhotos(&self, out: *mut u32) -> HRESULT,
     fn get_MaxPhotosPerSecond(&self, out: *mut f32) -> HRESULT,
@@ -15056,7 +15056,7 @@ impl MediaDevice {
 }
 DEFINE_CLSID!(MediaDevice(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,77,101,100,105,97,68,101,118,105,99,101,0]) [CLSID_MediaDevice]);
 DEFINE_IID!(IID_IMediaDeviceControl, 4020821929, 28533, 18531, 186, 11, 88, 63, 48, 54, 180, 222);
-RT_INTERFACE!{interface IMediaDeviceControl(IMediaDeviceControlVtbl): IInspectable(IInspectableVtbl) [IID_IMediaDeviceControl] {
+RT_INTERFACE!{interface IMediaDeviceControl(IMediaDeviceControlVtbl): IInspectable [IID_IMediaDeviceControl] {
     fn get_Capabilities(&self, out: *mut <MediaDeviceControlCapabilities as RtType>::Abi) -> HRESULT,
     fn TryGetValue(&self, value: *mut f64, out: *mut bool) -> HRESULT,
     fn TrySetValue(&self, value: f64, out: *mut bool) -> HRESULT,
@@ -15092,7 +15092,7 @@ impl IMediaDeviceControl {
 }
 RT_CLASS!{class MediaDeviceControl: IMediaDeviceControl}
 DEFINE_IID!(IID_IMediaDeviceControlCapabilities, 587225110, 60293, 17378, 185, 43, 130, 64, 213, 238, 112, 236);
-RT_INTERFACE!{interface IMediaDeviceControlCapabilities(IMediaDeviceControlCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IMediaDeviceControlCapabilities] {
+RT_INTERFACE!{interface IMediaDeviceControlCapabilities(IMediaDeviceControlCapabilitiesVtbl): IInspectable [IID_IMediaDeviceControlCapabilities] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_Min(&self, out: *mut f64) -> HRESULT,
     fn get_Max(&self, out: *mut f64) -> HRESULT,
@@ -15134,7 +15134,7 @@ impl IMediaDeviceControlCapabilities {
 }
 RT_CLASS!{class MediaDeviceControlCapabilities: IMediaDeviceControlCapabilities}
 DEFINE_IID!(IID_IMediaDeviceController, 4143510990, 8346, 18683, 134, 252, 212, 69, 120, 243, 23, 230);
-RT_INTERFACE!{interface IMediaDeviceController(IMediaDeviceControllerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaDeviceController] {
+RT_INTERFACE!{interface IMediaDeviceController(IMediaDeviceControllerVtbl): IInspectable [IID_IMediaDeviceController] {
     fn GetAvailableMediaStreamProperties(&self, mediaStreamType: super::capture::MediaStreamType, out: *mut <foundation::collections::IVectorView<super::mediaproperties::IMediaEncodingProperties> as RtType>::Abi) -> HRESULT,
     fn GetMediaStreamProperties(&self, mediaStreamType: super::capture::MediaStreamType, out: *mut <super::mediaproperties::IMediaEncodingProperties as RtType>::Abi) -> HRESULT,
     fn SetMediaStreamPropertiesAsync(&self, mediaStreamType: super::capture::MediaStreamType, mediaEncodingProperties: <super::mediaproperties::IMediaEncodingProperties as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
@@ -15157,7 +15157,7 @@ impl IMediaDeviceController {
     }}
 }
 DEFINE_IID!(IID_IMediaDeviceStatics, 2855115328, 37023, 19386, 191, 139, 12, 13, 41, 111, 20, 240);
-RT_INTERFACE!{static interface IMediaDeviceStatics(IMediaDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaDeviceStatics] {
+RT_INTERFACE!{static interface IMediaDeviceStatics(IMediaDeviceStaticsVtbl): IInspectable [IID_IMediaDeviceStatics] {
     fn GetAudioCaptureSelector(&self, out: *mut HSTRING) -> HRESULT,
     fn GetAudioRenderSelector(&self, out: *mut HSTRING) -> HRESULT,
     fn GetVideoCaptureSelector(&self, out: *mut HSTRING) -> HRESULT,
@@ -15214,7 +15214,7 @@ impl IMediaDeviceStatics {
     }}
 }
 DEFINE_IID!(IID_IModuleCommandResult, 1376591540, 4980, 19581, 177, 228, 57, 220, 223, 62, 174, 78);
-RT_INTERFACE!{interface IModuleCommandResult(IModuleCommandResultVtbl): IInspectable(IInspectableVtbl) [IID_IModuleCommandResult] {
+RT_INTERFACE!{interface IModuleCommandResult(IModuleCommandResultVtbl): IInspectable [IID_IModuleCommandResult] {
     fn get_Status(&self, out: *mut SendCommandStatus) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_Result(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -15232,7 +15232,7 @@ impl IModuleCommandResult {
 }
 RT_CLASS!{class ModuleCommandResult: IModuleCommandResult}
 DEFINE_IID!(IID_IOpticalImageStabilizationControl, 3215825949, 188, 16955, 142, 178, 160, 23, 140, 169, 66, 71);
-RT_INTERFACE!{interface IOpticalImageStabilizationControl(IOpticalImageStabilizationControlVtbl): IInspectable(IInspectableVtbl) [IID_IOpticalImageStabilizationControl] {
+RT_INTERFACE!{interface IOpticalImageStabilizationControl(IOpticalImageStabilizationControlVtbl): IInspectable [IID_IOpticalImageStabilizationControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_SupportedModes(&self, out: *mut <foundation::collections::IVectorView<OpticalImageStabilizationMode> as RtType>::Abi) -> HRESULT,
     fn get_Mode(&self, out: *mut OpticalImageStabilizationMode) -> HRESULT,
@@ -15264,7 +15264,7 @@ RT_ENUM! { enum OpticalImageStabilizationMode: i32 {
     Off = 0, On = 1, Auto = 2,
 }}
 DEFINE_IID!(IID_IPhotoConfirmationControl, 3371430755, 65374, 17794, 169, 168, 5, 80, 248, 90, 74, 118);
-RT_INTERFACE!{interface IPhotoConfirmationControl(IPhotoConfirmationControlVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoConfirmationControl] {
+RT_INTERFACE!{interface IPhotoConfirmationControl(IPhotoConfirmationControlVtbl): IInspectable [IID_IPhotoConfirmationControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_Enabled(&self, out: *mut bool) -> HRESULT,
     fn put_Enabled(&self, value: bool) -> HRESULT,
@@ -15298,7 +15298,7 @@ impl IPhotoConfirmationControl {
 }
 RT_CLASS!{class PhotoConfirmationControl: IPhotoConfirmationControl}
 DEFINE_IID!(IID_IRedialRequestedEventArgs, 2125812233, 30379, 19505, 180, 14, 75, 88, 55, 157, 88, 12);
-RT_INTERFACE!{interface IRedialRequestedEventArgs(IRedialRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRedialRequestedEventArgs] {
+RT_INTERFACE!{interface IRedialRequestedEventArgs(IRedialRequestedEventArgsVtbl): IInspectable [IID_IRedialRequestedEventArgs] {
     fn Handled(&self) -> HRESULT
 }}
 impl IRedialRequestedEventArgs {
@@ -15319,7 +15319,7 @@ impl RedialRequestedEventHandler {
     }}
 }
 DEFINE_IID!(IID_IRegionOfInterest, 3857500212, 52838, 19973, 167, 143, 207, 57, 26, 94, 194, 209);
-RT_INTERFACE!{interface IRegionOfInterest(IRegionOfInterestVtbl): IInspectable(IInspectableVtbl) [IID_IRegionOfInterest] {
+RT_INTERFACE!{interface IRegionOfInterest(IRegionOfInterestVtbl): IInspectable [IID_IRegionOfInterest] {
     fn get_AutoFocusEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_AutoFocusEnabled(&self, value: bool) -> HRESULT,
     fn get_AutoWhiteBalanceEnabled(&self, out: *mut bool) -> HRESULT,
@@ -15371,7 +15371,7 @@ RT_CLASS!{class RegionOfInterest: IRegionOfInterest}
 impl RtActivatable<IActivationFactory> for RegionOfInterest {}
 DEFINE_CLSID!(RegionOfInterest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,82,101,103,105,111,110,79,102,73,110,116,101,114,101,115,116,0]) [CLSID_RegionOfInterest]);
 DEFINE_IID!(IID_IRegionOfInterest2, 436087441, 29610, 19793, 138, 157, 86, 204, 247, 219, 127, 84);
-RT_INTERFACE!{interface IRegionOfInterest2(IRegionOfInterest2Vtbl): IInspectable(IInspectableVtbl) [IID_IRegionOfInterest2] {
+RT_INTERFACE!{interface IRegionOfInterest2(IRegionOfInterest2Vtbl): IInspectable [IID_IRegionOfInterest2] {
     fn get_Type(&self, out: *mut RegionOfInterestType) -> HRESULT,
     fn put_Type(&self, value: RegionOfInterestType) -> HRESULT,
     fn get_BoundsNormalized(&self, out: *mut bool) -> HRESULT,
@@ -15412,7 +15412,7 @@ RT_ENUM! { enum RegionOfInterestType: i32 {
     Unknown = 0, Face = 1,
 }}
 DEFINE_IID!(IID_IRegionsOfInterestControl, 3273913639, 43787, 17752, 139, 91, 223, 86, 147, 219, 3, 120);
-RT_INTERFACE!{interface IRegionsOfInterestControl(IRegionsOfInterestControlVtbl): IInspectable(IInspectableVtbl) [IID_IRegionsOfInterestControl] {
+RT_INTERFACE!{interface IRegionsOfInterestControl(IRegionsOfInterestControlVtbl): IInspectable [IID_IRegionsOfInterestControl] {
     fn get_MaxRegions(&self, out: *mut u32) -> HRESULT,
     fn SetRegionsAsync(&self, regions: <foundation::collections::IIterable<RegionOfInterest> as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn SetRegionsWithLockAsync(&self, regions: <foundation::collections::IIterable<RegionOfInterest> as RtType>::Abi, lockValues: bool, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -15460,7 +15460,7 @@ impl IRegionsOfInterestControl {
 }
 RT_CLASS!{class RegionsOfInterestControl: IRegionsOfInterestControl}
 DEFINE_IID!(IID_ISceneModeControl, 3566099191, 36185, 18516, 140, 98, 18, 199, 11, 168, 155, 124);
-RT_INTERFACE!{interface ISceneModeControl(ISceneModeControlVtbl): IInspectable(IInspectableVtbl) [IID_ISceneModeControl] {
+RT_INTERFACE!{interface ISceneModeControl(ISceneModeControlVtbl): IInspectable [IID_ISceneModeControl] {
     fn get_SupportedModes(&self, out: *mut <foundation::collections::IVectorView<CaptureSceneMode> as RtType>::Abi) -> HRESULT,
     fn get_Value(&self, out: *mut CaptureSceneMode) -> HRESULT,
     fn SetValueAsync(&self, sceneMode: CaptureSceneMode, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
@@ -15490,7 +15490,7 @@ RT_ENUM! { enum TelephonyKey: i32 {
     D0 = 0, D1 = 1, D2 = 2, D3 = 3, D4 = 4, D5 = 5, D6 = 6, D7 = 7, D8 = 8, D9 = 9, Star = 10, Pound = 11, A = 12, B = 13, C = 14, D = 15,
 }}
 DEFINE_IID!(IID_ITorchControl, 2785359461, 33360, 16748, 145, 154, 114, 66, 150, 175, 163, 6);
-RT_INTERFACE!{interface ITorchControl(ITorchControlVtbl): IInspectable(IInspectableVtbl) [IID_ITorchControl] {
+RT_INTERFACE!{interface ITorchControl(ITorchControlVtbl): IInspectable [IID_ITorchControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_PowerSupported(&self, out: *mut bool) -> HRESULT,
     fn get_Enabled(&self, out: *mut bool) -> HRESULT,
@@ -15530,7 +15530,7 @@ impl ITorchControl {
 }
 RT_CLASS!{class TorchControl: ITorchControl}
 DEFINE_IID!(IID_IVideoDeviceController, 2572506485, 11822, 16568, 182, 199, 248, 45, 16, 1, 50, 16);
-RT_INTERFACE!{interface IVideoDeviceController(IVideoDeviceControllerVtbl): IInspectable(IInspectableVtbl) [IID_IVideoDeviceController] {
+RT_INTERFACE!{interface IVideoDeviceController(IVideoDeviceControllerVtbl): IInspectable [IID_IVideoDeviceController] {
     fn get_Brightness(&self, out: *mut <MediaDeviceControl as RtType>::Abi) -> HRESULT,
     fn get_Contrast(&self, out: *mut <MediaDeviceControl as RtType>::Abi) -> HRESULT,
     fn get_Hue(&self, out: *mut <MediaDeviceControl as RtType>::Abi) -> HRESULT,
@@ -15614,7 +15614,7 @@ impl IVideoDeviceController {
 }
 RT_CLASS!{class VideoDeviceController: IVideoDeviceController}
 DEFINE_IID!(IID_IVideoDeviceControllerGetDevicePropertyResult, 3319301013, 28373, 18320, 139, 93, 14, 241, 57, 53, 208, 248);
-RT_INTERFACE!{interface IVideoDeviceControllerGetDevicePropertyResult(IVideoDeviceControllerGetDevicePropertyResultVtbl): IInspectable(IInspectableVtbl) [IID_IVideoDeviceControllerGetDevicePropertyResult] {
+RT_INTERFACE!{interface IVideoDeviceControllerGetDevicePropertyResult(IVideoDeviceControllerGetDevicePropertyResultVtbl): IInspectable [IID_IVideoDeviceControllerGetDevicePropertyResult] {
     fn get_Status(&self, out: *mut VideoDeviceControllerGetDevicePropertyStatus) -> HRESULT,
     fn get_Value(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT
 }}
@@ -15638,7 +15638,7 @@ RT_ENUM! { enum VideoDeviceControllerSetDevicePropertyStatus: i32 {
     Success = 0, UnknownFailure = 1, NotSupported = 2, InvalidValue = 3, DeviceNotAvailable = 4, NotInControl = 5,
 }}
 DEFINE_IID!(IID_IVideoTemporalDenoisingControl, 2058569525, 15914, 18994, 186, 255, 67, 88, 196, 251, 221, 87);
-RT_INTERFACE!{interface IVideoTemporalDenoisingControl(IVideoTemporalDenoisingControlVtbl): IInspectable(IInspectableVtbl) [IID_IVideoTemporalDenoisingControl] {
+RT_INTERFACE!{interface IVideoTemporalDenoisingControl(IVideoTemporalDenoisingControlVtbl): IInspectable [IID_IVideoTemporalDenoisingControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_SupportedModes(&self, out: *mut <foundation::collections::IVectorView<VideoTemporalDenoisingMode> as RtType>::Abi) -> HRESULT,
     fn get_Mode(&self, out: *mut VideoTemporalDenoisingMode) -> HRESULT,
@@ -15670,7 +15670,7 @@ RT_ENUM! { enum VideoTemporalDenoisingMode: i32 {
     Off = 0, On = 1, Auto = 2,
 }}
 DEFINE_IID!(IID_IWhiteBalanceControl, 2015298686, 29026, 18888, 168, 249, 148, 129, 197, 101, 54, 62);
-RT_INTERFACE!{interface IWhiteBalanceControl(IWhiteBalanceControlVtbl): IInspectable(IInspectableVtbl) [IID_IWhiteBalanceControl] {
+RT_INTERFACE!{interface IWhiteBalanceControl(IWhiteBalanceControlVtbl): IInspectable [IID_IWhiteBalanceControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_Preset(&self, out: *mut ColorTemperaturePreset) -> HRESULT,
     fn SetPresetAsync(&self, preset: ColorTemperaturePreset, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -15724,7 +15724,7 @@ impl IWhiteBalanceControl {
 }
 RT_CLASS!{class WhiteBalanceControl: IWhiteBalanceControl}
 DEFINE_IID!(IID_IZoomControl, 975047442, 13018, 19479, 191, 215, 141, 12, 115, 200, 245, 165);
-RT_INTERFACE!{interface IZoomControl(IZoomControlVtbl): IInspectable(IInspectableVtbl) [IID_IZoomControl] {
+RT_INTERFACE!{interface IZoomControl(IZoomControlVtbl): IInspectable [IID_IZoomControl] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_Min(&self, out: *mut f32) -> HRESULT,
     fn get_Max(&self, out: *mut f32) -> HRESULT,
@@ -15765,7 +15765,7 @@ impl IZoomControl {
 }
 RT_CLASS!{class ZoomControl: IZoomControl}
 DEFINE_IID!(IID_IZoomControl2, 1770274224, 11929, 17985, 133, 41, 24, 79, 49, 157, 22, 113);
-RT_INTERFACE!{interface IZoomControl2(IZoomControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IZoomControl2] {
+RT_INTERFACE!{interface IZoomControl2(IZoomControl2Vtbl): IInspectable [IID_IZoomControl2] {
     fn get_SupportedModes(&self, out: *mut <foundation::collections::IVectorView<ZoomTransitionMode> as RtType>::Abi) -> HRESULT,
     fn get_Mode(&self, out: *mut ZoomTransitionMode) -> HRESULT,
     fn Configure(&self, settings: <ZoomSettings as RtType>::Abi) -> HRESULT
@@ -15787,7 +15787,7 @@ impl IZoomControl2 {
     }}
 }
 DEFINE_IID!(IID_IZoomSettings, 1792437028, 5300, 19453, 177, 143, 136, 254, 36, 70, 59, 82);
-RT_INTERFACE!{interface IZoomSettings(IZoomSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IZoomSettings] {
+RT_INTERFACE!{interface IZoomSettings(IZoomSettingsVtbl): IInspectable [IID_IZoomSettings] {
     fn get_Mode(&self, out: *mut ZoomTransitionMode) -> HRESULT,
     fn put_Mode(&self, value: ZoomTransitionMode) -> HRESULT,
     fn get_Value(&self, out: *mut f32) -> HRESULT,
@@ -15822,7 +15822,7 @@ RT_ENUM! { enum ZoomTransitionMode: i32 {
 pub mod core { // Windows.Media.Devices.Core
 use crate::prelude::*;
 DEFINE_IID!(IID_ICameraIntrinsics, 178711858, 25993, 18906, 175, 222, 89, 66, 112, 202, 10, 172);
-RT_INTERFACE!{interface ICameraIntrinsics(ICameraIntrinsicsVtbl): IInspectable(IInspectableVtbl) [IID_ICameraIntrinsics] {
+RT_INTERFACE!{interface ICameraIntrinsics(ICameraIntrinsicsVtbl): IInspectable [IID_ICameraIntrinsics] {
     fn get_FocalLength(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
     fn get_PrincipalPoint(&self, out: *mut foundation::numerics::Vector2) -> HRESULT,
     fn get_RadialDistortion(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
@@ -15893,7 +15893,7 @@ impl CameraIntrinsics {
 }
 DEFINE_CLSID!(CameraIntrinsics(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,67,111,114,101,46,67,97,109,101,114,97,73,110,116,114,105,110,115,105,99,115,0]) [CLSID_CameraIntrinsics]);
 DEFINE_IID!(IID_ICameraIntrinsics2, 215655495, 1944, 19277, 131, 159, 197, 236, 65, 77, 178, 122);
-RT_INTERFACE!{interface ICameraIntrinsics2(ICameraIntrinsics2Vtbl): IInspectable(IInspectableVtbl) [IID_ICameraIntrinsics2] {
+RT_INTERFACE!{interface ICameraIntrinsics2(ICameraIntrinsics2Vtbl): IInspectable [IID_ICameraIntrinsics2] {
     fn get_UndistortedProjectionTransform(&self, out: *mut foundation::numerics::Matrix4x4) -> HRESULT,
     fn DistortPoint(&self, input: foundation::Point, out: *mut foundation::Point) -> HRESULT,
     fn DistortPoints(&self, inputsSize: u32, inputs: *mut foundation::Point, resultsSize: u32, results: *mut foundation::Point) -> HRESULT,
@@ -15926,7 +15926,7 @@ impl ICameraIntrinsics2 {
     }}
 }
 DEFINE_IID!(IID_ICameraIntrinsicsFactory, 3235759238, 8498, 18996, 166, 89, 155, 254, 42, 5, 87, 18);
-RT_INTERFACE!{static interface ICameraIntrinsicsFactory(ICameraIntrinsicsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICameraIntrinsicsFactory] {
+RT_INTERFACE!{static interface ICameraIntrinsicsFactory(ICameraIntrinsicsFactoryVtbl): IInspectable [IID_ICameraIntrinsicsFactory] {
     fn Create(&self, focalLength: foundation::numerics::Vector2, principalPoint: foundation::numerics::Vector2, radialDistortion: foundation::numerics::Vector3, tangentialDistortion: foundation::numerics::Vector2, imageWidth: u32, imageHeight: u32, out: *mut <CameraIntrinsics as RtType>::Abi) -> HRESULT
 }}
 impl ICameraIntrinsicsFactory {
@@ -15937,7 +15937,7 @@ impl ICameraIntrinsicsFactory {
     }}
 }
 DEFINE_IID!(IID_IDepthCorrelatedCoordinateMapper, 4183656955, 35568, 19632, 146, 109, 105, 104, 102, 229, 4, 106);
-RT_INTERFACE!{interface IDepthCorrelatedCoordinateMapper(IDepthCorrelatedCoordinateMapperVtbl): IInspectable(IInspectableVtbl) [IID_IDepthCorrelatedCoordinateMapper] {
+RT_INTERFACE!{interface IDepthCorrelatedCoordinateMapper(IDepthCorrelatedCoordinateMapperVtbl): IInspectable [IID_IDepthCorrelatedCoordinateMapper] {
     #[cfg(feature="windows-perception")] fn UnprojectPoint(&self, sourcePoint: foundation::Point, targetCoordinateSystem: <crate::windows::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, out: *mut foundation::numerics::Vector3) -> HRESULT,
     #[cfg(feature="windows-perception")] fn UnprojectPoints(&self, sourcePointsSize: u32, sourcePoints: *mut foundation::Point, targetCoordinateSystem: <crate::windows::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, resultsSize: u32, results: *mut foundation::numerics::Vector3) -> HRESULT,
     #[cfg(feature="windows-perception")] fn MapPoint(&self, sourcePoint: foundation::Point, targetCoordinateSystem: <crate::windows::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, targetCameraIntrinsics: <CameraIntrinsics as RtType>::Abi, out: *mut foundation::Point) -> HRESULT,
@@ -15965,7 +15965,7 @@ impl IDepthCorrelatedCoordinateMapper {
 }
 RT_CLASS!{class DepthCorrelatedCoordinateMapper: IDepthCorrelatedCoordinateMapper}
 DEFINE_IID!(IID_IFrameControlCapabilities, 2835328608, 20126, 17271, 167, 137, 226, 76, 74, 231, 229, 68);
-RT_INTERFACE!{interface IFrameControlCapabilities(IFrameControlCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IFrameControlCapabilities] {
+RT_INTERFACE!{interface IFrameControlCapabilities(IFrameControlCapabilitiesVtbl): IInspectable [IID_IFrameControlCapabilities] {
     fn get_Exposure(&self, out: *mut <FrameExposureCapabilities as RtType>::Abi) -> HRESULT,
     fn get_ExposureCompensation(&self, out: *mut <FrameExposureCompensationCapabilities as RtType>::Abi) -> HRESULT,
     fn get_IsoSpeed(&self, out: *mut <FrameIsoSpeedCapabilities as RtType>::Abi) -> HRESULT,
@@ -16001,7 +16001,7 @@ impl IFrameControlCapabilities {
 }
 RT_CLASS!{class FrameControlCapabilities: IFrameControlCapabilities}
 DEFINE_IID!(IID_IFrameControlCapabilities2, 3466265700, 18224, 17423, 189, 62, 239, 232, 168, 242, 48, 168);
-RT_INTERFACE!{interface IFrameControlCapabilities2(IFrameControlCapabilities2Vtbl): IInspectable(IInspectableVtbl) [IID_IFrameControlCapabilities2] {
+RT_INTERFACE!{interface IFrameControlCapabilities2(IFrameControlCapabilities2Vtbl): IInspectable [IID_IFrameControlCapabilities2] {
     fn get_Flash(&self, out: *mut <FrameFlashCapabilities as RtType>::Abi) -> HRESULT
 }}
 impl IFrameControlCapabilities2 {
@@ -16012,7 +16012,7 @@ impl IFrameControlCapabilities2 {
     }}
 }
 DEFINE_IID!(IID_IFrameController, 3244579289, 47855, 16466, 145, 119, 72, 175, 242, 175, 117, 34);
-RT_INTERFACE!{interface IFrameController(IFrameControllerVtbl): IInspectable(IInspectableVtbl) [IID_IFrameController] {
+RT_INTERFACE!{interface IFrameController(IFrameControllerVtbl): IInspectable [IID_IFrameController] {
     fn get_ExposureControl(&self, out: *mut <FrameExposureControl as RtType>::Abi) -> HRESULT,
     fn get_ExposureCompensationControl(&self, out: *mut <FrameExposureCompensationControl as RtType>::Abi) -> HRESULT,
     fn get_IsoSpeedControl(&self, out: *mut <FrameIsoSpeedControl as RtType>::Abi) -> HRESULT,
@@ -16055,7 +16055,7 @@ RT_CLASS!{class FrameController: IFrameController}
 impl RtActivatable<IActivationFactory> for FrameController {}
 DEFINE_CLSID!(FrameController(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,101,118,105,99,101,115,46,67,111,114,101,46,70,114,97,109,101,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_FrameController]);
 DEFINE_IID!(IID_IFrameController2, 13876341, 55420, 18523, 138, 9, 92, 53, 133, 104, 180, 39);
-RT_INTERFACE!{interface IFrameController2(IFrameController2Vtbl): IInspectable(IInspectableVtbl) [IID_IFrameController2] {
+RT_INTERFACE!{interface IFrameController2(IFrameController2Vtbl): IInspectable [IID_IFrameController2] {
     fn get_FlashControl(&self, out: *mut <FrameFlashControl as RtType>::Abi) -> HRESULT
 }}
 impl IFrameController2 {
@@ -16066,7 +16066,7 @@ impl IFrameController2 {
     }}
 }
 DEFINE_IID!(IID_IFrameExposureCapabilities, 3183385827, 14725, 20082, 151, 194, 5, 144, 214, 19, 7, 161);
-RT_INTERFACE!{interface IFrameExposureCapabilities(IFrameExposureCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IFrameExposureCapabilities] {
+RT_INTERFACE!{interface IFrameExposureCapabilities(IFrameExposureCapabilitiesVtbl): IInspectable [IID_IFrameExposureCapabilities] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_Min(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_Max(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -16096,7 +16096,7 @@ impl IFrameExposureCapabilities {
 }
 RT_CLASS!{class FrameExposureCapabilities: IFrameExposureCapabilities}
 DEFINE_IID!(IID_IFrameExposureCompensationCapabilities, 3112740899, 32869, 16878, 176, 79, 114, 34, 101, 149, 69, 0);
-RT_INTERFACE!{interface IFrameExposureCompensationCapabilities(IFrameExposureCompensationCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IFrameExposureCompensationCapabilities] {
+RT_INTERFACE!{interface IFrameExposureCompensationCapabilities(IFrameExposureCompensationCapabilitiesVtbl): IInspectable [IID_IFrameExposureCompensationCapabilities] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_Min(&self, out: *mut f32) -> HRESULT,
     fn get_Max(&self, out: *mut f32) -> HRESULT,
@@ -16126,7 +16126,7 @@ impl IFrameExposureCompensationCapabilities {
 }
 RT_CLASS!{class FrameExposureCompensationCapabilities: IFrameExposureCompensationCapabilities}
 DEFINE_IID!(IID_IFrameExposureCompensationControl, 3914897097, 63481, 18634, 133, 145, 162, 101, 49, 203, 21, 120);
-RT_INTERFACE!{interface IFrameExposureCompensationControl(IFrameExposureCompensationControlVtbl): IInspectable(IInspectableVtbl) [IID_IFrameExposureCompensationControl] {
+RT_INTERFACE!{interface IFrameExposureCompensationControl(IFrameExposureCompensationControlVtbl): IInspectable [IID_IFrameExposureCompensationControl] {
     fn get_Value(&self, out: *mut <foundation::IReference<f32> as RtType>::Abi) -> HRESULT,
     fn put_Value(&self, value: <foundation::IReference<f32> as RtType>::Abi) -> HRESULT
 }}
@@ -16143,7 +16143,7 @@ impl IFrameExposureCompensationControl {
 }
 RT_CLASS!{class FrameExposureCompensationControl: IFrameExposureCompensationControl}
 DEFINE_IID!(IID_IFrameExposureControl, 2975881825, 65455, 18258, 182, 33, 245, 182, 241, 23, 244, 50);
-RT_INTERFACE!{interface IFrameExposureControl(IFrameExposureControlVtbl): IInspectable(IInspectableVtbl) [IID_IFrameExposureControl] {
+RT_INTERFACE!{interface IFrameExposureControl(IFrameExposureControlVtbl): IInspectable [IID_IFrameExposureControl] {
     fn get_Auto(&self, out: *mut bool) -> HRESULT,
     fn put_Auto(&self, value: bool) -> HRESULT,
     fn get_Value(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
@@ -16171,7 +16171,7 @@ impl IFrameExposureControl {
 }
 RT_CLASS!{class FrameExposureControl: IFrameExposureControl}
 DEFINE_IID!(IID_IFrameFlashCapabilities, 3146989986, 24254, 20322, 130, 35, 14, 43, 5, 191, 187, 208);
-RT_INTERFACE!{interface IFrameFlashCapabilities(IFrameFlashCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IFrameFlashCapabilities] {
+RT_INTERFACE!{interface IFrameFlashCapabilities(IFrameFlashCapabilitiesVtbl): IInspectable [IID_IFrameFlashCapabilities] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_RedEyeReductionSupported(&self, out: *mut bool) -> HRESULT,
     fn get_PowerSupported(&self, out: *mut bool) -> HRESULT
@@ -16195,7 +16195,7 @@ impl IFrameFlashCapabilities {
 }
 RT_CLASS!{class FrameFlashCapabilities: IFrameFlashCapabilities}
 DEFINE_IID!(IID_IFrameFlashControl, 1976956615, 48453, 20395, 147, 117, 69, 172, 4, 179, 50, 194);
-RT_INTERFACE!{interface IFrameFlashControl(IFrameFlashControlVtbl): IInspectable(IInspectableVtbl) [IID_IFrameFlashControl] {
+RT_INTERFACE!{interface IFrameFlashControl(IFrameFlashControlVtbl): IInspectable [IID_IFrameFlashControl] {
     fn get_Mode(&self, out: *mut FrameFlashMode) -> HRESULT,
     fn put_Mode(&self, value: FrameFlashMode) -> HRESULT,
     fn get_Auto(&self, out: *mut bool) -> HRESULT,
@@ -16248,7 +16248,7 @@ RT_ENUM! { enum FrameFlashMode: i32 {
     Disable = 0, Enable = 1, Global = 2,
 }}
 DEFINE_IID!(IID_IFrameFocusCapabilities, 2066074968, 448, 16485, 156, 64, 193, 167, 33, 66, 92, 26);
-RT_INTERFACE!{interface IFrameFocusCapabilities(IFrameFocusCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IFrameFocusCapabilities] {
+RT_INTERFACE!{interface IFrameFocusCapabilities(IFrameFocusCapabilitiesVtbl): IInspectable [IID_IFrameFocusCapabilities] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_Min(&self, out: *mut u32) -> HRESULT,
     fn get_Max(&self, out: *mut u32) -> HRESULT,
@@ -16278,7 +16278,7 @@ impl IFrameFocusCapabilities {
 }
 RT_CLASS!{class FrameFocusCapabilities: IFrameFocusCapabilities}
 DEFINE_IID!(IID_IFrameFocusControl, 657322448, 55570, 16916, 166, 123, 227, 138, 141, 72, 216, 198);
-RT_INTERFACE!{interface IFrameFocusControl(IFrameFocusControlVtbl): IInspectable(IInspectableVtbl) [IID_IFrameFocusControl] {
+RT_INTERFACE!{interface IFrameFocusControl(IFrameFocusControlVtbl): IInspectable [IID_IFrameFocusControl] {
     fn get_Value(&self, out: *mut <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
     fn put_Value(&self, value: <foundation::IReference<u32> as RtType>::Abi) -> HRESULT
 }}
@@ -16295,7 +16295,7 @@ impl IFrameFocusControl {
 }
 RT_CLASS!{class FrameFocusControl: IFrameFocusControl}
 DEFINE_IID!(IID_IFrameIsoSpeedCapabilities, 381550433, 28150, 19145, 185, 42, 159, 110, 205, 26, 210, 250);
-RT_INTERFACE!{interface IFrameIsoSpeedCapabilities(IFrameIsoSpeedCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IFrameIsoSpeedCapabilities] {
+RT_INTERFACE!{interface IFrameIsoSpeedCapabilities(IFrameIsoSpeedCapabilitiesVtbl): IInspectable [IID_IFrameIsoSpeedCapabilities] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_Min(&self, out: *mut u32) -> HRESULT,
     fn get_Max(&self, out: *mut u32) -> HRESULT,
@@ -16325,7 +16325,7 @@ impl IFrameIsoSpeedCapabilities {
 }
 RT_CLASS!{class FrameIsoSpeedCapabilities: IFrameIsoSpeedCapabilities}
 DEFINE_IID!(IID_IFrameIsoSpeedControl, 436465645, 30826, 19573, 165, 87, 122, 185, 168, 95, 88, 140);
-RT_INTERFACE!{interface IFrameIsoSpeedControl(IFrameIsoSpeedControlVtbl): IInspectable(IInspectableVtbl) [IID_IFrameIsoSpeedControl] {
+RT_INTERFACE!{interface IFrameIsoSpeedControl(IFrameIsoSpeedControlVtbl): IInspectable [IID_IFrameIsoSpeedControl] {
     fn get_Auto(&self, out: *mut bool) -> HRESULT,
     fn put_Auto(&self, value: bool) -> HRESULT,
     fn get_Value(&self, out: *mut <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
@@ -16353,7 +16353,7 @@ impl IFrameIsoSpeedControl {
 }
 RT_CLASS!{class FrameIsoSpeedControl: IFrameIsoSpeedControl}
 DEFINE_IID!(IID_IVariablePhotoSequenceController, 2143287424, 60812, 17405, 167, 195, 179, 88, 9, 228, 34, 154);
-RT_INTERFACE!{interface IVariablePhotoSequenceController(IVariablePhotoSequenceControllerVtbl): IInspectable(IInspectableVtbl) [IID_IVariablePhotoSequenceController] {
+RT_INTERFACE!{interface IVariablePhotoSequenceController(IVariablePhotoSequenceControllerVtbl): IInspectable [IID_IVariablePhotoSequenceController] {
     fn get_Supported(&self, out: *mut bool) -> HRESULT,
     fn get_MaxPhotosPerSecond(&self, out: *mut f32) -> HRESULT,
     fn get_PhotosPerSecondLimit(&self, out: *mut f32) -> HRESULT,
@@ -16410,7 +16410,7 @@ RT_CLASS!{class VariablePhotoSequenceController: IVariablePhotoSequenceControlle
 pub mod dialprotocol { // Windows.Media.DialProtocol
 use crate::prelude::*;
 DEFINE_IID!(IID_IDialApp, 1432353747, 17847, 18931, 187, 215, 48, 45, 182, 8, 70, 70);
-RT_INTERFACE!{interface IDialApp(IDialAppVtbl): IInspectable(IInspectableVtbl) [IID_IDialApp] {
+RT_INTERFACE!{interface IDialApp(IDialAppVtbl): IInspectable [IID_IDialApp] {
     fn get_AppName(&self, out: *mut HSTRING) -> HRESULT,
     fn RequestLaunchAsync(&self, appArgument: HSTRING, out: *mut <foundation::IAsyncOperation<DialAppLaunchResult> as RtType>::Abi) -> HRESULT,
     fn StopAsync(&self, out: *mut <foundation::IAsyncOperation<DialAppStopResult> as RtType>::Abi) -> HRESULT,
@@ -16446,7 +16446,7 @@ RT_ENUM! { enum DialAppState: i32 {
     Unknown = 0, Stopped = 1, Running = 2, NetworkFailure = 3,
 }}
 DEFINE_IID!(IID_IDialAppStateDetails, 3720651937, 62942, 16397, 190, 164, 140, 132, 102, 187, 41, 97);
-RT_INTERFACE!{interface IDialAppStateDetails(IDialAppStateDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IDialAppStateDetails] {
+RT_INTERFACE!{interface IDialAppStateDetails(IDialAppStateDetailsVtbl): IInspectable [IID_IDialAppStateDetails] {
     fn get_State(&self, out: *mut DialAppState) -> HRESULT,
     fn get_FullXml(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -16467,7 +16467,7 @@ RT_ENUM! { enum DialAppStopResult: i32 {
     Stopped = 0, StopFailed = 1, OperationNotSupported = 2, NetworkFailure = 3,
 }}
 DEFINE_IID!(IID_IDialDevice, 4293979567, 30111, 16850, 162, 10, 127, 41, 206, 11, 55, 132);
-RT_INTERFACE!{interface IDialDevice(IDialDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IDialDevice] {
+RT_INTERFACE!{interface IDialDevice(IDialDeviceVtbl): IInspectable [IID_IDialDevice] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn GetDialApp(&self, appName: HSTRING, out: *mut <DialApp as RtType>::Abi) -> HRESULT
 }}
@@ -16498,7 +16498,7 @@ impl DialDevice {
 }
 DEFINE_CLSID!(DialDevice(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,105,97,108,80,114,111,116,111,99,111,108,46,68,105,97,108,68,101,118,105,99,101,0]) [CLSID_DialDevice]);
 DEFINE_IID!(IID_IDialDevice2, 3132617685, 23547, 20154, 139, 50, 181, 124, 92, 94, 229, 201);
-RT_INTERFACE!{interface IDialDevice2(IDialDevice2Vtbl): IInspectable(IInspectableVtbl) [IID_IDialDevice2] {
+RT_INTERFACE!{interface IDialDevice2(IDialDevice2Vtbl): IInspectable [IID_IDialDevice2] {
     fn get_FriendlyName(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_Thumbnail(&self, out: *mut <super::super::storage::streams::IRandomAccessStreamReference as RtType>::Abi) -> HRESULT
 }}
@@ -16518,7 +16518,7 @@ RT_ENUM! { enum DialDeviceDisplayStatus: i32 {
     None = 0, Connecting = 1, Connected = 2, Disconnecting = 3, Disconnected = 4, Error = 5,
 }}
 DEFINE_IID!(IID_IDialDevicePicker, 3128840714, 65369, 20299, 189, 172, 216, 159, 73, 90, 214, 225);
-RT_INTERFACE!{interface IDialDevicePicker(IDialDevicePickerVtbl): IInspectable(IInspectableVtbl) [IID_IDialDevicePicker] {
+RT_INTERFACE!{interface IDialDevicePicker(IDialDevicePickerVtbl): IInspectable [IID_IDialDevicePicker] {
     fn get_Filter(&self, out: *mut <DialDevicePickerFilter as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-devices")] fn get_Appearance(&self, out: *mut <super::super::devices::enumeration::DevicePickerAppearance as RtType>::Abi) -> HRESULT,
@@ -16606,7 +16606,7 @@ RT_CLASS!{class DialDevicePicker: IDialDevicePicker}
 impl RtActivatable<IActivationFactory> for DialDevicePicker {}
 DEFINE_CLSID!(DialDevicePicker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,105,97,108,80,114,111,116,111,99,111,108,46,68,105,97,108,68,101,118,105,99,101,80,105,99,107,101,114,0]) [CLSID_DialDevicePicker]);
 DEFINE_IID!(IID_IDialDevicePickerFilter, 3246166970, 34496, 18525, 184, 214, 15, 154, 143, 100, 21, 144);
-RT_INTERFACE!{interface IDialDevicePickerFilter(IDialDevicePickerFilterVtbl): IInspectable(IInspectableVtbl) [IID_IDialDevicePickerFilter] {
+RT_INTERFACE!{interface IDialDevicePickerFilter(IDialDevicePickerFilterVtbl): IInspectable [IID_IDialDevicePickerFilter] {
     fn get_SupportedAppNames(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT
 }}
 impl IDialDevicePickerFilter {
@@ -16618,7 +16618,7 @@ impl IDialDevicePickerFilter {
 }
 RT_CLASS!{class DialDevicePickerFilter: IDialDevicePickerFilter}
 DEFINE_IID!(IID_IDialDeviceSelectedEventArgs, 1208717997, 44150, 18411, 156, 6, 161, 147, 4, 218, 2, 71);
-RT_INTERFACE!{interface IDialDeviceSelectedEventArgs(IDialDeviceSelectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDialDeviceSelectedEventArgs] {
+RT_INTERFACE!{interface IDialDeviceSelectedEventArgs(IDialDeviceSelectedEventArgsVtbl): IInspectable [IID_IDialDeviceSelectedEventArgs] {
     fn get_SelectedDialDevice(&self, out: *mut <DialDevice as RtType>::Abi) -> HRESULT
 }}
 impl IDialDeviceSelectedEventArgs {
@@ -16630,7 +16630,7 @@ impl IDialDeviceSelectedEventArgs {
 }
 RT_CLASS!{class DialDeviceSelectedEventArgs: IDialDeviceSelectedEventArgs}
 DEFINE_IID!(IID_IDialDeviceStatics, 2859060373, 504, 18264, 132, 97, 43, 189, 28, 220, 60, 243);
-RT_INTERFACE!{static interface IDialDeviceStatics(IDialDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDialDeviceStatics] {
+RT_INTERFACE!{static interface IDialDeviceStatics(IDialDeviceStaticsVtbl): IInspectable [IID_IDialDeviceStatics] {
     fn GetDeviceSelector(&self, appName: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn FromIdAsync(&self, value: HSTRING, out: *mut <foundation::IAsyncOperation<DialDevice> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-devices")] fn DeviceInfoSupportsDialAsync(&self, device: <super::super::devices::enumeration::DeviceInformation as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
@@ -16653,7 +16653,7 @@ impl IDialDeviceStatics {
     }}
 }
 DEFINE_IID!(IID_IDialDisconnectButtonClickedEventArgs, 1383485778, 40065, 20053, 173, 194, 14, 190, 153, 205, 227, 182);
-RT_INTERFACE!{interface IDialDisconnectButtonClickedEventArgs(IDialDisconnectButtonClickedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDialDisconnectButtonClickedEventArgs] {
+RT_INTERFACE!{interface IDialDisconnectButtonClickedEventArgs(IDialDisconnectButtonClickedEventArgsVtbl): IInspectable [IID_IDialDisconnectButtonClickedEventArgs] {
     fn get_Device(&self, out: *mut <DialDevice as RtType>::Abi) -> HRESULT
 }}
 impl IDialDisconnectButtonClickedEventArgs {
@@ -16665,7 +16665,7 @@ impl IDialDisconnectButtonClickedEventArgs {
 }
 RT_CLASS!{class DialDisconnectButtonClickedEventArgs: IDialDisconnectButtonClickedEventArgs}
 DEFINE_IID!(IID_IDialReceiverApp, 4248730711, 20549, 18190, 179, 4, 77, 217, 177, 62, 125, 17);
-RT_INTERFACE!{interface IDialReceiverApp(IDialReceiverAppVtbl): IInspectable(IInspectableVtbl) [IID_IDialReceiverApp] {
+RT_INTERFACE!{interface IDialReceiverApp(IDialReceiverAppVtbl): IInspectable [IID_IDialReceiverApp] {
     fn GetAdditionalDataAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IMap<HString, HString>> as RtType>::Abi) -> HRESULT,
     fn SetAdditionalDataAsync(&self, additionalData: <foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, HString>> as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
@@ -16690,7 +16690,7 @@ impl DialReceiverApp {
 }
 DEFINE_CLSID!(DialReceiverApp(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,68,105,97,108,80,114,111,116,111,99,111,108,46,68,105,97,108,82,101,99,101,105,118,101,114,65,112,112,0]) [CLSID_DialReceiverApp]);
 DEFINE_IID!(IID_IDialReceiverApp2, 1393317893, 37168, 17068, 165, 4, 25, 119, 220, 178, 234, 138);
-RT_INTERFACE!{interface IDialReceiverApp2(IDialReceiverApp2Vtbl): IInspectable(IInspectableVtbl) [IID_IDialReceiverApp2] {
+RT_INTERFACE!{interface IDialReceiverApp2(IDialReceiverApp2Vtbl): IInspectable [IID_IDialReceiverApp2] {
     fn GetUniqueDeviceNameAsync(&self, out: *mut <foundation::IAsyncOperation<HString> as RtType>::Abi) -> HRESULT
 }}
 impl IDialReceiverApp2 {
@@ -16701,7 +16701,7 @@ impl IDialReceiverApp2 {
     }}
 }
 DEFINE_IID!(IID_IDialReceiverAppStatics, 1394096700, 19510, 19714, 178, 138, 242, 169, 218, 56, 236, 82);
-RT_INTERFACE!{static interface IDialReceiverAppStatics(IDialReceiverAppStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDialReceiverAppStatics] {
+RT_INTERFACE!{static interface IDialReceiverAppStatics(IDialReceiverAppStaticsVtbl): IInspectable [IID_IDialReceiverAppStatics] {
     fn get_Current(&self, out: *mut <DialReceiverApp as RtType>::Abi) -> HRESULT
 }}
 impl IDialReceiverAppStatics {
@@ -16715,7 +16715,7 @@ impl IDialReceiverAppStatics {
 pub mod editing { // Windows.Media.Editing
 use crate::prelude::*;
 DEFINE_IID!(IID_IBackgroundAudioTrack, 1267839933, 40481, 16998, 169, 194, 103, 221, 1, 26, 35, 87);
-RT_INTERFACE!{interface IBackgroundAudioTrack(IBackgroundAudioTrackVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundAudioTrack] {
+RT_INTERFACE!{interface IBackgroundAudioTrack(IBackgroundAudioTrackVtbl): IInspectable [IID_IBackgroundAudioTrack] {
     fn get_TrimTimeFromStart(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_TrimTimeFromStart(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_TrimTimeFromEnd(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -16811,7 +16811,7 @@ impl BackgroundAudioTrack {
 }
 DEFINE_CLSID!(BackgroundAudioTrack(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,66,97,99,107,103,114,111,117,110,100,65,117,100,105,111,84,114,97,99,107,0]) [CLSID_BackgroundAudioTrack]);
 DEFINE_IID!(IID_IBackgroundAudioTrackStatics, 3652305111, 53272, 17064, 165, 89, 203, 77, 158, 151, 230, 100);
-RT_INTERFACE!{static interface IBackgroundAudioTrackStatics(IBackgroundAudioTrackStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundAudioTrackStatics] {
+RT_INTERFACE!{static interface IBackgroundAudioTrackStatics(IBackgroundAudioTrackStaticsVtbl): IInspectable [IID_IBackgroundAudioTrackStatics] {
     fn CreateFromEmbeddedAudioTrack(&self, embeddedAudioTrack: <EmbeddedAudioTrack as RtType>::Abi, out: *mut <BackgroundAudioTrack as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateFromFileAsync(&self, file: <super::super::storage::IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<BackgroundAudioTrack> as RtType>::Abi) -> HRESULT
 }}
@@ -16828,7 +16828,7 @@ impl IBackgroundAudioTrackStatics {
     }}
 }
 DEFINE_IID!(IID_IEmbeddedAudioTrack, 1441684090, 11568, 16314, 161, 144, 79, 26, 100, 84, 248, 143);
-RT_INTERFACE!{interface IEmbeddedAudioTrack(IEmbeddedAudioTrackVtbl): IInspectable(IInspectableVtbl) [IID_IEmbeddedAudioTrack] {
+RT_INTERFACE!{interface IEmbeddedAudioTrack(IEmbeddedAudioTrackVtbl): IInspectable [IID_IEmbeddedAudioTrack] {
     fn GetAudioEncodingProperties(&self, out: *mut <super::mediaproperties::AudioEncodingProperties as RtType>::Abi) -> HRESULT
 }}
 impl IEmbeddedAudioTrack {
@@ -16840,7 +16840,7 @@ impl IEmbeddedAudioTrack {
 }
 RT_CLASS!{class EmbeddedAudioTrack: IEmbeddedAudioTrack}
 DEFINE_IID!(IID_IMediaClip, 1408389990, 24506, 16036, 134, 147, 36, 118, 24, 17, 20, 10);
-RT_INTERFACE!{interface IMediaClip(IMediaClipVtbl): IInspectable(IInspectableVtbl) [IID_IMediaClip] {
+RT_INTERFACE!{interface IMediaClip(IMediaClipVtbl): IInspectable [IID_IMediaClip] {
     fn get_TrimTimeFromStart(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_TrimTimeFromStart(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_TrimTimeFromEnd(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -16967,7 +16967,7 @@ impl MediaClip {
 }
 DEFINE_CLSID!(MediaClip(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,67,108,105,112,0]) [CLSID_MediaClip]);
 DEFINE_IID!(IID_IMediaClipStatics, 4198509416, 37519, 17348, 188, 110, 120, 58, 26, 53, 150, 86);
-RT_INTERFACE!{static interface IMediaClipStatics(IMediaClipStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaClipStatics] {
+RT_INTERFACE!{static interface IMediaClipStatics(IMediaClipStaticsVtbl): IInspectable [IID_IMediaClipStatics] {
     #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-ui")] fn CreateFromColor(&self, color: super::super::ui::Color, originalDuration: foundation::TimeSpan, out: *mut <MediaClip as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateFromFileAsync(&self, file: <super::super::storage::IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<MediaClip> as RtType>::Abi) -> HRESULT,
@@ -16991,7 +16991,7 @@ impl IMediaClipStatics {
     }}
 }
 DEFINE_IID!(IID_IMediaClipStatics2, 1528682419, 34126, 19867, 135, 125, 71, 116, 165, 86, 205, 18);
-RT_INTERFACE!{static interface IMediaClipStatics2(IMediaClipStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaClipStatics2] {
+RT_INTERFACE!{static interface IMediaClipStatics2(IMediaClipStatics2Vtbl): IInspectable [IID_IMediaClipStatics2] {
     #[cfg(feature="windows-graphics")] fn CreateFromSurface(&self, surface: <super::super::graphics::directx::direct3d11::IDirect3DSurface as RtType>::Abi, originalDuration: foundation::TimeSpan, out: *mut <MediaClip as RtType>::Abi) -> HRESULT
 }}
 impl IMediaClipStatics2 {
@@ -17002,7 +17002,7 @@ impl IMediaClipStatics2 {
     }}
 }
 DEFINE_IID!(IID_IMediaComposition, 772204037, 56433, 16854, 184, 55, 45, 43, 193, 74, 41, 71);
-RT_INTERFACE!{interface IMediaComposition(IMediaCompositionVtbl): IInspectable(IInspectableVtbl) [IID_IMediaComposition] {
+RT_INTERFACE!{interface IMediaComposition(IMediaCompositionVtbl): IInspectable [IID_IMediaComposition] {
     fn get_Duration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_Clips(&self, out: *mut <foundation::collections::IVector<MediaClip> as RtType>::Abi) -> HRESULT,
     fn get_BackgroundAudioTracks(&self, out: *mut <foundation::collections::IVector<BackgroundAudioTrack> as RtType>::Abi) -> HRESULT,
@@ -17112,7 +17112,7 @@ impl MediaComposition {
 }
 DEFINE_CLSID!(MediaComposition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,67,111,109,112,111,115,105,116,105,111,110,0]) [CLSID_MediaComposition]);
 DEFINE_IID!(IID_IMediaComposition2, 2778616690, 9062, 18732, 190, 200, 230, 223, 186, 109, 2, 129);
-RT_INTERFACE!{interface IMediaComposition2(IMediaComposition2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaComposition2] {
+RT_INTERFACE!{interface IMediaComposition2(IMediaComposition2Vtbl): IInspectable [IID_IMediaComposition2] {
     fn get_OverlayLayers(&self, out: *mut <foundation::collections::IVector<MediaOverlayLayer> as RtType>::Abi) -> HRESULT
 }}
 impl IMediaComposition2 {
@@ -17123,7 +17123,7 @@ impl IMediaComposition2 {
     }}
 }
 DEFINE_IID!(IID_IMediaCompositionStatics, 2275446532, 58154, 17870, 143, 102, 163, 13, 240, 118, 98, 36);
-RT_INTERFACE!{static interface IMediaCompositionStatics(IMediaCompositionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaCompositionStatics] {
+RT_INTERFACE!{static interface IMediaCompositionStatics(IMediaCompositionStaticsVtbl): IInspectable [IID_IMediaCompositionStatics] {
     #[cfg(feature="windows-storage")] fn LoadAsync(&self, file: <super::super::storage::StorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<MediaComposition> as RtType>::Abi) -> HRESULT
 }}
 impl IMediaCompositionStatics {
@@ -17134,7 +17134,7 @@ impl IMediaCompositionStatics {
     }}
 }
 DEFINE_IID!(IID_IMediaOverlay, 2835525213, 30825, 18480, 138, 177, 148, 220, 1, 192, 95, 164);
-RT_INTERFACE!{interface IMediaOverlay(IMediaOverlayVtbl): IInspectable(IInspectableVtbl) [IID_IMediaOverlay] {
+RT_INTERFACE!{interface IMediaOverlay(IMediaOverlayVtbl): IInspectable [IID_IMediaOverlay] {
     fn get_Position(&self, out: *mut foundation::Rect) -> HRESULT,
     fn put_Position(&self, value: foundation::Rect) -> HRESULT,
     fn put_Delay(&self, value: foundation::TimeSpan) -> HRESULT,
@@ -17206,7 +17206,7 @@ impl MediaOverlay {
 }
 DEFINE_CLSID!(MediaOverlay(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,79,118,101,114,108,97,121,0]) [CLSID_MediaOverlay]);
 DEFINE_IID!(IID_IMediaOverlayFactory, 3045360266, 24968, 20367, 162, 224, 170, 85, 45, 89, 142, 24);
-RT_INTERFACE!{static interface IMediaOverlayFactory(IMediaOverlayFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaOverlayFactory] {
+RT_INTERFACE!{static interface IMediaOverlayFactory(IMediaOverlayFactoryVtbl): IInspectable [IID_IMediaOverlayFactory] {
     fn Create(&self, clip: <MediaClip as RtType>::Abi, out: *mut <MediaOverlay as RtType>::Abi) -> HRESULT,
     fn CreateWithPositionAndOpacity(&self, clip: <MediaClip as RtType>::Abi, position: foundation::Rect, opacity: f64, out: *mut <MediaOverlay as RtType>::Abi) -> HRESULT
 }}
@@ -17223,7 +17223,7 @@ impl IMediaOverlayFactory {
     }}
 }
 DEFINE_IID!(IID_IMediaOverlayLayer, 2799286871, 61146, 18118, 187, 229, 227, 152, 200, 65, 104, 172);
-RT_INTERFACE!{interface IMediaOverlayLayer(IMediaOverlayLayerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaOverlayLayer] {
+RT_INTERFACE!{interface IMediaOverlayLayer(IMediaOverlayLayerVtbl): IInspectable [IID_IMediaOverlayLayer] {
     fn Clone(&self, out: *mut <MediaOverlayLayer as RtType>::Abi) -> HRESULT,
     fn get_Overlays(&self, out: *mut <foundation::collections::IVector<MediaOverlay> as RtType>::Abi) -> HRESULT,
     fn get_CustomCompositorDefinition(&self, out: *mut <super::effects::IVideoCompositorDefinition as RtType>::Abi) -> HRESULT
@@ -17255,7 +17255,7 @@ impl MediaOverlayLayer {
 }
 DEFINE_CLSID!(MediaOverlayLayer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,100,105,116,105,110,103,46,77,101,100,105,97,79,118,101,114,108,97,121,76,97,121,101,114,0]) [CLSID_MediaOverlayLayer]);
 DEFINE_IID!(IID_IMediaOverlayLayerFactory, 2491200627, 41886, 17250, 171, 191, 159, 139, 80, 112, 160, 98);
-RT_INTERFACE!{static interface IMediaOverlayLayerFactory(IMediaOverlayLayerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaOverlayLayerFactory] {
+RT_INTERFACE!{static interface IMediaOverlayLayerFactory(IMediaOverlayLayerFactoryVtbl): IInspectable [IID_IMediaOverlayLayerFactory] {
     fn CreateWithCompositorDefinition(&self, compositorDefinition: <super::effects::IVideoCompositorDefinition as RtType>::Abi, out: *mut <MediaOverlayLayer as RtType>::Abi) -> HRESULT
 }}
 impl IMediaOverlayLayerFactory {
@@ -17275,7 +17275,7 @@ RT_ENUM! { enum VideoFramePrecision: i32 {
 pub mod effects { // Windows.Media.Effects
 use crate::prelude::*;
 DEFINE_IID!(IID_IAudioCaptureEffectsManager, 2407907953, 909, 17299, 130, 152, 84, 1, 16, 96, 142, 239);
-RT_INTERFACE!{interface IAudioCaptureEffectsManager(IAudioCaptureEffectsManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAudioCaptureEffectsManager] {
+RT_INTERFACE!{interface IAudioCaptureEffectsManager(IAudioCaptureEffectsManagerVtbl): IInspectable [IID_IAudioCaptureEffectsManager] {
     fn add_AudioCaptureEffectsChanged(&self, handler: <foundation::TypedEventHandler<AudioCaptureEffectsManager, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_AudioCaptureEffectsChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn GetAudioCaptureEffects(&self, out: *mut <foundation::collections::IVectorView<AudioEffect> as RtType>::Abi) -> HRESULT
@@ -17298,7 +17298,7 @@ impl IAudioCaptureEffectsManager {
 }
 RT_CLASS!{class AudioCaptureEffectsManager: IAudioCaptureEffectsManager}
 DEFINE_IID!(IID_IAudioEffect, 883620433, 37383, 16469, 190, 147, 110, 87, 52, 168, 106, 228);
-RT_INTERFACE!{interface IAudioEffect(IAudioEffectVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEffect] {
+RT_INTERFACE!{interface IAudioEffect(IAudioEffectVtbl): IInspectable [IID_IAudioEffect] {
     fn get_AudioEffectType(&self, out: *mut AudioEffectType) -> HRESULT
 }}
 impl IAudioEffect {
@@ -17310,7 +17310,7 @@ impl IAudioEffect {
 }
 RT_CLASS!{class AudioEffect: IAudioEffect}
 DEFINE_IID!(IID_IAudioEffectDefinition, 3839359348, 32128, 20339, 144, 137, 227, 28, 157, 185, 194, 148);
-RT_INTERFACE!{interface IAudioEffectDefinition(IAudioEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEffectDefinition] {
+RT_INTERFACE!{interface IAudioEffectDefinition(IAudioEffectDefinitionVtbl): IInspectable [IID_IAudioEffectDefinition] {
     fn get_ActivatableClassId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Properties(&self, out: *mut <foundation::collections::IPropertySet as RtType>::Abi) -> HRESULT
 }}
@@ -17338,7 +17338,7 @@ impl AudioEffectDefinition {
 }
 DEFINE_CLSID!(AudioEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,65,117,100,105,111,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_AudioEffectDefinition]);
 DEFINE_IID!(IID_IAudioEffectDefinitionFactory, 2384307782, 59141, 17901, 138, 43, 252, 78, 79, 64, 90, 151);
-RT_INTERFACE!{static interface IAudioEffectDefinitionFactory(IAudioEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEffectDefinitionFactory] {
+RT_INTERFACE!{static interface IAudioEffectDefinitionFactory(IAudioEffectDefinitionFactoryVtbl): IInspectable [IID_IAudioEffectDefinitionFactory] {
     fn Create(&self, activatableClassId: HSTRING, out: *mut <AudioEffectDefinition as RtType>::Abi) -> HRESULT,
     fn CreateWithProperties(&self, activatableClassId: HSTRING, props: <foundation::collections::IPropertySet as RtType>::Abi, out: *mut <AudioEffectDefinition as RtType>::Abi) -> HRESULT
 }}
@@ -17372,7 +17372,7 @@ impl AudioEffectsManager {
 }
 DEFINE_CLSID!(AudioEffectsManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,65,117,100,105,111,69,102,102,101,99,116,115,77,97,110,97,103,101,114,0]) [CLSID_AudioEffectsManager]);
 DEFINE_IID!(IID_IAudioEffectsManagerStatics, 1715497988, 34554, 18380, 163, 21, 244, 137, 216, 195, 254, 16);
-RT_INTERFACE!{static interface IAudioEffectsManagerStatics(IAudioEffectsManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEffectsManagerStatics] {
+RT_INTERFACE!{static interface IAudioEffectsManagerStatics(IAudioEffectsManagerStaticsVtbl): IInspectable [IID_IAudioEffectsManagerStatics] {
     fn CreateAudioRenderEffectsManager(&self, deviceId: HSTRING, category: super::render::AudioRenderCategory, out: *mut <AudioRenderEffectsManager as RtType>::Abi) -> HRESULT,
     fn CreateAudioRenderEffectsManagerWithMode(&self, deviceId: HSTRING, category: super::render::AudioRenderCategory, mode: super::AudioProcessing, out: *mut <AudioRenderEffectsManager as RtType>::Abi) -> HRESULT,
     fn CreateAudioCaptureEffectsManager(&self, deviceId: HSTRING, category: super::capture::MediaCategory, out: *mut <AudioCaptureEffectsManager as RtType>::Abi) -> HRESULT,
@@ -17404,7 +17404,7 @@ RT_ENUM! { enum AudioEffectType: i32 {
     Other = 0, AcousticEchoCancellation = 1, NoiseSuppression = 2, AutomaticGainControl = 3, BeamForming = 4, ConstantToneRemoval = 5, Equalizer = 6, LoudnessEqualizer = 7, BassBoost = 8, VirtualSurround = 9, VirtualHeadphones = 10, SpeakerFill = 11, RoomCorrection = 12, BassManagement = 13, EnvironmentalEffects = 14, SpeakerProtection = 15, SpeakerCompensation = 16, DynamicRangeCompression = 17,
 }}
 DEFINE_IID!(IID_IAudioRenderEffectsManager, 1305053542, 34641, 17074, 191, 203, 57, 202, 120, 100, 189, 71);
-RT_INTERFACE!{interface IAudioRenderEffectsManager(IAudioRenderEffectsManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAudioRenderEffectsManager] {
+RT_INTERFACE!{interface IAudioRenderEffectsManager(IAudioRenderEffectsManagerVtbl): IInspectable [IID_IAudioRenderEffectsManager] {
     fn add_AudioRenderEffectsChanged(&self, handler: <foundation::TypedEventHandler<AudioRenderEffectsManager, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_AudioRenderEffectsChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn GetAudioRenderEffects(&self, out: *mut <foundation::collections::IVectorView<AudioEffect> as RtType>::Abi) -> HRESULT
@@ -17427,7 +17427,7 @@ impl IAudioRenderEffectsManager {
 }
 RT_CLASS!{class AudioRenderEffectsManager: IAudioRenderEffectsManager}
 DEFINE_IID!(IID_IAudioRenderEffectsManager2, 2823081225, 24268, 17587, 187, 78, 29, 176, 114, 135, 19, 156);
-RT_INTERFACE!{interface IAudioRenderEffectsManager2(IAudioRenderEffectsManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioRenderEffectsManager2] {
+RT_INTERFACE!{interface IAudioRenderEffectsManager2(IAudioRenderEffectsManager2Vtbl): IInspectable [IID_IAudioRenderEffectsManager2] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_EffectsProviderThumbnail(&self, out: *mut <super::super::storage::streams::IRandomAccessStreamWithContentType as RtType>::Abi) -> HRESULT,
     fn get_EffectsProviderSettingsLabel(&self, out: *mut HSTRING) -> HRESULT,
@@ -17450,7 +17450,7 @@ impl IAudioRenderEffectsManager2 {
     }}
 }
 DEFINE_IID!(IID_IBasicAudioEffect, 2349214803, 27584, 18616, 169, 154, 75, 65, 85, 15, 19, 89);
-RT_INTERFACE!{interface IBasicAudioEffect(IBasicAudioEffectVtbl): IInspectable(IInspectableVtbl) [IID_IBasicAudioEffect] {
+RT_INTERFACE!{interface IBasicAudioEffect(IBasicAudioEffectVtbl): IInspectable [IID_IBasicAudioEffect] {
     fn get_UseInputFrameForOutput(&self, out: *mut bool) -> HRESULT,
     fn get_SupportedEncodingProperties(&self, out: *mut <foundation::collections::IVectorView<super::mediaproperties::AudioEncodingProperties> as RtType>::Abi) -> HRESULT,
     fn SetEncodingProperties(&self, encodingProperties: <super::mediaproperties::AudioEncodingProperties as RtType>::Abi) -> HRESULT,
@@ -17487,7 +17487,7 @@ impl IBasicAudioEffect {
     }}
 }
 DEFINE_IID!(IID_IBasicVideoEffect, 2187511791, 45920, 16574, 148, 155, 47, 244, 47, 243, 86, 147);
-RT_INTERFACE!{interface IBasicVideoEffect(IBasicVideoEffectVtbl): IInspectable(IInspectableVtbl) [IID_IBasicVideoEffect] {
+RT_INTERFACE!{interface IBasicVideoEffect(IBasicVideoEffectVtbl): IInspectable [IID_IBasicVideoEffect] {
     fn get_IsReadOnly(&self, out: *mut bool) -> HRESULT,
     fn get_SupportedMemoryTypes(&self, out: *mut MediaMemoryTypes) -> HRESULT,
     fn get_TimeIndependent(&self, out: *mut bool) -> HRESULT,
@@ -17537,7 +17537,7 @@ impl IBasicVideoEffect {
     }}
 }
 DEFINE_IID!(IID_ICompositeVideoFrameContext, 1815085643, 62740, 17016, 165, 247, 185, 24, 128, 73, 209, 16);
-RT_INTERFACE!{interface ICompositeVideoFrameContext(ICompositeVideoFrameContextVtbl): IInspectable(IInspectableVtbl) [IID_ICompositeVideoFrameContext] {
+RT_INTERFACE!{interface ICompositeVideoFrameContext(ICompositeVideoFrameContextVtbl): IInspectable [IID_ICompositeVideoFrameContext] {
     #[cfg(feature="windows-graphics")] fn get_SurfacesToOverlay(&self, out: *mut <foundation::collections::IVectorView<super::super::graphics::directx::direct3d11::IDirect3DSurface> as RtType>::Abi) -> HRESULT,
     fn get_BackgroundFrame(&self, out: *mut <super::VideoFrame as RtType>::Abi) -> HRESULT,
     fn get_OutputFrame(&self, out: *mut <super::VideoFrame as RtType>::Abi) -> HRESULT,
@@ -17573,7 +17573,7 @@ RT_ENUM! { enum MediaMemoryTypes: i32 {
     Gpu = 0, Cpu = 1, GpuAndCpu = 2,
 }}
 DEFINE_IID!(IID_IProcessAudioFrameContext, 1289300294, 4642, 18983, 165, 134, 251, 62, 32, 39, 50, 85);
-RT_INTERFACE!{interface IProcessAudioFrameContext(IProcessAudioFrameContextVtbl): IInspectable(IInspectableVtbl) [IID_IProcessAudioFrameContext] {
+RT_INTERFACE!{interface IProcessAudioFrameContext(IProcessAudioFrameContextVtbl): IInspectable [IID_IProcessAudioFrameContext] {
     fn get_InputFrame(&self, out: *mut <super::AudioFrame as RtType>::Abi) -> HRESULT,
     fn get_OutputFrame(&self, out: *mut <super::AudioFrame as RtType>::Abi) -> HRESULT
 }}
@@ -17591,7 +17591,7 @@ impl IProcessAudioFrameContext {
 }
 RT_CLASS!{class ProcessAudioFrameContext: IProcessAudioFrameContext}
 DEFINE_IID!(IID_IProcessVideoFrameContext, 661589547, 25697, 16414, 186, 120, 15, 218, 214, 17, 78, 236);
-RT_INTERFACE!{interface IProcessVideoFrameContext(IProcessVideoFrameContextVtbl): IInspectable(IInspectableVtbl) [IID_IProcessVideoFrameContext] {
+RT_INTERFACE!{interface IProcessVideoFrameContext(IProcessVideoFrameContextVtbl): IInspectable [IID_IProcessVideoFrameContext] {
     fn get_InputFrame(&self, out: *mut <super::VideoFrame as RtType>::Abi) -> HRESULT,
     fn get_OutputFrame(&self, out: *mut <super::VideoFrame as RtType>::Abi) -> HRESULT
 }}
@@ -17609,7 +17609,7 @@ impl IProcessVideoFrameContext {
 }
 RT_CLASS!{class ProcessVideoFrameContext: IProcessVideoFrameContext}
 DEFINE_IID!(IID_IVideoCompositor, 2232464446, 16908, 16911, 150, 199, 124, 152, 187, 161, 252, 85);
-RT_INTERFACE!{interface IVideoCompositor(IVideoCompositorVtbl): IInspectable(IInspectableVtbl) [IID_IVideoCompositor] {
+RT_INTERFACE!{interface IVideoCompositor(IVideoCompositorVtbl): IInspectable [IID_IVideoCompositor] {
     fn get_TimeIndependent(&self, out: *mut bool) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-graphics")] fn SetEncodingProperties(&self, backgroundProperties: <super::mediaproperties::VideoEncodingProperties as RtType>::Abi, device: <super::super::graphics::directx::direct3d11::IDirect3DDevice as RtType>::Abi) -> HRESULT,
@@ -17641,7 +17641,7 @@ impl IVideoCompositor {
     }}
 }
 DEFINE_IID!(IID_IVideoCompositorDefinition, 2034677968, 8208, 19171, 154, 178, 44, 239, 66, 237, 212, 210);
-RT_INTERFACE!{interface IVideoCompositorDefinition(IVideoCompositorDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IVideoCompositorDefinition] {
+RT_INTERFACE!{interface IVideoCompositorDefinition(IVideoCompositorDefinitionVtbl): IInspectable [IID_IVideoCompositorDefinition] {
     fn get_ActivatableClassId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Properties(&self, out: *mut <foundation::collections::IPropertySet as RtType>::Abi) -> HRESULT
 }}
@@ -17669,7 +17669,7 @@ impl VideoCompositorDefinition {
 }
 DEFINE_CLSID!(VideoCompositorDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,86,105,100,101,111,67,111,109,112,111,115,105,116,111,114,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoCompositorDefinition]);
 DEFINE_IID!(IID_IVideoCompositorDefinitionFactory, 1130822928, 26808, 19794, 137, 182, 2, 169, 104, 204, 168, 153);
-RT_INTERFACE!{static interface IVideoCompositorDefinitionFactory(IVideoCompositorDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoCompositorDefinitionFactory] {
+RT_INTERFACE!{static interface IVideoCompositorDefinitionFactory(IVideoCompositorDefinitionFactoryVtbl): IInspectable [IID_IVideoCompositorDefinitionFactory] {
     fn Create(&self, activatableClassId: HSTRING, out: *mut <VideoCompositorDefinition as RtType>::Abi) -> HRESULT,
     fn CreateWithProperties(&self, activatableClassId: HSTRING, props: <foundation::collections::IPropertySet as RtType>::Abi, out: *mut <VideoCompositorDefinition as RtType>::Abi) -> HRESULT
 }}
@@ -17686,7 +17686,7 @@ impl IVideoCompositorDefinitionFactory {
     }}
 }
 DEFINE_IID!(IID_IVideoEffectDefinition, 972262640, 36111, 20286, 132, 252, 45, 70, 165, 41, 121, 67);
-RT_INTERFACE!{interface IVideoEffectDefinition(IVideoEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IVideoEffectDefinition] {
+RT_INTERFACE!{interface IVideoEffectDefinition(IVideoEffectDefinitionVtbl): IInspectable [IID_IVideoEffectDefinition] {
     fn get_ActivatableClassId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Properties(&self, out: *mut <foundation::collections::IPropertySet as RtType>::Abi) -> HRESULT
 }}
@@ -17714,7 +17714,7 @@ impl VideoEffectDefinition {
 }
 DEFINE_CLSID!(VideoEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,86,105,100,101,111,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoEffectDefinition]);
 DEFINE_IID!(IID_IVideoEffectDefinitionFactory, 2168691534, 28211, 17039, 157, 33, 181, 170, 254, 247, 97, 124);
-RT_INTERFACE!{static interface IVideoEffectDefinitionFactory(IVideoEffectDefinitionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVideoEffectDefinitionFactory] {
+RT_INTERFACE!{static interface IVideoEffectDefinitionFactory(IVideoEffectDefinitionFactoryVtbl): IInspectable [IID_IVideoEffectDefinitionFactory] {
     fn Create(&self, activatableClassId: HSTRING, out: *mut <VideoEffectDefinition as RtType>::Abi) -> HRESULT,
     fn CreateWithProperties(&self, activatableClassId: HSTRING, props: <foundation::collections::IPropertySet as RtType>::Abi, out: *mut <VideoEffectDefinition as RtType>::Abi) -> HRESULT
 }}
@@ -17731,7 +17731,7 @@ impl IVideoEffectDefinitionFactory {
     }}
 }
 DEFINE_IID!(IID_IVideoTransformEffectDefinition, 2523183978, 7846, 19110, 128, 116, 171, 232, 133, 30, 202, 226);
-RT_INTERFACE!{interface IVideoTransformEffectDefinition(IVideoTransformEffectDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IVideoTransformEffectDefinition] {
+RT_INTERFACE!{interface IVideoTransformEffectDefinition(IVideoTransformEffectDefinitionVtbl): IInspectable [IID_IVideoTransformEffectDefinition] {
     #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-ui")] fn get_PaddingColor(&self, out: *mut super::super::ui::Color) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy1(&self) -> (),
@@ -17807,7 +17807,7 @@ RT_CLASS!{class VideoTransformEffectDefinition: IVideoEffectDefinition}
 impl RtActivatable<IActivationFactory> for VideoTransformEffectDefinition {}
 DEFINE_CLSID!(VideoTransformEffectDefinition(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,69,102,102,101,99,116,115,46,86,105,100,101,111,84,114,97,110,115,102,111,114,109,69,102,102,101,99,116,68,101,102,105,110,105,116,105,111,110,0]) [CLSID_VideoTransformEffectDefinition]);
 DEFINE_IID!(IID_IVideoTransformEffectDefinition2, 4037544095, 26312, 18068, 159, 217, 17, 54, 171, 247, 68, 74);
-RT_INTERFACE!{interface IVideoTransformEffectDefinition2(IVideoTransformEffectDefinition2Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoTransformEffectDefinition2] {
+RT_INTERFACE!{interface IVideoTransformEffectDefinition2(IVideoTransformEffectDefinition2Vtbl): IInspectable [IID_IVideoTransformEffectDefinition2] {
     fn get_SphericalProjection(&self, out: *mut <VideoTransformSphericalProjection as RtType>::Abi) -> HRESULT
 }}
 impl IVideoTransformEffectDefinition2 {
@@ -17818,7 +17818,7 @@ impl IVideoTransformEffectDefinition2 {
     }}
 }
 DEFINE_IID!(IID_IVideoTransformSphericalProjection, 3477340656, 39922, 19513, 159, 65, 224, 34, 81, 74, 132, 104);
-RT_INTERFACE!{interface IVideoTransformSphericalProjection(IVideoTransformSphericalProjectionVtbl): IInspectable(IInspectableVtbl) [IID_IVideoTransformSphericalProjection] {
+RT_INTERFACE!{interface IVideoTransformSphericalProjection(IVideoTransformSphericalProjectionVtbl): IInspectable [IID_IVideoTransformSphericalProjection] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_IsEnabled(&self, value: bool) -> HRESULT,
     fn get_FrameFormat(&self, out: *mut super::mediaproperties::SphericalVideoFrameFormat) -> HRESULT,
@@ -17882,7 +17882,7 @@ RT_CLASS!{class VideoTransformSphericalProjection: IVideoTransformSphericalProje
 pub mod faceanalysis { // Windows.Media.FaceAnalysis
 use crate::prelude::*;
 DEFINE_IID!(IID_IDetectedFace, 2181092436, 26300, 13535, 148, 16, 232, 148, 0, 25, 84, 20);
-RT_INTERFACE!{interface IDetectedFace(IDetectedFaceVtbl): IInspectable(IInspectableVtbl) [IID_IDetectedFace] {
+RT_INTERFACE!{interface IDetectedFace(IDetectedFaceVtbl): IInspectable [IID_IDetectedFace] {
     #[cfg(feature="windows-graphics")] fn get_FaceBox(&self, out: *mut super::super::graphics::imaging::BitmapBounds) -> HRESULT
 }}
 impl IDetectedFace {
@@ -17894,7 +17894,7 @@ impl IDetectedFace {
 }
 RT_CLASS!{class DetectedFace: IDetectedFace}
 DEFINE_IID!(IID_IFaceDetector, 381055708, 65135, 12567, 141, 149, 195, 240, 77, 81, 99, 12);
-RT_INTERFACE!{interface IFaceDetector(IFaceDetectorVtbl): IInspectable(IInspectableVtbl) [IID_IFaceDetector] {
+RT_INTERFACE!{interface IFaceDetector(IFaceDetectorVtbl): IInspectable [IID_IFaceDetector] {
     #[cfg(feature="windows-graphics")] fn DetectFacesAsync(&self, image: <super::super::graphics::imaging::SoftwareBitmap as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IVector<DetectedFace>> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn DetectFacesWithSearchAreaAsync(&self, image: <super::super::graphics::imaging::SoftwareBitmap as RtType>::Abi, searchArea: super::super::graphics::imaging::BitmapBounds, out: *mut <foundation::IAsyncOperation<foundation::collections::IVector<DetectedFace>> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn get_MinDetectableFaceSize(&self, out: *mut super::super::graphics::imaging::BitmapSize) -> HRESULT,
@@ -17950,7 +17950,7 @@ impl FaceDetector {
 }
 DEFINE_CLSID!(FaceDetector(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,70,97,99,101,65,110,97,108,121,115,105,115,46,70,97,99,101,68,101,116,101,99,116,111,114,0]) [CLSID_FaceDetector]);
 DEFINE_IID!(IID_IFaceDetectorStatics, 3154390375, 36935, 13302, 136, 27, 103, 70, 193, 178, 24, 184);
-RT_INTERFACE!{static interface IFaceDetectorStatics(IFaceDetectorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFaceDetectorStatics] {
+RT_INTERFACE!{static interface IFaceDetectorStatics(IFaceDetectorStaticsVtbl): IInspectable [IID_IFaceDetectorStatics] {
     fn CreateAsync(&self, out: *mut <foundation::IAsyncOperation<FaceDetector> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-graphics")] fn GetSupportedBitmapPixelFormats(&self, out: *mut <foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat> as RtType>::Abi) -> HRESULT,
@@ -17981,7 +17981,7 @@ impl IFaceDetectorStatics {
     }}
 }
 DEFINE_IID!(IID_IFaceTracker, 1806073228, 43073, 17440, 147, 230, 36, 32, 161, 136, 79, 207);
-RT_INTERFACE!{interface IFaceTracker(IFaceTrackerVtbl): IInspectable(IInspectableVtbl) [IID_IFaceTracker] {
+RT_INTERFACE!{interface IFaceTracker(IFaceTrackerVtbl): IInspectable [IID_IFaceTracker] {
     fn ProcessNextFrameAsync(&self, videoFrame: <super::VideoFrame as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IVector<DetectedFace>> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn get_MinDetectableFaceSize(&self, out: *mut super::super::graphics::imaging::BitmapSize) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn put_MinDetectableFaceSize(&self, value: super::super::graphics::imaging::BitmapSize) -> HRESULT,
@@ -18031,7 +18031,7 @@ impl FaceTracker {
 }
 DEFINE_CLSID!(FaceTracker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,70,97,99,101,65,110,97,108,121,115,105,115,46,70,97,99,101,84,114,97,99,107,101,114,0]) [CLSID_FaceTracker]);
 DEFINE_IID!(IID_IFaceTrackerStatics, 3915551128, 6145, 16293, 147, 46, 49, 215, 103, 175, 108, 77);
-RT_INTERFACE!{static interface IFaceTrackerStatics(IFaceTrackerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFaceTrackerStatics] {
+RT_INTERFACE!{static interface IFaceTrackerStatics(IFaceTrackerStaticsVtbl): IInspectable [IID_IFaceTrackerStatics] {
     fn CreateAsync(&self, out: *mut <foundation::IAsyncOperation<FaceTracker> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-graphics")] fn GetSupportedBitmapPixelFormats(&self, out: *mut <foundation::collections::IVectorView<super::super::graphics::imaging::BitmapPixelFormat> as RtType>::Abi) -> HRESULT,
@@ -18077,7 +18077,7 @@ RT_ENUM! { enum PhotoImportContentTypeFilter: i32 {
     OnlyImages = 0, OnlyVideos = 1, ImagesAndVideos = 2, ImagesAndVideosFromCameraRoll = 3,
 }}
 DEFINE_IID!(IID_IPhotoImportDeleteImportedItemsFromSourceResult, 4108391160, 33853, 17034, 161, 166, 129, 81, 2, 146, 176, 174);
-RT_INTERFACE!{interface IPhotoImportDeleteImportedItemsFromSourceResult(IPhotoImportDeleteImportedItemsFromSourceResultVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportDeleteImportedItemsFromSourceResult] {
+RT_INTERFACE!{interface IPhotoImportDeleteImportedItemsFromSourceResult(IPhotoImportDeleteImportedItemsFromSourceResultVtbl): IInspectable [IID_IPhotoImportDeleteImportedItemsFromSourceResult] {
     fn get_Session(&self, out: *mut <PhotoImportSession as RtType>::Abi) -> HRESULT,
     fn get_HasSucceeded(&self, out: *mut bool) -> HRESULT,
     fn get_DeletedItems(&self, out: *mut <foundation::collections::IVectorView<PhotoImportItem> as RtType>::Abi) -> HRESULT,
@@ -18161,7 +18161,7 @@ impl IPhotoImportDeleteImportedItemsFromSourceResult {
 }
 RT_CLASS!{class PhotoImportDeleteImportedItemsFromSourceResult: IPhotoImportDeleteImportedItemsFromSourceResult}
 DEFINE_IID!(IID_IPhotoImportFindItemsResult, 957736519, 27768, 18731, 132, 78, 143, 229, 232, 246, 191, 185);
-RT_INTERFACE!{interface IPhotoImportFindItemsResult(IPhotoImportFindItemsResultVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportFindItemsResult] {
+RT_INTERFACE!{interface IPhotoImportFindItemsResult(IPhotoImportFindItemsResultVtbl): IInspectable [IID_IPhotoImportFindItemsResult] {
     fn get_Session(&self, out: *mut <PhotoImportSession as RtType>::Abi) -> HRESULT,
     fn get_HasSucceeded(&self, out: *mut bool) -> HRESULT,
     fn get_FoundItems(&self, out: *mut <foundation::collections::IVectorView<PhotoImportItem> as RtType>::Abi) -> HRESULT,
@@ -18360,7 +18360,7 @@ impl IPhotoImportFindItemsResult {
 }
 RT_CLASS!{class PhotoImportFindItemsResult: IPhotoImportFindItemsResult}
 DEFINE_IID!(IID_IPhotoImportFindItemsResult2, 4225591867, 60665, 16490, 129, 94, 80, 21, 98, 91, 10, 136);
-RT_INTERFACE!{interface IPhotoImportFindItemsResult2(IPhotoImportFindItemsResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportFindItemsResult2] {
+RT_INTERFACE!{interface IPhotoImportFindItemsResult2(IPhotoImportFindItemsResult2Vtbl): IInspectable [IID_IPhotoImportFindItemsResult2] {
     fn AddItemsInDateRangeToSelection(&self, rangeStart: foundation::DateTime, rangeLength: foundation::TimeSpan) -> HRESULT
 }}
 impl IPhotoImportFindItemsResult2 {
@@ -18370,7 +18370,7 @@ impl IPhotoImportFindItemsResult2 {
     }}
 }
 DEFINE_IID!(IID_IPhotoImportImportItemsResult, 3839161464, 54297, 17475, 168, 78, 240, 106, 133, 12, 11, 0);
-RT_INTERFACE!{interface IPhotoImportImportItemsResult(IPhotoImportImportItemsResultVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportImportItemsResult] {
+RT_INTERFACE!{interface IPhotoImportImportItemsResult(IPhotoImportImportItemsResultVtbl): IInspectable [IID_IPhotoImportImportItemsResult] {
     fn get_Session(&self, out: *mut <PhotoImportSession as RtType>::Abi) -> HRESULT,
     fn get_HasSucceeded(&self, out: *mut bool) -> HRESULT,
     fn get_ImportedItems(&self, out: *mut <foundation::collections::IVectorView<PhotoImportItem> as RtType>::Abi) -> HRESULT,
@@ -18463,7 +18463,7 @@ RT_ENUM! { enum PhotoImportImportMode: i32 {
     ImportEverything = 0, IgnoreSidecars = 1, IgnoreSiblings = 2, IgnoreSidecarsAndSiblings = 3,
 }}
 DEFINE_IID!(IID_IPhotoImportItem, 2849013366, 39932, 17336, 179, 86, 99, 59, 106, 152, 140, 158);
-RT_INTERFACE!{interface IPhotoImportItem(IPhotoImportItemVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportItem] {
+RT_INTERFACE!{interface IPhotoImportItem(IPhotoImportItemVtbl): IInspectable [IID_IPhotoImportItem] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ItemKey(&self, out: *mut u64) -> HRESULT,
     fn get_ContentType(&self, out: *mut PhotoImportContentType) -> HRESULT,
@@ -18547,7 +18547,7 @@ impl IPhotoImportItem {
 }
 RT_CLASS!{class PhotoImportItem: IPhotoImportItem}
 DEFINE_IID!(IID_IPhotoImportItem2, 4043650309, 62779, 18083, 158, 48, 54, 16, 121, 26, 145, 16);
-RT_INTERFACE!{interface IPhotoImportItem2(IPhotoImportItem2Vtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportItem2] {
+RT_INTERFACE!{interface IPhotoImportItem2(IPhotoImportItem2Vtbl): IInspectable [IID_IPhotoImportItem2] {
     fn get_Path(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IPhotoImportItem2 {
@@ -18558,7 +18558,7 @@ impl IPhotoImportItem2 {
     }}
 }
 DEFINE_IID!(IID_IPhotoImportItemImportedEventArgs, 1120612317, 32104, 18357, 188, 124, 206, 183, 62, 12, 119, 220);
-RT_INTERFACE!{interface IPhotoImportItemImportedEventArgs(IPhotoImportItemImportedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportItemImportedEventArgs] {
+RT_INTERFACE!{interface IPhotoImportItemImportedEventArgs(IPhotoImportItemImportedEventArgsVtbl): IInspectable [IID_IPhotoImportItemImportedEventArgs] {
     fn get_ImportedItem(&self, out: *mut <PhotoImportItem as RtType>::Abi) -> HRESULT
 }}
 impl IPhotoImportItemImportedEventArgs {
@@ -18587,7 +18587,7 @@ impl PhotoImportManager {
 }
 DEFINE_CLSID!(PhotoImportManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,73,109,112,111,114,116,46,80,104,111,116,111,73,109,112,111,114,116,77,97,110,97,103,101,114,0]) [CLSID_PhotoImportManager]);
 DEFINE_IID!(IID_IPhotoImportManagerStatics, 661753917, 41030, 20230, 155, 156, 191, 214, 98, 232, 50, 135);
-RT_INTERFACE!{static interface IPhotoImportManagerStatics(IPhotoImportManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportManagerStatics] {
+RT_INTERFACE!{static interface IPhotoImportManagerStatics(IPhotoImportManagerStaticsVtbl): IInspectable [IID_IPhotoImportManagerStatics] {
     fn IsSupportedAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn FindAllSourcesAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<PhotoImportSource>> as RtType>::Abi) -> HRESULT,
     fn GetPendingOperations(&self, out: *mut <foundation::collections::IVectorView<PhotoImportOperation> as RtType>::Abi) -> HRESULT
@@ -18610,7 +18610,7 @@ impl IPhotoImportManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IPhotoImportOperation, 3656882148, 41114, 20196, 164, 177, 32, 148, 2, 119, 165, 190);
-RT_INTERFACE!{interface IPhotoImportOperation(IPhotoImportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportOperation] {
+RT_INTERFACE!{interface IPhotoImportOperation(IPhotoImportOperationVtbl): IInspectable [IID_IPhotoImportOperation] {
     fn get_Stage(&self, out: *mut PhotoImportStage) -> HRESULT,
     fn get_Session(&self, out: *mut <PhotoImportSession as RtType>::Abi) -> HRESULT,
     fn get_ContinueFindingItemsAsync(&self, out: *mut <foundation::IAsyncOperationWithProgress<PhotoImportFindItemsResult, u32> as RtType>::Abi) -> HRESULT,
@@ -18652,7 +18652,7 @@ RT_STRUCT! { struct PhotoImportProgress {
     ItemsImported: u32, TotalItemsToImport: u32, BytesImported: u64, TotalBytesToImport: u64, ImportProgress: f64,
 }}
 DEFINE_IID!(IID_IPhotoImportSelectionChangedEventArgs, 273028994, 64157, 19504, 139, 201, 77, 100, 145, 21, 114, 213);
-RT_INTERFACE!{interface IPhotoImportSelectionChangedEventArgs(IPhotoImportSelectionChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportSelectionChangedEventArgs] {
+RT_INTERFACE!{interface IPhotoImportSelectionChangedEventArgs(IPhotoImportSelectionChangedEventArgsVtbl): IInspectable [IID_IPhotoImportSelectionChangedEventArgs] {
     fn get_IsSelectionEmpty(&self, out: *mut bool) -> HRESULT
 }}
 impl IPhotoImportSelectionChangedEventArgs {
@@ -18664,7 +18664,7 @@ impl IPhotoImportSelectionChangedEventArgs {
 }
 RT_CLASS!{class PhotoImportSelectionChangedEventArgs: IPhotoImportSelectionChangedEventArgs}
 DEFINE_IID!(IID_IPhotoImportSession, 2858652014, 60635, 20222, 148, 198, 95, 92, 175, 227, 76, 251);
-RT_INTERFACE!{interface IPhotoImportSession(IPhotoImportSessionVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportSession] {
+RT_INTERFACE!{interface IPhotoImportSession(IPhotoImportSessionVtbl): IInspectable [IID_IPhotoImportSession] {
     fn get_Source(&self, out: *mut <PhotoImportSource as RtType>::Abi) -> HRESULT,
     fn get_SessionId(&self, out: *mut Guid) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -18734,7 +18734,7 @@ impl IPhotoImportSession {
 }
 RT_CLASS!{class PhotoImportSession: IPhotoImportSession}
 DEFINE_IID!(IID_IPhotoImportSession2, 710043408, 16070, 18077, 163, 117, 43, 159, 71, 133, 57, 30);
-RT_INTERFACE!{interface IPhotoImportSession2(IPhotoImportSession2Vtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportSession2] {
+RT_INTERFACE!{interface IPhotoImportSession2(IPhotoImportSession2Vtbl): IInspectable [IID_IPhotoImportSession2] {
     fn put_SubfolderDateFormat(&self, value: PhotoImportSubfolderDateFormat) -> HRESULT,
     fn get_SubfolderDateFormat(&self, out: *mut PhotoImportSubfolderDateFormat) -> HRESULT,
     fn put_RememberDeselectedItems(&self, value: bool) -> HRESULT,
@@ -18761,7 +18761,7 @@ impl IPhotoImportSession2 {
     }}
 }
 DEFINE_IID!(IID_IPhotoImportSidecar, 1188550487, 63490, 17607, 156, 152, 122, 113, 244, 188, 20, 134);
-RT_INTERFACE!{interface IPhotoImportSidecar(IPhotoImportSidecarVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportSidecar] {
+RT_INTERFACE!{interface IPhotoImportSidecar(IPhotoImportSidecarVtbl): IInspectable [IID_IPhotoImportSidecar] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SizeInBytes(&self, out: *mut u64) -> HRESULT,
     fn get_Date(&self, out: *mut foundation::DateTime) -> HRESULT
@@ -18785,7 +18785,7 @@ impl IPhotoImportSidecar {
 }
 RT_CLASS!{class PhotoImportSidecar: IPhotoImportSidecar}
 DEFINE_IID!(IID_IPhotoImportSource, 529441630, 5211, 19670, 135, 241, 84, 150, 90, 152, 47, 239);
-RT_INTERFACE!{interface IPhotoImportSource(IPhotoImportSourceVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportSource] {
+RT_INTERFACE!{interface IPhotoImportSource(IPhotoImportSourceVtbl): IInspectable [IID_IPhotoImportSource] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Description(&self, out: *mut HSTRING) -> HRESULT,
@@ -18904,7 +18904,7 @@ impl PhotoImportSource {
 }
 DEFINE_CLSID!(PhotoImportSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,73,109,112,111,114,116,46,80,104,111,116,111,73,109,112,111,114,116,83,111,117,114,99,101,0]) [CLSID_PhotoImportSource]);
 DEFINE_IID!(IID_IPhotoImportSourceStatics, 86566278, 13016, 18044, 140, 238, 35, 161, 178, 244, 62, 133);
-RT_INTERFACE!{static interface IPhotoImportSourceStatics(IPhotoImportSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportSourceStatics] {
+RT_INTERFACE!{static interface IPhotoImportSourceStatics(IPhotoImportSourceStaticsVtbl): IInspectable [IID_IPhotoImportSourceStatics] {
     fn FromIdAsync(&self, sourceId: HSTRING, out: *mut <foundation::IAsyncOperation<PhotoImportSource> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn FromFolderAsync(&self, sourceRootFolder: <super::super::storage::IStorageFolder as RtType>::Abi, out: *mut <foundation::IAsyncOperation<PhotoImportSource> as RtType>::Abi) -> HRESULT
 }}
@@ -18927,7 +18927,7 @@ RT_ENUM! { enum PhotoImportStage: i32 {
     NotStarted = 0, FindingItems = 1, ImportingItems = 2, DeletingImportedItemsFromSource = 3,
 }}
 DEFINE_IID!(IID_IPhotoImportStorageMedium, 4072255635, 64645, 18559, 135, 194, 88, 214, 117, 208, 91, 7);
-RT_INTERFACE!{interface IPhotoImportStorageMedium(IPhotoImportStorageMediumVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportStorageMedium] {
+RT_INTERFACE!{interface IPhotoImportStorageMedium(IPhotoImportStorageMediumVtbl): IInspectable [IID_IPhotoImportStorageMedium] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Description(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SerialNumber(&self, out: *mut HSTRING) -> HRESULT,
@@ -18989,7 +18989,7 @@ RT_ENUM! { enum PhotoImportSubfolderDateFormat: i32 {
     Year = 0, YearMonth = 1, YearMonthDay = 2,
 }}
 DEFINE_IID!(IID_IPhotoImportVideoSegment, 1648099977, 12826, 16856, 145, 102, 140, 98, 163, 51, 39, 108);
-RT_INTERFACE!{interface IPhotoImportVideoSegment(IPhotoImportVideoSegmentVtbl): IInspectable(IInspectableVtbl) [IID_IPhotoImportVideoSegment] {
+RT_INTERFACE!{interface IPhotoImportVideoSegment(IPhotoImportVideoSegmentVtbl): IInspectable [IID_IPhotoImportVideoSegment] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SizeInBytes(&self, out: *mut u64) -> HRESULT,
     fn get_Date(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -19028,7 +19028,7 @@ RT_CLASS!{class PhotoImportVideoSegment: IPhotoImportVideoSegment}
 pub mod mediaproperties { // Windows.Media.MediaProperties
 use crate::prelude::*;
 DEFINE_IID!(IID_IAudioEncodingProperties, 1656519190, 92, 19259, 138, 11, 10, 9, 14, 150, 135, 243);
-RT_INTERFACE!{interface IAudioEncodingProperties(IAudioEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEncodingProperties] {
+RT_INTERFACE!{interface IAudioEncodingProperties(IAudioEncodingPropertiesVtbl): IInspectable [IID_IAudioEncodingProperties] {
     fn put_Bitrate(&self, value: u32) -> HRESULT,
     fn get_Bitrate(&self, out: *mut u32) -> HRESULT,
     fn put_ChannelCount(&self, value: u32) -> HRESULT,
@@ -19105,7 +19105,7 @@ impl AudioEncodingProperties {
 }
 DEFINE_CLSID!(AudioEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,65,117,100,105,111,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_AudioEncodingProperties]);
 DEFINE_IID!(IID_IAudioEncodingProperties2, 3294450906, 32957, 19491, 128, 213, 114, 212, 161, 129, 232, 148);
-RT_INTERFACE!{interface IAudioEncodingProperties2(IAudioEncodingProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioEncodingProperties2] {
+RT_INTERFACE!{interface IAudioEncodingProperties2(IAudioEncodingProperties2Vtbl): IInspectable [IID_IAudioEncodingProperties2] {
     fn get_IsSpatial(&self, out: *mut bool) -> HRESULT
 }}
 impl IAudioEncodingProperties2 {
@@ -19116,7 +19116,7 @@ impl IAudioEncodingProperties2 {
     }}
 }
 DEFINE_IID!(IID_IAudioEncodingProperties3, 2271216449, 29836, 20365, 176, 253, 16, 202, 240, 143, 240, 135);
-RT_INTERFACE!{interface IAudioEncodingProperties3(IAudioEncodingProperties3Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioEncodingProperties3] {
+RT_INTERFACE!{interface IAudioEncodingProperties3(IAudioEncodingProperties3Vtbl): IInspectable [IID_IAudioEncodingProperties3] {
     fn Copy(&self, out: *mut <AudioEncodingProperties as RtType>::Abi) -> HRESULT
 }}
 impl IAudioEncodingProperties3 {
@@ -19127,7 +19127,7 @@ impl IAudioEncodingProperties3 {
     }}
 }
 DEFINE_IID!(IID_IAudioEncodingPropertiesStatics, 212677420, 60393, 17703, 179, 109, 228, 42, 19, 207, 56, 219);
-RT_INTERFACE!{static interface IAudioEncodingPropertiesStatics(IAudioEncodingPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEncodingPropertiesStatics] {
+RT_INTERFACE!{static interface IAudioEncodingPropertiesStatics(IAudioEncodingPropertiesStaticsVtbl): IInspectable [IID_IAudioEncodingPropertiesStatics] {
     fn CreateAac(&self, sampleRate: u32, channelCount: u32, bitrate: u32, out: *mut <AudioEncodingProperties as RtType>::Abi) -> HRESULT,
     fn CreateAacAdts(&self, sampleRate: u32, channelCount: u32, bitrate: u32, out: *mut <AudioEncodingProperties as RtType>::Abi) -> HRESULT,
     fn CreateMp3(&self, sampleRate: u32, channelCount: u32, bitrate: u32, out: *mut <AudioEncodingProperties as RtType>::Abi) -> HRESULT,
@@ -19162,7 +19162,7 @@ impl IAudioEncodingPropertiesStatics {
     }}
 }
 DEFINE_IID!(IID_IAudioEncodingPropertiesStatics2, 1955148143, 30624, 17213, 142, 213, 64, 64, 40, 14, 134, 101);
-RT_INTERFACE!{static interface IAudioEncodingPropertiesStatics2(IAudioEncodingPropertiesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IAudioEncodingPropertiesStatics2] {
+RT_INTERFACE!{static interface IAudioEncodingPropertiesStatics2(IAudioEncodingPropertiesStatics2Vtbl): IInspectable [IID_IAudioEncodingPropertiesStatics2] {
     fn CreateAlac(&self, sampleRate: u32, channelCount: u32, bitsPerSample: u32, out: *mut <AudioEncodingProperties as RtType>::Abi) -> HRESULT,
     fn CreateFlac(&self, sampleRate: u32, channelCount: u32, bitsPerSample: u32, out: *mut <AudioEncodingProperties as RtType>::Abi) -> HRESULT
 }}
@@ -19179,7 +19179,7 @@ impl IAudioEncodingPropertiesStatics2 {
     }}
 }
 DEFINE_IID!(IID_IAudioEncodingPropertiesWithFormatUserData, 2565934457, 5098, 18943, 190, 112, 38, 115, 219, 105, 112, 44);
-RT_INTERFACE!{interface IAudioEncodingPropertiesWithFormatUserData(IAudioEncodingPropertiesWithFormatUserDataVtbl): IInspectable(IInspectableVtbl) [IID_IAudioEncodingPropertiesWithFormatUserData] {
+RT_INTERFACE!{interface IAudioEncodingPropertiesWithFormatUserData(IAudioEncodingPropertiesWithFormatUserDataVtbl): IInspectable [IID_IAudioEncodingPropertiesWithFormatUserData] {
     fn SetFormatUserData(&self, valueSize: u32, value: *mut u8) -> HRESULT,
     fn GetFormatUserData(&self, valueSize: *mut u32, value: *mut *mut u8) -> HRESULT
 }}
@@ -19198,14 +19198,14 @@ RT_ENUM! { enum AudioEncodingQuality: i32 {
     Auto = 0, High = 1, Medium = 2, Low = 3,
 }}
 DEFINE_IID!(IID_IContainerEncodingProperties, 1504455255, 45866, 18334, 138, 97, 75, 127, 46, 158, 126, 160);
-RT_INTERFACE!{interface IContainerEncodingProperties(IContainerEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IContainerEncodingProperties] {
+RT_INTERFACE!{interface IContainerEncodingProperties(IContainerEncodingPropertiesVtbl): IInspectable [IID_IContainerEncodingProperties] {
     
 }}
 RT_CLASS!{class ContainerEncodingProperties: IContainerEncodingProperties}
 impl RtActivatable<IActivationFactory> for ContainerEncodingProperties {}
 DEFINE_CLSID!(ContainerEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,67,111,110,116,97,105,110,101,114,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ContainerEncodingProperties]);
 DEFINE_IID!(IID_IContainerEncodingProperties2, 2993864745, 44582, 18457, 186, 173, 173, 122, 73, 176, 168, 118);
-RT_INTERFACE!{interface IContainerEncodingProperties2(IContainerEncodingProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IContainerEncodingProperties2] {
+RT_INTERFACE!{interface IContainerEncodingProperties2(IContainerEncodingProperties2Vtbl): IInspectable [IID_IContainerEncodingProperties2] {
     fn Copy(&self, out: *mut <ContainerEncodingProperties as RtType>::Abi) -> HRESULT
 }}
 impl IContainerEncodingProperties2 {
@@ -19251,7 +19251,7 @@ impl H264ProfileIds {
 }
 DEFINE_CLSID!(H264ProfileIds(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,72,50,54,52,80,114,111,102,105,108,101,73,100,115,0]) [CLSID_H264ProfileIds]);
 DEFINE_IID!(IID_IH264ProfileIdsStatics, 946162855, 33898, 20375, 162, 229, 195, 161, 91, 191, 112, 253);
-RT_INTERFACE!{static interface IH264ProfileIdsStatics(IH264ProfileIdsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IH264ProfileIdsStatics] {
+RT_INTERFACE!{static interface IH264ProfileIdsStatics(IH264ProfileIdsStaticsVtbl): IInspectable [IID_IH264ProfileIdsStatics] {
     fn get_ConstrainedBaseline(&self, out: *mut i32) -> HRESULT,
     fn get_Baseline(&self, out: *mut i32) -> HRESULT,
     fn get_Extended(&self, out: *mut i32) -> HRESULT,
@@ -19316,7 +19316,7 @@ impl IH264ProfileIdsStatics {
     }}
 }
 DEFINE_IID!(IID_IImageEncodingProperties, 2019710517, 62257, 16777, 177, 195, 180, 141, 90, 224, 52, 241);
-RT_INTERFACE!{interface IImageEncodingProperties(IImageEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IImageEncodingProperties] {
+RT_INTERFACE!{interface IImageEncodingProperties(IImageEncodingPropertiesVtbl): IInspectable [IID_IImageEncodingProperties] {
     fn put_Width(&self, value: u32) -> HRESULT,
     fn get_Width(&self, out: *mut u32) -> HRESULT,
     fn put_Height(&self, value: u32) -> HRESULT,
@@ -19369,7 +19369,7 @@ impl ImageEncodingProperties {
 }
 DEFINE_CLSID!(ImageEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,73,109,97,103,101,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_ImageEncodingProperties]);
 DEFINE_IID!(IID_IImageEncodingProperties2, 3360989919, 51491, 18075, 172, 142, 106, 159, 60, 28, 217, 227);
-RT_INTERFACE!{interface IImageEncodingProperties2(IImageEncodingProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IImageEncodingProperties2] {
+RT_INTERFACE!{interface IImageEncodingProperties2(IImageEncodingProperties2Vtbl): IInspectable [IID_IImageEncodingProperties2] {
     fn Copy(&self, out: *mut <ImageEncodingProperties as RtType>::Abi) -> HRESULT
 }}
 impl IImageEncodingProperties2 {
@@ -19380,7 +19380,7 @@ impl IImageEncodingProperties2 {
     }}
 }
 DEFINE_IID!(IID_IImageEncodingPropertiesStatics, 628910300, 35737, 17310, 170, 89, 145, 58, 54, 22, 18, 151);
-RT_INTERFACE!{static interface IImageEncodingPropertiesStatics(IImageEncodingPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IImageEncodingPropertiesStatics] {
+RT_INTERFACE!{static interface IImageEncodingPropertiesStatics(IImageEncodingPropertiesStaticsVtbl): IInspectable [IID_IImageEncodingPropertiesStatics] {
     fn CreateJpeg(&self, out: *mut <ImageEncodingProperties as RtType>::Abi) -> HRESULT,
     fn CreatePng(&self, out: *mut <ImageEncodingProperties as RtType>::Abi) -> HRESULT,
     fn CreateJpegXR(&self, out: *mut <ImageEncodingProperties as RtType>::Abi) -> HRESULT
@@ -19403,7 +19403,7 @@ impl IImageEncodingPropertiesStatics {
     }}
 }
 DEFINE_IID!(IID_IImageEncodingPropertiesStatics2, 4139932457, 14372, 18096, 149, 110, 80, 19, 41, 225, 190, 60);
-RT_INTERFACE!{static interface IImageEncodingPropertiesStatics2(IImageEncodingPropertiesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IImageEncodingPropertiesStatics2] {
+RT_INTERFACE!{static interface IImageEncodingPropertiesStatics2(IImageEncodingPropertiesStatics2Vtbl): IInspectable [IID_IImageEncodingPropertiesStatics2] {
     fn CreateUncompressed(&self, format: MediaPixelFormat, out: *mut <ImageEncodingProperties as RtType>::Abi) -> HRESULT,
     fn CreateBmp(&self, out: *mut <ImageEncodingProperties as RtType>::Abi) -> HRESULT
 }}
@@ -19420,7 +19420,7 @@ impl IImageEncodingPropertiesStatics2 {
     }}
 }
 DEFINE_IID!(IID_IImageEncodingPropertiesStatics3, 1223983437, 41727, 18652, 142, 160, 233, 6, 128, 102, 54, 86);
-RT_INTERFACE!{static interface IImageEncodingPropertiesStatics3(IImageEncodingPropertiesStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IImageEncodingPropertiesStatics3] {
+RT_INTERFACE!{static interface IImageEncodingPropertiesStatics3(IImageEncodingPropertiesStatics3Vtbl): IInspectable [IID_IImageEncodingPropertiesStatics3] {
     fn CreateHeif(&self, out: *mut <ImageEncodingProperties as RtType>::Abi) -> HRESULT
 }}
 impl IImageEncodingPropertiesStatics3 {
@@ -19431,7 +19431,7 @@ impl IImageEncodingPropertiesStatics3 {
     }}
 }
 DEFINE_IID!(IID_IMediaEncodingProfile, 3889952168, 7609, 18307, 135, 107, 61, 254, 18, 172, 253, 179);
-RT_INTERFACE!{interface IMediaEncodingProfile(IMediaEncodingProfileVtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingProfile] {
+RT_INTERFACE!{interface IMediaEncodingProfile(IMediaEncodingProfileVtbl): IInspectable [IID_IMediaEncodingProfile] {
     fn put_Audio(&self, value: <AudioEncodingProperties as RtType>::Abi) -> HRESULT,
     fn get_Audio(&self, out: *mut <AudioEncodingProperties as RtType>::Abi) -> HRESULT,
     fn put_Video(&self, value: <VideoEncodingProperties as RtType>::Abi) -> HRESULT,
@@ -19513,7 +19513,7 @@ impl MediaEncodingProfile {
 }
 DEFINE_CLSID!(MediaEncodingProfile(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,69,110,99,111,100,105,110,103,80,114,111,102,105,108,101,0]) [CLSID_MediaEncodingProfile]);
 DEFINE_IID!(IID_IMediaEncodingProfile2, 882589194, 16437, 18574, 152, 119, 133, 99, 40, 101, 237, 16);
-RT_INTERFACE!{interface IMediaEncodingProfile2(IMediaEncodingProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingProfile2] {
+RT_INTERFACE!{interface IMediaEncodingProfile2(IMediaEncodingProfile2Vtbl): IInspectable [IID_IMediaEncodingProfile2] {
     fn SetAudioTracks(&self, value: <foundation::collections::IIterable<super::core::AudioStreamDescriptor> as RtType>::Abi) -> HRESULT,
     fn GetAudioTracks(&self, out: *mut <foundation::collections::IVector<super::core::AudioStreamDescriptor> as RtType>::Abi) -> HRESULT,
     fn SetVideoTracks(&self, value: <foundation::collections::IIterable<super::core::VideoStreamDescriptor> as RtType>::Abi) -> HRESULT,
@@ -19540,7 +19540,7 @@ impl IMediaEncodingProfile2 {
     }}
 }
 DEFINE_IID!(IID_IMediaEncodingProfile3, 3127819912, 30064, 20073, 172, 207, 86, 17, 173, 1, 95, 136);
-RT_INTERFACE!{interface IMediaEncodingProfile3(IMediaEncodingProfile3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingProfile3] {
+RT_INTERFACE!{interface IMediaEncodingProfile3(IMediaEncodingProfile3Vtbl): IInspectable [IID_IMediaEncodingProfile3] {
     fn SetTimedMetadataTracks(&self, value: <foundation::collections::IIterable<super::core::TimedMetadataStreamDescriptor> as RtType>::Abi) -> HRESULT,
     fn GetTimedMetadataTracks(&self, out: *mut <foundation::collections::IVector<super::core::TimedMetadataStreamDescriptor> as RtType>::Abi) -> HRESULT
 }}
@@ -19556,7 +19556,7 @@ impl IMediaEncodingProfile3 {
     }}
 }
 DEFINE_IID!(IID_IMediaEncodingProfileStatics, 427767084, 11998, 19013, 168, 150, 129, 122, 72, 84, 248, 254);
-RT_INTERFACE!{static interface IMediaEncodingProfileStatics(IMediaEncodingProfileStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingProfileStatics] {
+RT_INTERFACE!{static interface IMediaEncodingProfileStatics(IMediaEncodingProfileStaticsVtbl): IInspectable [IID_IMediaEncodingProfileStatics] {
     fn CreateM4a(&self, quality: AudioEncodingQuality, out: *mut <MediaEncodingProfile as RtType>::Abi) -> HRESULT,
     fn CreateMp3(&self, quality: AudioEncodingQuality, out: *mut <MediaEncodingProfile as RtType>::Abi) -> HRESULT,
     fn CreateWma(&self, quality: AudioEncodingQuality, out: *mut <MediaEncodingProfile as RtType>::Abi) -> HRESULT,
@@ -19603,7 +19603,7 @@ impl IMediaEncodingProfileStatics {
     }}
 }
 DEFINE_IID!(IID_IMediaEncodingProfileStatics2, 3465406287, 27380, 17032, 143, 226, 121, 173, 241, 247, 154, 67);
-RT_INTERFACE!{static interface IMediaEncodingProfileStatics2(IMediaEncodingProfileStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingProfileStatics2] {
+RT_INTERFACE!{static interface IMediaEncodingProfileStatics2(IMediaEncodingProfileStatics2Vtbl): IInspectable [IID_IMediaEncodingProfileStatics2] {
     fn CreateWav(&self, quality: AudioEncodingQuality, out: *mut <MediaEncodingProfile as RtType>::Abi) -> HRESULT,
     fn CreateAvi(&self, quality: VideoEncodingQuality, out: *mut <MediaEncodingProfile as RtType>::Abi) -> HRESULT
 }}
@@ -19620,7 +19620,7 @@ impl IMediaEncodingProfileStatics2 {
     }}
 }
 DEFINE_IID!(IID_IMediaEncodingProfileStatics3, 2430256554, 53110, 17044, 169, 237, 26, 20, 32, 245, 31, 107);
-RT_INTERFACE!{static interface IMediaEncodingProfileStatics3(IMediaEncodingProfileStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingProfileStatics3] {
+RT_INTERFACE!{static interface IMediaEncodingProfileStatics3(IMediaEncodingProfileStatics3Vtbl): IInspectable [IID_IMediaEncodingProfileStatics3] {
     fn CreateAlac(&self, quality: AudioEncodingQuality, out: *mut <MediaEncodingProfile as RtType>::Abi) -> HRESULT,
     fn CreateFlac(&self, quality: AudioEncodingQuality, out: *mut <MediaEncodingProfile as RtType>::Abi) -> HRESULT,
     fn CreateHevc(&self, quality: VideoEncodingQuality, out: *mut <MediaEncodingProfile as RtType>::Abi) -> HRESULT
@@ -19643,7 +19643,7 @@ impl IMediaEncodingProfileStatics3 {
     }}
 }
 DEFINE_IID!(IID_IMediaEncodingProperties, 3019909878, 44244, 20058, 162, 75, 93, 116, 152, 168, 184, 196);
-RT_INTERFACE!{interface IMediaEncodingProperties(IMediaEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingProperties] {
+RT_INTERFACE!{interface IMediaEncodingProperties(IMediaEncodingPropertiesVtbl): IInspectable [IID_IMediaEncodingProperties] {
     fn get_Properties(&self, out: *mut <MediaPropertySet as RtType>::Abi) -> HRESULT,
     fn get_Type(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Subtype(&self, value: HSTRING) -> HRESULT,
@@ -19824,7 +19824,7 @@ impl MediaEncodingSubtypes {
 }
 DEFINE_CLSID!(MediaEncodingSubtypes(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,69,110,99,111,100,105,110,103,83,117,98,116,121,112,101,115,0]) [CLSID_MediaEncodingSubtypes]);
 DEFINE_IID!(IID_IMediaEncodingSubtypesStatics, 934696974, 41329, 17508, 186, 90, 83, 24, 158, 72, 193, 200);
-RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics(IMediaEncodingSubtypesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingSubtypesStatics] {
+RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics(IMediaEncodingSubtypesStaticsVtbl): IInspectable [IID_IMediaEncodingSubtypesStatics] {
     fn get_Aac(&self, out: *mut HSTRING) -> HRESULT,
     fn get_AacAdts(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Ac3(&self, out: *mut HSTRING) -> HRESULT,
@@ -20069,7 +20069,7 @@ impl IMediaEncodingSubtypesStatics {
     }}
 }
 DEFINE_IID!(IID_IMediaEncodingSubtypesStatics2, 1266471485, 17151, 19763, 133, 49, 6, 38, 190, 228, 181, 45);
-RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics2(IMediaEncodingSubtypesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingSubtypesStatics2] {
+RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics2(IMediaEncodingSubtypesStatics2Vtbl): IInspectable [IID_IMediaEncodingSubtypesStatics2] {
     fn get_Vp9(&self, out: *mut HSTRING) -> HRESULT,
     fn get_L8(&self, out: *mut HSTRING) -> HRESULT,
     fn get_L16(&self, out: *mut HSTRING) -> HRESULT,
@@ -20098,7 +20098,7 @@ impl IMediaEncodingSubtypesStatics2 {
     }}
 }
 DEFINE_IID!(IID_IMediaEncodingSubtypesStatics3, 3122926820, 34877, 17998, 164, 79, 9, 125, 160, 142, 247, 255);
-RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics3(IMediaEncodingSubtypesStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingSubtypesStatics3] {
+RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics3(IMediaEncodingSubtypesStatics3Vtbl): IInspectable [IID_IMediaEncodingSubtypesStatics3] {
     fn get_Alac(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Flac(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -20115,7 +20115,7 @@ impl IMediaEncodingSubtypesStatics3 {
     }}
 }
 DEFINE_IID!(IID_IMediaEncodingSubtypesStatics4, 3723289994, 14665, 17988, 138, 44, 89, 239, 2, 198, 66, 250);
-RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics4(IMediaEncodingSubtypesStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingSubtypesStatics4] {
+RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics4(IMediaEncodingSubtypesStatics4Vtbl): IInspectable [IID_IMediaEncodingSubtypesStatics4] {
     fn get_P010(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IMediaEncodingSubtypesStatics4 {
@@ -20126,7 +20126,7 @@ impl IMediaEncodingSubtypesStatics4 {
     }}
 }
 DEFINE_IID!(IID_IMediaEncodingSubtypesStatics5, 1523884039, 65486, 18272, 152, 40, 93, 12, 153, 99, 126, 106);
-RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics5(IMediaEncodingSubtypesStatics5Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaEncodingSubtypesStatics5] {
+RT_INTERFACE!{static interface IMediaEncodingSubtypesStatics5(IMediaEncodingSubtypesStatics5Vtbl): IInspectable [IID_IMediaEncodingSubtypesStatics5] {
     fn get_Heif(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IMediaEncodingSubtypesStatics5 {
@@ -20146,7 +20146,7 @@ RT_CLASS!{class MediaPropertySet: foundation::collections::IMap<Guid, IInspectab
 impl RtActivatable<IActivationFactory> for MediaPropertySet {}
 DEFINE_CLSID!(MediaPropertySet(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,101,100,105,97,80,114,111,112,101,114,116,121,83,101,116,0]) [CLSID_MediaPropertySet]);
 DEFINE_IID!(IID_IMediaRatio, 3536912101, 35113, 16413, 172, 120, 125, 53, 126, 55, 129, 99);
-RT_INTERFACE!{interface IMediaRatio(IMediaRatioVtbl): IInspectable(IInspectableVtbl) [IID_IMediaRatio] {
+RT_INTERFACE!{interface IMediaRatio(IMediaRatioVtbl): IInspectable [IID_IMediaRatio] {
     fn put_Numerator(&self, value: u32) -> HRESULT,
     fn get_Numerator(&self, out: *mut u32) -> HRESULT,
     fn put_Denominator(&self, value: u32) -> HRESULT,
@@ -20200,7 +20200,7 @@ impl Mpeg2ProfileIds {
 }
 DEFINE_CLSID!(Mpeg2ProfileIds(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,77,112,101,103,50,80,114,111,102,105,108,101,73,100,115,0]) [CLSID_Mpeg2ProfileIds]);
 DEFINE_IID!(IID_IMpeg2ProfileIdsStatics, 2757885829, 58746, 16680, 155, 33, 213, 51, 27, 4, 35, 92);
-RT_INTERFACE!{static interface IMpeg2ProfileIdsStatics(IMpeg2ProfileIdsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMpeg2ProfileIdsStatics] {
+RT_INTERFACE!{static interface IMpeg2ProfileIdsStatics(IMpeg2ProfileIdsStaticsVtbl): IInspectable [IID_IMpeg2ProfileIdsStatics] {
     fn get_Simple(&self, out: *mut i32) -> HRESULT,
     fn get_Main(&self, out: *mut i32) -> HRESULT,
     fn get_SignalNoiseRatioScalable(&self, out: *mut i32) -> HRESULT,
@@ -20241,7 +20241,7 @@ RT_ENUM! { enum StereoscopicVideoPackingMode: i32 {
     None = 0, SideBySide = 1, TopBottom = 2,
 }}
 DEFINE_IID!(IID_ITimedMetadataEncodingProperties, 1372401875, 54928, 19706, 151, 244, 74, 57, 142, 157, 180, 32);
-RT_INTERFACE!{interface ITimedMetadataEncodingProperties(ITimedMetadataEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataEncodingProperties] {
+RT_INTERFACE!{interface ITimedMetadataEncodingProperties(ITimedMetadataEncodingPropertiesVtbl): IInspectable [IID_ITimedMetadataEncodingProperties] {
     fn SetFormatUserData(&self, valueSize: u32, value: *mut u8) -> HRESULT,
     fn GetFormatUserData(&self, valueSize: *mut u32, value: *mut *mut u8) -> HRESULT,
     fn Copy(&self, out: *mut <TimedMetadataEncodingProperties as RtType>::Abi) -> HRESULT
@@ -20266,7 +20266,7 @@ RT_CLASS!{class TimedMetadataEncodingProperties: IMediaEncodingProperties}
 impl RtActivatable<IActivationFactory> for TimedMetadataEncodingProperties {}
 DEFINE_CLSID!(TimedMetadataEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,84,105,109,101,100,77,101,116,97,100,97,116,97,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_TimedMetadataEncodingProperties]);
 DEFINE_IID!(IID_IVideoEncodingProperties, 1995336858, 14274, 20266, 136, 10, 18, 130, 187, 180, 55, 61);
-RT_INTERFACE!{interface IVideoEncodingProperties(IVideoEncodingPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IVideoEncodingProperties] {
+RT_INTERFACE!{interface IVideoEncodingProperties(IVideoEncodingPropertiesVtbl): IInspectable [IID_IVideoEncodingProperties] {
     fn put_Bitrate(&self, value: u32) -> HRESULT,
     fn get_Bitrate(&self, out: *mut u32) -> HRESULT,
     fn put_Width(&self, value: u32) -> HRESULT,
@@ -20335,7 +20335,7 @@ impl VideoEncodingProperties {
 }
 DEFINE_CLSID!(VideoEncodingProperties(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,77,101,100,105,97,80,114,111,112,101,114,116,105,101,115,46,86,105,100,101,111,69,110,99,111,100,105,110,103,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_VideoEncodingProperties]);
 DEFINE_IID!(IID_IVideoEncodingProperties2, 4148404719, 54373, 17040, 169, 75, 239, 15, 21, 40, 248, 227);
-RT_INTERFACE!{interface IVideoEncodingProperties2(IVideoEncodingProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoEncodingProperties2] {
+RT_INTERFACE!{interface IVideoEncodingProperties2(IVideoEncodingProperties2Vtbl): IInspectable [IID_IVideoEncodingProperties2] {
     fn SetFormatUserData(&self, valueSize: u32, value: *mut u8) -> HRESULT,
     fn GetFormatUserData(&self, valueSize: *mut u32, value: *mut *mut u8) -> HRESULT,
     fn put_ProfileId(&self, value: i32) -> HRESULT,
@@ -20362,7 +20362,7 @@ impl IVideoEncodingProperties2 {
     }}
 }
 DEFINE_IID!(IID_IVideoEncodingProperties3, 946589124, 34618, 18335, 179, 235, 86, 193, 252, 190, 198, 215);
-RT_INTERFACE!{interface IVideoEncodingProperties3(IVideoEncodingProperties3Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoEncodingProperties3] {
+RT_INTERFACE!{interface IVideoEncodingProperties3(IVideoEncodingProperties3Vtbl): IInspectable [IID_IVideoEncodingProperties3] {
     fn get_StereoscopicVideoPackingMode(&self, out: *mut StereoscopicVideoPackingMode) -> HRESULT
 }}
 impl IVideoEncodingProperties3 {
@@ -20373,7 +20373,7 @@ impl IVideoEncodingProperties3 {
     }}
 }
 DEFINE_IID!(IID_IVideoEncodingProperties4, 1917775892, 49420, 16626, 157, 114, 62, 225, 59, 69, 250, 142);
-RT_INTERFACE!{interface IVideoEncodingProperties4(IVideoEncodingProperties4Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoEncodingProperties4] {
+RT_INTERFACE!{interface IVideoEncodingProperties4(IVideoEncodingProperties4Vtbl): IInspectable [IID_IVideoEncodingProperties4] {
     fn get_SphericalVideoFrameFormat(&self, out: *mut SphericalVideoFrameFormat) -> HRESULT
 }}
 impl IVideoEncodingProperties4 {
@@ -20384,7 +20384,7 @@ impl IVideoEncodingProperties4 {
     }}
 }
 DEFINE_IID!(IID_IVideoEncodingProperties5, 1230571535, 10031, 20174, 164, 223, 192, 204, 219, 51, 216, 64);
-RT_INTERFACE!{interface IVideoEncodingProperties5(IVideoEncodingProperties5Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoEncodingProperties5] {
+RT_INTERFACE!{interface IVideoEncodingProperties5(IVideoEncodingProperties5Vtbl): IInspectable [IID_IVideoEncodingProperties5] {
     fn Copy(&self, out: *mut <VideoEncodingProperties as RtType>::Abi) -> HRESULT
 }}
 impl IVideoEncodingProperties5 {
@@ -20395,7 +20395,7 @@ impl IVideoEncodingProperties5 {
     }}
 }
 DEFINE_IID!(IID_IVideoEncodingPropertiesStatics, 1021398340, 7621, 17371, 159, 56, 235, 235, 249, 1, 82, 203);
-RT_INTERFACE!{static interface IVideoEncodingPropertiesStatics(IVideoEncodingPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVideoEncodingPropertiesStatics] {
+RT_INTERFACE!{static interface IVideoEncodingPropertiesStatics(IVideoEncodingPropertiesStaticsVtbl): IInspectable [IID_IVideoEncodingPropertiesStatics] {
     fn CreateH264(&self, out: *mut <VideoEncodingProperties as RtType>::Abi) -> HRESULT,
     fn CreateMpeg2(&self, out: *mut <VideoEncodingProperties as RtType>::Abi) -> HRESULT,
     fn CreateUncompressed(&self, subtype: HSTRING, width: u32, height: u32, out: *mut <VideoEncodingProperties as RtType>::Abi) -> HRESULT
@@ -20418,7 +20418,7 @@ impl IVideoEncodingPropertiesStatics {
     }}
 }
 DEFINE_IID!(IID_IVideoEncodingPropertiesStatics2, 3474898269, 18942, 19712, 181, 154, 207, 164, 223, 197, 25, 68);
-RT_INTERFACE!{static interface IVideoEncodingPropertiesStatics2(IVideoEncodingPropertiesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IVideoEncodingPropertiesStatics2] {
+RT_INTERFACE!{static interface IVideoEncodingPropertiesStatics2(IVideoEncodingPropertiesStatics2Vtbl): IInspectable [IID_IVideoEncodingPropertiesStatics2] {
     fn CreateHevc(&self, out: *mut <VideoEncodingProperties as RtType>::Abi) -> HRESULT
 }}
 impl IVideoEncodingPropertiesStatics2 {
@@ -20435,7 +20435,7 @@ RT_ENUM! { enum VideoEncodingQuality: i32 {
 pub mod ocr { // Windows.Media.Ocr
 use crate::prelude::*;
 DEFINE_IID!(IID_IOcrEngine, 1511308353, 23414, 12608, 182, 128, 136, 37, 86, 38, 131, 172);
-RT_INTERFACE!{interface IOcrEngine(IOcrEngineVtbl): IInspectable(IInspectableVtbl) [IID_IOcrEngine] {
+RT_INTERFACE!{interface IOcrEngine(IOcrEngineVtbl): IInspectable [IID_IOcrEngine] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-graphics")] fn RecognizeAsync(&self, bitmap: <super::super::graphics::imaging::SoftwareBitmap as RtType>::Abi, out: *mut <foundation::IAsyncOperation<OcrResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-globalization")] fn get_RecognizerLanguage(&self, out: *mut <super::super::globalization::Language as RtType>::Abi) -> HRESULT
@@ -20473,7 +20473,7 @@ impl OcrEngine {
 }
 DEFINE_CLSID!(OcrEngine(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,79,99,114,46,79,99,114,69,110,103,105,110,101,0]) [CLSID_OcrEngine]);
 DEFINE_IID!(IID_IOcrEngineStatics, 1543481434, 13188, 13632, 153, 64, 105, 145, 32, 212, 40, 168);
-RT_INTERFACE!{static interface IOcrEngineStatics(IOcrEngineStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOcrEngineStatics] {
+RT_INTERFACE!{static interface IOcrEngineStatics(IOcrEngineStaticsVtbl): IInspectable [IID_IOcrEngineStatics] {
     fn get_MaxImageDimension(&self, out: *mut u32) -> HRESULT,
     #[cfg(not(feature="windows-globalization"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-globalization")] fn get_AvailableRecognizerLanguages(&self, out: *mut <foundation::collections::IVectorView<super::super::globalization::Language> as RtType>::Abi) -> HRESULT,
@@ -20511,7 +20511,7 @@ impl IOcrEngineStatics {
     }}
 }
 DEFINE_IID!(IID_IOcrLine, 4432239, 58143, 14884, 137, 156, 212, 68, 189, 8, 129, 36);
-RT_INTERFACE!{interface IOcrLine(IOcrLineVtbl): IInspectable(IInspectableVtbl) [IID_IOcrLine] {
+RT_INTERFACE!{interface IOcrLine(IOcrLineVtbl): IInspectable [IID_IOcrLine] {
     fn get_Words(&self, out: *mut <foundation::collections::IVectorView<OcrWord> as RtType>::Abi) -> HRESULT,
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -20529,7 +20529,7 @@ impl IOcrLine {
 }
 RT_CLASS!{class OcrLine: IOcrLine}
 DEFINE_IID!(IID_IOcrResult, 2614244786, 5979, 15722, 146, 226, 56, 140, 32, 110, 47, 99);
-RT_INTERFACE!{interface IOcrResult(IOcrResultVtbl): IInspectable(IInspectableVtbl) [IID_IOcrResult] {
+RT_INTERFACE!{interface IOcrResult(IOcrResultVtbl): IInspectable [IID_IOcrResult] {
     fn get_Lines(&self, out: *mut <foundation::collections::IVectorView<OcrLine> as RtType>::Abi) -> HRESULT,
     fn get_TextAngle(&self, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT,
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT
@@ -20553,7 +20553,7 @@ impl IOcrResult {
 }
 RT_CLASS!{class OcrResult: IOcrResult}
 DEFINE_IID!(IID_IOcrWord, 1009403770, 23769, 13605, 186, 42, 35, 209, 224, 166, 138, 29);
-RT_INTERFACE!{interface IOcrWord(IOcrWordVtbl): IInspectable(IInspectableVtbl) [IID_IOcrWord] {
+RT_INTERFACE!{interface IOcrWord(IOcrWordVtbl): IInspectable [IID_IOcrWord] {
     fn get_BoundingRect(&self, out: *mut foundation::Rect) -> HRESULT,
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -20574,7 +20574,7 @@ RT_CLASS!{class OcrWord: IOcrWord}
 pub mod playto { // Windows.Media.PlayTo
 use crate::prelude::*;
 DEFINE_IID!(IID_ICurrentTimeChangeRequestedEventArgs, 2574324516, 60871, 19445, 145, 246, 60, 134, 39, 219, 89, 229);
-RT_INTERFACE!{interface ICurrentTimeChangeRequestedEventArgs(ICurrentTimeChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICurrentTimeChangeRequestedEventArgs] {
+RT_INTERFACE!{interface ICurrentTimeChangeRequestedEventArgs(ICurrentTimeChangeRequestedEventArgsVtbl): IInspectable [IID_ICurrentTimeChangeRequestedEventArgs] {
     fn get_Time(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
 impl ICurrentTimeChangeRequestedEventArgs {
@@ -20586,7 +20586,7 @@ impl ICurrentTimeChangeRequestedEventArgs {
 }
 RT_CLASS!{class CurrentTimeChangeRequestedEventArgs: ICurrentTimeChangeRequestedEventArgs}
 DEFINE_IID!(IID_IMuteChangeRequestedEventArgs, 3837064694, 44831, 20254, 180, 55, 125, 163, 36, 0, 225, 212);
-RT_INTERFACE!{interface IMuteChangeRequestedEventArgs(IMuteChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMuteChangeRequestedEventArgs] {
+RT_INTERFACE!{interface IMuteChangeRequestedEventArgs(IMuteChangeRequestedEventArgsVtbl): IInspectable [IID_IMuteChangeRequestedEventArgs] {
     fn get_Mute(&self, out: *mut bool) -> HRESULT
 }}
 impl IMuteChangeRequestedEventArgs {
@@ -20598,7 +20598,7 @@ impl IMuteChangeRequestedEventArgs {
 }
 RT_CLASS!{class MuteChangeRequestedEventArgs: IMuteChangeRequestedEventArgs}
 DEFINE_IID!(IID_IPlaybackRateChangeRequestedEventArgs, 257319342, 11400, 19658, 133, 64, 213, 134, 9, 93, 19, 165);
-RT_INTERFACE!{interface IPlaybackRateChangeRequestedEventArgs(IPlaybackRateChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackRateChangeRequestedEventArgs] {
+RT_INTERFACE!{interface IPlaybackRateChangeRequestedEventArgs(IPlaybackRateChangeRequestedEventArgsVtbl): IInspectable [IID_IPlaybackRateChangeRequestedEventArgs] {
     fn get_Rate(&self, out: *mut f64) -> HRESULT
 }}
 impl IPlaybackRateChangeRequestedEventArgs {
@@ -20610,7 +20610,7 @@ impl IPlaybackRateChangeRequestedEventArgs {
 }
 RT_CLASS!{class PlaybackRateChangeRequestedEventArgs: IPlaybackRateChangeRequestedEventArgs}
 DEFINE_IID!(IID_IPlayToConnection, 288341960, 62005, 20446, 141, 65, 155, 242, 124, 158, 154, 64);
-RT_INTERFACE!{interface IPlayToConnection(IPlayToConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToConnection] {
+RT_INTERFACE!{interface IPlayToConnection(IPlayToConnectionVtbl): IInspectable [IID_IPlayToConnection] {
     fn get_State(&self, out: *mut PlayToConnectionState) -> HRESULT,
     fn add_StateChanged(&self, handler: <foundation::TypedEventHandler<PlayToConnection, PlayToConnectionStateChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_StateChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
@@ -20658,7 +20658,7 @@ RT_ENUM! { enum PlayToConnectionError: i32 {
     None = 0, DeviceNotResponding = 1, DeviceError = 2, DeviceLocked = 3, ProtectedPlaybackFailed = 4,
 }}
 DEFINE_IID!(IID_IPlayToConnectionErrorEventArgs, 3210653094, 35046, 17503, 157, 64, 217, 185, 248, 147, 152, 150);
-RT_INTERFACE!{interface IPlayToConnectionErrorEventArgs(IPlayToConnectionErrorEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToConnectionErrorEventArgs] {
+RT_INTERFACE!{interface IPlayToConnectionErrorEventArgs(IPlayToConnectionErrorEventArgsVtbl): IInspectable [IID_IPlayToConnectionErrorEventArgs] {
     fn get_Code(&self, out: *mut PlayToConnectionError) -> HRESULT,
     fn get_Message(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -20679,7 +20679,7 @@ RT_ENUM! { enum PlayToConnectionState: i32 {
     Disconnected = 0, Connected = 1, Rendering = 2,
 }}
 DEFINE_IID!(IID_IPlayToConnectionStateChangedEventArgs, 1757721871, 3104, 18816, 134, 2, 88, 198, 34, 56, 212, 35);
-RT_INTERFACE!{interface IPlayToConnectionStateChangedEventArgs(IPlayToConnectionStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToConnectionStateChangedEventArgs] {
+RT_INTERFACE!{interface IPlayToConnectionStateChangedEventArgs(IPlayToConnectionStateChangedEventArgsVtbl): IInspectable [IID_IPlayToConnectionStateChangedEventArgs] {
     fn get_PreviousState(&self, out: *mut PlayToConnectionState) -> HRESULT,
     fn get_CurrentState(&self, out: *mut PlayToConnectionState) -> HRESULT
 }}
@@ -20697,7 +20697,7 @@ impl IPlayToConnectionStateChangedEventArgs {
 }
 RT_CLASS!{class PlayToConnectionStateChangedEventArgs: IPlayToConnectionStateChangedEventArgs}
 DEFINE_IID!(IID_IPlayToConnectionTransferredEventArgs, 4209187130, 1667, 18393, 141, 240, 24, 203, 180, 137, 132, 216);
-RT_INTERFACE!{interface IPlayToConnectionTransferredEventArgs(IPlayToConnectionTransferredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToConnectionTransferredEventArgs] {
+RT_INTERFACE!{interface IPlayToConnectionTransferredEventArgs(IPlayToConnectionTransferredEventArgsVtbl): IInspectable [IID_IPlayToConnectionTransferredEventArgs] {
     fn get_PreviousSource(&self, out: *mut <PlayToSource as RtType>::Abi) -> HRESULT,
     fn get_CurrentSource(&self, out: *mut <PlayToSource as RtType>::Abi) -> HRESULT
 }}
@@ -20715,7 +20715,7 @@ impl IPlayToConnectionTransferredEventArgs {
 }
 RT_CLASS!{class PlayToConnectionTransferredEventArgs: IPlayToConnectionTransferredEventArgs}
 DEFINE_IID!(IID_IPlayToManager, 4117373038, 7031, 17135, 143, 13, 185, 73, 248, 217, 178, 96);
-RT_INTERFACE!{interface IPlayToManager(IPlayToManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToManager] {
+RT_INTERFACE!{interface IPlayToManager(IPlayToManagerVtbl): IInspectable [IID_IPlayToManager] {
     fn add_SourceRequested(&self, handler: <foundation::TypedEventHandler<PlayToManager, PlayToSourceRequestedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SourceRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_SourceSelected(&self, handler: <foundation::TypedEventHandler<PlayToManager, PlayToSourceSelectedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -20764,7 +20764,7 @@ impl PlayToManager {
 }
 DEFINE_CLSID!(PlayToManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,84,111,46,80,108,97,121,84,111,77,97,110,97,103,101,114,0]) [CLSID_PlayToManager]);
 DEFINE_IID!(IID_IPlayToManagerStatics, 1692838023, 14722, 20283, 186, 32, 97, 85, 228, 53, 50, 91);
-RT_INTERFACE!{static interface IPlayToManagerStatics(IPlayToManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToManagerStatics] {
+RT_INTERFACE!{static interface IPlayToManagerStatics(IPlayToManagerStaticsVtbl): IInspectable [IID_IPlayToManagerStatics] {
     fn GetForCurrentView(&self, out: *mut <PlayToManager as RtType>::Abi) -> HRESULT,
     fn ShowPlayToUI(&self) -> HRESULT
 }}
@@ -20780,7 +20780,7 @@ impl IPlayToManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IPlayToReceiver, 2887110471, 41314, 19110, 175, 27, 58, 163, 95, 59, 144, 105);
-RT_INTERFACE!{interface IPlayToReceiver(IPlayToReceiverVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToReceiver] {
+RT_INTERFACE!{interface IPlayToReceiver(IPlayToReceiverVtbl): IInspectable [IID_IPlayToReceiver] {
     fn add_PlayRequested(&self, handler: <foundation::TypedEventHandler<PlayToReceiver, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PlayRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_PauseRequested(&self, handler: <foundation::TypedEventHandler<PlayToReceiver, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -21009,7 +21009,7 @@ RT_CLASS!{class PlayToReceiver: IPlayToReceiver}
 impl RtActivatable<IActivationFactory> for PlayToReceiver {}
 DEFINE_CLSID!(PlayToReceiver(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,84,111,46,80,108,97,121,84,111,82,101,99,101,105,118,101,114,0]) [CLSID_PlayToReceiver]);
 DEFINE_IID!(IID_IPlayToSource, 2131986952, 64439, 19209, 131, 86, 170, 95, 78, 51, 92, 49);
-RT_INTERFACE!{interface IPlayToSource(IPlayToSourceVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSource] {
+RT_INTERFACE!{interface IPlayToSource(IPlayToSourceVtbl): IInspectable [IID_IPlayToSource] {
     fn get_Connection(&self, out: *mut <PlayToConnection as RtType>::Abi) -> HRESULT,
     fn get_Next(&self, out: *mut <PlayToSource as RtType>::Abi) -> HRESULT,
     fn put_Next(&self, value: <PlayToSource as RtType>::Abi) -> HRESULT,
@@ -21037,7 +21037,7 @@ impl IPlayToSource {
 }
 RT_CLASS!{class PlayToSource: IPlayToSource}
 DEFINE_IID!(IID_IPlayToSourceDeferral, 1090554141, 10126, 20265, 133, 155, 169, 229, 1, 5, 62, 125);
-RT_INTERFACE!{interface IPlayToSourceDeferral(IPlayToSourceDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSourceDeferral] {
+RT_INTERFACE!{interface IPlayToSourceDeferral(IPlayToSourceDeferralVtbl): IInspectable [IID_IPlayToSourceDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl IPlayToSourceDeferral {
@@ -21048,7 +21048,7 @@ impl IPlayToSourceDeferral {
 }
 RT_CLASS!{class PlayToSourceDeferral: IPlayToSourceDeferral}
 DEFINE_IID!(IID_IPlayToSourceRequest, 4166534757, 25844, 17568, 172, 13, 70, 141, 43, 143, 218, 131);
-RT_INTERFACE!{interface IPlayToSourceRequest(IPlayToSourceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSourceRequest] {
+RT_INTERFACE!{interface IPlayToSourceRequest(IPlayToSourceRequestVtbl): IInspectable [IID_IPlayToSourceRequest] {
     fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn DisplayErrorString(&self, errorString: HSTRING) -> HRESULT,
     fn GetDeferral(&self, out: *mut <PlayToSourceDeferral as RtType>::Abi) -> HRESULT,
@@ -21076,7 +21076,7 @@ impl IPlayToSourceRequest {
 }
 RT_CLASS!{class PlayToSourceRequest: IPlayToSourceRequest}
 DEFINE_IID!(IID_IPlayToSourceRequestedEventArgs, 3318596400, 10719, 20166, 157, 169, 159, 189, 252, 252, 27, 62);
-RT_INTERFACE!{interface IPlayToSourceRequestedEventArgs(IPlayToSourceRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSourceRequestedEventArgs] {
+RT_INTERFACE!{interface IPlayToSourceRequestedEventArgs(IPlayToSourceRequestedEventArgsVtbl): IInspectable [IID_IPlayToSourceRequestedEventArgs] {
     fn get_SourceRequest(&self, out: *mut <PlayToSourceRequest as RtType>::Abi) -> HRESULT
 }}
 impl IPlayToSourceRequestedEventArgs {
@@ -21088,7 +21088,7 @@ impl IPlayToSourceRequestedEventArgs {
 }
 RT_CLASS!{class PlayToSourceRequestedEventArgs: IPlayToSourceRequestedEventArgs}
 DEFINE_IID!(IID_IPlayToSourceSelectedEventArgs, 211649809, 20994, 19915, 140, 103, 171, 218, 18, 187, 60, 18);
-RT_INTERFACE!{interface IPlayToSourceSelectedEventArgs(IPlayToSourceSelectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSourceSelectedEventArgs] {
+RT_INTERFACE!{interface IPlayToSourceSelectedEventArgs(IPlayToSourceSelectedEventArgsVtbl): IInspectable [IID_IPlayToSourceSelectedEventArgs] {
     fn get_FriendlyName(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_Icon(&self, out: *mut <super::super::storage::streams::IRandomAccessStreamWithContentType as RtType>::Abi) -> HRESULT,
@@ -21125,7 +21125,7 @@ impl IPlayToSourceSelectedEventArgs {
 }
 RT_CLASS!{class PlayToSourceSelectedEventArgs: IPlayToSourceSelectedEventArgs}
 DEFINE_IID!(IID_IPlayToSourceWithPreferredSourceUri, 2863813611, 13057, 19908, 175, 186, 178, 242, 237, 150, 53, 160);
-RT_INTERFACE!{interface IPlayToSourceWithPreferredSourceUri(IPlayToSourceWithPreferredSourceUriVtbl): IInspectable(IInspectableVtbl) [IID_IPlayToSourceWithPreferredSourceUri] {
+RT_INTERFACE!{interface IPlayToSourceWithPreferredSourceUri(IPlayToSourceWithPreferredSourceUriVtbl): IInspectable [IID_IPlayToSourceWithPreferredSourceUri] {
     fn get_PreferredSourceUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn put_PreferredSourceUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT
 }}
@@ -21141,7 +21141,7 @@ impl IPlayToSourceWithPreferredSourceUri {
     }}
 }
 DEFINE_IID!(IID_ISourceChangeRequestedEventArgs, 4215224982, 31398, 19083, 134, 231, 84, 246, 198, 211, 79, 100);
-RT_INTERFACE!{interface ISourceChangeRequestedEventArgs(ISourceChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISourceChangeRequestedEventArgs] {
+RT_INTERFACE!{interface ISourceChangeRequestedEventArgs(ISourceChangeRequestedEventArgsVtbl): IInspectable [IID_ISourceChangeRequestedEventArgs] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_Stream(&self, out: *mut <super::super::storage::streams::IRandomAccessStreamWithContentType as RtType>::Abi) -> HRESULT,
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
@@ -21209,7 +21209,7 @@ impl ISourceChangeRequestedEventArgs {
 }
 RT_CLASS!{class SourceChangeRequestedEventArgs: ISourceChangeRequestedEventArgs}
 DEFINE_IID!(IID_IVolumeChangeRequestedEventArgs, 1862430044, 53109, 19499, 145, 62, 109, 124, 108, 50, 145, 121);
-RT_INTERFACE!{interface IVolumeChangeRequestedEventArgs(IVolumeChangeRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVolumeChangeRequestedEventArgs] {
+RT_INTERFACE!{interface IVolumeChangeRequestedEventArgs(IVolumeChangeRequestedEventArgsVtbl): IInspectable [IID_IVolumeChangeRequestedEventArgs] {
     fn get_Volume(&self, out: *mut f64) -> HRESULT
 }}
 impl IVolumeChangeRequestedEventArgs {
@@ -21259,7 +21259,7 @@ impl BackgroundMediaPlayer {
 }
 DEFINE_CLSID!(BackgroundMediaPlayer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,66,97,99,107,103,114,111,117,110,100,77,101,100,105,97,80,108,97,121,101,114,0]) [CLSID_BackgroundMediaPlayer]);
 DEFINE_IID!(IID_IBackgroundMediaPlayerStatics, 2238569409, 22007, 18207, 160, 242, 104, 172, 76, 144, 69, 146);
-RT_INTERFACE!{static interface IBackgroundMediaPlayerStatics(IBackgroundMediaPlayerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundMediaPlayerStatics] {
+RT_INTERFACE!{static interface IBackgroundMediaPlayerStatics(IBackgroundMediaPlayerStaticsVtbl): IInspectable [IID_IBackgroundMediaPlayerStatics] {
     fn get_Current(&self, out: *mut <MediaPlayer as RtType>::Abi) -> HRESULT,
     fn add_MessageReceivedFromBackground(&self, value: <foundation::EventHandler<MediaPlayerDataReceivedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_MessageReceivedFromBackground(&self, token: foundation::EventRegistrationToken) -> HRESULT,
@@ -21313,7 +21313,7 @@ impl IBackgroundMediaPlayerStatics {
     }}
 }
 DEFINE_IID!(IID_ICurrentMediaPlaybackItemChangedEventArgs, 390310034, 23619, 18965, 150, 122, 87, 45, 45, 15, 38, 198);
-RT_INTERFACE!{interface ICurrentMediaPlaybackItemChangedEventArgs(ICurrentMediaPlaybackItemChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ICurrentMediaPlaybackItemChangedEventArgs] {
+RT_INTERFACE!{interface ICurrentMediaPlaybackItemChangedEventArgs(ICurrentMediaPlaybackItemChangedEventArgsVtbl): IInspectable [IID_ICurrentMediaPlaybackItemChangedEventArgs] {
     fn get_NewItem(&self, out: *mut <MediaPlaybackItem as RtType>::Abi) -> HRESULT,
     fn get_OldItem(&self, out: *mut <MediaPlaybackItem as RtType>::Abi) -> HRESULT
 }}
@@ -21331,7 +21331,7 @@ impl ICurrentMediaPlaybackItemChangedEventArgs {
 }
 RT_CLASS!{class CurrentMediaPlaybackItemChangedEventArgs: ICurrentMediaPlaybackItemChangedEventArgs}
 DEFINE_IID!(IID_ICurrentMediaPlaybackItemChangedEventArgs2, 494970142, 39278, 16553, 190, 72, 230, 110, 201, 11, 43, 125);
-RT_INTERFACE!{interface ICurrentMediaPlaybackItemChangedEventArgs2(ICurrentMediaPlaybackItemChangedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_ICurrentMediaPlaybackItemChangedEventArgs2] {
+RT_INTERFACE!{interface ICurrentMediaPlaybackItemChangedEventArgs2(ICurrentMediaPlaybackItemChangedEventArgs2Vtbl): IInspectable [IID_ICurrentMediaPlaybackItemChangedEventArgs2] {
     fn get_Reason(&self, out: *mut MediaPlaybackItemChangedReason) -> HRESULT
 }}
 impl ICurrentMediaPlaybackItemChangedEventArgs2 {
@@ -21345,7 +21345,7 @@ RT_ENUM! { enum FailedMediaStreamKind: i32 {
     Unknown = 0, Audio = 1, Video = 2,
 }}
 DEFINE_IID!(IID_IMediaBreak, 1900798576, 3567, 20156, 164, 137, 107, 52, 147, 14, 21, 88);
-RT_INTERFACE!{interface IMediaBreak(IMediaBreakVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreak] {
+RT_INTERFACE!{interface IMediaBreak(IMediaBreakVtbl): IInspectable [IID_IMediaBreak] {
     fn get_PlaybackList(&self, out: *mut <MediaPlaybackList as RtType>::Abi) -> HRESULT,
     fn get_PresentationPosition(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_InsertionMethod(&self, out: *mut MediaBreakInsertionMethod) -> HRESULT,
@@ -21396,7 +21396,7 @@ impl MediaBreak {
 }
 DEFINE_CLSID!(MediaBreak(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,66,114,101,97,107,0]) [CLSID_MediaBreak]);
 DEFINE_IID!(IID_IMediaBreakEndedEventArgs, 850997878, 7261, 20462, 135, 50, 35, 109, 195, 168, 133, 128);
-RT_INTERFACE!{interface IMediaBreakEndedEventArgs(IMediaBreakEndedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakEndedEventArgs] {
+RT_INTERFACE!{interface IMediaBreakEndedEventArgs(IMediaBreakEndedEventArgsVtbl): IInspectable [IID_IMediaBreakEndedEventArgs] {
     fn get_MediaBreak(&self, out: *mut <MediaBreak as RtType>::Abi) -> HRESULT
 }}
 impl IMediaBreakEndedEventArgs {
@@ -21408,7 +21408,7 @@ impl IMediaBreakEndedEventArgs {
 }
 RT_CLASS!{class MediaBreakEndedEventArgs: IMediaBreakEndedEventArgs}
 DEFINE_IID!(IID_IMediaBreakFactory, 1159127042, 6368, 16505, 139, 95, 211, 52, 149, 193, 93, 46);
-RT_INTERFACE!{static interface IMediaBreakFactory(IMediaBreakFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakFactory] {
+RT_INTERFACE!{static interface IMediaBreakFactory(IMediaBreakFactoryVtbl): IInspectable [IID_IMediaBreakFactory] {
     fn Create(&self, insertionMethod: MediaBreakInsertionMethod, out: *mut <MediaBreak as RtType>::Abi) -> HRESULT,
     fn CreateWithPresentationPosition(&self, insertionMethod: MediaBreakInsertionMethod, presentationPosition: foundation::TimeSpan, out: *mut <MediaBreak as RtType>::Abi) -> HRESULT
 }}
@@ -21428,7 +21428,7 @@ RT_ENUM! { enum MediaBreakInsertionMethod: i32 {
     Interrupt = 0, Replace = 1,
 }}
 DEFINE_IID!(IID_IMediaBreakManager, 2824134065, 65204, 19867, 157, 151, 15, 219, 229, 142, 94, 57);
-RT_INTERFACE!{interface IMediaBreakManager(IMediaBreakManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakManager] {
+RT_INTERFACE!{interface IMediaBreakManager(IMediaBreakManagerVtbl): IInspectable [IID_IMediaBreakManager] {
     fn add_BreaksSeekedOver(&self, handler: <foundation::TypedEventHandler<MediaBreakManager, MediaBreakSeekedOverEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_BreaksSeekedOver(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_BreakStarted(&self, handler: <foundation::TypedEventHandler<MediaBreakManager, MediaBreakStartedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -21500,7 +21500,7 @@ impl IMediaBreakManager {
 }
 RT_CLASS!{class MediaBreakManager: IMediaBreakManager}
 DEFINE_IID!(IID_IMediaBreakSchedule, 2711246867, 39094, 16856, 131, 218, 249, 113, 210, 43, 123, 186);
-RT_INTERFACE!{interface IMediaBreakSchedule(IMediaBreakScheduleVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakSchedule] {
+RT_INTERFACE!{interface IMediaBreakSchedule(IMediaBreakScheduleVtbl): IInspectable [IID_IMediaBreakSchedule] {
     fn add_ScheduleChanged(&self, handler: <foundation::TypedEventHandler<MediaBreakSchedule, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ScheduleChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn InsertMidrollBreak(&self, mediaBreak: <MediaBreak as RtType>::Abi) -> HRESULT,
@@ -21561,7 +21561,7 @@ impl IMediaBreakSchedule {
 }
 RT_CLASS!{class MediaBreakSchedule: IMediaBreakSchedule}
 DEFINE_IID!(IID_IMediaBreakSeekedOverEventArgs, 3853150022, 1542, 17554, 185, 211, 195, 200, 253, 224, 164, 234);
-RT_INTERFACE!{interface IMediaBreakSeekedOverEventArgs(IMediaBreakSeekedOverEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakSeekedOverEventArgs] {
+RT_INTERFACE!{interface IMediaBreakSeekedOverEventArgs(IMediaBreakSeekedOverEventArgsVtbl): IInspectable [IID_IMediaBreakSeekedOverEventArgs] {
     fn get_SeekedOverBreaks(&self, out: *mut <foundation::collections::IVectorView<MediaBreak> as RtType>::Abi) -> HRESULT,
     fn get_OldPosition(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_NewPosition(&self, out: *mut foundation::TimeSpan) -> HRESULT
@@ -21585,7 +21585,7 @@ impl IMediaBreakSeekedOverEventArgs {
 }
 RT_CLASS!{class MediaBreakSeekedOverEventArgs: IMediaBreakSeekedOverEventArgs}
 DEFINE_IID!(IID_IMediaBreakSkippedEventArgs, 1860783109, 12116, 19006, 163, 171, 36, 195, 178, 112, 180, 163);
-RT_INTERFACE!{interface IMediaBreakSkippedEventArgs(IMediaBreakSkippedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakSkippedEventArgs] {
+RT_INTERFACE!{interface IMediaBreakSkippedEventArgs(IMediaBreakSkippedEventArgsVtbl): IInspectable [IID_IMediaBreakSkippedEventArgs] {
     fn get_MediaBreak(&self, out: *mut <MediaBreak as RtType>::Abi) -> HRESULT
 }}
 impl IMediaBreakSkippedEventArgs {
@@ -21597,7 +21597,7 @@ impl IMediaBreakSkippedEventArgs {
 }
 RT_CLASS!{class MediaBreakSkippedEventArgs: IMediaBreakSkippedEventArgs}
 DEFINE_IID!(IID_IMediaBreakStartedEventArgs, 2826894961, 57300, 17738, 149, 110, 10, 74, 100, 131, 149, 248);
-RT_INTERFACE!{interface IMediaBreakStartedEventArgs(IMediaBreakStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaBreakStartedEventArgs] {
+RT_INTERFACE!{interface IMediaBreakStartedEventArgs(IMediaBreakStartedEventArgsVtbl): IInspectable [IID_IMediaBreakStartedEventArgs] {
     fn get_MediaBreak(&self, out: *mut <MediaBreak as RtType>::Abi) -> HRESULT
 }}
 impl IMediaBreakStartedEventArgs {
@@ -21612,7 +21612,7 @@ RT_ENUM! { enum MediaCommandEnablingRule: i32 {
     Auto = 0, Always = 1, Never = 2,
 }}
 DEFINE_IID!(IID_IMediaEnginePlaybackSource, 1545407399, 14422, 18617, 141, 198, 36, 75, 241, 7, 191, 140);
-RT_INTERFACE!{interface IMediaEnginePlaybackSource(IMediaEnginePlaybackSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaEnginePlaybackSource] {
+RT_INTERFACE!{interface IMediaEnginePlaybackSource(IMediaEnginePlaybackSourceVtbl): IInspectable [IID_IMediaEnginePlaybackSource] {
     fn get_CurrentItem(&self, out: *mut <MediaPlaybackItem as RtType>::Abi) -> HRESULT,
     fn SetPlaybackSource(&self, source: <IMediaPlaybackSource as RtType>::Abi) -> HRESULT
 }}
@@ -21628,7 +21628,7 @@ impl IMediaEnginePlaybackSource {
     }}
 }
 DEFINE_IID!(IID_IMediaItemDisplayProperties, 507255624, 28823, 17284, 162, 23, 193, 41, 29, 250, 140, 22);
-RT_INTERFACE!{interface IMediaItemDisplayProperties(IMediaItemDisplayPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IMediaItemDisplayProperties] {
+RT_INTERFACE!{interface IMediaItemDisplayProperties(IMediaItemDisplayPropertiesVtbl): IInspectable [IID_IMediaItemDisplayProperties] {
     fn get_Type(&self, out: *mut super::MediaPlaybackType) -> HRESULT,
     fn put_Type(&self, value: super::MediaPlaybackType) -> HRESULT,
     fn get_MusicProperties(&self, out: *mut <super::MusicDisplayProperties as RtType>::Abi) -> HRESULT,
@@ -21676,7 +21676,7 @@ impl IMediaItemDisplayProperties {
 RT_CLASS!{class MediaItemDisplayProperties: IMediaItemDisplayProperties}
 RT_CLASS!{class MediaPlaybackAudioTrackList: foundation::collections::IVectorView<super::core::AudioTrack>}
 DEFINE_IID!(IID_IMediaPlaybackCommandManager, 1523508646, 23734, 19034, 133, 33, 204, 134, 177, 193, 237, 55);
-RT_INTERFACE!{interface IMediaPlaybackCommandManager(IMediaPlaybackCommandManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManager] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManager(IMediaPlaybackCommandManagerVtbl): IInspectable [IID_IMediaPlaybackCommandManager] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_IsEnabled(&self, value: bool) -> HRESULT,
     fn get_MediaPlayer(&self, out: *mut <MediaPlayer as RtType>::Abi) -> HRESULT,
@@ -21869,7 +21869,7 @@ impl IMediaPlaybackCommandManager {
 }
 RT_CLASS!{class MediaPlaybackCommandManager: IMediaPlaybackCommandManager}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs, 1030704931, 21040, 17425, 160, 233, 186, 217, 76, 42, 4, 92);
-RT_INTERFACE!{interface IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs(IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs(IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgsVtbl): IInspectable [IID_IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT,
     fn get_AutoRepeatMode(&self, out: *mut super::MediaPlaybackAutoRepeatMode) -> HRESULT,
@@ -21898,7 +21898,7 @@ impl IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs: IMediaPlaybackCommandManagerAutoRepeatModeReceivedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerCommandBehavior, 2020351608, 52856, 18960, 175, 214, 132, 63, 203, 185, 12, 46);
-RT_INTERFACE!{interface IMediaPlaybackCommandManagerCommandBehavior(IMediaPlaybackCommandManagerCommandBehaviorVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerCommandBehavior] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManagerCommandBehavior(IMediaPlaybackCommandManagerCommandBehaviorVtbl): IInspectable [IID_IMediaPlaybackCommandManagerCommandBehavior] {
     fn get_CommandManager(&self, out: *mut <MediaPlaybackCommandManager as RtType>::Abi) -> HRESULT,
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_EnablingRule(&self, out: *mut MediaCommandEnablingRule) -> HRESULT,
@@ -21938,7 +21938,7 @@ impl IMediaPlaybackCommandManagerCommandBehavior {
 }
 RT_CLASS!{class MediaPlaybackCommandManagerCommandBehavior: IMediaPlaybackCommandManagerCommandBehavior}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerFastForwardReceivedEventArgs, 821060825, 46225, 19722, 188, 33, 48, 152, 189, 19, 50, 233);
-RT_INTERFACE!{interface IMediaPlaybackCommandManagerFastForwardReceivedEventArgs(IMediaPlaybackCommandManagerFastForwardReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerFastForwardReceivedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManagerFastForwardReceivedEventArgs(IMediaPlaybackCommandManagerFastForwardReceivedEventArgsVtbl): IInspectable [IID_IMediaPlaybackCommandManagerFastForwardReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -21961,7 +21961,7 @@ impl IMediaPlaybackCommandManagerFastForwardReceivedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackCommandManagerFastForwardReceivedEventArgs: IMediaPlaybackCommandManagerFastForwardReceivedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerNextReceivedEventArgs, 3780133939, 41648, 17876, 185, 222, 95, 66, 172, 20, 168, 57);
-RT_INTERFACE!{interface IMediaPlaybackCommandManagerNextReceivedEventArgs(IMediaPlaybackCommandManagerNextReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerNextReceivedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManagerNextReceivedEventArgs(IMediaPlaybackCommandManagerNextReceivedEventArgsVtbl): IInspectable [IID_IMediaPlaybackCommandManagerNextReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -21984,7 +21984,7 @@ impl IMediaPlaybackCommandManagerNextReceivedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackCommandManagerNextReceivedEventArgs: IMediaPlaybackCommandManagerNextReceivedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerPauseReceivedEventArgs, 1559022876, 49756, 16929, 177, 108, 195, 201, 140, 224, 18, 214);
-RT_INTERFACE!{interface IMediaPlaybackCommandManagerPauseReceivedEventArgs(IMediaPlaybackCommandManagerPauseReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerPauseReceivedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManagerPauseReceivedEventArgs(IMediaPlaybackCommandManagerPauseReceivedEventArgsVtbl): IInspectable [IID_IMediaPlaybackCommandManagerPauseReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -22007,7 +22007,7 @@ impl IMediaPlaybackCommandManagerPauseReceivedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackCommandManagerPauseReceivedEventArgs: IMediaPlaybackCommandManagerPauseReceivedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerPlayReceivedEventArgs, 2599419982, 22411, 19542, 160, 6, 22, 21, 157, 136, 138, 72);
-RT_INTERFACE!{interface IMediaPlaybackCommandManagerPlayReceivedEventArgs(IMediaPlaybackCommandManagerPlayReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerPlayReceivedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManagerPlayReceivedEventArgs(IMediaPlaybackCommandManagerPlayReceivedEventArgsVtbl): IInspectable [IID_IMediaPlaybackCommandManagerPlayReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -22030,7 +22030,7 @@ impl IMediaPlaybackCommandManagerPlayReceivedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackCommandManagerPlayReceivedEventArgs: IMediaPlaybackCommandManagerPlayReceivedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerPositionReceivedEventArgs, 1435608916, 54823, 19421, 169, 13, 134, 160, 21, 178, 73, 2);
-RT_INTERFACE!{interface IMediaPlaybackCommandManagerPositionReceivedEventArgs(IMediaPlaybackCommandManagerPositionReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerPositionReceivedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManagerPositionReceivedEventArgs(IMediaPlaybackCommandManagerPositionReceivedEventArgsVtbl): IInspectable [IID_IMediaPlaybackCommandManagerPositionReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT,
     fn get_Position(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -22059,7 +22059,7 @@ impl IMediaPlaybackCommandManagerPositionReceivedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackCommandManagerPositionReceivedEventArgs: IMediaPlaybackCommandManagerPositionReceivedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerPreviousReceivedEventArgs, 1381904513, 17970, 20342, 153, 177, 215, 113, 98, 63, 98, 135);
-RT_INTERFACE!{interface IMediaPlaybackCommandManagerPreviousReceivedEventArgs(IMediaPlaybackCommandManagerPreviousReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerPreviousReceivedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManagerPreviousReceivedEventArgs(IMediaPlaybackCommandManagerPreviousReceivedEventArgsVtbl): IInspectable [IID_IMediaPlaybackCommandManagerPreviousReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -22082,7 +22082,7 @@ impl IMediaPlaybackCommandManagerPreviousReceivedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackCommandManagerPreviousReceivedEventArgs: IMediaPlaybackCommandManagerPreviousReceivedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerRateReceivedEventArgs, 418003257, 18966, 16745, 139, 5, 62, 185, 245, 255, 120, 235);
-RT_INTERFACE!{interface IMediaPlaybackCommandManagerRateReceivedEventArgs(IMediaPlaybackCommandManagerRateReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerRateReceivedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManagerRateReceivedEventArgs(IMediaPlaybackCommandManagerRateReceivedEventArgsVtbl): IInspectable [IID_IMediaPlaybackCommandManagerRateReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT,
     fn get_PlaybackRate(&self, out: *mut f64) -> HRESULT,
@@ -22111,7 +22111,7 @@ impl IMediaPlaybackCommandManagerRateReceivedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackCommandManagerRateReceivedEventArgs: IMediaPlaybackCommandManagerRateReceivedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerRewindReceivedEventArgs, 2668124487, 41920, 16989, 170, 239, 151, 186, 120, 152, 177, 65);
-RT_INTERFACE!{interface IMediaPlaybackCommandManagerRewindReceivedEventArgs(IMediaPlaybackCommandManagerRewindReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerRewindReceivedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManagerRewindReceivedEventArgs(IMediaPlaybackCommandManagerRewindReceivedEventArgsVtbl): IInspectable [IID_IMediaPlaybackCommandManagerRewindReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -22134,7 +22134,7 @@ impl IMediaPlaybackCommandManagerRewindReceivedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackCommandManagerRewindReceivedEventArgs: IMediaPlaybackCommandManagerRewindReceivedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackCommandManagerShuffleReceivedEventArgs, 1352686831, 25582, 19094, 183, 181, 254, 224, 139, 159, 249, 12);
-RT_INTERFACE!{interface IMediaPlaybackCommandManagerShuffleReceivedEventArgs(IMediaPlaybackCommandManagerShuffleReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackCommandManagerShuffleReceivedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackCommandManagerShuffleReceivedEventArgs(IMediaPlaybackCommandManagerShuffleReceivedEventArgsVtbl): IInspectable [IID_IMediaPlaybackCommandManagerShuffleReceivedEventArgs] {
     fn get_Handled(&self, out: *mut bool) -> HRESULT,
     fn put_Handled(&self, value: bool) -> HRESULT,
     fn get_IsShuffleRequested(&self, out: *mut bool) -> HRESULT,
@@ -22163,7 +22163,7 @@ impl IMediaPlaybackCommandManagerShuffleReceivedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackCommandManagerShuffleReceivedEventArgs: IMediaPlaybackCommandManagerShuffleReceivedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackItem, 74487762, 58543, 18603, 178, 131, 105, 41, 230, 116, 236, 226);
-RT_INTERFACE!{interface IMediaPlaybackItem(IMediaPlaybackItemVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItem] {
+RT_INTERFACE!{interface IMediaPlaybackItem(IMediaPlaybackItemVtbl): IInspectable [IID_IMediaPlaybackItem] {
     fn add_AudioTracksChanged(&self, handler: <foundation::TypedEventHandler<MediaPlaybackItem, foundation::collections::IVectorChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_AudioTracksChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_VideoTracksChanged(&self, handler: <foundation::TypedEventHandler<MediaPlaybackItem, foundation::collections::IVectorChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -22244,7 +22244,7 @@ impl MediaPlaybackItem {
 }
 DEFINE_CLSID!(MediaPlaybackItem(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,80,108,97,121,98,97,99,107,73,116,101,109,0]) [CLSID_MediaPlaybackItem]);
 DEFINE_IID!(IID_IMediaPlaybackItem2, 3629764977, 55279, 19329, 172, 31, 244, 4, 147, 203, 176, 145);
-RT_INTERFACE!{interface IMediaPlaybackItem2(IMediaPlaybackItem2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItem2] {
+RT_INTERFACE!{interface IMediaPlaybackItem2(IMediaPlaybackItem2Vtbl): IInspectable [IID_IMediaPlaybackItem2] {
     fn get_BreakSchedule(&self, out: *mut <MediaBreakSchedule as RtType>::Abi) -> HRESULT,
     fn get_StartTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_DurationLimit(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
@@ -22289,7 +22289,7 @@ impl IMediaPlaybackItem2 {
     }}
 }
 DEFINE_IID!(IID_IMediaPlaybackItem3, 221413920, 47114, 19721, 159, 248, 248, 112, 148, 161, 200, 49);
-RT_INTERFACE!{interface IMediaPlaybackItem3(IMediaPlaybackItem3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItem3] {
+RT_INTERFACE!{interface IMediaPlaybackItem3(IMediaPlaybackItem3Vtbl): IInspectable [IID_IMediaPlaybackItem3] {
     fn get_IsDisabledInPlaybackList(&self, out: *mut bool) -> HRESULT,
     fn put_IsDisabledInPlaybackList(&self, value: bool) -> HRESULT,
     fn get_TotalDownloadProgress(&self, out: *mut f64) -> HRESULT,
@@ -22325,7 +22325,7 @@ RT_ENUM! { enum MediaPlaybackItemChangedReason: i32 {
     InitialItem = 0, EndOfStream = 1, Error = 2, AppRequested = 3,
 }}
 DEFINE_IID!(IID_IMediaPlaybackItemError, 1778118443, 56534, 19961, 164, 80, 219, 244, 198, 241, 194, 194);
-RT_INTERFACE!{interface IMediaPlaybackItemError(IMediaPlaybackItemErrorVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItemError] {
+RT_INTERFACE!{interface IMediaPlaybackItemError(IMediaPlaybackItemErrorVtbl): IInspectable [IID_IMediaPlaybackItemError] {
     fn get_ErrorCode(&self, out: *mut MediaPlaybackItemErrorCode) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
@@ -22346,7 +22346,7 @@ RT_ENUM! { enum MediaPlaybackItemErrorCode: i32 {
     None = 0, Aborted = 1, NetworkError = 2, DecodeError = 3, SourceNotSupportedError = 4, EncryptionError = 5,
 }}
 DEFINE_IID!(IID_IMediaPlaybackItemFactory, 1899232481, 5993, 20473, 167, 193, 56, 210, 196, 212, 35, 96);
-RT_INTERFACE!{static interface IMediaPlaybackItemFactory(IMediaPlaybackItemFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItemFactory] {
+RT_INTERFACE!{static interface IMediaPlaybackItemFactory(IMediaPlaybackItemFactoryVtbl): IInspectable [IID_IMediaPlaybackItemFactory] {
     fn Create(&self, source: <super::core::MediaSource as RtType>::Abi, out: *mut <MediaPlaybackItem as RtType>::Abi) -> HRESULT
 }}
 impl IMediaPlaybackItemFactory {
@@ -22357,7 +22357,7 @@ impl IMediaPlaybackItemFactory {
     }}
 }
 DEFINE_IID!(IID_IMediaPlaybackItemFactory2, 3615285050, 47431, 18802, 179, 93, 173, 251, 147, 26, 113, 230);
-RT_INTERFACE!{static interface IMediaPlaybackItemFactory2(IMediaPlaybackItemFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItemFactory2] {
+RT_INTERFACE!{static interface IMediaPlaybackItemFactory2(IMediaPlaybackItemFactory2Vtbl): IInspectable [IID_IMediaPlaybackItemFactory2] {
     fn CreateWithStartTime(&self, source: <super::core::MediaSource as RtType>::Abi, startTime: foundation::TimeSpan, out: *mut <MediaPlaybackItem as RtType>::Abi) -> HRESULT,
     fn CreateWithStartTimeAndDurationLimit(&self, source: <super::core::MediaSource as RtType>::Abi, startTime: foundation::TimeSpan, durationLimit: foundation::TimeSpan, out: *mut <MediaPlaybackItem as RtType>::Abi) -> HRESULT
 }}
@@ -22374,7 +22374,7 @@ impl IMediaPlaybackItemFactory2 {
     }}
 }
 DEFINE_IID!(IID_IMediaPlaybackItemFailedEventArgs, 1996690250, 59815, 18371, 134, 44, 198, 86, 211, 6, 131, 212);
-RT_INTERFACE!{interface IMediaPlaybackItemFailedEventArgs(IMediaPlaybackItemFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItemFailedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackItemFailedEventArgs(IMediaPlaybackItemFailedEventArgsVtbl): IInspectable [IID_IMediaPlaybackItemFailedEventArgs] {
     fn get_Item(&self, out: *mut <MediaPlaybackItem as RtType>::Abi) -> HRESULT,
     fn get_Error(&self, out: *mut <MediaPlaybackItemError as RtType>::Abi) -> HRESULT
 }}
@@ -22392,7 +22392,7 @@ impl IMediaPlaybackItemFailedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackItemFailedEventArgs: IMediaPlaybackItemFailedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackItemOpenedEventArgs, 3420044674, 12343, 20414, 174, 143, 57, 252, 57, 237, 244, 239);
-RT_INTERFACE!{interface IMediaPlaybackItemOpenedEventArgs(IMediaPlaybackItemOpenedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItemOpenedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackItemOpenedEventArgs(IMediaPlaybackItemOpenedEventArgsVtbl): IInspectable [IID_IMediaPlaybackItemOpenedEventArgs] {
     fn get_Item(&self, out: *mut <MediaPlaybackItem as RtType>::Abi) -> HRESULT
 }}
 impl IMediaPlaybackItemOpenedEventArgs {
@@ -22404,7 +22404,7 @@ impl IMediaPlaybackItemOpenedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackItemOpenedEventArgs: IMediaPlaybackItemOpenedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackItemStatics, 1260120052, 17221, 16444, 138, 103, 245, 222, 145, 223, 76, 134);
-RT_INTERFACE!{static interface IMediaPlaybackItemStatics(IMediaPlaybackItemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackItemStatics] {
+RT_INTERFACE!{static interface IMediaPlaybackItemStatics(IMediaPlaybackItemStaticsVtbl): IInspectable [IID_IMediaPlaybackItemStatics] {
     fn FindFromMediaSource(&self, source: <super::core::MediaSource as RtType>::Abi, out: *mut <MediaPlaybackItem as RtType>::Abi) -> HRESULT
 }}
 impl IMediaPlaybackItemStatics {
@@ -22415,7 +22415,7 @@ impl IMediaPlaybackItemStatics {
     }}
 }
 DEFINE_IID!(IID_IMediaPlaybackList, 2138566300, 56386, 20006, 169, 141, 120, 80, 223, 142, 201, 37);
-RT_INTERFACE!{interface IMediaPlaybackList(IMediaPlaybackListVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackList] {
+RT_INTERFACE!{interface IMediaPlaybackList(IMediaPlaybackListVtbl): IInspectable [IID_IMediaPlaybackList] {
     fn add_ItemFailed(&self, handler: <foundation::TypedEventHandler<MediaPlaybackList, MediaPlaybackItemFailedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ItemFailed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_CurrentItemChanged(&self, handler: <foundation::TypedEventHandler<MediaPlaybackList, CurrentMediaPlaybackItemChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -22514,7 +22514,7 @@ RT_CLASS!{class MediaPlaybackList: IMediaPlaybackList}
 impl RtActivatable<IActivationFactory> for MediaPlaybackList {}
 DEFINE_CLSID!(MediaPlaybackList(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,80,108,97,121,98,97,99,107,76,105,115,116,0]) [CLSID_MediaPlaybackList]);
 DEFINE_IID!(IID_IMediaPlaybackList2, 235517048, 24586, 17012, 161, 75, 11, 103, 35, 208, 244, 139);
-RT_INTERFACE!{interface IMediaPlaybackList2(IMediaPlaybackList2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackList2] {
+RT_INTERFACE!{interface IMediaPlaybackList2(IMediaPlaybackList2Vtbl): IInspectable [IID_IMediaPlaybackList2] {
     fn get_MaxPrefetchTime(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn put_MaxPrefetchTime(&self, value: <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_StartingItem(&self, out: *mut <MediaPlaybackItem as RtType>::Abi) -> HRESULT,
@@ -22552,7 +22552,7 @@ impl IMediaPlaybackList2 {
     }}
 }
 DEFINE_IID!(IID_IMediaPlaybackList3, 3710172073, 48199, 17507, 170, 144, 193, 139, 126, 95, 253, 225);
-RT_INTERFACE!{interface IMediaPlaybackList3(IMediaPlaybackList3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackList3] {
+RT_INTERFACE!{interface IMediaPlaybackList3(IMediaPlaybackList3Vtbl): IInspectable [IID_IMediaPlaybackList3] {
     fn get_MaxPlayedItemsToKeepOpen(&self, out: *mut <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
     fn put_MaxPlayedItemsToKeepOpen(&self, value: <foundation::IReference<u32> as RtType>::Abi) -> HRESULT
 }}
@@ -22568,7 +22568,7 @@ impl IMediaPlaybackList3 {
     }}
 }
 DEFINE_IID!(IID_IMediaPlaybackSession, 3274401853, 1031, 16826, 137, 70, 139, 52, 90, 90, 84, 53);
-RT_INTERFACE!{interface IMediaPlaybackSession(IMediaPlaybackSessionVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSession] {
+RT_INTERFACE!{interface IMediaPlaybackSession(IMediaPlaybackSessionVtbl): IInspectable [IID_IMediaPlaybackSession] {
     fn add_PlaybackStateChanged(&self, value: <foundation::TypedEventHandler<MediaPlaybackSession, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PlaybackStateChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_PlaybackRateChanged(&self, value: <foundation::TypedEventHandler<MediaPlaybackSession, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -22788,7 +22788,7 @@ impl IMediaPlaybackSession {
 }
 RT_CLASS!{class MediaPlaybackSession: IMediaPlaybackSession}
 DEFINE_IID!(IID_IMediaPlaybackSession2, 4172971129, 8136, 16535, 173, 112, 192, 250, 24, 204, 0, 80);
-RT_INTERFACE!{interface IMediaPlaybackSession2(IMediaPlaybackSession2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSession2] {
+RT_INTERFACE!{interface IMediaPlaybackSession2(IMediaPlaybackSession2Vtbl): IInspectable [IID_IMediaPlaybackSession2] {
     fn add_BufferedRangesChanged(&self, value: <foundation::TypedEventHandler<MediaPlaybackSession, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_BufferedRangesChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_PlayedRangesChanged(&self, value: <foundation::TypedEventHandler<MediaPlaybackSession, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -22878,7 +22878,7 @@ impl IMediaPlaybackSession2 {
     }}
 }
 DEFINE_IID!(IID_IMediaPlaybackSession3, 2074260506, 41954, 16479, 183, 123, 164, 129, 44, 35, 139, 102);
-RT_INTERFACE!{interface IMediaPlaybackSession3(IMediaPlaybackSession3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSession3] {
+RT_INTERFACE!{interface IMediaPlaybackSession3(IMediaPlaybackSession3Vtbl): IInspectable [IID_IMediaPlaybackSession3] {
     fn get_PlaybackRotation(&self, out: *mut super::mediaproperties::MediaRotation) -> HRESULT,
     fn put_PlaybackRotation(&self, value: super::mediaproperties::MediaRotation) -> HRESULT,
     fn GetOutputDegradationPolicyState(&self, out: *mut <MediaPlaybackSessionOutputDegradationPolicyState as RtType>::Abi) -> HRESULT
@@ -22900,7 +22900,7 @@ impl IMediaPlaybackSession3 {
     }}
 }
 DEFINE_IID!(IID_IMediaPlaybackSessionBufferingStartedEventArgs, 3446321133, 29922, 17333, 177, 21, 118, 35, 108, 51, 121, 26);
-RT_INTERFACE!{interface IMediaPlaybackSessionBufferingStartedEventArgs(IMediaPlaybackSessionBufferingStartedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSessionBufferingStartedEventArgs] {
+RT_INTERFACE!{interface IMediaPlaybackSessionBufferingStartedEventArgs(IMediaPlaybackSessionBufferingStartedEventArgsVtbl): IInspectable [IID_IMediaPlaybackSessionBufferingStartedEventArgs] {
     fn get_IsPlaybackInterruption(&self, out: *mut bool) -> HRESULT
 }}
 impl IMediaPlaybackSessionBufferingStartedEventArgs {
@@ -22912,7 +22912,7 @@ impl IMediaPlaybackSessionBufferingStartedEventArgs {
 }
 RT_CLASS!{class MediaPlaybackSessionBufferingStartedEventArgs: IMediaPlaybackSessionBufferingStartedEventArgs}
 DEFINE_IID!(IID_IMediaPlaybackSessionOutputDegradationPolicyState, 1435398781, 63027, 18937, 150, 90, 171, 170, 29, 183, 9, 190);
-RT_INTERFACE!{interface IMediaPlaybackSessionOutputDegradationPolicyState(IMediaPlaybackSessionOutputDegradationPolicyStateVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSessionOutputDegradationPolicyState] {
+RT_INTERFACE!{interface IMediaPlaybackSessionOutputDegradationPolicyState(IMediaPlaybackSessionOutputDegradationPolicyStateVtbl): IInspectable [IID_IMediaPlaybackSessionOutputDegradationPolicyState] {
     fn get_VideoConstrictionReason(&self, out: *mut MediaPlaybackSessionVideoConstrictionReason) -> HRESULT
 }}
 impl IMediaPlaybackSessionOutputDegradationPolicyState {
@@ -22927,11 +22927,11 @@ RT_ENUM! { enum MediaPlaybackSessionVideoConstrictionReason: i32 {
     None = 0, VirtualMachine = 1, UnsupportedDisplayAdapter = 2, UnsignedDriver = 3, FrameServerEnabled = 4, OutputProtectionFailed = 5, Unknown = 6,
 }}
 DEFINE_IID!(IID_IMediaPlaybackSource, 4020093628, 37655, 18070, 176, 81, 43, 173, 100, 49, 119, 181);
-RT_INTERFACE!{interface IMediaPlaybackSource(IMediaPlaybackSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSource] {
+RT_INTERFACE!{interface IMediaPlaybackSource(IMediaPlaybackSourceVtbl): IInspectable [IID_IMediaPlaybackSource] {
     
 }}
 DEFINE_IID!(IID_IMediaPlaybackSphericalVideoProjection, 3557143420, 28430, 18017, 184, 238, 212, 135, 186, 151, 82, 213);
-RT_INTERFACE!{interface IMediaPlaybackSphericalVideoProjection(IMediaPlaybackSphericalVideoProjectionVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackSphericalVideoProjection] {
+RT_INTERFACE!{interface IMediaPlaybackSphericalVideoProjection(IMediaPlaybackSphericalVideoProjectionVtbl): IInspectable [IID_IMediaPlaybackSphericalVideoProjection] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_IsEnabled(&self, value: bool) -> HRESULT,
     fn get_FrameFormat(&self, out: *mut super::mediaproperties::SphericalVideoFrameFormat) -> HRESULT,
@@ -22995,7 +22995,7 @@ RT_ENUM! { enum MediaPlaybackState: i32 {
     None = 0, Opening = 1, Buffering = 2, Playing = 3, Paused = 4,
 }}
 DEFINE_IID!(IID_IMediaPlaybackTimedMetadataTrackList, 1924403993, 48123, 18083, 147, 114, 156, 156, 116, 75, 148, 56);
-RT_INTERFACE!{interface IMediaPlaybackTimedMetadataTrackList(IMediaPlaybackTimedMetadataTrackListVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlaybackTimedMetadataTrackList] {
+RT_INTERFACE!{interface IMediaPlaybackTimedMetadataTrackList(IMediaPlaybackTimedMetadataTrackListVtbl): IInspectable [IID_IMediaPlaybackTimedMetadataTrackList] {
     fn add_PresentationModeChanged(&self, handler: <foundation::TypedEventHandler<MediaPlaybackTimedMetadataTrackList, TimedMetadataPresentationModeChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PresentationModeChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn GetPresentationMode(&self, index: u32, out: *mut TimedMetadataTrackPresentationMode) -> HRESULT,
@@ -23024,7 +23024,7 @@ impl IMediaPlaybackTimedMetadataTrackList {
 RT_CLASS!{class MediaPlaybackTimedMetadataTrackList: foundation::collections::IVectorView<super::core::TimedMetadataTrack>}
 RT_CLASS!{class MediaPlaybackVideoTrackList: foundation::collections::IVectorView<super::core::VideoTrack>}
 DEFINE_IID!(IID_IMediaPlayer, 941261771, 28671, 18843, 141, 100, 40, 133, 223, 193, 36, 158);
-RT_INTERFACE!{interface IMediaPlayer(IMediaPlayerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayer] {
+RT_INTERFACE!{interface IMediaPlayer(IMediaPlayerVtbl): IInspectable [IID_IMediaPlayer] {
     fn get_AutoPlay(&self, out: *mut bool) -> HRESULT,
     fn put_AutoPlay(&self, value: bool) -> HRESULT,
     fn get_NaturalDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -23265,7 +23265,7 @@ RT_CLASS!{class MediaPlayer: IMediaPlayer}
 impl RtActivatable<IActivationFactory> for MediaPlayer {}
 DEFINE_CLSID!(MediaPlayer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,77,101,100,105,97,80,108,97,121,101,114,0]) [CLSID_MediaPlayer]);
 DEFINE_IID!(IID_IMediaPlayer2, 1015288344, 8483, 20421, 144, 130, 47, 136, 63, 119, 189, 245);
-RT_INTERFACE!{interface IMediaPlayer2(IMediaPlayer2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayer2] {
+RT_INTERFACE!{interface IMediaPlayer2(IMediaPlayer2Vtbl): IInspectable [IID_IMediaPlayer2] {
     fn get_SystemMediaTransportControls(&self, out: *mut <super::SystemMediaTransportControls as RtType>::Abi) -> HRESULT,
     fn get_AudioCategory(&self, out: *mut MediaPlayerAudioCategory) -> HRESULT,
     fn put_AudioCategory(&self, value: MediaPlayerAudioCategory) -> HRESULT,
@@ -23298,7 +23298,7 @@ impl IMediaPlayer2 {
     }}
 }
 DEFINE_IID!(IID_IMediaPlayer3, 3993395418, 795, 20459, 189, 155, 146, 224, 160, 168, 210, 153);
-RT_INTERFACE!{interface IMediaPlayer3(IMediaPlayer3Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayer3] {
+RT_INTERFACE!{interface IMediaPlayer3(IMediaPlayer3Vtbl): IInspectable [IID_IMediaPlayer3] {
     fn add_IsMutedChanged(&self, value: <foundation::TypedEventHandler<MediaPlayer, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_IsMutedChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_SourceChanged(&self, value: <foundation::TypedEventHandler<MediaPlayer, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -23427,7 +23427,7 @@ impl IMediaPlayer3 {
     }}
 }
 DEFINE_IID!(IID_IMediaPlayer4, 2147704240, 29768, 18288, 175, 207, 42, 87, 69, 9, 20, 197);
-RT_INTERFACE!{interface IMediaPlayer4(IMediaPlayer4Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayer4] {
+RT_INTERFACE!{interface IMediaPlayer4(IMediaPlayer4Vtbl): IInspectable [IID_IMediaPlayer4] {
     fn SetSurfaceSize(&self, size: foundation::Size) -> HRESULT,
     #[cfg(feature="windows-ui")] fn GetSurface(&self, compositor: <super::super::ui::composition::Compositor as RtType>::Abi, out: *mut <MediaPlayerSurface as RtType>::Abi) -> HRESULT
 }}
@@ -23443,7 +23443,7 @@ impl IMediaPlayer4 {
     }}
 }
 DEFINE_IID!(IID_IMediaPlayer5, 3487905789, 63594, 17478, 191, 77, 200, 231, 146, 183, 180, 179);
-RT_INTERFACE!{interface IMediaPlayer5(IMediaPlayer5Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayer5] {
+RT_INTERFACE!{interface IMediaPlayer5(IMediaPlayer5Vtbl): IInspectable [IID_IMediaPlayer5] {
     fn add_VideoFrameAvailable(&self, value: <foundation::TypedEventHandler<MediaPlayer, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_VideoFrameAvailable(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_IsVideoFrameServerEnabled(&self, out: *mut bool) -> HRESULT,
@@ -23485,7 +23485,7 @@ impl IMediaPlayer5 {
     }}
 }
 DEFINE_IID!(IID_IMediaPlayer6, 3771375750, 44645, 16716, 176, 16, 139, 197, 95, 0, 230, 146);
-RT_INTERFACE!{interface IMediaPlayer6(IMediaPlayer6Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayer6] {
+RT_INTERFACE!{interface IMediaPlayer6(IMediaPlayer6Vtbl): IInspectable [IID_IMediaPlayer6] {
     fn add_SubtitleFrameChanged(&self, handler: <foundation::TypedEventHandler<MediaPlayer, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SubtitleFrameChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn RenderSubtitlesToSurface(&self, destination: <super::super::graphics::directx::direct3d11::IDirect3DSurface as RtType>::Abi, out: *mut bool) -> HRESULT,
@@ -23513,7 +23513,7 @@ impl IMediaPlayer6 {
     }}
 }
 DEFINE_IID!(IID_IMediaPlayer7, 1562231928, 17664, 17713, 179, 244, 119, 122, 113, 73, 31, 127);
-RT_INTERFACE!{interface IMediaPlayer7(IMediaPlayer7Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayer7] {
+RT_INTERFACE!{interface IMediaPlayer7(IMediaPlayer7Vtbl): IInspectable [IID_IMediaPlayer7] {
     fn get_AudioStateMonitor(&self, out: *mut <super::audio::AudioStateMonitor as RtType>::Abi) -> HRESULT
 }}
 impl IMediaPlayer7 {
@@ -23530,7 +23530,7 @@ RT_ENUM! { enum MediaPlayerAudioDeviceType: i32 {
     Console = 0, Multimedia = 1, Communications = 2,
 }}
 DEFINE_IID!(IID_IMediaPlayerDataReceivedEventArgs, 3344602117, 51201, 16682, 131, 91, 131, 252, 14, 98, 42, 142);
-RT_INTERFACE!{interface IMediaPlayerDataReceivedEventArgs(IMediaPlayerDataReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerDataReceivedEventArgs] {
+RT_INTERFACE!{interface IMediaPlayerDataReceivedEventArgs(IMediaPlayerDataReceivedEventArgsVtbl): IInspectable [IID_IMediaPlayerDataReceivedEventArgs] {
     fn get_Data(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT
 }}
 impl IMediaPlayerDataReceivedEventArgs {
@@ -23542,7 +23542,7 @@ impl IMediaPlayerDataReceivedEventArgs {
 }
 RT_CLASS!{class MediaPlayerDataReceivedEventArgs: IMediaPlayerDataReceivedEventArgs}
 DEFINE_IID!(IID_IMediaPlayerEffects, 2241978074, 51894, 19648, 139, 227, 96, 53, 244, 222, 37, 145);
-RT_INTERFACE!{interface IMediaPlayerEffects(IMediaPlayerEffectsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerEffects] {
+RT_INTERFACE!{interface IMediaPlayerEffects(IMediaPlayerEffectsVtbl): IInspectable [IID_IMediaPlayerEffects] {
     fn AddAudioEffect(&self, activatableClassId: HSTRING, effectOptional: bool, configuration: <foundation::collections::IPropertySet as RtType>::Abi) -> HRESULT,
     fn RemoveAllEffects(&self) -> HRESULT
 }}
@@ -23557,7 +23557,7 @@ impl IMediaPlayerEffects {
     }}
 }
 DEFINE_IID!(IID_IMediaPlayerEffects2, 4198603385, 7102, 18117, 174, 31, 142, 230, 159, 179, 194, 199);
-RT_INTERFACE!{interface IMediaPlayerEffects2(IMediaPlayerEffects2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerEffects2] {
+RT_INTERFACE!{interface IMediaPlayerEffects2(IMediaPlayerEffects2Vtbl): IInspectable [IID_IMediaPlayerEffects2] {
     fn AddVideoEffect(&self, activatableClassId: HSTRING, effectOptional: bool, effectConfiguration: <foundation::collections::IPropertySet as RtType>::Abi) -> HRESULT
 }}
 impl IMediaPlayerEffects2 {
@@ -23570,7 +23570,7 @@ RT_ENUM! { enum MediaPlayerError: i32 {
     Unknown = 0, Aborted = 1, NetworkError = 2, DecodingError = 3, SourceNotSupported = 4,
 }}
 DEFINE_IID!(IID_IMediaPlayerFailedEventArgs, 658827705, 42979, 20246, 186, 196, 121, 20, 235, 192, 131, 1);
-RT_INTERFACE!{interface IMediaPlayerFailedEventArgs(IMediaPlayerFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerFailedEventArgs] {
+RT_INTERFACE!{interface IMediaPlayerFailedEventArgs(IMediaPlayerFailedEventArgsVtbl): IInspectable [IID_IMediaPlayerFailedEventArgs] {
     fn get_Error(&self, out: *mut MediaPlayerError) -> HRESULT,
     fn get_ExtendedErrorCode(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_ErrorMessage(&self, out: *mut HSTRING) -> HRESULT
@@ -23594,7 +23594,7 @@ impl IMediaPlayerFailedEventArgs {
 }
 RT_CLASS!{class MediaPlayerFailedEventArgs: IMediaPlayerFailedEventArgs}
 DEFINE_IID!(IID_IMediaPlayerRateChangedEventArgs, 1080036696, 15201, 19378, 152, 159, 252, 101, 96, 139, 108, 171);
-RT_INTERFACE!{interface IMediaPlayerRateChangedEventArgs(IMediaPlayerRateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerRateChangedEventArgs] {
+RT_INTERFACE!{interface IMediaPlayerRateChangedEventArgs(IMediaPlayerRateChangedEventArgsVtbl): IInspectable [IID_IMediaPlayerRateChangedEventArgs] {
     fn get_NewRate(&self, out: *mut f64) -> HRESULT
 }}
 impl IMediaPlayerRateChangedEventArgs {
@@ -23606,7 +23606,7 @@ impl IMediaPlayerRateChangedEventArgs {
 }
 RT_CLASS!{class MediaPlayerRateChangedEventArgs: IMediaPlayerRateChangedEventArgs}
 DEFINE_IID!(IID_IMediaPlayerSource, 3176106135, 5155, 19518, 130, 197, 15, 177, 175, 148, 247, 21);
-RT_INTERFACE!{interface IMediaPlayerSource(IMediaPlayerSourceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerSource] {
+RT_INTERFACE!{interface IMediaPlayerSource(IMediaPlayerSourceVtbl): IInspectable [IID_IMediaPlayerSource] {
     fn get_ProtectionManager(&self, out: *mut <super::protection::MediaProtectionManager as RtType>::Abi) -> HRESULT,
     fn put_ProtectionManager(&self, value: <super::protection::MediaProtectionManager as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -23639,7 +23639,7 @@ impl IMediaPlayerSource {
     }}
 }
 DEFINE_IID!(IID_IMediaPlayerSource2, 2185534367, 29474, 19467, 176, 59, 62, 105, 164, 130, 96, 197);
-RT_INTERFACE!{interface IMediaPlayerSource2(IMediaPlayerSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerSource2] {
+RT_INTERFACE!{interface IMediaPlayerSource2(IMediaPlayerSource2Vtbl): IInspectable [IID_IMediaPlayerSource2] {
     fn get_Source(&self, out: *mut <IMediaPlaybackSource as RtType>::Abi) -> HRESULT,
     fn put_Source(&self, value: <IMediaPlaybackSource as RtType>::Abi) -> HRESULT
 }}
@@ -23658,7 +23658,7 @@ RT_ENUM! { enum MediaPlayerState: i32 {
     Closed = 0, Opening = 1, Buffering = 2, Playing = 3, Paused = 4, Stopped = 5,
 }}
 DEFINE_IID!(IID_IMediaPlayerSurface, 248927164, 46902, 18883, 131, 11, 118, 74, 56, 69, 49, 58);
-RT_INTERFACE!{interface IMediaPlayerSurface(IMediaPlayerSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_IMediaPlayerSurface] {
+RT_INTERFACE!{interface IMediaPlayerSurface(IMediaPlayerSurfaceVtbl): IInspectable [IID_IMediaPlayerSurface] {
     #[cfg(not(feature="windows-ui"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-ui")] fn get_CompositionSurface(&self, out: *mut <super::super::ui::composition::ICompositionSurface as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy1(&self) -> (),
@@ -23684,7 +23684,7 @@ impl IMediaPlayerSurface {
 }
 RT_CLASS!{class MediaPlayerSurface: IMediaPlayerSurface}
 DEFINE_IID!(IID_IPlaybackMediaMarker, 3302109020, 15388, 17476, 182, 185, 119, 139, 4, 34, 212, 26);
-RT_INTERFACE!{interface IPlaybackMediaMarker(IPlaybackMediaMarkerVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackMediaMarker] {
+RT_INTERFACE!{interface IPlaybackMediaMarker(IPlaybackMediaMarkerVtbl): IInspectable [IID_IPlaybackMediaMarker] {
     fn get_Time(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_MediaMarkerType(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT
@@ -23718,7 +23718,7 @@ impl PlaybackMediaMarker {
 }
 DEFINE_CLSID!(PlaybackMediaMarker(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,108,97,121,98,97,99,107,46,80,108,97,121,98,97,99,107,77,101,100,105,97,77,97,114,107,101,114,0]) [CLSID_PlaybackMediaMarker]);
 DEFINE_IID!(IID_IPlaybackMediaMarkerFactory, 2354252408, 57518, 19994, 168, 200, 226, 63, 152, 42, 147, 123);
-RT_INTERFACE!{static interface IPlaybackMediaMarkerFactory(IPlaybackMediaMarkerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackMediaMarkerFactory] {
+RT_INTERFACE!{static interface IPlaybackMediaMarkerFactory(IPlaybackMediaMarkerFactoryVtbl): IInspectable [IID_IPlaybackMediaMarkerFactory] {
     fn CreateFromTime(&self, value: foundation::TimeSpan, out: *mut <PlaybackMediaMarker as RtType>::Abi) -> HRESULT,
     fn Create(&self, value: foundation::TimeSpan, mediaMarketType: HSTRING, text: HSTRING, out: *mut <PlaybackMediaMarker as RtType>::Abi) -> HRESULT
 }}
@@ -23735,7 +23735,7 @@ impl IPlaybackMediaMarkerFactory {
     }}
 }
 DEFINE_IID!(IID_IPlaybackMediaMarkerReachedEventArgs, 1468846521, 37090, 20064, 171, 196, 135, 64, 176, 31, 97, 150);
-RT_INTERFACE!{interface IPlaybackMediaMarkerReachedEventArgs(IPlaybackMediaMarkerReachedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackMediaMarkerReachedEventArgs] {
+RT_INTERFACE!{interface IPlaybackMediaMarkerReachedEventArgs(IPlaybackMediaMarkerReachedEventArgsVtbl): IInspectable [IID_IPlaybackMediaMarkerReachedEventArgs] {
     fn get_PlaybackMediaMarker(&self, out: *mut <PlaybackMediaMarker as RtType>::Abi) -> HRESULT
 }}
 impl IPlaybackMediaMarkerReachedEventArgs {
@@ -23747,7 +23747,7 @@ impl IPlaybackMediaMarkerReachedEventArgs {
 }
 RT_CLASS!{class PlaybackMediaMarkerReachedEventArgs: IPlaybackMediaMarkerReachedEventArgs}
 DEFINE_IID!(IID_IPlaybackMediaMarkerSequence, 4068543726, 25483, 18127, 136, 23, 29, 17, 31, 233, 216, 196);
-RT_INTERFACE!{interface IPlaybackMediaMarkerSequence(IPlaybackMediaMarkerSequenceVtbl): IInspectable(IInspectableVtbl) [IID_IPlaybackMediaMarkerSequence] {
+RT_INTERFACE!{interface IPlaybackMediaMarkerSequence(IPlaybackMediaMarkerSequenceVtbl): IInspectable [IID_IPlaybackMediaMarkerSequence] {
     fn get_Size(&self, out: *mut u32) -> HRESULT,
     fn Insert(&self, value: <PlaybackMediaMarker as RtType>::Abi) -> HRESULT,
     fn Clear(&self) -> HRESULT
@@ -23775,7 +23775,7 @@ RT_ENUM! { enum StereoscopicVideoRenderMode: i32 {
     Mono = 0, Stereo = 1,
 }}
 DEFINE_IID!(IID_ITimedMetadataPresentationModeChangedEventArgs, 3512950937, 26079, 17838, 140, 239, 220, 11, 83, 253, 194, 187);
-RT_INTERFACE!{interface ITimedMetadataPresentationModeChangedEventArgs(ITimedMetadataPresentationModeChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITimedMetadataPresentationModeChangedEventArgs] {
+RT_INTERFACE!{interface ITimedMetadataPresentationModeChangedEventArgs(ITimedMetadataPresentationModeChangedEventArgsVtbl): IInspectable [IID_ITimedMetadataPresentationModeChangedEventArgs] {
     fn get_Track(&self, out: *mut <super::core::TimedMetadataTrack as RtType>::Abi) -> HRESULT,
     fn get_OldPresentationMode(&self, out: *mut TimedMetadataTrackPresentationMode) -> HRESULT,
     fn get_NewPresentationMode(&self, out: *mut TimedMetadataTrackPresentationMode) -> HRESULT
@@ -23805,7 +23805,7 @@ RT_ENUM! { enum TimedMetadataTrackPresentationMode: i32 {
 pub mod playlists { // Windows.Media.Playlists
 use crate::prelude::*;
 DEFINE_IID!(IID_IPlaylist, 2151102197, 53060, 19863, 131, 179, 122, 8, 158, 154, 182, 99);
-RT_INTERFACE!{interface IPlaylist(IPlaylistVtbl): IInspectable(IInspectableVtbl) [IID_IPlaylist] {
+RT_INTERFACE!{interface IPlaylist(IPlaylistVtbl): IInspectable [IID_IPlaylist] {
     #[cfg(feature="windows-storage")] fn get_Files(&self, out: *mut <foundation::collections::IVector<super::super::storage::StorageFile> as RtType>::Abi) -> HRESULT,
     fn SaveAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn SaveAsAsync(&self, saveLocation: <super::super::storage::IStorageFolder as RtType>::Abi, desiredName: HSTRING, option: super::super::storage::NameCollisionOption, out: *mut <foundation::IAsyncOperation<super::super::storage::StorageFile> as RtType>::Abi) -> HRESULT,
@@ -23846,7 +23846,7 @@ RT_ENUM! { enum PlaylistFormat: i32 {
     WindowsMedia = 0, Zune = 1, M3u = 2,
 }}
 DEFINE_IID!(IID_IPlaylistStatics, 3317903821, 33273, 20467, 149, 185, 112, 182, 255, 4, 107, 104);
-RT_INTERFACE!{static interface IPlaylistStatics(IPlaylistStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlaylistStatics] {
+RT_INTERFACE!{static interface IPlaylistStatics(IPlaylistStaticsVtbl): IInspectable [IID_IPlaylistStatics] {
     #[cfg(feature="windows-storage")] fn LoadAsync(&self, file: <super::super::storage::IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<Playlist> as RtType>::Abi) -> HRESULT
 }}
 impl IPlaylistStatics {
@@ -23860,7 +23860,7 @@ impl IPlaylistStatics {
 pub mod protection { // Windows.Media.Protection
 use crate::prelude::*;
 DEFINE_IID!(IID_IComponentLoadFailedEventArgs, 2509713043, 30534, 16766, 132, 149, 240, 49, 187, 197, 134, 44);
-RT_INTERFACE!{interface IComponentLoadFailedEventArgs(IComponentLoadFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IComponentLoadFailedEventArgs] {
+RT_INTERFACE!{interface IComponentLoadFailedEventArgs(IComponentLoadFailedEventArgsVtbl): IInspectable [IID_IComponentLoadFailedEventArgs] {
     fn get_Information(&self, out: *mut <RevocationAndRenewalInformation as RtType>::Abi) -> HRESULT,
     fn get_Completion(&self, out: *mut <MediaProtectionServiceCompletion as RtType>::Abi) -> HRESULT
 }}
@@ -23896,7 +23896,7 @@ impl ComponentRenewal {
 }
 DEFINE_CLSID!(ComponentRenewal(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,67,111,109,112,111,110,101,110,116,82,101,110,101,119,97,108,0]) [CLSID_ComponentRenewal]);
 DEFINE_IID!(IID_IComponentRenewalStatics, 1878773095, 46997, 18629, 139, 123, 167, 196, 239, 226, 2, 227);
-RT_INTERFACE!{static interface IComponentRenewalStatics(IComponentRenewalStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IComponentRenewalStatics] {
+RT_INTERFACE!{static interface IComponentRenewalStatics(IComponentRenewalStaticsVtbl): IInspectable [IID_IComponentRenewalStatics] {
     fn RenewSystemComponentsAsync(&self, information: <RevocationAndRenewalInformation as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<RenewalStatus, u32> as RtType>::Abi) -> HRESULT
 }}
 impl IComponentRenewalStatics {
@@ -23913,7 +23913,7 @@ RT_ENUM! { enum HdcpProtection: i32 {
     Off = 0, On = 1, OnWithTypeEnforcement = 2,
 }}
 DEFINE_IID!(IID_IHdcpSession, 1904756201, 25815, 17005, 128, 155, 27, 228, 97, 148, 26, 42);
-RT_INTERFACE!{interface IHdcpSession(IHdcpSessionVtbl): IInspectable(IInspectableVtbl) [IID_IHdcpSession] {
+RT_INTERFACE!{interface IHdcpSession(IHdcpSessionVtbl): IInspectable [IID_IHdcpSession] {
     fn IsEffectiveProtectionAtLeast(&self, protection: HdcpProtection, out: *mut bool) -> HRESULT,
     fn GetEffectiveProtection(&self, out: *mut <foundation::IReference<HdcpProtection> as RtType>::Abi) -> HRESULT,
     fn SetDesiredMinProtectionAsync(&self, protection: HdcpProtection, out: *mut <foundation::IAsyncOperation<HdcpSetProtectionResult> as RtType>::Abi) -> HRESULT,
@@ -23953,7 +23953,7 @@ RT_ENUM! { enum HdcpSetProtectionResult: i32 {
     Success = 0, TimedOut = 1, NotSupported = 2, UnknownFailure = 3,
 }}
 DEFINE_IID!(IID_IMediaProtectionManager, 1164527943, 51009, 17227, 167, 158, 71, 76, 18, 217, 61, 47);
-RT_INTERFACE!{interface IMediaProtectionManager(IMediaProtectionManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProtectionManager] {
+RT_INTERFACE!{interface IMediaProtectionManager(IMediaProtectionManagerVtbl): IInspectable [IID_IMediaProtectionManager] {
     fn add_ServiceRequested(&self, handler: <ServiceRequestedEventHandler as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ServiceRequested(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
     fn add_RebootNeeded(&self, handler: <RebootNeededEventHandler as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -24000,7 +24000,7 @@ RT_CLASS!{class MediaProtectionManager: IMediaProtectionManager}
 impl RtActivatable<IActivationFactory> for MediaProtectionManager {}
 DEFINE_CLSID!(MediaProtectionManager(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,77,101,100,105,97,80,114,111,116,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_MediaProtectionManager]);
 DEFINE_IID!(IID_IMediaProtectionPMPServer, 202445350, 31526, 19761, 149, 187, 156, 27, 8, 239, 127, 192);
-RT_INTERFACE!{interface IMediaProtectionPMPServer(IMediaProtectionPMPServerVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProtectionPMPServer] {
+RT_INTERFACE!{interface IMediaProtectionPMPServer(IMediaProtectionPMPServerVtbl): IInspectable [IID_IMediaProtectionPMPServer] {
     fn get_Properties(&self, out: *mut <foundation::collections::IPropertySet as RtType>::Abi) -> HRESULT
 }}
 impl IMediaProtectionPMPServer {
@@ -24019,7 +24019,7 @@ impl MediaProtectionPMPServer {
 }
 DEFINE_CLSID!(MediaProtectionPMPServer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,77,101,100,105,97,80,114,111,116,101,99,116,105,111,110,80,77,80,83,101,114,118,101,114,0]) [CLSID_MediaProtectionPMPServer]);
 DEFINE_IID!(IID_IMediaProtectionPMPServerFactory, 1613532766, 63442, 18558, 175, 145, 219, 196, 37, 43, 33, 130);
-RT_INTERFACE!{static interface IMediaProtectionPMPServerFactory(IMediaProtectionPMPServerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProtectionPMPServerFactory] {
+RT_INTERFACE!{static interface IMediaProtectionPMPServerFactory(IMediaProtectionPMPServerFactoryVtbl): IInspectable [IID_IMediaProtectionPMPServerFactory] {
     fn CreatePMPServer(&self, pProperties: <foundation::collections::IPropertySet as RtType>::Abi, out: *mut <MediaProtectionPMPServer as RtType>::Abi) -> HRESULT
 }}
 impl IMediaProtectionPMPServerFactory {
@@ -24030,7 +24030,7 @@ impl IMediaProtectionPMPServerFactory {
     }}
 }
 DEFINE_IID!(IID_IMediaProtectionServiceCompletion, 2338114072, 53205, 17646, 162, 237, 223, 118, 1, 12, 20, 181);
-RT_INTERFACE!{interface IMediaProtectionServiceCompletion(IMediaProtectionServiceCompletionVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProtectionServiceCompletion] {
+RT_INTERFACE!{interface IMediaProtectionServiceCompletion(IMediaProtectionServiceCompletionVtbl): IInspectable [IID_IMediaProtectionServiceCompletion] {
     fn Complete(&self, success: bool) -> HRESULT
 }}
 impl IMediaProtectionServiceCompletion {
@@ -24041,7 +24041,7 @@ impl IMediaProtectionServiceCompletion {
 }
 RT_CLASS!{class MediaProtectionServiceCompletion: IMediaProtectionServiceCompletion}
 DEFINE_IID!(IID_IMediaProtectionServiceRequest, 2984119974, 8340, 18317, 135, 164, 139, 149, 32, 15, 133, 198);
-RT_INTERFACE!{interface IMediaProtectionServiceRequest(IMediaProtectionServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IMediaProtectionServiceRequest] {
+RT_INTERFACE!{interface IMediaProtectionServiceRequest(IMediaProtectionServiceRequestVtbl): IInspectable [IID_IMediaProtectionServiceRequest] {
     fn get_ProtectionSystem(&self, out: *mut Guid) -> HRESULT,
     fn get_Type(&self, out: *mut Guid) -> HRESULT
 }}
@@ -24058,7 +24058,7 @@ impl IMediaProtectionServiceRequest {
     }}
 }
 DEFINE_IID!(IID_IProtectionCapabilities, 3349962110, 29824, 19753, 164, 100, 123, 205, 145, 61, 216, 228);
-RT_INTERFACE!{interface IProtectionCapabilities(IProtectionCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IProtectionCapabilities] {
+RT_INTERFACE!{interface IProtectionCapabilities(IProtectionCapabilitiesVtbl): IInspectable [IID_IProtectionCapabilities] {
     fn IsTypeSupported(&self, type_: HSTRING, keySystem: HSTRING, out: *mut ProtectionCapabilityResult) -> HRESULT
 }}
 impl IProtectionCapabilities {
@@ -24088,7 +24088,7 @@ RT_ENUM! { enum RenewalStatus: i32 {
     NotStarted = 0, UpdatesInProgress = 1, UserCancelled = 2, AppComponentsMayNeedUpdating = 3, NoComponentsFound = 4,
 }}
 DEFINE_IID!(IID_IRevocationAndRenewalInformation, 4087452539, 9473, 17310, 166, 231, 111, 201, 94, 23, 95, 207);
-RT_INTERFACE!{interface IRevocationAndRenewalInformation(IRevocationAndRenewalInformationVtbl): IInspectable(IInspectableVtbl) [IID_IRevocationAndRenewalInformation] {
+RT_INTERFACE!{interface IRevocationAndRenewalInformation(IRevocationAndRenewalInformationVtbl): IInspectable [IID_IRevocationAndRenewalInformation] {
     fn get_Items(&self, out: *mut <foundation::collections::IVector<RevocationAndRenewalItem> as RtType>::Abi) -> HRESULT
 }}
 impl IRevocationAndRenewalInformation {
@@ -24100,7 +24100,7 @@ impl IRevocationAndRenewalInformation {
 }
 RT_CLASS!{class RevocationAndRenewalInformation: IRevocationAndRenewalInformation}
 DEFINE_IID!(IID_IRevocationAndRenewalItem, 815383052, 15600, 18922, 144, 45, 202, 243, 45, 45, 222, 44);
-RT_INTERFACE!{interface IRevocationAndRenewalItem(IRevocationAndRenewalItemVtbl): IInspectable(IInspectableVtbl) [IID_IRevocationAndRenewalItem] {
+RT_INTERFACE!{interface IRevocationAndRenewalItem(IRevocationAndRenewalItemVtbl): IInspectable [IID_IRevocationAndRenewalItem] {
     fn get_Reasons(&self, out: *mut RevocationAndRenewalReasons) -> HRESULT,
     fn get_HeaderHash(&self, out: *mut HSTRING) -> HRESULT,
     fn get_PublicKeyHash(&self, out: *mut HSTRING) -> HRESULT,
@@ -24139,7 +24139,7 @@ RT_ENUM! { enum RevocationAndRenewalReasons: u32 {
     UserModeComponentLoad = 1, KernelModeComponentLoad = 2, AppComponent = 4, GlobalRevocationListLoadFailed = 16, InvalidGlobalRevocationListSignature = 32, GlobalRevocationListAbsent = 4096, ComponentRevoked = 8192, InvalidComponentCertificateExtendedKeyUse = 16384, ComponentCertificateRevoked = 32768, InvalidComponentCertificateRoot = 65536, ComponentHighSecurityCertificateRevoked = 131072, ComponentLowSecurityCertificateRevoked = 262144, BootDriverVerificationFailed = 1048576, ComponentSignedWithTestCertificate = 16777216, EncryptionFailure = 268435456,
 }}
 DEFINE_IID!(IID_IServiceRequestedEventArgs, 875051951, 43956, 20417, 189, 137, 147, 241, 6, 87, 58, 73);
-RT_INTERFACE!{interface IServiceRequestedEventArgs(IServiceRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IServiceRequestedEventArgs] {
+RT_INTERFACE!{interface IServiceRequestedEventArgs(IServiceRequestedEventArgsVtbl): IInspectable [IID_IServiceRequestedEventArgs] {
     fn get_Request(&self, out: *mut <IMediaProtectionServiceRequest as RtType>::Abi) -> HRESULT,
     fn get_Completion(&self, out: *mut <MediaProtectionServiceCompletion as RtType>::Abi) -> HRESULT
 }}
@@ -24157,7 +24157,7 @@ impl IServiceRequestedEventArgs {
 }
 RT_CLASS!{class ServiceRequestedEventArgs: IServiceRequestedEventArgs}
 DEFINE_IID!(IID_IServiceRequestedEventArgs2, 1430022614, 64254, 16680, 141, 250, 19, 14, 57, 138, 19, 167);
-RT_INTERFACE!{interface IServiceRequestedEventArgs2(IServiceRequestedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IServiceRequestedEventArgs2] {
+RT_INTERFACE!{interface IServiceRequestedEventArgs2(IServiceRequestedEventArgs2Vtbl): IInspectable [IID_IServiceRequestedEventArgs2] {
     fn get_MediaPlaybackItem(&self, out: *mut <super::playback::MediaPlaybackItem as RtType>::Abi) -> HRESULT
 }}
 impl IServiceRequestedEventArgs2 {
@@ -24189,7 +24189,7 @@ RT_ENUM! { enum NDCertificateType: i32 {
     Unknown = 0, PC = 1, Device = 2, Domain = 3, Issuer = 4, CrlSigner = 5, Service = 6, Silverlight = 7, Application = 8, Metering = 9, KeyFileSigner = 10, Server = 11, LicenseSigner = 12,
 }}
 DEFINE_IID!(IID_INDClient, 1003911195, 25016, 18146, 153, 165, 138, 188, 182, 185, 247, 214);
-RT_INTERFACE!{interface INDClient(INDClientVtbl): IInspectable(IInspectableVtbl) [IID_INDClient] {
+RT_INTERFACE!{interface INDClient(INDClientVtbl): IInspectable [IID_INDClient] {
     fn add_RegistrationCompleted(&self, handler: <foundation::TypedEventHandler<NDClient, INDRegistrationCompletedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_RegistrationCompleted(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_ProximityDetectionCompleted(&self, handler: <foundation::TypedEventHandler<NDClient, INDProximityDetectionCompletedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -24280,7 +24280,7 @@ impl NDClient {
 }
 DEFINE_CLSID!(NDClient(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,67,108,105,101,110,116,0]) [CLSID_NDClient]);
 DEFINE_IID!(IID_INDClientFactory, 1045683554, 65256, 17695, 176, 212, 247, 6, 204, 163, 224, 55);
-RT_INTERFACE!{static interface INDClientFactory(INDClientFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INDClientFactory] {
+RT_INTERFACE!{static interface INDClientFactory(INDClientFactoryVtbl): IInspectable [IID_INDClientFactory] {
     fn CreateInstance(&self, downloadEngine: <INDDownloadEngine as RtType>::Abi, streamParser: <INDStreamParser as RtType>::Abi, pMessenger: <INDMessenger as RtType>::Abi, out: *mut <NDClient as RtType>::Abi) -> HRESULT
 }}
 impl INDClientFactory {
@@ -24291,7 +24291,7 @@ impl INDClientFactory {
     }}
 }
 DEFINE_IID!(IID_INDClosedCaptionDataReceivedEventArgs, 1194906271, 49989, 17993, 132, 104, 184, 197, 252, 53, 113, 144);
-RT_INTERFACE!{interface INDClosedCaptionDataReceivedEventArgs(INDClosedCaptionDataReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_INDClosedCaptionDataReceivedEventArgs] {
+RT_INTERFACE!{interface INDClosedCaptionDataReceivedEventArgs(INDClosedCaptionDataReceivedEventArgsVtbl): IInspectable [IID_INDClosedCaptionDataReceivedEventArgs] {
     fn get_ClosedCaptionDataFormat(&self, out: *mut NDClosedCaptionFormat) -> HRESULT,
     fn get_PresentationTimestamp(&self, out: *mut i64) -> HRESULT,
     fn get_ClosedCaptionData(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT
@@ -24320,7 +24320,7 @@ RT_ENUM! { enum NDContentIDType: i32 {
     KeyID = 1, PlayReadyObject = 2, Custom = 3,
 }}
 DEFINE_IID!(IID_INDCustomData, 4123725788, 11529, 20249, 181, 225, 118, 160, 179, 238, 146, 103);
-RT_INTERFACE!{interface INDCustomData(INDCustomDataVtbl): IInspectable(IInspectableVtbl) [IID_INDCustomData] {
+RT_INTERFACE!{interface INDCustomData(INDCustomDataVtbl): IInspectable [IID_INDCustomData] {
     fn get_CustomDataTypeID(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT,
     fn get_CustomData(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT
 }}
@@ -24345,7 +24345,7 @@ impl NDCustomData {
 }
 DEFINE_CLSID!(NDCustomData(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,67,117,115,116,111,109,68,97,116,97,0]) [CLSID_NDCustomData]);
 DEFINE_IID!(IID_INDCustomDataFactory, 3595830699, 13348, 18483, 140, 154, 175, 95, 222, 178, 40, 114);
-RT_INTERFACE!{static interface INDCustomDataFactory(INDCustomDataFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INDCustomDataFactory] {
+RT_INTERFACE!{static interface INDCustomDataFactory(INDCustomDataFactoryVtbl): IInspectable [IID_INDCustomDataFactory] {
     fn CreateInstance(&self, customDataTypeIDBytesSize: u32, customDataTypeIDBytes: *mut u8, customDataBytesSize: u32, customDataBytes: *mut u8, out: *mut <NDCustomData as RtType>::Abi) -> HRESULT
 }}
 impl INDCustomDataFactory {
@@ -24356,7 +24356,7 @@ impl INDCustomDataFactory {
     }}
 }
 DEFINE_IID!(IID_INDDownloadEngine, 757218661, 50358, 17464, 141, 70, 185, 110, 109, 15, 178, 31);
-RT_INTERFACE!{interface INDDownloadEngine(INDDownloadEngineVtbl): IInspectable(IInspectableVtbl) [IID_INDDownloadEngine] {
+RT_INTERFACE!{interface INDDownloadEngine(INDDownloadEngineVtbl): IInspectable [IID_INDDownloadEngine] {
     fn Open(&self, uri: <foundation::Uri as RtType>::Abi, sessionIDBytesSize: u32, sessionIDBytes: *mut u8) -> HRESULT,
     fn Pause(&self) -> HRESULT,
     fn Resume(&self) -> HRESULT,
@@ -24410,7 +24410,7 @@ impl INDDownloadEngine {
     }}
 }
 DEFINE_IID!(IID_INDDownloadEngineNotifier, 3609244884, 62648, 17712, 168, 9, 145, 147, 165, 113, 231, 252);
-RT_INTERFACE!{interface INDDownloadEngineNotifier(INDDownloadEngineNotifierVtbl): IInspectable(IInspectableVtbl) [IID_INDDownloadEngineNotifier] {
+RT_INTERFACE!{interface INDDownloadEngineNotifier(INDDownloadEngineNotifierVtbl): IInspectable [IID_INDDownloadEngineNotifier] {
     fn OnStreamOpened(&self) -> HRESULT,
     fn OnPlayReadyObjectReceived(&self, dataBytesSize: u32, dataBytes: *mut u8) -> HRESULT,
     fn OnContentIDReceived(&self, licenseFetchDescriptor: <INDLicenseFetchDescriptor as RtType>::Abi) -> HRESULT,
@@ -24448,7 +24448,7 @@ RT_CLASS!{class NDDownloadEngineNotifier: INDDownloadEngineNotifier}
 impl RtActivatable<IActivationFactory> for NDDownloadEngineNotifier {}
 DEFINE_CLSID!(NDDownloadEngineNotifier(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,68,111,119,110,108,111,97,100,69,110,103,105,110,101,78,111,116,105,102,105,101,114,0]) [CLSID_NDDownloadEngineNotifier]);
 DEFINE_IID!(IID_INDLicenseFetchCompletedEventArgs, 518195738, 4530, 17752, 136, 101, 227, 165, 22, 146, 37, 23);
-RT_INTERFACE!{interface INDLicenseFetchCompletedEventArgs(INDLicenseFetchCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_INDLicenseFetchCompletedEventArgs] {
+RT_INTERFACE!{interface INDLicenseFetchCompletedEventArgs(INDLicenseFetchCompletedEventArgsVtbl): IInspectable [IID_INDLicenseFetchCompletedEventArgs] {
     fn get_ResponseCustomData(&self, out: *mut <INDCustomData as RtType>::Abi) -> HRESULT
 }}
 impl INDLicenseFetchCompletedEventArgs {
@@ -24459,7 +24459,7 @@ impl INDLicenseFetchCompletedEventArgs {
     }}
 }
 DEFINE_IID!(IID_INDLicenseFetchDescriptor, 1419301690, 59014, 18741, 165, 103, 124, 167, 122, 210, 15, 164);
-RT_INTERFACE!{interface INDLicenseFetchDescriptor(INDLicenseFetchDescriptorVtbl): IInspectable(IInspectableVtbl) [IID_INDLicenseFetchDescriptor] {
+RT_INTERFACE!{interface INDLicenseFetchDescriptor(INDLicenseFetchDescriptorVtbl): IInspectable [IID_INDLicenseFetchDescriptor] {
     fn get_ContentIDType(&self, out: *mut NDContentIDType) -> HRESULT,
     fn get_ContentID(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT,
     fn get_LicenseFetchChallengeCustomData(&self, out: *mut <INDCustomData as RtType>::Abi) -> HRESULT,
@@ -24495,7 +24495,7 @@ impl NDLicenseFetchDescriptor {
 }
 DEFINE_CLSID!(NDLicenseFetchDescriptor(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,76,105,99,101,110,115,101,70,101,116,99,104,68,101,115,99,114,105,112,116,111,114,0]) [CLSID_NDLicenseFetchDescriptor]);
 DEFINE_IID!(IID_INDLicenseFetchDescriptorFactory, 3489862146, 53164, 20224, 174, 106, 151, 175, 128, 184, 72, 242);
-RT_INTERFACE!{static interface INDLicenseFetchDescriptorFactory(INDLicenseFetchDescriptorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INDLicenseFetchDescriptorFactory] {
+RT_INTERFACE!{static interface INDLicenseFetchDescriptorFactory(INDLicenseFetchDescriptorFactoryVtbl): IInspectable [IID_INDLicenseFetchDescriptorFactory] {
     fn CreateInstance(&self, contentIDType: NDContentIDType, contentIDBytesSize: u32, contentIDBytes: *mut u8, licenseFetchChallengeCustomData: <INDCustomData as RtType>::Abi, out: *mut <NDLicenseFetchDescriptor as RtType>::Abi) -> HRESULT
 }}
 impl INDLicenseFetchDescriptorFactory {
@@ -24506,7 +24506,7 @@ impl INDLicenseFetchDescriptorFactory {
     }}
 }
 DEFINE_IID!(IID_INDLicenseFetchResult, 567514776, 43618, 17919, 165, 255, 128, 55, 229, 67, 56, 37);
-RT_INTERFACE!{interface INDLicenseFetchResult(INDLicenseFetchResultVtbl): IInspectable(IInspectableVtbl) [IID_INDLicenseFetchResult] {
+RT_INTERFACE!{interface INDLicenseFetchResult(INDLicenseFetchResultVtbl): IInspectable [IID_INDLicenseFetchResult] {
     fn get_ResponseCustomData(&self, out: *mut <INDCustomData as RtType>::Abi) -> HRESULT
 }}
 impl INDLicenseFetchResult {
@@ -24520,7 +24520,7 @@ RT_ENUM! { enum NDMediaStreamType: i32 {
     Audio = 1, Video = 2,
 }}
 DEFINE_IID!(IID_INDMessenger, 3559782749, 42843, 18367, 130, 73, 188, 131, 130, 13, 163, 138);
-RT_INTERFACE!{interface INDMessenger(INDMessengerVtbl): IInspectable(IInspectableVtbl) [IID_INDMessenger] {
+RT_INTERFACE!{interface INDMessenger(INDMessengerVtbl): IInspectable [IID_INDMessenger] {
     fn SendRegistrationRequestAsync(&self, sessionIDBytesSize: u32, sessionIDBytes: *mut u8, challengeDataBytesSize: u32, challengeDataBytes: *mut u8, out: *mut <foundation::IAsyncOperation<INDSendResult> as RtType>::Abi) -> HRESULT,
     fn SendProximityDetectionStartAsync(&self, pdType: NDProximityDetectionType, transmitterChannelBytesSize: u32, transmitterChannelBytes: *mut u8, sessionIDBytesSize: u32, sessionIDBytes: *mut u8, challengeDataBytesSize: u32, challengeDataBytes: *mut u8, out: *mut <foundation::IAsyncOperation<INDSendResult> as RtType>::Abi) -> HRESULT,
     fn SendProximityDetectionResponseAsync(&self, pdType: NDProximityDetectionType, transmitterChannelBytesSize: u32, transmitterChannelBytes: *mut u8, sessionIDBytesSize: u32, sessionIDBytes: *mut u8, responseDataBytesSize: u32, responseDataBytes: *mut u8, out: *mut <foundation::IAsyncOperation<INDSendResult> as RtType>::Abi) -> HRESULT,
@@ -24549,7 +24549,7 @@ impl INDMessenger {
     }}
 }
 DEFINE_IID!(IID_INDProximityDetectionCompletedEventArgs, 712008488, 55845, 20364, 158, 183, 93, 15, 195, 101, 139, 202);
-RT_INTERFACE!{interface INDProximityDetectionCompletedEventArgs(INDProximityDetectionCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_INDProximityDetectionCompletedEventArgs] {
+RT_INTERFACE!{interface INDProximityDetectionCompletedEventArgs(INDProximityDetectionCompletedEventArgsVtbl): IInspectable [IID_INDProximityDetectionCompletedEventArgs] {
     fn get_ProximityDetectionRetryCount(&self, out: *mut u32) -> HRESULT
 }}
 impl INDProximityDetectionCompletedEventArgs {
@@ -24563,7 +24563,7 @@ RT_ENUM! { enum NDProximityDetectionType: i32 {
     UDP = 1, TCP = 2, TransportAgnostic = 4,
 }}
 DEFINE_IID!(IID_INDRegistrationCompletedEventArgs, 2654582349, 43867, 18693, 172, 220, 120, 122, 119, 198, 55, 77);
-RT_INTERFACE!{interface INDRegistrationCompletedEventArgs(INDRegistrationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_INDRegistrationCompletedEventArgs] {
+RT_INTERFACE!{interface INDRegistrationCompletedEventArgs(INDRegistrationCompletedEventArgsVtbl): IInspectable [IID_INDRegistrationCompletedEventArgs] {
     fn get_ResponseCustomData(&self, out: *mut <INDCustomData as RtType>::Abi) -> HRESULT,
     fn get_TransmitterProperties(&self, out: *mut <INDTransmitterProperties as RtType>::Abi) -> HRESULT,
     fn get_TransmitterCertificateAccepted(&self, out: *mut bool) -> HRESULT,
@@ -24591,7 +24591,7 @@ impl INDRegistrationCompletedEventArgs {
     }}
 }
 DEFINE_IID!(IID_INDSendResult, 3815265559, 42372, 18333, 144, 183, 214, 137, 199, 191, 124, 128);
-RT_INTERFACE!{interface INDSendResult(INDSendResultVtbl): IInspectable(IInspectableVtbl) [IID_INDSendResult] {
+RT_INTERFACE!{interface INDSendResult(INDSendResultVtbl): IInspectable [IID_INDSendResult] {
     fn get_Response(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT
 }}
 impl INDSendResult {
@@ -24605,7 +24605,7 @@ RT_ENUM! { enum NDStartAsyncOptions: i32 {
     MutualAuthentication = 1, WaitForLicenseDescriptor = 2,
 }}
 DEFINE_IID!(IID_INDStartResult, 2046224750, 62735, 16405, 139, 164, 194, 188, 52, 78, 189, 78);
-RT_INTERFACE!{interface INDStartResult(INDStartResultVtbl): IInspectable(IInspectableVtbl) [IID_INDStartResult] {
+RT_INTERFACE!{interface INDStartResult(INDStartResultVtbl): IInspectable [IID_INDStartResult] {
     fn get_MediaStreamSource(&self, out: *mut <super::super::core::MediaStreamSource as RtType>::Abi) -> HRESULT
 }}
 impl INDStartResult {
@@ -24616,7 +24616,7 @@ impl INDStartResult {
     }}
 }
 DEFINE_IID!(IID_INDStorageFileHelper, 3639656184, 37330, 19783, 163, 249, 234, 255, 78, 219, 114, 159);
-RT_INTERFACE!{interface INDStorageFileHelper(INDStorageFileHelperVtbl): IInspectable(IInspectableVtbl) [IID_INDStorageFileHelper] {
+RT_INTERFACE!{interface INDStorageFileHelper(INDStorageFileHelperVtbl): IInspectable [IID_INDStorageFileHelper] {
     #[cfg(feature="windows-storage")] fn GetFileURLs(&self, file: <crate::windows::storage::IStorageFile as RtType>::Abi, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT
 }}
 impl INDStorageFileHelper {
@@ -24630,7 +24630,7 @@ RT_CLASS!{class NDStorageFileHelper: INDStorageFileHelper}
 impl RtActivatable<IActivationFactory> for NDStorageFileHelper {}
 DEFINE_CLSID!(NDStorageFileHelper(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,83,116,111,114,97,103,101,70,105,108,101,72,101,108,112,101,114,0]) [CLSID_NDStorageFileHelper]);
 DEFINE_IID!(IID_INDStreamParser, 3770327448, 38806, 16841, 134, 149, 89, 67, 126, 103, 230, 106);
-RT_INTERFACE!{interface INDStreamParser(INDStreamParserVtbl): IInspectable(IInspectableVtbl) [IID_INDStreamParser] {
+RT_INTERFACE!{interface INDStreamParser(INDStreamParserVtbl): IInspectable [IID_INDStreamParser] {
     fn ParseData(&self, dataBytesSize: u32, dataBytes: *mut u8) -> HRESULT,
     fn GetStreamInformation(&self, descriptor: <super::super::core::IMediaStreamDescriptor as RtType>::Abi, streamType: *mut NDMediaStreamType, out: *mut u32) -> HRESULT,
     fn BeginOfStream(&self) -> HRESULT,
@@ -24662,7 +24662,7 @@ impl INDStreamParser {
     }}
 }
 DEFINE_IID!(IID_INDStreamParserNotifier, 3244797136, 11494, 17004, 172, 229, 94, 146, 117, 254, 167, 21);
-RT_INTERFACE!{interface INDStreamParserNotifier(INDStreamParserNotifierVtbl): IInspectable(IInspectableVtbl) [IID_INDStreamParserNotifier] {
+RT_INTERFACE!{interface INDStreamParserNotifier(INDStreamParserNotifierVtbl): IInspectable [IID_INDStreamParserNotifier] {
     fn OnContentIDReceived(&self, licenseFetchDescriptor: <INDLicenseFetchDescriptor as RtType>::Abi) -> HRESULT,
     fn OnMediaStreamDescriptorCreated(&self, audioStreamDescriptors: <foundation::collections::IVector<super::super::core::AudioStreamDescriptor> as RtType>::Abi, videoStreamDescriptors: <foundation::collections::IVector<super::super::core::VideoStreamDescriptor> as RtType>::Abi) -> HRESULT,
     fn OnSampleParsed(&self, streamID: u32, streamType: NDMediaStreamType, streamSample: <super::super::core::MediaStreamSample as RtType>::Abi, pts: i64, ccFormat: NDClosedCaptionFormat, ccDataBytesSize: u32, ccDataBytes: *mut u8) -> HRESULT,
@@ -24698,7 +24698,7 @@ impl NDTCPMessenger {
 }
 DEFINE_CLSID!(NDTCPMessenger(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,78,68,84,67,80,77,101,115,115,101,110,103,101,114,0]) [CLSID_NDTCPMessenger]);
 DEFINE_IID!(IID_INDTCPMessengerFactory, 2111331582, 7065, 20328, 143, 130, 129, 119, 247, 206, 223, 43);
-RT_INTERFACE!{static interface INDTCPMessengerFactory(INDTCPMessengerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INDTCPMessengerFactory] {
+RT_INTERFACE!{static interface INDTCPMessengerFactory(INDTCPMessengerFactoryVtbl): IInspectable [IID_INDTCPMessengerFactory] {
     fn CreateInstance(&self, remoteHostName: HSTRING, remoteHostPort: u32, out: *mut <NDTCPMessenger as RtType>::Abi) -> HRESULT
 }}
 impl INDTCPMessengerFactory {
@@ -24709,7 +24709,7 @@ impl INDTCPMessengerFactory {
     }}
 }
 DEFINE_IID!(IID_INDTransmitterProperties, 3845566243, 44111, 19164, 140, 102, 79, 247, 194, 112, 45, 214);
-RT_INTERFACE!{interface INDTransmitterProperties(INDTransmitterPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_INDTransmitterProperties] {
+RT_INTERFACE!{interface INDTransmitterProperties(INDTransmitterPropertiesVtbl): IInspectable [IID_INDTransmitterProperties] {
     fn get_CertificateType(&self, out: *mut NDCertificateType) -> HRESULT,
     fn get_PlatformIdentifier(&self, out: *mut NDCertificatePlatformID) -> HRESULT,
     fn get_SupportedFeatures(&self, outSize: *mut u32, out: *mut *mut NDCertificateFeature) -> HRESULT,
@@ -24780,7 +24780,7 @@ impl INDTransmitterProperties {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyContentHeader, 2588117610, 32588, 17710, 136, 189, 1, 72, 198, 56, 122, 44);
-RT_INTERFACE!{interface IPlayReadyContentHeader(IPlayReadyContentHeaderVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyContentHeader] {
+RT_INTERFACE!{interface IPlayReadyContentHeader(IPlayReadyContentHeaderVtbl): IInspectable [IID_IPlayReadyContentHeader] {
     fn get_KeyId(&self, out: *mut Guid) -> HRESULT,
     fn get_KeyIdString(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LicenseAcquisitionUrl(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
@@ -24863,7 +24863,7 @@ impl PlayReadyContentHeader {
 }
 DEFINE_CLSID!(PlayReadyContentHeader(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,67,111,110,116,101,110,116,72,101,97,100,101,114,0]) [CLSID_PlayReadyContentHeader]);
 DEFINE_IID!(IID_IPlayReadyContentHeader2, 899447284, 8576, 18828, 150, 91, 231, 84, 216, 117, 234, 178);
-RT_INTERFACE!{interface IPlayReadyContentHeader2(IPlayReadyContentHeader2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyContentHeader2] {
+RT_INTERFACE!{interface IPlayReadyContentHeader2(IPlayReadyContentHeader2Vtbl): IInspectable [IID_IPlayReadyContentHeader2] {
     fn get_KeyIds(&self, outSize: *mut u32, out: *mut *mut Guid) -> HRESULT,
     fn get_KeyIdStrings(&self, outSize: *mut u32, out: *mut *mut HSTRING) -> HRESULT
 }}
@@ -24880,7 +24880,7 @@ impl IPlayReadyContentHeader2 {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyContentHeaderFactory, 3415722239, 46936, 18294, 191, 1, 33, 122, 139, 81, 11, 44);
-RT_INTERFACE!{static interface IPlayReadyContentHeaderFactory(IPlayReadyContentHeaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyContentHeaderFactory] {
+RT_INTERFACE!{static interface IPlayReadyContentHeaderFactory(IPlayReadyContentHeaderFactoryVtbl): IInspectable [IID_IPlayReadyContentHeaderFactory] {
     fn CreateInstanceFromWindowsMediaDrmHeader(&self, headerBytesSize: u32, headerBytes: *mut u8, licenseAcquisitionUrl: <foundation::Uri as RtType>::Abi, licenseAcquisitionUserInterfaceUrl: <foundation::Uri as RtType>::Abi, customAttributes: HSTRING, domainServiceId: Guid, out: *mut <PlayReadyContentHeader as RtType>::Abi) -> HRESULT,
     fn CreateInstanceFromComponents(&self, contentKeyId: Guid, contentKeyIdString: HSTRING, contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: <foundation::Uri as RtType>::Abi, licenseAcquisitionUserInterfaceUrl: <foundation::Uri as RtType>::Abi, customAttributes: HSTRING, domainServiceId: Guid, out: *mut <PlayReadyContentHeader as RtType>::Abi) -> HRESULT,
     fn CreateInstanceFromPlayReadyHeader(&self, headerBytesSize: u32, headerBytes: *mut u8, out: *mut <PlayReadyContentHeader as RtType>::Abi) -> HRESULT
@@ -24903,7 +24903,7 @@ impl IPlayReadyContentHeaderFactory {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyContentHeaderFactory2, 3508772085, 44653, 18296, 151, 253, 110, 58, 46, 234, 219, 235);
-RT_INTERFACE!{static interface IPlayReadyContentHeaderFactory2(IPlayReadyContentHeaderFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyContentHeaderFactory2] {
+RT_INTERFACE!{static interface IPlayReadyContentHeaderFactory2(IPlayReadyContentHeaderFactory2Vtbl): IInspectable [IID_IPlayReadyContentHeaderFactory2] {
     fn CreateInstanceFromComponents2(&self, dwFlags: u32, contentKeyIdsSize: u32, contentKeyIds: *mut Guid, contentKeyIdStringsSize: u32, contentKeyIdStrings: *mut HSTRING, contentEncryptionAlgorithm: PlayReadyEncryptionAlgorithm, licenseAcquisitionUrl: <foundation::Uri as RtType>::Abi, licenseAcquisitionUserInterfaceUrl: <foundation::Uri as RtType>::Abi, customAttributes: HSTRING, domainServiceId: Guid, out: *mut <PlayReadyContentHeader as RtType>::Abi) -> HRESULT
 }}
 impl IPlayReadyContentHeaderFactory2 {
@@ -24914,7 +24914,7 @@ impl IPlayReadyContentHeaderFactory2 {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyContentResolver, 4227671331, 36973, 18818, 166, 184, 104, 73, 86, 90, 124, 232);
-RT_INTERFACE!{static interface IPlayReadyContentResolver(IPlayReadyContentResolverVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyContentResolver] {
+RT_INTERFACE!{static interface IPlayReadyContentResolver(IPlayReadyContentResolverVtbl): IInspectable [IID_IPlayReadyContentResolver] {
     fn ServiceRequest(&self, contentHeader: <PlayReadyContentHeader as RtType>::Abi, out: *mut <IPlayReadyServiceRequest as RtType>::Abi) -> HRESULT
 }}
 impl IPlayReadyContentResolver {
@@ -24936,7 +24936,7 @@ RT_ENUM! { enum PlayReadyDecryptorSetup: i32 {
     Uninitialized = 0, OnDemand = 1,
 }}
 DEFINE_IID!(IID_IPlayReadyDomain, 2915865516, 38886, 17391, 149, 228, 215, 134, 143, 59, 22, 169);
-RT_INTERFACE!{interface IPlayReadyDomain(IPlayReadyDomainVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyDomain] {
+RT_INTERFACE!{interface IPlayReadyDomain(IPlayReadyDomainVtbl): IInspectable [IID_IPlayReadyDomain] {
     fn get_AccountId(&self, out: *mut Guid) -> HRESULT,
     fn get_ServiceId(&self, out: *mut Guid) -> HRESULT,
     fn get_Revision(&self, out: *mut u32) -> HRESULT,
@@ -24980,7 +24980,7 @@ impl PlayReadyDomainIterable {
 }
 DEFINE_CLSID!(PlayReadyDomainIterable(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,68,111,109,97,105,110,73,116,101,114,97,98,108,101,0]) [CLSID_PlayReadyDomainIterable]);
 DEFINE_IID!(IID_IPlayReadyDomainIterableFactory, 1307804910, 12577, 19955, 165, 232, 208, 194, 76, 5, 0, 252);
-RT_INTERFACE!{static interface IPlayReadyDomainIterableFactory(IPlayReadyDomainIterableFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyDomainIterableFactory] {
+RT_INTERFACE!{static interface IPlayReadyDomainIterableFactory(IPlayReadyDomainIterableFactoryVtbl): IInspectable [IID_IPlayReadyDomainIterableFactory] {
     fn CreateInstance(&self, domainAccountId: Guid, out: *mut <PlayReadyDomainIterable as RtType>::Abi) -> HRESULT
 }}
 impl IPlayReadyDomainIterableFactory {
@@ -24992,7 +24992,7 @@ impl IPlayReadyDomainIterableFactory {
 }
 RT_CLASS!{class PlayReadyDomainIterator: foundation::collections::IIterator<IPlayReadyDomain>}
 DEFINE_IID!(IID_IPlayReadyDomainJoinServiceRequest, 387664474, 16479, 18233, 176, 64, 103, 185, 240, 195, 135, 88);
-RT_INTERFACE!{interface IPlayReadyDomainJoinServiceRequest(IPlayReadyDomainJoinServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyDomainJoinServiceRequest] {
+RT_INTERFACE!{interface IPlayReadyDomainJoinServiceRequest(IPlayReadyDomainJoinServiceRequestVtbl): IInspectable [IID_IPlayReadyDomainJoinServiceRequest] {
     fn get_DomainAccountId(&self, out: *mut Guid) -> HRESULT,
     fn put_DomainAccountId(&self, value: Guid) -> HRESULT,
     fn get_DomainFriendlyName(&self, out: *mut HSTRING) -> HRESULT,
@@ -25033,7 +25033,7 @@ RT_CLASS!{class PlayReadyDomainJoinServiceRequest: IPlayReadyDomainJoinServiceRe
 impl RtActivatable<IActivationFactory> for PlayReadyDomainJoinServiceRequest {}
 DEFINE_CLSID!(PlayReadyDomainJoinServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,68,111,109,97,105,110,74,111,105,110,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyDomainJoinServiceRequest]);
 DEFINE_IID!(IID_IPlayReadyDomainLeaveServiceRequest, 103635134, 38829, 18711, 170, 3, 70, 212, 194, 82, 212, 100);
-RT_INTERFACE!{interface IPlayReadyDomainLeaveServiceRequest(IPlayReadyDomainLeaveServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyDomainLeaveServiceRequest] {
+RT_INTERFACE!{interface IPlayReadyDomainLeaveServiceRequest(IPlayReadyDomainLeaveServiceRequestVtbl): IInspectable [IID_IPlayReadyDomainLeaveServiceRequest] {
     fn get_DomainAccountId(&self, out: *mut Guid) -> HRESULT,
     fn put_DomainAccountId(&self, value: Guid) -> HRESULT,
     fn get_DomainServiceId(&self, out: *mut Guid) -> HRESULT,
@@ -25069,7 +25069,7 @@ RT_ENUM! { enum PlayReadyHardwareDRMFeatures: i32 {
     HardwareDRM = 1, HEVC = 2, Aes128Cbc = 3,
 }}
 DEFINE_IID!(IID_IPlayReadyIndividualizationServiceRequest, 569747563, 140, 17937, 171, 47, 170, 166, 198, 159, 14, 36);
-RT_INTERFACE!{interface IPlayReadyIndividualizationServiceRequest(IPlayReadyIndividualizationServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyIndividualizationServiceRequest] {
+RT_INTERFACE!{interface IPlayReadyIndividualizationServiceRequest(IPlayReadyIndividualizationServiceRequestVtbl): IInspectable [IID_IPlayReadyIndividualizationServiceRequest] {
     
 }}
 RT_CLASS!{class PlayReadyIndividualizationServiceRequest: IPlayReadyIndividualizationServiceRequest}
@@ -25079,7 +25079,7 @@ RT_ENUM! { enum PlayReadyITADataFormat: i32 {
     SerializedProperties = 0, SerializedProperties_WithContentProtectionWrapper = 1,
 }}
 DEFINE_IID!(IID_IPlayReadyITADataGenerator, 608463758, 4281, 17712, 178, 91, 144, 26, 128, 41, 169, 178);
-RT_INTERFACE!{interface IPlayReadyITADataGenerator(IPlayReadyITADataGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyITADataGenerator] {
+RT_INTERFACE!{interface IPlayReadyITADataGenerator(IPlayReadyITADataGeneratorVtbl): IInspectable [IID_IPlayReadyITADataGenerator] {
     fn GenerateData(&self, guidCPSystemId: Guid, countOfStreams: u32, configuration: <foundation::collections::IPropertySet as RtType>::Abi, format: PlayReadyITADataFormat, outSize: *mut u32, out: *mut *mut u8) -> HRESULT
 }}
 impl IPlayReadyITADataGenerator {
@@ -25093,7 +25093,7 @@ RT_CLASS!{class PlayReadyITADataGenerator: IPlayReadyITADataGenerator}
 impl RtActivatable<IActivationFactory> for PlayReadyITADataGenerator {}
 DEFINE_CLSID!(PlayReadyITADataGenerator(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,73,84,65,68,97,116,97,71,101,110,101,114,97,116,111,114,0]) [CLSID_PlayReadyITADataGenerator]);
 DEFINE_IID!(IID_IPlayReadyLicense, 3997649998, 64060, 16717, 169, 242, 63, 252, 30, 248, 50, 212);
-RT_INTERFACE!{interface IPlayReadyLicense(IPlayReadyLicenseVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicense] {
+RT_INTERFACE!{interface IPlayReadyLicense(IPlayReadyLicenseVtbl): IInspectable [IID_IPlayReadyLicense] {
     fn get_FullyEvaluated(&self, out: *mut bool) -> HRESULT,
     fn get_UsableForPlay(&self, out: *mut bool) -> HRESULT,
     fn get_ExpirationDate(&self, out: *mut <foundation::IReference<foundation::DateTime> as RtType>::Abi) -> HRESULT,
@@ -25141,7 +25141,7 @@ impl IPlayReadyLicense {
 }
 RT_CLASS!{class PlayReadyLicense: IPlayReadyLicense}
 DEFINE_IID!(IID_IPlayReadyLicense2, 821356455, 55523, 18592, 188, 218, 255, 159, 64, 83, 4, 54);
-RT_INTERFACE!{interface IPlayReadyLicense2(IPlayReadyLicense2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicense2] {
+RT_INTERFACE!{interface IPlayReadyLicense2(IPlayReadyLicense2Vtbl): IInspectable [IID_IPlayReadyLicense2] {
     fn get_SecureStopId(&self, out: *mut Guid) -> HRESULT,
     fn get_SecurityLevel(&self, out: *mut u32) -> HRESULT,
     fn get_InMemoryOnly(&self, out: *mut bool) -> HRESULT,
@@ -25170,7 +25170,7 @@ impl IPlayReadyLicense2 {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyLicenseAcquisitionServiceRequest, 1569062725, 16031, 20296, 147, 225, 149, 48, 200, 213, 140, 62);
-RT_INTERFACE!{interface IPlayReadyLicenseAcquisitionServiceRequest(IPlayReadyLicenseAcquisitionServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseAcquisitionServiceRequest] {
+RT_INTERFACE!{interface IPlayReadyLicenseAcquisitionServiceRequest(IPlayReadyLicenseAcquisitionServiceRequestVtbl): IInspectable [IID_IPlayReadyLicenseAcquisitionServiceRequest] {
     fn get_ContentHeader(&self, out: *mut <PlayReadyContentHeader as RtType>::Abi) -> HRESULT,
     fn put_ContentHeader(&self, value: <PlayReadyContentHeader as RtType>::Abi) -> HRESULT,
     fn get_DomainServiceId(&self, out: *mut Guid) -> HRESULT,
@@ -25200,7 +25200,7 @@ RT_CLASS!{class PlayReadyLicenseAcquisitionServiceRequest: IPlayReadyLicenseAcqu
 impl RtActivatable<IActivationFactory> for PlayReadyLicenseAcquisitionServiceRequest {}
 DEFINE_CLSID!(PlayReadyLicenseAcquisitionServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,65,99,113,117,105,115,105,116,105,111,110,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyLicenseAcquisitionServiceRequest]);
 DEFINE_IID!(IID_IPlayReadyLicenseAcquisitionServiceRequest2, 3086638773, 65036, 45605, 188, 96, 90, 158, 221, 50, 206, 181);
-RT_INTERFACE!{interface IPlayReadyLicenseAcquisitionServiceRequest2(IPlayReadyLicenseAcquisitionServiceRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseAcquisitionServiceRequest2] {
+RT_INTERFACE!{interface IPlayReadyLicenseAcquisitionServiceRequest2(IPlayReadyLicenseAcquisitionServiceRequest2Vtbl): IInspectable [IID_IPlayReadyLicenseAcquisitionServiceRequest2] {
     fn get_SessionId(&self, out: *mut Guid) -> HRESULT
 }}
 impl IPlayReadyLicenseAcquisitionServiceRequest2 {
@@ -25211,7 +25211,7 @@ impl IPlayReadyLicenseAcquisitionServiceRequest2 {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyLicenseAcquisitionServiceRequest3, 961437517, 32629, 17165, 178, 231, 127, 117, 243, 75, 45, 117);
-RT_INTERFACE!{interface IPlayReadyLicenseAcquisitionServiceRequest3(IPlayReadyLicenseAcquisitionServiceRequest3Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseAcquisitionServiceRequest3] {
+RT_INTERFACE!{interface IPlayReadyLicenseAcquisitionServiceRequest3(IPlayReadyLicenseAcquisitionServiceRequest3Vtbl): IInspectable [IID_IPlayReadyLicenseAcquisitionServiceRequest3] {
     fn CreateLicenseIterable(&self, contentHeader: <PlayReadyContentHeader as RtType>::Abi, fullyEvaluated: bool, out: *mut <PlayReadyLicenseIterable as RtType>::Abi) -> HRESULT
 }}
 impl IPlayReadyLicenseAcquisitionServiceRequest3 {
@@ -25231,7 +25231,7 @@ impl PlayReadyLicenseIterable {
 }
 DEFINE_CLSID!(PlayReadyLicenseIterable(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,73,116,101,114,97,98,108,101,0]) [CLSID_PlayReadyLicenseIterable]);
 DEFINE_IID!(IID_IPlayReadyLicenseIterableFactory, 3558317832, 2103, 18808, 142, 104, 190, 66, 147, 200, 215, 166);
-RT_INTERFACE!{static interface IPlayReadyLicenseIterableFactory(IPlayReadyLicenseIterableFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseIterableFactory] {
+RT_INTERFACE!{static interface IPlayReadyLicenseIterableFactory(IPlayReadyLicenseIterableFactoryVtbl): IInspectable [IID_IPlayReadyLicenseIterableFactory] {
     fn CreateInstance(&self, contentHeader: <PlayReadyContentHeader as RtType>::Abi, fullyEvaluated: bool, out: *mut <PlayReadyLicenseIterable as RtType>::Abi) -> HRESULT
 }}
 impl IPlayReadyLicenseIterableFactory {
@@ -25243,7 +25243,7 @@ impl IPlayReadyLicenseIterableFactory {
 }
 RT_CLASS!{class PlayReadyLicenseIterator: foundation::collections::IIterator<IPlayReadyLicense>}
 DEFINE_IID!(IID_IPlayReadyLicenseManagement, 2867536193, 2391, 17413, 184, 146, 139, 243, 236, 93, 173, 217);
-RT_INTERFACE!{static interface IPlayReadyLicenseManagement(IPlayReadyLicenseManagementVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseManagement] {
+RT_INTERFACE!{static interface IPlayReadyLicenseManagement(IPlayReadyLicenseManagementVtbl): IInspectable [IID_IPlayReadyLicenseManagement] {
     fn DeleteLicenses(&self, contentHeader: <PlayReadyContentHeader as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl IPlayReadyLicenseManagement {
@@ -25262,7 +25262,7 @@ impl PlayReadyLicenseManagement {
 }
 DEFINE_CLSID!(PlayReadyLicenseManagement(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,77,97,110,97,103,101,109,101,110,116,0]) [CLSID_PlayReadyLicenseManagement]);
 DEFINE_IID!(IID_IPlayReadyLicenseSession, 2708617785, 34810, 20445, 171, 187, 169, 114, 14, 132, 82, 89);
-RT_INTERFACE!{interface IPlayReadyLicenseSession(IPlayReadyLicenseSessionVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseSession] {
+RT_INTERFACE!{interface IPlayReadyLicenseSession(IPlayReadyLicenseSessionVtbl): IInspectable [IID_IPlayReadyLicenseSession] {
     fn CreateLAServiceRequest(&self, out: *mut <IPlayReadyLicenseAcquisitionServiceRequest as RtType>::Abi) -> HRESULT,
     fn ConfigureMediaProtectionManager(&self, mpm: <super::MediaProtectionManager as RtType>::Abi) -> HRESULT
 }}
@@ -25286,7 +25286,7 @@ impl PlayReadyLicenseSession {
 }
 DEFINE_CLSID!(PlayReadyLicenseSession(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,76,105,99,101,110,115,101,83,101,115,115,105,111,110,0]) [CLSID_PlayReadyLicenseSession]);
 DEFINE_IID!(IID_IPlayReadyLicenseSession2, 1225375290, 15085, 18006, 138, 215, 238, 15, 215, 121, 149, 16);
-RT_INTERFACE!{interface IPlayReadyLicenseSession2(IPlayReadyLicenseSession2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseSession2] {
+RT_INTERFACE!{interface IPlayReadyLicenseSession2(IPlayReadyLicenseSession2Vtbl): IInspectable [IID_IPlayReadyLicenseSession2] {
     fn CreateLicenseIterable(&self, contentHeader: <PlayReadyContentHeader as RtType>::Abi, fullyEvaluated: bool, out: *mut <PlayReadyLicenseIterable as RtType>::Abi) -> HRESULT
 }}
 impl IPlayReadyLicenseSession2 {
@@ -25297,7 +25297,7 @@ impl IPlayReadyLicenseSession2 {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyLicenseSessionFactory, 1648961177, 25895, 17054, 152, 190, 72, 215, 152, 172, 39, 57);
-RT_INTERFACE!{static interface IPlayReadyLicenseSessionFactory(IPlayReadyLicenseSessionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyLicenseSessionFactory] {
+RT_INTERFACE!{static interface IPlayReadyLicenseSessionFactory(IPlayReadyLicenseSessionFactoryVtbl): IInspectable [IID_IPlayReadyLicenseSessionFactory] {
     fn CreateInstance(&self, configuration: <foundation::collections::IPropertySet as RtType>::Abi, out: *mut <PlayReadyLicenseSession as RtType>::Abi) -> HRESULT
 }}
 impl IPlayReadyLicenseSessionFactory {
@@ -25308,7 +25308,7 @@ impl IPlayReadyLicenseSessionFactory {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyMeteringReportServiceRequest, 3240829724, 3789, 20241, 161, 133, 30, 36, 164, 166, 127, 183);
-RT_INTERFACE!{interface IPlayReadyMeteringReportServiceRequest(IPlayReadyMeteringReportServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyMeteringReportServiceRequest] {
+RT_INTERFACE!{interface IPlayReadyMeteringReportServiceRequest(IPlayReadyMeteringReportServiceRequestVtbl): IInspectable [IID_IPlayReadyMeteringReportServiceRequest] {
     fn get_MeteringCertificate(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT,
     fn put_MeteringCertificate(&self, meteringCertBytesSize: u32, meteringCertBytes: *mut u8) -> HRESULT
 }}
@@ -25327,7 +25327,7 @@ RT_CLASS!{class PlayReadyMeteringReportServiceRequest: IPlayReadyMeteringReportS
 impl RtActivatable<IActivationFactory> for PlayReadyMeteringReportServiceRequest {}
 DEFINE_CLSID!(PlayReadyMeteringReportServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,77,101,116,101,114,105,110,103,82,101,112,111,114,116,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadyMeteringReportServiceRequest]);
 DEFINE_IID!(IID_IPlayReadyRevocationServiceRequest, 1413310124, 64240, 17760, 132, 165, 14, 74, 206, 201, 57, 228);
-RT_INTERFACE!{interface IPlayReadyRevocationServiceRequest(IPlayReadyRevocationServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyRevocationServiceRequest] {
+RT_INTERFACE!{interface IPlayReadyRevocationServiceRequest(IPlayReadyRevocationServiceRequestVtbl): IInspectable [IID_IPlayReadyRevocationServiceRequest] {
     
 }}
 RT_CLASS!{class PlayReadyRevocationServiceRequest: IPlayReadyRevocationServiceRequest}
@@ -25342,7 +25342,7 @@ impl PlayReadySecureStopIterable {
 }
 DEFINE_CLSID!(PlayReadySecureStopIterable(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,83,101,99,117,114,101,83,116,111,112,73,116,101,114,97,98,108,101,0]) [CLSID_PlayReadySecureStopIterable]);
 DEFINE_IID!(IID_IPlayReadySecureStopIterableFactory, 1595867493, 16916, 19870, 129, 235, 232, 159, 157, 41, 74, 238);
-RT_INTERFACE!{static interface IPlayReadySecureStopIterableFactory(IPlayReadySecureStopIterableFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadySecureStopIterableFactory] {
+RT_INTERFACE!{static interface IPlayReadySecureStopIterableFactory(IPlayReadySecureStopIterableFactoryVtbl): IInspectable [IID_IPlayReadySecureStopIterableFactory] {
     fn CreateInstance(&self, publisherCertBytesSize: u32, publisherCertBytes: *mut u8, out: *mut <PlayReadySecureStopIterable as RtType>::Abi) -> HRESULT
 }}
 impl IPlayReadySecureStopIterableFactory {
@@ -25354,7 +25354,7 @@ impl IPlayReadySecureStopIterableFactory {
 }
 RT_CLASS!{class PlayReadySecureStopIterator: foundation::collections::IIterator<IPlayReadySecureStopServiceRequest>}
 DEFINE_IID!(IID_IPlayReadySecureStopServiceRequest, 3041926885, 447, 17409, 150, 119, 5, 99, 10, 106, 76, 200);
-RT_INTERFACE!{interface IPlayReadySecureStopServiceRequest(IPlayReadySecureStopServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadySecureStopServiceRequest] {
+RT_INTERFACE!{interface IPlayReadySecureStopServiceRequest(IPlayReadySecureStopServiceRequestVtbl): IInspectable [IID_IPlayReadySecureStopServiceRequest] {
     fn get_SessionID(&self, out: *mut Guid) -> HRESULT,
     fn get_StartTime(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_UpdateTime(&self, out: *mut foundation::DateTime) -> HRESULT,
@@ -25400,7 +25400,7 @@ impl PlayReadySecureStopServiceRequest {
 }
 DEFINE_CLSID!(PlayReadySecureStopServiceRequest(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,83,101,99,117,114,101,83,116,111,112,83,101,114,118,105,99,101,82,101,113,117,101,115,116,0]) [CLSID_PlayReadySecureStopServiceRequest]);
 DEFINE_IID!(IID_IPlayReadySecureStopServiceRequestFactory, 239373001, 59006, 18766, 159, 73, 98, 133, 67, 140, 118, 207);
-RT_INTERFACE!{static interface IPlayReadySecureStopServiceRequestFactory(IPlayReadySecureStopServiceRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadySecureStopServiceRequestFactory] {
+RT_INTERFACE!{static interface IPlayReadySecureStopServiceRequestFactory(IPlayReadySecureStopServiceRequestFactoryVtbl): IInspectable [IID_IPlayReadySecureStopServiceRequestFactory] {
     fn CreateInstance(&self, publisherCertBytesSize: u32, publisherCertBytes: *mut u8, out: *mut <PlayReadySecureStopServiceRequest as RtType>::Abi) -> HRESULT,
     fn CreateInstanceFromSessionID(&self, sessionID: Guid, publisherCertBytesSize: u32, publisherCertBytes: *mut u8, out: *mut <PlayReadySecureStopServiceRequest as RtType>::Abi) -> HRESULT
 }}
@@ -25417,7 +25417,7 @@ impl IPlayReadySecureStopServiceRequestFactory {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyServiceRequest, 2343381046, 42755, 17830, 161, 128, 118, 243, 86, 90, 167, 37);
-RT_INTERFACE!{interface IPlayReadyServiceRequest(IPlayReadyServiceRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyServiceRequest] {
+RT_INTERFACE!{interface IPlayReadyServiceRequest(IPlayReadyServiceRequestVtbl): IInspectable [IID_IPlayReadyServiceRequest] {
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn put_Uri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_ResponseCustomData(&self, out: *mut HSTRING) -> HRESULT,
@@ -25474,7 +25474,7 @@ impl IPlayReadyServiceRequest {
     }}
 }
 DEFINE_IID!(IID_IPlayReadySoapMessage, 3059350709, 52801, 16826, 138, 13, 97, 223, 95, 255, 161, 57);
-RT_INTERFACE!{interface IPlayReadySoapMessage(IPlayReadySoapMessageVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadySoapMessage] {
+RT_INTERFACE!{interface IPlayReadySoapMessage(IPlayReadySoapMessageVtbl): IInspectable [IID_IPlayReadySoapMessage] {
     fn GetMessageBody(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT,
     fn get_MessageHeaders(&self, out: *mut <foundation::collections::IPropertySet as RtType>::Abi) -> HRESULT,
     fn get_Uri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
@@ -25498,7 +25498,7 @@ impl IPlayReadySoapMessage {
 }
 RT_CLASS!{class PlayReadySoapMessage: IPlayReadySoapMessage}
 DEFINE_IID!(IID_IPlayReadyStatics, 1583988749, 9340, 18074, 143, 49, 92, 26, 21, 113, 217, 198);
-RT_INTERFACE!{static interface IPlayReadyStatics(IPlayReadyStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyStatics] {
+RT_INTERFACE!{static interface IPlayReadyStatics(IPlayReadyStaticsVtbl): IInspectable [IID_IPlayReadyStatics] {
     fn get_DomainJoinServiceRequestType(&self, out: *mut Guid) -> HRESULT,
     fn get_DomainLeaveServiceRequestType(&self, out: *mut Guid) -> HRESULT,
     fn get_IndividualizationServiceRequestType(&self, out: *mut Guid) -> HRESULT,
@@ -25608,7 +25608,7 @@ impl PlayReadyStatics {
 }
 DEFINE_CLSID!(PlayReadyStatics(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,80,114,111,116,101,99,116,105,111,110,46,80,108,97,121,82,101,97,100,121,46,80,108,97,121,82,101,97,100,121,83,116,97,116,105,99,115,0]) [CLSID_PlayReadyStatics]);
 DEFINE_IID!(IID_IPlayReadyStatics2, 529361554, 24474, 16958, 148, 102, 179, 57, 105, 175, 122, 61);
-RT_INTERFACE!{static interface IPlayReadyStatics2(IPlayReadyStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyStatics2] {
+RT_INTERFACE!{static interface IPlayReadyStatics2(IPlayReadyStatics2Vtbl): IInspectable [IID_IPlayReadyStatics2] {
     fn get_PlayReadyCertificateSecurityLevel(&self, out: *mut u32) -> HRESULT
 }}
 impl IPlayReadyStatics2 {
@@ -25619,7 +25619,7 @@ impl IPlayReadyStatics2 {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyStatics3, 1067663217, 11731, 19437, 174, 73, 247, 20, 142, 99, 231, 16);
-RT_INTERFACE!{static interface IPlayReadyStatics3(IPlayReadyStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyStatics3] {
+RT_INTERFACE!{static interface IPlayReadyStatics3(IPlayReadyStatics3Vtbl): IInspectable [IID_IPlayReadyStatics3] {
     fn get_SecureStopServiceRequestType(&self, out: *mut Guid) -> HRESULT,
     fn CheckSupportedHardware(&self, hwdrmFeature: PlayReadyHardwareDRMFeatures, out: *mut bool) -> HRESULT
 }}
@@ -25636,7 +25636,7 @@ impl IPlayReadyStatics3 {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyStatics4, 1353257728, 55332, 16945, 157, 94, 120, 239, 136, 68, 199, 215);
-RT_INTERFACE!{static interface IPlayReadyStatics4(IPlayReadyStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyStatics4] {
+RT_INTERFACE!{static interface IPlayReadyStatics4(IPlayReadyStatics4Vtbl): IInspectable [IID_IPlayReadyStatics4] {
     fn get_InputTrustAuthorityToCreate(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ProtectionSystemId(&self, out: *mut Guid) -> HRESULT
 }}
@@ -25653,7 +25653,7 @@ impl IPlayReadyStatics4 {
     }}
 }
 DEFINE_IID!(IID_IPlayReadyStatics5, 587886709, 57248, 20366, 167, 121, 206, 254, 169, 198, 130, 75);
-RT_INTERFACE!{static interface IPlayReadyStatics5(IPlayReadyStatics5Vtbl): IInspectable(IInspectableVtbl) [IID_IPlayReadyStatics5] {
+RT_INTERFACE!{static interface IPlayReadyStatics5(IPlayReadyStatics5Vtbl): IInspectable [IID_IPlayReadyStatics5] {
     fn get_HardwareDRMDisabledAtTime(&self, out: *mut <foundation::IReference<foundation::DateTime> as RtType>::Abi) -> HRESULT,
     fn get_HardwareDRMDisabledUntilTime(&self, out: *mut <foundation::IReference<foundation::DateTime> as RtType>::Abi) -> HRESULT,
     fn ResetHardwareDRMDisabled(&self) -> HRESULT
@@ -25685,7 +25685,7 @@ RT_ENUM! { enum AudioRenderCategory: i32 {
 pub mod speechrecognition { // Windows.Media.SpeechRecognition
 use crate::prelude::*;
 DEFINE_IID!(IID_ISpeechContinuousRecognitionCompletedEventArgs, 3822086587, 58124, 24088, 66, 75, 127, 190, 129, 248, 251, 208);
-RT_INTERFACE!{interface ISpeechContinuousRecognitionCompletedEventArgs(ISpeechContinuousRecognitionCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechContinuousRecognitionCompletedEventArgs] {
+RT_INTERFACE!{interface ISpeechContinuousRecognitionCompletedEventArgs(ISpeechContinuousRecognitionCompletedEventArgsVtbl): IInspectable [IID_ISpeechContinuousRecognitionCompletedEventArgs] {
     fn get_Status(&self, out: *mut SpeechRecognitionResultStatus) -> HRESULT
 }}
 impl ISpeechContinuousRecognitionCompletedEventArgs {
@@ -25700,7 +25700,7 @@ RT_ENUM! { enum SpeechContinuousRecognitionMode: i32 {
     Default = 0, PauseOnRecognition = 1,
 }}
 DEFINE_IID!(IID_ISpeechContinuousRecognitionResultGeneratedEventArgs, 420027934, 28286, 23110, 64, 251, 118, 89, 79, 120, 101, 4);
-RT_INTERFACE!{interface ISpeechContinuousRecognitionResultGeneratedEventArgs(ISpeechContinuousRecognitionResultGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechContinuousRecognitionResultGeneratedEventArgs] {
+RT_INTERFACE!{interface ISpeechContinuousRecognitionResultGeneratedEventArgs(ISpeechContinuousRecognitionResultGeneratedEventArgsVtbl): IInspectable [IID_ISpeechContinuousRecognitionResultGeneratedEventArgs] {
     fn get_Result(&self, out: *mut <SpeechRecognitionResult as RtType>::Abi) -> HRESULT
 }}
 impl ISpeechContinuousRecognitionResultGeneratedEventArgs {
@@ -25712,7 +25712,7 @@ impl ISpeechContinuousRecognitionResultGeneratedEventArgs {
 }
 RT_CLASS!{class SpeechContinuousRecognitionResultGeneratedEventArgs: ISpeechContinuousRecognitionResultGeneratedEventArgs}
 DEFINE_IID!(IID_ISpeechContinuousRecognitionSession, 1780562948, 26132, 18936, 153, 162, 181, 233, 179, 160, 133, 200);
-RT_INTERFACE!{interface ISpeechContinuousRecognitionSession(ISpeechContinuousRecognitionSessionVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechContinuousRecognitionSession] {
+RT_INTERFACE!{interface ISpeechContinuousRecognitionSession(ISpeechContinuousRecognitionSessionVtbl): IInspectable [IID_ISpeechContinuousRecognitionSession] {
     fn get_AutoStopSilenceTimeout(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_AutoStopSilenceTimeout(&self, value: foundation::TimeSpan) -> HRESULT,
     fn StartAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -25789,7 +25789,7 @@ RT_ENUM! { enum SpeechRecognitionAudioProblem: i32 {
     None = 0, TooNoisy = 1, NoSignal = 2, TooLoud = 3, TooQuiet = 4, TooFast = 5, TooSlow = 6,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionCompilationResult, 1082027101, 27335, 19876, 156, 193, 47, 206, 50, 207, 116, 137);
-RT_INTERFACE!{interface ISpeechRecognitionCompilationResult(ISpeechRecognitionCompilationResultVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionCompilationResult] {
+RT_INTERFACE!{interface ISpeechRecognitionCompilationResult(ISpeechRecognitionCompilationResultVtbl): IInspectable [IID_ISpeechRecognitionCompilationResult] {
     fn get_Status(&self, out: *mut SpeechRecognitionResultStatus) -> HRESULT
 }}
 impl ISpeechRecognitionCompilationResult {
@@ -25804,7 +25804,7 @@ RT_ENUM! { enum SpeechRecognitionConfidence: i32 {
     High = 0, Medium = 1, Low = 2, Rejected = 3,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionConstraint, 2041321000, 19816, 17348, 137, 17, 64, 220, 65, 1, 181, 91);
-RT_INTERFACE!{interface ISpeechRecognitionConstraint(ISpeechRecognitionConstraintVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionConstraint] {
+RT_INTERFACE!{interface ISpeechRecognitionConstraint(ISpeechRecognitionConstraintVtbl): IInspectable [IID_ISpeechRecognitionConstraint] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_IsEnabled(&self, value: bool) -> HRESULT,
     fn get_Tag(&self, out: *mut HSTRING) -> HRESULT,
@@ -25854,7 +25854,7 @@ RT_ENUM! { enum SpeechRecognitionConstraintType: i32 {
     Topic = 0, List = 1, Grammar = 2, VoiceCommandDefinition = 3,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionGrammarFileConstraint, 3036879503, 34250, 20388, 177, 26, 71, 79, 196, 27, 56, 53);
-RT_INTERFACE!{interface ISpeechRecognitionGrammarFileConstraint(ISpeechRecognitionGrammarFileConstraintVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionGrammarFileConstraint] {
+RT_INTERFACE!{interface ISpeechRecognitionGrammarFileConstraint(ISpeechRecognitionGrammarFileConstraintVtbl): IInspectable [IID_ISpeechRecognitionGrammarFileConstraint] {
     #[cfg(feature="windows-storage")] fn get_GrammarFile(&self, out: *mut <super::super::storage::StorageFile as RtType>::Abi) -> HRESULT
 }}
 impl ISpeechRecognitionGrammarFileConstraint {
@@ -25876,7 +25876,7 @@ impl SpeechRecognitionGrammarFileConstraint {
 }
 DEFINE_CLSID!(SpeechRecognitionGrammarFileConstraint(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,71,114,97,109,109,97,114,70,105,108,101,67,111,110,115,116,114,97,105,110,116,0]) [CLSID_SpeechRecognitionGrammarFileConstraint]);
 DEFINE_IID!(IID_ISpeechRecognitionGrammarFileConstraintFactory, 1034383595, 50297, 19495, 159, 25, 137, 151, 78, 243, 146, 209);
-RT_INTERFACE!{static interface ISpeechRecognitionGrammarFileConstraintFactory(ISpeechRecognitionGrammarFileConstraintFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionGrammarFileConstraintFactory] {
+RT_INTERFACE!{static interface ISpeechRecognitionGrammarFileConstraintFactory(ISpeechRecognitionGrammarFileConstraintFactoryVtbl): IInspectable [IID_ISpeechRecognitionGrammarFileConstraintFactory] {
     #[cfg(feature="windows-storage")] fn Create(&self, file: <super::super::storage::StorageFile as RtType>::Abi, out: *mut <SpeechRecognitionGrammarFileConstraint as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateWithTag(&self, file: <super::super::storage::StorageFile as RtType>::Abi, tag: HSTRING, out: *mut <SpeechRecognitionGrammarFileConstraint as RtType>::Abi) -> HRESULT
 }}
@@ -25893,7 +25893,7 @@ impl ISpeechRecognitionGrammarFileConstraintFactory {
     }}
 }
 DEFINE_IID!(IID_ISpeechRecognitionHypothesis, 2054890928, 39365, 20349, 191, 132, 16, 170, 19, 2, 182, 52);
-RT_INTERFACE!{interface ISpeechRecognitionHypothesis(ISpeechRecognitionHypothesisVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionHypothesis] {
+RT_INTERFACE!{interface ISpeechRecognitionHypothesis(ISpeechRecognitionHypothesisVtbl): IInspectable [IID_ISpeechRecognitionHypothesis] {
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ISpeechRecognitionHypothesis {
@@ -25905,7 +25905,7 @@ impl ISpeechRecognitionHypothesis {
 }
 RT_CLASS!{class SpeechRecognitionHypothesis: ISpeechRecognitionHypothesis}
 DEFINE_IID!(IID_ISpeechRecognitionHypothesisGeneratedEventArgs, 1427511930, 32803, 22630, 65, 29, 18, 19, 187, 39, 20, 118);
-RT_INTERFACE!{interface ISpeechRecognitionHypothesisGeneratedEventArgs(ISpeechRecognitionHypothesisGeneratedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionHypothesisGeneratedEventArgs] {
+RT_INTERFACE!{interface ISpeechRecognitionHypothesisGeneratedEventArgs(ISpeechRecognitionHypothesisGeneratedEventArgsVtbl): IInspectable [IID_ISpeechRecognitionHypothesisGeneratedEventArgs] {
     fn get_Hypothesis(&self, out: *mut <SpeechRecognitionHypothesis as RtType>::Abi) -> HRESULT
 }}
 impl ISpeechRecognitionHypothesisGeneratedEventArgs {
@@ -25917,7 +25917,7 @@ impl ISpeechRecognitionHypothesisGeneratedEventArgs {
 }
 RT_CLASS!{class SpeechRecognitionHypothesisGeneratedEventArgs: ISpeechRecognitionHypothesisGeneratedEventArgs}
 DEFINE_IID!(IID_ISpeechRecognitionListConstraint, 163874793, 58541, 17702, 129, 242, 73, 70, 251, 72, 29, 152);
-RT_INTERFACE!{interface ISpeechRecognitionListConstraint(ISpeechRecognitionListConstraintVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionListConstraint] {
+RT_INTERFACE!{interface ISpeechRecognitionListConstraint(ISpeechRecognitionListConstraintVtbl): IInspectable [IID_ISpeechRecognitionListConstraint] {
     fn get_Commands(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT
 }}
 impl ISpeechRecognitionListConstraint {
@@ -25939,7 +25939,7 @@ impl SpeechRecognitionListConstraint {
 }
 DEFINE_CLSID!(SpeechRecognitionListConstraint(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,76,105,115,116,67,111,110,115,116,114,97,105,110,116,0]) [CLSID_SpeechRecognitionListConstraint]);
 DEFINE_IID!(IID_ISpeechRecognitionListConstraintFactory, 1089719751, 22058, 17002, 159, 59, 59, 78, 40, 43, 225, 213);
-RT_INTERFACE!{static interface ISpeechRecognitionListConstraintFactory(ISpeechRecognitionListConstraintFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionListConstraintFactory] {
+RT_INTERFACE!{static interface ISpeechRecognitionListConstraintFactory(ISpeechRecognitionListConstraintFactoryVtbl): IInspectable [IID_ISpeechRecognitionListConstraintFactory] {
     fn Create(&self, commands: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <SpeechRecognitionListConstraint as RtType>::Abi) -> HRESULT,
     fn CreateWithTag(&self, commands: <foundation::collections::IIterable<HString> as RtType>::Abi, tag: HSTRING, out: *mut <SpeechRecognitionListConstraint as RtType>::Abi) -> HRESULT
 }}
@@ -25956,7 +25956,7 @@ impl ISpeechRecognitionListConstraintFactory {
     }}
 }
 DEFINE_IID!(IID_ISpeechRecognitionQualityDegradingEventArgs, 1340227845, 35898, 19582, 141, 10, 91, 212, 245, 177, 74, 216);
-RT_INTERFACE!{interface ISpeechRecognitionQualityDegradingEventArgs(ISpeechRecognitionQualityDegradingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionQualityDegradingEventArgs] {
+RT_INTERFACE!{interface ISpeechRecognitionQualityDegradingEventArgs(ISpeechRecognitionQualityDegradingEventArgsVtbl): IInspectable [IID_ISpeechRecognitionQualityDegradingEventArgs] {
     fn get_Problem(&self, out: *mut SpeechRecognitionAudioProblem) -> HRESULT
 }}
 impl ISpeechRecognitionQualityDegradingEventArgs {
@@ -25968,7 +25968,7 @@ impl ISpeechRecognitionQualityDegradingEventArgs {
 }
 RT_CLASS!{class SpeechRecognitionQualityDegradingEventArgs: ISpeechRecognitionQualityDegradingEventArgs}
 DEFINE_IID!(IID_ISpeechRecognitionResult, 1311781207, 846, 18002, 133, 126, 208, 69, 76, 196, 190, 236);
-RT_INTERFACE!{interface ISpeechRecognitionResult(ISpeechRecognitionResultVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionResult] {
+RT_INTERFACE!{interface ISpeechRecognitionResult(ISpeechRecognitionResultVtbl): IInspectable [IID_ISpeechRecognitionResult] {
     fn get_Status(&self, out: *mut SpeechRecognitionResultStatus) -> HRESULT,
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Confidence(&self, out: *mut SpeechRecognitionConfidence) -> HRESULT,
@@ -26022,7 +26022,7 @@ impl ISpeechRecognitionResult {
 }
 RT_CLASS!{class SpeechRecognitionResult: ISpeechRecognitionResult}
 DEFINE_IID!(IID_ISpeechRecognitionResult2, 2944324026, 17691, 16742, 160, 193, 31, 254, 132, 3, 45, 3);
-RT_INTERFACE!{interface ISpeechRecognitionResult2(ISpeechRecognitionResult2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionResult2] {
+RT_INTERFACE!{interface ISpeechRecognitionResult2(ISpeechRecognitionResult2Vtbl): IInspectable [IID_ISpeechRecognitionResult2] {
     fn get_PhraseStartTime(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_PhraseDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
@@ -26045,7 +26045,7 @@ RT_ENUM! { enum SpeechRecognitionScenario: i32 {
     WebSearch = 0, Dictation = 1, FormFilling = 2,
 }}
 DEFINE_IID!(IID_ISpeechRecognitionSemanticInterpretation, 2866928283, 32306, 19487, 137, 254, 12, 101, 244, 134, 245, 46);
-RT_INTERFACE!{interface ISpeechRecognitionSemanticInterpretation(ISpeechRecognitionSemanticInterpretationVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionSemanticInterpretation] {
+RT_INTERFACE!{interface ISpeechRecognitionSemanticInterpretation(ISpeechRecognitionSemanticInterpretationVtbl): IInspectable [IID_ISpeechRecognitionSemanticInterpretation] {
     fn get_Properties(&self, out: *mut <foundation::collections::IMapView<HString, foundation::collections::IVectorView<HString>> as RtType>::Abi) -> HRESULT
 }}
 impl ISpeechRecognitionSemanticInterpretation {
@@ -26057,7 +26057,7 @@ impl ISpeechRecognitionSemanticInterpretation {
 }
 RT_CLASS!{class SpeechRecognitionSemanticInterpretation: ISpeechRecognitionSemanticInterpretation}
 DEFINE_IID!(IID_ISpeechRecognitionTopicConstraint, 3211779865, 33373, 20073, 166, 129, 54, 228, 140, 241, 201, 62);
-RT_INTERFACE!{interface ISpeechRecognitionTopicConstraint(ISpeechRecognitionTopicConstraintVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionTopicConstraint] {
+RT_INTERFACE!{interface ISpeechRecognitionTopicConstraint(ISpeechRecognitionTopicConstraintVtbl): IInspectable [IID_ISpeechRecognitionTopicConstraint] {
     fn get_Scenario(&self, out: *mut SpeechRecognitionScenario) -> HRESULT,
     fn get_TopicHint(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -26085,7 +26085,7 @@ impl SpeechRecognitionTopicConstraint {
 }
 DEFINE_CLSID!(SpeechRecognitionTopicConstraint(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,84,111,112,105,99,67,111,110,115,116,114,97,105,110,116,0]) [CLSID_SpeechRecognitionTopicConstraint]);
 DEFINE_IID!(IID_ISpeechRecognitionTopicConstraintFactory, 1852335071, 60421, 18391, 165, 223, 86, 163, 67, 30, 88, 210);
-RT_INTERFACE!{static interface ISpeechRecognitionTopicConstraintFactory(ISpeechRecognitionTopicConstraintFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionTopicConstraintFactory] {
+RT_INTERFACE!{static interface ISpeechRecognitionTopicConstraintFactory(ISpeechRecognitionTopicConstraintFactoryVtbl): IInspectable [IID_ISpeechRecognitionTopicConstraintFactory] {
     fn Create(&self, scenario: SpeechRecognitionScenario, topicHint: HSTRING, out: *mut <SpeechRecognitionTopicConstraint as RtType>::Abi) -> HRESULT,
     fn CreateWithTag(&self, scenario: SpeechRecognitionScenario, topicHint: HSTRING, tag: HSTRING, out: *mut <SpeechRecognitionTopicConstraint as RtType>::Abi) -> HRESULT
 }}
@@ -26102,12 +26102,12 @@ impl ISpeechRecognitionTopicConstraintFactory {
     }}
 }
 DEFINE_IID!(IID_ISpeechRecognitionVoiceCommandDefinitionConstraint, 4068023339, 7924, 19175, 157, 119, 182, 255, 16, 184, 163, 194);
-RT_INTERFACE!{interface ISpeechRecognitionVoiceCommandDefinitionConstraint(ISpeechRecognitionVoiceCommandDefinitionConstraintVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognitionVoiceCommandDefinitionConstraint] {
+RT_INTERFACE!{interface ISpeechRecognitionVoiceCommandDefinitionConstraint(ISpeechRecognitionVoiceCommandDefinitionConstraintVtbl): IInspectable [IID_ISpeechRecognitionVoiceCommandDefinitionConstraint] {
     
 }}
 RT_CLASS!{class SpeechRecognitionVoiceCommandDefinitionConstraint: ISpeechRecognitionVoiceCommandDefinitionConstraint}
 DEFINE_IID!(IID_ISpeechRecognizer, 197380555, 49770, 16626, 174, 181, 128, 150, 178, 228, 128, 115);
-RT_INTERFACE!{interface ISpeechRecognizer(ISpeechRecognizerVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizer] {
+RT_INTERFACE!{interface ISpeechRecognizer(ISpeechRecognizerVtbl): IInspectable [IID_ISpeechRecognizer] {
     #[cfg(not(feature="windows-globalization"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-globalization")] fn get_CurrentLanguage(&self, out: *mut <super::super::globalization::Language as RtType>::Abi) -> HRESULT,
     fn get_Constraints(&self, out: *mut <foundation::collections::IVector<ISpeechRecognitionConstraint> as RtType>::Abi) -> HRESULT,
@@ -26200,7 +26200,7 @@ impl SpeechRecognizer {
 }
 DEFINE_CLSID!(SpeechRecognizer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,82,101,99,111,103,110,105,116,105,111,110,46,83,112,101,101,99,104,82,101,99,111,103,110,105,122,101,114,0]) [CLSID_SpeechRecognizer]);
 DEFINE_IID!(IID_ISpeechRecognizer2, 1674164977, 37347, 20132, 134, 161, 124, 56, 103, 208, 132, 166);
-RT_INTERFACE!{interface ISpeechRecognizer2(ISpeechRecognizer2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizer2] {
+RT_INTERFACE!{interface ISpeechRecognizer2(ISpeechRecognizer2Vtbl): IInspectable [IID_ISpeechRecognizer2] {
     fn get_ContinuousRecognitionSession(&self, out: *mut <SpeechContinuousRecognitionSession as RtType>::Abi) -> HRESULT,
     fn get_State(&self, out: *mut SpeechRecognizerState) -> HRESULT,
     fn StopRecognitionAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -26234,7 +26234,7 @@ impl ISpeechRecognizer2 {
     }}
 }
 DEFINE_IID!(IID_ISpeechRecognizerFactory, 1623492829, 32696, 16435, 172, 112, 208, 70, 246, 72, 24, 225);
-RT_INTERFACE!{static interface ISpeechRecognizerFactory(ISpeechRecognizerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizerFactory] {
+RT_INTERFACE!{static interface ISpeechRecognizerFactory(ISpeechRecognizerFactoryVtbl): IInspectable [IID_ISpeechRecognizerFactory] {
     #[cfg(feature="windows-globalization")] fn Create(&self, language: <super::super::globalization::Language as RtType>::Abi, out: *mut <SpeechRecognizer as RtType>::Abi) -> HRESULT
 }}
 impl ISpeechRecognizerFactory {
@@ -26248,7 +26248,7 @@ RT_ENUM! { enum SpeechRecognizerState: i32 {
     Idle = 0, Capturing = 1, Processing = 2, SoundStarted = 3, SoundEnded = 4, SpeechDetected = 5, Paused = 6,
 }}
 DEFINE_IID!(IID_ISpeechRecognizerStateChangedEventArgs, 1446858505, 47619, 19373, 173, 129, 221, 198, 196, 218, 176, 195);
-RT_INTERFACE!{interface ISpeechRecognizerStateChangedEventArgs(ISpeechRecognizerStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizerStateChangedEventArgs] {
+RT_INTERFACE!{interface ISpeechRecognizerStateChangedEventArgs(ISpeechRecognizerStateChangedEventArgsVtbl): IInspectable [IID_ISpeechRecognizerStateChangedEventArgs] {
     fn get_State(&self, out: *mut SpeechRecognizerState) -> HRESULT
 }}
 impl ISpeechRecognizerStateChangedEventArgs {
@@ -26260,7 +26260,7 @@ impl ISpeechRecognizerStateChangedEventArgs {
 }
 RT_CLASS!{class SpeechRecognizerStateChangedEventArgs: ISpeechRecognizerStateChangedEventArgs}
 DEFINE_IID!(IID_ISpeechRecognizerStatics, 2275630764, 42972, 19211, 188, 201, 36, 244, 124, 11, 126, 191);
-RT_INTERFACE!{static interface ISpeechRecognizerStatics(ISpeechRecognizerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizerStatics] {
+RT_INTERFACE!{static interface ISpeechRecognizerStatics(ISpeechRecognizerStaticsVtbl): IInspectable [IID_ISpeechRecognizerStatics] {
     #[cfg(feature="windows-globalization")] fn get_SystemSpeechLanguage(&self, out: *mut <super::super::globalization::Language as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-globalization")] fn get_SupportedTopicLanguages(&self, out: *mut <foundation::collections::IVectorView<super::super::globalization::Language> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-globalization")] fn get_SupportedGrammarLanguages(&self, out: *mut <foundation::collections::IVectorView<super::super::globalization::Language> as RtType>::Abi) -> HRESULT
@@ -26283,7 +26283,7 @@ impl ISpeechRecognizerStatics {
     }}
 }
 DEFINE_IID!(IID_ISpeechRecognizerStatics2, 488312213, 30053, 20217, 162, 243, 186, 21, 22, 42, 150, 207);
-RT_INTERFACE!{static interface ISpeechRecognizerStatics2(ISpeechRecognizerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizerStatics2] {
+RT_INTERFACE!{static interface ISpeechRecognizerStatics2(ISpeechRecognizerStatics2Vtbl): IInspectable [IID_ISpeechRecognizerStatics2] {
     #[cfg(feature="windows-globalization")] fn TrySetSystemSpeechLanguageAsync(&self, speechLanguage: <super::super::globalization::Language as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
 }}
 impl ISpeechRecognizerStatics2 {
@@ -26294,7 +26294,7 @@ impl ISpeechRecognizerStatics2 {
     }}
 }
 DEFINE_IID!(IID_ISpeechRecognizerTimeouts, 787967946, 27196, 19914, 161, 83, 223, 27, 200, 138, 121, 175);
-RT_INTERFACE!{interface ISpeechRecognizerTimeouts(ISpeechRecognizerTimeoutsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizerTimeouts] {
+RT_INTERFACE!{interface ISpeechRecognizerTimeouts(ISpeechRecognizerTimeoutsVtbl): IInspectable [IID_ISpeechRecognizerTimeouts] {
     fn get_InitialSilenceTimeout(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_InitialSilenceTimeout(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_EndSilenceTimeout(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -26333,7 +26333,7 @@ impl ISpeechRecognizerTimeouts {
 }
 RT_CLASS!{class SpeechRecognizerTimeouts: ISpeechRecognizerTimeouts}
 DEFINE_IID!(IID_ISpeechRecognizerUIOptions, 2022233665, 47403, 17594, 162, 95, 209, 134, 70, 48, 100, 31);
-RT_INTERFACE!{interface ISpeechRecognizerUIOptions(ISpeechRecognizerUIOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechRecognizerUIOptions] {
+RT_INTERFACE!{interface ISpeechRecognizerUIOptions(ISpeechRecognizerUIOptionsVtbl): IInspectable [IID_ISpeechRecognizerUIOptions] {
     fn get_ExampleText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_ExampleText(&self, value: HSTRING) -> HRESULT,
     fn get_AudiblePrompt(&self, out: *mut HSTRING) -> HRESULT,
@@ -26386,7 +26386,7 @@ RT_CLASS!{class SpeechRecognizerUIOptions: ISpeechRecognizerUIOptions}
 pub mod speechsynthesis { // Windows.Media.SpeechSynthesis
 use crate::prelude::*;
 DEFINE_IID!(IID_IInstalledVoicesStatic, 2102554316, 30003, 19519, 133, 190, 136, 140, 43, 174, 235, 220);
-RT_INTERFACE!{static interface IInstalledVoicesStatic(IInstalledVoicesStaticVtbl): IInspectable(IInspectableVtbl) [IID_IInstalledVoicesStatic] {
+RT_INTERFACE!{static interface IInstalledVoicesStatic(IInstalledVoicesStaticVtbl): IInspectable [IID_IInstalledVoicesStatic] {
     fn get_AllVoices(&self, out: *mut <foundation::collections::IVectorView<VoiceInformation> as RtType>::Abi) -> HRESULT,
     fn get_DefaultVoice(&self, out: *mut <VoiceInformation as RtType>::Abi) -> HRESULT
 }}
@@ -26403,7 +26403,7 @@ impl IInstalledVoicesStatic {
     }}
 }
 DEFINE_IID!(IID_IInstalledVoicesStatic2, 1680170798, 13709, 16472, 190, 154, 253, 63, 203, 66, 53, 48);
-RT_INTERFACE!{static interface IInstalledVoicesStatic2(IInstalledVoicesStatic2Vtbl): IInspectable(IInspectableVtbl) [IID_IInstalledVoicesStatic2] {
+RT_INTERFACE!{static interface IInstalledVoicesStatic2(IInstalledVoicesStatic2Vtbl): IInspectable [IID_IInstalledVoicesStatic2] {
     fn TrySetDefaultVoiceAsync(&self, voice: <VoiceInformation as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
 }}
 impl IInstalledVoicesStatic2 {
@@ -26420,7 +26420,7 @@ RT_ENUM! { enum SpeechPunctuationSilence: i32 {
     Default = 0, Min = 1,
 }}
 DEFINE_IID!(IID_ISpeechSynthesisStream, 2212785811, 9292, 17954, 186, 11, 98, 41, 196, 208, 214, 93);
-RT_INTERFACE!{interface ISpeechSynthesisStream(ISpeechSynthesisStreamVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesisStream] {
+RT_INTERFACE!{interface ISpeechSynthesisStream(ISpeechSynthesisStreamVtbl): IInspectable [IID_ISpeechSynthesisStream] {
     fn get_Markers(&self, out: *mut <foundation::collections::IVectorView<super::IMediaMarker> as RtType>::Abi) -> HRESULT
 }}
 impl ISpeechSynthesisStream {
@@ -26432,7 +26432,7 @@ impl ISpeechSynthesisStream {
 }
 RT_CLASS!{class SpeechSynthesisStream: ISpeechSynthesisStream}
 DEFINE_IID!(IID_ISpeechSynthesizer, 3466558582, 38900, 19693, 173, 104, 213, 28, 69, 142, 69, 198);
-RT_INTERFACE!{interface ISpeechSynthesizer(ISpeechSynthesizerVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesizer] {
+RT_INTERFACE!{interface ISpeechSynthesizer(ISpeechSynthesizerVtbl): IInspectable [IID_ISpeechSynthesizer] {
     fn SynthesizeTextToStreamAsync(&self, text: HSTRING, out: *mut <foundation::IAsyncOperation<SpeechSynthesisStream> as RtType>::Abi) -> HRESULT,
     fn SynthesizeSsmlToStreamAsync(&self, ssml: HSTRING, out: *mut <foundation::IAsyncOperation<SpeechSynthesisStream> as RtType>::Abi) -> HRESULT,
     fn put_Voice(&self, value: <VoiceInformation as RtType>::Abi) -> HRESULT,
@@ -26476,7 +26476,7 @@ impl SpeechSynthesizer {
 }
 DEFINE_CLSID!(SpeechSynthesizer(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,112,101,101,99,104,83,121,110,116,104,101,115,105,115,46,83,112,101,101,99,104,83,121,110,116,104,101,115,105,122,101,114,0]) [CLSID_SpeechSynthesizer]);
 DEFINE_IID!(IID_ISpeechSynthesizer2, 2814766258, 17209, 19818, 187, 248, 199, 164, 241, 84, 76, 46);
-RT_INTERFACE!{interface ISpeechSynthesizer2(ISpeechSynthesizer2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesizer2] {
+RT_INTERFACE!{interface ISpeechSynthesizer2(ISpeechSynthesizer2Vtbl): IInspectable [IID_ISpeechSynthesizer2] {
     fn get_Options(&self, out: *mut <SpeechSynthesizerOptions as RtType>::Abi) -> HRESULT
 }}
 impl ISpeechSynthesizer2 {
@@ -26487,7 +26487,7 @@ impl ISpeechSynthesizer2 {
     }}
 }
 DEFINE_IID!(IID_ISpeechSynthesizerOptions, 2699180145, 52285, 17353, 145, 177, 238, 24, 83, 36, 216, 61);
-RT_INTERFACE!{interface ISpeechSynthesizerOptions(ISpeechSynthesizerOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesizerOptions] {
+RT_INTERFACE!{interface ISpeechSynthesizerOptions(ISpeechSynthesizerOptionsVtbl): IInspectable [IID_ISpeechSynthesizerOptions] {
     fn get_IncludeWordBoundaryMetadata(&self, out: *mut bool) -> HRESULT,
     fn put_IncludeWordBoundaryMetadata(&self, value: bool) -> HRESULT,
     fn get_IncludeSentenceBoundaryMetadata(&self, out: *mut bool) -> HRESULT,
@@ -26515,7 +26515,7 @@ impl ISpeechSynthesizerOptions {
 }
 RT_CLASS!{class SpeechSynthesizerOptions: ISpeechSynthesizerOptions}
 DEFINE_IID!(IID_ISpeechSynthesizerOptions2, 482276878, 4508, 19437, 177, 24, 210, 80, 195, 162, 87, 147);
-RT_INTERFACE!{interface ISpeechSynthesizerOptions2(ISpeechSynthesizerOptions2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesizerOptions2] {
+RT_INTERFACE!{interface ISpeechSynthesizerOptions2(ISpeechSynthesizerOptions2Vtbl): IInspectable [IID_ISpeechSynthesizerOptions2] {
     fn get_AudioVolume(&self, out: *mut f64) -> HRESULT,
     fn put_AudioVolume(&self, value: f64) -> HRESULT,
     fn get_SpeakingRate(&self, out: *mut f64) -> HRESULT,
@@ -26553,7 +26553,7 @@ impl ISpeechSynthesizerOptions2 {
     }}
 }
 DEFINE_IID!(IID_ISpeechSynthesizerOptions3, 1075763319, 36908, 18452, 165, 130, 165, 208, 192, 118, 159, 168);
-RT_INTERFACE!{interface ISpeechSynthesizerOptions3(ISpeechSynthesizerOptions3Vtbl): IInspectable(IInspectableVtbl) [IID_ISpeechSynthesizerOptions3] {
+RT_INTERFACE!{interface ISpeechSynthesizerOptions3(ISpeechSynthesizerOptions3Vtbl): IInspectable [IID_ISpeechSynthesizerOptions3] {
     fn get_AppendedSilence(&self, out: *mut SpeechAppendedSilence) -> HRESULT,
     fn put_AppendedSilence(&self, value: SpeechAppendedSilence) -> HRESULT,
     fn get_PunctuationSilence(&self, out: *mut SpeechPunctuationSilence) -> HRESULT,
@@ -26583,7 +26583,7 @@ RT_ENUM! { enum VoiceGender: i32 {
     Male = 0, Female = 1,
 }}
 DEFINE_IID!(IID_IVoiceInformation, 2972178084, 4753, 17924, 170, 156, 131, 19, 64, 131, 53, 44);
-RT_INTERFACE!{interface IVoiceInformation(IVoiceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IVoiceInformation] {
+RT_INTERFACE!{interface IVoiceInformation(IVoiceInformationVtbl): IInspectable [IID_IVoiceInformation] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Language(&self, out: *mut HSTRING) -> HRESULT,
@@ -26623,7 +26623,7 @@ pub mod streaming { // Windows.Media.Streaming
 pub mod adaptive { // Windows.Media.Streaming.Adaptive
 use crate::prelude::*;
 DEFINE_IID!(IID_IAdaptiveMediaSource, 1282618095, 54175, 17302, 180, 217, 4, 57, 87, 167, 201, 100);
-RT_INTERFACE!{interface IAdaptiveMediaSource(IAdaptiveMediaSourceVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSource] {
+RT_INTERFACE!{interface IAdaptiveMediaSource(IAdaptiveMediaSourceVtbl): IInspectable [IID_IAdaptiveMediaSource] {
     fn get_IsLive(&self, out: *mut bool) -> HRESULT,
     fn get_DesiredLiveOffset(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_DesiredLiveOffset(&self, value: foundation::TimeSpan) -> HRESULT,
@@ -26794,7 +26794,7 @@ impl AdaptiveMediaSource {
 }
 DEFINE_CLSID!(AdaptiveMediaSource(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,83,116,114,101,97,109,105,110,103,46,65,100,97,112,116,105,118,101,46,65,100,97,112,116,105,118,101,77,101,100,105,97,83,111,117,114,99,101,0]) [CLSID_AdaptiveMediaSource]);
 DEFINE_IID!(IID_IAdaptiveMediaSource2, 394855234, 26464, 19385, 165, 138, 247, 170, 152, 176, 140, 14);
-RT_INTERFACE!{interface IAdaptiveMediaSource2(IAdaptiveMediaSource2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSource2] {
+RT_INTERFACE!{interface IAdaptiveMediaSource2(IAdaptiveMediaSource2Vtbl): IInspectable [IID_IAdaptiveMediaSource2] {
     fn get_AdvancedSettings(&self, out: *mut <AdaptiveMediaSourceAdvancedSettings as RtType>::Abi) -> HRESULT
 }}
 impl IAdaptiveMediaSource2 {
@@ -26805,7 +26805,7 @@ impl IAdaptiveMediaSource2 {
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSource3, 3127911421, 49972, 17947, 163, 110, 201, 159, 84, 247, 23, 74);
-RT_INTERFACE!{interface IAdaptiveMediaSource3(IAdaptiveMediaSource3Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSource3] {
+RT_INTERFACE!{interface IAdaptiveMediaSource3(IAdaptiveMediaSource3Vtbl): IInspectable [IID_IAdaptiveMediaSource3] {
     fn get_MinLiveOffset(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_MaxSeekableWindowSize(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_DesiredSeekableWindowSize(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
@@ -26845,7 +26845,7 @@ impl IAdaptiveMediaSource3 {
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceAdvancedSettings, 1440421504, 6891, 18396, 170, 8, 154, 17, 97, 11, 164, 90);
-RT_INTERFACE!{interface IAdaptiveMediaSourceAdvancedSettings(IAdaptiveMediaSourceAdvancedSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceAdvancedSettings] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceAdvancedSettings(IAdaptiveMediaSourceAdvancedSettingsVtbl): IInspectable [IID_IAdaptiveMediaSourceAdvancedSettings] {
     fn get_AllSegmentsIndependent(&self, out: *mut bool) -> HRESULT,
     fn put_AllSegmentsIndependent(&self, value: bool) -> HRESULT,
     fn get_DesiredBitrateHeadroomRatio(&self, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT,
@@ -26884,7 +26884,7 @@ impl IAdaptiveMediaSourceAdvancedSettings {
 }
 RT_CLASS!{class AdaptiveMediaSourceAdvancedSettings: IAdaptiveMediaSourceAdvancedSettings}
 DEFINE_IID!(IID_IAdaptiveMediaSourceCorrelatedTimes, 84969351, 57394, 18657, 171, 141, 0, 43, 11, 48, 81, 223);
-RT_INTERFACE!{interface IAdaptiveMediaSourceCorrelatedTimes(IAdaptiveMediaSourceCorrelatedTimesVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceCorrelatedTimes] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceCorrelatedTimes(IAdaptiveMediaSourceCorrelatedTimesVtbl): IInspectable [IID_IAdaptiveMediaSourceCorrelatedTimes] {
     fn get_Position(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_PresentationTimeStamp(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_ProgramDateTime(&self, out: *mut <foundation::IReference<foundation::DateTime> as RtType>::Abi) -> HRESULT
@@ -26908,7 +26908,7 @@ impl IAdaptiveMediaSourceCorrelatedTimes {
 }
 RT_CLASS!{class AdaptiveMediaSourceCorrelatedTimes: IAdaptiveMediaSourceCorrelatedTimes}
 DEFINE_IID!(IID_IAdaptiveMediaSourceCreationResult, 1183233714, 32783, 20017, 144, 147, 118, 212, 120, 32, 19, 231);
-RT_INTERFACE!{interface IAdaptiveMediaSourceCreationResult(IAdaptiveMediaSourceCreationResultVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceCreationResult] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceCreationResult(IAdaptiveMediaSourceCreationResultVtbl): IInspectable [IID_IAdaptiveMediaSourceCreationResult] {
     fn get_Status(&self, out: *mut AdaptiveMediaSourceCreationStatus) -> HRESULT,
     fn get_MediaSource(&self, out: *mut <AdaptiveMediaSource as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-web")] fn get_HttpResponseMessage(&self, out: *mut <crate::windows::web::http::HttpResponseMessage as RtType>::Abi) -> HRESULT
@@ -26932,7 +26932,7 @@ impl IAdaptiveMediaSourceCreationResult {
 }
 RT_CLASS!{class AdaptiveMediaSourceCreationResult: IAdaptiveMediaSourceCreationResult}
 DEFINE_IID!(IID_IAdaptiveMediaSourceCreationResult2, 473056191, 7236, 16459, 162, 1, 223, 69, 172, 120, 152, 232);
-RT_INTERFACE!{interface IAdaptiveMediaSourceCreationResult2(IAdaptiveMediaSourceCreationResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceCreationResult2] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceCreationResult2(IAdaptiveMediaSourceCreationResult2Vtbl): IInspectable [IID_IAdaptiveMediaSourceCreationResult2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl IAdaptiveMediaSourceCreationResult2 {
@@ -26946,7 +26946,7 @@ RT_ENUM! { enum AdaptiveMediaSourceCreationStatus: i32 {
     Success = 0, ManifestDownloadFailure = 1, ManifestParseFailure = 2, UnsupportedManifestContentType = 3, UnsupportedManifestVersion = 4, UnsupportedManifestProfile = 5, UnknownFailure = 6,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs, 989220614, 28060, 18762, 183, 169, 179, 165, 222, 230, 173, 104);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnosticAvailableEventArgs(IAdaptiveMediaSourceDiagnosticAvailableEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnosticAvailableEventArgs(IAdaptiveMediaSourceDiagnosticAvailableEventArgsVtbl): IInspectable [IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs] {
     fn get_DiagnosticType(&self, out: *mut AdaptiveMediaSourceDiagnosticType) -> HRESULT,
     fn get_RequestId(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_Position(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
@@ -27006,7 +27006,7 @@ impl IAdaptiveMediaSourceDiagnosticAvailableEventArgs {
 }
 RT_CLASS!{class AdaptiveMediaSourceDiagnosticAvailableEventArgs: IAdaptiveMediaSourceDiagnosticAvailableEventArgs}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs2, 2356009047, 5797, 19871, 129, 14, 0, 189, 144, 27, 62, 249);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnosticAvailableEventArgs2(IAdaptiveMediaSourceDiagnosticAvailableEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs2] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnosticAvailableEventArgs2(IAdaptiveMediaSourceDiagnosticAvailableEventArgs2Vtbl): IInspectable [IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs2] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl IAdaptiveMediaSourceDiagnosticAvailableEventArgs2 {
@@ -27017,7 +27017,7 @@ impl IAdaptiveMediaSourceDiagnosticAvailableEventArgs2 {
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs3, 3278179541, 56043, 16643, 132, 218, 104, 118, 154, 213, 19, 255);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnosticAvailableEventArgs3(IAdaptiveMediaSourceDiagnosticAvailableEventArgs3Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs3] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnosticAvailableEventArgs3(IAdaptiveMediaSourceDiagnosticAvailableEventArgs3Vtbl): IInspectable [IID_IAdaptiveMediaSourceDiagnosticAvailableEventArgs3] {
     fn get_ResourceDuration(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_ResourceContentType(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -27034,7 +27034,7 @@ impl IAdaptiveMediaSourceDiagnosticAvailableEventArgs3 {
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDiagnostics, 2602888808, 38446, 17548, 174, 191, 178, 155, 86, 9, 142, 35);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnostics(IAdaptiveMediaSourceDiagnosticsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDiagnostics] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDiagnostics(IAdaptiveMediaSourceDiagnosticsVtbl): IInspectable [IID_IAdaptiveMediaSourceDiagnostics] {
     fn add_DiagnosticAvailable(&self, handler: <foundation::TypedEventHandler<AdaptiveMediaSourceDiagnostics, AdaptiveMediaSourceDiagnosticAvailableEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_DiagnosticAvailable(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -27054,7 +27054,7 @@ RT_ENUM! { enum AdaptiveMediaSourceDiagnosticType: i32 {
     ManifestUnchangedUponReload = 0, ManifestMismatchUponReload = 1, ManifestSignaledEndOfLiveEventUponReload = 2, MediaSegmentSkipped = 3, ResourceNotFound = 4, ResourceTimedOut = 5, ResourceParsingError = 6, BitrateDisabled = 7, FatalMediaSourceError = 8,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs, 1728842308, 57422, 20223, 129, 106, 23, 57, 159, 120, 244, 186);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadBitrateChangedEventArgs(IAdaptiveMediaSourceDownloadBitrateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadBitrateChangedEventArgs(IAdaptiveMediaSourceDownloadBitrateChangedEventArgsVtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs] {
     fn get_OldValue(&self, out: *mut u32) -> HRESULT,
     fn get_NewValue(&self, out: *mut u32) -> HRESULT
 }}
@@ -27072,7 +27072,7 @@ impl IAdaptiveMediaSourceDownloadBitrateChangedEventArgs {
 }
 RT_CLASS!{class AdaptiveMediaSourceDownloadBitrateChangedEventArgs: IAdaptiveMediaSourceDownloadBitrateChangedEventArgs}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2, 4092720196, 38574, 19936, 181, 64, 43, 50, 70, 230, 150, 140);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2(IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2(IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2Vtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2] {
     fn get_Reason(&self, out: *mut AdaptiveMediaSourceDownloadBitrateChangedReason) -> HRESULT
 }}
 impl IAdaptiveMediaSourceDownloadBitrateChangedEventArgs2 {
@@ -27086,7 +27086,7 @@ RT_ENUM! { enum AdaptiveMediaSourceDownloadBitrateChangedReason: i32 {
     SufficientInboundBitsPerSecond = 0, InsufficientInboundBitsPerSecond = 1, LowBufferLevel = 2, PositionChanged = 3, TrackSelectionChanged = 4, DesiredBitratesChanged = 5, ErrorInPreviousBitrate = 6,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadCompletedEventArgs, 421793219, 23351, 18970, 137, 112, 214, 33, 203, 108, 168, 59);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadCompletedEventArgs(IAdaptiveMediaSourceDownloadCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadCompletedEventArgs] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadCompletedEventArgs(IAdaptiveMediaSourceDownloadCompletedEventArgsVtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadCompletedEventArgs] {
     fn get_ResourceType(&self, out: *mut AdaptiveMediaSourceResourceType) -> HRESULT,
     fn get_ResourceUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_ResourceByteRangeOffset(&self, out: *mut <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
@@ -27122,7 +27122,7 @@ impl IAdaptiveMediaSourceDownloadCompletedEventArgs {
 }
 RT_CLASS!{class AdaptiveMediaSourceDownloadCompletedEventArgs: IAdaptiveMediaSourceDownloadCompletedEventArgs}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadCompletedEventArgs2, 1883718852, 38474, 16612, 175, 149, 145, 119, 221, 109, 250, 0);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadCompletedEventArgs2(IAdaptiveMediaSourceDownloadCompletedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadCompletedEventArgs2] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadCompletedEventArgs2(IAdaptiveMediaSourceDownloadCompletedEventArgs2Vtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadCompletedEventArgs2] {
     fn get_RequestId(&self, out: *mut i32) -> HRESULT,
     fn get_Statistics(&self, out: *mut <AdaptiveMediaSourceDownloadStatistics as RtType>::Abi) -> HRESULT,
     fn get_Position(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT
@@ -27145,7 +27145,7 @@ impl IAdaptiveMediaSourceDownloadCompletedEventArgs2 {
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadCompletedEventArgs3, 260738001, 37810, 18374, 186, 220, 139, 226, 200, 247, 246, 232);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadCompletedEventArgs3(IAdaptiveMediaSourceDownloadCompletedEventArgs3Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadCompletedEventArgs3] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadCompletedEventArgs3(IAdaptiveMediaSourceDownloadCompletedEventArgs3Vtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadCompletedEventArgs3] {
     fn get_ResourceDuration(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_ResourceContentType(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -27162,7 +27162,7 @@ impl IAdaptiveMediaSourceDownloadCompletedEventArgs3 {
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadFailedEventArgs, 930320456, 62635, 16548, 177, 53, 198, 223, 216, 189, 127, 241);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadFailedEventArgs(IAdaptiveMediaSourceDownloadFailedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadFailedEventArgs] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadFailedEventArgs(IAdaptiveMediaSourceDownloadFailedEventArgsVtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadFailedEventArgs] {
     fn get_ResourceType(&self, out: *mut AdaptiveMediaSourceResourceType) -> HRESULT,
     fn get_ResourceUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_ResourceByteRangeOffset(&self, out: *mut <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
@@ -27198,7 +27198,7 @@ impl IAdaptiveMediaSourceDownloadFailedEventArgs {
 }
 RT_CLASS!{class AdaptiveMediaSourceDownloadFailedEventArgs: IAdaptiveMediaSourceDownloadFailedEventArgs}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadFailedEventArgs2, 1888589160, 38524, 18822, 144, 197, 198, 252, 75, 49, 226, 216);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadFailedEventArgs2(IAdaptiveMediaSourceDownloadFailedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadFailedEventArgs2] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadFailedEventArgs2(IAdaptiveMediaSourceDownloadFailedEventArgs2Vtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadFailedEventArgs2] {
     fn get_RequestId(&self, out: *mut i32) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_Statistics(&self, out: *mut <AdaptiveMediaSourceDownloadStatistics as RtType>::Abi) -> HRESULT,
@@ -27227,7 +27227,7 @@ impl IAdaptiveMediaSourceDownloadFailedEventArgs2 {
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadFailedEventArgs3, 3493152073, 4402, 18960, 145, 90, 194, 33, 27, 91, 148, 9);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadFailedEventArgs3(IAdaptiveMediaSourceDownloadFailedEventArgs3Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadFailedEventArgs3] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadFailedEventArgs3(IAdaptiveMediaSourceDownloadFailedEventArgs3Vtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadFailedEventArgs3] {
     fn get_ResourceDuration(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_ResourceContentType(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -27244,7 +27244,7 @@ impl IAdaptiveMediaSourceDownloadFailedEventArgs3 {
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadRequestedDeferral, 96898916, 64032, 19901, 152, 33, 75, 244, 201, 191, 119, 171);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadRequestedDeferral(IAdaptiveMediaSourceDownloadRequestedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadRequestedDeferral] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadRequestedDeferral(IAdaptiveMediaSourceDownloadRequestedDeferralVtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadRequestedDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl IAdaptiveMediaSourceDownloadRequestedDeferral {
@@ -27255,7 +27255,7 @@ impl IAdaptiveMediaSourceDownloadRequestedDeferral {
 }
 RT_CLASS!{class AdaptiveMediaSourceDownloadRequestedDeferral: IAdaptiveMediaSourceDownloadRequestedDeferral}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadRequestedEventArgs, 3359629309, 17577, 18338, 191, 150, 3, 57, 139, 75, 250, 175);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadRequestedEventArgs(IAdaptiveMediaSourceDownloadRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadRequestedEventArgs] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadRequestedEventArgs(IAdaptiveMediaSourceDownloadRequestedEventArgsVtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadRequestedEventArgs] {
     fn get_ResourceType(&self, out: *mut AdaptiveMediaSourceResourceType) -> HRESULT,
     fn get_ResourceUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_ResourceByteRangeOffset(&self, out: *mut <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
@@ -27297,7 +27297,7 @@ impl IAdaptiveMediaSourceDownloadRequestedEventArgs {
 }
 RT_CLASS!{class AdaptiveMediaSourceDownloadRequestedEventArgs: IAdaptiveMediaSourceDownloadRequestedEventArgs}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadRequestedEventArgs2, 3011349502, 43588, 19842, 130, 91, 97, 29, 227, 188, 254, 203);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadRequestedEventArgs2(IAdaptiveMediaSourceDownloadRequestedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadRequestedEventArgs2] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadRequestedEventArgs2(IAdaptiveMediaSourceDownloadRequestedEventArgs2Vtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadRequestedEventArgs2] {
     fn get_RequestId(&self, out: *mut i32) -> HRESULT,
     fn get_Position(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT
 }}
@@ -27314,7 +27314,7 @@ impl IAdaptiveMediaSourceDownloadRequestedEventArgs2 {
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadRequestedEventArgs3, 859590909, 20322, 17537, 171, 68, 30, 71, 176, 87, 66, 37);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadRequestedEventArgs3(IAdaptiveMediaSourceDownloadRequestedEventArgs3Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadRequestedEventArgs3] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadRequestedEventArgs3(IAdaptiveMediaSourceDownloadRequestedEventArgs3Vtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadRequestedEventArgs3] {
     fn get_ResourceDuration(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_ResourceContentType(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -27331,7 +27331,7 @@ impl IAdaptiveMediaSourceDownloadRequestedEventArgs3 {
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadResult, 4105165939, 48366, 19050, 159, 10, 254, 196, 30, 35, 57, 176);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadResult(IAdaptiveMediaSourceDownloadResultVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadResult] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadResult(IAdaptiveMediaSourceDownloadResultVtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadResult] {
     fn get_ResourceUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn put_ResourceUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -27396,7 +27396,7 @@ impl IAdaptiveMediaSourceDownloadResult {
 }
 RT_CLASS!{class AdaptiveMediaSourceDownloadResult: IAdaptiveMediaSourceDownloadResult}
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadResult2, 357903543, 31616, 19140, 134, 96, 164, 185, 127, 124, 112, 240);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadResult2(IAdaptiveMediaSourceDownloadResult2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadResult2] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadResult2(IAdaptiveMediaSourceDownloadResult2Vtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadResult2] {
     fn get_ResourceByteRangeOffset(&self, out: *mut <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
     fn put_ResourceByteRangeOffset(&self, value: <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
     fn get_ResourceByteRangeLength(&self, out: *mut <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
@@ -27423,7 +27423,7 @@ impl IAdaptiveMediaSourceDownloadResult2 {
     }}
 }
 DEFINE_IID!(IID_IAdaptiveMediaSourceDownloadStatistics, 2735132411, 59754, 19967, 169, 184, 26, 224, 140, 1, 174, 152);
-RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadStatistics(IAdaptiveMediaSourceDownloadStatisticsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceDownloadStatistics] {
+RT_INTERFACE!{interface IAdaptiveMediaSourceDownloadStatistics(IAdaptiveMediaSourceDownloadStatisticsVtbl): IInspectable [IID_IAdaptiveMediaSourceDownloadStatistics] {
     fn get_ContentBytesReceivedCount(&self, out: *mut u64) -> HRESULT,
     fn get_TimeToHeadersReceived(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
     fn get_TimeToFirstByteReceived(&self, out: *mut <foundation::IReference<foundation::TimeSpan> as RtType>::Abi) -> HRESULT,
@@ -27453,7 +27453,7 @@ impl IAdaptiveMediaSourceDownloadStatistics {
 }
 RT_CLASS!{class AdaptiveMediaSourceDownloadStatistics: IAdaptiveMediaSourceDownloadStatistics}
 DEFINE_IID!(IID_IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs, 597860205, 32218, 19025, 135, 169, 111, 168, 197, 178, 146, 190);
-RT_INTERFACE!{interface IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs(IAdaptiveMediaSourcePlaybackBitrateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs] {
+RT_INTERFACE!{interface IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs(IAdaptiveMediaSourcePlaybackBitrateChangedEventArgsVtbl): IInspectable [IID_IAdaptiveMediaSourcePlaybackBitrateChangedEventArgs] {
     fn get_OldValue(&self, out: *mut u32) -> HRESULT,
     fn get_NewValue(&self, out: *mut u32) -> HRESULT,
     fn get_AudioOnly(&self, out: *mut bool) -> HRESULT
@@ -27480,7 +27480,7 @@ RT_ENUM! { enum AdaptiveMediaSourceResourceType: i32 {
     Manifest = 0, InitializationSegment = 1, MediaSegment = 2, Key = 3, InitializationVector = 4, MediaSegmentIndex = 5,
 }}
 DEFINE_IID!(IID_IAdaptiveMediaSourceStatics, 1353104733, 26351, 19667, 149, 121, 158, 102, 5, 7, 220, 63);
-RT_INTERFACE!{static interface IAdaptiveMediaSourceStatics(IAdaptiveMediaSourceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAdaptiveMediaSourceStatics] {
+RT_INTERFACE!{static interface IAdaptiveMediaSourceStatics(IAdaptiveMediaSourceStaticsVtbl): IInspectable [IID_IAdaptiveMediaSourceStatics] {
     fn IsContentTypeSupported(&self, contentType: HSTRING, out: *mut bool) -> HRESULT,
     fn CreateFromUriAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperation<AdaptiveMediaSourceCreationResult> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-web"))] fn __Dummy2(&self) -> (),
@@ -27521,7 +27521,7 @@ impl IAdaptiveMediaSourceStatics {
 pub mod transcoding { // Windows.Media.Transcoding
 use crate::prelude::*;
 DEFINE_IID!(IID_IMediaTranscoder, 420256210, 41130, 19764, 134, 188, 238, 209, 177, 44, 47, 91);
-RT_INTERFACE!{interface IMediaTranscoder(IMediaTranscoderVtbl): IInspectable(IInspectableVtbl) [IID_IMediaTranscoder] {
+RT_INTERFACE!{interface IMediaTranscoder(IMediaTranscoderVtbl): IInspectable [IID_IMediaTranscoder] {
     fn put_TrimStartTime(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_TrimStartTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_TrimStopTime(&self, value: foundation::TimeSpan) -> HRESULT,
@@ -27610,7 +27610,7 @@ RT_CLASS!{class MediaTranscoder: IMediaTranscoder}
 impl RtActivatable<IActivationFactory> for MediaTranscoder {}
 DEFINE_CLSID!(MediaTranscoder(&[87,105,110,100,111,119,115,46,77,101,100,105,97,46,84,114,97,110,115,99,111,100,105,110,103,46,77,101,100,105,97,84,114,97,110,115,99,111,100,101,114,0]) [CLSID_MediaTranscoder]);
 DEFINE_IID!(IID_IMediaTranscoder2, 1079188852, 13792, 20228, 133, 116, 202, 139, 196, 229, 160, 130);
-RT_INTERFACE!{interface IMediaTranscoder2(IMediaTranscoder2Vtbl): IInspectable(IInspectableVtbl) [IID_IMediaTranscoder2] {
+RT_INTERFACE!{interface IMediaTranscoder2(IMediaTranscoder2Vtbl): IInspectable [IID_IMediaTranscoder2] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn PrepareMediaStreamSourceTranscodeAsync(&self, source: <super::core::IMediaSource as RtType>::Abi, destination: <super::super::storage::streams::IRandomAccessStream as RtType>::Abi, profile: <super::mediaproperties::MediaEncodingProfile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<PrepareTranscodeResult> as RtType>::Abi) -> HRESULT,
     fn put_VideoProcessingAlgorithm(&self, value: MediaVideoProcessingAlgorithm) -> HRESULT,
@@ -27636,7 +27636,7 @@ RT_ENUM! { enum MediaVideoProcessingAlgorithm: i32 {
     Default = 0, MrfCrf444 = 1,
 }}
 DEFINE_IID!(IID_IPrepareTranscodeResult, 99769806, 39247, 18996, 157, 104, 151, 204, 206, 23, 48, 214);
-RT_INTERFACE!{interface IPrepareTranscodeResult(IPrepareTranscodeResultVtbl): IInspectable(IInspectableVtbl) [IID_IPrepareTranscodeResult] {
+RT_INTERFACE!{interface IPrepareTranscodeResult(IPrepareTranscodeResultVtbl): IInspectable [IID_IPrepareTranscodeResult] {
     fn get_CanTranscode(&self, out: *mut bool) -> HRESULT,
     fn get_FailureReason(&self, out: *mut TranscodeFailureReason) -> HRESULT,
     fn TranscodeAsync(&self, out: *mut <foundation::IAsyncActionWithProgress<f64> as RtType>::Abi) -> HRESULT

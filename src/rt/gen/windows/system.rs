@@ -1,6 +1,6 @@
 use crate::prelude::*;
 DEFINE_IID!(IID_IAppActivationResult, 1800571136, 62574, 20144, 170, 108, 56, 175, 85, 124, 249, 237);
-RT_INTERFACE!{interface IAppActivationResult(IAppActivationResultVtbl): IInspectable(IInspectableVtbl) [IID_IAppActivationResult] {
+RT_INTERFACE!{interface IAppActivationResult(IAppActivationResultVtbl): IInspectable [IID_IAppActivationResult] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_AppResourceGroupInfo(&self, out: *mut <AppResourceGroupInfo as RtType>::Abi) -> HRESULT
 }}
@@ -18,7 +18,7 @@ impl IAppActivationResult {
 }
 RT_CLASS!{class AppActivationResult: IAppActivationResult}
 DEFINE_IID!(IID_IAppDiagnosticInfo, 3813189274, 34953, 19619, 190, 7, 213, 255, 255, 95, 8, 4);
-RT_INTERFACE!{interface IAppDiagnosticInfo(IAppDiagnosticInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfo] {
+RT_INTERFACE!{interface IAppDiagnosticInfo(IAppDiagnosticInfoVtbl): IInspectable [IID_IAppDiagnosticInfo] {
     #[cfg(feature="windows-applicationmodel")] fn get_AppInfo(&self, out: *mut <super::applicationmodel::AppInfo as RtType>::Abi) -> HRESULT
 }}
 impl IAppDiagnosticInfo {
@@ -53,7 +53,7 @@ impl AppDiagnosticInfo {
 }
 DEFINE_CLSID!(AppDiagnosticInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,65,112,112,68,105,97,103,110,111,115,116,105,99,73,110,102,111,0]) [CLSID_AppDiagnosticInfo]);
 DEFINE_IID!(IID_IAppDiagnosticInfo2, 3745971159, 6426, 17516, 148, 115, 143, 188, 35, 116, 163, 84);
-RT_INTERFACE!{interface IAppDiagnosticInfo2(IAppDiagnosticInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfo2] {
+RT_INTERFACE!{interface IAppDiagnosticInfo2(IAppDiagnosticInfo2Vtbl): IInspectable [IID_IAppDiagnosticInfo2] {
     fn GetResourceGroups(&self, out: *mut <foundation::collections::IVector<AppResourceGroupInfo> as RtType>::Abi) -> HRESULT,
     fn CreateResourceGroupWatcher(&self, out: *mut <AppResourceGroupInfoWatcher as RtType>::Abi) -> HRESULT
 }}
@@ -70,7 +70,7 @@ impl IAppDiagnosticInfo2 {
     }}
 }
 DEFINE_IID!(IID_IAppDiagnosticInfo3, 3365258813, 56673, 19557, 186, 189, 129, 161, 11, 79, 152, 21);
-RT_INTERFACE!{interface IAppDiagnosticInfo3(IAppDiagnosticInfo3Vtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfo3] {
+RT_INTERFACE!{interface IAppDiagnosticInfo3(IAppDiagnosticInfo3Vtbl): IInspectable [IID_IAppDiagnosticInfo3] {
     fn LaunchAsync(&self, out: *mut <foundation::IAsyncOperation<AppActivationResult> as RtType>::Abi) -> HRESULT
 }}
 impl IAppDiagnosticInfo3 {
@@ -81,7 +81,7 @@ impl IAppDiagnosticInfo3 {
     }}
 }
 DEFINE_IID!(IID_IAppDiagnosticInfoStatics, 3462997439, 4298, 16584, 169, 202, 197, 201, 101, 1, 134, 110);
-RT_INTERFACE!{static interface IAppDiagnosticInfoStatics(IAppDiagnosticInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfoStatics] {
+RT_INTERFACE!{static interface IAppDiagnosticInfoStatics(IAppDiagnosticInfoStaticsVtbl): IInspectable [IID_IAppDiagnosticInfoStatics] {
     fn RequestInfoAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVector<AppDiagnosticInfo>> as RtType>::Abi) -> HRESULT
 }}
 impl IAppDiagnosticInfoStatics {
@@ -92,7 +92,7 @@ impl IAppDiagnosticInfoStatics {
     }}
 }
 DEFINE_IID!(IID_IAppDiagnosticInfoStatics2, 95570822, 4096, 19600, 187, 159, 114, 53, 7, 28, 80, 254);
-RT_INTERFACE!{static interface IAppDiagnosticInfoStatics2(IAppDiagnosticInfoStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfoStatics2] {
+RT_INTERFACE!{static interface IAppDiagnosticInfoStatics2(IAppDiagnosticInfoStatics2Vtbl): IInspectable [IID_IAppDiagnosticInfoStatics2] {
     fn CreateWatcher(&self, out: *mut <AppDiagnosticInfoWatcher as RtType>::Abi) -> HRESULT,
     fn RequestAccessAsync(&self, out: *mut <foundation::IAsyncOperation<DiagnosticAccessStatus> as RtType>::Abi) -> HRESULT,
     fn RequestInfoForPackageAsync(&self, packageFamilyName: HSTRING, out: *mut <foundation::IAsyncOperation<foundation::collections::IVector<AppDiagnosticInfo>> as RtType>::Abi) -> HRESULT,
@@ -127,7 +127,7 @@ impl IAppDiagnosticInfoStatics2 {
     }}
 }
 DEFINE_IID!(IID_IAppDiagnosticInfoWatcher, 1968656496, 467, 18586, 147, 37, 82, 249, 204, 110, 222, 10);
-RT_INTERFACE!{interface IAppDiagnosticInfoWatcher(IAppDiagnosticInfoWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfoWatcher] {
+RT_INTERFACE!{interface IAppDiagnosticInfoWatcher(IAppDiagnosticInfoWatcherVtbl): IInspectable [IID_IAppDiagnosticInfoWatcher] {
     fn add_Added(&self, handler: <foundation::TypedEventHandler<AppDiagnosticInfoWatcher, AppDiagnosticInfoWatcherEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Added(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_Removed(&self, handler: <foundation::TypedEventHandler<AppDiagnosticInfoWatcher, AppDiagnosticInfoWatcherEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -193,7 +193,7 @@ impl IAppDiagnosticInfoWatcher {
 }
 RT_CLASS!{class AppDiagnosticInfoWatcher: IAppDiagnosticInfoWatcher}
 DEFINE_IID!(IID_IAppDiagnosticInfoWatcherEventArgs, 1880606486, 57818, 19557, 153, 223, 4, 109, 255, 91, 231, 26);
-RT_INTERFACE!{interface IAppDiagnosticInfoWatcherEventArgs(IAppDiagnosticInfoWatcherEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppDiagnosticInfoWatcherEventArgs] {
+RT_INTERFACE!{interface IAppDiagnosticInfoWatcherEventArgs(IAppDiagnosticInfoWatcherEventArgsVtbl): IInspectable [IID_IAppDiagnosticInfoWatcherEventArgs] {
     fn get_AppDiagnosticInfo(&self, out: *mut <AppDiagnosticInfo as RtType>::Abi) -> HRESULT
 }}
 impl IAppDiagnosticInfoWatcherEventArgs {
@@ -208,7 +208,7 @@ RT_ENUM! { enum AppDiagnosticInfoWatcherStatus: i32 {
     Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IAppExecutionStateChangeResult, 1862507504, 63771, 19960, 174, 119, 48, 51, 204, 182, 145, 20);
-RT_INTERFACE!{interface IAppExecutionStateChangeResult(IAppExecutionStateChangeResultVtbl): IInspectable(IInspectableVtbl) [IID_IAppExecutionStateChangeResult] {
+RT_INTERFACE!{interface IAppExecutionStateChangeResult(IAppExecutionStateChangeResultVtbl): IInspectable [IID_IAppExecutionStateChangeResult] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
 impl IAppExecutionStateChangeResult {
@@ -220,7 +220,7 @@ impl IAppExecutionStateChangeResult {
 }
 RT_CLASS!{class AppExecutionStateChangeResult: IAppExecutionStateChangeResult}
 DEFINE_IID!(IID_IAppMemoryReport, 1835348891, 19823, 17852, 156, 94, 228, 155, 63, 242, 117, 141);
-RT_INTERFACE!{interface IAppMemoryReport(IAppMemoryReportVtbl): IInspectable(IInspectableVtbl) [IID_IAppMemoryReport] {
+RT_INTERFACE!{interface IAppMemoryReport(IAppMemoryReportVtbl): IInspectable [IID_IAppMemoryReport] {
     fn get_PrivateCommitUsage(&self, out: *mut u64) -> HRESULT,
     fn get_PeakPrivateCommitUsage(&self, out: *mut u64) -> HRESULT,
     fn get_TotalCommitUsage(&self, out: *mut u64) -> HRESULT,
@@ -250,7 +250,7 @@ impl IAppMemoryReport {
 }
 RT_CLASS!{class AppMemoryReport: IAppMemoryReport}
 DEFINE_IID!(IID_IAppMemoryReport2, 1602172728, 20919, 17116, 183, 237, 121, 186, 70, 210, 136, 87);
-RT_INTERFACE!{interface IAppMemoryReport2(IAppMemoryReport2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppMemoryReport2] {
+RT_INTERFACE!{interface IAppMemoryReport2(IAppMemoryReport2Vtbl): IInspectable [IID_IAppMemoryReport2] {
     fn get_ExpectedTotalCommitLimit(&self, out: *mut u64) -> HRESULT
 }}
 impl IAppMemoryReport2 {
@@ -264,7 +264,7 @@ RT_ENUM! { enum AppMemoryUsageLevel: i32 {
     Low = 0, Medium = 1, High = 2, OverLimit = 3,
 }}
 DEFINE_IID!(IID_IAppMemoryUsageLimitChangingEventArgs, 2046322276, 65226, 19877, 158, 64, 43, 198, 62, 253, 201, 121);
-RT_INTERFACE!{interface IAppMemoryUsageLimitChangingEventArgs(IAppMemoryUsageLimitChangingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppMemoryUsageLimitChangingEventArgs] {
+RT_INTERFACE!{interface IAppMemoryUsageLimitChangingEventArgs(IAppMemoryUsageLimitChangingEventArgsVtbl): IInspectable [IID_IAppMemoryUsageLimitChangingEventArgs] {
     fn get_OldLimit(&self, out: *mut u64) -> HRESULT,
     fn get_NewLimit(&self, out: *mut u64) -> HRESULT
 }}
@@ -282,7 +282,7 @@ impl IAppMemoryUsageLimitChangingEventArgs {
 }
 RT_CLASS!{class AppMemoryUsageLimitChangingEventArgs: IAppMemoryUsageLimitChangingEventArgs}
 DEFINE_IID!(IID_IAppResourceGroupBackgroundTaskReport, 627500878, 45149, 16578, 157, 193, 26, 79, 3, 158, 161, 32);
-RT_INTERFACE!{interface IAppResourceGroupBackgroundTaskReport(IAppResourceGroupBackgroundTaskReportVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupBackgroundTaskReport] {
+RT_INTERFACE!{interface IAppResourceGroupBackgroundTaskReport(IAppResourceGroupBackgroundTaskReportVtbl): IInspectable [IID_IAppResourceGroupBackgroundTaskReport] {
     fn get_TaskId(&self, out: *mut Guid) -> HRESULT,
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Trigger(&self, out: *mut HSTRING) -> HRESULT,
@@ -318,7 +318,7 @@ RT_ENUM! { enum AppResourceGroupExecutionState: i32 {
     Unknown = 0, Running = 1, Suspending = 2, Suspended = 3, NotRunning = 4,
 }}
 DEFINE_IID!(IID_IAppResourceGroupInfo, 3105093498, 59399, 18932, 132, 94, 123, 139, 220, 254, 142, 231);
-RT_INTERFACE!{interface IAppResourceGroupInfo(IAppResourceGroupInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupInfo] {
+RT_INTERFACE!{interface IAppResourceGroupInfo(IAppResourceGroupInfoVtbl): IInspectable [IID_IAppResourceGroupInfo] {
     fn get_InstanceId(&self, out: *mut Guid) -> HRESULT,
     fn get_IsShared(&self, out: *mut bool) -> HRESULT,
     fn GetBackgroundTaskReports(&self, out: *mut <foundation::collections::IVector<AppResourceGroupBackgroundTaskReport> as RtType>::Abi) -> HRESULT,
@@ -360,7 +360,7 @@ impl IAppResourceGroupInfo {
 }
 RT_CLASS!{class AppResourceGroupInfo: IAppResourceGroupInfo}
 DEFINE_IID!(IID_IAppResourceGroupInfo2, 4003144557, 54021, 19819, 146, 247, 106, 253, 173, 114, 222, 220);
-RT_INTERFACE!{interface IAppResourceGroupInfo2(IAppResourceGroupInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupInfo2] {
+RT_INTERFACE!{interface IAppResourceGroupInfo2(IAppResourceGroupInfo2Vtbl): IInspectable [IID_IAppResourceGroupInfo2] {
     fn StartSuspendAsync(&self, out: *mut <foundation::IAsyncOperation<AppExecutionStateChangeResult> as RtType>::Abi) -> HRESULT,
     fn StartResumeAsync(&self, out: *mut <foundation::IAsyncOperation<AppExecutionStateChangeResult> as RtType>::Abi) -> HRESULT,
     fn StartTerminateAsync(&self, out: *mut <foundation::IAsyncOperation<AppExecutionStateChangeResult> as RtType>::Abi) -> HRESULT
@@ -383,7 +383,7 @@ impl IAppResourceGroupInfo2 {
     }}
 }
 DEFINE_IID!(IID_IAppResourceGroupInfoWatcher, 3652231421, 28250, 19570, 139, 23, 9, 254, 196, 162, 18, 189);
-RT_INTERFACE!{interface IAppResourceGroupInfoWatcher(IAppResourceGroupInfoWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupInfoWatcher] {
+RT_INTERFACE!{interface IAppResourceGroupInfoWatcher(IAppResourceGroupInfoWatcherVtbl): IInspectable [IID_IAppResourceGroupInfoWatcher] {
     fn add_Added(&self, handler: <foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Added(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_Removed(&self, handler: <foundation::TypedEventHandler<AppResourceGroupInfoWatcher, AppResourceGroupInfoWatcherEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -460,7 +460,7 @@ impl IAppResourceGroupInfoWatcher {
 }
 RT_CLASS!{class AppResourceGroupInfoWatcher: IAppResourceGroupInfoWatcher}
 DEFINE_IID!(IID_IAppResourceGroupInfoWatcherEventArgs, 2054714935, 25346, 19759, 191, 137, 28, 18, 208, 178, 166, 185);
-RT_INTERFACE!{interface IAppResourceGroupInfoWatcherEventArgs(IAppResourceGroupInfoWatcherEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupInfoWatcherEventArgs] {
+RT_INTERFACE!{interface IAppResourceGroupInfoWatcherEventArgs(IAppResourceGroupInfoWatcherEventArgsVtbl): IInspectable [IID_IAppResourceGroupInfoWatcherEventArgs] {
     fn get_AppDiagnosticInfos(&self, out: *mut <foundation::collections::IVectorView<AppDiagnosticInfo> as RtType>::Abi) -> HRESULT,
     fn get_AppResourceGroupInfo(&self, out: *mut <AppResourceGroupInfo as RtType>::Abi) -> HRESULT
 }}
@@ -478,7 +478,7 @@ impl IAppResourceGroupInfoWatcherEventArgs {
 }
 RT_CLASS!{class AppResourceGroupInfoWatcherEventArgs: IAppResourceGroupInfoWatcherEventArgs}
 DEFINE_IID!(IID_IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs, 467398103, 65254, 20436, 152, 221, 233, 42, 44, 194, 153, 243);
-RT_INTERFACE!{interface IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs(IAppResourceGroupInfoWatcherExecutionStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs] {
+RT_INTERFACE!{interface IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs(IAppResourceGroupInfoWatcherExecutionStateChangedEventArgsVtbl): IInspectable [IID_IAppResourceGroupInfoWatcherExecutionStateChangedEventArgs] {
     fn get_AppDiagnosticInfos(&self, out: *mut <foundation::collections::IVectorView<AppDiagnosticInfo> as RtType>::Abi) -> HRESULT,
     fn get_AppResourceGroupInfo(&self, out: *mut <AppResourceGroupInfo as RtType>::Abi) -> HRESULT
 }}
@@ -499,7 +499,7 @@ RT_ENUM! { enum AppResourceGroupInfoWatcherStatus: i32 {
     Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IAppResourceGroupMemoryReport, 747374257, 32177, 19537, 162, 37, 127, 174, 45, 73, 228, 49);
-RT_INTERFACE!{interface IAppResourceGroupMemoryReport(IAppResourceGroupMemoryReportVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupMemoryReport] {
+RT_INTERFACE!{interface IAppResourceGroupMemoryReport(IAppResourceGroupMemoryReportVtbl): IInspectable [IID_IAppResourceGroupMemoryReport] {
     fn get_CommitUsageLimit(&self, out: *mut u64) -> HRESULT,
     fn get_CommitUsageLevel(&self, out: *mut AppMemoryUsageLevel) -> HRESULT,
     fn get_PrivateCommitUsage(&self, out: *mut u64) -> HRESULT,
@@ -529,7 +529,7 @@ impl IAppResourceGroupMemoryReport {
 }
 RT_CLASS!{class AppResourceGroupMemoryReport: IAppResourceGroupMemoryReport}
 DEFINE_IID!(IID_IAppResourceGroupStateReport, 1384423192, 12144, 16950, 171, 64, 208, 77, 176, 199, 185, 49);
-RT_INTERFACE!{interface IAppResourceGroupStateReport(IAppResourceGroupStateReportVtbl): IInspectable(IInspectableVtbl) [IID_IAppResourceGroupStateReport] {
+RT_INTERFACE!{interface IAppResourceGroupStateReport(IAppResourceGroupStateReportVtbl): IInspectable [IID_IAppResourceGroupStateReport] {
     fn get_ExecutionState(&self, out: *mut AppResourceGroupExecutionState) -> HRESULT,
     fn get_EnergyQuotaState(&self, out: *mut AppResourceGroupEnergyQuotaState) -> HRESULT
 }}
@@ -547,7 +547,7 @@ impl IAppResourceGroupStateReport {
 }
 RT_CLASS!{class AppResourceGroupStateReport: IAppResourceGroupStateReport}
 DEFINE_IID!(IID_IAppUriHandlerHost, 1565575877, 37586, 21513, 181, 111, 127, 115, 225, 14, 164, 195);
-RT_INTERFACE!{interface IAppUriHandlerHost(IAppUriHandlerHostVtbl): IInspectable(IInspectableVtbl) [IID_IAppUriHandlerHost] {
+RT_INTERFACE!{interface IAppUriHandlerHost(IAppUriHandlerHostVtbl): IInspectable [IID_IAppUriHandlerHost] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Name(&self, value: HSTRING) -> HRESULT
 }}
@@ -572,7 +572,7 @@ impl AppUriHandlerHost {
 }
 DEFINE_CLSID!(AppUriHandlerHost(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,65,112,112,85,114,105,72,97,110,100,108,101,114,72,111,115,116,0]) [CLSID_AppUriHandlerHost]);
 DEFINE_IID!(IID_IAppUriHandlerHostFactory, 628898966, 52740, 24472, 150, 187, 62, 189, 62, 146, 117, 187);
-RT_INTERFACE!{static interface IAppUriHandlerHostFactory(IAppUriHandlerHostFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IAppUriHandlerHostFactory] {
+RT_INTERFACE!{static interface IAppUriHandlerHostFactory(IAppUriHandlerHostFactoryVtbl): IInspectable [IID_IAppUriHandlerHostFactory] {
     fn CreateInstance(&self, name: HSTRING, out: *mut <AppUriHandlerHost as RtType>::Abi) -> HRESULT
 }}
 impl IAppUriHandlerHostFactory {
@@ -583,7 +583,7 @@ impl IAppUriHandlerHostFactory {
     }}
 }
 DEFINE_IID!(IID_IAppUriHandlerRegistration, 1869852337, 17769, 23615, 155, 160, 153, 18, 62, 234, 50, 195);
-RT_INTERFACE!{interface IAppUriHandlerRegistration(IAppUriHandlerRegistrationVtbl): IInspectable(IInspectableVtbl) [IID_IAppUriHandlerRegistration] {
+RT_INTERFACE!{interface IAppUriHandlerRegistration(IAppUriHandlerRegistrationVtbl): IInspectable [IID_IAppUriHandlerRegistration] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_User(&self, out: *mut <User as RtType>::Abi) -> HRESULT,
     fn GetAppAddedHostsAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVector<AppUriHandlerHost>> as RtType>::Abi) -> HRESULT,
@@ -613,7 +613,7 @@ impl IAppUriHandlerRegistration {
 }
 RT_CLASS!{class AppUriHandlerRegistration: IAppUriHandlerRegistration}
 DEFINE_IID!(IID_IAppUriHandlerRegistrationManager, 3861682770, 44180, 22352, 172, 27, 108, 251, 111, 37, 2, 99);
-RT_INTERFACE!{interface IAppUriHandlerRegistrationManager(IAppUriHandlerRegistrationManagerVtbl): IInspectable(IInspectableVtbl) [IID_IAppUriHandlerRegistrationManager] {
+RT_INTERFACE!{interface IAppUriHandlerRegistrationManager(IAppUriHandlerRegistrationManagerVtbl): IInspectable [IID_IAppUriHandlerRegistrationManager] {
     fn get_User(&self, out: *mut <User as RtType>::Abi) -> HRESULT,
     fn TryGetRegistration(&self, name: HSTRING, out: *mut <AppUriHandlerRegistration as RtType>::Abi) -> HRESULT
 }}
@@ -641,7 +641,7 @@ impl AppUriHandlerRegistrationManager {
 }
 DEFINE_CLSID!(AppUriHandlerRegistrationManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,65,112,112,85,114,105,72,97,110,100,108,101,114,82,101,103,105,115,116,114,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_AppUriHandlerRegistrationManager]);
 DEFINE_IID!(IID_IAppUriHandlerRegistrationManagerStatics, 3587104159, 22313, 23414, 161, 212, 2, 133, 242, 149, 193, 36);
-RT_INTERFACE!{static interface IAppUriHandlerRegistrationManagerStatics(IAppUriHandlerRegistrationManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAppUriHandlerRegistrationManagerStatics] {
+RT_INTERFACE!{static interface IAppUriHandlerRegistrationManagerStatics(IAppUriHandlerRegistrationManagerStaticsVtbl): IInspectable [IID_IAppUriHandlerRegistrationManagerStatics] {
     fn GetDefault(&self, out: *mut <AppUriHandlerRegistrationManager as RtType>::Abi) -> HRESULT,
     fn GetForUser(&self, user: <User as RtType>::Abi, out: *mut <AppUriHandlerRegistrationManager as RtType>::Abi) -> HRESULT
 }}
@@ -669,7 +669,7 @@ impl DateTimeSettings {
 }
 DEFINE_CLSID!(DateTimeSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,97,116,101,84,105,109,101,83,101,116,116,105,110,103,115,0]) [CLSID_DateTimeSettings]);
 DEFINE_IID!(IID_IDateTimeSettingsStatics, 1562464465, 18414, 18603, 165, 43, 159, 25, 84, 39, 141, 130);
-RT_INTERFACE!{static interface IDateTimeSettingsStatics(IDateTimeSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeSettingsStatics] {
+RT_INTERFACE!{static interface IDateTimeSettingsStatics(IDateTimeSettingsStaticsVtbl): IInspectable [IID_IDateTimeSettingsStatics] {
     fn SetSystemDateTime(&self, utcDateTime: foundation::DateTime) -> HRESULT
 }}
 impl IDateTimeSettingsStatics {
@@ -682,7 +682,7 @@ RT_ENUM! { enum DiagnosticAccessStatus: i32 {
     Unspecified = 0, Denied = 1, Limited = 2, Allowed = 3,
 }}
 DEFINE_IID!(IID_IDispatcherQueue, 1614711012, 41784, 20478, 164, 87, 165, 207, 185, 206, 184, 153);
-RT_INTERFACE!{interface IDispatcherQueue(IDispatcherQueueVtbl): IInspectable(IInspectableVtbl) [IID_IDispatcherQueue] {
+RT_INTERFACE!{interface IDispatcherQueue(IDispatcherQueueVtbl): IInspectable [IID_IDispatcherQueue] {
     fn CreateTimer(&self, out: *mut <DispatcherQueueTimer as RtType>::Abi) -> HRESULT,
     fn TryEnqueue(&self, callback: <DispatcherQueueHandler as RtType>::Abi, out: *mut bool) -> HRESULT,
     fn TryEnqueueWithPriority(&self, priority: DispatcherQueuePriority, callback: <DispatcherQueueHandler as RtType>::Abi, out: *mut bool) -> HRESULT,
@@ -735,7 +735,7 @@ impl DispatcherQueue {
 }
 DEFINE_CLSID!(DispatcherQueue(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,115,112,97,116,99,104,101,114,81,117,101,117,101,0]) [CLSID_DispatcherQueue]);
 DEFINE_IID!(IID_IDispatcherQueueController, 586370662, 20699, 20022, 169, 141, 97, 192, 27, 56, 77, 32);
-RT_INTERFACE!{interface IDispatcherQueueController(IDispatcherQueueControllerVtbl): IInspectable(IInspectableVtbl) [IID_IDispatcherQueueController] {
+RT_INTERFACE!{interface IDispatcherQueueController(IDispatcherQueueControllerVtbl): IInspectable [IID_IDispatcherQueueController] {
     fn get_DispatcherQueue(&self, out: *mut <DispatcherQueue as RtType>::Abi) -> HRESULT,
     fn ShutdownQueueAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
@@ -760,7 +760,7 @@ impl DispatcherQueueController {
 }
 DEFINE_CLSID!(DispatcherQueueController(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,115,112,97,116,99,104,101,114,81,117,101,117,101,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_DispatcherQueueController]);
 DEFINE_IID!(IID_IDispatcherQueueControllerStatics, 174889184, 20888, 18850, 163, 19, 63, 112, 209, 241, 60, 39);
-RT_INTERFACE!{static interface IDispatcherQueueControllerStatics(IDispatcherQueueControllerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDispatcherQueueControllerStatics] {
+RT_INTERFACE!{static interface IDispatcherQueueControllerStatics(IDispatcherQueueControllerStaticsVtbl): IInspectable [IID_IDispatcherQueueControllerStatics] {
     fn CreateOnDedicatedThread(&self, out: *mut <DispatcherQueueController as RtType>::Abi) -> HRESULT
 }}
 impl IDispatcherQueueControllerStatics {
@@ -784,7 +784,7 @@ RT_ENUM! { enum DispatcherQueuePriority: i32 {
     Low = -10, Normal = 0, High = 10,
 }}
 DEFINE_IID!(IID_IDispatcherQueueShutdownStartingEventArgs, 3295824972, 65431, 16576, 162, 38, 204, 10, 170, 84, 94, 137);
-RT_INTERFACE!{interface IDispatcherQueueShutdownStartingEventArgs(IDispatcherQueueShutdownStartingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDispatcherQueueShutdownStartingEventArgs] {
+RT_INTERFACE!{interface IDispatcherQueueShutdownStartingEventArgs(IDispatcherQueueShutdownStartingEventArgsVtbl): IInspectable [IID_IDispatcherQueueShutdownStartingEventArgs] {
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
 impl IDispatcherQueueShutdownStartingEventArgs {
@@ -796,7 +796,7 @@ impl IDispatcherQueueShutdownStartingEventArgs {
 }
 RT_CLASS!{class DispatcherQueueShutdownStartingEventArgs: IDispatcherQueueShutdownStartingEventArgs}
 DEFINE_IID!(IID_IDispatcherQueueStatics, 2842526679, 37745, 17687, 146, 69, 208, 130, 74, 193, 44, 116);
-RT_INTERFACE!{static interface IDispatcherQueueStatics(IDispatcherQueueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDispatcherQueueStatics] {
+RT_INTERFACE!{static interface IDispatcherQueueStatics(IDispatcherQueueStaticsVtbl): IInspectable [IID_IDispatcherQueueStatics] {
     fn GetForCurrentThread(&self, out: *mut <DispatcherQueue as RtType>::Abi) -> HRESULT
 }}
 impl IDispatcherQueueStatics {
@@ -807,7 +807,7 @@ impl IDispatcherQueueStatics {
     }}
 }
 DEFINE_IID!(IID_IDispatcherQueueTimer, 1609218845, 41756, 18215, 177, 172, 55, 69, 70, 73, 213, 106);
-RT_INTERFACE!{interface IDispatcherQueueTimer(IDispatcherQueueTimerVtbl): IInspectable(IInspectableVtbl) [IID_IDispatcherQueueTimer] {
+RT_INTERFACE!{interface IDispatcherQueueTimer(IDispatcherQueueTimerVtbl): IInspectable [IID_IDispatcherQueueTimer] {
     fn get_Interval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_Interval(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_IsRunning(&self, out: *mut bool) -> HRESULT,
@@ -862,7 +862,7 @@ impl IDispatcherQueueTimer {
 }
 RT_CLASS!{class DispatcherQueueTimer: IDispatcherQueueTimer}
 DEFINE_IID!(IID_IFolderLauncherOptions, 3146891901, 27527, 17194, 189, 4, 119, 108, 111, 95, 178, 171);
-RT_INTERFACE!{interface IFolderLauncherOptions(IFolderLauncherOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IFolderLauncherOptions] {
+RT_INTERFACE!{interface IFolderLauncherOptions(IFolderLauncherOptionsVtbl): IInspectable [IID_IFolderLauncherOptions] {
     #[cfg(feature="windows-storage")] fn get_ItemsToSelect(&self, out: *mut <foundation::collections::IVector<super::storage::IStorageItem> as RtType>::Abi) -> HRESULT
 }}
 impl IFolderLauncherOptions {
@@ -908,7 +908,7 @@ impl KnownUserProperties {
 }
 DEFINE_CLSID!(KnownUserProperties(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,75,110,111,119,110,85,115,101,114,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownUserProperties]);
 DEFINE_IID!(IID_IKnownUserPropertiesStatics, 2002096410, 28869, 18661, 182, 55, 91, 163, 68, 30, 78, 228);
-RT_INTERFACE!{static interface IKnownUserPropertiesStatics(IKnownUserPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownUserPropertiesStatics] {
+RT_INTERFACE!{static interface IKnownUserPropertiesStatics(IKnownUserPropertiesStaticsVtbl): IInspectable [IID_IKnownUserPropertiesStatics] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_FirstName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LastName(&self, out: *mut HSTRING) -> HRESULT,
@@ -1060,7 +1060,7 @@ impl Launcher {
 }
 DEFINE_CLSID!(Launcher(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,76,97,117,110,99,104,101,114,0]) [CLSID_Launcher]);
 DEFINE_IID!(IID_ILauncherOptions, 3136954840, 45169, 19672, 133, 62, 52, 18, 3, 229, 87, 211);
-RT_INTERFACE!{interface ILauncherOptions(ILauncherOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILauncherOptions] {
+RT_INTERFACE!{interface ILauncherOptions(ILauncherOptionsVtbl): IInspectable [IID_ILauncherOptions] {
     fn get_TreatAsUntrusted(&self, out: *mut bool) -> HRESULT,
     fn put_TreatAsUntrusted(&self, value: bool) -> HRESULT,
     fn get_DisplayApplicationPicker(&self, out: *mut bool) -> HRESULT,
@@ -1140,7 +1140,7 @@ RT_CLASS!{class LauncherOptions: ILauncherOptions}
 impl RtActivatable<IActivationFactory> for LauncherOptions {}
 DEFINE_CLSID!(LauncherOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,76,97,117,110,99,104,101,114,79,112,116,105,111,110,115,0]) [CLSID_LauncherOptions]);
 DEFINE_IID!(IID_ILauncherOptions2, 1000378036, 28224, 19918, 161, 163, 47, 83, 149, 10, 251, 73);
-RT_INTERFACE!{interface ILauncherOptions2(ILauncherOptions2Vtbl): IInspectable(IInspectableVtbl) [IID_ILauncherOptions2] {
+RT_INTERFACE!{interface ILauncherOptions2(ILauncherOptions2Vtbl): IInspectable [IID_ILauncherOptions2] {
     fn get_TargetApplicationPackageFamilyName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_TargetApplicationPackageFamilyName(&self, value: HSTRING) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_NeighboringFilesQuery(&self, out: *mut <super::storage::search::StorageFileQueryResult as RtType>::Abi) -> HRESULT,
@@ -1167,7 +1167,7 @@ impl ILauncherOptions2 {
     }}
 }
 DEFINE_IID!(IID_ILauncherOptions3, 4034332245, 19299, 20026, 145, 7, 78, 104, 120, 65, 146, 58);
-RT_INTERFACE!{interface ILauncherOptions3(ILauncherOptions3Vtbl): IInspectable(IInspectableVtbl) [IID_ILauncherOptions3] {
+RT_INTERFACE!{interface ILauncherOptions3(ILauncherOptions3Vtbl): IInspectable [IID_ILauncherOptions3] {
     fn get_IgnoreAppUriHandlers(&self, out: *mut bool) -> HRESULT,
     fn put_IgnoreAppUriHandlers(&self, value: bool) -> HRESULT
 }}
@@ -1183,7 +1183,7 @@ impl ILauncherOptions3 {
     }}
 }
 DEFINE_IID!(IID_ILauncherOptions4, 4017082638, 59131, 18452, 164, 78, 87, 232, 185, 217, 160, 27);
-RT_INTERFACE!{interface ILauncherOptions4(ILauncherOptions4Vtbl): IInspectable(IInspectableVtbl) [IID_ILauncherOptions4] {
+RT_INTERFACE!{interface ILauncherOptions4(ILauncherOptions4Vtbl): IInspectable [IID_ILauncherOptions4] {
     fn get_LimitPickerToCurrentAppAndAppUriHandlers(&self, out: *mut bool) -> HRESULT,
     fn put_LimitPickerToCurrentAppAndAppUriHandlers(&self, value: bool) -> HRESULT
 }}
@@ -1199,7 +1199,7 @@ impl ILauncherOptions4 {
     }}
 }
 DEFINE_IID!(IID_ILauncherStatics, 661737923, 40510, 17142, 145, 164, 93, 253, 235, 35, 36, 81);
-RT_INTERFACE!{static interface ILauncherStatics(ILauncherStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILauncherStatics] {
+RT_INTERFACE!{static interface ILauncherStatics(ILauncherStaticsVtbl): IInspectable [IID_ILauncherStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn LaunchFileAsync(&self, file: <super::storage::IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -1230,7 +1230,7 @@ impl ILauncherStatics {
     }}
 }
 DEFINE_IID!(IID_ILauncherStatics2, 1505374139, 9419, 19458, 164, 196, 130, 148, 86, 157, 84, 241);
-RT_INTERFACE!{static interface ILauncherStatics2(ILauncherStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ILauncherStatics2] {
+RT_INTERFACE!{static interface ILauncherStatics2(ILauncherStatics2Vtbl): IInspectable [IID_ILauncherStatics2] {
     fn LaunchUriForResultsAsync(&self, uri: <foundation::Uri as RtType>::Abi, options: <LauncherOptions as RtType>::Abi, out: *mut <foundation::IAsyncOperation<LaunchUriResult> as RtType>::Abi) -> HRESULT,
     fn LaunchUriForResultsWithDataAsync(&self, uri: <foundation::Uri as RtType>::Abi, options: <LauncherOptions as RtType>::Abi, inputData: <foundation::collections::ValueSet as RtType>::Abi, out: *mut <foundation::IAsyncOperation<LaunchUriResult> as RtType>::Abi) -> HRESULT,
     fn LaunchUriWithDataAsync(&self, uri: <foundation::Uri as RtType>::Abi, options: <LauncherOptions as RtType>::Abi, inputData: <foundation::collections::ValueSet as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
@@ -1297,7 +1297,7 @@ impl ILauncherStatics2 {
     }}
 }
 DEFINE_IID!(IID_ILauncherStatics3, 591552936, 40371, 18051, 170, 66, 220, 111, 81, 211, 56, 71);
-RT_INTERFACE!{static interface ILauncherStatics3(ILauncherStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_ILauncherStatics3] {
+RT_INTERFACE!{static interface ILauncherStatics3(ILauncherStatics3Vtbl): IInspectable [IID_ILauncherStatics3] {
     #[cfg(feature="windows-storage")] fn LaunchFolderAsync(&self, folder: <super::storage::IStorageFolder as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn LaunchFolderWithOptionsAsync(&self, folder: <super::storage::IStorageFolder as RtType>::Abi, options: <FolderLauncherOptions as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
 }}
@@ -1314,7 +1314,7 @@ impl ILauncherStatics3 {
     }}
 }
 DEFINE_IID!(IID_ILauncherStatics4, 3119284639, 46501, 16838, 179, 179, 221, 27, 49, 120, 188, 242);
-RT_INTERFACE!{static interface ILauncherStatics4(ILauncherStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_ILauncherStatics4] {
+RT_INTERFACE!{static interface ILauncherStatics4(ILauncherStatics4Vtbl): IInspectable [IID_ILauncherStatics4] {
     fn QueryAppUriSupportAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperation<LaunchQuerySupportStatus> as RtType>::Abi) -> HRESULT,
     fn QueryAppUriSupportWithPackageFamilyNameAsync(&self, uri: <foundation::Uri as RtType>::Abi, packageFamilyName: HSTRING, out: *mut <foundation::IAsyncOperation<LaunchQuerySupportStatus> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy2(&self) -> (),
@@ -1368,7 +1368,7 @@ impl ILauncherStatics4 {
     }}
 }
 DEFINE_IID!(IID_ILauncherStatics5, 1529147268, 55445, 24554, 145, 83, 26, 196, 154, 237, 155, 169);
-RT_INTERFACE!{static interface ILauncherStatics5(ILauncherStatics5Vtbl): IInspectable(IInspectableVtbl) [IID_ILauncherStatics5] {
+RT_INTERFACE!{static interface ILauncherStatics5(ILauncherStatics5Vtbl): IInspectable [IID_ILauncherStatics5] {
     fn LaunchFolderPathAsync(&self, path: HSTRING, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn LaunchFolderPathWithOptionsAsync(&self, path: HSTRING, options: <FolderLauncherOptions as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn LaunchFolderPathForUserAsync(&self, user: <User as RtType>::Abi, path: HSTRING, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
@@ -1397,7 +1397,7 @@ impl ILauncherStatics5 {
     }}
 }
 DEFINE_IID!(IID_ILauncherUIOptions, 455465582, 35494, 16873, 130, 81, 65, 101, 245, 152, 95, 73);
-RT_INTERFACE!{interface ILauncherUIOptions(ILauncherUIOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILauncherUIOptions] {
+RT_INTERFACE!{interface ILauncherUIOptions(ILauncherUIOptionsVtbl): IInspectable [IID_ILauncherUIOptions] {
     fn get_InvocationPoint(&self, out: *mut <foundation::IReference<foundation::Point> as RtType>::Abi) -> HRESULT,
     fn put_InvocationPoint(&self, value: <foundation::IReference<foundation::Point> as RtType>::Abi) -> HRESULT,
     fn get_SelectionRect(&self, out: *mut <foundation::IReference<foundation::Rect> as RtType>::Abi) -> HRESULT,
@@ -1436,7 +1436,7 @@ impl ILauncherUIOptions {
 }
 RT_CLASS!{class LauncherUIOptions: ILauncherUIOptions}
 DEFINE_IID!(IID_ILauncherViewOptions, 2325424625, 31911, 18910, 155, 211, 60, 91, 113, 132, 246, 22);
-RT_INTERFACE!{interface ILauncherViewOptions(ILauncherViewOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ILauncherViewOptions] {
+RT_INTERFACE!{interface ILauncherViewOptions(ILauncherViewOptionsVtbl): IInspectable [IID_ILauncherViewOptions] {
     #[cfg(feature="windows-ui")] fn get_DesiredRemainingView(&self, out: *mut super::ui::viewmanagement::ViewSizePreference) -> HRESULT,
     #[cfg(feature="windows-ui")] fn put_DesiredRemainingView(&self, value: super::ui::viewmanagement::ViewSizePreference) -> HRESULT
 }}
@@ -1461,7 +1461,7 @@ RT_ENUM! { enum LaunchQuerySupportType: i32 {
     Uri = 0, UriForResults = 1,
 }}
 DEFINE_IID!(IID_ILaunchUriResult, 3962022111, 63189, 17866, 145, 58, 112, 164, 12, 92, 130, 33);
-RT_INTERFACE!{interface ILaunchUriResult(ILaunchUriResultVtbl): IInspectable(IInspectableVtbl) [IID_ILaunchUriResult] {
+RT_INTERFACE!{interface ILaunchUriResult(ILaunchUriResultVtbl): IInspectable [IID_ILaunchUriResult] {
     fn get_Status(&self, out: *mut LaunchUriStatus) -> HRESULT,
     fn get_Result(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT
 }}
@@ -1529,7 +1529,7 @@ impl MemoryManager {
 }
 DEFINE_CLSID!(MemoryManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,77,101,109,111,114,121,77,97,110,97,103,101,114,0]) [CLSID_MemoryManager]);
 DEFINE_IID!(IID_IMemoryManagerStatics, 1550591900, 55242, 18297, 145, 136, 64, 87, 33, 156, 230, 76);
-RT_INTERFACE!{static interface IMemoryManagerStatics(IMemoryManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMemoryManagerStatics] {
+RT_INTERFACE!{static interface IMemoryManagerStatics(IMemoryManagerStaticsVtbl): IInspectable [IID_IMemoryManagerStatics] {
     fn get_AppMemoryUsage(&self, out: *mut u64) -> HRESULT,
     fn get_AppMemoryUsageLimit(&self, out: *mut u64) -> HRESULT,
     fn get_AppMemoryUsageLevel(&self, out: *mut AppMemoryUsageLevel) -> HRESULT,
@@ -1585,7 +1585,7 @@ impl IMemoryManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IMemoryManagerStatics2, 1861104927, 28002, 16959, 148, 121, 176, 31, 156, 159, 118, 105);
-RT_INTERFACE!{static interface IMemoryManagerStatics2(IMemoryManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IMemoryManagerStatics2] {
+RT_INTERFACE!{static interface IMemoryManagerStatics2(IMemoryManagerStatics2Vtbl): IInspectable [IID_IMemoryManagerStatics2] {
     fn GetAppMemoryReport(&self, out: *mut <AppMemoryReport as RtType>::Abi) -> HRESULT,
     fn GetProcessMemoryReport(&self, out: *mut <ProcessMemoryReport as RtType>::Abi) -> HRESULT
 }}
@@ -1602,7 +1602,7 @@ impl IMemoryManagerStatics2 {
     }}
 }
 DEFINE_IID!(IID_IMemoryManagerStatics3, 345725390, 37549, 20021, 137, 235, 80, 223, 180, 192, 217, 28);
-RT_INTERFACE!{static interface IMemoryManagerStatics3(IMemoryManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IMemoryManagerStatics3] {
+RT_INTERFACE!{static interface IMemoryManagerStatics3(IMemoryManagerStatics3Vtbl): IInspectable [IID_IMemoryManagerStatics3] {
     fn TrySetAppMemoryUsageLimit(&self, value: u64, out: *mut bool) -> HRESULT
 }}
 impl IMemoryManagerStatics3 {
@@ -1613,7 +1613,7 @@ impl IMemoryManagerStatics3 {
     }}
 }
 DEFINE_IID!(IID_IMemoryManagerStatics4, 3316205608, 59470, 18566, 138, 13, 68, 179, 25, 14, 59, 114);
-RT_INTERFACE!{static interface IMemoryManagerStatics4(IMemoryManagerStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IMemoryManagerStatics4] {
+RT_INTERFACE!{static interface IMemoryManagerStatics4(IMemoryManagerStatics4Vtbl): IInspectable [IID_IMemoryManagerStatics4] {
     fn get_ExpectedAppMemoryUsageLimit(&self, out: *mut u64) -> HRESULT
 }}
 impl IMemoryManagerStatics4 {
@@ -1638,7 +1638,7 @@ impl ProcessLauncher {
 }
 DEFINE_CLSID!(ProcessLauncher(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,99,101,115,115,76,97,117,110,99,104,101,114,0]) [CLSID_ProcessLauncher]);
 DEFINE_IID!(IID_IProcessLauncherOptions, 813742543, 62532, 19075, 190, 175, 165, 73, 160, 243, 34, 156);
-RT_INTERFACE!{interface IProcessLauncherOptions(IProcessLauncherOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IProcessLauncherOptions] {
+RT_INTERFACE!{interface IProcessLauncherOptions(IProcessLauncherOptionsVtbl): IInspectable [IID_IProcessLauncherOptions] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_StandardInput(&self, out: *mut <super::storage::streams::IInputStream as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -1696,7 +1696,7 @@ RT_CLASS!{class ProcessLauncherOptions: IProcessLauncherOptions}
 impl RtActivatable<IActivationFactory> for ProcessLauncherOptions {}
 DEFINE_CLSID!(ProcessLauncherOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,99,101,115,115,76,97,117,110,99,104,101,114,79,112,116,105,111,110,115,0]) [CLSID_ProcessLauncherOptions]);
 DEFINE_IID!(IID_IProcessLauncherResult, 1414302004, 34520, 18833, 142, 117, 236, 232, 164, 59, 107, 109);
-RT_INTERFACE!{interface IProcessLauncherResult(IProcessLauncherResultVtbl): IInspectable(IInspectableVtbl) [IID_IProcessLauncherResult] {
+RT_INTERFACE!{interface IProcessLauncherResult(IProcessLauncherResultVtbl): IInspectable [IID_IProcessLauncherResult] {
     fn get_ExitCode(&self, out: *mut u32) -> HRESULT
 }}
 impl IProcessLauncherResult {
@@ -1708,7 +1708,7 @@ impl IProcessLauncherResult {
 }
 RT_CLASS!{class ProcessLauncherResult: IProcessLauncherResult}
 DEFINE_IID!(IID_IProcessLauncherStatics, 866871015, 11534, 17547, 166, 160, 193, 60, 56, 54, 208, 156);
-RT_INTERFACE!{static interface IProcessLauncherStatics(IProcessLauncherStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IProcessLauncherStatics] {
+RT_INTERFACE!{static interface IProcessLauncherStatics(IProcessLauncherStaticsVtbl): IInspectable [IID_IProcessLauncherStatics] {
     fn RunToCompletionAsync(&self, fileName: HSTRING, args: HSTRING, out: *mut <foundation::IAsyncOperation<ProcessLauncherResult> as RtType>::Abi) -> HRESULT,
     fn RunToCompletionAsyncWithOptions(&self, fileName: HSTRING, args: HSTRING, options: <ProcessLauncherOptions as RtType>::Abi, out: *mut <foundation::IAsyncOperation<ProcessLauncherResult> as RtType>::Abi) -> HRESULT
 }}
@@ -1725,7 +1725,7 @@ impl IProcessLauncherStatics {
     }}
 }
 DEFINE_IID!(IID_IProcessMemoryReport, 141755816, 39792, 18306, 135, 65, 58, 152, 43, 108, 229, 228);
-RT_INTERFACE!{interface IProcessMemoryReport(IProcessMemoryReportVtbl): IInspectable(IInspectableVtbl) [IID_IProcessMemoryReport] {
+RT_INTERFACE!{interface IProcessMemoryReport(IProcessMemoryReportVtbl): IInspectable [IID_IProcessMemoryReport] {
     fn get_PrivateWorkingSetUsage(&self, out: *mut u64) -> HRESULT,
     fn get_TotalWorkingSetUsage(&self, out: *mut u64) -> HRESULT
 }}
@@ -1746,7 +1746,7 @@ RT_ENUM! { enum ProcessorArchitecture: i32 {
     X86 = 0, Arm = 5, X64 = 9, Neutral = 11, Unknown = 65535,
 }}
 DEFINE_IID!(IID_IProtocolForResultsOperation, 3582011706, 28137, 19752, 147, 120, 248, 103, 130, 225, 130, 187);
-RT_INTERFACE!{interface IProtocolForResultsOperation(IProtocolForResultsOperationVtbl): IInspectable(IInspectableVtbl) [IID_IProtocolForResultsOperation] {
+RT_INTERFACE!{interface IProtocolForResultsOperation(IProtocolForResultsOperationVtbl): IInspectable [IID_IProtocolForResultsOperation] {
     fn ReportCompleted(&self, data: <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT
 }}
 impl IProtocolForResultsOperation {
@@ -1771,7 +1771,7 @@ impl RemoteLauncher {
 }
 DEFINE_CLSID!(RemoteLauncher(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,76,97,117,110,99,104,101,114,0]) [CLSID_RemoteLauncher]);
 DEFINE_IID!(IID_IRemoteLauncherOptions, 2654611336, 10385, 19679, 162, 214, 157, 255, 125, 2, 230, 147);
-RT_INTERFACE!{interface IRemoteLauncherOptions(IRemoteLauncherOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteLauncherOptions] {
+RT_INTERFACE!{interface IRemoteLauncherOptions(IRemoteLauncherOptionsVtbl): IInspectable [IID_IRemoteLauncherOptions] {
     fn get_FallbackUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn put_FallbackUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_PreferredAppIds(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT
@@ -1796,7 +1796,7 @@ RT_CLASS!{class RemoteLauncherOptions: IRemoteLauncherOptions}
 impl RtActivatable<IActivationFactory> for RemoteLauncherOptions {}
 DEFINE_CLSID!(RemoteLauncherOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,76,97,117,110,99,104,101,114,79,112,116,105,111,110,115,0]) [CLSID_RemoteLauncherOptions]);
 DEFINE_IID!(IID_IRemoteLauncherStatics, 3621485203, 41740, 18615, 159, 33, 5, 16, 38, 164, 229, 23);
-RT_INTERFACE!{static interface IRemoteLauncherStatics(IRemoteLauncherStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteLauncherStatics] {
+RT_INTERFACE!{static interface IRemoteLauncherStatics(IRemoteLauncherStaticsVtbl): IInspectable [IID_IRemoteLauncherStatics] {
     fn LaunchUriAsync(&self, remoteSystemConnectionRequest: <remotesystems::RemoteSystemConnectionRequest as RtType>::Abi, uri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperation<RemoteLaunchUriStatus> as RtType>::Abi) -> HRESULT,
     fn LaunchUriWithOptionsAsync(&self, remoteSystemConnectionRequest: <remotesystems::RemoteSystemConnectionRequest as RtType>::Abi, uri: <foundation::Uri as RtType>::Abi, options: <RemoteLauncherOptions as RtType>::Abi, out: *mut <foundation::IAsyncOperation<RemoteLaunchUriStatus> as RtType>::Abi) -> HRESULT,
     fn LaunchUriWithDataAsync(&self, remoteSystemConnectionRequest: <remotesystems::RemoteSystemConnectionRequest as RtType>::Abi, uri: <foundation::Uri as RtType>::Abi, options: <RemoteLauncherOptions as RtType>::Abi, inputData: <foundation::collections::ValueSet as RtType>::Abi, out: *mut <foundation::IAsyncOperation<RemoteLaunchUriStatus> as RtType>::Abi) -> HRESULT
@@ -1846,7 +1846,7 @@ impl ShutdownManager {
 }
 DEFINE_CLSID!(ShutdownManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,83,104,117,116,100,111,119,110,77,97,110,97,103,101,114,0]) [CLSID_ShutdownManager]);
 DEFINE_IID!(IID_IShutdownManagerStatics, 1927432173, 56667, 19820, 177, 208, 197, 122, 123, 187, 95, 148);
-RT_INTERFACE!{static interface IShutdownManagerStatics(IShutdownManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IShutdownManagerStatics] {
+RT_INTERFACE!{static interface IShutdownManagerStatics(IShutdownManagerStaticsVtbl): IInspectable [IID_IShutdownManagerStatics] {
     fn BeginShutdown(&self, shutdownKind: ShutdownKind, timeout: foundation::TimeSpan) -> HRESULT,
     fn CancelShutdown(&self) -> HRESULT
 }}
@@ -1861,7 +1861,7 @@ impl IShutdownManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IShutdownManagerStatics2, 258580527, 39988, 17351, 168, 195, 112, 179, 10, 127, 117, 4);
-RT_INTERFACE!{static interface IShutdownManagerStatics2(IShutdownManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IShutdownManagerStatics2] {
+RT_INTERFACE!{static interface IShutdownManagerStatics2(IShutdownManagerStatics2Vtbl): IInspectable [IID_IShutdownManagerStatics2] {
     fn IsPowerStateSupported(&self, powerState: PowerState, out: *mut bool) -> HRESULT,
     fn EnterPowerState(&self, powerState: PowerState) -> HRESULT,
     fn EnterPowerStateWithTimeSpan(&self, powerState: PowerState, wakeUpAfter: foundation::TimeSpan) -> HRESULT
@@ -1903,7 +1903,7 @@ impl TimeZoneSettings {
 }
 DEFINE_CLSID!(TimeZoneSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,105,109,101,90,111,110,101,83,101,116,116,105,110,103,115,0]) [CLSID_TimeZoneSettings]);
 DEFINE_IID!(IID_ITimeZoneSettingsStatics, 2604346346, 41217, 16814, 159, 189, 2, 135, 40, 186, 183, 61);
-RT_INTERFACE!{static interface ITimeZoneSettingsStatics(ITimeZoneSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITimeZoneSettingsStatics] {
+RT_INTERFACE!{static interface ITimeZoneSettingsStatics(ITimeZoneSettingsStaticsVtbl): IInspectable [IID_ITimeZoneSettingsStatics] {
     fn get_CurrentTimeZoneDisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SupportedTimeZoneDisplayNames(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_CanChangeTimeZone(&self, out: *mut bool) -> HRESULT,
@@ -1931,7 +1931,7 @@ impl ITimeZoneSettingsStatics {
     }}
 }
 DEFINE_IID!(IID_ITimeZoneSettingsStatics2, 1432096184, 14760, 18938, 180, 246, 162, 199, 252, 40, 66, 236);
-RT_INTERFACE!{static interface ITimeZoneSettingsStatics2(ITimeZoneSettingsStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ITimeZoneSettingsStatics2] {
+RT_INTERFACE!{static interface ITimeZoneSettingsStatics2(ITimeZoneSettingsStatics2Vtbl): IInspectable [IID_ITimeZoneSettingsStatics2] {
     fn AutoUpdateTimeZoneAsync(&self, timeout: foundation::TimeSpan, out: *mut <foundation::IAsyncOperation<AutoUpdateTimeZoneStatus> as RtType>::Abi) -> HRESULT
 }}
 impl ITimeZoneSettingsStatics2 {
@@ -1942,7 +1942,7 @@ impl ITimeZoneSettingsStatics2 {
     }}
 }
 DEFINE_IID!(IID_IUser, 3751421638, 59206, 19405, 181, 212, 18, 1, 3, 196, 32, 155);
-RT_INTERFACE!{interface IUser(IUserVtbl): IInspectable(IInspectableVtbl) [IID_IUser] {
+RT_INTERFACE!{interface IUser(IUserVtbl): IInspectable [IID_IUser] {
     fn get_NonRoamableId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_AuthenticationStatus(&self, out: *mut UserAuthenticationStatus) -> HRESULT,
     fn get_Type(&self, out: *mut UserType) -> HRESULT,
@@ -2006,7 +2006,7 @@ RT_ENUM! { enum UserAuthenticationStatus: i32 {
     Unauthenticated = 0, LocallyAuthenticated = 1, RemotelyAuthenticated = 2,
 }}
 DEFINE_IID!(IID_IUserAuthenticationStatusChangeDeferral, 2293601640, 47920, 17147, 162, 112, 233, 144, 46, 64, 239, 167);
-RT_INTERFACE!{interface IUserAuthenticationStatusChangeDeferral(IUserAuthenticationStatusChangeDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IUserAuthenticationStatusChangeDeferral] {
+RT_INTERFACE!{interface IUserAuthenticationStatusChangeDeferral(IUserAuthenticationStatusChangeDeferralVtbl): IInspectable [IID_IUserAuthenticationStatusChangeDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl IUserAuthenticationStatusChangeDeferral {
@@ -2017,7 +2017,7 @@ impl IUserAuthenticationStatusChangeDeferral {
 }
 RT_CLASS!{class UserAuthenticationStatusChangeDeferral: IUserAuthenticationStatusChangeDeferral}
 DEFINE_IID!(IID_IUserAuthenticationStatusChangingEventArgs, 2349010728, 42769, 19486, 171, 72, 4, 23, 156, 21, 147, 143);
-RT_INTERFACE!{interface IUserAuthenticationStatusChangingEventArgs(IUserAuthenticationStatusChangingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserAuthenticationStatusChangingEventArgs] {
+RT_INTERFACE!{interface IUserAuthenticationStatusChangingEventArgs(IUserAuthenticationStatusChangingEventArgsVtbl): IInspectable [IID_IUserAuthenticationStatusChangingEventArgs] {
     fn GetDeferral(&self, out: *mut <UserAuthenticationStatusChangeDeferral as RtType>::Abi) -> HRESULT,
     fn get_User(&self, out: *mut <User as RtType>::Abi) -> HRESULT,
     fn get_NewStatus(&self, out: *mut UserAuthenticationStatus) -> HRESULT,
@@ -2047,7 +2047,7 @@ impl IUserAuthenticationStatusChangingEventArgs {
 }
 RT_CLASS!{class UserAuthenticationStatusChangingEventArgs: IUserAuthenticationStatusChangingEventArgs}
 DEFINE_IID!(IID_IUserChangedEventArgs, 140794332, 6342, 18651, 188, 153, 114, 79, 185, 32, 60, 204);
-RT_INTERFACE!{interface IUserChangedEventArgs(IUserChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserChangedEventArgs] {
+RT_INTERFACE!{interface IUserChangedEventArgs(IUserChangedEventArgsVtbl): IInspectable [IID_IUserChangedEventArgs] {
     fn get_User(&self, out: *mut <User as RtType>::Abi) -> HRESULT
 }}
 impl IUserChangedEventArgs {
@@ -2073,7 +2073,7 @@ impl UserDeviceAssociation {
 }
 DEFINE_CLSID!(UserDeviceAssociation(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,68,101,118,105,99,101,65,115,115,111,99,105,97,116,105,111,110,0]) [CLSID_UserDeviceAssociation]);
 DEFINE_IID!(IID_IUserDeviceAssociationChangedEventArgs, 3172953964, 47965, 19835, 165, 240, 200, 205, 17, 163, 141, 66);
-RT_INTERFACE!{interface IUserDeviceAssociationChangedEventArgs(IUserDeviceAssociationChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDeviceAssociationChangedEventArgs] {
+RT_INTERFACE!{interface IUserDeviceAssociationChangedEventArgs(IUserDeviceAssociationChangedEventArgsVtbl): IInspectable [IID_IUserDeviceAssociationChangedEventArgs] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_NewUser(&self, out: *mut <User as RtType>::Abi) -> HRESULT,
     fn get_OldUser(&self, out: *mut <User as RtType>::Abi) -> HRESULT
@@ -2097,7 +2097,7 @@ impl IUserDeviceAssociationChangedEventArgs {
 }
 RT_CLASS!{class UserDeviceAssociationChangedEventArgs: IUserDeviceAssociationChangedEventArgs}
 DEFINE_IID!(IID_IUserDeviceAssociationStatics, 2118721044, 63578, 19463, 141, 169, 127, 227, 208, 84, 35, 67);
-RT_INTERFACE!{static interface IUserDeviceAssociationStatics(IUserDeviceAssociationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserDeviceAssociationStatics] {
+RT_INTERFACE!{static interface IUserDeviceAssociationStatics(IUserDeviceAssociationStaticsVtbl): IInspectable [IID_IUserDeviceAssociationStatics] {
     fn FindUserFromDeviceId(&self, deviceId: HSTRING, out: *mut <User as RtType>::Abi) -> HRESULT,
     fn add_UserDeviceAssociationChanged(&self, handler: <foundation::EventHandler<UserDeviceAssociationChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_UserDeviceAssociationChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
@@ -2119,7 +2119,7 @@ impl IUserDeviceAssociationStatics {
     }}
 }
 DEFINE_IID!(IID_IUserPicker, 2102689800, 61923, 19052, 141, 220, 169, 187, 15, 72, 138, 237);
-RT_INTERFACE!{interface IUserPicker(IUserPickerVtbl): IInspectable(IInspectableVtbl) [IID_IUserPicker] {
+RT_INTERFACE!{interface IUserPicker(IUserPickerVtbl): IInspectable [IID_IUserPicker] {
     fn get_AllowGuestAccounts(&self, out: *mut bool) -> HRESULT,
     fn put_AllowGuestAccounts(&self, value: bool) -> HRESULT,
     fn get_SuggestedSelectedUser(&self, out: *mut <User as RtType>::Abi) -> HRESULT,
@@ -2161,7 +2161,7 @@ impl UserPicker {
 }
 DEFINE_CLSID!(UserPicker(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,105,99,107,101,114,0]) [CLSID_UserPicker]);
 DEFINE_IID!(IID_IUserPickerStatics, 3727855836, 32371, 19958, 161, 174, 77, 126, 202, 130, 180, 13);
-RT_INTERFACE!{static interface IUserPickerStatics(IUserPickerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserPickerStatics] {
+RT_INTERFACE!{static interface IUserPickerStatics(IUserPickerStaticsVtbl): IInspectable [IID_IUserPickerStatics] {
     fn IsSupported(&self, out: *mut bool) -> HRESULT
 }}
 impl IUserPickerStatics {
@@ -2175,7 +2175,7 @@ RT_ENUM! { enum UserPictureSize: i32 {
     Size64x64 = 0, Size208x208 = 1, Size424x424 = 2, Size1080x1080 = 3,
 }}
 DEFINE_IID!(IID_IUserStatics, 358527547, 9258, 17888, 162, 233, 49, 113, 252, 106, 127, 221);
-RT_INTERFACE!{static interface IUserStatics(IUserStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserStatics] {
+RT_INTERFACE!{static interface IUserStatics(IUserStaticsVtbl): IInspectable [IID_IUserStatics] {
     fn CreateWatcher(&self, out: *mut <UserWatcher as RtType>::Abi) -> HRESULT,
     fn FindAllAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<User>> as RtType>::Abi) -> HRESULT,
     fn FindAllAsyncByType(&self, type_: UserType, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<User>> as RtType>::Abi) -> HRESULT,
@@ -2213,7 +2213,7 @@ RT_ENUM! { enum UserType: i32 {
     LocalUser = 0, RemoteUser = 1, LocalGuest = 2, RemoteGuest = 3,
 }}
 DEFINE_IID!(IID_IUserWatcher, 358527547, 9258, 17888, 162, 233, 49, 113, 252, 106, 127, 187);
-RT_INTERFACE!{interface IUserWatcher(IUserWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IUserWatcher] {
+RT_INTERFACE!{interface IUserWatcher(IUserWatcherVtbl): IInspectable [IID_IUserWatcher] {
     fn get_Status(&self, out: *mut UserWatcherStatus) -> HRESULT,
     fn Start(&self) -> HRESULT,
     fn Stop(&self) -> HRESULT,
@@ -2323,7 +2323,7 @@ RT_ENUM! { enum VirtualKeyModifiers: u32 {
 pub mod diagnostics { // Windows.System.Diagnostics
 use crate::prelude::*;
 DEFINE_IID!(IID_IDiagnosticActionResult, 3261440662, 59195, 16535, 178, 143, 52, 66, 240, 61, 216, 49);
-RT_INTERFACE!{interface IDiagnosticActionResult(IDiagnosticActionResultVtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticActionResult] {
+RT_INTERFACE!{interface IDiagnosticActionResult(IDiagnosticActionResultVtbl): IInspectable [IID_IDiagnosticActionResult] {
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_Results(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT
 }}
@@ -2344,7 +2344,7 @@ RT_ENUM! { enum DiagnosticActionState: i32 {
     Initializing = 0, Downloading = 1, VerifyingTrust = 2, Detecting = 3, Resolving = 4, VerifyingResolution = 5,
 }}
 DEFINE_IID!(IID_IDiagnosticInvoker, 410724106, 739, 20358, 132, 252, 253, 216, 146, 181, 148, 15);
-RT_INTERFACE!{interface IDiagnosticInvoker(IDiagnosticInvokerVtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticInvoker] {
+RT_INTERFACE!{interface IDiagnosticInvoker(IDiagnosticInvokerVtbl): IInspectable [IID_IDiagnosticInvoker] {
     #[cfg(feature="windows-data")] fn RunDiagnosticActionAsync(&self, context: <super::super::data::json::JsonObject as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<DiagnosticActionResult, DiagnosticActionState> as RtType>::Abi) -> HRESULT
 }}
 impl IDiagnosticInvoker {
@@ -2369,7 +2369,7 @@ impl DiagnosticInvoker {
 }
 DEFINE_CLSID!(DiagnosticInvoker(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,68,105,97,103,110,111,115,116,105,99,73,110,118,111,107,101,114,0]) [CLSID_DiagnosticInvoker]);
 DEFINE_IID!(IID_IDiagnosticInvoker2, 3820983388, 5466, 19282, 168, 236, 7, 12, 68, 249, 80, 0);
-RT_INTERFACE!{interface IDiagnosticInvoker2(IDiagnosticInvoker2Vtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticInvoker2] {
+RT_INTERFACE!{interface IDiagnosticInvoker2(IDiagnosticInvoker2Vtbl): IInspectable [IID_IDiagnosticInvoker2] {
     fn RunDiagnosticActionFromStringAsync(&self, context: HSTRING, out: *mut <foundation::IAsyncOperationWithProgress<DiagnosticActionResult, DiagnosticActionState> as RtType>::Abi) -> HRESULT
 }}
 impl IDiagnosticInvoker2 {
@@ -2380,7 +2380,7 @@ impl IDiagnosticInvoker2 {
     }}
 }
 DEFINE_IID!(IID_IDiagnosticInvokerStatics, 1559943390, 61788, 17748, 168, 19, 193, 19, 195, 136, 27, 9);
-RT_INTERFACE!{static interface IDiagnosticInvokerStatics(IDiagnosticInvokerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticInvokerStatics] {
+RT_INTERFACE!{static interface IDiagnosticInvokerStatics(IDiagnosticInvokerStaticsVtbl): IInspectable [IID_IDiagnosticInvokerStatics] {
     fn GetDefault(&self, out: *mut <DiagnosticInvoker as RtType>::Abi) -> HRESULT,
     fn GetForUser(&self, user: <super::User as RtType>::Abi, out: *mut <DiagnosticInvoker as RtType>::Abi) -> HRESULT,
     fn get_IsSupported(&self, out: *mut bool) -> HRESULT
@@ -2403,7 +2403,7 @@ impl IDiagnosticInvokerStatics {
     }}
 }
 DEFINE_IID!(IID_IProcessCpuUsage, 196813938, 51391, 16954, 168, 16, 181, 89, 174, 67, 84, 226);
-RT_INTERFACE!{interface IProcessCpuUsage(IProcessCpuUsageVtbl): IInspectable(IInspectableVtbl) [IID_IProcessCpuUsage] {
+RT_INTERFACE!{interface IProcessCpuUsage(IProcessCpuUsageVtbl): IInspectable [IID_IProcessCpuUsage] {
     fn GetReport(&self, out: *mut <ProcessCpuUsageReport as RtType>::Abi) -> HRESULT
 }}
 impl IProcessCpuUsage {
@@ -2415,7 +2415,7 @@ impl IProcessCpuUsage {
 }
 RT_CLASS!{class ProcessCpuUsage: IProcessCpuUsage}
 DEFINE_IID!(IID_IProcessCpuUsageReport, 2322439340, 14727, 20015, 161, 25, 107, 95, 162, 20, 241, 180);
-RT_INTERFACE!{interface IProcessCpuUsageReport(IProcessCpuUsageReportVtbl): IInspectable(IInspectableVtbl) [IID_IProcessCpuUsageReport] {
+RT_INTERFACE!{interface IProcessCpuUsageReport(IProcessCpuUsageReportVtbl): IInspectable [IID_IProcessCpuUsageReport] {
     fn get_KernelTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_UserTime(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
@@ -2433,7 +2433,7 @@ impl IProcessCpuUsageReport {
 }
 RT_CLASS!{class ProcessCpuUsageReport: IProcessCpuUsageReport}
 DEFINE_IID!(IID_IProcessDiagnosticInfo, 3895504971, 12302, 20198, 160, 171, 91, 95, 82, 49, 180, 52);
-RT_INTERFACE!{interface IProcessDiagnosticInfo(IProcessDiagnosticInfoVtbl): IInspectable(IInspectableVtbl) [IID_IProcessDiagnosticInfo] {
+RT_INTERFACE!{interface IProcessDiagnosticInfo(IProcessDiagnosticInfoVtbl): IInspectable [IID_IProcessDiagnosticInfo] {
     fn get_ProcessId(&self, out: *mut u32) -> HRESULT,
     fn get_ExecutableFileName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Parent(&self, out: *mut <ProcessDiagnosticInfo as RtType>::Abi) -> HRESULT,
@@ -2495,7 +2495,7 @@ impl ProcessDiagnosticInfo {
 }
 DEFINE_CLSID!(ProcessDiagnosticInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,80,114,111,99,101,115,115,68,105,97,103,110,111,115,116,105,99,73,110,102,111,0]) [CLSID_ProcessDiagnosticInfo]);
 DEFINE_IID!(IID_IProcessDiagnosticInfo2, 2505624346, 15627, 18924, 171, 112, 79, 122, 17, 40, 5, 222);
-RT_INTERFACE!{interface IProcessDiagnosticInfo2(IProcessDiagnosticInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IProcessDiagnosticInfo2] {
+RT_INTERFACE!{interface IProcessDiagnosticInfo2(IProcessDiagnosticInfo2Vtbl): IInspectable [IID_IProcessDiagnosticInfo2] {
     fn GetAppDiagnosticInfos(&self, out: *mut <foundation::collections::IVector<super::AppDiagnosticInfo> as RtType>::Abi) -> HRESULT,
     fn get_IsPackaged(&self, out: *mut bool) -> HRESULT
 }}
@@ -2512,7 +2512,7 @@ impl IProcessDiagnosticInfo2 {
     }}
 }
 DEFINE_IID!(IID_IProcessDiagnosticInfoStatics, 792834656, 46239, 17036, 170, 14, 132, 116, 79, 73, 202, 149);
-RT_INTERFACE!{static interface IProcessDiagnosticInfoStatics(IProcessDiagnosticInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IProcessDiagnosticInfoStatics] {
+RT_INTERFACE!{static interface IProcessDiagnosticInfoStatics(IProcessDiagnosticInfoStaticsVtbl): IInspectable [IID_IProcessDiagnosticInfoStatics] {
     fn GetForProcesses(&self, out: *mut <foundation::collections::IVectorView<ProcessDiagnosticInfo> as RtType>::Abi) -> HRESULT,
     fn GetForCurrentProcess(&self, out: *mut <ProcessDiagnosticInfo as RtType>::Abi) -> HRESULT
 }}
@@ -2529,7 +2529,7 @@ impl IProcessDiagnosticInfoStatics {
     }}
 }
 DEFINE_IID!(IID_IProcessDiagnosticInfoStatics2, 1250334871, 39065, 19012, 162, 155, 9, 22, 99, 190, 9, 182);
-RT_INTERFACE!{static interface IProcessDiagnosticInfoStatics2(IProcessDiagnosticInfoStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IProcessDiagnosticInfoStatics2] {
+RT_INTERFACE!{static interface IProcessDiagnosticInfoStatics2(IProcessDiagnosticInfoStatics2Vtbl): IInspectable [IID_IProcessDiagnosticInfoStatics2] {
     fn TryGetForProcessId(&self, processId: u32, out: *mut <ProcessDiagnosticInfo as RtType>::Abi) -> HRESULT
 }}
 impl IProcessDiagnosticInfoStatics2 {
@@ -2540,7 +2540,7 @@ impl IProcessDiagnosticInfoStatics2 {
     }}
 }
 DEFINE_IID!(IID_IProcessDiskUsage, 1524075517, 32337, 20051, 191, 170, 90, 110, 225, 170, 187, 248);
-RT_INTERFACE!{interface IProcessDiskUsage(IProcessDiskUsageVtbl): IInspectable(IInspectableVtbl) [IID_IProcessDiskUsage] {
+RT_INTERFACE!{interface IProcessDiskUsage(IProcessDiskUsageVtbl): IInspectable [IID_IProcessDiskUsage] {
     fn GetReport(&self, out: *mut <ProcessDiskUsageReport as RtType>::Abi) -> HRESULT
 }}
 impl IProcessDiskUsage {
@@ -2552,7 +2552,7 @@ impl IProcessDiskUsage {
 }
 RT_CLASS!{class ProcessDiskUsage: IProcessDiskUsage}
 DEFINE_IID!(IID_IProcessDiskUsageReport, 1075193853, 21341, 19487, 129, 184, 218, 84, 225, 190, 99, 94);
-RT_INTERFACE!{interface IProcessDiskUsageReport(IProcessDiskUsageReportVtbl): IInspectable(IInspectableVtbl) [IID_IProcessDiskUsageReport] {
+RT_INTERFACE!{interface IProcessDiskUsageReport(IProcessDiskUsageReportVtbl): IInspectable [IID_IProcessDiskUsageReport] {
     fn get_ReadOperationCount(&self, out: *mut i64) -> HRESULT,
     fn get_WriteOperationCount(&self, out: *mut i64) -> HRESULT,
     fn get_OtherOperationCount(&self, out: *mut i64) -> HRESULT,
@@ -2594,7 +2594,7 @@ impl IProcessDiskUsageReport {
 }
 RT_CLASS!{class ProcessDiskUsageReport: IProcessDiskUsageReport}
 DEFINE_IID!(IID_IProcessMemoryUsage, 4111147675, 33404, 17079, 176, 124, 14, 50, 98, 126, 107, 62);
-RT_INTERFACE!{interface IProcessMemoryUsage(IProcessMemoryUsageVtbl): IInspectable(IInspectableVtbl) [IID_IProcessMemoryUsage] {
+RT_INTERFACE!{interface IProcessMemoryUsage(IProcessMemoryUsageVtbl): IInspectable [IID_IProcessMemoryUsage] {
     fn GetReport(&self, out: *mut <ProcessMemoryUsageReport as RtType>::Abi) -> HRESULT
 }}
 impl IProcessMemoryUsage {
@@ -2606,7 +2606,7 @@ impl IProcessMemoryUsage {
 }
 RT_CLASS!{class ProcessMemoryUsage: IProcessMemoryUsage}
 DEFINE_IID!(IID_IProcessMemoryUsageReport, 3267853498, 6481, 18053, 133, 50, 126, 116, 158, 207, 142, 235);
-RT_INTERFACE!{interface IProcessMemoryUsageReport(IProcessMemoryUsageReportVtbl): IInspectable(IInspectableVtbl) [IID_IProcessMemoryUsageReport] {
+RT_INTERFACE!{interface IProcessMemoryUsageReport(IProcessMemoryUsageReportVtbl): IInspectable [IID_IProcessMemoryUsageReport] {
     fn get_NonPagedPoolSizeInBytes(&self, out: *mut u64) -> HRESULT,
     fn get_PageFaultCount(&self, out: *mut u32) -> HRESULT,
     fn get_PageFileSizeInBytes(&self, out: *mut u64) -> HRESULT,
@@ -2684,7 +2684,7 @@ impl IProcessMemoryUsageReport {
 }
 RT_CLASS!{class ProcessMemoryUsageReport: IProcessMemoryUsageReport}
 DEFINE_IID!(IID_ISystemCpuUsage, 1614263212, 726, 16948, 131, 98, 127, 227, 173, 200, 31, 95);
-RT_INTERFACE!{interface ISystemCpuUsage(ISystemCpuUsageVtbl): IInspectable(IInspectableVtbl) [IID_ISystemCpuUsage] {
+RT_INTERFACE!{interface ISystemCpuUsage(ISystemCpuUsageVtbl): IInspectable [IID_ISystemCpuUsage] {
     fn GetReport(&self, out: *mut <SystemCpuUsageReport as RtType>::Abi) -> HRESULT
 }}
 impl ISystemCpuUsage {
@@ -2696,7 +2696,7 @@ impl ISystemCpuUsage {
 }
 RT_CLASS!{class SystemCpuUsage: ISystemCpuUsage}
 DEFINE_IID!(IID_ISystemCpuUsageReport, 740741298, 38019, 20322, 171, 87, 130, 178, 157, 151, 25, 184);
-RT_INTERFACE!{interface ISystemCpuUsageReport(ISystemCpuUsageReportVtbl): IInspectable(IInspectableVtbl) [IID_ISystemCpuUsageReport] {
+RT_INTERFACE!{interface ISystemCpuUsageReport(ISystemCpuUsageReportVtbl): IInspectable [IID_ISystemCpuUsageReport] {
     fn get_KernelTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_UserTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_IdleTime(&self, out: *mut foundation::TimeSpan) -> HRESULT
@@ -2720,7 +2720,7 @@ impl ISystemCpuUsageReport {
 }
 RT_CLASS!{class SystemCpuUsageReport: ISystemCpuUsageReport}
 DEFINE_IID!(IID_ISystemDiagnosticInfo, 2727411205, 57331, 16511, 154, 27, 11, 43, 49, 124, 168, 0);
-RT_INTERFACE!{interface ISystemDiagnosticInfo(ISystemDiagnosticInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISystemDiagnosticInfo] {
+RT_INTERFACE!{interface ISystemDiagnosticInfo(ISystemDiagnosticInfoVtbl): IInspectable [IID_ISystemDiagnosticInfo] {
     fn get_MemoryUsage(&self, out: *mut <SystemMemoryUsage as RtType>::Abi) -> HRESULT,
     fn get_CpuUsage(&self, out: *mut <SystemCpuUsage as RtType>::Abi) -> HRESULT
 }}
@@ -2745,7 +2745,7 @@ impl SystemDiagnosticInfo {
 }
 DEFINE_CLSID!(SystemDiagnosticInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,83,121,115,116,101,109,68,105,97,103,110,111,115,116,105,99,73,110,102,111,0]) [CLSID_SystemDiagnosticInfo]);
 DEFINE_IID!(IID_ISystemDiagnosticInfoStatics, 3557076001, 64637, 17904, 154, 63, 57, 32, 58, 237, 159, 126);
-RT_INTERFACE!{static interface ISystemDiagnosticInfoStatics(ISystemDiagnosticInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemDiagnosticInfoStatics] {
+RT_INTERFACE!{static interface ISystemDiagnosticInfoStatics(ISystemDiagnosticInfoStaticsVtbl): IInspectable [IID_ISystemDiagnosticInfoStatics] {
     fn GetForCurrentSystem(&self, out: *mut <SystemDiagnosticInfo as RtType>::Abi) -> HRESULT
 }}
 impl ISystemDiagnosticInfoStatics {
@@ -2756,7 +2756,7 @@ impl ISystemDiagnosticInfoStatics {
     }}
 }
 DEFINE_IID!(IID_ISystemMemoryUsage, 402638229, 5890, 18895, 170, 39, 47, 10, 50, 89, 20, 4);
-RT_INTERFACE!{interface ISystemMemoryUsage(ISystemMemoryUsageVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMemoryUsage] {
+RT_INTERFACE!{interface ISystemMemoryUsage(ISystemMemoryUsageVtbl): IInspectable [IID_ISystemMemoryUsage] {
     fn GetReport(&self, out: *mut <SystemMemoryUsageReport as RtType>::Abi) -> HRESULT
 }}
 impl ISystemMemoryUsage {
@@ -2768,7 +2768,7 @@ impl ISystemMemoryUsage {
 }
 RT_CLASS!{class SystemMemoryUsage: ISystemMemoryUsage}
 DEFINE_IID!(IID_ISystemMemoryUsageReport, 946224263, 10911, 16442, 189, 25, 44, 243, 232, 22, 149, 0);
-RT_INTERFACE!{interface ISystemMemoryUsageReport(ISystemMemoryUsageReportVtbl): IInspectable(IInspectableVtbl) [IID_ISystemMemoryUsageReport] {
+RT_INTERFACE!{interface ISystemMemoryUsageReport(ISystemMemoryUsageReportVtbl): IInspectable [IID_ISystemMemoryUsageReport] {
     fn get_TotalPhysicalSizeInBytes(&self, out: *mut u64) -> HRESULT,
     fn get_AvailableSizeInBytes(&self, out: *mut u64) -> HRESULT,
     fn get_CommittedSizeInBytes(&self, out: *mut u64) -> HRESULT
@@ -2794,7 +2794,7 @@ RT_CLASS!{class SystemMemoryUsageReport: ISystemMemoryUsageReport}
 pub mod deviceportal { // Windows.System.Diagnostics.DevicePortal
 use crate::prelude::*;
 DEFINE_IID!(IID_IDevicePortalConnection, 256147281, 4504, 19873, 141, 84, 189, 239, 57, 62, 9, 182);
-RT_INTERFACE!{interface IDevicePortalConnection(IDevicePortalConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalConnection] {
+RT_INTERFACE!{interface IDevicePortalConnection(IDevicePortalConnectionVtbl): IInspectable [IID_IDevicePortalConnection] {
     fn add_Closed(&self, handler: <foundation::TypedEventHandler<DevicePortalConnection, DevicePortalConnectionClosedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Closed(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_RequestReceived(&self, handler: <foundation::TypedEventHandler<DevicePortalConnection, DevicePortalConnectionRequestReceivedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -2829,7 +2829,7 @@ impl DevicePortalConnection {
 }
 DEFINE_CLSID!(DevicePortalConnection(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,68,101,118,105,99,101,80,111,114,116,97,108,46,68,101,118,105,99,101,80,111,114,116,97,108,67,111,110,110,101,99,116,105,111,110,0]) [CLSID_DevicePortalConnection]);
 DEFINE_IID!(IID_IDevicePortalConnectionClosedEventArgs, 4244049464, 28722, 17036, 159, 80, 148, 92, 21, 169, 240, 203);
-RT_INTERFACE!{interface IDevicePortalConnectionClosedEventArgs(IDevicePortalConnectionClosedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalConnectionClosedEventArgs] {
+RT_INTERFACE!{interface IDevicePortalConnectionClosedEventArgs(IDevicePortalConnectionClosedEventArgsVtbl): IInspectable [IID_IDevicePortalConnectionClosedEventArgs] {
     fn get_Reason(&self, out: *mut DevicePortalConnectionClosedReason) -> HRESULT
 }}
 impl IDevicePortalConnectionClosedEventArgs {
@@ -2844,7 +2844,7 @@ RT_ENUM! { enum DevicePortalConnectionClosedReason: i32 {
     Unknown = 0, ResourceLimitsExceeded = 1, ProtocolError = 2, NotAuthorized = 3, UserNotPresent = 4, ServiceTerminated = 5,
 }}
 DEFINE_IID!(IID_IDevicePortalConnectionRequestReceivedEventArgs, 1692065861, 28634, 17497, 158, 189, 236, 206, 34, 227, 133, 89);
-RT_INTERFACE!{interface IDevicePortalConnectionRequestReceivedEventArgs(IDevicePortalConnectionRequestReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalConnectionRequestReceivedEventArgs] {
+RT_INTERFACE!{interface IDevicePortalConnectionRequestReceivedEventArgs(IDevicePortalConnectionRequestReceivedEventArgsVtbl): IInspectable [IID_IDevicePortalConnectionRequestReceivedEventArgs] {
     #[cfg(feature="windows-web")] fn get_RequestMessage(&self, out: *mut <crate::windows::web::http::HttpRequestMessage as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-web")] fn get_ResponseMessage(&self, out: *mut <crate::windows::web::http::HttpResponseMessage as RtType>::Abi) -> HRESULT
 }}
@@ -2862,7 +2862,7 @@ impl IDevicePortalConnectionRequestReceivedEventArgs {
 }
 RT_CLASS!{class DevicePortalConnectionRequestReceivedEventArgs: IDevicePortalConnectionRequestReceivedEventArgs}
 DEFINE_IID!(IID_IDevicePortalConnectionStatics, 1270755815, 59833, 17989, 143, 237, 165, 62, 234, 14, 219, 214);
-RT_INTERFACE!{static interface IDevicePortalConnectionStatics(IDevicePortalConnectionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalConnectionStatics] {
+RT_INTERFACE!{static interface IDevicePortalConnectionStatics(IDevicePortalConnectionStaticsVtbl): IInspectable [IID_IDevicePortalConnectionStatics] {
     #[cfg(feature="windows-applicationmodel")] fn GetForAppServiceConnection(&self, appServiceConnection: <crate::windows::applicationmodel::appservice::AppServiceConnection as RtType>::Abi, out: *mut <DevicePortalConnection as RtType>::Abi) -> HRESULT
 }}
 impl IDevicePortalConnectionStatics {
@@ -2873,7 +2873,7 @@ impl IDevicePortalConnectionStatics {
     }}
 }
 DEFINE_IID!(IID_IDevicePortalWebSocketConnection, 1734703392, 54874, 17136, 174, 244, 120, 120, 8, 9, 139, 123);
-RT_INTERFACE!{interface IDevicePortalWebSocketConnection(IDevicePortalWebSocketConnectionVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalWebSocketConnection] {
+RT_INTERFACE!{interface IDevicePortalWebSocketConnection(IDevicePortalWebSocketConnectionVtbl): IInspectable [IID_IDevicePortalWebSocketConnection] {
     #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest(&self, request: <crate::windows::web::http::HttpRequestMessage as RtType>::Abi, out: *mut <crate::windows::networking::sockets::ServerMessageWebSocket as RtType>::Abi) -> HRESULT,
     #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest2(&self, request: <crate::windows::web::http::HttpRequestMessage as RtType>::Abi, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: HSTRING, out: *mut <crate::windows::networking::sockets::ServerMessageWebSocket as RtType>::Abi) -> HRESULT,
     #[cfg(all(feature="windows-networking",feature="windows-web"))] fn GetServerMessageWebSocketForRequest3(&self, request: <crate::windows::web::http::HttpRequestMessage as RtType>::Abi, messageType: crate::windows::networking::sockets::SocketMessageType, protocol: HSTRING, outboundBufferSizeInBytes: u32, maxMessageSize: u32, receiveMode: crate::windows::networking::sockets::MessageWebSocketReceiveMode, out: *mut <crate::windows::networking::sockets::ServerMessageWebSocket as RtType>::Abi) -> HRESULT,
@@ -2908,7 +2908,7 @@ impl IDevicePortalWebSocketConnection {
     }}
 }
 DEFINE_IID!(IID_IDevicePortalWebSocketConnectionRequestReceivedEventArgs, 2046675642, 5980, 18233, 159, 116, 221, 167, 151, 195, 91, 63);
-RT_INTERFACE!{interface IDevicePortalWebSocketConnectionRequestReceivedEventArgs(IDevicePortalWebSocketConnectionRequestReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDevicePortalWebSocketConnectionRequestReceivedEventArgs] {
+RT_INTERFACE!{interface IDevicePortalWebSocketConnectionRequestReceivedEventArgs(IDevicePortalWebSocketConnectionRequestReceivedEventArgsVtbl): IInspectable [IID_IDevicePortalWebSocketConnectionRequestReceivedEventArgs] {
     fn get_IsWebSocketUpgradeRequest(&self, out: *mut bool) -> HRESULT,
     fn get_WebSocketProtocolsRequested(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -2945,7 +2945,7 @@ impl PlatformTelemetryClient {
 }
 DEFINE_CLSID!(PlatformTelemetryClient(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,84,101,108,101,109,101,116,114,121,46,80,108,97,116,102,111,114,109,84,101,108,101,109,101,116,114,121,67,108,105,101,110,116,0]) [CLSID_PlatformTelemetryClient]);
 DEFINE_IID!(IID_IPlatformTelemetryClientStatics, 2616455773, 54723, 20202, 141, 190, 156, 141, 187, 13, 157, 143);
-RT_INTERFACE!{static interface IPlatformTelemetryClientStatics(IPlatformTelemetryClientStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformTelemetryClientStatics] {
+RT_INTERFACE!{static interface IPlatformTelemetryClientStatics(IPlatformTelemetryClientStaticsVtbl): IInspectable [IID_IPlatformTelemetryClientStatics] {
     fn Register(&self, id: HSTRING, out: *mut <PlatformTelemetryRegistrationResult as RtType>::Abi) -> HRESULT,
     fn RegisterWithSettings(&self, id: HSTRING, settings: <PlatformTelemetryRegistrationSettings as RtType>::Abi, out: *mut <PlatformTelemetryRegistrationResult as RtType>::Abi) -> HRESULT
 }}
@@ -2962,7 +2962,7 @@ impl IPlatformTelemetryClientStatics {
     }}
 }
 DEFINE_IID!(IID_IPlatformTelemetryRegistrationResult, 1300568235, 8850, 18877, 161, 90, 61, 113, 210, 20, 81, 18);
-RT_INTERFACE!{interface IPlatformTelemetryRegistrationResult(IPlatformTelemetryRegistrationResultVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformTelemetryRegistrationResult] {
+RT_INTERFACE!{interface IPlatformTelemetryRegistrationResult(IPlatformTelemetryRegistrationResultVtbl): IInspectable [IID_IPlatformTelemetryRegistrationResult] {
     fn get_Status(&self, out: *mut PlatformTelemetryRegistrationStatus) -> HRESULT
 }}
 impl IPlatformTelemetryRegistrationResult {
@@ -2974,7 +2974,7 @@ impl IPlatformTelemetryRegistrationResult {
 }
 RT_CLASS!{class PlatformTelemetryRegistrationResult: IPlatformTelemetryRegistrationResult}
 DEFINE_IID!(IID_IPlatformTelemetryRegistrationSettings, 2174387586, 51737, 16734, 187, 121, 156, 34, 75, 250, 58, 115);
-RT_INTERFACE!{interface IPlatformTelemetryRegistrationSettings(IPlatformTelemetryRegistrationSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformTelemetryRegistrationSettings] {
+RT_INTERFACE!{interface IPlatformTelemetryRegistrationSettings(IPlatformTelemetryRegistrationSettingsVtbl): IInspectable [IID_IPlatformTelemetryRegistrationSettings] {
     fn get_StorageSize(&self, out: *mut u32) -> HRESULT,
     fn put_StorageSize(&self, value: u32) -> HRESULT,
     fn get_UploadQuotaSize(&self, out: *mut u32) -> HRESULT,
@@ -3039,7 +3039,7 @@ impl PlatformDiagnosticActions {
 }
 DEFINE_CLSID!(PlatformDiagnosticActions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,68,105,97,103,110,111,115,116,105,99,115,46,84,114,97,99,101,82,101,112,111,114,116,105,110,103,46,80,108,97,116,102,111,114,109,68,105,97,103,110,111,115,116,105,99,65,99,116,105,111,110,115,0]) [CLSID_PlatformDiagnosticActions]);
 DEFINE_IID!(IID_IPlatformDiagnosticActionsStatics, 3239337210, 37522, 16999, 137, 10, 158, 163, 237, 7, 35, 18);
-RT_INTERFACE!{static interface IPlatformDiagnosticActionsStatics(IPlatformDiagnosticActionsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformDiagnosticActionsStatics] {
+RT_INTERFACE!{static interface IPlatformDiagnosticActionsStatics(IPlatformDiagnosticActionsStaticsVtbl): IInspectable [IID_IPlatformDiagnosticActionsStatics] {
     fn IsScenarioEnabled(&self, scenarioId: Guid, out: *mut bool) -> HRESULT,
     fn TryEscalateScenario(&self, scenarioId: Guid, escalationType: PlatformDiagnosticEscalationType, outputDirectory: HSTRING, timestampOutputDirectory: bool, forceEscalationUpload: bool, triggers: <foundation::collections::IMapView<HString, HString> as RtType>::Abi, out: *mut bool) -> HRESULT,
     fn DownloadLatestSettingsForNamespace(&self, partner: HSTRING, feature: HSTRING, isScenarioNamespace: bool, downloadOverCostedNetwork: bool, downloadOverBattery: bool, out: *mut PlatformDiagnosticActionState) -> HRESULT,
@@ -3101,7 +3101,7 @@ RT_ENUM! { enum PlatformDiagnosticEventBufferLatencies: u32 {
     Normal = 1, CostDeferred = 2, Realtime = 4,
 }}
 DEFINE_IID!(IID_IPlatformDiagnosticTraceInfo, 4168150423, 54679, 19447, 136, 220, 207, 92, 125, 194, 161, 210);
-RT_INTERFACE!{interface IPlatformDiagnosticTraceInfo(IPlatformDiagnosticTraceInfoVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformDiagnosticTraceInfo] {
+RT_INTERFACE!{interface IPlatformDiagnosticTraceInfo(IPlatformDiagnosticTraceInfoVtbl): IInspectable [IID_IPlatformDiagnosticTraceInfo] {
     fn get_ScenarioId(&self, out: *mut Guid) -> HRESULT,
     fn get_ProfileHash(&self, out: *mut u64) -> HRESULT,
     fn get_IsExclusive(&self, out: *mut bool) -> HRESULT,
@@ -3146,7 +3146,7 @@ RT_ENUM! { enum PlatformDiagnosticTracePriority: i32 {
     Normal = 0, UserElevated = 1,
 }}
 DEFINE_IID!(IID_IPlatformDiagnosticTraceRuntimeInfo, 1028480557, 472, 18280, 133, 84, 30, 177, 202, 97, 9, 134);
-RT_INTERFACE!{interface IPlatformDiagnosticTraceRuntimeInfo(IPlatformDiagnosticTraceRuntimeInfoVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformDiagnosticTraceRuntimeInfo] {
+RT_INTERFACE!{interface IPlatformDiagnosticTraceRuntimeInfo(IPlatformDiagnosticTraceRuntimeInfoVtbl): IInspectable [IID_IPlatformDiagnosticTraceRuntimeInfo] {
     fn get_RuntimeFileTime(&self, out: *mut i64) -> HRESULT,
     fn get_EtwRuntimeFileTime(&self, out: *mut i64) -> HRESULT
 }}
@@ -3174,7 +3174,7 @@ RT_ENUM! { enum PlatformDiagnosticTraceSlotType: i32 {
 pub mod display { // Windows.System.Display
 use crate::prelude::*;
 DEFINE_IID!(IID_IDisplayRequest, 3849527364, 62623, 19296, 141, 212, 94, 126, 58, 99, 42, 192);
-RT_INTERFACE!{interface IDisplayRequest(IDisplayRequestVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayRequest] {
+RT_INTERFACE!{interface IDisplayRequest(IDisplayRequestVtbl): IInspectable [IID_IDisplayRequest] {
     fn RequestActive(&self) -> HRESULT,
     fn RequestRelease(&self) -> HRESULT
 }}
@@ -3195,7 +3195,7 @@ DEFINE_CLSID!(DisplayRequest(&[87,105,110,100,111,119,115,46,83,121,115,116,101,
 pub mod inventory { // Windows.System.Inventory
 use crate::prelude::*;
 DEFINE_IID!(IID_IInstalledDesktopApp, 1978317037, 49340, 21348, 76, 40, 22, 110, 5, 69, 22, 122);
-RT_INTERFACE!{interface IInstalledDesktopApp(IInstalledDesktopAppVtbl): IInspectable(IInspectableVtbl) [IID_IInstalledDesktopApp] {
+RT_INTERFACE!{interface IInstalledDesktopApp(IInstalledDesktopAppVtbl): IInspectable [IID_IInstalledDesktopApp] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Publisher(&self, out: *mut HSTRING) -> HRESULT,
@@ -3232,7 +3232,7 @@ impl InstalledDesktopApp {
 }
 DEFINE_CLSID!(InstalledDesktopApp(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,73,110,118,101,110,116,111,114,121,46,73,110,115,116,97,108,108,101,100,68,101,115,107,116,111,112,65,112,112,0]) [CLSID_InstalledDesktopApp]);
 DEFINE_IID!(IID_IInstalledDesktopAppStatics, 642578254, 8653, 24475, 96, 86, 120, 102, 173, 114, 72, 154);
-RT_INTERFACE!{static interface IInstalledDesktopAppStatics(IInstalledDesktopAppStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInstalledDesktopAppStatics] {
+RT_INTERFACE!{static interface IInstalledDesktopAppStatics(IInstalledDesktopAppStaticsVtbl): IInspectable [IID_IInstalledDesktopAppStatics] {
     fn GetInventoryAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<InstalledDesktopApp>> as RtType>::Abi) -> HRESULT
 }}
 impl IInstalledDesktopAppStatics {
@@ -3287,7 +3287,7 @@ impl BackgroundEnergyManager {
 }
 DEFINE_CLSID!(BackgroundEnergyManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,66,97,99,107,103,114,111,117,110,100,69,110,101,114,103,121,77,97,110,97,103,101,114,0]) [CLSID_BackgroundEnergyManager]);
 DEFINE_IID!(IID_IBackgroundEnergyManagerStatics, 3004571029, 4480, 17270, 150, 225, 64, 149, 86, 129, 71, 206);
-RT_INTERFACE!{static interface IBackgroundEnergyManagerStatics(IBackgroundEnergyManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundEnergyManagerStatics] {
+RT_INTERFACE!{static interface IBackgroundEnergyManagerStatics(IBackgroundEnergyManagerStaticsVtbl): IInspectable [IID_IBackgroundEnergyManagerStatics] {
     fn get_LowUsageLevel(&self, out: *mut u32) -> HRESULT,
     fn get_NearMaxAcceptableUsageLevel(&self, out: *mut u32) -> HRESULT,
     fn get_MaxAcceptableUsageLevel(&self, out: *mut u32) -> HRESULT,
@@ -3403,7 +3403,7 @@ impl ForegroundEnergyManager {
 }
 DEFINE_CLSID!(ForegroundEnergyManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,70,111,114,101,103,114,111,117,110,100,69,110,101,114,103,121,77,97,110,97,103,101,114,0]) [CLSID_ForegroundEnergyManager]);
 DEFINE_IID!(IID_IForegroundEnergyManagerStatics, 2683857010, 58999, 18452, 154, 32, 83, 55, 202, 115, 43, 152);
-RT_INTERFACE!{static interface IForegroundEnergyManagerStatics(IForegroundEnergyManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IForegroundEnergyManagerStatics] {
+RT_INTERFACE!{static interface IForegroundEnergyManagerStatics(IForegroundEnergyManagerStaticsVtbl): IInspectable [IID_IForegroundEnergyManagerStatics] {
     fn get_LowUsageLevel(&self, out: *mut u32) -> HRESULT,
     fn get_NearMaxAcceptableUsageLevel(&self, out: *mut u32) -> HRESULT,
     fn get_MaxAcceptableUsageLevel(&self, out: *mut u32) -> HRESULT,
@@ -3516,7 +3516,7 @@ impl PowerManager {
 }
 DEFINE_CLSID!(PowerManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,80,111,119,101,114,77,97,110,97,103,101,114,0]) [CLSID_PowerManager]);
 DEFINE_IID!(IID_IPowerManagerStatics, 328499805, 25294, 17252, 152, 213, 170, 40, 199, 251, 209, 91);
-RT_INTERFACE!{static interface IPowerManagerStatics(IPowerManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPowerManagerStatics] {
+RT_INTERFACE!{static interface IPowerManagerStatics(IPowerManagerStaticsVtbl): IInspectable [IID_IPowerManagerStatics] {
     fn get_EnergySaverStatus(&self, out: *mut EnergySaverStatus) -> HRESULT,
     fn add_EnergySaverStatusChanged(&self, handler: <foundation::EventHandler<IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_EnergySaverStatusChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
@@ -3625,7 +3625,7 @@ impl BackgroundEnergyDiagnostics {
 }
 DEFINE_CLSID!(BackgroundEnergyDiagnostics(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,68,105,97,103,110,111,115,116,105,99,115,46,66,97,99,107,103,114,111,117,110,100,69,110,101,114,103,121,68,105,97,103,110,111,115,116,105,99,115,0]) [CLSID_BackgroundEnergyDiagnostics]);
 DEFINE_IID!(IID_IBackgroundEnergyDiagnosticsStatics, 3613800194, 54182, 18144, 143, 155, 80, 185, 91, 180, 249, 197);
-RT_INTERFACE!{static interface IBackgroundEnergyDiagnosticsStatics(IBackgroundEnergyDiagnosticsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundEnergyDiagnosticsStatics] {
+RT_INTERFACE!{static interface IBackgroundEnergyDiagnosticsStatics(IBackgroundEnergyDiagnosticsStaticsVtbl): IInspectable [IID_IBackgroundEnergyDiagnosticsStatics] {
     fn get_DeviceSpecificConversionFactor(&self, out: *mut f64) -> HRESULT,
     fn ComputeTotalEnergyUsage(&self, out: *mut u64) -> HRESULT,
     fn ResetTotalEnergyUsage(&self) -> HRESULT
@@ -3661,7 +3661,7 @@ impl ForegroundEnergyDiagnostics {
 }
 DEFINE_CLSID!(ForegroundEnergyDiagnostics(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,111,119,101,114,46,68,105,97,103,110,111,115,116,105,99,115,46,70,111,114,101,103,114,111,117,110,100,69,110,101,114,103,121,68,105,97,103,110,111,115,116,105,99,115,0]) [CLSID_ForegroundEnergyDiagnostics]);
 DEFINE_IID!(IID_IForegroundEnergyDiagnosticsStatics, 600443159, 52487, 17929, 190, 21, 143, 232, 148, 197, 228, 30);
-RT_INTERFACE!{static interface IForegroundEnergyDiagnosticsStatics(IForegroundEnergyDiagnosticsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IForegroundEnergyDiagnosticsStatics] {
+RT_INTERFACE!{static interface IForegroundEnergyDiagnosticsStatics(IForegroundEnergyDiagnosticsStaticsVtbl): IInspectable [IID_IForegroundEnergyDiagnosticsStatics] {
     fn get_DeviceSpecificConversionFactor(&self, out: *mut f64) -> HRESULT,
     fn ComputeTotalEnergyUsage(&self, out: *mut u64) -> HRESULT,
     fn ResetTotalEnergyUsage(&self) -> HRESULT
@@ -3690,7 +3690,7 @@ RT_ENUM! { enum HingeState: i32 {
     Unknown = 0, Closed = 1, Concave = 2, Flat = 3, Convex = 4, Full = 5,
 }}
 DEFINE_IID!(IID_ITwoPanelHingedDevicePosturePreview, 1914985521, 19257, 17062, 142, 115, 114, 53, 173, 225, 104, 83);
-RT_INTERFACE!{interface ITwoPanelHingedDevicePosturePreview(ITwoPanelHingedDevicePosturePreviewVtbl): IInspectable(IInspectableVtbl) [IID_ITwoPanelHingedDevicePosturePreview] {
+RT_INTERFACE!{interface ITwoPanelHingedDevicePosturePreview(ITwoPanelHingedDevicePosturePreviewVtbl): IInspectable [IID_ITwoPanelHingedDevicePosturePreview] {
     fn GetCurrentPostureAsync(&self, out: *mut <foundation::IAsyncOperation<TwoPanelHingedDevicePosturePreviewReading> as RtType>::Abi) -> HRESULT,
     fn add_PostureChanged(&self, handler: <foundation::TypedEventHandler<TwoPanelHingedDevicePosturePreview, TwoPanelHingedDevicePosturePreviewReadingChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PostureChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
@@ -3720,7 +3720,7 @@ impl TwoPanelHingedDevicePosturePreview {
 }
 DEFINE_CLSID!(TwoPanelHingedDevicePosturePreview(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,101,118,105,101,119,46,84,119,111,80,97,110,101,108,72,105,110,103,101,100,68,101,118,105,99,101,80,111,115,116,117,114,101,80,114,101,118,105,101,119,0]) [CLSID_TwoPanelHingedDevicePosturePreview]);
 DEFINE_IID!(IID_ITwoPanelHingedDevicePosturePreviewReading, 2686784594, 19158, 19256, 132, 38, 197, 154, 21, 73, 58, 125);
-RT_INTERFACE!{interface ITwoPanelHingedDevicePosturePreviewReading(ITwoPanelHingedDevicePosturePreviewReadingVtbl): IInspectable(IInspectableVtbl) [IID_ITwoPanelHingedDevicePosturePreviewReading] {
+RT_INTERFACE!{interface ITwoPanelHingedDevicePosturePreviewReading(ITwoPanelHingedDevicePosturePreviewReadingVtbl): IInspectable [IID_ITwoPanelHingedDevicePosturePreviewReading] {
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_HingeState(&self, out: *mut HingeState) -> HRESULT,
     #[cfg(not(feature="windows-devices"))] fn __Dummy2(&self) -> (),
@@ -3764,7 +3764,7 @@ impl ITwoPanelHingedDevicePosturePreviewReading {
 }
 RT_CLASS!{class TwoPanelHingedDevicePosturePreviewReading: ITwoPanelHingedDevicePosturePreviewReading}
 DEFINE_IID!(IID_ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs, 757930950, 718, 18250, 165, 86, 167, 91, 28, 249, 58, 3);
-RT_INTERFACE!{interface ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs(ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs] {
+RT_INTERFACE!{interface ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs(ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgsVtbl): IInspectable [IID_ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs] {
     fn get_Reading(&self, out: *mut <TwoPanelHingedDevicePosturePreviewReading as RtType>::Abi) -> HRESULT
 }}
 impl ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs {
@@ -3776,7 +3776,7 @@ impl ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs {
 }
 RT_CLASS!{class TwoPanelHingedDevicePosturePreviewReadingChangedEventArgs: ITwoPanelHingedDevicePosturePreviewReadingChangedEventArgs}
 DEFINE_IID!(IID_ITwoPanelHingedDevicePosturePreviewStatics, 205992914, 22496, 16768, 189, 94, 243, 26, 33, 56, 66, 62);
-RT_INTERFACE!{static interface ITwoPanelHingedDevicePosturePreviewStatics(ITwoPanelHingedDevicePosturePreviewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ITwoPanelHingedDevicePosturePreviewStatics] {
+RT_INTERFACE!{static interface ITwoPanelHingedDevicePosturePreviewStatics(ITwoPanelHingedDevicePosturePreviewStaticsVtbl): IInspectable [IID_ITwoPanelHingedDevicePosturePreviewStatics] {
     fn GetDefaultAsync(&self, out: *mut <foundation::IAsyncOperation<TwoPanelHingedDevicePosturePreview> as RtType>::Abi) -> HRESULT
 }}
 impl ITwoPanelHingedDevicePosturePreviewStatics {
@@ -3805,7 +3805,7 @@ impl AnalyticsInfo {
 }
 DEFINE_CLSID!(AnalyticsInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,65,110,97,108,121,116,105,99,115,73,110,102,111,0]) [CLSID_AnalyticsInfo]);
 DEFINE_IID!(IID_IAnalyticsInfoStatics, 492757094, 6285, 23465, 67, 135, 172, 174, 176, 231, 227, 5);
-RT_INTERFACE!{static interface IAnalyticsInfoStatics(IAnalyticsInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAnalyticsInfoStatics] {
+RT_INTERFACE!{static interface IAnalyticsInfoStatics(IAnalyticsInfoStaticsVtbl): IInspectable [IID_IAnalyticsInfoStatics] {
     fn get_VersionInfo(&self, out: *mut <AnalyticsVersionInfo as RtType>::Abi) -> HRESULT,
     fn get_DeviceForm(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -3822,7 +3822,7 @@ impl IAnalyticsInfoStatics {
     }}
 }
 DEFINE_IID!(IID_IAnalyticsInfoStatics2, 269944042, 43001, 18130, 171, 148, 1, 104, 101, 175, 219, 37);
-RT_INTERFACE!{static interface IAnalyticsInfoStatics2(IAnalyticsInfoStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IAnalyticsInfoStatics2] {
+RT_INTERFACE!{static interface IAnalyticsInfoStatics2(IAnalyticsInfoStatics2Vtbl): IInspectable [IID_IAnalyticsInfoStatics2] {
     fn GetSystemPropertiesAsync(&self, attributeNames: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IMapView<HString, HString>> as RtType>::Abi) -> HRESULT
 }}
 impl IAnalyticsInfoStatics2 {
@@ -3833,7 +3833,7 @@ impl IAnalyticsInfoStatics2 {
     }}
 }
 DEFINE_IID!(IID_IAnalyticsVersionInfo, 2455843000, 39253, 19572, 189, 193, 124, 208, 222, 207, 155, 3);
-RT_INTERFACE!{interface IAnalyticsVersionInfo(IAnalyticsVersionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAnalyticsVersionInfo] {
+RT_INTERFACE!{interface IAnalyticsVersionInfo(IAnalyticsVersionInfoVtbl): IInspectable [IID_IAnalyticsVersionInfo] {
     fn get_DeviceFamily(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DeviceFamilyVersion(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -3859,7 +3859,7 @@ impl EducationSettings {
 }
 DEFINE_CLSID!(EducationSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,69,100,117,99,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_EducationSettings]);
 DEFINE_IID!(IID_IEducationSettingsStatics, 4233359599, 19774, 19987, 155, 35, 80, 95, 77, 9, 30, 146);
-RT_INTERFACE!{static interface IEducationSettingsStatics(IEducationSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IEducationSettingsStatics] {
+RT_INTERFACE!{static interface IEducationSettingsStatics(IEducationSettingsStaticsVtbl): IInspectable [IID_IEducationSettingsStatics] {
     fn get_IsEducationEnvironment(&self, out: *mut bool) -> HRESULT
 }}
 impl IEducationSettingsStatics {
@@ -3878,7 +3878,7 @@ impl HardwareIdentification {
 }
 DEFINE_CLSID!(HardwareIdentification(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,72,97,114,100,119,97,114,101,73,100,101,110,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_HardwareIdentification]);
 DEFINE_IID!(IID_IHardwareIdentificationStatics, 2534564064, 61808, 19010, 189, 85, 169, 0, 178, 18, 218, 226);
-RT_INTERFACE!{static interface IHardwareIdentificationStatics(IHardwareIdentificationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHardwareIdentificationStatics] {
+RT_INTERFACE!{static interface IHardwareIdentificationStatics(IHardwareIdentificationStaticsVtbl): IInspectable [IID_IHardwareIdentificationStatics] {
     #[cfg(feature="windows-storage")] fn GetPackageSpecificToken(&self, nonce: <super::super::storage::streams::IBuffer as RtType>::Abi, out: *mut <HardwareToken as RtType>::Abi) -> HRESULT
 }}
 impl IHardwareIdentificationStatics {
@@ -3889,7 +3889,7 @@ impl IHardwareIdentificationStatics {
     }}
 }
 DEFINE_IID!(IID_IHardwareToken, 687264960, 64274, 16548, 129, 103, 127, 78, 3, 210, 114, 76);
-RT_INTERFACE!{interface IHardwareToken(IHardwareTokenVtbl): IInspectable(IInspectableVtbl) [IID_IHardwareToken] {
+RT_INTERFACE!{interface IHardwareToken(IHardwareTokenVtbl): IInspectable [IID_IHardwareToken] {
     #[cfg(feature="windows-storage")] fn get_Id(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_Signature(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_Certificate(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
@@ -3984,7 +3984,7 @@ impl KnownRetailInfoProperties {
 }
 DEFINE_CLSID!(KnownRetailInfoProperties(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,75,110,111,119,110,82,101,116,97,105,108,73,110,102,111,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_KnownRetailInfoProperties]);
 DEFINE_IID!(IID_IKnownRetailInfoPropertiesStatics, 2572620152, 20495, 18558, 142, 117, 41, 229, 81, 114, 135, 18);
-RT_INTERFACE!{static interface IKnownRetailInfoPropertiesStatics(IKnownRetailInfoPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownRetailInfoPropertiesStatics] {
+RT_INTERFACE!{static interface IKnownRetailInfoPropertiesStatics(IKnownRetailInfoPropertiesStaticsVtbl): IInspectable [IID_IKnownRetailInfoPropertiesStatics] {
     fn get_RetailAccessCode(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ManufacturerName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ModelName(&self, out: *mut HSTRING) -> HRESULT,
@@ -4141,7 +4141,7 @@ impl PlatformDiagnosticsAndUsageDataSettings {
 }
 DEFINE_CLSID!(PlatformDiagnosticsAndUsageDataSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,80,108,97,116,102,111,114,109,68,105,97,103,110,111,115,116,105,99,115,65,110,100,85,115,97,103,101,68,97,116,97,83,101,116,116,105,110,103,115,0]) [CLSID_PlatformDiagnosticsAndUsageDataSettings]);
 DEFINE_IID!(IID_IPlatformDiagnosticsAndUsageDataSettingsStatics, 3068283931, 31516, 19250, 140, 98, 166, 101, 151, 206, 114, 58);
-RT_INTERFACE!{static interface IPlatformDiagnosticsAndUsageDataSettingsStatics(IPlatformDiagnosticsAndUsageDataSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPlatformDiagnosticsAndUsageDataSettingsStatics] {
+RT_INTERFACE!{static interface IPlatformDiagnosticsAndUsageDataSettingsStatics(IPlatformDiagnosticsAndUsageDataSettingsStaticsVtbl): IInspectable [IID_IPlatformDiagnosticsAndUsageDataSettingsStatics] {
     fn get_CollectionLevel(&self, out: *mut PlatformDataCollectionLevel) -> HRESULT,
     fn add_CollectionLevelChanged(&self, handler: <foundation::EventHandler<IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_CollectionLevelChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
@@ -4180,7 +4180,7 @@ impl RetailInfo {
 }
 DEFINE_CLSID!(RetailInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,82,101,116,97,105,108,73,110,102,111,0]) [CLSID_RetailInfo]);
 DEFINE_IID!(IID_IRetailInfoStatics, 118671032, 35730, 20266, 132, 153, 3, 31, 23, 152, 214, 239);
-RT_INTERFACE!{static interface IRetailInfoStatics(IRetailInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRetailInfoStatics] {
+RT_INTERFACE!{static interface IRetailInfoStatics(IRetailInfoStaticsVtbl): IInspectable [IID_IRetailInfoStatics] {
     fn get_IsDemoModeEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_Properties(&self, out: *mut <foundation::collections::IMapView<HString, IInspectable> as RtType>::Abi) -> HRESULT
 }}
@@ -4209,7 +4209,7 @@ impl SharedModeSettings {
 }
 DEFINE_CLSID!(SharedModeSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,104,97,114,101,100,77,111,100,101,83,101,116,116,105,110,103,115,0]) [CLSID_SharedModeSettings]);
 DEFINE_IID!(IID_ISharedModeSettingsStatics, 2302538766, 51926, 19792, 140, 73, 111, 207, 192, 62, 219, 41);
-RT_INTERFACE!{static interface ISharedModeSettingsStatics(ISharedModeSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISharedModeSettingsStatics] {
+RT_INTERFACE!{static interface ISharedModeSettingsStatics(ISharedModeSettingsStaticsVtbl): IInspectable [IID_ISharedModeSettingsStatics] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT
 }}
 impl ISharedModeSettingsStatics {
@@ -4220,7 +4220,7 @@ impl ISharedModeSettingsStatics {
     }}
 }
 DEFINE_IID!(IID_ISharedModeSettingsStatics2, 1619626148, 52465, 20200, 165, 226, 253, 106, 29, 12, 250, 200);
-RT_INTERFACE!{static interface ISharedModeSettingsStatics2(ISharedModeSettingsStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISharedModeSettingsStatics2] {
+RT_INTERFACE!{static interface ISharedModeSettingsStatics2(ISharedModeSettingsStatics2Vtbl): IInspectable [IID_ISharedModeSettingsStatics2] {
     fn get_ShouldAvoidLocalStorage(&self, out: *mut bool) -> HRESULT
 }}
 impl ISharedModeSettingsStatics2 {
@@ -4242,7 +4242,7 @@ impl SystemIdentification {
 }
 DEFINE_CLSID!(SystemIdentification(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,121,115,116,101,109,73,100,101,110,116,105,102,105,99,97,116,105,111,110,0]) [CLSID_SystemIdentification]);
 DEFINE_IID!(IID_ISystemIdentificationInfo, 207986301, 50114, 19763, 162, 223, 33, 188, 65, 145, 110, 179);
-RT_INTERFACE!{interface ISystemIdentificationInfo(ISystemIdentificationInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISystemIdentificationInfo] {
+RT_INTERFACE!{interface ISystemIdentificationInfo(ISystemIdentificationInfoVtbl): IInspectable [IID_ISystemIdentificationInfo] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_Id(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     fn get_Source(&self, out: *mut SystemIdentificationSource) -> HRESULT
@@ -4264,7 +4264,7 @@ RT_ENUM! { enum SystemIdentificationSource: i32 {
     None = 0, Tpm = 1, Uefi = 2, Registry = 3,
 }}
 DEFINE_IID!(IID_ISystemIdentificationStatics, 1434580010, 54239, 19859, 163, 125, 196, 26, 97, 108, 109, 1);
-RT_INTERFACE!{static interface ISystemIdentificationStatics(ISystemIdentificationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemIdentificationStatics] {
+RT_INTERFACE!{static interface ISystemIdentificationStatics(ISystemIdentificationStaticsVtbl): IInspectable [IID_ISystemIdentificationStatics] {
     fn GetSystemIdForPublisher(&self, out: *mut <SystemIdentificationInfo as RtType>::Abi) -> HRESULT,
     fn GetSystemIdForUser(&self, user: <super::User as RtType>::Abi, out: *mut <SystemIdentificationInfo as RtType>::Abi) -> HRESULT
 }}
@@ -4298,7 +4298,7 @@ impl SystemSetupInfo {
 }
 DEFINE_CLSID!(SystemSetupInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,121,115,116,101,109,83,101,116,117,112,73,110,102,111,0]) [CLSID_SystemSetupInfo]);
 DEFINE_IID!(IID_ISystemSetupInfoStatics, 748036264, 7560, 24109, 163, 36, 165, 67, 175, 66, 71, 238);
-RT_INTERFACE!{static interface ISystemSetupInfoStatics(ISystemSetupInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemSetupInfoStatics] {
+RT_INTERFACE!{static interface ISystemSetupInfoStatics(ISystemSetupInfoStaticsVtbl): IInspectable [IID_ISystemSetupInfoStatics] {
     fn get_OutOfBoxExperienceState(&self, out: *mut SystemOutOfBoxExperienceState) -> HRESULT,
     fn add_OutOfBoxExperienceStateChanged(&self, handler: <foundation::EventHandler<IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_OutOfBoxExperienceStateChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
@@ -4343,7 +4343,7 @@ impl WindowsIntegrityPolicy {
 }
 DEFINE_CLSID!(WindowsIntegrityPolicy(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,87,105,110,100,111,119,115,73,110,116,101,103,114,105,116,121,80,111,108,105,99,121,0]) [CLSID_WindowsIntegrityPolicy]);
 DEFINE_IID!(IID_IWindowsIntegrityPolicyStatics, 2099085787, 36195, 18313, 158, 165, 221, 207, 101, 169, 79, 60);
-RT_INTERFACE!{static interface IWindowsIntegrityPolicyStatics(IWindowsIntegrityPolicyStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWindowsIntegrityPolicyStatics] {
+RT_INTERFACE!{static interface IWindowsIntegrityPolicyStatics(IWindowsIntegrityPolicyStaticsVtbl): IInspectable [IID_IWindowsIntegrityPolicyStatics] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_IsEnabledForTrial(&self, out: *mut bool) -> HRESULT,
     fn get_CanDisable(&self, out: *mut bool) -> HRESULT,
@@ -4385,7 +4385,7 @@ impl IWindowsIntegrityPolicyStatics {
 pub mod systemmanufacturers { // Windows.System.Profile.SystemManufacturers
 use crate::prelude::*;
 DEFINE_IID!(IID_IOemSupportInfo, 2368646741, 34799, 16998, 134, 208, 196, 175, 190, 178, 155, 185);
-RT_INTERFACE!{interface IOemSupportInfo(IOemSupportInfoVtbl): IInspectable(IInspectableVtbl) [IID_IOemSupportInfo] {
+RT_INTERFACE!{interface IOemSupportInfo(IOemSupportInfoVtbl): IInspectable [IID_IOemSupportInfo] {
     fn get_SupportLink(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_SupportAppLink(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_SupportProvider(&self, out: *mut HSTRING) -> HRESULT
@@ -4417,7 +4417,7 @@ impl SmbiosInformation {
 }
 DEFINE_CLSID!(SmbiosInformation(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,121,115,116,101,109,77,97,110,117,102,97,99,116,117,114,101,114,115,46,83,109,98,105,111,115,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_SmbiosInformation]);
 DEFINE_IID!(IID_ISmbiosInformationStatics, 135055996, 25468, 18628, 183, 40, 249, 39, 56, 18, 219, 142);
-RT_INTERFACE!{static interface ISmbiosInformationStatics(ISmbiosInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISmbiosInformationStatics] {
+RT_INTERFACE!{static interface ISmbiosInformationStatics(ISmbiosInformationStaticsVtbl): IInspectable [IID_ISmbiosInformationStatics] {
     fn get_SerialNumber(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ISmbiosInformationStatics {
@@ -4428,7 +4428,7 @@ impl ISmbiosInformationStatics {
     }}
 }
 DEFINE_IID!(IID_ISystemSupportDeviceInfo, 92801945, 33351, 17435, 169, 150, 161, 120, 75, 171, 121, 168);
-RT_INTERFACE!{interface ISystemSupportDeviceInfo(ISystemSupportDeviceInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISystemSupportDeviceInfo] {
+RT_INTERFACE!{interface ISystemSupportDeviceInfo(ISystemSupportDeviceInfoVtbl): IInspectable [IID_ISystemSupportDeviceInfo] {
     fn get_OperatingSystem(&self, out: *mut HSTRING) -> HRESULT,
     fn get_FriendlyName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SystemManufacturer(&self, out: *mut HSTRING) -> HRESULT,
@@ -4491,7 +4491,7 @@ impl SystemSupportInfo {
 }
 DEFINE_CLSID!(SystemSupportInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,80,114,111,102,105,108,101,46,83,121,115,116,101,109,77,97,110,117,102,97,99,116,117,114,101,114,115,46,83,121,115,116,101,109,83,117,112,112,111,114,116,73,110,102,111,0]) [CLSID_SystemSupportInfo]);
 DEFINE_IID!(IID_ISystemSupportInfoStatics, 4017424756, 50210, 17879, 164, 77, 92, 28, 0, 67, 162, 179);
-RT_INTERFACE!{static interface ISystemSupportInfoStatics(ISystemSupportInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemSupportInfoStatics] {
+RT_INTERFACE!{static interface ISystemSupportInfoStatics(ISystemSupportInfoStaticsVtbl): IInspectable [IID_ISystemSupportInfoStatics] {
     fn get_LocalSystemEdition(&self, out: *mut HSTRING) -> HRESULT,
     fn get_OemSupportInfo(&self, out: *mut <OemSupportInfo as RtType>::Abi) -> HRESULT
 }}
@@ -4508,7 +4508,7 @@ impl ISystemSupportInfoStatics {
     }}
 }
 DEFINE_IID!(IID_ISystemSupportInfoStatics2, 871582116, 16289, 18822, 170, 75, 5, 116, 32, 69, 94, 109);
-RT_INTERFACE!{static interface ISystemSupportInfoStatics2(ISystemSupportInfoStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISystemSupportInfoStatics2] {
+RT_INTERFACE!{static interface ISystemSupportInfoStatics2(ISystemSupportInfoStatics2Vtbl): IInspectable [IID_ISystemSupportInfoStatics2] {
     fn get_LocalDeviceInfo(&self, out: *mut <SystemSupportDeviceInfo as RtType>::Abi) -> HRESULT
 }}
 impl ISystemSupportInfoStatics2 {
@@ -4531,7 +4531,7 @@ impl InteractiveSession {
 }
 DEFINE_CLSID!(InteractiveSession(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,68,101,115,107,116,111,112,46,73,110,116,101,114,97,99,116,105,118,101,83,101,115,115,105,111,110,0]) [CLSID_InteractiveSession]);
 DEFINE_IID!(IID_IInteractiveSessionStatics, 1619543601, 56634, 17782, 156, 141, 232, 2, 118, 24, 189, 206);
-RT_INTERFACE!{static interface IInteractiveSessionStatics(IInteractiveSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IInteractiveSessionStatics] {
+RT_INTERFACE!{static interface IInteractiveSessionStatics(IInteractiveSessionStaticsVtbl): IInspectable [IID_IInteractiveSessionStatics] {
     fn get_IsRemote(&self, out: *mut bool) -> HRESULT
 }}
 impl IInteractiveSessionStatics {
@@ -4562,7 +4562,7 @@ impl KnownRemoteSystemCapabilities {
 }
 DEFINE_CLSID!(KnownRemoteSystemCapabilities(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,75,110,111,119,110,82,101,109,111,116,101,83,121,115,116,101,109,67,97,112,97,98,105,108,105,116,105,101,115,0]) [CLSID_KnownRemoteSystemCapabilities]);
 DEFINE_IID!(IID_IKnownRemoteSystemCapabilitiesStatics, 2164843392, 32650, 17636, 146, 205, 3, 182, 70, 155, 148, 163);
-RT_INTERFACE!{static interface IKnownRemoteSystemCapabilitiesStatics(IKnownRemoteSystemCapabilitiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownRemoteSystemCapabilitiesStatics] {
+RT_INTERFACE!{static interface IKnownRemoteSystemCapabilitiesStatics(IKnownRemoteSystemCapabilitiesStaticsVtbl): IInspectable [IID_IKnownRemoteSystemCapabilitiesStatics] {
     fn get_AppService(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LaunchUri(&self, out: *mut HSTRING) -> HRESULT,
     fn get_RemoteSession(&self, out: *mut HSTRING) -> HRESULT,
@@ -4591,7 +4591,7 @@ impl IKnownRemoteSystemCapabilitiesStatics {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystem, 3981981901, 7696, 19084, 180, 166, 78, 95, 214, 249, 119, 33);
-RT_INTERFACE!{interface IRemoteSystem(IRemoteSystemVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystem] {
+RT_INTERFACE!{interface IRemoteSystem(IRemoteSystemVtbl): IInspectable [IID_IRemoteSystem] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Kind(&self, out: *mut HSTRING) -> HRESULT,
@@ -4647,7 +4647,7 @@ impl RemoteSystem {
 }
 DEFINE_CLSID!(RemoteSystem(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,0]) [CLSID_RemoteSystem]);
 DEFINE_IID!(IID_IRemoteSystem2, 165668076, 64395, 18952, 167, 88, 104, 118, 67, 93, 118, 158);
-RT_INTERFACE!{interface IRemoteSystem2(IRemoteSystem2Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystem2] {
+RT_INTERFACE!{interface IRemoteSystem2(IRemoteSystem2Vtbl): IInspectable [IID_IRemoteSystem2] {
     fn get_IsAvailableBySpatialProximity(&self, out: *mut bool) -> HRESULT,
     fn GetCapabilitySupportedAsync(&self, capabilityName: HSTRING, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
 }}
@@ -4664,7 +4664,7 @@ impl IRemoteSystem2 {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystem3, 1924445333, 47046, 16574, 131, 27, 115, 86, 47, 18, 255, 168);
-RT_INTERFACE!{interface IRemoteSystem3(IRemoteSystem3Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystem3] {
+RT_INTERFACE!{interface IRemoteSystem3(IRemoteSystem3Vtbl): IInspectable [IID_IRemoteSystem3] {
     fn get_ManufacturerDisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ModelDisplayName(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -4681,7 +4681,7 @@ impl IRemoteSystem3 {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystem4, 4049928165, 47495, 19621, 153, 38, 250, 4, 56, 190, 98, 115);
-RT_INTERFACE!{interface IRemoteSystem4(IRemoteSystem4Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystem4] {
+RT_INTERFACE!{interface IRemoteSystem4(IRemoteSystem4Vtbl): IInspectable [IID_IRemoteSystem4] {
     fn get_Platform(&self, out: *mut RemoteSystemPlatform) -> HRESULT
 }}
 impl IRemoteSystem4 {
@@ -4692,7 +4692,7 @@ impl IRemoteSystem4 {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystem5, 3945453347, 58850, 19170, 167, 167, 161, 9, 122, 9, 142, 144);
-RT_INTERFACE!{interface IRemoteSystem5(IRemoteSystem5Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystem5] {
+RT_INTERFACE!{interface IRemoteSystem5(IRemoteSystem5Vtbl): IInspectable [IID_IRemoteSystem5] {
     fn get_Apps(&self, out: *mut <foundation::collections::IVectorView<RemoteSystemApp> as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystem5 {
@@ -4706,7 +4706,7 @@ RT_ENUM! { enum RemoteSystemAccessStatus: i32 {
     Unspecified = 0, Allowed = 1, DeniedByUser = 2, DeniedBySystem = 3,
 }}
 DEFINE_IID!(IID_IRemoteSystemAddedEventArgs, 2402899471, 58676, 18071, 136, 54, 122, 190, 161, 81, 81, 110);
-RT_INTERFACE!{interface IRemoteSystemAddedEventArgs(IRemoteSystemAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemAddedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemAddedEventArgs(IRemoteSystemAddedEventArgsVtbl): IInspectable [IID_IRemoteSystemAddedEventArgs] {
     fn get_RemoteSystem(&self, out: *mut <RemoteSystem as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemAddedEventArgs {
@@ -4718,7 +4718,7 @@ impl IRemoteSystemAddedEventArgs {
 }
 RT_CLASS!{class RemoteSystemAddedEventArgs: IRemoteSystemAddedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemApp, 2162539709, 54605, 16817, 155, 22, 104, 16, 168, 113, 237, 79);
-RT_INTERFACE!{interface IRemoteSystemApp(IRemoteSystemAppVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemApp] {
+RT_INTERFACE!{interface IRemoteSystemApp(IRemoteSystemAppVtbl): IInspectable [IID_IRemoteSystemApp] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IsAvailableByProximity(&self, out: *mut bool) -> HRESULT,
@@ -4754,7 +4754,7 @@ impl IRemoteSystemApp {
 }
 RT_CLASS!{class RemoteSystemApp: IRemoteSystemApp}
 DEFINE_IID!(IID_IRemoteSystemAppRegistration, 3027847093, 28725, 19034, 184, 223, 150, 45, 143, 132, 49, 244);
-RT_INTERFACE!{interface IRemoteSystemAppRegistration(IRemoteSystemAppRegistrationVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemAppRegistration] {
+RT_INTERFACE!{interface IRemoteSystemAppRegistration(IRemoteSystemAppRegistrationVtbl): IInspectable [IID_IRemoteSystemAppRegistration] {
     fn get_User(&self, out: *mut <super::User as RtType>::Abi) -> HRESULT,
     fn get_Attributes(&self, out: *mut <foundation::collections::IMap<HString, HString> as RtType>::Abi) -> HRESULT,
     fn SaveAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
@@ -4788,7 +4788,7 @@ impl RemoteSystemAppRegistration {
 }
 DEFINE_CLSID!(RemoteSystemAppRegistration(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,65,112,112,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_RemoteSystemAppRegistration]);
 DEFINE_IID!(IID_IRemoteSystemAppRegistrationStatics, 28940352, 53202, 17727, 174, 37, 194, 83, 159, 8, 106, 253);
-RT_INTERFACE!{static interface IRemoteSystemAppRegistrationStatics(IRemoteSystemAppRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemAppRegistrationStatics] {
+RT_INTERFACE!{static interface IRemoteSystemAppRegistrationStatics(IRemoteSystemAppRegistrationStaticsVtbl): IInspectable [IID_IRemoteSystemAppRegistrationStatics] {
     fn GetDefault(&self, out: *mut <RemoteSystemAppRegistration as RtType>::Abi) -> HRESULT,
     fn GetForUser(&self, user: <super::User as RtType>::Abi, out: *mut <RemoteSystemAppRegistration as RtType>::Abi) -> HRESULT
 }}
@@ -4808,7 +4808,7 @@ RT_ENUM! { enum RemoteSystemAuthorizationKind: i32 {
     SameUser = 0, Anonymous = 1,
 }}
 DEFINE_IID!(IID_IRemoteSystemAuthorizationKindFilter, 1796071054, 1232, 16628, 162, 127, 194, 172, 187, 214, 183, 52);
-RT_INTERFACE!{interface IRemoteSystemAuthorizationKindFilter(IRemoteSystemAuthorizationKindFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemAuthorizationKindFilter] {
+RT_INTERFACE!{interface IRemoteSystemAuthorizationKindFilter(IRemoteSystemAuthorizationKindFilterVtbl): IInspectable [IID_IRemoteSystemAuthorizationKindFilter] {
     fn get_RemoteSystemAuthorizationKind(&self, out: *mut RemoteSystemAuthorizationKind) -> HRESULT
 }}
 impl IRemoteSystemAuthorizationKindFilter {
@@ -4827,7 +4827,7 @@ impl RemoteSystemAuthorizationKindFilter {
 }
 DEFINE_CLSID!(RemoteSystemAuthorizationKindFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,65,117,116,104,111,114,105,122,97,116,105,111,110,75,105,110,100,70,105,108,116,101,114,0]) [CLSID_RemoteSystemAuthorizationKindFilter]);
 DEFINE_IID!(IID_IRemoteSystemAuthorizationKindFilterFactory, 2909134669, 46698, 17828, 129, 119, 140, 174, 215, 93, 158, 90);
-RT_INTERFACE!{static interface IRemoteSystemAuthorizationKindFilterFactory(IRemoteSystemAuthorizationKindFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemAuthorizationKindFilterFactory] {
+RT_INTERFACE!{static interface IRemoteSystemAuthorizationKindFilterFactory(IRemoteSystemAuthorizationKindFilterFactoryVtbl): IInspectable [IID_IRemoteSystemAuthorizationKindFilterFactory] {
     fn Create(&self, remoteSystemAuthorizationKind: RemoteSystemAuthorizationKind, out: *mut <RemoteSystemAuthorizationKindFilter as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemAuthorizationKindFilterFactory {
@@ -4838,7 +4838,7 @@ impl IRemoteSystemAuthorizationKindFilterFactory {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystemConnectionInfo, 589794243, 3337, 21195, 156, 106, 238, 210, 148, 11, 238, 67);
-RT_INTERFACE!{interface IRemoteSystemConnectionInfo(IRemoteSystemConnectionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemConnectionInfo] {
+RT_INTERFACE!{interface IRemoteSystemConnectionInfo(IRemoteSystemConnectionInfoVtbl): IInspectable [IID_IRemoteSystemConnectionInfo] {
     fn get_IsProximal(&self, out: *mut bool) -> HRESULT
 }}
 impl IRemoteSystemConnectionInfo {
@@ -4857,7 +4857,7 @@ impl RemoteSystemConnectionInfo {
 }
 DEFINE_CLSID!(RemoteSystemConnectionInfo(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,67,111,110,110,101,99,116,105,111,110,73,110,102,111,0]) [CLSID_RemoteSystemConnectionInfo]);
 DEFINE_IID!(IID_IRemoteSystemConnectionInfoStatics, 2894274093, 26309, 22231, 164, 206, 112, 93, 148, 146, 90, 214);
-RT_INTERFACE!{static interface IRemoteSystemConnectionInfoStatics(IRemoteSystemConnectionInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemConnectionInfoStatics] {
+RT_INTERFACE!{static interface IRemoteSystemConnectionInfoStatics(IRemoteSystemConnectionInfoStaticsVtbl): IInspectable [IID_IRemoteSystemConnectionInfoStatics] {
     #[cfg(feature="windows-applicationmodel")] fn TryCreateFromAppServiceConnection(&self, connection: <super::super::applicationmodel::appservice::AppServiceConnection as RtType>::Abi, out: *mut <RemoteSystemConnectionInfo as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemConnectionInfoStatics {
@@ -4868,7 +4868,7 @@ impl IRemoteSystemConnectionInfoStatics {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystemConnectionRequest, 2230141188, 36190, 19826, 130, 56, 118, 33, 87, 108, 122, 103);
-RT_INTERFACE!{interface IRemoteSystemConnectionRequest(IRemoteSystemConnectionRequestVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemConnectionRequest] {
+RT_INTERFACE!{interface IRemoteSystemConnectionRequest(IRemoteSystemConnectionRequestVtbl): IInspectable [IID_IRemoteSystemConnectionRequest] {
     fn get_RemoteSystem(&self, out: *mut <RemoteSystem as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemConnectionRequest {
@@ -4891,7 +4891,7 @@ impl RemoteSystemConnectionRequest {
 }
 DEFINE_CLSID!(RemoteSystemConnectionRequest(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,67,111,110,110,101,99,116,105,111,110,82,101,113,117,101,115,116,0]) [CLSID_RemoteSystemConnectionRequest]);
 DEFINE_IID!(IID_IRemoteSystemConnectionRequest2, 316632431, 49148, 18490, 138, 190, 211, 74, 108, 25, 249, 43);
-RT_INTERFACE!{interface IRemoteSystemConnectionRequest2(IRemoteSystemConnectionRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemConnectionRequest2] {
+RT_INTERFACE!{interface IRemoteSystemConnectionRequest2(IRemoteSystemConnectionRequest2Vtbl): IInspectable [IID_IRemoteSystemConnectionRequest2] {
     fn get_RemoteSystemApp(&self, out: *mut <RemoteSystemApp as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemConnectionRequest2 {
@@ -4902,7 +4902,7 @@ impl IRemoteSystemConnectionRequest2 {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystemConnectionRequestFactory, 2852784672, 47851, 17781, 181, 48, 129, 11, 185, 120, 99, 52);
-RT_INTERFACE!{static interface IRemoteSystemConnectionRequestFactory(IRemoteSystemConnectionRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemConnectionRequestFactory] {
+RT_INTERFACE!{static interface IRemoteSystemConnectionRequestFactory(IRemoteSystemConnectionRequestFactoryVtbl): IInspectable [IID_IRemoteSystemConnectionRequestFactory] {
     fn Create(&self, remoteSystem: <RemoteSystem as RtType>::Abi, out: *mut <RemoteSystemConnectionRequest as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemConnectionRequestFactory {
@@ -4913,7 +4913,7 @@ impl IRemoteSystemConnectionRequestFactory {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystemConnectionRequestStatics, 2261390397, 33300, 16988, 137, 50, 219, 73, 3, 45, 19, 6);
-RT_INTERFACE!{static interface IRemoteSystemConnectionRequestStatics(IRemoteSystemConnectionRequestStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemConnectionRequestStatics] {
+RT_INTERFACE!{static interface IRemoteSystemConnectionRequestStatics(IRemoteSystemConnectionRequestStaticsVtbl): IInspectable [IID_IRemoteSystemConnectionRequestStatics] {
     fn CreateForApp(&self, remoteSystemApp: <RemoteSystemApp as RtType>::Abi, out: *mut <RemoteSystemConnectionRequest as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemConnectionRequestStatics {
@@ -4927,7 +4927,7 @@ RT_ENUM! { enum RemoteSystemDiscoveryType: i32 {
     Any = 0, Proximal = 1, Cloud = 2, SpatiallyProximal = 3,
 }}
 DEFINE_IID!(IID_IRemoteSystemDiscoveryTypeFilter, 1121518623, 61018, 17370, 172, 106, 111, 238, 37, 70, 7, 65);
-RT_INTERFACE!{interface IRemoteSystemDiscoveryTypeFilter(IRemoteSystemDiscoveryTypeFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemDiscoveryTypeFilter] {
+RT_INTERFACE!{interface IRemoteSystemDiscoveryTypeFilter(IRemoteSystemDiscoveryTypeFilterVtbl): IInspectable [IID_IRemoteSystemDiscoveryTypeFilter] {
     fn get_RemoteSystemDiscoveryType(&self, out: *mut RemoteSystemDiscoveryType) -> HRESULT
 }}
 impl IRemoteSystemDiscoveryTypeFilter {
@@ -4946,7 +4946,7 @@ impl RemoteSystemDiscoveryTypeFilter {
 }
 DEFINE_CLSID!(RemoteSystemDiscoveryTypeFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,68,105,115,99,111,118,101,114,121,84,121,112,101,70,105,108,116,101,114,0]) [CLSID_RemoteSystemDiscoveryTypeFilter]);
 DEFINE_IID!(IID_IRemoteSystemDiscoveryTypeFilterFactory, 2677979539, 49760, 16737, 146, 242, 156, 2, 31, 35, 254, 93);
-RT_INTERFACE!{static interface IRemoteSystemDiscoveryTypeFilterFactory(IRemoteSystemDiscoveryTypeFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemDiscoveryTypeFilterFactory] {
+RT_INTERFACE!{static interface IRemoteSystemDiscoveryTypeFilterFactory(IRemoteSystemDiscoveryTypeFilterFactoryVtbl): IInspectable [IID_IRemoteSystemDiscoveryTypeFilterFactory] {
     fn Create(&self, discoveryType: RemoteSystemDiscoveryType, out: *mut <RemoteSystemDiscoveryTypeFilter as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemDiscoveryTypeFilterFactory {
@@ -4957,16 +4957,16 @@ impl IRemoteSystemDiscoveryTypeFilterFactory {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystemEnumerationCompletedEventArgs, 3337108831, 16432, 17236, 160, 96, 20, 241, 178, 44, 84, 93);
-RT_INTERFACE!{interface IRemoteSystemEnumerationCompletedEventArgs(IRemoteSystemEnumerationCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemEnumerationCompletedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemEnumerationCompletedEventArgs(IRemoteSystemEnumerationCompletedEventArgsVtbl): IInspectable [IID_IRemoteSystemEnumerationCompletedEventArgs] {
     
 }}
 RT_CLASS!{class RemoteSystemEnumerationCompletedEventArgs: IRemoteSystemEnumerationCompletedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemFilter, 1245424100, 39403, 17899, 186, 22, 3, 103, 114, 143, 243, 116);
-RT_INTERFACE!{interface IRemoteSystemFilter(IRemoteSystemFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemFilter] {
+RT_INTERFACE!{interface IRemoteSystemFilter(IRemoteSystemFilterVtbl): IInspectable [IID_IRemoteSystemFilter] {
     
 }}
 DEFINE_IID!(IID_IRemoteSystemKindFilter, 954321388, 8899, 20214, 144, 26, 187, 177, 199, 170, 212, 237);
-RT_INTERFACE!{interface IRemoteSystemKindFilter(IRemoteSystemKindFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemKindFilter] {
+RT_INTERFACE!{interface IRemoteSystemKindFilter(IRemoteSystemKindFilterVtbl): IInspectable [IID_IRemoteSystemKindFilter] {
     fn get_RemoteSystemKinds(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemKindFilter {
@@ -4985,7 +4985,7 @@ impl RemoteSystemKindFilter {
 }
 DEFINE_CLSID!(RemoteSystemKindFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,75,105,110,100,70,105,108,116,101,114,0]) [CLSID_RemoteSystemKindFilter]);
 DEFINE_IID!(IID_IRemoteSystemKindFilterFactory, 2717587694, 39402, 16572, 154, 57, 198, 112, 170, 128, 74, 40);
-RT_INTERFACE!{static interface IRemoteSystemKindFilterFactory(IRemoteSystemKindFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemKindFilterFactory] {
+RT_INTERFACE!{static interface IRemoteSystemKindFilterFactory(IRemoteSystemKindFilterFactoryVtbl): IInspectable [IID_IRemoteSystemKindFilterFactory] {
     fn Create(&self, remoteSystemKinds: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <RemoteSystemKindFilter as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemKindFilterFactory {
@@ -5026,7 +5026,7 @@ impl RemoteSystemKinds {
 }
 DEFINE_CLSID!(RemoteSystemKinds(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,75,105,110,100,115,0]) [CLSID_RemoteSystemKinds]);
 DEFINE_IID!(IID_IRemoteSystemKindStatics, 4130436659, 43796, 16848, 149, 83, 121, 106, 173, 184, 130, 219);
-RT_INTERFACE!{static interface IRemoteSystemKindStatics(IRemoteSystemKindStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemKindStatics] {
+RT_INTERFACE!{static interface IRemoteSystemKindStatics(IRemoteSystemKindStaticsVtbl): IInspectable [IID_IRemoteSystemKindStatics] {
     fn get_Phone(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Hub(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Holographic(&self, out: *mut HSTRING) -> HRESULT,
@@ -5061,7 +5061,7 @@ impl IRemoteSystemKindStatics {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystemKindStatics2, 3118703568, 1126, 18249, 145, 232, 101, 249, 209, 154, 150, 165);
-RT_INTERFACE!{static interface IRemoteSystemKindStatics2(IRemoteSystemKindStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemKindStatics2] {
+RT_INTERFACE!{static interface IRemoteSystemKindStatics2(IRemoteSystemKindStatics2Vtbl): IInspectable [IID_IRemoteSystemKindStatics2] {
     fn get_Iot(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Tablet(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Laptop(&self, out: *mut HSTRING) -> HRESULT
@@ -5087,7 +5087,7 @@ RT_ENUM! { enum RemoteSystemPlatform: i32 {
     Unknown = 0, Windows = 1, Android = 2, Ios = 3, Linux = 4,
 }}
 DEFINE_IID!(IID_IRemoteSystemRemovedEventArgs, 2336036539, 29446, 18922, 183, 223, 103, 213, 113, 76, 176, 19);
-RT_INTERFACE!{interface IRemoteSystemRemovedEventArgs(IRemoteSystemRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemRemovedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemRemovedEventArgs(IRemoteSystemRemovedEventArgsVtbl): IInspectable [IID_IRemoteSystemRemovedEventArgs] {
     fn get_RemoteSystemId(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IRemoteSystemRemovedEventArgs {
@@ -5099,7 +5099,7 @@ impl IRemoteSystemRemovedEventArgs {
 }
 RT_CLASS!{class RemoteSystemRemovedEventArgs: IRemoteSystemRemovedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemSession, 1766287873, 39642, 18703, 149, 73, 211, 28, 177, 76, 158, 149);
-RT_INTERFACE!{interface IRemoteSystemSession(IRemoteSystemSessionVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSession] {
+RT_INTERFACE!{interface IRemoteSystemSession(IRemoteSystemSessionVtbl): IInspectable [IID_IRemoteSystemSession] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ControllerDisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -5153,7 +5153,7 @@ impl RemoteSystemSession {
 }
 DEFINE_CLSID!(RemoteSystemSession(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,0]) [CLSID_RemoteSystemSession]);
 DEFINE_IID!(IID_IRemoteSystemSessionAddedEventArgs, 3582318420, 48279, 19513, 153, 180, 190, 202, 118, 224, 76, 63);
-RT_INTERFACE!{interface IRemoteSystemSessionAddedEventArgs(IRemoteSystemSessionAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionAddedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemSessionAddedEventArgs(IRemoteSystemSessionAddedEventArgsVtbl): IInspectable [IID_IRemoteSystemSessionAddedEventArgs] {
     fn get_SessionInfo(&self, out: *mut <RemoteSystemSessionInfo as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemSessionAddedEventArgs {
@@ -5165,7 +5165,7 @@ impl IRemoteSystemSessionAddedEventArgs {
 }
 RT_CLASS!{class RemoteSystemSessionAddedEventArgs: IRemoteSystemSessionAddedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemSessionController, 3834326482, 26656, 18535, 180, 37, 216, 156, 10, 62, 247, 186);
-RT_INTERFACE!{interface IRemoteSystemSessionController(IRemoteSystemSessionControllerVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionController] {
+RT_INTERFACE!{interface IRemoteSystemSessionController(IRemoteSystemSessionControllerVtbl): IInspectable [IID_IRemoteSystemSessionController] {
     fn add_JoinRequested(&self, handler: <foundation::TypedEventHandler<RemoteSystemSessionController, RemoteSystemSessionJoinRequestedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_JoinRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn RemoveParticipantAsync(&self, pParticipant: <RemoteSystemSessionParticipant as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
@@ -5204,7 +5204,7 @@ impl RemoteSystemSessionController {
 }
 DEFINE_CLSID!(RemoteSystemSessionController(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,67,111,110,116,114,111,108,108,101,114,0]) [CLSID_RemoteSystemSessionController]);
 DEFINE_IID!(IID_IRemoteSystemSessionControllerFactory, 3217829739, 44093, 16793, 130, 205, 102, 112, 167, 115, 239, 46);
-RT_INTERFACE!{static interface IRemoteSystemSessionControllerFactory(IRemoteSystemSessionControllerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionControllerFactory] {
+RT_INTERFACE!{static interface IRemoteSystemSessionControllerFactory(IRemoteSystemSessionControllerFactoryVtbl): IInspectable [IID_IRemoteSystemSessionControllerFactory] {
     fn CreateController(&self, displayName: HSTRING, out: *mut <RemoteSystemSessionController as RtType>::Abi) -> HRESULT,
     fn CreateControllerWithSessionOptions(&self, displayName: HSTRING, options: <RemoteSystemSessionOptions as RtType>::Abi, out: *mut <RemoteSystemSessionController as RtType>::Abi) -> HRESULT
 }}
@@ -5221,7 +5221,7 @@ impl IRemoteSystemSessionControllerFactory {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystemSessionCreationResult, 2811761346, 14302, 17548, 139, 131, 163, 10, 163, 196, 234, 214);
-RT_INTERFACE!{interface IRemoteSystemSessionCreationResult(IRemoteSystemSessionCreationResultVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionCreationResult] {
+RT_INTERFACE!{interface IRemoteSystemSessionCreationResult(IRemoteSystemSessionCreationResultVtbl): IInspectable [IID_IRemoteSystemSessionCreationResult] {
     fn get_Status(&self, out: *mut RemoteSystemSessionCreationStatus) -> HRESULT,
     fn get_Session(&self, out: *mut <RemoteSystemSession as RtType>::Abi) -> HRESULT
 }}
@@ -5242,7 +5242,7 @@ RT_ENUM! { enum RemoteSystemSessionCreationStatus: i32 {
     Success = 0, SessionLimitsExceeded = 1, OperationAborted = 2,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionDisconnectedEventArgs, 3725313691, 30661, 17948, 130, 9, 124, 108, 93, 49, 17, 171);
-RT_INTERFACE!{interface IRemoteSystemSessionDisconnectedEventArgs(IRemoteSystemSessionDisconnectedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionDisconnectedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemSessionDisconnectedEventArgs(IRemoteSystemSessionDisconnectedEventArgsVtbl): IInspectable [IID_IRemoteSystemSessionDisconnectedEventArgs] {
     fn get_Reason(&self, out: *mut RemoteSystemSessionDisconnectedReason) -> HRESULT
 }}
 impl IRemoteSystemSessionDisconnectedEventArgs {
@@ -5257,7 +5257,7 @@ RT_ENUM! { enum RemoteSystemSessionDisconnectedReason: i32 {
     SessionUnavailable = 0, RemovedByController = 1, SessionClosed = 2,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionInfo, 4283299400, 35594, 20122, 153, 5, 105, 228, 184, 65, 197, 136);
-RT_INTERFACE!{interface IRemoteSystemSessionInfo(IRemoteSystemSessionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionInfo] {
+RT_INTERFACE!{interface IRemoteSystemSessionInfo(IRemoteSystemSessionInfoVtbl): IInspectable [IID_IRemoteSystemSessionInfo] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ControllerDisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn JoinAsync(&self, out: *mut <foundation::IAsyncOperation<RemoteSystemSessionJoinResult> as RtType>::Abi) -> HRESULT
@@ -5281,7 +5281,7 @@ impl IRemoteSystemSessionInfo {
 }
 RT_CLASS!{class RemoteSystemSessionInfo: IRemoteSystemSessionInfo}
 DEFINE_IID!(IID_IRemoteSystemSessionInvitation, 1043516561, 20951, 18278, 161, 33, 37, 81, 108, 59, 130, 148);
-RT_INTERFACE!{interface IRemoteSystemSessionInvitation(IRemoteSystemSessionInvitationVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionInvitation] {
+RT_INTERFACE!{interface IRemoteSystemSessionInvitation(IRemoteSystemSessionInvitationVtbl): IInspectable [IID_IRemoteSystemSessionInvitation] {
     fn get_Sender(&self, out: *mut <RemoteSystem as RtType>::Abi) -> HRESULT,
     fn get_SessionInfo(&self, out: *mut <RemoteSystemSessionInfo as RtType>::Abi) -> HRESULT
 }}
@@ -5299,7 +5299,7 @@ impl IRemoteSystemSessionInvitation {
 }
 RT_CLASS!{class RemoteSystemSessionInvitation: IRemoteSystemSessionInvitation}
 DEFINE_IID!(IID_IRemoteSystemSessionInvitationListener, 150208575, 48241, 18913, 135, 74, 49, 221, 255, 154, 39, 185);
-RT_INTERFACE!{interface IRemoteSystemSessionInvitationListener(IRemoteSystemSessionInvitationListenerVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionInvitationListener] {
+RT_INTERFACE!{interface IRemoteSystemSessionInvitationListener(IRemoteSystemSessionInvitationListenerVtbl): IInspectable [IID_IRemoteSystemSessionInvitationListener] {
     fn add_InvitationReceived(&self, handler: <foundation::TypedEventHandler<RemoteSystemSessionInvitationListener, RemoteSystemSessionInvitationReceivedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_InvitationReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -5318,7 +5318,7 @@ RT_CLASS!{class RemoteSystemSessionInvitationListener: IRemoteSystemSessionInvit
 impl RtActivatable<IActivationFactory> for RemoteSystemSessionInvitationListener {}
 DEFINE_CLSID!(RemoteSystemSessionInvitationListener(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,73,110,118,105,116,97,116,105,111,110,76,105,115,116,101,110,101,114,0]) [CLSID_RemoteSystemSessionInvitationListener]);
 DEFINE_IID!(IID_IRemoteSystemSessionInvitationReceivedEventArgs, 1586907693, 41229, 20187, 141, 234, 84, 210, 10, 193, 149, 67);
-RT_INTERFACE!{interface IRemoteSystemSessionInvitationReceivedEventArgs(IRemoteSystemSessionInvitationReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionInvitationReceivedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemSessionInvitationReceivedEventArgs(IRemoteSystemSessionInvitationReceivedEventArgsVtbl): IInspectable [IID_IRemoteSystemSessionInvitationReceivedEventArgs] {
     fn get_Invitation(&self, out: *mut <RemoteSystemSessionInvitation as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemSessionInvitationReceivedEventArgs {
@@ -5330,7 +5330,7 @@ impl IRemoteSystemSessionInvitationReceivedEventArgs {
 }
 RT_CLASS!{class RemoteSystemSessionInvitationReceivedEventArgs: IRemoteSystemSessionInvitationReceivedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemSessionJoinRequest, 543162472, 31124, 17201, 134, 209, 216, 157, 136, 37, 133, 238);
-RT_INTERFACE!{interface IRemoteSystemSessionJoinRequest(IRemoteSystemSessionJoinRequestVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionJoinRequest] {
+RT_INTERFACE!{interface IRemoteSystemSessionJoinRequest(IRemoteSystemSessionJoinRequestVtbl): IInspectable [IID_IRemoteSystemSessionJoinRequest] {
     fn get_Participant(&self, out: *mut <RemoteSystemSessionParticipant as RtType>::Abi) -> HRESULT,
     fn Accept(&self) -> HRESULT
 }}
@@ -5347,7 +5347,7 @@ impl IRemoteSystemSessionJoinRequest {
 }
 RT_CLASS!{class RemoteSystemSessionJoinRequest: IRemoteSystemSessionJoinRequest}
 DEFINE_IID!(IID_IRemoteSystemSessionJoinRequestedEventArgs, 3687468995, 33465, 18454, 156, 36, 228, 14, 97, 119, 75, 216);
-RT_INTERFACE!{interface IRemoteSystemSessionJoinRequestedEventArgs(IRemoteSystemSessionJoinRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionJoinRequestedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemSessionJoinRequestedEventArgs(IRemoteSystemSessionJoinRequestedEventArgsVtbl): IInspectable [IID_IRemoteSystemSessionJoinRequestedEventArgs] {
     fn get_JoinRequest(&self, out: *mut <RemoteSystemSessionJoinRequest as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
@@ -5365,7 +5365,7 @@ impl IRemoteSystemSessionJoinRequestedEventArgs {
 }
 RT_CLASS!{class RemoteSystemSessionJoinRequestedEventArgs: IRemoteSystemSessionJoinRequestedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemSessionJoinResult, 3464175364, 41022, 16804, 144, 11, 30, 121, 50, 140, 18, 103);
-RT_INTERFACE!{interface IRemoteSystemSessionJoinResult(IRemoteSystemSessionJoinResultVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionJoinResult] {
+RT_INTERFACE!{interface IRemoteSystemSessionJoinResult(IRemoteSystemSessionJoinResultVtbl): IInspectable [IID_IRemoteSystemSessionJoinResult] {
     fn get_Status(&self, out: *mut RemoteSystemSessionJoinStatus) -> HRESULT,
     fn get_Session(&self, out: *mut <RemoteSystemSession as RtType>::Abi) -> HRESULT
 }}
@@ -5386,7 +5386,7 @@ RT_ENUM! { enum RemoteSystemSessionJoinStatus: i32 {
     Success = 0, SessionLimitsExceeded = 1, OperationAborted = 2, SessionUnavailable = 3, RejectedByController = 4,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionMessageChannel, 2502218026, 29657, 19472, 183, 81, 194, 103, 132, 67, 113, 39);
-RT_INTERFACE!{interface IRemoteSystemSessionMessageChannel(IRemoteSystemSessionMessageChannelVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionMessageChannel] {
+RT_INTERFACE!{interface IRemoteSystemSessionMessageChannel(IRemoteSystemSessionMessageChannelVtbl): IInspectable [IID_IRemoteSystemSessionMessageChannel] {
     fn get_Session(&self, out: *mut <RemoteSystemSession as RtType>::Abi) -> HRESULT,
     fn BroadcastValueSetAsync(&self, messageData: <foundation::collections::ValueSet as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn SendValueSetAsync(&self, messageData: <foundation::collections::ValueSet as RtType>::Abi, participant: <RemoteSystemSessionParticipant as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
@@ -5437,7 +5437,7 @@ impl RemoteSystemSessionMessageChannel {
 }
 DEFINE_CLSID!(RemoteSystemSessionMessageChannel(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,77,101,115,115,97,103,101,67,104,97,110,110,101,108,0]) [CLSID_RemoteSystemSessionMessageChannel]);
 DEFINE_IID!(IID_IRemoteSystemSessionMessageChannelFactory, 694033482, 48406, 17048, 183, 206, 65, 84, 130, 176, 225, 29);
-RT_INTERFACE!{static interface IRemoteSystemSessionMessageChannelFactory(IRemoteSystemSessionMessageChannelFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionMessageChannelFactory] {
+RT_INTERFACE!{static interface IRemoteSystemSessionMessageChannelFactory(IRemoteSystemSessionMessageChannelFactoryVtbl): IInspectable [IID_IRemoteSystemSessionMessageChannelFactory] {
     fn Create(&self, session: <RemoteSystemSession as RtType>::Abi, channelName: HSTRING, out: *mut <RemoteSystemSessionMessageChannel as RtType>::Abi) -> HRESULT,
     fn CreateWithReliability(&self, session: <RemoteSystemSession as RtType>::Abi, channelName: HSTRING, reliability: RemoteSystemSessionMessageChannelReliability, out: *mut <RemoteSystemSessionMessageChannel as RtType>::Abi) -> HRESULT
 }}
@@ -5457,7 +5457,7 @@ RT_ENUM! { enum RemoteSystemSessionMessageChannelReliability: i32 {
     Reliable = 0, Unreliable = 1,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionOptions, 1947129685, 33816, 20225, 147, 83, 226, 28, 158, 204, 108, 252);
-RT_INTERFACE!{interface IRemoteSystemSessionOptions(IRemoteSystemSessionOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionOptions] {
+RT_INTERFACE!{interface IRemoteSystemSessionOptions(IRemoteSystemSessionOptionsVtbl): IInspectable [IID_IRemoteSystemSessionOptions] {
     fn get_IsInviteOnly(&self, out: *mut bool) -> HRESULT,
     fn put_IsInviteOnly(&self, value: bool) -> HRESULT
 }}
@@ -5476,7 +5476,7 @@ RT_CLASS!{class RemoteSystemSessionOptions: IRemoteSystemSessionOptions}
 impl RtActivatable<IActivationFactory> for RemoteSystemSessionOptions {}
 DEFINE_CLSID!(RemoteSystemSessionOptions(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,101,115,115,105,111,110,79,112,116,105,111,110,115,0]) [CLSID_RemoteSystemSessionOptions]);
 DEFINE_IID!(IID_IRemoteSystemSessionParticipant, 2123367820, 44281, 18217, 138, 23, 68, 231, 186, 237, 93, 204);
-RT_INTERFACE!{interface IRemoteSystemSessionParticipant(IRemoteSystemSessionParticipantVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionParticipant] {
+RT_INTERFACE!{interface IRemoteSystemSessionParticipant(IRemoteSystemSessionParticipantVtbl): IInspectable [IID_IRemoteSystemSessionParticipant] {
     fn get_RemoteSystem(&self, out: *mut <RemoteSystem as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-networking")] fn GetHostNames(&self, out: *mut <foundation::collections::IVectorView<super::super::networking::HostName> as RtType>::Abi) -> HRESULT
 }}
@@ -5494,7 +5494,7 @@ impl IRemoteSystemSessionParticipant {
 }
 RT_CLASS!{class RemoteSystemSessionParticipant: IRemoteSystemSessionParticipant}
 DEFINE_IID!(IID_IRemoteSystemSessionParticipantAddedEventArgs, 3545913304, 51617, 19383, 182, 176, 121, 187, 145, 173, 249, 61);
-RT_INTERFACE!{interface IRemoteSystemSessionParticipantAddedEventArgs(IRemoteSystemSessionParticipantAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionParticipantAddedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemSessionParticipantAddedEventArgs(IRemoteSystemSessionParticipantAddedEventArgsVtbl): IInspectable [IID_IRemoteSystemSessionParticipantAddedEventArgs] {
     fn get_Participant(&self, out: *mut <RemoteSystemSessionParticipant as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemSessionParticipantAddedEventArgs {
@@ -5506,7 +5506,7 @@ impl IRemoteSystemSessionParticipantAddedEventArgs {
 }
 RT_CLASS!{class RemoteSystemSessionParticipantAddedEventArgs: IRemoteSystemSessionParticipantAddedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemSessionParticipantRemovedEventArgs, 2255417480, 56936, 19135, 136, 161, 249, 13, 22, 39, 65, 146);
-RT_INTERFACE!{interface IRemoteSystemSessionParticipantRemovedEventArgs(IRemoteSystemSessionParticipantRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionParticipantRemovedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemSessionParticipantRemovedEventArgs(IRemoteSystemSessionParticipantRemovedEventArgsVtbl): IInspectable [IID_IRemoteSystemSessionParticipantRemovedEventArgs] {
     fn get_Participant(&self, out: *mut <RemoteSystemSessionParticipant as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemSessionParticipantRemovedEventArgs {
@@ -5518,7 +5518,7 @@ impl IRemoteSystemSessionParticipantRemovedEventArgs {
 }
 RT_CLASS!{class RemoteSystemSessionParticipantRemovedEventArgs: IRemoteSystemSessionParticipantRemovedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemSessionParticipantWatcher, 3705471692, 43655, 19833, 182, 204, 68, 89, 179, 233, 32, 117);
-RT_INTERFACE!{interface IRemoteSystemSessionParticipantWatcher(IRemoteSystemSessionParticipantWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionParticipantWatcher] {
+RT_INTERFACE!{interface IRemoteSystemSessionParticipantWatcher(IRemoteSystemSessionParticipantWatcherVtbl): IInspectable [IID_IRemoteSystemSessionParticipantWatcher] {
     fn Start(&self) -> HRESULT,
     fn Stop(&self) -> HRESULT,
     fn get_Status(&self, out: *mut RemoteSystemSessionParticipantWatcherStatus) -> HRESULT,
@@ -5576,7 +5576,7 @@ RT_ENUM! { enum RemoteSystemSessionParticipantWatcherStatus: i32 {
     Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IRemoteSystemSessionRemovedEventArgs, 2944569678, 14753, 19946, 157, 99, 67, 121, 141, 91, 187, 208);
-RT_INTERFACE!{interface IRemoteSystemSessionRemovedEventArgs(IRemoteSystemSessionRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionRemovedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemSessionRemovedEventArgs(IRemoteSystemSessionRemovedEventArgsVtbl): IInspectable [IID_IRemoteSystemSessionRemovedEventArgs] {
     fn get_SessionInfo(&self, out: *mut <RemoteSystemSessionInfo as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemSessionRemovedEventArgs {
@@ -5588,7 +5588,7 @@ impl IRemoteSystemSessionRemovedEventArgs {
 }
 RT_CLASS!{class RemoteSystemSessionRemovedEventArgs: IRemoteSystemSessionRemovedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemSessionStatics, 2233764255, 64800, 17635, 149, 101, 231, 90, 59, 20, 198, 110);
-RT_INTERFACE!{static interface IRemoteSystemSessionStatics(IRemoteSystemSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionStatics] {
+RT_INTERFACE!{static interface IRemoteSystemSessionStatics(IRemoteSystemSessionStaticsVtbl): IInspectable [IID_IRemoteSystemSessionStatics] {
     fn CreateWatcher(&self, out: *mut <RemoteSystemSessionWatcher as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemSessionStatics {
@@ -5599,7 +5599,7 @@ impl IRemoteSystemSessionStatics {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystemSessionUpdatedEventArgs, 377966697, 8990, 19601, 142, 200, 179, 163, 157, 158, 85, 163);
-RT_INTERFACE!{interface IRemoteSystemSessionUpdatedEventArgs(IRemoteSystemSessionUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionUpdatedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemSessionUpdatedEventArgs(IRemoteSystemSessionUpdatedEventArgsVtbl): IInspectable [IID_IRemoteSystemSessionUpdatedEventArgs] {
     fn get_SessionInfo(&self, out: *mut <RemoteSystemSessionInfo as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemSessionUpdatedEventArgs {
@@ -5611,7 +5611,7 @@ impl IRemoteSystemSessionUpdatedEventArgs {
 }
 RT_CLASS!{class RemoteSystemSessionUpdatedEventArgs: IRemoteSystemSessionUpdatedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemSessionValueSetReceivedEventArgs, 116594565, 11685, 20056, 167, 143, 158, 141, 7, 132, 238, 37);
-RT_INTERFACE!{interface IRemoteSystemSessionValueSetReceivedEventArgs(IRemoteSystemSessionValueSetReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionValueSetReceivedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemSessionValueSetReceivedEventArgs(IRemoteSystemSessionValueSetReceivedEventArgsVtbl): IInspectable [IID_IRemoteSystemSessionValueSetReceivedEventArgs] {
     fn get_Sender(&self, out: *mut <RemoteSystemSessionParticipant as RtType>::Abi) -> HRESULT,
     fn get_Message(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT
 }}
@@ -5629,7 +5629,7 @@ impl IRemoteSystemSessionValueSetReceivedEventArgs {
 }
 RT_CLASS!{class RemoteSystemSessionValueSetReceivedEventArgs: IRemoteSystemSessionValueSetReceivedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemSessionWatcher, 2147738432, 3137, 19042, 182, 215, 189, 190, 43, 25, 190, 45);
-RT_INTERFACE!{interface IRemoteSystemSessionWatcher(IRemoteSystemSessionWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemSessionWatcher] {
+RT_INTERFACE!{interface IRemoteSystemSessionWatcher(IRemoteSystemSessionWatcherVtbl): IInspectable [IID_IRemoteSystemSessionWatcher] {
     fn Start(&self) -> HRESULT,
     fn Stop(&self) -> HRESULT,
     fn get_Status(&self, out: *mut RemoteSystemSessionWatcherStatus) -> HRESULT,
@@ -5687,7 +5687,7 @@ RT_ENUM! { enum RemoteSystemSessionWatcherStatus: i32 {
     Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IRemoteSystemStatics, 2760225682, 65323, 19271, 190, 98, 116, 63, 47, 20, 15, 48);
-RT_INTERFACE!{static interface IRemoteSystemStatics(IRemoteSystemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemStatics] {
+RT_INTERFACE!{static interface IRemoteSystemStatics(IRemoteSystemStaticsVtbl): IInspectable [IID_IRemoteSystemStatics] {
     #[cfg(not(feature="windows-networking"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-networking")] fn FindByHostNameAsync(&self, hostName: <super::super::networking::HostName as RtType>::Abi, out: *mut <foundation::IAsyncOperation<RemoteSystem> as RtType>::Abi) -> HRESULT,
     fn CreateWatcher(&self, out: *mut <RemoteSystemWatcher as RtType>::Abi) -> HRESULT,
@@ -5717,7 +5717,7 @@ impl IRemoteSystemStatics {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystemStatics2, 211348938, 28569, 19538, 162, 114, 234, 79, 54, 71, 23, 68);
-RT_INTERFACE!{static interface IRemoteSystemStatics2(IRemoteSystemStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemStatics2] {
+RT_INTERFACE!{static interface IRemoteSystemStatics2(IRemoteSystemStatics2Vtbl): IInspectable [IID_IRemoteSystemStatics2] {
     fn IsAuthorizationKindEnabled(&self, kind: RemoteSystemAuthorizationKind, out: *mut bool) -> HRESULT
 }}
 impl IRemoteSystemStatics2 {
@@ -5734,7 +5734,7 @@ RT_ENUM! { enum RemoteSystemStatusType: i32 {
     Any = 0, Available = 1,
 }}
 DEFINE_IID!(IID_IRemoteSystemStatusTypeFilter, 205082958, 52150, 18295, 133, 52, 46, 12, 82, 26, 255, 162);
-RT_INTERFACE!{interface IRemoteSystemStatusTypeFilter(IRemoteSystemStatusTypeFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemStatusTypeFilter] {
+RT_INTERFACE!{interface IRemoteSystemStatusTypeFilter(IRemoteSystemStatusTypeFilterVtbl): IInspectable [IID_IRemoteSystemStatusTypeFilter] {
     fn get_RemoteSystemStatusType(&self, out: *mut RemoteSystemStatusType) -> HRESULT
 }}
 impl IRemoteSystemStatusTypeFilter {
@@ -5753,7 +5753,7 @@ impl RemoteSystemStatusTypeFilter {
 }
 DEFINE_CLSID!(RemoteSystemStatusTypeFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,83,116,97,116,117,115,84,121,112,101,70,105,108,116,101,114,0]) [CLSID_RemoteSystemStatusTypeFilter]);
 DEFINE_IID!(IID_IRemoteSystemStatusTypeFilterFactory, 869234938, 55076, 16677, 172, 122, 141, 40, 30, 68, 201, 73);
-RT_INTERFACE!{static interface IRemoteSystemStatusTypeFilterFactory(IRemoteSystemStatusTypeFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemStatusTypeFilterFactory] {
+RT_INTERFACE!{static interface IRemoteSystemStatusTypeFilterFactory(IRemoteSystemStatusTypeFilterFactoryVtbl): IInspectable [IID_IRemoteSystemStatusTypeFilterFactory] {
     fn Create(&self, remoteSystemStatusType: RemoteSystemStatusType, out: *mut <RemoteSystemStatusTypeFilter as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemStatusTypeFilterFactory {
@@ -5764,7 +5764,7 @@ impl IRemoteSystemStatusTypeFilterFactory {
     }}
 }
 DEFINE_IID!(IID_IRemoteSystemUpdatedEventArgs, 1963130638, 56267, 16725, 180, 202, 179, 10, 4, 242, 118, 39);
-RT_INTERFACE!{interface IRemoteSystemUpdatedEventArgs(IRemoteSystemUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemUpdatedEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemUpdatedEventArgs(IRemoteSystemUpdatedEventArgsVtbl): IInspectable [IID_IRemoteSystemUpdatedEventArgs] {
     fn get_RemoteSystem(&self, out: *mut <RemoteSystem as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemUpdatedEventArgs {
@@ -5776,7 +5776,7 @@ impl IRemoteSystemUpdatedEventArgs {
 }
 RT_CLASS!{class RemoteSystemUpdatedEventArgs: IRemoteSystemUpdatedEventArgs}
 DEFINE_IID!(IID_IRemoteSystemWatcher, 1566575742, 11271, 18629, 136, 156, 69, 93, 43, 9, 151, 113);
-RT_INTERFACE!{interface IRemoteSystemWatcher(IRemoteSystemWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemWatcher] {
+RT_INTERFACE!{interface IRemoteSystemWatcher(IRemoteSystemWatcherVtbl): IInspectable [IID_IRemoteSystemWatcher] {
     fn Start(&self) -> HRESULT,
     fn Stop(&self) -> HRESULT,
     fn add_RemoteSystemAdded(&self, handler: <foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemAddedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5825,7 +5825,7 @@ impl IRemoteSystemWatcher {
 }
 RT_CLASS!{class RemoteSystemWatcher: IRemoteSystemWatcher}
 DEFINE_IID!(IID_IRemoteSystemWatcher2, 1933797120, 6602, 18681, 164, 205, 120, 15, 122, 213, 140, 113);
-RT_INTERFACE!{interface IRemoteSystemWatcher2(IRemoteSystemWatcher2Vtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemWatcher2] {
+RT_INTERFACE!{interface IRemoteSystemWatcher2(IRemoteSystemWatcher2Vtbl): IInspectable [IID_IRemoteSystemWatcher2] {
     fn add_EnumerationCompleted(&self, handler: <foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemEnumerationCompletedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_EnumerationCompleted(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_ErrorOccurred(&self, handler: <foundation::TypedEventHandler<RemoteSystemWatcher, RemoteSystemWatcherErrorOccurredEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5855,7 +5855,7 @@ RT_ENUM! { enum RemoteSystemWatcherError: i32 {
     Unknown = 0, InternetNotAvailable = 1, AuthenticationError = 2,
 }}
 DEFINE_IID!(IID_IRemoteSystemWatcherErrorOccurredEventArgs, 1959118511, 20756, 17446, 146, 22, 32, 216, 31, 133, 25, 174);
-RT_INTERFACE!{interface IRemoteSystemWatcherErrorOccurredEventArgs(IRemoteSystemWatcherErrorOccurredEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemWatcherErrorOccurredEventArgs] {
+RT_INTERFACE!{interface IRemoteSystemWatcherErrorOccurredEventArgs(IRemoteSystemWatcherErrorOccurredEventArgsVtbl): IInspectable [IID_IRemoteSystemWatcherErrorOccurredEventArgs] {
     fn get_Error(&self, out: *mut RemoteSystemWatcherError) -> HRESULT
 }}
 impl IRemoteSystemWatcherErrorOccurredEventArgs {
@@ -5867,7 +5867,7 @@ impl IRemoteSystemWatcherErrorOccurredEventArgs {
 }
 RT_CLASS!{class RemoteSystemWatcherErrorOccurredEventArgs: IRemoteSystemWatcherErrorOccurredEventArgs}
 DEFINE_IID!(IID_IRemoteSystemWebAccountFilter, 1068980339, 34760, 23951, 151, 126, 246, 159, 150, 214, 114, 56);
-RT_INTERFACE!{interface IRemoteSystemWebAccountFilter(IRemoteSystemWebAccountFilterVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemWebAccountFilter] {
+RT_INTERFACE!{interface IRemoteSystemWebAccountFilter(IRemoteSystemWebAccountFilterVtbl): IInspectable [IID_IRemoteSystemWebAccountFilter] {
     #[cfg(feature="windows-security")] fn get_Account(&self, out: *mut <super::super::security::credentials::WebAccount as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemWebAccountFilter {
@@ -5886,7 +5886,7 @@ impl RemoteSystemWebAccountFilter {
 }
 DEFINE_CLSID!(RemoteSystemWebAccountFilter(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,82,101,109,111,116,101,83,121,115,116,101,109,115,46,82,101,109,111,116,101,83,121,115,116,101,109,87,101,98,65,99,99,111,117,110,116,70,105,108,116,101,114,0]) [CLSID_RemoteSystemWebAccountFilter]);
 DEFINE_IID!(IID_IRemoteSystemWebAccountFilterFactory, 881469193, 24397, 20775, 180, 167, 191, 153, 213, 37, 43, 27);
-RT_INTERFACE!{static interface IRemoteSystemWebAccountFilterFactory(IRemoteSystemWebAccountFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRemoteSystemWebAccountFilterFactory] {
+RT_INTERFACE!{static interface IRemoteSystemWebAccountFilterFactory(IRemoteSystemWebAccountFilterFactoryVtbl): IInspectable [IID_IRemoteSystemWebAccountFilterFactory] {
     #[cfg(feature="windows-security")] fn Create(&self, account: <super::super::security::credentials::WebAccount as RtType>::Abi, out: *mut <RemoteSystemWebAccountFilter as RtType>::Abi) -> HRESULT
 }}
 impl IRemoteSystemWebAccountFilterFactory {
@@ -5914,7 +5914,7 @@ impl ThreadPool {
 }
 DEFINE_CLSID!(ThreadPool(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,84,104,114,101,97,100,80,111,111,108,0]) [CLSID_ThreadPool]);
 DEFINE_IID!(IID_IThreadPoolStatics, 3065997277, 33981, 17656, 172, 28, 147, 235, 203, 157, 186, 145);
-RT_INTERFACE!{static interface IThreadPoolStatics(IThreadPoolStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IThreadPoolStatics] {
+RT_INTERFACE!{static interface IThreadPoolStatics(IThreadPoolStaticsVtbl): IInspectable [IID_IThreadPoolStatics] {
     fn RunAsync(&self, handler: <WorkItemHandler as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn RunWithPriorityAsync(&self, handler: <WorkItemHandler as RtType>::Abi, priority: WorkItemPriority, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn RunWithPriorityAndOptionsAsync(&self, handler: <WorkItemHandler as RtType>::Abi, priority: WorkItemPriority, options: WorkItemOptions, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
@@ -5937,7 +5937,7 @@ impl IThreadPoolStatics {
     }}
 }
 DEFINE_IID!(IID_IThreadPoolTimer, 1498332792, 21994, 19080, 165, 13, 52, 2, 174, 31, 156, 242);
-RT_INTERFACE!{interface IThreadPoolTimer(IThreadPoolTimerVtbl): IInspectable(IInspectableVtbl) [IID_IThreadPoolTimer] {
+RT_INTERFACE!{interface IThreadPoolTimer(IThreadPoolTimerVtbl): IInspectable [IID_IThreadPoolTimer] {
     fn get_Period(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_Delay(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn Cancel(&self) -> HRESULT
@@ -5976,7 +5976,7 @@ impl ThreadPoolTimer {
 }
 DEFINE_CLSID!(ThreadPoolTimer(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,84,104,114,101,97,100,80,111,111,108,84,105,109,101,114,0]) [CLSID_ThreadPoolTimer]);
 DEFINE_IID!(IID_IThreadPoolTimerStatics, 445291778, 58498, 17947, 184, 199, 142, 250, 209, 204, 229, 144);
-RT_INTERFACE!{static interface IThreadPoolTimerStatics(IThreadPoolTimerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IThreadPoolTimerStatics] {
+RT_INTERFACE!{static interface IThreadPoolTimerStatics(IThreadPoolTimerStaticsVtbl): IInspectable [IID_IThreadPoolTimerStatics] {
     fn CreatePeriodicTimer(&self, handler: <TimerElapsedHandler as RtType>::Abi, period: foundation::TimeSpan, out: *mut <ThreadPoolTimer as RtType>::Abi) -> HRESULT,
     fn CreateTimer(&self, handler: <TimerElapsedHandler as RtType>::Abi, delay: foundation::TimeSpan, out: *mut <ThreadPoolTimer as RtType>::Abi) -> HRESULT,
     fn CreatePeriodicTimerWithCompletion(&self, handler: <TimerElapsedHandler as RtType>::Abi, period: foundation::TimeSpan, destroyed: <TimerDestroyedHandler as RtType>::Abi, out: *mut <ThreadPoolTimer as RtType>::Abi) -> HRESULT,
@@ -6043,7 +6043,7 @@ RT_ENUM! { enum WorkItemPriority: i32 {
 pub mod core { // Windows.System.Threading.Core
 use crate::prelude::*;
 DEFINE_IID!(IID_IPreallocatedWorkItem, 3067783676, 48219, 16410, 168, 178, 110, 117, 77, 20, 218, 166);
-RT_INTERFACE!{interface IPreallocatedWorkItem(IPreallocatedWorkItemVtbl): IInspectable(IInspectableVtbl) [IID_IPreallocatedWorkItem] {
+RT_INTERFACE!{interface IPreallocatedWorkItem(IPreallocatedWorkItemVtbl): IInspectable [IID_IPreallocatedWorkItem] {
     fn RunAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl IPreallocatedWorkItem {
@@ -6068,7 +6068,7 @@ impl PreallocatedWorkItem {
 }
 DEFINE_CLSID!(PreallocatedWorkItem(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,67,111,114,101,46,80,114,101,97,108,108,111,99,97,116,101,100,87,111,114,107,73,116,101,109,0]) [CLSID_PreallocatedWorkItem]);
 DEFINE_IID!(IID_IPreallocatedWorkItemFactory, 3822267205, 57322, 18075, 130, 197, 246, 227, 206, 253, 234, 251);
-RT_INTERFACE!{static interface IPreallocatedWorkItemFactory(IPreallocatedWorkItemFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPreallocatedWorkItemFactory] {
+RT_INTERFACE!{static interface IPreallocatedWorkItemFactory(IPreallocatedWorkItemFactoryVtbl): IInspectable [IID_IPreallocatedWorkItemFactory] {
     fn CreateWorkItem(&self, handler: <super::WorkItemHandler as RtType>::Abi, out: *mut <PreallocatedWorkItem as RtType>::Abi) -> HRESULT,
     fn CreateWorkItemWithPriority(&self, handler: <super::WorkItemHandler as RtType>::Abi, priority: super::WorkItemPriority, out: *mut <PreallocatedWorkItem as RtType>::Abi) -> HRESULT,
     fn CreateWorkItemWithPriorityAndOptions(&self, handler: <super::WorkItemHandler as RtType>::Abi, priority: super::WorkItemPriority, options: super::WorkItemOptions, out: *mut <PreallocatedWorkItem as RtType>::Abi) -> HRESULT
@@ -6101,7 +6101,7 @@ impl SignalHandler {
     }}
 }
 DEFINE_IID!(IID_ISignalNotifier, 338189830, 25511, 18195, 182, 217, 98, 246, 75, 86, 251, 139);
-RT_INTERFACE!{interface ISignalNotifier(ISignalNotifierVtbl): IInspectable(IInspectableVtbl) [IID_ISignalNotifier] {
+RT_INTERFACE!{interface ISignalNotifier(ISignalNotifierVtbl): IInspectable [IID_ISignalNotifier] {
     fn Enable(&self) -> HRESULT,
     fn Terminate(&self) -> HRESULT
 }}
@@ -6133,7 +6133,7 @@ impl SignalNotifier {
 }
 DEFINE_CLSID!(SignalNotifier(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,84,104,114,101,97,100,105,110,103,46,67,111,114,101,46,83,105,103,110,97,108,78,111,116,105,102,105,101,114,0]) [CLSID_SignalNotifier]);
 DEFINE_IID!(IID_ISignalNotifierStatics, 474891622, 33792, 18131, 161, 21, 125, 12, 13, 252, 159, 98);
-RT_INTERFACE!{static interface ISignalNotifierStatics(ISignalNotifierStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISignalNotifierStatics] {
+RT_INTERFACE!{static interface ISignalNotifierStatics(ISignalNotifierStaticsVtbl): IInspectable [IID_ISignalNotifierStatics] {
     fn AttachToEvent(&self, name: HSTRING, handler: <SignalHandler as RtType>::Abi, out: *mut <SignalNotifier as RtType>::Abi) -> HRESULT,
     fn AttachToEventWithTimeout(&self, name: HSTRING, handler: <SignalHandler as RtType>::Abi, timeout: foundation::TimeSpan, out: *mut <SignalNotifier as RtType>::Abi) -> HRESULT,
     fn AttachToSemaphore(&self, name: HSTRING, handler: <SignalHandler as RtType>::Abi, out: *mut <SignalNotifier as RtType>::Abi) -> HRESULT,
@@ -6169,7 +6169,7 @@ RT_ENUM! { enum SystemUpdateAttentionRequiredReason: i32 {
     None = 0, NetworkRequired = 1, InsufficientDiskSpace = 2, InsufficientBattery = 3, UpdateBlocked = 4,
 }}
 DEFINE_IID!(IID_ISystemUpdateItem, 2006401259, 22052, 20894, 168, 226, 9, 233, 23, 59, 63, 183);
-RT_INTERFACE!{interface ISystemUpdateItem(ISystemUpdateItemVtbl): IInspectable(IInspectableVtbl) [IID_ISystemUpdateItem] {
+RT_INTERFACE!{interface ISystemUpdateItem(ISystemUpdateItemVtbl): IInspectable [IID_ISystemUpdateItem] {
     fn get_State(&self, out: *mut SystemUpdateItemState) -> HRESULT,
     fn get_Title(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Description(&self, out: *mut HSTRING) -> HRESULT,
@@ -6226,7 +6226,7 @@ RT_ENUM! { enum SystemUpdateItemState: i32 {
     NotStarted = 0, Initializing = 1, Preparing = 2, Calculating = 3, Downloading = 4, Installing = 5, Completed = 6, RebootRequired = 7, Error = 8,
 }}
 DEFINE_IID!(IID_ISystemUpdateLastErrorInfo, 2129168375, 35396, 23406, 189, 7, 122, 236, 228, 17, 110, 169);
-RT_INTERFACE!{interface ISystemUpdateLastErrorInfo(ISystemUpdateLastErrorInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISystemUpdateLastErrorInfo] {
+RT_INTERFACE!{interface ISystemUpdateLastErrorInfo(ISystemUpdateLastErrorInfoVtbl): IInspectable [IID_ISystemUpdateLastErrorInfo] {
     fn get_State(&self, out: *mut SystemUpdateManagerState) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT,
     fn get_IsInteractive(&self, out: *mut bool) -> HRESULT
@@ -6330,7 +6330,7 @@ RT_ENUM! { enum SystemUpdateManagerState: i32 {
     Idle = 0, Detecting = 1, ReadyToDownload = 2, Downloading = 3, ReadyToInstall = 4, Installing = 5, RebootRequired = 6, ReadyToFinalize = 7, Finalizing = 8, Completed = 9, AttentionRequired = 10, Error = 11,
 }}
 DEFINE_IID!(IID_ISystemUpdateManagerStatics, 3000237295, 10609, 20926, 180, 26, 139, 215, 3, 187, 112, 26);
-RT_INTERFACE!{static interface ISystemUpdateManagerStatics(ISystemUpdateManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISystemUpdateManagerStatics] {
+RT_INTERFACE!{static interface ISystemUpdateManagerStatics(ISystemUpdateManagerStaticsVtbl): IInspectable [IID_ISystemUpdateManagerStatics] {
     fn IsSupported(&self, out: *mut bool) -> HRESULT,
     fn get_State(&self, out: *mut SystemUpdateManagerState) -> HRESULT,
     fn add_StateChanged(&self, handler: <foundation::EventHandler<IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -6496,7 +6496,7 @@ impl AdvertisingManager {
 }
 DEFINE_CLSID!(AdvertisingManager(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,65,100,118,101,114,116,105,115,105,110,103,77,97,110,97,103,101,114,0]) [CLSID_AdvertisingManager]);
 DEFINE_IID!(IID_IAdvertisingManagerForUser, 2458645456, 53116, 19120, 167, 220, 109, 197, 188, 212, 66, 82);
-RT_INTERFACE!{interface IAdvertisingManagerForUser(IAdvertisingManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IAdvertisingManagerForUser] {
+RT_INTERFACE!{interface IAdvertisingManagerForUser(IAdvertisingManagerForUserVtbl): IInspectable [IID_IAdvertisingManagerForUser] {
     fn get_AdvertisingId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_User(&self, out: *mut <super::User as RtType>::Abi) -> HRESULT
 }}
@@ -6514,7 +6514,7 @@ impl IAdvertisingManagerForUser {
 }
 RT_CLASS!{class AdvertisingManagerForUser: IAdvertisingManagerForUser}
 DEFINE_IID!(IID_IAdvertisingManagerStatics, 2916304524, 41587, 18635, 179, 70, 53, 68, 82, 45, 85, 129);
-RT_INTERFACE!{static interface IAdvertisingManagerStatics(IAdvertisingManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAdvertisingManagerStatics] {
+RT_INTERFACE!{static interface IAdvertisingManagerStatics(IAdvertisingManagerStaticsVtbl): IInspectable [IID_IAdvertisingManagerStatics] {
     fn get_AdvertisingId(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IAdvertisingManagerStatics {
@@ -6525,7 +6525,7 @@ impl IAdvertisingManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IAdvertisingManagerStatics2, 3708372911, 6765, 18096, 149, 188, 243, 249, 214, 190, 185, 251);
-RT_INTERFACE!{static interface IAdvertisingManagerStatics2(IAdvertisingManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IAdvertisingManagerStatics2] {
+RT_INTERFACE!{static interface IAdvertisingManagerStatics2(IAdvertisingManagerStatics2Vtbl): IInspectable [IID_IAdvertisingManagerStatics2] {
     fn GetForUser(&self, user: <super::User as RtType>::Abi, out: *mut <AdvertisingManagerForUser as RtType>::Abi) -> HRESULT
 }}
 impl IAdvertisingManagerStatics2 {
@@ -6536,7 +6536,7 @@ impl IAdvertisingManagerStatics2 {
     }}
 }
 DEFINE_IID!(IID_IAssignedAccessSettings, 465927964, 59761, 22359, 184, 224, 81, 47, 139, 140, 70, 210);
-RT_INTERFACE!{interface IAssignedAccessSettings(IAssignedAccessSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IAssignedAccessSettings] {
+RT_INTERFACE!{interface IAssignedAccessSettings(IAssignedAccessSettingsVtbl): IInspectable [IID_IAssignedAccessSettings] {
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_IsSingleAppKioskMode(&self, out: *mut bool) -> HRESULT,
     fn get_User(&self, out: *mut <super::User as RtType>::Abi) -> HRESULT
@@ -6570,7 +6570,7 @@ impl AssignedAccessSettings {
 }
 DEFINE_CLSID!(AssignedAccessSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,65,115,115,105,103,110,101,100,65,99,99,101,115,115,83,101,116,116,105,110,103,115,0]) [CLSID_AssignedAccessSettings]);
 DEFINE_IID!(IID_IAssignedAccessSettingsStatics, 883432717, 35369, 24307, 167, 190, 97, 142, 106, 195, 189, 1);
-RT_INTERFACE!{static interface IAssignedAccessSettingsStatics(IAssignedAccessSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAssignedAccessSettingsStatics] {
+RT_INTERFACE!{static interface IAssignedAccessSettingsStatics(IAssignedAccessSettingsStaticsVtbl): IInspectable [IID_IAssignedAccessSettingsStatics] {
     fn GetDefault(&self, out: *mut <AssignedAccessSettings as RtType>::Abi) -> HRESULT,
     fn GetForUser(&self, user: <super::User as RtType>::Abi, out: *mut <AssignedAccessSettings as RtType>::Abi) -> HRESULT
 }}
@@ -6587,7 +6587,7 @@ impl IAssignedAccessSettingsStatics {
     }}
 }
 DEFINE_IID!(IID_IDiagnosticsSettings, 3857312973, 10001, 17632, 151, 60, 73, 29, 120, 4, 141, 36);
-RT_INTERFACE!{interface IDiagnosticsSettings(IDiagnosticsSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticsSettings] {
+RT_INTERFACE!{interface IDiagnosticsSettings(IDiagnosticsSettingsVtbl): IInspectable [IID_IDiagnosticsSettings] {
     fn get_CanUseDiagnosticsToTailorExperiences(&self, out: *mut bool) -> HRESULT,
     fn get_User(&self, out: *mut <super::User as RtType>::Abi) -> HRESULT
 }}
@@ -6615,7 +6615,7 @@ impl DiagnosticsSettings {
 }
 DEFINE_CLSID!(DiagnosticsSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,68,105,97,103,110,111,115,116,105,99,115,83,101,116,116,105,110,103,115,0]) [CLSID_DiagnosticsSettings]);
 DEFINE_IID!(IID_IDiagnosticsSettingsStatics, 1926424591, 21392, 18323, 153, 11, 60, 204, 125, 106, 201, 200);
-RT_INTERFACE!{static interface IDiagnosticsSettingsStatics(IDiagnosticsSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDiagnosticsSettingsStatics] {
+RT_INTERFACE!{static interface IDiagnosticsSettingsStatics(IDiagnosticsSettingsStaticsVtbl): IInspectable [IID_IDiagnosticsSettingsStatics] {
     fn GetDefault(&self, out: *mut <DiagnosticsSettings as RtType>::Abi) -> HRESULT,
     fn GetForUser(&self, user: <super::User as RtType>::Abi, out: *mut <DiagnosticsSettings as RtType>::Abi) -> HRESULT
 }}
@@ -6632,7 +6632,7 @@ impl IDiagnosticsSettingsStatics {
     }}
 }
 DEFINE_IID!(IID_IFirstSignInSettings, 1049907539, 14942, 17710, 166, 1, 245, 186, 173, 42, 72, 112);
-RT_INTERFACE!{interface IFirstSignInSettings(IFirstSignInSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IFirstSignInSettings] {
+RT_INTERFACE!{interface IFirstSignInSettings(IFirstSignInSettingsVtbl): IInspectable [IID_IFirstSignInSettings] {
     
 }}
 RT_CLASS!{class FirstSignInSettings: IFirstSignInSettings}
@@ -6644,7 +6644,7 @@ impl FirstSignInSettings {
 }
 DEFINE_CLSID!(FirstSignInSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,70,105,114,115,116,83,105,103,110,73,110,83,101,116,116,105,110,103,115,0]) [CLSID_FirstSignInSettings]);
 DEFINE_IID!(IID_IFirstSignInSettingsStatics, 484544271, 7233, 20128, 183, 162, 111, 12, 28, 126, 132, 56);
-RT_INTERFACE!{static interface IFirstSignInSettingsStatics(IFirstSignInSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFirstSignInSettingsStatics] {
+RT_INTERFACE!{static interface IFirstSignInSettingsStatics(IFirstSignInSettingsStaticsVtbl): IInspectable [IID_IFirstSignInSettingsStatics] {
     fn GetDefault(&self, out: *mut <FirstSignInSettings as RtType>::Abi) -> HRESULT
 }}
 impl IFirstSignInSettingsStatics {
@@ -6689,7 +6689,7 @@ impl GlobalizationPreferences {
 }
 DEFINE_CLSID!(GlobalizationPreferences(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,71,108,111,98,97,108,105,122,97,116,105,111,110,80,114,101,102,101,114,101,110,99,101,115,0]) [CLSID_GlobalizationPreferences]);
 DEFINE_IID!(IID_IGlobalizationPreferencesForUser, 353306517, 20334, 16570, 160, 16, 226, 125, 129, 189, 167, 245);
-RT_INTERFACE!{interface IGlobalizationPreferencesForUser(IGlobalizationPreferencesForUserVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalizationPreferencesForUser] {
+RT_INTERFACE!{interface IGlobalizationPreferencesForUser(IGlobalizationPreferencesForUserVtbl): IInspectable [IID_IGlobalizationPreferencesForUser] {
     fn get_User(&self, out: *mut <super::User as RtType>::Abi) -> HRESULT,
     fn get_Calendars(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_Clocks(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
@@ -6737,7 +6737,7 @@ impl IGlobalizationPreferencesForUser {
 }
 RT_CLASS!{class GlobalizationPreferencesForUser: IGlobalizationPreferencesForUser}
 DEFINE_IID!(IID_IGlobalizationPreferencesStatics, 29311782, 60727, 20118, 176, 233, 193, 52, 13, 30, 161, 88);
-RT_INTERFACE!{static interface IGlobalizationPreferencesStatics(IGlobalizationPreferencesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGlobalizationPreferencesStatics] {
+RT_INTERFACE!{static interface IGlobalizationPreferencesStatics(IGlobalizationPreferencesStaticsVtbl): IInspectable [IID_IGlobalizationPreferencesStatics] {
     fn get_Calendars(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_Clocks(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_Currencies(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
@@ -6778,7 +6778,7 @@ impl IGlobalizationPreferencesStatics {
     }}
 }
 DEFINE_IID!(IID_IGlobalizationPreferencesStatics2, 4241393137, 17152, 19664, 156, 172, 26, 142, 123, 126, 24, 244);
-RT_INTERFACE!{static interface IGlobalizationPreferencesStatics2(IGlobalizationPreferencesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IGlobalizationPreferencesStatics2] {
+RT_INTERFACE!{static interface IGlobalizationPreferencesStatics2(IGlobalizationPreferencesStatics2Vtbl): IInspectable [IID_IGlobalizationPreferencesStatics2] {
     fn TrySetHomeGeographicRegion(&self, region: HSTRING, out: *mut bool) -> HRESULT,
     fn TrySetLanguages(&self, languageTags: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -6795,7 +6795,7 @@ impl IGlobalizationPreferencesStatics2 {
     }}
 }
 DEFINE_IID!(IID_IGlobalizationPreferencesStatics3, 503682867, 13813, 16600, 185, 232, 174, 243, 239, 133, 111, 206);
-RT_INTERFACE!{static interface IGlobalizationPreferencesStatics3(IGlobalizationPreferencesStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IGlobalizationPreferencesStatics3] {
+RT_INTERFACE!{static interface IGlobalizationPreferencesStatics3(IGlobalizationPreferencesStatics3Vtbl): IInspectable [IID_IGlobalizationPreferencesStatics3] {
     fn GetForUser(&self, user: <super::User as RtType>::Abi, out: *mut <GlobalizationPreferencesForUser as RtType>::Abi) -> HRESULT
 }}
 impl IGlobalizationPreferencesStatics3 {
@@ -6830,7 +6830,7 @@ impl LockScreen {
 }
 DEFINE_CLSID!(LockScreen(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,76,111,99,107,83,99,114,101,101,110,0]) [CLSID_LockScreen]);
 DEFINE_IID!(IID_ILockScreenImageFeedStatics, 739079158, 937, 16806, 155, 1, 73, 82, 81, 255, 81, 213);
-RT_INTERFACE!{static interface ILockScreenImageFeedStatics(ILockScreenImageFeedStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenImageFeedStatics] {
+RT_INTERFACE!{static interface ILockScreenImageFeedStatics(ILockScreenImageFeedStaticsVtbl): IInspectable [IID_ILockScreenImageFeedStatics] {
     fn RequestSetImageFeedAsync(&self, syndicationFeedUri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperation<SetImageFeedResult> as RtType>::Abi) -> HRESULT,
     fn TryRemoveImageFeed(&self, out: *mut bool) -> HRESULT
 }}
@@ -6847,7 +6847,7 @@ impl ILockScreenImageFeedStatics {
     }}
 }
 DEFINE_IID!(IID_ILockScreenStatics, 1055511469, 46599, 16558, 180, 38, 118, 49, 217, 130, 18, 105);
-RT_INTERFACE!{static interface ILockScreenStatics(ILockScreenStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILockScreenStatics] {
+RT_INTERFACE!{static interface ILockScreenStatics(ILockScreenStaticsVtbl): IInspectable [IID_ILockScreenStatics] {
     fn get_OriginalImageFile(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn GetImageStream(&self, out: *mut <super::super::storage::streams::IRandomAccessStream as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn SetImageFileAsync(&self, value: <super::super::storage::IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -6932,7 +6932,7 @@ impl UserInformation {
 }
 DEFINE_CLSID!(UserInformation(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,85,115,101,114,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_UserInformation]);
 DEFINE_IID!(IID_IUserInformationStatics, 2012457232, 18682, 18588, 147, 78, 42, 232, 91, 168, 247, 114);
-RT_INTERFACE!{static interface IUserInformationStatics(IUserInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserInformationStatics] {
+RT_INTERFACE!{static interface IUserInformationStatics(IUserInformationStaticsVtbl): IInspectable [IID_IUserInformationStatics] {
     fn get_AccountPictureChangeEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_NameAccessAllowed(&self, out: *mut bool) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -7031,7 +7031,7 @@ impl IUserInformationStatics {
     }}
 }
 DEFINE_IID!(IID_IUserProfilePersonalizationSettings, 2364398260, 31128, 18133, 141, 211, 24, 79, 28, 95, 154, 185);
-RT_INTERFACE!{interface IUserProfilePersonalizationSettings(IUserProfilePersonalizationSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IUserProfilePersonalizationSettings] {
+RT_INTERFACE!{interface IUserProfilePersonalizationSettings(IUserProfilePersonalizationSettingsVtbl): IInspectable [IID_IUserProfilePersonalizationSettings] {
     #[cfg(feature="windows-storage")] fn TrySetLockScreenImageAsync(&self, imageFile: <super::super::storage::StorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn TrySetWallpaperImageAsync(&self, imageFile: <super::super::storage::StorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
 }}
@@ -7059,7 +7059,7 @@ impl UserProfilePersonalizationSettings {
 }
 DEFINE_CLSID!(UserProfilePersonalizationSettings(&[87,105,110,100,111,119,115,46,83,121,115,116,101,109,46,85,115,101,114,80,114,111,102,105,108,101,46,85,115,101,114,80,114,111,102,105,108,101,80,101,114,115,111,110,97,108,105,122,97,116,105,111,110,83,101,116,116,105,110,103,115,0]) [CLSID_UserProfilePersonalizationSettings]);
 DEFINE_IID!(IID_IUserProfilePersonalizationSettingsStatics, 2444015681, 20535, 17739, 152, 131, 187, 119, 45, 8, 221, 22);
-RT_INTERFACE!{static interface IUserProfilePersonalizationSettingsStatics(IUserProfilePersonalizationSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserProfilePersonalizationSettingsStatics] {
+RT_INTERFACE!{static interface IUserProfilePersonalizationSettingsStatics(IUserProfilePersonalizationSettingsStaticsVtbl): IInspectable [IID_IUserProfilePersonalizationSettingsStatics] {
     fn get_Current(&self, out: *mut <UserProfilePersonalizationSettings as RtType>::Abi) -> HRESULT,
     fn IsSupported(&self, out: *mut bool) -> HRESULT
 }}

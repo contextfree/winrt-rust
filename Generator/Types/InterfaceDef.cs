@@ -109,7 +109,7 @@ DEFINE_IID!(IID_{ name }, { String.Join(", ", guid.ConstructorArguments.Select(a
             if (!IsDelegate)
             {
                 Module.Append($@"
-RT_INTERFACE!{{{ prependStatic }interface { name }{ generic }({ name }Vtbl): IInspectable(IInspectableVtbl) [IID_{ name }] {{
+RT_INTERFACE!{{{ prependStatic }interface { name }{ generic }({ name }Vtbl): IInspectable [IID_{ name }] {{
     { String.Join(",\r\n    ", rawMethodDeclarationsWithFeatures) }
 }}}}");
             }
