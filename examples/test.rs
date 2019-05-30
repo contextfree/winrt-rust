@@ -14,7 +14,7 @@ fn main() {
     let base = FastHString::new("https://github.com");
     let relative = FastHString::new("contextfree/winrt-rust");
     let uri = Uri::create_with_relative_uri(&base, &relative).unwrap();
-    // let uri2 = uri.clone(); // TODO
+    let uri2 = uri.clone();
     let to_string = uri.query_interface::<IStringable>().unwrap().to_string().unwrap();
     println!("{} -> {}", uri.get_runtime_class_name(), to_string);
     println!("TrustLevel: {:?}", uri.get_trust_level());

@@ -10,7 +10,6 @@ use w::um::combaseapi::CoTaskMemFree;
 /// Smart pointer for Windows Runtime objects. This pointer automatically maintains the
 /// reference count of the underlying COM object.
 #[repr(transparent)]
-#[derive(Debug)]
 pub(crate) struct ComPtr<T: ComInterfaceAbi>(ptr::NonNull<T>);
 
 impl<T: ComInterfaceAbi> fmt::Pointer for ComPtr<T> {

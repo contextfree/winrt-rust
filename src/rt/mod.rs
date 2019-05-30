@@ -311,7 +311,7 @@ macro_rules! RT_INTERFACE {
         pub struct $abiname {
             lpVtbl: *const $vtbl
         }
-        $(#[$attr])* #[repr(transparent)]
+        $(#[$attr])* #[repr(transparent)] #[derive(Clone)]
         pub struct $interface(ComPtr<$abiname>);
         impl ComIid for $interface {
             #[inline] fn iid() -> &'static crate::Guid { &$iid }
@@ -374,7 +374,7 @@ macro_rules! RT_INTERFACE {
         pub struct $abiname {
             lpVtbl: *const $vtbl
         }
-        $(#[$attr])* #[repr(transparent)]
+        $(#[$attr])* #[repr(transparent)] #[derive(Clone)]
         pub struct $interface(ComPtr<$abiname>);
         impl ComIid for $interface {
             #[inline] fn iid() -> &'static crate::Guid { &$iid }
@@ -437,7 +437,7 @@ macro_rules! RT_INTERFACE {
         pub struct $abiname<$t1> where $t1: RtType {
             lpVtbl: *const $vtbl<$t1>,
         }
-        $(#[$attr])* #[repr(transparent)]
+        $(#[$attr])* #[repr(transparent)] #[derive(Clone)]
         pub struct $interface<$t1: RtType>(ComPtr<$abiname<$t1>>);
         impl<$t1> crate::ComInterfaceAbi for $abiname<$t1> where $t1: RtType {
             type Vtbl = $vtbl<$t1>;
@@ -496,7 +496,7 @@ macro_rules! RT_INTERFACE {
         pub struct $abiname<$t1, $t2> where $t1: RtType, $t2: RtType {
             lpVtbl: *const $vtbl<$t1, $t2>,
         }
-        $(#[$attr])* #[repr(transparent)]
+        $(#[$attr])* #[repr(transparent)] #[derive(Clone)]
         pub struct $interface<$t1: RtType, $t2: RtType>(ComPtr<$abiname<$t1, $t2>>);
         impl<$t1, $t2> crate::ComInterfaceAbi for $abiname<$t1, $t2> where $t1: RtType, $t2: RtType {
             type Vtbl = $vtbl<$t1, $t2>;
@@ -685,7 +685,7 @@ macro_rules! RT_CLASS {
     };
 
     {class $cls:ident : $interface:ty} => {
-        #[repr(transparent)]
+        #[repr(transparent)] #[derive(Clone)]
         pub struct $cls(ComPtr<<$interface as ComInterface>::TAbi>);
         unsafe impl crate::RtInterface for $cls {}
         unsafe impl crate::RtClassInterface for $cls {}
