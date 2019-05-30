@@ -7,6 +7,25 @@ use w::shared::minwindef::LPVOID;
 use w::um::unknwnbase::IUnknown;
 use w::um::combaseapi::CoTaskMemFree;
 
+#[repr(transparent)]
+pub struct ComAbi<Vtbl> {
+    lpVtbl: *const Vtbl
+}
+
+impl<Vtbl> ComInterfaceAbi for ComAbi<Vtbl> {
+    type Vtbl = Vtbl;
+    fn get_vtbl(&self) -> *const Vtbl {
+        self.lpVtbl
+    }
+}
+
+impl<Vtbl> Clone for ComAbi<Vtbl> {
+    #[inline]
+    fn clone(&self) -> Self {
+        ComAbi { lpVtbl: self.lpVtbl }
+    }
+}
+
 /// Smart pointer for Windows Runtime objects. This pointer automatically maintains the
 /// reference count of the underlying COM object.
 #[repr(transparent)]
@@ -27,7 +46,7 @@ pub(crate) trait ComPtrHelpers {
     unsafe fn as_unchecked<Interface: ComInterface>(&self) -> &Interface;
 }
 
-impl<T> ComPtrHelpers for T where T: ComInterface + Sized {
+impl<T> ComPtrHelpers for T where T: ComInterface {
     #[inline]
     unsafe fn into_unchecked<Interface: ComInterface>(self) -> Interface {
         let ptr = self.get_abi() as *const _;

@@ -112,7 +112,7 @@ namespace Generator.Types
             }
 
             return outInit + $@"
-        let hr = ((*self.get_abi().lpVtbl).{ rawName })({ String.Join(", ", rawParams) });
+        let hr = (self.get_vtbl().{ rawName })({ String.Join(", ", rawParams) });
         if hr == S_OK {{ { outWrap } }} else {{ err(hr) }}";
         }
     }

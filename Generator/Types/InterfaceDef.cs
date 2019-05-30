@@ -109,14 +109,14 @@ DEFINE_IID!(IID_{ name }, { String.Join(", ", guid.ConstructorArguments.Select(a
             if (!IsDelegate)
             {
                 Module.Append($@"
-RT_INTERFACE!{{{ prependStatic }interface { name }{ generic }({ name }Vtbl, {name}_Abi): IInspectable(IInspectableVtbl) [IID_{ name }] {{
+RT_INTERFACE!{{{ prependStatic }interface { name }{ generic }({ name }Vtbl): IInspectable(IInspectableVtbl) [IID_{ name }] {{
     { String.Join(",\r\n    ", rawMethodDeclarationsWithFeatures) }
 }}}}");
             }
             else
             {
                 Module.Append($@"
-RT_DELEGATE!{{delegate { name }{ generic }({ name }Vtbl, { name}_Abi, { name }Impl) [IID_{ name }] {{
+RT_DELEGATE!{{delegate { name }{ generic }({ name }Vtbl, { name }Impl) [IID_{ name }] {{
     { String.Join(",\r\n    ", rawMethodDeclarationsWithFeatures) }
 }}}}");
             }
