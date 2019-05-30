@@ -21,7 +21,7 @@ impl ApplicationLanguages {
 }
 DEFINE_CLSID!(ApplicationLanguages(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,65,112,112,108,105,99,97,116,105,111,110,76,97,110,103,117,97,103,101,115,0]) [CLSID_ApplicationLanguages]);
 DEFINE_IID!(IID_IApplicationLanguagesStatics, 1974732871, 2636, 19090, 149, 101, 253, 99, 201, 95, 122, 237);
-RT_INTERFACE!{static interface IApplicationLanguagesStatics(IApplicationLanguagesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IApplicationLanguagesStatics] {
+RT_INTERFACE!{static interface IApplicationLanguagesStatics(IApplicationLanguagesStaticsVtbl): IInspectable [IID_IApplicationLanguagesStatics] {
     fn get_PrimaryLanguageOverride(&self, out: *mut HSTRING) -> HRESULT,
     fn put_PrimaryLanguageOverride(&self, value: HSTRING) -> HRESULT,
     fn get_Languages(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
@@ -49,7 +49,7 @@ impl IApplicationLanguagesStatics {
     }}
 }
 DEFINE_IID!(IID_IApplicationLanguagesStatics2, 502324815, 1835, 19835, 143, 6, 203, 45, 180, 15, 43, 181);
-RT_INTERFACE!{static interface IApplicationLanguagesStatics2(IApplicationLanguagesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IApplicationLanguagesStatics2] {
+RT_INTERFACE!{static interface IApplicationLanguagesStatics2(IApplicationLanguagesStatics2Vtbl): IInspectable [IID_IApplicationLanguagesStatics2] {
     #[cfg(feature="windows-system")] fn GetLanguagesForUser(&self, user: <super::system::User as RtType>::Abi, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT
 }}
 impl IApplicationLanguagesStatics2 {
@@ -60,7 +60,7 @@ impl IApplicationLanguagesStatics2 {
     }}
 }
 DEFINE_IID!(IID_ICalendar, 3392152093, 34521, 16635, 162, 107, 212, 78, 183, 207, 8, 234);
-RT_INTERFACE!{interface ICalendar(ICalendarVtbl): IInspectable(IInspectableVtbl) [IID_ICalendar] {
+RT_INTERFACE!{interface ICalendar(ICalendarVtbl): IInspectable [IID_ICalendar] {
     fn Clone(&self, out: *mut <Calendar as RtType>::Abi) -> HRESULT,
     fn SetToMin(&self) -> HRESULT,
     fn SetToMax(&self) -> HRESULT,
@@ -642,7 +642,7 @@ impl Calendar {
 }
 DEFINE_CLSID!(Calendar(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,97,108,101,110,100,97,114,0]) [CLSID_Calendar]);
 DEFINE_IID!(IID_ICalendarFactory, 2213905426, 58731, 19573, 166, 110, 15, 99, 213, 119, 88, 166);
-RT_INTERFACE!{static interface ICalendarFactory(ICalendarFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICalendarFactory] {
+RT_INTERFACE!{static interface ICalendarFactory(ICalendarFactoryVtbl): IInspectable [IID_ICalendarFactory] {
     fn CreateCalendarDefaultCalendarAndClock(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <Calendar as RtType>::Abi) -> HRESULT,
     fn CreateCalendar(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, calendar: HSTRING, clock: HSTRING, out: *mut <Calendar as RtType>::Abi) -> HRESULT
 }}
@@ -659,7 +659,7 @@ impl ICalendarFactory {
     }}
 }
 DEFINE_IID!(IID_ICalendarFactory2, 3024828300, 51838, 17808, 158, 114, 234, 43, 236, 26, 81, 21);
-RT_INTERFACE!{static interface ICalendarFactory2(ICalendarFactory2Vtbl): IInspectable(IInspectableVtbl) [IID_ICalendarFactory2] {
+RT_INTERFACE!{static interface ICalendarFactory2(ICalendarFactory2Vtbl): IInspectable [IID_ICalendarFactory2] {
     fn CreateCalendarWithTimeZone(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, calendar: HSTRING, clock: HSTRING, timeZoneId: HSTRING, out: *mut <Calendar as RtType>::Abi) -> HRESULT
 }}
 impl ICalendarFactory2 {
@@ -722,7 +722,7 @@ impl CalendarIdentifiers {
 }
 DEFINE_CLSID!(CalendarIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,97,108,101,110,100,97,114,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_CalendarIdentifiers]);
 DEFINE_IID!(IID_ICalendarIdentifiersStatics, 2154119016, 11442, 19487, 181, 144, 240, 245, 43, 244, 253, 26);
-RT_INTERFACE!{static interface ICalendarIdentifiersStatics(ICalendarIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICalendarIdentifiersStatics] {
+RT_INTERFACE!{static interface ICalendarIdentifiersStatics(ICalendarIdentifiersStaticsVtbl): IInspectable [IID_ICalendarIdentifiersStatics] {
     fn get_Gregorian(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Hebrew(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Hijri(&self, out: *mut HSTRING) -> HRESULT,
@@ -781,7 +781,7 @@ impl ICalendarIdentifiersStatics {
     }}
 }
 DEFINE_IID!(IID_ICalendarIdentifiersStatics2, 2113197192, 24528, 17063, 149, 181, 125, 152, 216, 35, 7, 95);
-RT_INTERFACE!{static interface ICalendarIdentifiersStatics2(ICalendarIdentifiersStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ICalendarIdentifiersStatics2] {
+RT_INTERFACE!{static interface ICalendarIdentifiersStatics2(ICalendarIdentifiersStatics2Vtbl): IInspectable [IID_ICalendarIdentifiersStatics2] {
     fn get_Persian(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ICalendarIdentifiersStatics2 {
@@ -792,7 +792,7 @@ impl ICalendarIdentifiersStatics2 {
     }}
 }
 DEFINE_IID!(IID_ICalendarIdentifiersStatics3, 740447267, 8109, 16576, 147, 52, 168, 235, 144, 219, 4, 245);
-RT_INTERFACE!{static interface ICalendarIdentifiersStatics3(ICalendarIdentifiersStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_ICalendarIdentifiersStatics3] {
+RT_INTERFACE!{static interface ICalendarIdentifiersStatics3(ICalendarIdentifiersStatics3Vtbl): IInspectable [IID_ICalendarIdentifiersStatics3] {
     fn get_ChineseLunar(&self, out: *mut HSTRING) -> HRESULT,
     fn get_JapaneseLunar(&self, out: *mut HSTRING) -> HRESULT,
     fn get_KoreanLunar(&self, out: *mut HSTRING) -> HRESULT,
@@ -838,7 +838,7 @@ impl ClockIdentifiers {
 }
 DEFINE_CLSID!(ClockIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,108,111,99,107,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_ClockIdentifiers]);
 DEFINE_IID!(IID_IClockIdentifiersStatics, 1379403195, 4844, 20355, 188, 49, 177, 180, 55, 107, 8, 8);
-RT_INTERFACE!{static interface IClockIdentifiersStatics(IClockIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IClockIdentifiersStatics] {
+RT_INTERFACE!{static interface IClockIdentifiersStatics(IClockIdentifiersStaticsVtbl): IInspectable [IID_IClockIdentifiersStatics] {
     fn get_TwelveHour(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TwentyFourHour(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -1348,7 +1348,7 @@ impl CurrencyIdentifiers {
 }
 DEFINE_CLSID!(CurrencyIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,117,114,114,101,110,99,121,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_CurrencyIdentifiers]);
 DEFINE_IID!(IID_ICurrencyIdentifiersStatics, 2669480219, 54662, 18707, 155, 106, 169, 189, 45, 193, 40, 116);
-RT_INTERFACE!{static interface ICurrencyIdentifiersStatics(ICurrencyIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyIdentifiersStatics] {
+RT_INTERFACE!{static interface ICurrencyIdentifiersStatics(ICurrencyIdentifiersStaticsVtbl): IInspectable [IID_ICurrencyIdentifiersStatics] {
     fn get_AED(&self, out: *mut HSTRING) -> HRESULT,
     fn get_AFN(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ALL(&self, out: *mut HSTRING) -> HRESULT,
@@ -2295,7 +2295,7 @@ impl ICurrencyIdentifiersStatics {
     }}
 }
 DEFINE_IID!(IID_ICurrencyIdentifiersStatics2, 403995007, 50098, 19507, 149, 145, 152, 0, 17, 149, 13, 55);
-RT_INTERFACE!{static interface ICurrencyIdentifiersStatics2(ICurrencyIdentifiersStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyIdentifiersStatics2] {
+RT_INTERFACE!{static interface ICurrencyIdentifiersStatics2(ICurrencyIdentifiersStatics2Vtbl): IInspectable [IID_ICurrencyIdentifiersStatics2] {
     fn get_BYN(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ICurrencyIdentifiersStatics2 {
@@ -2306,7 +2306,7 @@ impl ICurrencyIdentifiersStatics2 {
     }}
 }
 DEFINE_IID!(IID_ICurrencyIdentifiersStatics3, 1337080826, 60709, 20301, 133, 127, 35, 127, 23, 72, 194, 28);
-RT_INTERFACE!{static interface ICurrencyIdentifiersStatics3(ICurrencyIdentifiersStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyIdentifiersStatics3] {
+RT_INTERFACE!{static interface ICurrencyIdentifiersStatics3(ICurrencyIdentifiersStatics3Vtbl): IInspectable [IID_ICurrencyIdentifiersStatics3] {
     fn get_MRU(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SSP(&self, out: *mut HSTRING) -> HRESULT,
     fn get_STN(&self, out: *mut HSTRING) -> HRESULT,
@@ -2338,7 +2338,7 @@ RT_ENUM! { enum DayOfWeek: i32 {
     Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6,
 }}
 DEFINE_IID!(IID_IGeographicRegion, 32089633, 19044, 20185, 149, 79, 158, 222, 176, 123, 217, 3);
-RT_INTERFACE!{interface IGeographicRegion(IGeographicRegionVtbl): IInspectable(IInspectableVtbl) [IID_IGeographicRegion] {
+RT_INTERFACE!{interface IGeographicRegion(IGeographicRegionVtbl): IInspectable [IID_IGeographicRegion] {
     fn get_Code(&self, out: *mut HSTRING) -> HRESULT,
     fn get_CodeTwoLetter(&self, out: *mut HSTRING) -> HRESULT,
     fn get_CodeThreeLetter(&self, out: *mut HSTRING) -> HRESULT,
@@ -2398,7 +2398,7 @@ impl GeographicRegion {
 }
 DEFINE_CLSID!(GeographicRegion(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,71,101,111,103,114,97,112,104,105,99,82,101,103,105,111,110,0]) [CLSID_GeographicRegion]);
 DEFINE_IID!(IID_IGeographicRegionFactory, 1396855408, 30644, 17003, 133, 159, 129, 225, 157, 81, 37, 70);
-RT_INTERFACE!{static interface IGeographicRegionFactory(IGeographicRegionFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IGeographicRegionFactory] {
+RT_INTERFACE!{static interface IGeographicRegionFactory(IGeographicRegionFactoryVtbl): IInspectable [IID_IGeographicRegionFactory] {
     fn CreateGeographicRegion(&self, geographicRegionCode: HSTRING, out: *mut <GeographicRegion as RtType>::Abi) -> HRESULT
 }}
 impl IGeographicRegionFactory {
@@ -2409,7 +2409,7 @@ impl IGeographicRegionFactory {
     }}
 }
 DEFINE_IID!(IID_IGeographicRegionStatics, 702712180, 31449, 20212, 135, 153, 179, 180, 79, 173, 236, 8);
-RT_INTERFACE!{static interface IGeographicRegionStatics(IGeographicRegionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGeographicRegionStatics] {
+RT_INTERFACE!{static interface IGeographicRegionStatics(IGeographicRegionStaticsVtbl): IInspectable [IID_IGeographicRegionStatics] {
     fn IsSupported(&self, geographicRegionCode: HSTRING, out: *mut bool) -> HRESULT
 }}
 impl IGeographicRegionStatics {
@@ -2420,7 +2420,7 @@ impl IGeographicRegionStatics {
     }}
 }
 DEFINE_IID!(IID_IJapanesePhoneme, 795513600, 59483, 17382, 137, 125, 93, 130, 248, 98, 223, 33);
-RT_INTERFACE!{interface IJapanesePhoneme(IJapanesePhonemeVtbl): IInspectable(IInspectableVtbl) [IID_IJapanesePhoneme] {
+RT_INTERFACE!{interface IJapanesePhoneme(IJapanesePhonemeVtbl): IInspectable [IID_IJapanesePhoneme] {
     fn get_DisplayText(&self, out: *mut HSTRING) -> HRESULT,
     fn get_YomiText(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IsPhraseStart(&self, out: *mut bool) -> HRESULT
@@ -2455,7 +2455,7 @@ impl JapanesePhoneticAnalyzer {
 }
 DEFINE_CLSID!(JapanesePhoneticAnalyzer(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,74,97,112,97,110,101,115,101,80,104,111,110,101,116,105,99,65,110,97,108,121,122,101,114,0]) [CLSID_JapanesePhoneticAnalyzer]);
 DEFINE_IID!(IID_IJapanesePhoneticAnalyzerStatics, 2292948624, 37854, 16818, 180, 213, 142, 219, 34, 127, 209, 194);
-RT_INTERFACE!{static interface IJapanesePhoneticAnalyzerStatics(IJapanesePhoneticAnalyzerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJapanesePhoneticAnalyzerStatics] {
+RT_INTERFACE!{static interface IJapanesePhoneticAnalyzerStatics(IJapanesePhoneticAnalyzerStaticsVtbl): IInspectable [IID_IJapanesePhoneticAnalyzerStatics] {
     fn GetWords(&self, input: HSTRING, out: *mut <foundation::collections::IVectorView<JapanesePhoneme> as RtType>::Abi) -> HRESULT,
     fn GetWordsWithMonoRubyOption(&self, input: HSTRING, monoRuby: bool, out: *mut <foundation::collections::IVectorView<JapanesePhoneme> as RtType>::Abi) -> HRESULT
 }}
@@ -2472,7 +2472,7 @@ impl IJapanesePhoneticAnalyzerStatics {
     }}
 }
 DEFINE_IID!(IID_ILanguage, 3933841234, 63426, 16997, 177, 189, 196, 222, 196, 228, 240, 128);
-RT_INTERFACE!{interface ILanguage(ILanguageVtbl): IInspectable(IInspectableVtbl) [IID_ILanguage] {
+RT_INTERFACE!{interface ILanguage(ILanguageVtbl): IInspectable [IID_ILanguage] {
     fn get_LanguageTag(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_NativeName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2520,7 +2520,7 @@ impl Language {
 }
 DEFINE_CLSID!(Language(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,76,97,110,103,117,97,103,101,0]) [CLSID_Language]);
 DEFINE_IID!(IID_ILanguage2, 1783096757, 55629, 18566, 164, 4, 165, 165, 185, 213, 180, 148);
-RT_INTERFACE!{interface ILanguage2(ILanguage2Vtbl): IInspectable(IInspectableVtbl) [IID_ILanguage2] {
+RT_INTERFACE!{interface ILanguage2(ILanguage2Vtbl): IInspectable [IID_ILanguage2] {
     fn get_LayoutDirection(&self, out: *mut LanguageLayoutDirection) -> HRESULT
 }}
 impl ILanguage2 {
@@ -2531,7 +2531,7 @@ impl ILanguage2 {
     }}
 }
 DEFINE_IID!(IID_ILanguageExtensionSubtags, 2105388869, 13965, 17252, 133, 43, 222, 201, 39, 3, 123, 133);
-RT_INTERFACE!{interface ILanguageExtensionSubtags(ILanguageExtensionSubtagsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageExtensionSubtags] {
+RT_INTERFACE!{interface ILanguageExtensionSubtags(ILanguageExtensionSubtagsVtbl): IInspectable [IID_ILanguageExtensionSubtags] {
     fn GetExtensionSubtags(&self, singleton: HSTRING, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT
 }}
 impl ILanguageExtensionSubtags {
@@ -2542,7 +2542,7 @@ impl ILanguageExtensionSubtags {
     }}
 }
 DEFINE_IID!(IID_ILanguageFactory, 2600620716, 3111, 17656, 183, 146, 151, 147, 251, 102, 198, 62);
-RT_INTERFACE!{static interface ILanguageFactory(ILanguageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFactory] {
+RT_INTERFACE!{static interface ILanguageFactory(ILanguageFactoryVtbl): IInspectable [IID_ILanguageFactory] {
     fn CreateLanguage(&self, languageTag: HSTRING, out: *mut <Language as RtType>::Abi) -> HRESULT
 }}
 impl ILanguageFactory {
@@ -2556,7 +2556,7 @@ RT_ENUM! { enum LanguageLayoutDirection: i32 {
     Ltr = 0, Rtl = 1, TtbLtr = 2, TtbRtl = 3,
 }}
 DEFINE_IID!(IID_ILanguageStatics, 2990331223, 2149, 18132, 137, 184, 213, 155, 232, 153, 15, 13);
-RT_INTERFACE!{static interface ILanguageStatics(ILanguageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics] {
+RT_INTERFACE!{static interface ILanguageStatics(ILanguageStaticsVtbl): IInspectable [IID_ILanguageStatics] {
     fn IsWellFormed(&self, languageTag: HSTRING, out: *mut bool) -> HRESULT,
     fn get_CurrentInputMethodLanguageTag(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -2573,7 +2573,7 @@ impl ILanguageStatics {
     }}
 }
 DEFINE_IID!(IID_ILanguageStatics2, 806985582, 37195, 19242, 157, 110, 227, 176, 226, 125, 190, 79);
-RT_INTERFACE!{static interface ILanguageStatics2(ILanguageStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ILanguageStatics2] {
+RT_INTERFACE!{static interface ILanguageStatics2(ILanguageStatics2Vtbl): IInspectable [IID_ILanguageStatics2] {
     fn TrySetInputMethodLanguageTag(&self, languageTag: HSTRING, out: *mut bool) -> HRESULT
 }}
 impl ILanguageStatics2 {
@@ -2734,7 +2734,7 @@ impl NumeralSystemIdentifiers {
 }
 DEFINE_CLSID!(NumeralSystemIdentifiers(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,101,114,97,108,83,121,115,116,101,109,73,100,101,110,116,105,102,105,101,114,115,0]) [CLSID_NumeralSystemIdentifiers]);
 DEFINE_IID!(IID_INumeralSystemIdentifiersStatics, 2781242051, 26825, 19773, 183, 101, 151, 32, 41, 226, 29, 236);
-RT_INTERFACE!{static interface INumeralSystemIdentifiersStatics(INumeralSystemIdentifiersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INumeralSystemIdentifiersStatics] {
+RT_INTERFACE!{static interface INumeralSystemIdentifiersStatics(INumeralSystemIdentifiersStaticsVtbl): IInspectable [IID_INumeralSystemIdentifiersStatics] {
     fn get_Arab(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ArabExt(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Bali(&self, out: *mut HSTRING) -> HRESULT,
@@ -2955,7 +2955,7 @@ impl INumeralSystemIdentifiersStatics {
     }}
 }
 DEFINE_IID!(IID_INumeralSystemIdentifiersStatics2, 2130719272, 40411, 18996, 145, 4, 2, 96, 192, 145, 167, 199);
-RT_INTERFACE!{static interface INumeralSystemIdentifiersStatics2(INumeralSystemIdentifiersStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_INumeralSystemIdentifiersStatics2] {
+RT_INTERFACE!{static interface INumeralSystemIdentifiersStatics2(INumeralSystemIdentifiersStatics2Vtbl): IInspectable [IID_INumeralSystemIdentifiersStatics2] {
     fn get_Brah(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Osma(&self, out: *mut HSTRING) -> HRESULT,
     fn get_MathBold(&self, out: *mut HSTRING) -> HRESULT,
@@ -3032,7 +3032,7 @@ impl INumeralSystemIdentifiersStatics2 {
     }}
 }
 DEFINE_IID!(IID_ITimeZoneOnCalendar, 3141281253, 18127, 17175, 163, 245, 2, 98, 26, 213, 68, 120);
-RT_INTERFACE!{interface ITimeZoneOnCalendar(ITimeZoneOnCalendarVtbl): IInspectable(IInspectableVtbl) [IID_ITimeZoneOnCalendar] {
+RT_INTERFACE!{interface ITimeZoneOnCalendar(ITimeZoneOnCalendarVtbl): IInspectable [IID_ITimeZoneOnCalendar] {
     fn GetTimeZone(&self, out: *mut HSTRING) -> HRESULT,
     fn ChangeTimeZone(&self, timeZoneId: HSTRING) -> HRESULT,
     fn TimeZoneAsFullString(&self, out: *mut HSTRING) -> HRESULT,
@@ -3062,7 +3062,7 @@ impl ITimeZoneOnCalendar {
 pub mod collation { // Windows.Globalization.Collation
 use crate::prelude::*;
 DEFINE_IID!(IID_ICharacterGrouping, 4209467835, 32861, 19376, 149, 187, 193, 247, 195, 232, 235, 142);
-RT_INTERFACE!{interface ICharacterGrouping(ICharacterGroupingVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGrouping] {
+RT_INTERFACE!{interface ICharacterGrouping(ICharacterGroupingVtbl): IInspectable [IID_ICharacterGrouping] {
     fn get_First(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Label(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -3080,7 +3080,7 @@ impl ICharacterGrouping {
 }
 RT_CLASS!{class CharacterGrouping: ICharacterGrouping}
 DEFINE_IID!(IID_ICharacterGroupings, 3100772981, 54479, 16469, 128, 229, 206, 22, 156, 34, 100, 150);
-RT_INTERFACE!{interface ICharacterGroupings(ICharacterGroupingsVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGroupings] {
+RT_INTERFACE!{interface ICharacterGroupings(ICharacterGroupingsVtbl): IInspectable [IID_ICharacterGroupings] {
     fn Lookup(&self, text: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
 impl ICharacterGroupings {
@@ -3100,7 +3100,7 @@ impl CharacterGroupings {
 }
 DEFINE_CLSID!(CharacterGroupings(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,67,111,108,108,97,116,105,111,110,46,67,104,97,114,97,99,116,101,114,71,114,111,117,112,105,110,103,115,0]) [CLSID_CharacterGroupings]);
 DEFINE_IID!(IID_ICharacterGroupingsFactory, 2582290393, 34925, 17409, 159, 152, 105, 200, 45, 76, 47, 120);
-RT_INTERFACE!{static interface ICharacterGroupingsFactory(ICharacterGroupingsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICharacterGroupingsFactory] {
+RT_INTERFACE!{static interface ICharacterGroupingsFactory(ICharacterGroupingsFactoryVtbl): IInspectable [IID_ICharacterGroupingsFactory] {
     fn Create(&self, language: HSTRING, out: *mut <CharacterGroupings as RtType>::Abi) -> HRESULT
 }}
 impl ICharacterGroupingsFactory {
@@ -3114,7 +3114,7 @@ impl ICharacterGroupingsFactory {
 pub mod datetimeformatting { // Windows.Globalization.DateTimeFormatting
 use crate::prelude::*;
 DEFINE_IID!(IID_IDateTimeFormatter, 2515454480, 29664, 20043, 161, 131, 61, 106, 208, 186, 53, 236);
-RT_INTERFACE!{interface IDateTimeFormatter(IDateTimeFormatterVtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatter] {
+RT_INTERFACE!{interface IDateTimeFormatter(IDateTimeFormatterVtbl): IInspectable [IID_IDateTimeFormatter] {
     fn get_Languages(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_GeographicRegion(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Calendar(&self, out: *mut HSTRING) -> HRESULT,
@@ -3265,7 +3265,7 @@ impl DateTimeFormatter {
 }
 DEFINE_CLSID!(DateTimeFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,68,97,116,101,84,105,109,101,70,111,114,109,97,116,116,105,110,103,46,68,97,116,101,84,105,109,101,70,111,114,109,97,116,116,101,114,0]) [CLSID_DateTimeFormatter]);
 DEFINE_IID!(IID_IDateTimeFormatter2, 667490950, 48554, 20432, 158, 54, 103, 29, 90, 165, 238, 3);
-RT_INTERFACE!{interface IDateTimeFormatter2(IDateTimeFormatter2Vtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatter2] {
+RT_INTERFACE!{interface IDateTimeFormatter2(IDateTimeFormatter2Vtbl): IInspectable [IID_IDateTimeFormatter2] {
     fn FormatUsingTimeZone(&self, datetime: foundation::DateTime, timeZoneId: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
 impl IDateTimeFormatter2 {
@@ -3276,7 +3276,7 @@ impl IDateTimeFormatter2 {
     }}
 }
 DEFINE_IID!(IID_IDateTimeFormatterFactory, 3968698963, 6702, 16685, 136, 21, 59, 116, 95, 177, 162, 160);
-RT_INTERFACE!{static interface IDateTimeFormatterFactory(IDateTimeFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatterFactory] {
+RT_INTERFACE!{static interface IDateTimeFormatterFactory(IDateTimeFormatterFactoryVtbl): IInspectable [IID_IDateTimeFormatterFactory] {
     fn CreateDateTimeFormatter(&self, formatTemplate: HSTRING, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
     fn CreateDateTimeFormatterLanguages(&self, formatTemplate: HSTRING, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
     fn CreateDateTimeFormatterContext(&self, formatTemplate: HSTRING, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, geographicRegion: HSTRING, calendar: HSTRING, clock: HSTRING, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
@@ -3323,7 +3323,7 @@ impl IDateTimeFormatterFactory {
     }}
 }
 DEFINE_IID!(IID_IDateTimeFormatterStatics, 3217942464, 57164, 18990, 144, 18, 244, 125, 175, 63, 18, 18);
-RT_INTERFACE!{static interface IDateTimeFormatterStatics(IDateTimeFormatterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDateTimeFormatterStatics] {
+RT_INTERFACE!{static interface IDateTimeFormatterStatics(IDateTimeFormatterStaticsVtbl): IInspectable [IID_IDateTimeFormatterStatics] {
     fn get_LongDate(&self, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
     fn get_LongTime(&self, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
     fn get_ShortDate(&self, out: *mut <DateTimeFormatter as RtType>::Abi) -> HRESULT,
@@ -3376,7 +3376,7 @@ RT_ENUM! { enum YearFormat: i32 {
 pub mod fonts { // Windows.Globalization.Fonts
 use crate::prelude::*;
 DEFINE_IID!(IID_ILanguageFont, 2972605498, 46957, 17819, 190, 235, 144, 17, 81, 205, 119, 209);
-RT_INTERFACE!{interface ILanguageFont(ILanguageFontVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFont] {
+RT_INTERFACE!{interface ILanguageFont(ILanguageFontVtbl): IInspectable [IID_ILanguageFont] {
     fn get_FontFamily(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-ui"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-ui")] fn get_FontWeight(&self, out: *mut super::super::ui::text::FontWeight) -> HRESULT,
@@ -3415,7 +3415,7 @@ impl ILanguageFont {
 }
 RT_CLASS!{class LanguageFont: ILanguageFont}
 DEFINE_IID!(IID_ILanguageFontGroup, 4080697283, 14940, 19178, 185, 255, 179, 159, 178, 66, 247, 246);
-RT_INTERFACE!{interface ILanguageFontGroup(ILanguageFontGroupVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroup] {
+RT_INTERFACE!{interface ILanguageFontGroup(ILanguageFontGroupVtbl): IInspectable [IID_ILanguageFontGroup] {
     fn get_UITextFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
     fn get_UIHeadingFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
     fn get_UITitleFont(&self, out: *mut <LanguageFont as RtType>::Abi) -> HRESULT,
@@ -3494,7 +3494,7 @@ impl LanguageFontGroup {
 }
 DEFINE_CLSID!(LanguageFontGroup(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,70,111,110,116,115,46,76,97,110,103,117,97,103,101,70,111,110,116,71,114,111,117,112,0]) [CLSID_LanguageFontGroup]);
 DEFINE_IID!(IID_ILanguageFontGroupFactory, 4239305831, 20087, 18887, 184, 86, 221, 233, 52, 252, 115, 91);
-RT_INTERFACE!{static interface ILanguageFontGroupFactory(ILanguageFontGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ILanguageFontGroupFactory] {
+RT_INTERFACE!{static interface ILanguageFontGroupFactory(ILanguageFontGroupFactoryVtbl): IInspectable [IID_ILanguageFontGroupFactory] {
     fn CreateLanguageFontGroup(&self, languageTag: HSTRING, out: *mut <LanguageFontGroup as RtType>::Abi) -> HRESULT
 }}
 impl ILanguageFontGroupFactory {
@@ -3508,7 +3508,7 @@ impl ILanguageFontGroupFactory {
 pub mod numberformatting { // Windows.Globalization.NumberFormatting
 use crate::prelude::*;
 DEFINE_IID!(IID_ICurrencyFormatter, 292752549, 19200, 16818, 179, 50, 115, 177, 42, 73, 125, 84);
-RT_INTERFACE!{interface ICurrencyFormatter(ICurrencyFormatterVtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatter] {
+RT_INTERFACE!{interface ICurrencyFormatter(ICurrencyFormatterVtbl): IInspectable [IID_ICurrencyFormatter] {
     fn get_Currency(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Currency(&self, value: HSTRING) -> HRESULT
 }}
@@ -3535,7 +3535,7 @@ impl CurrencyFormatter {
 }
 DEFINE_CLSID!(CurrencyFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,67,117,114,114,101,110,99,121,70,111,114,109,97,116,116,101,114,0]) [CLSID_CurrencyFormatter]);
 DEFINE_IID!(IID_ICurrencyFormatter2, 120336157, 59322, 16791, 146, 14, 36, 124, 146, 247, 222, 166);
-RT_INTERFACE!{interface ICurrencyFormatter2(ICurrencyFormatter2Vtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatter2] {
+RT_INTERFACE!{interface ICurrencyFormatter2(ICurrencyFormatter2Vtbl): IInspectable [IID_ICurrencyFormatter2] {
     fn get_Mode(&self, out: *mut CurrencyFormatterMode) -> HRESULT,
     fn put_Mode(&self, value: CurrencyFormatterMode) -> HRESULT,
     fn ApplyRoundingForCurrency(&self, roundingAlgorithm: RoundingAlgorithm) -> HRESULT
@@ -3556,7 +3556,7 @@ impl ICurrencyFormatter2 {
     }}
 }
 DEFINE_IID!(IID_ICurrencyFormatterFactory, 2261209982, 47416, 19106, 132, 176, 44, 51, 220, 91, 20, 80);
-RT_INTERFACE!{static interface ICurrencyFormatterFactory(ICurrencyFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICurrencyFormatterFactory] {
+RT_INTERFACE!{static interface ICurrencyFormatterFactory(ICurrencyFormatterFactoryVtbl): IInspectable [IID_ICurrencyFormatterFactory] {
     fn CreateCurrencyFormatterCode(&self, currencyCode: HSTRING, out: *mut <CurrencyFormatter as RtType>::Abi) -> HRESULT,
     fn CreateCurrencyFormatterCodeContext(&self, currencyCode: HSTRING, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, geographicRegion: HSTRING, out: *mut <CurrencyFormatter as RtType>::Abi) -> HRESULT
 }}
@@ -3585,7 +3585,7 @@ impl DecimalFormatter {
 }
 DEFINE_CLSID!(DecimalFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,68,101,99,105,109,97,108,70,111,114,109,97,116,116,101,114,0]) [CLSID_DecimalFormatter]);
 DEFINE_IID!(IID_IDecimalFormatterFactory, 218205338, 58259, 18104, 184, 48, 122, 105, 200, 248, 159, 187);
-RT_INTERFACE!{static interface IDecimalFormatterFactory(IDecimalFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDecimalFormatterFactory] {
+RT_INTERFACE!{static interface IDecimalFormatterFactory(IDecimalFormatterFactoryVtbl): IInspectable [IID_IDecimalFormatterFactory] {
     fn CreateDecimalFormatter(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, geographicRegion: HSTRING, out: *mut <DecimalFormatter as RtType>::Abi) -> HRESULT
 }}
 impl IDecimalFormatterFactory {
@@ -3596,7 +3596,7 @@ impl IDecimalFormatterFactory {
     }}
 }
 DEFINE_IID!(IID_IIncrementNumberRounder, 1889947640, 26283, 16725, 157, 161, 115, 158, 70, 118, 69, 67);
-RT_INTERFACE!{interface IIncrementNumberRounder(IIncrementNumberRounderVtbl): IInspectable(IInspectableVtbl) [IID_IIncrementNumberRounder] {
+RT_INTERFACE!{interface IIncrementNumberRounder(IIncrementNumberRounderVtbl): IInspectable [IID_IIncrementNumberRounder] {
     fn get_RoundingAlgorithm(&self, out: *mut RoundingAlgorithm) -> HRESULT,
     fn put_RoundingAlgorithm(&self, value: RoundingAlgorithm) -> HRESULT,
     fn get_Increment(&self, out: *mut f64) -> HRESULT,
@@ -3626,7 +3626,7 @@ RT_CLASS!{class IncrementNumberRounder: INumberRounder}
 impl RtActivatable<IActivationFactory> for IncrementNumberRounder {}
 DEFINE_CLSID!(IncrementNumberRounder(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,73,110,99,114,101,109,101,110,116,78,117,109,98,101,114,82,111,117,110,100,101,114,0]) [CLSID_IncrementNumberRounder]);
 DEFINE_IID!(IID_INumberFormatter, 2768272457, 30326, 19895, 134, 49, 27, 111, 242, 101, 202, 169);
-RT_INTERFACE!{interface INumberFormatter(INumberFormatterVtbl): IInspectable(IInspectableVtbl) [IID_INumberFormatter] {
+RT_INTERFACE!{interface INumberFormatter(INumberFormatterVtbl): IInspectable [IID_INumberFormatter] {
     fn FormatInt(&self, value: i64, out: *mut HSTRING) -> HRESULT,
     fn FormatUInt(&self, value: u64, out: *mut HSTRING) -> HRESULT,
     fn FormatDouble(&self, value: f64, out: *mut HSTRING) -> HRESULT
@@ -3649,7 +3649,7 @@ impl INumberFormatter {
     }}
 }
 DEFINE_IID!(IID_INumberFormatter2, 3567829488, 32976, 19213, 168, 158, 136, 44, 30, 143, 131, 16);
-RT_INTERFACE!{interface INumberFormatter2(INumberFormatter2Vtbl): IInspectable(IInspectableVtbl) [IID_INumberFormatter2] {
+RT_INTERFACE!{interface INumberFormatter2(INumberFormatter2Vtbl): IInspectable [IID_INumberFormatter2] {
     fn FormatInt(&self, value: i64, out: *mut HSTRING) -> HRESULT,
     fn FormatUInt(&self, value: u64, out: *mut HSTRING) -> HRESULT,
     fn FormatDouble(&self, value: f64, out: *mut HSTRING) -> HRESULT
@@ -3672,7 +3672,7 @@ impl INumberFormatter2 {
     }}
 }
 DEFINE_IID!(IID_INumberFormatterOptions, 2150837537, 44769, 19001, 186, 162, 7, 237, 140, 150, 218, 246);
-RT_INTERFACE!{interface INumberFormatterOptions(INumberFormatterOptionsVtbl): IInspectable(IInspectableVtbl) [IID_INumberFormatterOptions] {
+RT_INTERFACE!{interface INumberFormatterOptions(INumberFormatterOptionsVtbl): IInspectable [IID_INumberFormatterOptions] {
     fn get_Languages(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_GeographicRegion(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IntegerDigits(&self, out: *mut i32) -> HRESULT,
@@ -3756,7 +3756,7 @@ impl INumberFormatterOptions {
     }}
 }
 DEFINE_IID!(IID_INumberParser, 3865416722, 18963, 19027, 131, 161, 57, 47, 190, 76, 255, 159);
-RT_INTERFACE!{interface INumberParser(INumberParserVtbl): IInspectable(IInspectableVtbl) [IID_INumberParser] {
+RT_INTERFACE!{interface INumberParser(INumberParserVtbl): IInspectable [IID_INumberParser] {
     fn ParseInt(&self, text: HSTRING, out: *mut <foundation::IReference<i64> as RtType>::Abi) -> HRESULT,
     fn ParseUInt(&self, text: HSTRING, out: *mut <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
     fn ParseDouble(&self, text: HSTRING, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT
@@ -3779,7 +3779,7 @@ impl INumberParser {
     }}
 }
 DEFINE_IID!(IID_INumberRounder, 1416872821, 14573, 17969, 184, 12, 239, 52, 252, 72, 183, 245);
-RT_INTERFACE!{interface INumberRounder(INumberRounderVtbl): IInspectable(IInspectableVtbl) [IID_INumberRounder] {
+RT_INTERFACE!{interface INumberRounder(INumberRounderVtbl): IInspectable [IID_INumberRounder] {
     fn RoundInt32(&self, value: i32, out: *mut i32) -> HRESULT,
     fn RoundUInt32(&self, value: u32, out: *mut u32) -> HRESULT,
     fn RoundInt64(&self, value: i64, out: *mut i64) -> HRESULT,
@@ -3820,7 +3820,7 @@ impl INumberRounder {
     }}
 }
 DEFINE_IID!(IID_INumberRounderOption, 990413875, 25711, 20222, 141, 72, 102, 235, 46, 73, 231, 54);
-RT_INTERFACE!{interface INumberRounderOption(INumberRounderOptionVtbl): IInspectable(IInspectableVtbl) [IID_INumberRounderOption] {
+RT_INTERFACE!{interface INumberRounderOption(INumberRounderOptionVtbl): IInspectable [IID_INumberRounderOption] {
     fn get_NumberRounder(&self, out: *mut <INumberRounder as RtType>::Abi) -> HRESULT,
     fn put_NumberRounder(&self, value: <INumberRounder as RtType>::Abi) -> HRESULT
 }}
@@ -3836,7 +3836,7 @@ impl INumberRounderOption {
     }}
 }
 DEFINE_IID!(IID_INumeralSystemTranslator, 687193132, 35875, 16948, 173, 46, 250, 90, 58, 66, 110, 155);
-RT_INTERFACE!{interface INumeralSystemTranslator(INumeralSystemTranslatorVtbl): IInspectable(IInspectableVtbl) [IID_INumeralSystemTranslator] {
+RT_INTERFACE!{interface INumeralSystemTranslator(INumeralSystemTranslatorVtbl): IInspectable [IID_INumeralSystemTranslator] {
     fn get_Languages(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_NumeralSystem(&self, out: *mut HSTRING) -> HRESULT,
@@ -3879,7 +3879,7 @@ impl NumeralSystemTranslator {
 }
 DEFINE_CLSID!(NumeralSystemTranslator(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,78,117,109,101,114,97,108,83,121,115,116,101,109,84,114,97,110,115,108,97,116,111,114,0]) [CLSID_NumeralSystemTranslator]);
 DEFINE_IID!(IID_INumeralSystemTranslatorFactory, 2519779546, 14063, 19848, 168, 92, 111, 13, 152, 214, 32, 166);
-RT_INTERFACE!{static interface INumeralSystemTranslatorFactory(INumeralSystemTranslatorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_INumeralSystemTranslatorFactory] {
+RT_INTERFACE!{static interface INumeralSystemTranslatorFactory(INumeralSystemTranslatorFactoryVtbl): IInspectable [IID_INumeralSystemTranslatorFactory] {
     fn Create(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <NumeralSystemTranslator as RtType>::Abi) -> HRESULT
 }}
 impl INumeralSystemTranslatorFactory {
@@ -3899,7 +3899,7 @@ impl PercentFormatter {
 }
 DEFINE_CLSID!(PercentFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,101,114,99,101,110,116,70,111,114,109,97,116,116,101,114,0]) [CLSID_PercentFormatter]);
 DEFINE_IID!(IID_IPercentFormatterFactory, 3078785775, 65236, 16408, 166, 226, 224, 153, 97, 224, 55, 101);
-RT_INTERFACE!{static interface IPercentFormatterFactory(IPercentFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPercentFormatterFactory] {
+RT_INTERFACE!{static interface IPercentFormatterFactory(IPercentFormatterFactoryVtbl): IInspectable [IID_IPercentFormatterFactory] {
     fn CreatePercentFormatter(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, geographicRegion: HSTRING, out: *mut <PercentFormatter as RtType>::Abi) -> HRESULT
 }}
 impl IPercentFormatterFactory {
@@ -3919,7 +3919,7 @@ impl PermilleFormatter {
 }
 DEFINE_CLSID!(PermilleFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,101,114,109,105,108,108,101,70,111,114,109,97,116,116,101,114,0]) [CLSID_PermilleFormatter]);
 DEFINE_IID!(IID_IPermilleFormatterFactory, 725071020, 58936, 20181, 169, 152, 98, 246, 176, 106, 73, 174);
-RT_INTERFACE!{static interface IPermilleFormatterFactory(IPermilleFormatterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPermilleFormatterFactory] {
+RT_INTERFACE!{static interface IPermilleFormatterFactory(IPermilleFormatterFactoryVtbl): IInspectable [IID_IPermilleFormatterFactory] {
     fn CreatePermilleFormatter(&self, languages: <foundation::collections::IIterable<HString> as RtType>::Abi, geographicRegion: HSTRING, out: *mut <PermilleFormatter as RtType>::Abi) -> HRESULT
 }}
 impl IPermilleFormatterFactory {
@@ -3933,7 +3933,7 @@ RT_ENUM! { enum RoundingAlgorithm: i32 {
     None = 0, RoundDown = 1, RoundUp = 2, RoundTowardsZero = 3, RoundAwayFromZero = 4, RoundHalfDown = 5, RoundHalfUp = 6, RoundHalfTowardsZero = 7, RoundHalfAwayFromZero = 8, RoundHalfToEven = 9, RoundHalfToOdd = 10,
 }}
 DEFINE_IID!(IID_ISignedZeroOption, 4246527281, 2620, 18884, 166, 66, 150, 161, 86, 79, 79, 48);
-RT_INTERFACE!{interface ISignedZeroOption(ISignedZeroOptionVtbl): IInspectable(IInspectableVtbl) [IID_ISignedZeroOption] {
+RT_INTERFACE!{interface ISignedZeroOption(ISignedZeroOptionVtbl): IInspectable [IID_ISignedZeroOption] {
     fn get_IsZeroSigned(&self, out: *mut bool) -> HRESULT,
     fn put_IsZeroSigned(&self, value: bool) -> HRESULT
 }}
@@ -3949,7 +3949,7 @@ impl ISignedZeroOption {
     }}
 }
 DEFINE_IID!(IID_ISignificantDigitsNumberRounder, 4120124362, 26182, 18707, 140, 118, 27, 25, 31, 249, 77, 253);
-RT_INTERFACE!{interface ISignificantDigitsNumberRounder(ISignificantDigitsNumberRounderVtbl): IInspectable(IInspectableVtbl) [IID_ISignificantDigitsNumberRounder] {
+RT_INTERFACE!{interface ISignificantDigitsNumberRounder(ISignificantDigitsNumberRounderVtbl): IInspectable [IID_ISignificantDigitsNumberRounder] {
     fn get_RoundingAlgorithm(&self, out: *mut RoundingAlgorithm) -> HRESULT,
     fn put_RoundingAlgorithm(&self, value: RoundingAlgorithm) -> HRESULT,
     fn get_SignificantDigits(&self, out: *mut u32) -> HRESULT,
@@ -3979,7 +3979,7 @@ RT_CLASS!{class SignificantDigitsNumberRounder: INumberRounder}
 impl RtActivatable<IActivationFactory> for SignificantDigitsNumberRounder {}
 DEFINE_CLSID!(SignificantDigitsNumberRounder(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,83,105,103,110,105,102,105,99,97,110,116,68,105,103,105,116,115,78,117,109,98,101,114,82,111,117,110,100,101,114,0]) [CLSID_SignificantDigitsNumberRounder]);
 DEFINE_IID!(IID_ISignificantDigitsOption, 491650269, 11587, 20200, 187, 241, 193, 178, 106, 113, 26, 88);
-RT_INTERFACE!{interface ISignificantDigitsOption(ISignificantDigitsOptionVtbl): IInspectable(IInspectableVtbl) [IID_ISignificantDigitsOption] {
+RT_INTERFACE!{interface ISignificantDigitsOption(ISignificantDigitsOptionVtbl): IInspectable [IID_ISignificantDigitsOption] {
     fn get_SignificantDigits(&self, out: *mut i32) -> HRESULT,
     fn put_SignificantDigits(&self, value: i32) -> HRESULT
 }}
@@ -4001,7 +4001,7 @@ RT_ENUM! { enum PhoneNumberFormat: i32 {
     E164 = 0, International = 1, National = 2, Rfc3966 = 3,
 }}
 DEFINE_IID!(IID_IPhoneNumberFormatter, 358003870, 47828, 19274, 144, 13, 68, 7, 173, 183, 201, 129);
-RT_INTERFACE!{interface IPhoneNumberFormatter(IPhoneNumberFormatterVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatter] {
+RT_INTERFACE!{interface IPhoneNumberFormatter(IPhoneNumberFormatterVtbl): IInspectable [IID_IPhoneNumberFormatter] {
     fn Format(&self, number: <PhoneNumberInfo as RtType>::Abi, out: *mut HSTRING) -> HRESULT,
     fn FormatWithOutputFormat(&self, number: <PhoneNumberInfo as RtType>::Abi, numberFormat: PhoneNumberFormat, out: *mut HSTRING) -> HRESULT,
     fn FormatPartialString(&self, number: HSTRING, out: *mut HSTRING) -> HRESULT,
@@ -4054,7 +4054,7 @@ impl PhoneNumberFormatter {
 }
 DEFINE_CLSID!(PhoneNumberFormatter(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,101,114,0]) [CLSID_PhoneNumberFormatter]);
 DEFINE_IID!(IID_IPhoneNumberFormatterStatics, 1554446641, 34009, 16715, 171, 78, 160, 85, 44, 135, 134, 2);
-RT_INTERFACE!{static interface IPhoneNumberFormatterStatics(IPhoneNumberFormatterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberFormatterStatics] {
+RT_INTERFACE!{static interface IPhoneNumberFormatterStatics(IPhoneNumberFormatterStaticsVtbl): IInspectable [IID_IPhoneNumberFormatterStatics] {
     fn TryCreate(&self, regionCode: HSTRING, phoneNumber: *mut <PhoneNumberFormatter as RtType>::Abi) -> HRESULT,
     fn GetCountryCodeForRegion(&self, regionCode: HSTRING, out: *mut i32) -> HRESULT,
     fn GetNationalDirectDialingPrefixForRegion(&self, regionCode: HSTRING, stripNonDigit: bool, out: *mut HSTRING) -> HRESULT,
@@ -4083,7 +4083,7 @@ impl IPhoneNumberFormatterStatics {
     }}
 }
 DEFINE_IID!(IID_IPhoneNumberInfo, 477947101, 51380, 20131, 154, 239, 179, 66, 226, 197, 180, 23);
-RT_INTERFACE!{interface IPhoneNumberInfo(IPhoneNumberInfoVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfo] {
+RT_INTERFACE!{interface IPhoneNumberInfo(IPhoneNumberInfoVtbl): IInspectable [IID_IPhoneNumberInfo] {
     fn get_CountryCode(&self, out: *mut i32) -> HRESULT,
     fn get_PhoneNumber(&self, out: *mut HSTRING) -> HRESULT,
     fn GetLengthOfGeographicalAreaCode(&self, out: *mut i32) -> HRESULT,
@@ -4151,7 +4151,7 @@ impl PhoneNumberInfo {
 }
 DEFINE_CLSID!(PhoneNumberInfo(&[87,105,110,100,111,119,115,46,71,108,111,98,97,108,105,122,97,116,105,111,110,46,80,104,111,110,101,78,117,109,98,101,114,70,111,114,109,97,116,116,105,110,103,46,80,104,111,110,101,78,117,109,98,101,114,73,110,102,111,0]) [CLSID_PhoneNumberInfo]);
 DEFINE_IID!(IID_IPhoneNumberInfoFactory, 2181216612, 44458, 19711, 143, 207, 23, 231, 81, 106, 40, 255);
-RT_INTERFACE!{static interface IPhoneNumberInfoFactory(IPhoneNumberInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoFactory] {
+RT_INTERFACE!{static interface IPhoneNumberInfoFactory(IPhoneNumberInfoFactoryVtbl): IInspectable [IID_IPhoneNumberInfoFactory] {
     fn Create(&self, number: HSTRING, out: *mut <PhoneNumberInfo as RtType>::Abi) -> HRESULT
 }}
 impl IPhoneNumberInfoFactory {
@@ -4162,7 +4162,7 @@ impl IPhoneNumberInfoFactory {
     }}
 }
 DEFINE_IID!(IID_IPhoneNumberInfoStatics, 1530875754, 34473, 16617, 134, 73, 109, 97, 22, 25, 40, 212);
-RT_INTERFACE!{static interface IPhoneNumberInfoStatics(IPhoneNumberInfoStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPhoneNumberInfoStatics] {
+RT_INTERFACE!{static interface IPhoneNumberInfoStatics(IPhoneNumberInfoStaticsVtbl): IInspectable [IID_IPhoneNumberInfoStatics] {
     fn TryParse(&self, input: HSTRING, phoneNumber: *mut <PhoneNumberInfo as RtType>::Abi, out: *mut PhoneNumberParseResult) -> HRESULT,
     fn TryParseWithRegion(&self, input: HSTRING, regionCode: HSTRING, phoneNumber: *mut <PhoneNumberInfo as RtType>::Abi, out: *mut PhoneNumberParseResult) -> HRESULT
 }}

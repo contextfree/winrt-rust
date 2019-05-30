@@ -3,7 +3,7 @@ RT_STRUCT! { struct DisplayAdapterId {
     LowPart: u32, HighPart: i32,
 }}
 DEFINE_IID!(IID_IGeometrySource2D, 3405740290, 26380, 16769, 166, 36, 218, 151, 114, 3, 184, 69);
-RT_INTERFACE!{interface IGeometrySource2D(IGeometrySource2DVtbl): IInspectable(IInspectableVtbl) [IID_IGeometrySource2D] {
+RT_INTERFACE!{interface IGeometrySource2D(IGeometrySource2DVtbl): IInspectable [IID_IGeometrySource2D] {
     
 }}
 RT_STRUCT! { struct PointInt32 {
@@ -18,7 +18,7 @@ RT_STRUCT! { struct SizeInt32 {
 pub mod capture { // Windows.Graphics.Capture
 use crate::prelude::*;
 DEFINE_IID!(IID_IDirect3D11CaptureFrame, 4199597603, 14554, 19250, 172, 243, 250, 151, 52, 173, 128, 14);
-RT_INTERFACE!{interface IDirect3D11CaptureFrame(IDirect3D11CaptureFrameVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFrame] {
+RT_INTERFACE!{interface IDirect3D11CaptureFrame(IDirect3D11CaptureFrameVtbl): IInspectable [IID_IDirect3D11CaptureFrame] {
     fn get_Surface(&self, out: *mut <super::directx::direct3d11::IDirect3DSurface as RtType>::Abi) -> HRESULT,
     fn get_SystemRelativeTime(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_ContentSize(&self, out: *mut super::SizeInt32) -> HRESULT
@@ -42,7 +42,7 @@ impl IDirect3D11CaptureFrame {
 }
 RT_CLASS!{class Direct3D11CaptureFrame: IDirect3D11CaptureFrame}
 DEFINE_IID!(IID_IDirect3D11CaptureFramePool, 619408674, 6517, 16942, 130, 231, 120, 13, 189, 141, 223, 36);
-RT_INTERFACE!{interface IDirect3D11CaptureFramePool(IDirect3D11CaptureFramePoolVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePool] {
+RT_INTERFACE!{interface IDirect3D11CaptureFramePool(IDirect3D11CaptureFramePoolVtbl): IInspectable [IID_IDirect3D11CaptureFramePool] {
     fn Recreate(&self, device: <super::directx::direct3d11::IDirect3DDevice as RtType>::Abi, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32) -> HRESULT,
     fn TryGetNextFrame(&self, out: *mut <Direct3D11CaptureFrame as RtType>::Abi) -> HRESULT,
     fn add_FrameArrived(&self, handler: <foundation::TypedEventHandler<Direct3D11CaptureFramePool, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -93,7 +93,7 @@ impl Direct3D11CaptureFramePool {
 }
 DEFINE_CLSID!(Direct3D11CaptureFramePool(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,68,105,114,101,99,116,51,68,49,49,67,97,112,116,117,114,101,70,114,97,109,101,80,111,111,108,0]) [CLSID_Direct3D11CaptureFramePool]);
 DEFINE_IID!(IID_IDirect3D11CaptureFramePoolStatics, 2005140842, 26538, 19795, 174, 84, 16, 136, 213, 168, 202, 33);
-RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics(IDirect3D11CaptureFramePoolStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePoolStatics] {
+RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics(IDirect3D11CaptureFramePoolStaticsVtbl): IInspectable [IID_IDirect3D11CaptureFramePoolStatics] {
     fn Create(&self, device: <super::directx::direct3d11::IDirect3DDevice as RtType>::Abi, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32, out: *mut <Direct3D11CaptureFramePool as RtType>::Abi) -> HRESULT
 }}
 impl IDirect3D11CaptureFramePoolStatics {
@@ -104,7 +104,7 @@ impl IDirect3D11CaptureFramePoolStatics {
     }}
 }
 DEFINE_IID!(IID_IDirect3D11CaptureFramePoolStatics2, 1486557247, 27580, 24053, 169, 145, 2, 226, 139, 59, 102, 213);
-RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics2(IDirect3D11CaptureFramePoolStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IDirect3D11CaptureFramePoolStatics2] {
+RT_INTERFACE!{static interface IDirect3D11CaptureFramePoolStatics2(IDirect3D11CaptureFramePoolStatics2Vtbl): IInspectable [IID_IDirect3D11CaptureFramePoolStatics2] {
     fn CreateFreeThreaded(&self, device: <super::directx::direct3d11::IDirect3DDevice as RtType>::Abi, pixelFormat: super::directx::DirectXPixelFormat, numberOfBuffers: i32, size: super::SizeInt32, out: *mut <Direct3D11CaptureFramePool as RtType>::Abi) -> HRESULT
 }}
 impl IDirect3D11CaptureFramePoolStatics2 {
@@ -115,7 +115,7 @@ impl IDirect3D11CaptureFramePoolStatics2 {
     }}
 }
 DEFINE_IID!(IID_IGraphicsCaptureItem, 2042886491, 12791, 20162, 164, 100, 99, 46, 245, 211, 7, 96);
-RT_INTERFACE!{interface IGraphicsCaptureItem(IGraphicsCaptureItemVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureItem] {
+RT_INTERFACE!{interface IGraphicsCaptureItem(IGraphicsCaptureItemVtbl): IInspectable [IID_IGraphicsCaptureItem] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Size(&self, out: *mut super::SizeInt32) -> HRESULT,
     fn add_Closed(&self, handler: <foundation::TypedEventHandler<GraphicsCaptureItem, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -151,7 +151,7 @@ impl GraphicsCaptureItem {
 }
 DEFINE_CLSID!(GraphicsCaptureItem(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,73,116,101,109,0]) [CLSID_GraphicsCaptureItem]);
 DEFINE_IID!(IID_IGraphicsCaptureItemStatics, 2826878629, 17788, 22408, 171, 71, 12, 241, 211, 99, 126, 116);
-RT_INTERFACE!{static interface IGraphicsCaptureItemStatics(IGraphicsCaptureItemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureItemStatics] {
+RT_INTERFACE!{static interface IGraphicsCaptureItemStatics(IGraphicsCaptureItemStaticsVtbl): IInspectable [IID_IGraphicsCaptureItemStatics] {
     #[cfg(feature="windows-ui")] fn CreateFromVisual(&self, visual: <super::super::ui::composition::Visual as RtType>::Abi, out: *mut <GraphicsCaptureItem as RtType>::Abi) -> HRESULT
 }}
 impl IGraphicsCaptureItemStatics {
@@ -162,7 +162,7 @@ impl IGraphicsCaptureItemStatics {
     }}
 }
 DEFINE_IID!(IID_IGraphicsCapturePicker, 1511461299, 44409, 19274, 147, 54, 19, 24, 253, 222, 53, 57);
-RT_INTERFACE!{interface IGraphicsCapturePicker(IGraphicsCapturePickerVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCapturePicker] {
+RT_INTERFACE!{interface IGraphicsCapturePicker(IGraphicsCapturePickerVtbl): IInspectable [IID_IGraphicsCapturePicker] {
     fn PickSingleItemAsync(&self, out: *mut <foundation::IAsyncOperation<GraphicsCaptureItem> as RtType>::Abi) -> HRESULT
 }}
 impl IGraphicsCapturePicker {
@@ -176,7 +176,7 @@ RT_CLASS!{class GraphicsCapturePicker: IGraphicsCapturePicker}
 impl RtActivatable<IActivationFactory> for GraphicsCapturePicker {}
 DEFINE_CLSID!(GraphicsCapturePicker(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,80,105,99,107,101,114,0]) [CLSID_GraphicsCapturePicker]);
 DEFINE_IID!(IID_IGraphicsCaptureSession, 2169389737, 63247, 19159, 147, 155, 253, 220, 198, 235, 136, 13);
-RT_INTERFACE!{interface IGraphicsCaptureSession(IGraphicsCaptureSessionVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureSession] {
+RT_INTERFACE!{interface IGraphicsCaptureSession(IGraphicsCaptureSessionVtbl): IInspectable [IID_IGraphicsCaptureSession] {
     fn StartCapture(&self) -> HRESULT
 }}
 impl IGraphicsCaptureSession {
@@ -194,7 +194,7 @@ impl GraphicsCaptureSession {
 }
 DEFINE_CLSID!(GraphicsCaptureSession(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,67,97,112,116,117,114,101,46,71,114,97,112,104,105,99,115,67,97,112,116,117,114,101,83,101,115,115,105,111,110,0]) [CLSID_GraphicsCaptureSession]);
 DEFINE_IID!(IID_IGraphicsCaptureSessionStatics, 572826944, 22900, 18858, 178, 50, 8, 130, 83, 111, 76, 181);
-RT_INTERFACE!{static interface IGraphicsCaptureSessionStatics(IGraphicsCaptureSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsCaptureSessionStatics] {
+RT_INTERFACE!{static interface IGraphicsCaptureSessionStatics(IGraphicsCaptureSessionStaticsVtbl): IInspectable [IID_IGraphicsCaptureSessionStatics] {
     fn IsSupported(&self, out: *mut bool) -> HRESULT
 }}
 impl IGraphicsCaptureSessionStatics {
@@ -222,7 +222,7 @@ RT_ENUM! { enum Direct3DBindings: u32 {
     VertexBuffer = 1, IndexBuffer = 2, ConstantBuffer = 4, ShaderResource = 8, StreamOutput = 16, RenderTarget = 32, DepthStencil = 64, UnorderedAccess = 128, Decoder = 512, VideoEncoder = 1024,
 }}
 DEFINE_IID!(IID_IDirect3DDevice, 2742428843, 36191, 18000, 157, 62, 158, 174, 61, 155, 198, 112);
-RT_INTERFACE!{interface IDirect3DDevice(IDirect3DDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3DDevice] {
+RT_INTERFACE!{interface IDirect3DDevice(IDirect3DDeviceVtbl): IInspectable [IID_IDirect3DDevice] {
     fn Trim(&self) -> HRESULT
 }}
 impl IDirect3DDevice {
@@ -235,7 +235,7 @@ RT_STRUCT! { struct Direct3DMultisampleDescription {
     Count: i32, Quality: i32,
 }}
 DEFINE_IID!(IID_IDirect3DSurface, 200581446, 5057, 18068, 190, 227, 122, 191, 21, 234, 245, 134);
-RT_INTERFACE!{interface IDirect3DSurface(IDirect3DSurfaceVtbl): IInspectable(IInspectableVtbl) [IID_IDirect3DSurface] {
+RT_INTERFACE!{interface IDirect3DSurface(IDirect3DSurfaceVtbl): IInspectable [IID_IDirect3DSurface] {
     fn get_Description(&self, out: *mut Direct3DSurfaceDescription) -> HRESULT
 }}
 impl IDirect3DSurface {
@@ -256,7 +256,7 @@ RT_ENUM! { enum Direct3DUsage: i32 {
 pub mod display { // Windows.Graphics.Display
 use crate::prelude::*;
 DEFINE_IID!(IID_IAdvancedColorInfo, 2274876667, 45609, 16513, 174, 154, 44, 200, 94, 52, 173, 106);
-RT_INTERFACE!{interface IAdvancedColorInfo(IAdvancedColorInfoVtbl): IInspectable(IInspectableVtbl) [IID_IAdvancedColorInfo] {
+RT_INTERFACE!{interface IAdvancedColorInfo(IAdvancedColorInfoVtbl): IInspectable [IID_IAdvancedColorInfo] {
     fn get_CurrentAdvancedColorKind(&self, out: *mut AdvancedColorKind) -> HRESULT,
     fn get_RedPrimary(&self, out: *mut foundation::Point) -> HRESULT,
     fn get_GreenPrimary(&self, out: *mut foundation::Point) -> HRESULT,
@@ -331,7 +331,7 @@ RT_ENUM! { enum AdvancedColorKind: i32 {
     StandardDynamicRange = 0, WideColorGamut = 1, HighDynamicRange = 2,
 }}
 DEFINE_IID!(IID_IBrightnessOverride, 2529780250, 49475, 17298, 190, 221, 74, 126, 149, 116, 200, 253);
-RT_INTERFACE!{interface IBrightnessOverride(IBrightnessOverrideVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverride] {
+RT_INTERFACE!{interface IBrightnessOverride(IBrightnessOverrideVtbl): IInspectable [IID_IBrightnessOverride] {
     fn get_IsSupported(&self, out: *mut bool) -> HRESULT,
     fn get_IsOverrideActive(&self, out: *mut bool) -> HRESULT,
     fn get_BrightnessLevel(&self, out: *mut f64) -> HRESULT,
@@ -427,7 +427,7 @@ impl BrightnessOverride {
 }
 DEFINE_CLSID!(BrightnessOverride(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,66,114,105,103,104,116,110,101,115,115,79,118,101,114,114,105,100,101,0]) [CLSID_BrightnessOverride]);
 DEFINE_IID!(IID_IBrightnessOverrideSettings, 3507661610, 30212, 19898, 188, 248, 75, 111, 73, 80, 44, 176);
-RT_INTERFACE!{interface IBrightnessOverrideSettings(IBrightnessOverrideSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverrideSettings] {
+RT_INTERFACE!{interface IBrightnessOverrideSettings(IBrightnessOverrideSettingsVtbl): IInspectable [IID_IBrightnessOverrideSettings] {
     fn get_DesiredLevel(&self, out: *mut f64) -> HRESULT,
     fn get_DesiredNits(&self, out: *mut f32) -> HRESULT
 }}
@@ -458,7 +458,7 @@ impl BrightnessOverrideSettings {
 }
 DEFINE_CLSID!(BrightnessOverrideSettings(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,66,114,105,103,104,116,110,101,115,115,79,118,101,114,114,105,100,101,83,101,116,116,105,110,103,115,0]) [CLSID_BrightnessOverrideSettings]);
 DEFINE_IID!(IID_IBrightnessOverrideSettingsStatics, 3565673616, 28532, 17419, 179, 131, 95, 233, 108, 240, 11, 15);
-RT_INTERFACE!{static interface IBrightnessOverrideSettingsStatics(IBrightnessOverrideSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverrideSettingsStatics] {
+RT_INTERFACE!{static interface IBrightnessOverrideSettingsStatics(IBrightnessOverrideSettingsStaticsVtbl): IInspectable [IID_IBrightnessOverrideSettingsStatics] {
     fn CreateFromLevel(&self, level: f64, out: *mut <BrightnessOverrideSettings as RtType>::Abi) -> HRESULT,
     fn CreateFromNits(&self, nits: f32, out: *mut <BrightnessOverrideSettings as RtType>::Abi) -> HRESULT,
     fn CreateFromDisplayBrightnessOverrideScenario(&self, overrideScenario: DisplayBrightnessOverrideScenario, out: *mut <BrightnessOverrideSettings as RtType>::Abi) -> HRESULT
@@ -481,7 +481,7 @@ impl IBrightnessOverrideSettingsStatics {
     }}
 }
 DEFINE_IID!(IID_IBrightnessOverrideStatics, 61323757, 57841, 19048, 161, 31, 148, 106, 216, 206, 83, 147);
-RT_INTERFACE!{static interface IBrightnessOverrideStatics(IBrightnessOverrideStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBrightnessOverrideStatics] {
+RT_INTERFACE!{static interface IBrightnessOverrideStatics(IBrightnessOverrideStaticsVtbl): IInspectable [IID_IBrightnessOverrideStatics] {
     fn GetDefaultForSystem(&self, out: *mut <BrightnessOverride as RtType>::Abi) -> HRESULT,
     fn GetForCurrentView(&self, out: *mut <BrightnessOverride as RtType>::Abi) -> HRESULT,
     fn SaveForSystemAsync(&self, value: <BrightnessOverride as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
@@ -504,7 +504,7 @@ impl IBrightnessOverrideStatics {
     }}
 }
 DEFINE_IID!(IID_IColorOverrideSettings, 4226785588, 19073, 19533, 165, 182, 125, 27, 92, 75, 208, 11);
-RT_INTERFACE!{interface IColorOverrideSettings(IColorOverrideSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IColorOverrideSettings] {
+RT_INTERFACE!{interface IColorOverrideSettings(IColorOverrideSettingsVtbl): IInspectable [IID_IColorOverrideSettings] {
     fn get_DesiredDisplayColorOverrideScenario(&self, out: *mut DisplayColorOverrideScenario) -> HRESULT
 }}
 impl IColorOverrideSettings {
@@ -523,7 +523,7 @@ impl ColorOverrideSettings {
 }
 DEFINE_CLSID!(ColorOverrideSettings(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,67,111,108,111,114,79,118,101,114,114,105,100,101,83,101,116,116,105,110,103,115,0]) [CLSID_ColorOverrideSettings]);
 DEFINE_IID!(IID_IColorOverrideSettingsStatics, 2959663199, 50207, 19145, 175, 171, 130, 122, 182, 36, 143, 154);
-RT_INTERFACE!{static interface IColorOverrideSettingsStatics(IColorOverrideSettingsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IColorOverrideSettingsStatics] {
+RT_INTERFACE!{static interface IColorOverrideSettingsStatics(IColorOverrideSettingsStaticsVtbl): IInspectable [IID_IColorOverrideSettingsStatics] {
     fn CreateFromDisplayColorOverrideScenario(&self, overrideScenario: DisplayColorOverrideScenario, out: *mut <ColorOverrideSettings as RtType>::Abi) -> HRESULT
 }}
 impl IColorOverrideSettingsStatics {
@@ -546,7 +546,7 @@ RT_ENUM! { enum DisplayColorOverrideScenario: i32 {
     Accurate = 0,
 }}
 DEFINE_IID!(IID_IDisplayEnhancementOverride, 1117099215, 55674, 19202, 164, 40, 92, 66, 146, 247, 245, 34);
-RT_INTERFACE!{interface IDisplayEnhancementOverride(IDisplayEnhancementOverrideVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverride] {
+RT_INTERFACE!{interface IDisplayEnhancementOverride(IDisplayEnhancementOverrideVtbl): IInspectable [IID_IDisplayEnhancementOverride] {
     fn get_ColorOverrideSettings(&self, out: *mut <ColorOverrideSettings as RtType>::Abi) -> HRESULT,
     fn put_ColorOverrideSettings(&self, value: <ColorOverrideSettings as RtType>::Abi) -> HRESULT,
     fn get_BrightnessOverrideSettings(&self, out: *mut <BrightnessOverrideSettings as RtType>::Abi) -> HRESULT,
@@ -642,7 +642,7 @@ impl DisplayEnhancementOverride {
 }
 DEFINE_CLSID!(DisplayEnhancementOverride(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,69,110,104,97,110,99,101,109,101,110,116,79,118,101,114,114,105,100,101,0]) [CLSID_DisplayEnhancementOverride]);
 DEFINE_IID!(IID_IDisplayEnhancementOverrideCapabilities, 1164992734, 61018, 18359, 153, 24, 30, 81, 232, 18, 204, 200);
-RT_INTERFACE!{interface IDisplayEnhancementOverrideCapabilities(IDisplayEnhancementOverrideCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverrideCapabilities] {
+RT_INTERFACE!{interface IDisplayEnhancementOverrideCapabilities(IDisplayEnhancementOverrideCapabilitiesVtbl): IInspectable [IID_IDisplayEnhancementOverrideCapabilities] {
     fn get_IsBrightnessControlSupported(&self, out: *mut bool) -> HRESULT,
     fn get_IsBrightnessNitsControlSupported(&self, out: *mut bool) -> HRESULT,
     fn GetSupportedNitRanges(&self, out: *mut <foundation::collections::IVectorView<NitRange> as RtType>::Abi) -> HRESULT
@@ -666,7 +666,7 @@ impl IDisplayEnhancementOverrideCapabilities {
 }
 RT_CLASS!{class DisplayEnhancementOverrideCapabilities: IDisplayEnhancementOverrideCapabilities}
 DEFINE_IID!(IID_IDisplayEnhancementOverrideCapabilitiesChangedEventArgs, 3680626276, 5626, 18906, 139, 119, 7, 219, 210, 175, 88, 93);
-RT_INTERFACE!{interface IDisplayEnhancementOverrideCapabilitiesChangedEventArgs(IDisplayEnhancementOverrideCapabilitiesChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverrideCapabilitiesChangedEventArgs] {
+RT_INTERFACE!{interface IDisplayEnhancementOverrideCapabilitiesChangedEventArgs(IDisplayEnhancementOverrideCapabilitiesChangedEventArgsVtbl): IInspectable [IID_IDisplayEnhancementOverrideCapabilitiesChangedEventArgs] {
     fn get_Capabilities(&self, out: *mut <DisplayEnhancementOverrideCapabilities as RtType>::Abi) -> HRESULT
 }}
 impl IDisplayEnhancementOverrideCapabilitiesChangedEventArgs {
@@ -678,7 +678,7 @@ impl IDisplayEnhancementOverrideCapabilitiesChangedEventArgs {
 }
 RT_CLASS!{class DisplayEnhancementOverrideCapabilitiesChangedEventArgs: IDisplayEnhancementOverrideCapabilitiesChangedEventArgs}
 DEFINE_IID!(IID_IDisplayEnhancementOverrideStatics, 3478879937, 38801, 17491, 176, 19, 41, 182, 247, 120, 229, 25);
-RT_INTERFACE!{static interface IDisplayEnhancementOverrideStatics(IDisplayEnhancementOverrideStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayEnhancementOverrideStatics] {
+RT_INTERFACE!{static interface IDisplayEnhancementOverrideStatics(IDisplayEnhancementOverrideStaticsVtbl): IInspectable [IID_IDisplayEnhancementOverrideStatics] {
     fn GetForCurrentView(&self, out: *mut <DisplayEnhancementOverride as RtType>::Abi) -> HRESULT
 }}
 impl IDisplayEnhancementOverrideStatics {
@@ -689,7 +689,7 @@ impl IDisplayEnhancementOverrideStatics {
     }}
 }
 DEFINE_IID!(IID_IDisplayInformation, 3201372846, 44483, 19913, 174, 101, 133, 31, 77, 125, 71, 153);
-RT_INTERFACE!{interface IDisplayInformation(IDisplayInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayInformation] {
+RT_INTERFACE!{interface IDisplayInformation(IDisplayInformationVtbl): IInspectable [IID_IDisplayInformation] {
     fn get_CurrentOrientation(&self, out: *mut DisplayOrientations) -> HRESULT,
     fn get_NativeOrientation(&self, out: *mut DisplayOrientations) -> HRESULT,
     fn add_OrientationChanged(&self, handler: <foundation::TypedEventHandler<DisplayInformation, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -807,7 +807,7 @@ impl DisplayInformation {
 }
 DEFINE_CLSID!(DisplayInformation(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,68,105,115,112,108,97,121,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_DisplayInformation]);
 DEFINE_IID!(IID_IDisplayInformation2, 1305280545, 64209, 19342, 142, 223, 119, 88, 135, 184, 191, 25);
-RT_INTERFACE!{interface IDisplayInformation2(IDisplayInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IDisplayInformation2] {
+RT_INTERFACE!{interface IDisplayInformation2(IDisplayInformation2Vtbl): IInspectable [IID_IDisplayInformation2] {
     fn get_RawPixelsPerViewPixel(&self, out: *mut f64) -> HRESULT
 }}
 impl IDisplayInformation2 {
@@ -818,7 +818,7 @@ impl IDisplayInformation2 {
     }}
 }
 DEFINE_IID!(IID_IDisplayInformation3, 3675586845, 3849, 17510, 143, 243, 17, 222, 154, 60, 146, 154);
-RT_INTERFACE!{interface IDisplayInformation3(IDisplayInformation3Vtbl): IInspectable(IInspectableVtbl) [IID_IDisplayInformation3] {
+RT_INTERFACE!{interface IDisplayInformation3(IDisplayInformation3Vtbl): IInspectable [IID_IDisplayInformation3] {
     fn get_DiagonalSizeInInches(&self, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT
 }}
 impl IDisplayInformation3 {
@@ -829,7 +829,7 @@ impl IDisplayInformation3 {
     }}
 }
 DEFINE_IID!(IID_IDisplayInformation4, 3379744303, 4674, 18110, 181, 54, 225, 170, 254, 158, 122, 207);
-RT_INTERFACE!{interface IDisplayInformation4(IDisplayInformation4Vtbl): IInspectable(IInspectableVtbl) [IID_IDisplayInformation4] {
+RT_INTERFACE!{interface IDisplayInformation4(IDisplayInformation4Vtbl): IInspectable [IID_IDisplayInformation4] {
     fn get_ScreenWidthInRawPixels(&self, out: *mut u32) -> HRESULT,
     fn get_ScreenHeightInRawPixels(&self, out: *mut u32) -> HRESULT
 }}
@@ -846,7 +846,7 @@ impl IDisplayInformation4 {
     }}
 }
 DEFINE_IID!(IID_IDisplayInformation5, 978600668, 11486, 19085, 128, 209, 33, 220, 90, 220, 193, 170);
-RT_INTERFACE!{interface IDisplayInformation5(IDisplayInformation5Vtbl): IInspectable(IInspectableVtbl) [IID_IDisplayInformation5] {
+RT_INTERFACE!{interface IDisplayInformation5(IDisplayInformation5Vtbl): IInspectable [IID_IDisplayInformation5] {
     fn GetAdvancedColorInfo(&self, out: *mut <AdvancedColorInfo as RtType>::Abi) -> HRESULT,
     fn add_AdvancedColorInfoChanged(&self, handler: <foundation::TypedEventHandler<DisplayInformation, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_AdvancedColorInfoChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT
@@ -868,7 +868,7 @@ impl IDisplayInformation5 {
     }}
 }
 DEFINE_IID!(IID_IDisplayInformationStatics, 3332385388, 54354, 17628, 186, 7, 150, 243, 198, 173, 249, 209);
-RT_INTERFACE!{static interface IDisplayInformationStatics(IDisplayInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayInformationStatics] {
+RT_INTERFACE!{static interface IDisplayInformationStatics(IDisplayInformationStaticsVtbl): IInspectable [IID_IDisplayInformationStatics] {
     fn GetForCurrentView(&self, out: *mut <DisplayInformation as RtType>::Abi) -> HRESULT,
     fn get_AutoRotationPreferences(&self, out: *mut DisplayOrientations) -> HRESULT,
     fn put_AutoRotationPreferences(&self, value: DisplayOrientations) -> HRESULT,
@@ -973,7 +973,7 @@ impl DisplayPropertiesEventHandler {
     }}
 }
 DEFINE_IID!(IID_IDisplayPropertiesStatics, 1765272973, 12522, 19949, 130, 113, 69, 83, 255, 2, 246, 138);
-RT_INTERFACE!{static interface IDisplayPropertiesStatics(IDisplayPropertiesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDisplayPropertiesStatics] {
+RT_INTERFACE!{static interface IDisplayPropertiesStatics(IDisplayPropertiesStaticsVtbl): IInspectable [IID_IDisplayPropertiesStatics] {
     fn get_CurrentOrientation(&self, out: *mut DisplayOrientations) -> HRESULT,
     fn get_NativeOrientation(&self, out: *mut DisplayOrientations) -> HRESULT,
     fn get_AutoRotationPreferences(&self, out: *mut DisplayOrientations) -> HRESULT,
@@ -1101,7 +1101,7 @@ RT_ENUM! { enum HdmiDisplayHdrOption: i32 {
     None = 0, EotfSdr = 1, Eotf2084 = 2, DolbyVisionLowLatency = 3,
 }}
 DEFINE_IID!(IID_IHdmiDisplayInformation, 319503370, 62821, 18286, 171, 213, 234, 5, 174, 231, 76, 105);
-RT_INTERFACE!{interface IHdmiDisplayInformation(IHdmiDisplayInformationVtbl): IInspectable(IInspectableVtbl) [IID_IHdmiDisplayInformation] {
+RT_INTERFACE!{interface IHdmiDisplayInformation(IHdmiDisplayInformationVtbl): IInspectable [IID_IHdmiDisplayInformation] {
     fn GetSupportedDisplayModes(&self, out: *mut <foundation::collections::IVectorView<HdmiDisplayMode> as RtType>::Abi) -> HRESULT,
     fn GetCurrentDisplayMode(&self, out: *mut <HdmiDisplayMode as RtType>::Abi) -> HRESULT,
     fn SetDefaultDisplayModeAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -1161,7 +1161,7 @@ impl HdmiDisplayInformation {
 }
 DEFINE_CLSID!(HdmiDisplayInformation(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,68,105,115,112,108,97,121,46,67,111,114,101,46,72,100,109,105,68,105,115,112,108,97,121,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_HdmiDisplayInformation]);
 DEFINE_IID!(IID_IHdmiDisplayInformationStatics, 1827058272, 62506, 18965, 145, 76, 123, 142, 42, 90, 101, 223);
-RT_INTERFACE!{static interface IHdmiDisplayInformationStatics(IHdmiDisplayInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHdmiDisplayInformationStatics] {
+RT_INTERFACE!{static interface IHdmiDisplayInformationStatics(IHdmiDisplayInformationStaticsVtbl): IInspectable [IID_IHdmiDisplayInformationStatics] {
     fn GetForCurrentView(&self, out: *mut <HdmiDisplayInformation as RtType>::Abi) -> HRESULT
 }}
 impl IHdmiDisplayInformationStatics {
@@ -1172,7 +1172,7 @@ impl IHdmiDisplayInformationStatics {
     }}
 }
 DEFINE_IID!(IID_IHdmiDisplayMode, 201774509, 7056, 20305, 153, 129, 239, 90, 28, 13, 223, 102);
-RT_INTERFACE!{interface IHdmiDisplayMode(IHdmiDisplayModeVtbl): IInspectable(IInspectableVtbl) [IID_IHdmiDisplayMode] {
+RT_INTERFACE!{interface IHdmiDisplayMode(IHdmiDisplayModeVtbl): IInspectable [IID_IHdmiDisplayMode] {
     fn get_ResolutionWidthInRawPixels(&self, out: *mut u32) -> HRESULT,
     fn get_ResolutionHeightInRawPixels(&self, out: *mut u32) -> HRESULT,
     fn get_RefreshRate(&self, out: *mut f64) -> HRESULT,
@@ -1244,7 +1244,7 @@ impl IHdmiDisplayMode {
 }
 RT_CLASS!{class HdmiDisplayMode: IHdmiDisplayMode}
 DEFINE_IID!(IID_IHdmiDisplayMode2, 130895519, 19260, 17080, 132, 231, 137, 83, 104, 113, 138, 242);
-RT_INTERFACE!{interface IHdmiDisplayMode2(IHdmiDisplayMode2Vtbl): IInspectable(IInspectableVtbl) [IID_IHdmiDisplayMode2] {
+RT_INTERFACE!{interface IHdmiDisplayMode2(IHdmiDisplayMode2Vtbl): IInspectable [IID_IHdmiDisplayMode2] {
     fn get_IsDolbyVisionLowLatencySupported(&self, out: *mut bool) -> HRESULT
 }}
 impl IHdmiDisplayMode2 {
@@ -1262,7 +1262,7 @@ RT_ENUM! { enum HdmiDisplayPixelEncoding: i32 {
 pub mod effects { // Windows.Graphics.Effects
 use crate::prelude::*;
 DEFINE_IID!(IID_IGraphicsEffect, 3411132622, 36838, 17974, 178, 2, 134, 31, 170, 7, 216, 243);
-RT_INTERFACE!{interface IGraphicsEffect(IGraphicsEffectVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsEffect] {
+RT_INTERFACE!{interface IGraphicsEffect(IGraphicsEffectVtbl): IInspectable [IID_IGraphicsEffect] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Name(&self, name: HSTRING) -> HRESULT
 }}
@@ -1278,7 +1278,7 @@ impl IGraphicsEffect {
     }}
 }
 DEFINE_IID!(IID_IGraphicsEffectSource, 764386780, 17209, 20153, 146, 22, 249, 222, 183, 86, 88, 162);
-RT_INTERFACE!{interface IGraphicsEffectSource(IGraphicsEffectSourceVtbl): IInspectable(IInspectableVtbl) [IID_IGraphicsEffectSource] {
+RT_INTERFACE!{interface IGraphicsEffectSource(IGraphicsEffectSourceVtbl): IInspectable [IID_IGraphicsEffectSource] {
     
 }}
 } // Windows.Graphics.Effects
@@ -1288,7 +1288,7 @@ RT_STRUCT! { struct HolographicAdapterId {
     LowPart: u32, HighPart: i32,
 }}
 DEFINE_IID!(IID_IHolographicCamera, 3840508997, 39917, 18816, 155, 160, 232, 118, 128, 209, 203, 116);
-RT_INTERFACE!{interface IHolographicCamera(IHolographicCameraVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera] {
+RT_INTERFACE!{interface IHolographicCamera(IHolographicCameraVtbl): IInspectable [IID_IHolographicCamera] {
     fn get_RenderTargetSize(&self, out: *mut foundation::Size) -> HRESULT,
     fn get_ViewportScaleFactor(&self, out: *mut f64) -> HRESULT,
     fn put_ViewportScaleFactor(&self, value: f64) -> HRESULT,
@@ -1333,7 +1333,7 @@ impl IHolographicCamera {
 }
 RT_CLASS!{class HolographicCamera: IHolographicCamera}
 DEFINE_IID!(IID_IHolographicCamera2, 3042680602, 47756, 20356, 173, 121, 46, 126, 30, 36, 80, 243);
-RT_INTERFACE!{interface IHolographicCamera2(IHolographicCamera2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera2] {
+RT_INTERFACE!{interface IHolographicCamera2(IHolographicCamera2Vtbl): IInspectable [IID_IHolographicCamera2] {
     fn get_LeftViewportParameters(&self, out: *mut <HolographicCameraViewportParameters as RtType>::Abi) -> HRESULT,
     fn get_RightViewportParameters(&self, out: *mut <HolographicCameraViewportParameters as RtType>::Abi) -> HRESULT,
     fn get_Display(&self, out: *mut <HolographicDisplay as RtType>::Abi) -> HRESULT
@@ -1356,7 +1356,7 @@ impl IHolographicCamera2 {
     }}
 }
 DEFINE_IID!(IID_IHolographicCamera3, 1168789427, 31577, 21070, 74, 63, 74, 106, 214, 101, 4, 119);
-RT_INTERFACE!{interface IHolographicCamera3(IHolographicCamera3Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera3] {
+RT_INTERFACE!{interface IHolographicCamera3(IHolographicCamera3Vtbl): IInspectable [IID_IHolographicCamera3] {
     fn get_IsPrimaryLayerEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_IsPrimaryLayerEnabled(&self, value: bool) -> HRESULT,
     fn get_MaxQuadLayerCount(&self, out: *mut u32) -> HRESULT,
@@ -1384,7 +1384,7 @@ impl IHolographicCamera3 {
     }}
 }
 DEFINE_IID!(IID_IHolographicCamera4, 2586128854, 18211, 20281, 169, 165, 157, 5, 24, 29, 155, 68);
-RT_INTERFACE!{interface IHolographicCamera4(IHolographicCamera4Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera4] {
+RT_INTERFACE!{interface IHolographicCamera4(IHolographicCamera4Vtbl): IInspectable [IID_IHolographicCamera4] {
     fn get_CanOverrideViewport(&self, out: *mut bool) -> HRESULT
 }}
 impl IHolographicCamera4 {
@@ -1395,7 +1395,7 @@ impl IHolographicCamera4 {
     }}
 }
 DEFINE_IID!(IID_IHolographicCamera5, 580323058, 25229, 20213, 156, 8, 166, 63, 221, 119, 135, 198);
-RT_INTERFACE!{interface IHolographicCamera5(IHolographicCamera5Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCamera5] {
+RT_INTERFACE!{interface IHolographicCamera5(IHolographicCamera5Vtbl): IInspectable [IID_IHolographicCamera5] {
     fn get_IsHardwareContentProtectionSupported(&self, out: *mut bool) -> HRESULT,
     fn get_IsHardwareContentProtectionEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_IsHardwareContentProtectionEnabled(&self, value: bool) -> HRESULT
@@ -1417,7 +1417,7 @@ impl IHolographicCamera5 {
     }}
 }
 DEFINE_IID!(IID_IHolographicCameraPose, 226328112, 4830, 17853, 145, 43, 199, 246, 86, 21, 153, 209);
-RT_INTERFACE!{interface IHolographicCameraPose(IHolographicCameraPoseVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraPose] {
+RT_INTERFACE!{interface IHolographicCameraPose(IHolographicCameraPoseVtbl): IInspectable [IID_IHolographicCameraPose] {
     fn get_HolographicCamera(&self, out: *mut <HolographicCamera as RtType>::Abi) -> HRESULT,
     fn get_Viewport(&self, out: *mut foundation::Rect) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy2(&self) -> (),
@@ -1474,7 +1474,7 @@ impl IHolographicCameraPose {
 }
 RT_CLASS!{class HolographicCameraPose: IHolographicCameraPose}
 DEFINE_IID!(IID_IHolographicCameraPose2, 590078067, 23853, 17760, 129, 78, 38, 151, 196, 252, 225, 107);
-RT_INTERFACE!{interface IHolographicCameraPose2(IHolographicCameraPose2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraPose2] {
+RT_INTERFACE!{interface IHolographicCameraPose2(IHolographicCameraPose2Vtbl): IInspectable [IID_IHolographicCameraPose2] {
     #[cfg(not(feature="windows-perception"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-perception")] fn OverrideViewTransform(&self, coordinateSystem: <super::super::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, coordinateSystemToViewTransform: HolographicStereoTransform) -> HRESULT,
     fn OverrideProjectionTransform(&self, projectionTransform: HolographicStereoTransform) -> HRESULT,
@@ -1495,7 +1495,7 @@ impl IHolographicCameraPose2 {
     }}
 }
 DEFINE_IID!(IID_IHolographicCameraRenderingParameters, 2393648849, 23540, 19990, 130, 54, 174, 8, 0, 193, 29, 13);
-RT_INTERFACE!{interface IHolographicCameraRenderingParameters(IHolographicCameraRenderingParametersVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters] {
+RT_INTERFACE!{interface IHolographicCameraRenderingParameters(IHolographicCameraRenderingParametersVtbl): IInspectable [IID_IHolographicCameraRenderingParameters] {
     #[cfg(not(feature="windows-perception"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-perception")] fn SetFocusPoint(&self, coordinateSystem: <super::super::perception::spatial::SpatialCoordinateSystem as RtType>::Abi, position: foundation::numerics::Vector3) -> HRESULT,
     #[cfg(not(feature="windows-perception"))] fn __Dummy1(&self) -> (),
@@ -1531,7 +1531,7 @@ impl IHolographicCameraRenderingParameters {
 }
 RT_CLASS!{class HolographicCameraRenderingParameters: IHolographicCameraRenderingParameters}
 DEFINE_IID!(IID_IHolographicCameraRenderingParameters2, 638742755, 46742, 17972, 148, 214, 190, 6, 129, 100, 53, 153);
-RT_INTERFACE!{interface IHolographicCameraRenderingParameters2(IHolographicCameraRenderingParameters2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters2] {
+RT_INTERFACE!{interface IHolographicCameraRenderingParameters2(IHolographicCameraRenderingParameters2Vtbl): IInspectable [IID_IHolographicCameraRenderingParameters2] {
     fn get_ReprojectionMode(&self, out: *mut HolographicReprojectionMode) -> HRESULT,
     fn put_ReprojectionMode(&self, value: HolographicReprojectionMode) -> HRESULT,
     fn CommitDirect3D11DepthBuffer(&self, value: <super::directx::direct3d11::IDirect3DSurface as RtType>::Abi) -> HRESULT
@@ -1552,7 +1552,7 @@ impl IHolographicCameraRenderingParameters2 {
     }}
 }
 DEFINE_IID!(IID_IHolographicCameraRenderingParameters3, 2980729151, 4973, 19206, 185, 212, 228, 185, 20, 205, 6, 131);
-RT_INTERFACE!{interface IHolographicCameraRenderingParameters3(IHolographicCameraRenderingParameters3Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraRenderingParameters3] {
+RT_INTERFACE!{interface IHolographicCameraRenderingParameters3(IHolographicCameraRenderingParameters3Vtbl): IInspectable [IID_IHolographicCameraRenderingParameters3] {
     fn get_IsContentProtectionEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_IsContentProtectionEnabled(&self, value: bool) -> HRESULT
 }}
@@ -1568,7 +1568,7 @@ impl IHolographicCameraRenderingParameters3 {
     }}
 }
 DEFINE_IID!(IID_IHolographicCameraViewportParameters, 2160980983, 33834, 16865, 147, 237, 86, 146, 171, 31, 187, 16);
-RT_INTERFACE!{interface IHolographicCameraViewportParameters(IHolographicCameraViewportParametersVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicCameraViewportParameters] {
+RT_INTERFACE!{interface IHolographicCameraViewportParameters(IHolographicCameraViewportParametersVtbl): IInspectable [IID_IHolographicCameraViewportParameters] {
     fn get_HiddenAreaMesh(&self, outSize: *mut u32, out: *mut *mut foundation::numerics::Vector2) -> HRESULT,
     fn get_VisibleAreaMesh(&self, outSize: *mut u32, out: *mut *mut foundation::numerics::Vector2) -> HRESULT
 }}
@@ -1586,7 +1586,7 @@ impl IHolographicCameraViewportParameters {
 }
 RT_CLASS!{class HolographicCameraViewportParameters: IHolographicCameraViewportParameters}
 DEFINE_IID!(IID_IHolographicDisplay, 2597233684, 7583, 16528, 163, 136, 144, 192, 111, 110, 174, 156);
-RT_INTERFACE!{interface IHolographicDisplay(IHolographicDisplayVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplay] {
+RT_INTERFACE!{interface IHolographicDisplay(IHolographicDisplayVtbl): IInspectable [IID_IHolographicDisplay] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_MaxViewportSize(&self, out: *mut foundation::Size) -> HRESULT,
     fn get_IsStereo(&self, out: *mut bool) -> HRESULT,
@@ -1635,7 +1635,7 @@ impl HolographicDisplay {
 }
 DEFINE_CLSID!(HolographicDisplay(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,68,105,115,112,108,97,121,0]) [CLSID_HolographicDisplay]);
 DEFINE_IID!(IID_IHolographicDisplay2, 1974222722, 59221, 17260, 141, 150, 77, 50, 209, 49, 71, 62);
-RT_INTERFACE!{interface IHolographicDisplay2(IHolographicDisplay2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplay2] {
+RT_INTERFACE!{interface IHolographicDisplay2(IHolographicDisplay2Vtbl): IInspectable [IID_IHolographicDisplay2] {
     fn get_RefreshRate(&self, out: *mut f64) -> HRESULT
 }}
 impl IHolographicDisplay2 {
@@ -1646,7 +1646,7 @@ impl IHolographicDisplay2 {
     }}
 }
 DEFINE_IID!(IID_IHolographicDisplayStatics, 3409398147, 59312, 18497, 131, 85, 58, 229, 181, 54, 233, 164);
-RT_INTERFACE!{static interface IHolographicDisplayStatics(IHolographicDisplayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicDisplayStatics] {
+RT_INTERFACE!{static interface IHolographicDisplayStatics(IHolographicDisplayStaticsVtbl): IInspectable [IID_IHolographicDisplayStatics] {
     fn GetDefault(&self, out: *mut <HolographicDisplay as RtType>::Abi) -> HRESULT
 }}
 impl IHolographicDisplayStatics {
@@ -1657,7 +1657,7 @@ impl IHolographicDisplayStatics {
     }}
 }
 DEFINE_IID!(IID_IHolographicFrame, 3331886774, 43193, 12372, 166, 235, 214, 36, 182, 83, 99, 117);
-RT_INTERFACE!{interface IHolographicFrame(IHolographicFrameVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFrame] {
+RT_INTERFACE!{interface IHolographicFrame(IHolographicFrameVtbl): IInspectable [IID_IHolographicFrame] {
     fn get_AddedCameras(&self, out: *mut <foundation::collections::IVectorView<HolographicCamera> as RtType>::Abi) -> HRESULT,
     fn get_RemovedCameras(&self, out: *mut <foundation::collections::IVectorView<HolographicCamera> as RtType>::Abi) -> HRESULT,
     fn GetRenderingParameters(&self, cameraPose: <HolographicCameraPose as RtType>::Abi, out: *mut <HolographicCameraRenderingParameters as RtType>::Abi) -> HRESULT,
@@ -1715,7 +1715,7 @@ impl IHolographicFrame {
 }
 RT_CLASS!{class HolographicFrame: IHolographicFrame}
 DEFINE_IID!(IID_IHolographicFrame2, 675231679, 15346, 24209, 102, 51, 135, 5, 116, 230, 242, 23);
-RT_INTERFACE!{interface IHolographicFrame2(IHolographicFrame2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFrame2] {
+RT_INTERFACE!{interface IHolographicFrame2(IHolographicFrame2Vtbl): IInspectable [IID_IHolographicFrame2] {
     fn GetQuadLayerUpdateParameters(&self, layer: <HolographicQuadLayer as RtType>::Abi, out: *mut <HolographicQuadLayerUpdateParameters as RtType>::Abi) -> HRESULT
 }}
 impl IHolographicFrame2 {
@@ -1726,7 +1726,7 @@ impl IHolographicFrame2 {
     }}
 }
 DEFINE_IID!(IID_IHolographicFramePrediction, 1376734689, 23562, 20089, 168, 30, 106, 190, 2, 187, 39, 57);
-RT_INTERFACE!{interface IHolographicFramePrediction(IHolographicFramePredictionVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePrediction] {
+RT_INTERFACE!{interface IHolographicFramePrediction(IHolographicFramePredictionVtbl): IInspectable [IID_IHolographicFramePrediction] {
     fn get_CameraPoses(&self, out: *mut <foundation::collections::IVectorView<HolographicCameraPose> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-perception")] fn get_Timestamp(&self, out: *mut <super::super::perception::PerceptionTimestamp as RtType>::Abi) -> HRESULT
 }}
@@ -1744,7 +1744,7 @@ impl IHolographicFramePrediction {
 }
 RT_CLASS!{class HolographicFramePrediction: IHolographicFramePrediction}
 DEFINE_IID!(IID_IHolographicFramePresentationMonitor, 3397854572, 28590, 17038, 187, 131, 37, 223, 238, 81, 19, 107);
-RT_INTERFACE!{interface IHolographicFramePresentationMonitor(IHolographicFramePresentationMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePresentationMonitor] {
+RT_INTERFACE!{interface IHolographicFramePresentationMonitor(IHolographicFramePresentationMonitorVtbl): IInspectable [IID_IHolographicFramePresentationMonitor] {
     fn ReadReports(&self, out: *mut <foundation::collections::IVectorView<HolographicFramePresentationReport> as RtType>::Abi) -> HRESULT
 }}
 impl IHolographicFramePresentationMonitor {
@@ -1756,7 +1756,7 @@ impl IHolographicFramePresentationMonitor {
 }
 RT_CLASS!{class HolographicFramePresentationMonitor: IHolographicFramePresentationMonitor}
 DEFINE_IID!(IID_IHolographicFramePresentationReport, 2159736340, 62196, 19594, 141, 227, 6, 92, 120, 246, 213, 222);
-RT_INTERFACE!{interface IHolographicFramePresentationReport(IHolographicFramePresentationReportVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicFramePresentationReport] {
+RT_INTERFACE!{interface IHolographicFramePresentationReport(IHolographicFramePresentationReportVtbl): IInspectable [IID_IHolographicFramePresentationReport] {
     fn get_CompositorGpuDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_AppGpuDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_AppGpuOverrun(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -1798,7 +1798,7 @@ RT_ENUM! { enum HolographicFramePresentWaitBehavior: i32 {
     WaitForFrameToFinish = 0, DoNotWaitForFrameToFinish = 1,
 }}
 DEFINE_IID!(IID_IHolographicQuadLayer, 2419351753, 51673, 23900, 65, 172, 162, 213, 171, 15, 211, 49);
-RT_INTERFACE!{interface IHolographicQuadLayer(IHolographicQuadLayerVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayer] {
+RT_INTERFACE!{interface IHolographicQuadLayer(IHolographicQuadLayerVtbl): IInspectable [IID_IHolographicQuadLayer] {
     fn get_PixelFormat(&self, out: *mut super::directx::DirectXPixelFormat) -> HRESULT,
     fn get_Size(&self, out: *mut foundation::Size) -> HRESULT
 }}
@@ -1826,7 +1826,7 @@ impl HolographicQuadLayer {
 }
 DEFINE_CLSID!(HolographicQuadLayer(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,81,117,97,100,76,97,121,101,114,0]) [CLSID_HolographicQuadLayer]);
 DEFINE_IID!(IID_IHolographicQuadLayerFactory, 2792700147, 23060, 23056, 72, 154, 69, 80, 101, 179, 123, 118);
-RT_INTERFACE!{static interface IHolographicQuadLayerFactory(IHolographicQuadLayerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayerFactory] {
+RT_INTERFACE!{static interface IHolographicQuadLayerFactory(IHolographicQuadLayerFactoryVtbl): IInspectable [IID_IHolographicQuadLayerFactory] {
     fn Create(&self, size: foundation::Size, out: *mut <HolographicQuadLayer as RtType>::Abi) -> HRESULT,
     fn CreateWithPixelFormat(&self, size: foundation::Size, pixelFormat: super::directx::DirectXPixelFormat, out: *mut <HolographicQuadLayer as RtType>::Abi) -> HRESULT
 }}
@@ -1843,7 +1843,7 @@ impl IHolographicQuadLayerFactory {
     }}
 }
 DEFINE_IID!(IID_IHolographicQuadLayerUpdateParameters, 722379696, 31117, 23498, 85, 194, 44, 12, 118, 46, 187, 8);
-RT_INTERFACE!{interface IHolographicQuadLayerUpdateParameters(IHolographicQuadLayerUpdateParametersVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayerUpdateParameters] {
+RT_INTERFACE!{interface IHolographicQuadLayerUpdateParameters(IHolographicQuadLayerUpdateParametersVtbl): IInspectable [IID_IHolographicQuadLayerUpdateParameters] {
     fn AcquireBufferToUpdateContent(&self, out: *mut <super::directx::direct3d11::IDirect3DSurface as RtType>::Abi) -> HRESULT,
     fn UpdateViewport(&self, value: foundation::Rect) -> HRESULT,
     fn UpdateContentProtectionEnabled(&self, value: bool) -> HRESULT,
@@ -1881,7 +1881,7 @@ impl IHolographicQuadLayerUpdateParameters {
 }
 RT_CLASS!{class HolographicQuadLayerUpdateParameters: IHolographicQuadLayerUpdateParameters}
 DEFINE_IID!(IID_IHolographicQuadLayerUpdateParameters2, 1328796461, 33473, 18113, 137, 128, 60, 183, 13, 152, 24, 43);
-RT_INTERFACE!{interface IHolographicQuadLayerUpdateParameters2(IHolographicQuadLayerUpdateParameters2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicQuadLayerUpdateParameters2] {
+RT_INTERFACE!{interface IHolographicQuadLayerUpdateParameters2(IHolographicQuadLayerUpdateParameters2Vtbl): IInspectable [IID_IHolographicQuadLayerUpdateParameters2] {
     fn get_CanAcquireWithHardwareProtection(&self, out: *mut bool) -> HRESULT,
     fn AcquireBufferToUpdateContentWithHardwareProtection(&self, out: *mut <super::directx::direct3d11::IDirect3DSurface as RtType>::Abi) -> HRESULT
 }}
@@ -1901,7 +1901,7 @@ RT_ENUM! { enum HolographicReprojectionMode: i32 {
     PositionAndOrientation = 0, OrientationOnly = 1, Disabled = 2,
 }}
 DEFINE_IID!(IID_IHolographicSpace, 1132518310, 24184, 17231, 128, 124, 52, 51, 209, 239, 232, 183);
-RT_INTERFACE!{interface IHolographicSpace(IHolographicSpaceVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpace] {
+RT_INTERFACE!{interface IHolographicSpace(IHolographicSpaceVtbl): IInspectable [IID_IHolographicSpace] {
     fn get_PrimaryAdapterId(&self, out: *mut HolographicAdapterId) -> HRESULT,
     fn SetDirect3D11Device(&self, value: <super::directx::direct3d11::IDirect3DDevice as RtType>::Abi) -> HRESULT,
     fn add_CameraAdded(&self, handler: <foundation::TypedEventHandler<HolographicSpace, HolographicSpaceCameraAddedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -1970,7 +1970,7 @@ impl HolographicSpace {
 }
 DEFINE_CLSID!(HolographicSpace(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,72,111,108,111,103,114,97,112,104,105,99,46,72,111,108,111,103,114,97,112,104,105,99,83,112,97,99,101,0]) [CLSID_HolographicSpace]);
 DEFINE_IID!(IID_IHolographicSpace2, 1333897640, 47103, 18563, 152, 39, 125, 103, 114, 135, 234, 112);
-RT_INTERFACE!{interface IHolographicSpace2(IHolographicSpace2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpace2] {
+RT_INTERFACE!{interface IHolographicSpace2(IHolographicSpace2Vtbl): IInspectable [IID_IHolographicSpace2] {
     fn get_UserPresence(&self, out: *mut HolographicSpaceUserPresence) -> HRESULT,
     fn add_UserPresenceChanged(&self, handler: <foundation::TypedEventHandler<HolographicSpace, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_UserPresenceChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
@@ -2008,7 +2008,7 @@ impl IHolographicSpace2 {
     }}
 }
 DEFINE_IID!(IID_IHolographicSpaceCameraAddedEventArgs, 1492245045, 48051, 15503, 153, 61, 108, 128, 231, 254, 185, 159);
-RT_INTERFACE!{interface IHolographicSpaceCameraAddedEventArgs(IHolographicSpaceCameraAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceCameraAddedEventArgs] {
+RT_INTERFACE!{interface IHolographicSpaceCameraAddedEventArgs(IHolographicSpaceCameraAddedEventArgsVtbl): IInspectable [IID_IHolographicSpaceCameraAddedEventArgs] {
     fn get_Camera(&self, out: *mut <HolographicCamera as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
@@ -2026,7 +2026,7 @@ impl IHolographicSpaceCameraAddedEventArgs {
 }
 RT_CLASS!{class HolographicSpaceCameraAddedEventArgs: IHolographicSpaceCameraAddedEventArgs}
 DEFINE_IID!(IID_IHolographicSpaceCameraRemovedEventArgs, 2153006248, 62126, 12846, 141, 169, 131, 106, 10, 149, 164, 193);
-RT_INTERFACE!{interface IHolographicSpaceCameraRemovedEventArgs(IHolographicSpaceCameraRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceCameraRemovedEventArgs] {
+RT_INTERFACE!{interface IHolographicSpaceCameraRemovedEventArgs(IHolographicSpaceCameraRemovedEventArgsVtbl): IInspectable [IID_IHolographicSpaceCameraRemovedEventArgs] {
     fn get_Camera(&self, out: *mut <HolographicCamera as RtType>::Abi) -> HRESULT
 }}
 impl IHolographicSpaceCameraRemovedEventArgs {
@@ -2038,7 +2038,7 @@ impl IHolographicSpaceCameraRemovedEventArgs {
 }
 RT_CLASS!{class HolographicSpaceCameraRemovedEventArgs: IHolographicSpaceCameraRemovedEventArgs}
 DEFINE_IID!(IID_IHolographicSpaceStatics, 911106148, 51442, 15265, 131, 145, 102, 184, 72, 158, 103, 253);
-RT_INTERFACE!{static interface IHolographicSpaceStatics(IHolographicSpaceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceStatics] {
+RT_INTERFACE!{static interface IHolographicSpaceStatics(IHolographicSpaceStaticsVtbl): IInspectable [IID_IHolographicSpaceStatics] {
     #[cfg(feature="windows-ui")] fn CreateForCoreWindow(&self, window: <super::super::ui::core::CoreWindow as RtType>::Abi, out: *mut <HolographicSpace as RtType>::Abi) -> HRESULT
 }}
 impl IHolographicSpaceStatics {
@@ -2049,7 +2049,7 @@ impl IHolographicSpaceStatics {
     }}
 }
 DEFINE_IID!(IID_IHolographicSpaceStatics2, 242708616, 30204, 18607, 135, 88, 6, 82, 246, 240, 124, 89);
-RT_INTERFACE!{static interface IHolographicSpaceStatics2(IHolographicSpaceStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceStatics2] {
+RT_INTERFACE!{static interface IHolographicSpaceStatics2(IHolographicSpaceStatics2Vtbl): IInspectable [IID_IHolographicSpaceStatics2] {
     fn get_IsSupported(&self, out: *mut bool) -> HRESULT,
     fn get_IsAvailable(&self, out: *mut bool) -> HRESULT,
     fn add_IsAvailableChanged(&self, handler: <foundation::EventHandler<IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -2077,7 +2077,7 @@ impl IHolographicSpaceStatics2 {
     }}
 }
 DEFINE_IID!(IID_IHolographicSpaceStatics3, 989912637, 45475, 19966, 142, 121, 254, 197, 144, 158, 109, 248);
-RT_INTERFACE!{static interface IHolographicSpaceStatics3(IHolographicSpaceStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IHolographicSpaceStatics3] {
+RT_INTERFACE!{static interface IHolographicSpaceStatics3(IHolographicSpaceStatics3Vtbl): IInspectable [IID_IHolographicSpaceStatics3] {
     fn get_IsConfigured(&self, out: *mut bool) -> HRESULT
 }}
 impl IHolographicSpaceStatics3 {
@@ -2103,7 +2103,7 @@ RT_STRUCT! { struct BitmapBounds {
     X: u32, Y: u32, Width: u32, Height: u32,
 }}
 DEFINE_IID!(IID_IBitmapBuffer, 2772305092, 14748, 17292, 178, 143, 166, 58, 107, 131, 209, 161);
-RT_INTERFACE!{interface IBitmapBuffer(IBitmapBufferVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapBuffer] {
+RT_INTERFACE!{interface IBitmapBuffer(IBitmapBufferVtbl): IInspectable [IID_IBitmapBuffer] {
     fn GetPlaneCount(&self, out: *mut i32) -> HRESULT,
     fn GetPlaneDescription(&self, index: i32, out: *mut BitmapPlaneDescription) -> HRESULT
 }}
@@ -2124,7 +2124,7 @@ RT_ENUM! { enum BitmapBufferAccessMode: i32 {
     Read = 0, ReadWrite = 1, Write = 2,
 }}
 DEFINE_IID!(IID_IBitmapCodecInformation, 1074572018, 50352, 17298, 163, 176, 111, 111, 155, 169, 92, 180);
-RT_INTERFACE!{interface IBitmapCodecInformation(IBitmapCodecInformationVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapCodecInformation] {
+RT_INTERFACE!{interface IBitmapCodecInformation(IBitmapCodecInformationVtbl): IInspectable [IID_IBitmapCodecInformation] {
     fn get_CodecId(&self, out: *mut Guid) -> HRESULT,
     fn get_FileExtensions(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_FriendlyName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2154,7 +2154,7 @@ impl IBitmapCodecInformation {
 }
 RT_CLASS!{class BitmapCodecInformation: IBitmapCodecInformation}
 DEFINE_IID!(IID_IBitmapDecoder, 2901353146, 7540, 19601, 157, 252, 150, 32, 116, 82, 51, 230);
-RT_INTERFACE!{interface IBitmapDecoder(IBitmapDecoderVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapDecoder] {
+RT_INTERFACE!{interface IBitmapDecoder(IBitmapDecoderVtbl): IInspectable [IID_IBitmapDecoder] {
     fn get_BitmapContainerProperties(&self, out: *mut <BitmapPropertiesView as RtType>::Abi) -> HRESULT,
     fn get_DecoderInformation(&self, out: *mut <BitmapCodecInformation as RtType>::Abi) -> HRESULT,
     fn get_FrameCount(&self, out: *mut u32) -> HRESULT,
@@ -2231,7 +2231,7 @@ impl BitmapDecoder {
 }
 DEFINE_CLSID!(BitmapDecoder(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,68,101,99,111,100,101,114,0]) [CLSID_BitmapDecoder]);
 DEFINE_IID!(IID_IBitmapDecoderStatics, 1133300518, 48367, 20117, 186, 214, 35, 168, 34, 229, 141, 1);
-RT_INTERFACE!{static interface IBitmapDecoderStatics(IBitmapDecoderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapDecoderStatics] {
+RT_INTERFACE!{static interface IBitmapDecoderStatics(IBitmapDecoderStaticsVtbl): IInspectable [IID_IBitmapDecoderStatics] {
     fn get_BmpDecoderId(&self, out: *mut Guid) -> HRESULT,
     fn get_JpegDecoderId(&self, out: *mut Guid) -> HRESULT,
     fn get_PngDecoderId(&self, out: *mut Guid) -> HRESULT,
@@ -2296,7 +2296,7 @@ impl IBitmapDecoderStatics {
     }}
 }
 DEFINE_IID!(IID_IBitmapDecoderStatics2, 1354393834, 39329, 16580, 128, 217, 174, 240, 218, 250, 108, 63);
-RT_INTERFACE!{static interface IBitmapDecoderStatics2(IBitmapDecoderStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBitmapDecoderStatics2] {
+RT_INTERFACE!{static interface IBitmapDecoderStatics2(IBitmapDecoderStatics2Vtbl): IInspectable [IID_IBitmapDecoderStatics2] {
     fn get_HeifDecoderId(&self, out: *mut Guid) -> HRESULT,
     fn get_WebpDecoderId(&self, out: *mut Guid) -> HRESULT
 }}
@@ -2313,7 +2313,7 @@ impl IBitmapDecoderStatics2 {
     }}
 }
 DEFINE_IID!(IID_IBitmapEncoder, 734292195, 57848, 19284, 149, 232, 50, 145, 149, 81, 206, 98);
-RT_INTERFACE!{interface IBitmapEncoder(IBitmapEncoderVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapEncoder] {
+RT_INTERFACE!{interface IBitmapEncoder(IBitmapEncoderVtbl): IInspectable [IID_IBitmapEncoder] {
     fn get_EncoderInformation(&self, out: *mut <BitmapCodecInformation as RtType>::Abi) -> HRESULT,
     fn get_BitmapProperties(&self, out: *mut <BitmapProperties as RtType>::Abi) -> HRESULT,
     fn get_BitmapContainerProperties(&self, out: *mut <BitmapProperties as RtType>::Abi) -> HRESULT,
@@ -2440,7 +2440,7 @@ impl BitmapEncoder {
 }
 DEFINE_CLSID!(BitmapEncoder(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,69,110,99,111,100,101,114,0]) [CLSID_BitmapEncoder]);
 DEFINE_IID!(IID_IBitmapEncoderStatics, 2806208167, 42212, 20153, 142, 64, 86, 77, 231, 225, 204, 178);
-RT_INTERFACE!{static interface IBitmapEncoderStatics(IBitmapEncoderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapEncoderStatics] {
+RT_INTERFACE!{static interface IBitmapEncoderStatics(IBitmapEncoderStaticsVtbl): IInspectable [IID_IBitmapEncoderStatics] {
     fn get_BmpEncoderId(&self, out: *mut Guid) -> HRESULT,
     fn get_JpegEncoderId(&self, out: *mut Guid) -> HRESULT,
     fn get_PngEncoderId(&self, out: *mut Guid) -> HRESULT,
@@ -2514,7 +2514,7 @@ impl IBitmapEncoderStatics {
     }}
 }
 DEFINE_IID!(IID_IBitmapEncoderStatics2, 868991577, 65073, 16817, 184, 18, 8, 109, 33, 232, 126, 22);
-RT_INTERFACE!{static interface IBitmapEncoderStatics2(IBitmapEncoderStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IBitmapEncoderStatics2] {
+RT_INTERFACE!{static interface IBitmapEncoderStatics2(IBitmapEncoderStatics2Vtbl): IInspectable [IID_IBitmapEncoderStatics2] {
     fn get_HeifEncoderId(&self, out: *mut Guid) -> HRESULT
 }}
 impl IBitmapEncoderStatics2 {
@@ -2525,7 +2525,7 @@ impl IBitmapEncoderStatics2 {
     }}
 }
 DEFINE_IID!(IID_IBitmapEncoderWithSoftwareBitmap, 1751962177, 17200, 19575, 172, 228, 3, 52, 150, 139, 23, 104);
-RT_INTERFACE!{interface IBitmapEncoderWithSoftwareBitmap(IBitmapEncoderWithSoftwareBitmapVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapEncoderWithSoftwareBitmap] {
+RT_INTERFACE!{interface IBitmapEncoderWithSoftwareBitmap(IBitmapEncoderWithSoftwareBitmapVtbl): IInspectable [IID_IBitmapEncoderWithSoftwareBitmap] {
     fn SetSoftwareBitmap(&self, bitmap: <SoftwareBitmap as RtType>::Abi) -> HRESULT
 }}
 impl IBitmapEncoderWithSoftwareBitmap {
@@ -2538,7 +2538,7 @@ RT_ENUM! { enum BitmapFlip: i32 {
     None = 0, Horizontal = 1, Vertical = 2,
 }}
 DEFINE_IID!(IID_IBitmapFrame, 1923389980, 32897, 17293, 145, 188, 148, 236, 252, 129, 133, 198);
-RT_INTERFACE!{interface IBitmapFrame(IBitmapFrameVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapFrame] {
+RT_INTERFACE!{interface IBitmapFrame(IBitmapFrameVtbl): IInspectable [IID_IBitmapFrame] {
     fn GetThumbnailAsync(&self, out: *mut <foundation::IAsyncOperation<ImageStream> as RtType>::Abi) -> HRESULT,
     fn get_BitmapProperties(&self, out: *mut <BitmapPropertiesView as RtType>::Abi) -> HRESULT,
     fn get_BitmapPixelFormat(&self, out: *mut BitmapPixelFormat) -> HRESULT,
@@ -2616,7 +2616,7 @@ impl IBitmapFrame {
 }
 RT_CLASS!{class BitmapFrame: IBitmapFrame}
 DEFINE_IID!(IID_IBitmapFrameWithSoftwareBitmap, 4264066202, 16908, 18787, 135, 173, 105, 20, 54, 224, 131, 131);
-RT_INTERFACE!{interface IBitmapFrameWithSoftwareBitmap(IBitmapFrameWithSoftwareBitmapVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapFrameWithSoftwareBitmap] {
+RT_INTERFACE!{interface IBitmapFrameWithSoftwareBitmap(IBitmapFrameWithSoftwareBitmapVtbl): IInspectable [IID_IBitmapFrameWithSoftwareBitmap] {
     fn GetSoftwareBitmapAsync(&self, out: *mut <foundation::IAsyncOperation<SoftwareBitmap> as RtType>::Abi) -> HRESULT,
     fn GetSoftwareBitmapConvertedAsync(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, out: *mut <foundation::IAsyncOperation<SoftwareBitmap> as RtType>::Abi) -> HRESULT,
     fn GetSoftwareBitmapTransformedAsync(&self, pixelFormat: BitmapPixelFormat, alphaMode: BitmapAlphaMode, transform: <BitmapTransform as RtType>::Abi, exifOrientationMode: ExifOrientationMode, colorManagementMode: ColorManagementMode, out: *mut <foundation::IAsyncOperation<SoftwareBitmap> as RtType>::Abi) -> HRESULT
@@ -2648,7 +2648,7 @@ RT_STRUCT! { struct BitmapPlaneDescription {
     StartIndex: i32, Width: i32, Height: i32, Stride: i32,
 }}
 DEFINE_IID!(IID_IBitmapProperties, 3936309019, 46341, 17488, 164, 209, 232, 202, 148, 82, 157, 141);
-RT_INTERFACE!{interface IBitmapProperties(IBitmapPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapProperties] {
+RT_INTERFACE!{interface IBitmapProperties(IBitmapPropertiesVtbl): IInspectable [IID_IBitmapProperties] {
     fn SetPropertiesAsync(&self, propertiesToSet: <foundation::collections::IIterable<foundation::collections::IKeyValuePair<HString, BitmapTypedValue>> as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl IBitmapProperties {
@@ -2660,7 +2660,7 @@ impl IBitmapProperties {
 }
 RT_CLASS!{class BitmapProperties: IBitmapProperties}
 DEFINE_IID!(IID_IBitmapPropertiesView, 2114971770, 14960, 18680, 156, 85, 25, 108, 245, 165, 69, 245);
-RT_INTERFACE!{interface IBitmapPropertiesView(IBitmapPropertiesViewVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapPropertiesView] {
+RT_INTERFACE!{interface IBitmapPropertiesView(IBitmapPropertiesViewVtbl): IInspectable [IID_IBitmapPropertiesView] {
     fn GetPropertiesAsync(&self, propertiesToRetrieve: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<BitmapPropertySet> as RtType>::Abi) -> HRESULT
 }}
 impl IBitmapPropertiesView {
@@ -2681,7 +2681,7 @@ RT_STRUCT! { struct BitmapSize {
     Width: u32, Height: u32,
 }}
 DEFINE_IID!(IID_IBitmapTransform, 2926924612, 57960, 19765, 173, 207, 233, 149, 211, 26, 141, 52);
-RT_INTERFACE!{interface IBitmapTransform(IBitmapTransformVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapTransform] {
+RT_INTERFACE!{interface IBitmapTransform(IBitmapTransformVtbl): IInspectable [IID_IBitmapTransform] {
     fn get_ScaledWidth(&self, out: *mut u32) -> HRESULT,
     fn put_ScaledWidth(&self, value: u32) -> HRESULT,
     fn get_ScaledHeight(&self, out: *mut u32) -> HRESULT,
@@ -2755,7 +2755,7 @@ RT_CLASS!{class BitmapTransform: IBitmapTransform}
 impl RtActivatable<IActivationFactory> for BitmapTransform {}
 DEFINE_CLSID!(BitmapTransform(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,84,114,97,110,115,102,111,114,109,0]) [CLSID_BitmapTransform]);
 DEFINE_IID!(IID_IBitmapTypedValue, 3447735465, 9283, 16384, 176, 205, 121, 49, 108, 86, 245, 137);
-RT_INTERFACE!{interface IBitmapTypedValue(IBitmapTypedValueVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapTypedValue] {
+RT_INTERFACE!{interface IBitmapTypedValue(IBitmapTypedValueVtbl): IInspectable [IID_IBitmapTypedValue] {
     fn get_Value(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT,
     fn get_Type(&self, out: *mut foundation::PropertyType) -> HRESULT
 }}
@@ -2780,7 +2780,7 @@ impl BitmapTypedValue {
 }
 DEFINE_CLSID!(BitmapTypedValue(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,66,105,116,109,97,112,84,121,112,101,100,86,97,108,117,101,0]) [CLSID_BitmapTypedValue]);
 DEFINE_IID!(IID_IBitmapTypedValueFactory, 2463872409, 52755, 18107, 149, 69, 203, 58, 63, 99, 235, 139);
-RT_INTERFACE!{static interface IBitmapTypedValueFactory(IBitmapTypedValueFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBitmapTypedValueFactory] {
+RT_INTERFACE!{static interface IBitmapTypedValueFactory(IBitmapTypedValueFactoryVtbl): IInspectable [IID_IBitmapTypedValueFactory] {
     fn Create(&self, value: <IInspectable as RtType>::Abi, type_: foundation::PropertyType, out: *mut <BitmapTypedValue as RtType>::Abi) -> HRESULT
 }}
 impl IBitmapTypedValueFactory {
@@ -2802,7 +2802,7 @@ RT_ENUM! { enum JpegSubsamplingMode: i32 {
     Default = 0, Y4Cb2Cr0 = 1, Y4Cb2Cr2 = 2, Y4Cb4Cr4 = 3,
 }}
 DEFINE_IID!(IID_IPixelDataProvider, 3716357925, 6236, 17813, 159, 185, 204, 190, 110, 193, 138, 111);
-RT_INTERFACE!{interface IPixelDataProvider(IPixelDataProviderVtbl): IInspectable(IInspectableVtbl) [IID_IPixelDataProvider] {
+RT_INTERFACE!{interface IPixelDataProvider(IPixelDataProviderVtbl): IInspectable [IID_IPixelDataProvider] {
     fn DetachPixelData(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT
 }}
 impl IPixelDataProvider {
@@ -2817,7 +2817,7 @@ RT_ENUM! { enum PngFilterMode: i32 {
     Automatic = 0, None = 1, Sub = 2, Up = 3, Average = 4, Paeth = 5, Adaptive = 6,
 }}
 DEFINE_IID!(IID_ISoftwareBitmap, 1755186952, 32495, 18495, 150, 63, 218, 147, 136, 24, 224, 115);
-RT_INTERFACE!{interface ISoftwareBitmap(ISoftwareBitmapVtbl): IInspectable(IInspectableVtbl) [IID_ISoftwareBitmap] {
+RT_INTERFACE!{interface ISoftwareBitmap(ISoftwareBitmapVtbl): IInspectable [IID_ISoftwareBitmap] {
     fn get_BitmapPixelFormat(&self, out: *mut BitmapPixelFormat) -> HRESULT,
     fn get_BitmapAlphaMode(&self, out: *mut BitmapAlphaMode) -> HRESULT,
     fn get_PixelWidth(&self, out: *mut i32) -> HRESULT,
@@ -2936,7 +2936,7 @@ impl SoftwareBitmap {
 }
 DEFINE_CLSID!(SoftwareBitmap(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,73,109,97,103,105,110,103,46,83,111,102,116,119,97,114,101,66,105,116,109,97,112,0]) [CLSID_SoftwareBitmap]);
 DEFINE_IID!(IID_ISoftwareBitmapFactory, 3382700905, 11618, 19783, 166, 179, 79, 219, 106, 7, 253, 248);
-RT_INTERFACE!{static interface ISoftwareBitmapFactory(ISoftwareBitmapFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISoftwareBitmapFactory] {
+RT_INTERFACE!{static interface ISoftwareBitmapFactory(ISoftwareBitmapFactoryVtbl): IInspectable [IID_ISoftwareBitmapFactory] {
     fn Create(&self, format: BitmapPixelFormat, width: i32, height: i32, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT,
     fn CreateWithAlpha(&self, format: BitmapPixelFormat, width: i32, height: i32, alpha: BitmapAlphaMode, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT
 }}
@@ -2953,7 +2953,7 @@ impl ISoftwareBitmapFactory {
     }}
 }
 DEFINE_IID!(IID_ISoftwareBitmapStatics, 3741550043, 26415, 19101, 128, 110, 194, 68, 47, 52, 62, 134);
-RT_INTERFACE!{static interface ISoftwareBitmapStatics(ISoftwareBitmapStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISoftwareBitmapStatics] {
+RT_INTERFACE!{static interface ISoftwareBitmapStatics(ISoftwareBitmapStaticsVtbl): IInspectable [IID_ISoftwareBitmapStatics] {
     fn Copy(&self, source: <SoftwareBitmap as RtType>::Abi, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT,
     fn Convert(&self, source: <SoftwareBitmap as RtType>::Abi, format: BitmapPixelFormat, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT,
     fn ConvertWithAlpha(&self, source: <SoftwareBitmap as RtType>::Abi, format: BitmapPixelFormat, alpha: BitmapAlphaMode, out: *mut <SoftwareBitmap as RtType>::Abi) -> HRESULT,
@@ -3020,7 +3020,7 @@ RT_ENUM! { enum PrintColorMode: i32 {
     Default = 0, NotAvailable = 1, PrinterCustom = 2, Color = 3, Grayscale = 4, Monochrome = 5,
 }}
 DEFINE_IID!(IID_IPrintDocumentSource, 3738962992, 61931, 18399, 170, 230, 237, 84, 39, 81, 31, 1);
-RT_INTERFACE!{interface IPrintDocumentSource(IPrintDocumentSourceVtbl): IInspectable(IInspectableVtbl) [IID_IPrintDocumentSource] {
+RT_INTERFACE!{interface IPrintDocumentSource(IPrintDocumentSourceVtbl): IInspectable [IID_IPrintDocumentSource] {
     
 }}
 RT_ENUM! { enum PrintDuplex: i32 {
@@ -3030,7 +3030,7 @@ RT_ENUM! { enum PrintHolePunch: i32 {
     Default = 0, NotAvailable = 1, PrinterCustom = 2, None = 3, LeftEdge = 4, RightEdge = 5, TopEdge = 6, BottomEdge = 7,
 }}
 DEFINE_IID!(IID_IPrintManager, 4280981140, 35993, 17661, 174, 74, 25, 217, 170, 154, 15, 10);
-RT_INTERFACE!{interface IPrintManager(IPrintManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPrintManager] {
+RT_INTERFACE!{interface IPrintManager(IPrintManagerVtbl): IInspectable [IID_IPrintManager] {
     fn add_PrintTaskRequested(&self, eventHandler: <foundation::TypedEventHandler<PrintManager, PrintTaskRequestedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_PrintTaskRequested(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -3061,7 +3061,7 @@ impl PrintManager {
 }
 DEFINE_CLSID!(PrintManager(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,80,114,105,110,116,77,97,110,97,103,101,114,0]) [CLSID_PrintManager]);
 DEFINE_IID!(IID_IPrintManagerStatic, 1477991885, 58932, 18004, 132, 240, 224, 21, 42, 130, 23, 172);
-RT_INTERFACE!{static interface IPrintManagerStatic(IPrintManagerStaticVtbl): IInspectable(IInspectableVtbl) [IID_IPrintManagerStatic] {
+RT_INTERFACE!{static interface IPrintManagerStatic(IPrintManagerStaticVtbl): IInspectable [IID_IPrintManagerStatic] {
     fn GetForCurrentView(&self, out: *mut <PrintManager as RtType>::Abi) -> HRESULT,
     fn ShowPrintUIAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
 }}
@@ -3078,7 +3078,7 @@ impl IPrintManagerStatic {
     }}
 }
 DEFINE_IID!(IID_IPrintManagerStatic2, 900307285, 59051, 16697, 154, 189, 184, 106, 114, 155, 53, 152);
-RT_INTERFACE!{static interface IPrintManagerStatic2(IPrintManagerStatic2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintManagerStatic2] {
+RT_INTERFACE!{static interface IPrintManagerStatic2(IPrintManagerStatic2Vtbl): IInspectable [IID_IPrintManagerStatic2] {
     fn IsSupported(&self, out: *mut bool) -> HRESULT
 }}
 impl IPrintManagerStatic2 {
@@ -3101,7 +3101,7 @@ RT_STRUCT! { struct PrintPageDescription {
     PageSize: foundation::Size, ImageableRect: foundation::Rect, DpiX: u32, DpiY: u32,
 }}
 DEFINE_IID!(IID_IPrintPageInfo, 3712739785, 42657, 19162, 147, 14, 218, 135, 42, 79, 35, 211);
-RT_INTERFACE!{interface IPrintPageInfo(IPrintPageInfoVtbl): IInspectable(IInspectableVtbl) [IID_IPrintPageInfo] {
+RT_INTERFACE!{interface IPrintPageInfo(IPrintPageInfoVtbl): IInspectable [IID_IPrintPageInfo] {
     fn put_MediaSize(&self, value: PrintMediaSize) -> HRESULT,
     fn get_MediaSize(&self, out: *mut PrintMediaSize) -> HRESULT,
     fn put_PageSize(&self, value: foundation::Size) -> HRESULT,
@@ -3164,7 +3164,7 @@ RT_CLASS!{class PrintPageInfo: IPrintPageInfo}
 impl RtActivatable<IActivationFactory> for PrintPageInfo {}
 DEFINE_CLSID!(PrintPageInfo(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,80,114,105,110,116,80,97,103,101,73,110,102,111,0]) [CLSID_PrintPageInfo]);
 DEFINE_IID!(IID_IPrintPageRange, 4171263060, 28284, 20933, 87, 253, 6, 96, 194, 215, 21, 19);
-RT_INTERFACE!{interface IPrintPageRange(IPrintPageRangeVtbl): IInspectable(IInspectableVtbl) [IID_IPrintPageRange] {
+RT_INTERFACE!{interface IPrintPageRange(IPrintPageRangeVtbl): IInspectable [IID_IPrintPageRange] {
     fn get_FirstPageNumber(&self, out: *mut i32) -> HRESULT,
     fn get_LastPageNumber(&self, out: *mut i32) -> HRESULT
 }}
@@ -3192,7 +3192,7 @@ impl PrintPageRange {
 }
 DEFINE_CLSID!(PrintPageRange(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,80,114,105,110,116,80,97,103,101,82,97,110,103,101,0]) [CLSID_PrintPageRange]);
 DEFINE_IID!(IID_IPrintPageRangeFactory, 1083167839, 57415, 24453, 113, 41, 251, 8, 90, 79, 173, 20);
-RT_INTERFACE!{static interface IPrintPageRangeFactory(IPrintPageRangeFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrintPageRangeFactory] {
+RT_INTERFACE!{static interface IPrintPageRangeFactory(IPrintPageRangeFactoryVtbl): IInspectable [IID_IPrintPageRangeFactory] {
     fn Create(&self, firstPage: i32, lastPage: i32, out: *mut <PrintPageRange as RtType>::Abi) -> HRESULT,
     fn CreateWithSinglePage(&self, page: i32, out: *mut <PrintPageRange as RtType>::Abi) -> HRESULT
 }}
@@ -3209,7 +3209,7 @@ impl IPrintPageRangeFactory {
     }}
 }
 DEFINE_IID!(IID_IPrintPageRangeOptions, 3463296808, 4951, 18098, 169, 35, 121, 249, 149, 244, 72, 252);
-RT_INTERFACE!{interface IPrintPageRangeOptions(IPrintPageRangeOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintPageRangeOptions] {
+RT_INTERFACE!{interface IPrintPageRangeOptions(IPrintPageRangeOptionsVtbl): IInspectable [IID_IPrintPageRangeOptions] {
     fn put_AllowAllPages(&self, value: bool) -> HRESULT,
     fn get_AllowAllPages(&self, out: *mut bool) -> HRESULT,
     fn put_AllowCurrentPage(&self, value: bool) -> HRESULT,
@@ -3254,7 +3254,7 @@ RT_ENUM! { enum PrintStaple: i32 {
     Default = 0, NotAvailable = 1, PrinterCustom = 2, None = 3, StapleTopLeft = 4, StapleTopRight = 5, StapleBottomLeft = 6, StapleBottomRight = 7, StapleDualLeft = 8, StapleDualRight = 9, StapleDualTop = 10, StapleDualBottom = 11, SaddleStitch = 12,
 }}
 DEFINE_IID!(IID_IPrintTask, 1641546311, 27894, 20397, 132, 226, 165, 232, 46, 45, 76, 235);
-RT_INTERFACE!{interface IPrintTask(IPrintTaskVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTask] {
+RT_INTERFACE!{interface IPrintTask(IPrintTaskVtbl): IInspectable [IID_IPrintTask] {
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-applicationmodel")] fn get_Properties(&self, out: *mut <super::super::applicationmodel::datatransfer::DataPackagePropertySet as RtType>::Abi) -> HRESULT,
     fn get_Source(&self, out: *mut <IPrintDocumentSource as RtType>::Abi) -> HRESULT,
@@ -3323,7 +3323,7 @@ impl IPrintTask {
 }
 RT_CLASS!{class PrintTask: IPrintTask}
 DEFINE_IID!(IID_IPrintTask2, 908281975, 15955, 19869, 143, 94, 49, 106, 200, 222, 218, 225);
-RT_INTERFACE!{interface IPrintTask2(IPrintTask2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintTask2] {
+RT_INTERFACE!{interface IPrintTask2(IPrintTask2Vtbl): IInspectable [IID_IPrintTask2] {
     fn put_IsPreviewEnabled(&self, value: bool) -> HRESULT,
     fn get_IsPreviewEnabled(&self, out: *mut bool) -> HRESULT
 }}
@@ -3339,7 +3339,7 @@ impl IPrintTask2 {
     }}
 }
 DEFINE_IID!(IID_IPrintTaskCompletedEventArgs, 1540175023, 9449, 19472, 141, 7, 20, 195, 70, 186, 63, 206);
-RT_INTERFACE!{interface IPrintTaskCompletedEventArgs(IPrintTaskCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskCompletedEventArgs] {
+RT_INTERFACE!{interface IPrintTaskCompletedEventArgs(IPrintTaskCompletedEventArgsVtbl): IInspectable [IID_IPrintTaskCompletedEventArgs] {
     fn get_Completion(&self, out: *mut PrintTaskCompletion) -> HRESULT
 }}
 impl IPrintTaskCompletedEventArgs {
@@ -3354,7 +3354,7 @@ RT_ENUM! { enum PrintTaskCompletion: i32 {
     Abandoned = 0, Canceled = 1, Failed = 2, Submitted = 3,
 }}
 DEFINE_IID!(IID_IPrintTaskOptions, 1510631099, 53897, 16827, 150, 221, 87, 226, 131, 56, 174, 63);
-RT_INTERFACE!{interface IPrintTaskOptions(IPrintTaskOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptions] {
+RT_INTERFACE!{interface IPrintTaskOptions(IPrintTaskOptionsVtbl): IInspectable [IID_IPrintTaskOptions] {
     fn put_Bordering(&self, value: PrintBordering) -> HRESULT,
     fn get_Bordering(&self, out: *mut PrintBordering) -> HRESULT,
     #[cfg(feature="windows-storage")] fn GetPagePrintTicket(&self, printPageInfo: <PrintPageInfo as RtType>::Abi, out: *mut <super::super::storage::streams::IRandomAccessStream as RtType>::Abi) -> HRESULT
@@ -3377,7 +3377,7 @@ impl IPrintTaskOptions {
 }
 RT_CLASS!{class PrintTaskOptions: IPrintTaskOptionsCore}
 DEFINE_IID!(IID_IPrintTaskOptions2, 3952809478, 39478, 19289, 134, 23, 178, 23, 132, 146, 98, 225);
-RT_INTERFACE!{interface IPrintTaskOptions2(IPrintTaskOptions2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptions2] {
+RT_INTERFACE!{interface IPrintTaskOptions2(IPrintTaskOptions2Vtbl): IInspectable [IID_IPrintTaskOptions2] {
     fn get_PageRangeOptions(&self, out: *mut <PrintPageRangeOptions as RtType>::Abi) -> HRESULT,
     fn get_CustomPageRanges(&self, out: *mut <foundation::collections::IVector<PrintPageRange> as RtType>::Abi) -> HRESULT
 }}
@@ -3394,7 +3394,7 @@ impl IPrintTaskOptions2 {
     }}
 }
 DEFINE_IID!(IID_IPrintTaskOptionsCore, 467383412, 20177, 16875, 190, 60, 114, 209, 142, 214, 115, 55);
-RT_INTERFACE!{interface IPrintTaskOptionsCore(IPrintTaskOptionsCoreVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionsCore] {
+RT_INTERFACE!{interface IPrintTaskOptionsCore(IPrintTaskOptionsCoreVtbl): IInspectable [IID_IPrintTaskOptionsCore] {
     fn GetPageDescription(&self, jobPageNumber: u32, out: *mut PrintPageDescription) -> HRESULT
 }}
 impl IPrintTaskOptionsCore {
@@ -3405,7 +3405,7 @@ impl IPrintTaskOptionsCore {
     }}
 }
 DEFINE_IID!(IID_IPrintTaskOptionsCoreProperties, 3250001970, 40595, 20053, 129, 75, 51, 38, 165, 158, 252, 225);
-RT_INTERFACE!{interface IPrintTaskOptionsCoreProperties(IPrintTaskOptionsCorePropertiesVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionsCoreProperties] {
+RT_INTERFACE!{interface IPrintTaskOptionsCoreProperties(IPrintTaskOptionsCorePropertiesVtbl): IInspectable [IID_IPrintTaskOptionsCoreProperties] {
     fn put_MediaSize(&self, value: PrintMediaSize) -> HRESULT,
     fn get_MediaSize(&self, out: *mut PrintMediaSize) -> HRESULT,
     fn put_MediaType(&self, value: PrintMediaType) -> HRESULT,
@@ -3543,7 +3543,7 @@ impl IPrintTaskOptionsCoreProperties {
     }}
 }
 DEFINE_IID!(IID_IPrintTaskOptionsCoreUIConfiguration, 1659280931, 39454, 17206, 183, 79, 60, 199, 244, 207, 247, 9);
-RT_INTERFACE!{interface IPrintTaskOptionsCoreUIConfiguration(IPrintTaskOptionsCoreUIConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionsCoreUIConfiguration] {
+RT_INTERFACE!{interface IPrintTaskOptionsCoreUIConfiguration(IPrintTaskOptionsCoreUIConfigurationVtbl): IInspectable [IID_IPrintTaskOptionsCoreUIConfiguration] {
     fn get_DisplayedOptions(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT
 }}
 impl IPrintTaskOptionsCoreUIConfiguration {
@@ -3554,7 +3554,7 @@ impl IPrintTaskOptionsCoreUIConfiguration {
     }}
 }
 DEFINE_IID!(IID_IPrintTaskProgressingEventArgs, 2165101515, 46096, 17026, 160, 115, 90, 195, 120, 35, 65, 116);
-RT_INTERFACE!{interface IPrintTaskProgressingEventArgs(IPrintTaskProgressingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskProgressingEventArgs] {
+RT_INTERFACE!{interface IPrintTaskProgressingEventArgs(IPrintTaskProgressingEventArgsVtbl): IInspectable [IID_IPrintTaskProgressingEventArgs] {
     fn get_DocumentPageCount(&self, out: *mut u32) -> HRESULT
 }}
 impl IPrintTaskProgressingEventArgs {
@@ -3566,7 +3566,7 @@ impl IPrintTaskProgressingEventArgs {
 }
 RT_CLASS!{class PrintTaskProgressingEventArgs: IPrintTaskProgressingEventArgs}
 DEFINE_IID!(IID_IPrintTaskRequest, 1878400558, 10018, 16960, 166, 124, 243, 100, 132, 154, 23, 243);
-RT_INTERFACE!{interface IPrintTaskRequest(IPrintTaskRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskRequest] {
+RT_INTERFACE!{interface IPrintTaskRequest(IPrintTaskRequestVtbl): IInspectable [IID_IPrintTaskRequest] {
     fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn CreatePrintTask(&self, title: HSTRING, handler: <PrintTaskSourceRequestedHandler as RtType>::Abi, out: *mut <PrintTask as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <PrintTaskRequestedDeferral as RtType>::Abi) -> HRESULT
@@ -3590,7 +3590,7 @@ impl IPrintTaskRequest {
 }
 RT_CLASS!{class PrintTaskRequest: IPrintTaskRequest}
 DEFINE_IID!(IID_IPrintTaskRequestedDeferral, 3488592880, 52798, 17095, 148, 150, 100, 128, 12, 98, 44, 68);
-RT_INTERFACE!{interface IPrintTaskRequestedDeferral(IPrintTaskRequestedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskRequestedDeferral] {
+RT_INTERFACE!{interface IPrintTaskRequestedDeferral(IPrintTaskRequestedDeferralVtbl): IInspectable [IID_IPrintTaskRequestedDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl IPrintTaskRequestedDeferral {
@@ -3601,7 +3601,7 @@ impl IPrintTaskRequestedDeferral {
 }
 RT_CLASS!{class PrintTaskRequestedDeferral: IPrintTaskRequestedDeferral}
 DEFINE_IID!(IID_IPrintTaskRequestedEventArgs, 3501193508, 41755, 17740, 167, 182, 93, 12, 197, 34, 252, 22);
-RT_INTERFACE!{interface IPrintTaskRequestedEventArgs(IPrintTaskRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskRequestedEventArgs] {
+RT_INTERFACE!{interface IPrintTaskRequestedEventArgs(IPrintTaskRequestedEventArgsVtbl): IInspectable [IID_IPrintTaskRequestedEventArgs] {
     fn get_Request(&self, out: *mut <PrintTaskRequest as RtType>::Abi) -> HRESULT
 }}
 impl IPrintTaskRequestedEventArgs {
@@ -3613,7 +3613,7 @@ impl IPrintTaskRequestedEventArgs {
 }
 RT_CLASS!{class PrintTaskRequestedEventArgs: IPrintTaskRequestedEventArgs}
 DEFINE_IID!(IID_IPrintTaskSourceRequestedArgs, 4193281982, 62550, 16880, 156, 152, 92, 231, 62, 133, 20, 16);
-RT_INTERFACE!{interface IPrintTaskSourceRequestedArgs(IPrintTaskSourceRequestedArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskSourceRequestedArgs] {
+RT_INTERFACE!{interface IPrintTaskSourceRequestedArgs(IPrintTaskSourceRequestedArgsVtbl): IInspectable [IID_IPrintTaskSourceRequestedArgs] {
     fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn SetSource(&self, source: <IPrintDocumentSource as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <PrintTaskSourceRequestedDeferral as RtType>::Abi) -> HRESULT
@@ -3636,7 +3636,7 @@ impl IPrintTaskSourceRequestedArgs {
 }
 RT_CLASS!{class PrintTaskSourceRequestedArgs: IPrintTaskSourceRequestedArgs}
 DEFINE_IID!(IID_IPrintTaskSourceRequestedDeferral, 1242915025, 27026, 19869, 133, 85, 76, 164, 86, 63, 177, 102);
-RT_INTERFACE!{interface IPrintTaskSourceRequestedDeferral(IPrintTaskSourceRequestedDeferralVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskSourceRequestedDeferral] {
+RT_INTERFACE!{interface IPrintTaskSourceRequestedDeferral(IPrintTaskSourceRequestedDeferralVtbl): IInspectable [IID_IPrintTaskSourceRequestedDeferral] {
     fn Complete(&self) -> HRESULT
 }}
 impl IPrintTaskSourceRequestedDeferral {
@@ -3657,7 +3657,7 @@ impl PrintTaskSourceRequestedHandler {
     }}
 }
 DEFINE_IID!(IID_IPrintTaskTargetDeviceSupport, 693989568, 49867, 19325, 176, 234, 147, 9, 80, 145, 162, 32);
-RT_INTERFACE!{interface IPrintTaskTargetDeviceSupport(IPrintTaskTargetDeviceSupportVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskTargetDeviceSupport] {
+RT_INTERFACE!{interface IPrintTaskTargetDeviceSupport(IPrintTaskTargetDeviceSupportVtbl): IInspectable [IID_IPrintTaskTargetDeviceSupport] {
     fn put_IsPrinterTargetEnabled(&self, value: bool) -> HRESULT,
     fn get_IsPrinterTargetEnabled(&self, out: *mut bool) -> HRESULT,
     fn put_Is3DManufacturingTargetEnabled(&self, value: bool) -> HRESULT,
@@ -3736,7 +3736,7 @@ impl StandardPrintTaskOptions {
 }
 DEFINE_CLSID!(StandardPrintTaskOptions(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,83,116,97,110,100,97,114,100,80,114,105,110,116,84,97,115,107,79,112,116,105,111,110,115,0]) [CLSID_StandardPrintTaskOptions]);
 DEFINE_IID!(IID_IStandardPrintTaskOptionsStatic, 3024633126, 3536, 19668, 186, 255, 147, 15, 199, 214, 165, 116);
-RT_INTERFACE!{static interface IStandardPrintTaskOptionsStatic(IStandardPrintTaskOptionsStaticVtbl): IInspectable(IInspectableVtbl) [IID_IStandardPrintTaskOptionsStatic] {
+RT_INTERFACE!{static interface IStandardPrintTaskOptionsStatic(IStandardPrintTaskOptionsStaticVtbl): IInspectable [IID_IStandardPrintTaskOptionsStatic] {
     fn get_MediaSize(&self, out: *mut HSTRING) -> HRESULT,
     fn get_MediaType(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Orientation(&self, out: *mut HSTRING) -> HRESULT,
@@ -3819,7 +3819,7 @@ impl IStandardPrintTaskOptionsStatic {
     }}
 }
 DEFINE_IID!(IID_IStandardPrintTaskOptionsStatic2, 1004768244, 31300, 17001, 154, 82, 129, 38, 30, 40, 158, 233);
-RT_INTERFACE!{static interface IStandardPrintTaskOptionsStatic2(IStandardPrintTaskOptionsStatic2Vtbl): IInspectable(IInspectableVtbl) [IID_IStandardPrintTaskOptionsStatic2] {
+RT_INTERFACE!{static interface IStandardPrintTaskOptionsStatic2(IStandardPrintTaskOptionsStatic2Vtbl): IInspectable [IID_IStandardPrintTaskOptionsStatic2] {
     fn get_Bordering(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IStandardPrintTaskOptionsStatic2 {
@@ -3830,7 +3830,7 @@ impl IStandardPrintTaskOptionsStatic2 {
     }}
 }
 DEFINE_IID!(IID_IStandardPrintTaskOptionsStatic3, 3153497734, 14424, 16819, 167, 153, 85, 221, 152, 136, 212, 117);
-RT_INTERFACE!{static interface IStandardPrintTaskOptionsStatic3(IStandardPrintTaskOptionsStatic3Vtbl): IInspectable(IInspectableVtbl) [IID_IStandardPrintTaskOptionsStatic3] {
+RT_INTERFACE!{static interface IStandardPrintTaskOptionsStatic3(IStandardPrintTaskOptionsStatic3Vtbl): IInspectable [IID_IStandardPrintTaskOptionsStatic3] {
     fn get_CustomPageRanges(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IStandardPrintTaskOptionsStatic3 {
@@ -3843,7 +3843,7 @@ impl IStandardPrintTaskOptionsStatic3 {
 pub mod optiondetails { // Windows.Graphics.Printing.OptionDetails
 use crate::prelude::*;
 DEFINE_IID!(IID_IPrintBindingOptionDetails, 3287600280, 38244, 20246, 160, 85, 169, 139, 154, 73, 233, 211);
-RT_INTERFACE!{interface IPrintBindingOptionDetails(IPrintBindingOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintBindingOptionDetails] {
+RT_INTERFACE!{interface IPrintBindingOptionDetails(IPrintBindingOptionDetailsVtbl): IInspectable [IID_IPrintBindingOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -3871,7 +3871,7 @@ impl IPrintBindingOptionDetails {
 }
 RT_CLASS!{class PrintBindingOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintBorderingOptionDetails, 1299430543, 64339, 20146, 152, 95, 29, 145, 222, 11, 118, 57);
-RT_INTERFACE!{interface IPrintBorderingOptionDetails(IPrintBorderingOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintBorderingOptionDetails] {
+RT_INTERFACE!{interface IPrintBorderingOptionDetails(IPrintBorderingOptionDetailsVtbl): IInspectable [IID_IPrintBorderingOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -3899,7 +3899,7 @@ impl IPrintBorderingOptionDetails {
 }
 RT_CLASS!{class PrintBorderingOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintCollationOptionDetails, 3601576294, 42406, 16604, 172, 195, 115, 159, 40, 241, 229, 211);
-RT_INTERFACE!{interface IPrintCollationOptionDetails(IPrintCollationOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCollationOptionDetails] {
+RT_INTERFACE!{interface IPrintCollationOptionDetails(IPrintCollationOptionDetailsVtbl): IInspectable [IID_IPrintCollationOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -3927,7 +3927,7 @@ impl IPrintCollationOptionDetails {
 }
 RT_CLASS!{class PrintCollationOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintColorModeOptionDetails, 3685316356, 61910, 18499, 164, 132, 155, 68, 124, 220, 243, 182);
-RT_INTERFACE!{interface IPrintColorModeOptionDetails(IPrintColorModeOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintColorModeOptionDetails] {
+RT_INTERFACE!{interface IPrintColorModeOptionDetails(IPrintColorModeOptionDetailsVtbl): IInspectable [IID_IPrintColorModeOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -3955,7 +3955,7 @@ impl IPrintColorModeOptionDetails {
 }
 RT_CLASS!{class PrintColorModeOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintCopiesOptionDetails, 1107636377, 17209, 17219, 137, 141, 44, 71, 181, 224, 195, 65);
-RT_INTERFACE!{interface IPrintCopiesOptionDetails(IPrintCopiesOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCopiesOptionDetails] {
+RT_INTERFACE!{interface IPrintCopiesOptionDetails(IPrintCopiesOptionDetailsVtbl): IInspectable [IID_IPrintCopiesOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -3983,7 +3983,7 @@ impl IPrintCopiesOptionDetails {
 }
 RT_CLASS!{class PrintCopiesOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintCustomItemDetails, 1459926583, 23610, 17562, 170, 54, 179, 41, 27, 17, 146, 253);
-RT_INTERFACE!{interface IPrintCustomItemDetails(IPrintCustomItemDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomItemDetails] {
+RT_INTERFACE!{interface IPrintCustomItemDetails(IPrintCustomItemDetailsVtbl): IInspectable [IID_IPrintCustomItemDetails] {
     fn get_ItemId(&self, out: *mut HSTRING) -> HRESULT,
     fn put_ItemDisplayName(&self, value: HSTRING) -> HRESULT,
     fn get_ItemDisplayName(&self, out: *mut HSTRING) -> HRESULT
@@ -4006,7 +4006,7 @@ impl IPrintCustomItemDetails {
 }
 RT_CLASS!{class PrintCustomItemDetails: IPrintCustomItemDetails}
 DEFINE_IID!(IID_IPrintCustomItemListOptionDetails, 2784689544, 22770, 20157, 185, 15, 81, 228, 242, 148, 76, 93);
-RT_INTERFACE!{interface IPrintCustomItemListOptionDetails(IPrintCustomItemListOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomItemListOptionDetails] {
+RT_INTERFACE!{interface IPrintCustomItemListOptionDetails(IPrintCustomItemListOptionDetailsVtbl): IInspectable [IID_IPrintCustomItemListOptionDetails] {
     fn AddItem(&self, itemId: HSTRING, displayName: HSTRING) -> HRESULT
 }}
 impl IPrintCustomItemListOptionDetails {
@@ -4017,7 +4017,7 @@ impl IPrintCustomItemListOptionDetails {
 }
 RT_CLASS!{class PrintCustomItemListOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintCustomItemListOptionDetails2, 3386258749, 25884, 19001, 144, 110, 16, 145, 161, 128, 27, 241);
-RT_INTERFACE!{interface IPrintCustomItemListOptionDetails2(IPrintCustomItemListOptionDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomItemListOptionDetails2] {
+RT_INTERFACE!{interface IPrintCustomItemListOptionDetails2(IPrintCustomItemListOptionDetails2Vtbl): IInspectable [IID_IPrintCustomItemListOptionDetails2] {
     #[cfg(feature="windows-storage")] fn AddItem(&self, itemId: HSTRING, displayName: HSTRING, description: HSTRING, icon: <crate::windows::storage::streams::IRandomAccessStreamWithContentType as RtType>::Abi) -> HRESULT
 }}
 impl IPrintCustomItemListOptionDetails2 {
@@ -4027,7 +4027,7 @@ impl IPrintCustomItemListOptionDetails2 {
     }}
 }
 DEFINE_IID!(IID_IPrintCustomItemListOptionDetails3, 1335997759, 15412, 18536, 164, 7, 252, 94, 171, 37, 155, 33);
-RT_INTERFACE!{interface IPrintCustomItemListOptionDetails3(IPrintCustomItemListOptionDetails3Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomItemListOptionDetails3] {
+RT_INTERFACE!{interface IPrintCustomItemListOptionDetails3(IPrintCustomItemListOptionDetails3Vtbl): IInspectable [IID_IPrintCustomItemListOptionDetails3] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -4054,7 +4054,7 @@ impl IPrintCustomItemListOptionDetails3 {
     }}
 }
 DEFINE_IID!(IID_IPrintCustomOptionDetails, 3811302940, 10415, 19344, 149, 218, 163, 172, 243, 32, 185, 41);
-RT_INTERFACE!{interface IPrintCustomOptionDetails(IPrintCustomOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomOptionDetails] {
+RT_INTERFACE!{interface IPrintCustomOptionDetails(IPrintCustomOptionDetailsVtbl): IInspectable [IID_IPrintCustomOptionDetails] {
     fn put_DisplayName(&self, value: HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -4070,7 +4070,7 @@ impl IPrintCustomOptionDetails {
     }}
 }
 DEFINE_IID!(IID_IPrintCustomTextOptionDetails, 718369272, 51389, 18693, 145, 146, 13, 117, 19, 110, 139, 49);
-RT_INTERFACE!{interface IPrintCustomTextOptionDetails(IPrintCustomTextOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomTextOptionDetails] {
+RT_INTERFACE!{interface IPrintCustomTextOptionDetails(IPrintCustomTextOptionDetailsVtbl): IInspectable [IID_IPrintCustomTextOptionDetails] {
     fn put_MaxCharacters(&self, value: u32) -> HRESULT,
     fn get_MaxCharacters(&self, out: *mut u32) -> HRESULT
 }}
@@ -4087,7 +4087,7 @@ impl IPrintCustomTextOptionDetails {
 }
 RT_CLASS!{class PrintCustomTextOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintCustomTextOptionDetails2, 3467053908, 47479, 18200, 131, 56, 126, 210, 176, 216, 111, 227);
-RT_INTERFACE!{interface IPrintCustomTextOptionDetails2(IPrintCustomTextOptionDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomTextOptionDetails2] {
+RT_INTERFACE!{interface IPrintCustomTextOptionDetails2(IPrintCustomTextOptionDetails2Vtbl): IInspectable [IID_IPrintCustomTextOptionDetails2] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -4114,7 +4114,7 @@ impl IPrintCustomTextOptionDetails2 {
     }}
 }
 DEFINE_IID!(IID_IPrintCustomToggleOptionDetails, 2645873940, 58465, 17928, 142, 233, 219, 111, 94, 208, 115, 198);
-RT_INTERFACE!{interface IPrintCustomToggleOptionDetails(IPrintCustomToggleOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintCustomToggleOptionDetails] {
+RT_INTERFACE!{interface IPrintCustomToggleOptionDetails(IPrintCustomToggleOptionDetailsVtbl): IInspectable [IID_IPrintCustomToggleOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -4142,7 +4142,7 @@ impl IPrintCustomToggleOptionDetails {
 }
 RT_CLASS!{class PrintCustomToggleOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintDuplexOptionDetails, 4242097553, 54436, 17658, 179, 254, 66, 224, 186, 40, 213, 173);
-RT_INTERFACE!{interface IPrintDuplexOptionDetails(IPrintDuplexOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintDuplexOptionDetails] {
+RT_INTERFACE!{interface IPrintDuplexOptionDetails(IPrintDuplexOptionDetailsVtbl): IInspectable [IID_IPrintDuplexOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -4170,7 +4170,7 @@ impl IPrintDuplexOptionDetails {
 }
 RT_CLASS!{class PrintDuplexOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintHolePunchOptionDetails, 2799574808, 18476, 18007, 157, 113, 141, 221, 219, 234, 30, 30);
-RT_INTERFACE!{interface IPrintHolePunchOptionDetails(IPrintHolePunchOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintHolePunchOptionDetails] {
+RT_INTERFACE!{interface IPrintHolePunchOptionDetails(IPrintHolePunchOptionDetailsVtbl): IInspectable [IID_IPrintHolePunchOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -4198,7 +4198,7 @@ impl IPrintHolePunchOptionDetails {
 }
 RT_CLASS!{class PrintHolePunchOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintItemListOptionDetails, 2585941951, 65121, 17368, 162, 79, 163, 246, 171, 115, 32, 231);
-RT_INTERFACE!{interface IPrintItemListOptionDetails(IPrintItemListOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintItemListOptionDetails] {
+RT_INTERFACE!{interface IPrintItemListOptionDetails(IPrintItemListOptionDetailsVtbl): IInspectable [IID_IPrintItemListOptionDetails] {
     fn get_Items(&self, out: *mut <foundation::collections::IVectorView<IInspectable> as RtType>::Abi) -> HRESULT
 }}
 impl IPrintItemListOptionDetails {
@@ -4209,7 +4209,7 @@ impl IPrintItemListOptionDetails {
     }}
 }
 DEFINE_IID!(IID_IPrintMediaSizeOptionDetails, 1821203407, 49343, 18376, 184, 74, 98, 142, 125, 13, 26, 29);
-RT_INTERFACE!{interface IPrintMediaSizeOptionDetails(IPrintMediaSizeOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintMediaSizeOptionDetails] {
+RT_INTERFACE!{interface IPrintMediaSizeOptionDetails(IPrintMediaSizeOptionDetailsVtbl): IInspectable [IID_IPrintMediaSizeOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -4237,7 +4237,7 @@ impl IPrintMediaSizeOptionDetails {
 }
 RT_CLASS!{class PrintMediaSizeOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintMediaTypeOptionDetails, 4173791243, 44019, 19132, 142, 134, 34, 171, 197, 116, 74, 67);
-RT_INTERFACE!{interface IPrintMediaTypeOptionDetails(IPrintMediaTypeOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintMediaTypeOptionDetails] {
+RT_INTERFACE!{interface IPrintMediaTypeOptionDetails(IPrintMediaTypeOptionDetailsVtbl): IInspectable [IID_IPrintMediaTypeOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -4265,7 +4265,7 @@ impl IPrintMediaTypeOptionDetails {
 }
 RT_CLASS!{class PrintMediaTypeOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintNumberOptionDetails, 1291959215, 25692, 19945, 150, 95, 111, 198, 187, 196, 124, 171);
-RT_INTERFACE!{interface IPrintNumberOptionDetails(IPrintNumberOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintNumberOptionDetails] {
+RT_INTERFACE!{interface IPrintNumberOptionDetails(IPrintNumberOptionDetailsVtbl): IInspectable [IID_IPrintNumberOptionDetails] {
     fn get_MinValue(&self, out: *mut u32) -> HRESULT,
     fn get_MaxValue(&self, out: *mut u32) -> HRESULT
 }}
@@ -4282,7 +4282,7 @@ impl IPrintNumberOptionDetails {
     }}
 }
 DEFINE_IID!(IID_IPrintOptionDetails, 956729039, 54914, 18783, 173, 254, 215, 51, 63, 92, 24, 8);
-RT_INTERFACE!{interface IPrintOptionDetails(IPrintOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintOptionDetails] {
+RT_INTERFACE!{interface IPrintOptionDetails(IPrintOptionDetailsVtbl): IInspectable [IID_IPrintOptionDetails] {
     fn get_OptionId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_OptionType(&self, out: *mut PrintOptionType) -> HRESULT,
     fn put_ErrorText(&self, value: HSTRING) -> HRESULT,
@@ -4339,7 +4339,7 @@ RT_ENUM! { enum PrintOptionType: i32 {
     Unknown = 0, Number = 1, Text = 2, ItemList = 3, Toggle = 4,
 }}
 DEFINE_IID!(IID_IPrintOrientationOptionDetails, 1187219577, 26336, 19872, 135, 180, 210, 84, 87, 130, 78, 183);
-RT_INTERFACE!{interface IPrintOrientationOptionDetails(IPrintOrientationOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintOrientationOptionDetails] {
+RT_INTERFACE!{interface IPrintOrientationOptionDetails(IPrintOrientationOptionDetailsVtbl): IInspectable [IID_IPrintOrientationOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -4367,7 +4367,7 @@ impl IPrintOrientationOptionDetails {
 }
 RT_CLASS!{class PrintOrientationOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintPageRangeOptionDetails, 1511646391, 11240, 19111, 158, 165, 222, 251, 232, 113, 59, 78);
-RT_INTERFACE!{interface IPrintPageRangeOptionDetails(IPrintPageRangeOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintPageRangeOptionDetails] {
+RT_INTERFACE!{interface IPrintPageRangeOptionDetails(IPrintPageRangeOptionDetailsVtbl): IInspectable [IID_IPrintPageRangeOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -4395,7 +4395,7 @@ impl IPrintPageRangeOptionDetails {
 }
 RT_CLASS!{class PrintPageRangeOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintQualityOptionDetails, 768633761, 52762, 17638, 132, 249, 58, 146, 234, 30, 48, 68);
-RT_INTERFACE!{interface IPrintQualityOptionDetails(IPrintQualityOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintQualityOptionDetails] {
+RT_INTERFACE!{interface IPrintQualityOptionDetails(IPrintQualityOptionDetailsVtbl): IInspectable [IID_IPrintQualityOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -4423,7 +4423,7 @@ impl IPrintQualityOptionDetails {
 }
 RT_CLASS!{class PrintQualityOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintStapleOptionDetails, 3560011197, 39947, 17632, 132, 246, 206, 235, 206, 101, 56, 0);
-RT_INTERFACE!{interface IPrintStapleOptionDetails(IPrintStapleOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintStapleOptionDetails] {
+RT_INTERFACE!{interface IPrintStapleOptionDetails(IPrintStapleOptionDetailsVtbl): IInspectable [IID_IPrintStapleOptionDetails] {
     fn put_WarningText(&self, value: HSTRING) -> HRESULT,
     fn get_WarningText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Description(&self, value: HSTRING) -> HRESULT,
@@ -4451,7 +4451,7 @@ impl IPrintStapleOptionDetails {
 }
 RT_CLASS!{class PrintStapleOptionDetails: IPrintOptionDetails}
 DEFINE_IID!(IID_IPrintTaskOptionChangedEventArgs, 1696169221, 42478, 17159, 148, 7, 154, 202, 209, 71, 103, 156);
-RT_INTERFACE!{interface IPrintTaskOptionChangedEventArgs(IPrintTaskOptionChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionChangedEventArgs] {
+RT_INTERFACE!{interface IPrintTaskOptionChangedEventArgs(IPrintTaskOptionChangedEventArgsVtbl): IInspectable [IID_IPrintTaskOptionChangedEventArgs] {
     fn get_OptionId(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT
 }}
 impl IPrintTaskOptionChangedEventArgs {
@@ -4463,7 +4463,7 @@ impl IPrintTaskOptionChangedEventArgs {
 }
 RT_CLASS!{class PrintTaskOptionChangedEventArgs: IPrintTaskOptionChangedEventArgs}
 DEFINE_IID!(IID_IPrintTaskOptionDetails, 4117891825, 43166, 17062, 129, 175, 248, 224, 16, 179, 138, 104);
-RT_INTERFACE!{interface IPrintTaskOptionDetails(IPrintTaskOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionDetails] {
+RT_INTERFACE!{interface IPrintTaskOptionDetails(IPrintTaskOptionDetailsVtbl): IInspectable [IID_IPrintTaskOptionDetails] {
     fn get_Options(&self, out: *mut <foundation::collections::IMapView<HString, IPrintOptionDetails> as RtType>::Abi) -> HRESULT,
     fn CreateItemListOption(&self, optionId: HSTRING, displayName: HSTRING, out: *mut <PrintCustomItemListOptionDetails as RtType>::Abi) -> HRESULT,
     fn CreateTextOption(&self, optionId: HSTRING, displayName: HSTRING, out: *mut <PrintCustomTextOptionDetails as RtType>::Abi) -> HRESULT,
@@ -4516,7 +4516,7 @@ impl PrintTaskOptionDetails {
 }
 DEFINE_CLSID!(PrintTaskOptionDetails(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,46,79,112,116,105,111,110,68,101,116,97,105,108,115,46,80,114,105,110,116,84,97,115,107,79,112,116,105,111,110,68,101,116,97,105,108,115,0]) [CLSID_PrintTaskOptionDetails]);
 DEFINE_IID!(IID_IPrintTaskOptionDetails2, 1400048137, 63848, 18066, 161, 119, 192, 116, 89, 113, 134, 219);
-RT_INTERFACE!{interface IPrintTaskOptionDetails2(IPrintTaskOptionDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionDetails2] {
+RT_INTERFACE!{interface IPrintTaskOptionDetails2(IPrintTaskOptionDetails2Vtbl): IInspectable [IID_IPrintTaskOptionDetails2] {
     fn CreateToggleOption(&self, optionId: HSTRING, displayName: HSTRING, out: *mut <PrintCustomToggleOptionDetails as RtType>::Abi) -> HRESULT
 }}
 impl IPrintTaskOptionDetails2 {
@@ -4527,7 +4527,7 @@ impl IPrintTaskOptionDetails2 {
     }}
 }
 DEFINE_IID!(IID_IPrintTaskOptionDetailsStatic, 324903315, 2401, 19310, 135, 102, 241, 59, 127, 188, 205, 88);
-RT_INTERFACE!{static interface IPrintTaskOptionDetailsStatic(IPrintTaskOptionDetailsStaticVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTaskOptionDetailsStatic] {
+RT_INTERFACE!{static interface IPrintTaskOptionDetailsStatic(IPrintTaskOptionDetailsStaticVtbl): IInspectable [IID_IPrintTaskOptionDetailsStatic] {
     fn GetFromPrintTaskOptions(&self, printTaskOptions: <super::PrintTaskOptions as RtType>::Abi, out: *mut <PrintTaskOptionDetails as RtType>::Abi) -> HRESULT
 }}
 impl IPrintTaskOptionDetailsStatic {
@@ -4538,7 +4538,7 @@ impl IPrintTaskOptionDetailsStatic {
     }}
 }
 DEFINE_IID!(IID_IPrintTextOptionDetails, 2910184803, 23780, 18108, 153, 24, 171, 159, 173, 20, 76, 91);
-RT_INTERFACE!{interface IPrintTextOptionDetails(IPrintTextOptionDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTextOptionDetails] {
+RT_INTERFACE!{interface IPrintTextOptionDetails(IPrintTextOptionDetailsVtbl): IInspectable [IID_IPrintTextOptionDetails] {
     fn get_MaxCharacters(&self, out: *mut u32) -> HRESULT
 }}
 impl IPrintTextOptionDetails {
@@ -4552,7 +4552,7 @@ impl IPrintTextOptionDetails {
 pub mod printticket { // Windows.Graphics.Printing.PrintTicket
 use crate::prelude::*;
 DEFINE_IID!(IID_IPrintTicketCapabilities, 2353352843, 48092, 16982, 161, 66, 47, 214, 21, 236, 180, 22);
-RT_INTERFACE!{interface IPrintTicketCapabilities(IPrintTicketCapabilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketCapabilities] {
+RT_INTERFACE!{interface IPrintTicketCapabilities(IPrintTicketCapabilitiesVtbl): IInspectable [IID_IPrintTicketCapabilities] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
@@ -4679,7 +4679,7 @@ impl IPrintTicketCapabilities {
 }
 RT_CLASS!{class PrintTicketCapabilities: IPrintTicketCapabilities}
 DEFINE_IID!(IID_IPrintTicketFeature, 3881860458, 23029, 16643, 136, 88, 185, 119, 16, 150, 61, 57);
-RT_INTERFACE!{interface IPrintTicketFeature(IPrintTicketFeatureVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketFeature] {
+RT_INTERFACE!{interface IPrintTicketFeature(IPrintTicketFeatureVtbl): IInspectable [IID_IPrintTicketFeature] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
@@ -4742,7 +4742,7 @@ RT_ENUM! { enum PrintTicketFeatureSelectionType: i32 {
     PickOne = 0, PickMany = 1,
 }}
 DEFINE_IID!(IID_IPrintTicketOption, 2961624976, 45927, 20043, 189, 72, 156, 120, 160, 187, 49, 206);
-RT_INTERFACE!{interface IPrintTicketOption(IPrintTicketOptionVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketOption] {
+RT_INTERFACE!{interface IPrintTicketOption(IPrintTicketOptionVtbl): IInspectable [IID_IPrintTicketOption] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
@@ -4802,7 +4802,7 @@ RT_ENUM! { enum PrintTicketParameterDataType: i32 {
     Integer = 0, NumericString = 1, String = 2,
 }}
 DEFINE_IID!(IID_IPrintTicketParameterDefinition, 3602560228, 10594, 19457, 183, 243, 154, 146, 148, 235, 131, 53);
-RT_INTERFACE!{interface IPrintTicketParameterDefinition(IPrintTicketParameterDefinitionVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketParameterDefinition] {
+RT_INTERFACE!{interface IPrintTicketParameterDefinition(IPrintTicketParameterDefinitionVtbl): IInspectable [IID_IPrintTicketParameterDefinition] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
@@ -4851,7 +4851,7 @@ impl IPrintTicketParameterDefinition {
 }
 RT_CLASS!{class PrintTicketParameterDefinition: IPrintTicketParameterDefinition}
 DEFINE_IID!(IID_IPrintTicketParameterInitializer, 1580414395, 41125, 18609, 157, 92, 7, 17, 109, 220, 89, 122);
-RT_INTERFACE!{interface IPrintTicketParameterInitializer(IPrintTicketParameterInitializerVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketParameterInitializer] {
+RT_INTERFACE!{interface IPrintTicketParameterInitializer(IPrintTicketParameterInitializerVtbl): IInspectable [IID_IPrintTicketParameterInitializer] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
@@ -4887,7 +4887,7 @@ impl IPrintTicketParameterInitializer {
 }
 RT_CLASS!{class PrintTicketParameterInitializer: IPrintTicketParameterInitializer}
 DEFINE_IID!(IID_IPrintTicketValue, 1723009586, 9293, 20002, 169, 139, 187, 60, 241, 242, 221, 145);
-RT_INTERFACE!{interface IPrintTicketValue(IPrintTicketValueVtbl): IInspectable(IInspectableVtbl) [IID_IPrintTicketValue] {
+RT_INTERFACE!{interface IPrintTicketValue(IPrintTicketValueVtbl): IInspectable [IID_IPrintTicketValue] {
     fn get_Type(&self, out: *mut PrintTicketValueType) -> HRESULT,
     fn GetValueAsInteger(&self, out: *mut i32) -> HRESULT,
     fn GetValueAsString(&self, out: *mut HSTRING) -> HRESULT
@@ -4914,7 +4914,7 @@ RT_ENUM! { enum PrintTicketValueType: i32 {
     Integer = 0, String = 1, Unknown = 2,
 }}
 DEFINE_IID!(IID_IWorkflowPrintTicket, 1104487045, 13800, 17550, 168, 197, 228, 182, 162, 207, 130, 108);
-RT_INTERFACE!{interface IWorkflowPrintTicket(IWorkflowPrintTicketVtbl): IInspectable(IInspectableVtbl) [IID_IWorkflowPrintTicket] {
+RT_INTERFACE!{interface IWorkflowPrintTicket(IWorkflowPrintTicketVtbl): IInspectable [IID_IWorkflowPrintTicket] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_XmlNamespace(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-data"))] fn __Dummy2(&self) -> (),
@@ -5077,7 +5077,7 @@ impl IWorkflowPrintTicket {
 }
 RT_CLASS!{class WorkflowPrintTicket: IWorkflowPrintTicket}
 DEFINE_IID!(IID_IWorkflowPrintTicketValidationResult, 181531538, 55931, 18998, 191, 54, 106, 153, 166, 46, 32, 89);
-RT_INTERFACE!{interface IWorkflowPrintTicketValidationResult(IWorkflowPrintTicketValidationResultVtbl): IInspectable(IInspectableVtbl) [IID_IWorkflowPrintTicketValidationResult] {
+RT_INTERFACE!{interface IWorkflowPrintTicketValidationResult(IWorkflowPrintTicketValidationResultVtbl): IInspectable [IID_IWorkflowPrintTicketValidationResult] {
     fn get_Validated(&self, out: *mut bool) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
 }}
@@ -5098,7 +5098,7 @@ RT_CLASS!{class WorkflowPrintTicketValidationResult: IWorkflowPrintTicketValidat
 pub mod workflow { // Windows.Graphics.Printing.Workflow
 use crate::prelude::*;
 DEFINE_IID!(IID_IPrintWorkflowBackgroundSession, 1534661562, 3166, 21130, 116, 88, 134, 164, 108, 189, 220, 69);
-RT_INTERFACE!{interface IPrintWorkflowBackgroundSession(IPrintWorkflowBackgroundSessionVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowBackgroundSession] {
+RT_INTERFACE!{interface IPrintWorkflowBackgroundSession(IPrintWorkflowBackgroundSessionVtbl): IInspectable [IID_IPrintWorkflowBackgroundSession] {
     fn add_SetupRequested(&self, setupEventHandler: <foundation::TypedEventHandler<PrintWorkflowBackgroundSession, PrintWorkflowBackgroundSetupRequestedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SetupRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_Submitted(&self, submittedEventHandler: <foundation::TypedEventHandler<PrintWorkflowBackgroundSession, PrintWorkflowSubmittedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5137,7 +5137,7 @@ impl IPrintWorkflowBackgroundSession {
 }
 RT_CLASS!{class PrintWorkflowBackgroundSession: IPrintWorkflowBackgroundSession}
 DEFINE_IID!(IID_IPrintWorkflowBackgroundSetupRequestedEventArgs, 1139372866, 5968, 22985, 97, 251, 56, 55, 72, 162, 3, 98);
-RT_INTERFACE!{interface IPrintWorkflowBackgroundSetupRequestedEventArgs(IPrintWorkflowBackgroundSetupRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowBackgroundSetupRequestedEventArgs] {
+RT_INTERFACE!{interface IPrintWorkflowBackgroundSetupRequestedEventArgs(IPrintWorkflowBackgroundSetupRequestedEventArgsVtbl): IInspectable [IID_IPrintWorkflowBackgroundSetupRequestedEventArgs] {
     fn GetUserPrintTicketAsync(&self, out: *mut <foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket> as RtType>::Abi) -> HRESULT,
     fn get_Configuration(&self, out: *mut <PrintWorkflowConfiguration as RtType>::Abi) -> HRESULT,
     fn SetRequiresUI(&self) -> HRESULT,
@@ -5166,7 +5166,7 @@ impl IPrintWorkflowBackgroundSetupRequestedEventArgs {
 }
 RT_CLASS!{class PrintWorkflowBackgroundSetupRequestedEventArgs: IPrintWorkflowBackgroundSetupRequestedEventArgs}
 DEFINE_IID!(IID_IPrintWorkflowConfiguration, 3500852461, 64843, 24053, 75, 182, 141, 13, 21, 158, 190, 63);
-RT_INTERFACE!{interface IPrintWorkflowConfiguration(IPrintWorkflowConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowConfiguration] {
+RT_INTERFACE!{interface IPrintWorkflowConfiguration(IPrintWorkflowConfigurationVtbl): IInspectable [IID_IPrintWorkflowConfiguration] {
     fn get_SourceAppDisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_JobTitle(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SessionId(&self, out: *mut HSTRING) -> HRESULT
@@ -5190,7 +5190,7 @@ impl IPrintWorkflowConfiguration {
 }
 RT_CLASS!{class PrintWorkflowConfiguration: IPrintWorkflowConfiguration}
 DEFINE_IID!(IID_IPrintWorkflowForegroundSession, 3348849616, 63724, 19691, 149, 58, 200, 135, 97, 87, 221, 51);
-RT_INTERFACE!{interface IPrintWorkflowForegroundSession(IPrintWorkflowForegroundSessionVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowForegroundSession] {
+RT_INTERFACE!{interface IPrintWorkflowForegroundSession(IPrintWorkflowForegroundSessionVtbl): IInspectable [IID_IPrintWorkflowForegroundSession] {
     fn add_SetupRequested(&self, setupEventHandler: <foundation::TypedEventHandler<PrintWorkflowForegroundSession, PrintWorkflowForegroundSetupRequestedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SetupRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_XpsDataAvailable(&self, xpsDataAvailableEventHandler: <foundation::TypedEventHandler<PrintWorkflowForegroundSession, PrintWorkflowXpsDataAvailableEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5229,7 +5229,7 @@ impl IPrintWorkflowForegroundSession {
 }
 RT_CLASS!{class PrintWorkflowForegroundSession: IPrintWorkflowForegroundSession}
 DEFINE_IID!(IID_IPrintWorkflowForegroundSetupRequestedEventArgs, 3152249415, 39963, 19923, 155, 43, 200, 4, 104, 217, 65, 179);
-RT_INTERFACE!{interface IPrintWorkflowForegroundSetupRequestedEventArgs(IPrintWorkflowForegroundSetupRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowForegroundSetupRequestedEventArgs] {
+RT_INTERFACE!{interface IPrintWorkflowForegroundSetupRequestedEventArgs(IPrintWorkflowForegroundSetupRequestedEventArgsVtbl): IInspectable [IID_IPrintWorkflowForegroundSetupRequestedEventArgs] {
     fn GetUserPrintTicketAsync(&self, out: *mut <foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket> as RtType>::Abi) -> HRESULT,
     fn get_Configuration(&self, out: *mut <PrintWorkflowConfiguration as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -5253,12 +5253,12 @@ impl IPrintWorkflowForegroundSetupRequestedEventArgs {
 }
 RT_CLASS!{class PrintWorkflowForegroundSetupRequestedEventArgs: IPrintWorkflowForegroundSetupRequestedEventArgs}
 DEFINE_IID!(IID_IPrintWorkflowObjectModelSourceFileContent, 3278670442, 35370, 16794, 179, 195, 32, 144, 230, 191, 171, 47);
-RT_INTERFACE!{interface IPrintWorkflowObjectModelSourceFileContent(IPrintWorkflowObjectModelSourceFileContentVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowObjectModelSourceFileContent] {
+RT_INTERFACE!{interface IPrintWorkflowObjectModelSourceFileContent(IPrintWorkflowObjectModelSourceFileContentVtbl): IInspectable [IID_IPrintWorkflowObjectModelSourceFileContent] {
     
 }}
 RT_CLASS!{class PrintWorkflowObjectModelSourceFileContent: IPrintWorkflowObjectModelSourceFileContent}
 DEFINE_IID!(IID_IPrintWorkflowObjectModelTargetPackage, 2107030644, 39764, 19617, 173, 58, 151, 156, 61, 68, 221, 172);
-RT_INTERFACE!{interface IPrintWorkflowObjectModelTargetPackage(IPrintWorkflowObjectModelTargetPackageVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowObjectModelTargetPackage] {
+RT_INTERFACE!{interface IPrintWorkflowObjectModelTargetPackage(IPrintWorkflowObjectModelTargetPackageVtbl): IInspectable [IID_IPrintWorkflowObjectModelTargetPackage] {
     
 }}
 RT_CLASS!{class PrintWorkflowObjectModelTargetPackage: IPrintWorkflowObjectModelTargetPackage}
@@ -5266,7 +5266,7 @@ RT_ENUM! { enum PrintWorkflowSessionStatus: i32 {
     Started = 0, Completed = 1, Aborted = 2, Closed = 3,
 }}
 DEFINE_IID!(IID_IPrintWorkflowSourceContent, 438879809, 52913, 17715, 187, 115, 251, 230, 62, 239, 219, 24);
-RT_INTERFACE!{interface IPrintWorkflowSourceContent(IPrintWorkflowSourceContentVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSourceContent] {
+RT_INTERFACE!{interface IPrintWorkflowSourceContent(IPrintWorkflowSourceContentVtbl): IInspectable [IID_IPrintWorkflowSourceContent] {
     fn GetJobPrintTicketAsync(&self, out: *mut <foundation::IAsyncOperation<super::printticket::WorkflowPrintTicket> as RtType>::Abi) -> HRESULT,
     fn GetSourceSpoolDataAsStreamContent(&self, out: *mut <PrintWorkflowSpoolStreamContent as RtType>::Abi) -> HRESULT,
     fn GetSourceSpoolDataAsXpsObjectModel(&self, out: *mut <PrintWorkflowObjectModelSourceFileContent as RtType>::Abi) -> HRESULT
@@ -5290,7 +5290,7 @@ impl IPrintWorkflowSourceContent {
 }
 RT_CLASS!{class PrintWorkflowSourceContent: IPrintWorkflowSourceContent}
 DEFINE_IID!(IID_IPrintWorkflowSpoolStreamContent, 1927634638, 58374, 19316, 132, 225, 63, 243, 253, 205, 175, 112);
-RT_INTERFACE!{interface IPrintWorkflowSpoolStreamContent(IPrintWorkflowSpoolStreamContentVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSpoolStreamContent] {
+RT_INTERFACE!{interface IPrintWorkflowSpoolStreamContent(IPrintWorkflowSpoolStreamContentVtbl): IInspectable [IID_IPrintWorkflowSpoolStreamContent] {
     #[cfg(feature="windows-storage")] fn GetInputStream(&self, out: *mut <crate::windows::storage::streams::IInputStream as RtType>::Abi) -> HRESULT
 }}
 impl IPrintWorkflowSpoolStreamContent {
@@ -5302,7 +5302,7 @@ impl IPrintWorkflowSpoolStreamContent {
 }
 RT_CLASS!{class PrintWorkflowSpoolStreamContent: IPrintWorkflowSpoolStreamContent}
 DEFINE_IID!(IID_IPrintWorkflowStreamTarget, 2990258820, 34149, 18571, 152, 57, 28, 158, 124, 122, 169, 22);
-RT_INTERFACE!{interface IPrintWorkflowStreamTarget(IPrintWorkflowStreamTargetVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowStreamTarget] {
+RT_INTERFACE!{interface IPrintWorkflowStreamTarget(IPrintWorkflowStreamTargetVtbl): IInspectable [IID_IPrintWorkflowStreamTarget] {
     #[cfg(feature="windows-storage")] fn GetOutputStream(&self, out: *mut <crate::windows::storage::streams::IOutputStream as RtType>::Abi) -> HRESULT
 }}
 impl IPrintWorkflowStreamTarget {
@@ -5314,7 +5314,7 @@ impl IPrintWorkflowStreamTarget {
 }
 RT_CLASS!{class PrintWorkflowStreamTarget: IPrintWorkflowStreamTarget}
 DEFINE_IID!(IID_IPrintWorkflowSubmittedEventArgs, 987564609, 14228, 21865, 92, 135, 64, 232, 255, 114, 15, 131);
-RT_INTERFACE!{interface IPrintWorkflowSubmittedEventArgs(IPrintWorkflowSubmittedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSubmittedEventArgs] {
+RT_INTERFACE!{interface IPrintWorkflowSubmittedEventArgs(IPrintWorkflowSubmittedEventArgsVtbl): IInspectable [IID_IPrintWorkflowSubmittedEventArgs] {
     fn get_Operation(&self, out: *mut <PrintWorkflowSubmittedOperation as RtType>::Abi) -> HRESULT,
     fn GetTarget(&self, jobPrintTicket: <super::printticket::WorkflowPrintTicket as RtType>::Abi, out: *mut <PrintWorkflowTarget as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -5338,7 +5338,7 @@ impl IPrintWorkflowSubmittedEventArgs {
 }
 RT_CLASS!{class PrintWorkflowSubmittedEventArgs: IPrintWorkflowSubmittedEventArgs}
 DEFINE_IID!(IID_IPrintWorkflowSubmittedOperation, 776888854, 15329, 24335, 92, 129, 165, 162, 189, 78, 171, 14);
-RT_INTERFACE!{interface IPrintWorkflowSubmittedOperation(IPrintWorkflowSubmittedOperationVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowSubmittedOperation] {
+RT_INTERFACE!{interface IPrintWorkflowSubmittedOperation(IPrintWorkflowSubmittedOperationVtbl): IInspectable [IID_IPrintWorkflowSubmittedOperation] {
     fn Complete(&self, status: PrintWorkflowSubmittedStatus) -> HRESULT,
     fn get_Configuration(&self, out: *mut <PrintWorkflowConfiguration as RtType>::Abi) -> HRESULT,
     fn get_XpsContent(&self, out: *mut <PrintWorkflowSourceContent as RtType>::Abi) -> HRESULT
@@ -5364,7 +5364,7 @@ RT_ENUM! { enum PrintWorkflowSubmittedStatus: i32 {
     Succeeded = 0, Canceled = 1, Failed = 2,
 }}
 DEFINE_IID!(IID_IPrintWorkflowTarget, 702162796, 2675, 23277, 79, 61, 151, 13, 50, 81, 240, 87);
-RT_INTERFACE!{interface IPrintWorkflowTarget(IPrintWorkflowTargetVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowTarget] {
+RT_INTERFACE!{interface IPrintWorkflowTarget(IPrintWorkflowTargetVtbl): IInspectable [IID_IPrintWorkflowTarget] {
     fn get_TargetAsStream(&self, out: *mut <PrintWorkflowStreamTarget as RtType>::Abi) -> HRESULT,
     fn get_TargetAsXpsObjectModelPackage(&self, out: *mut <PrintWorkflowObjectModelTargetPackage as RtType>::Abi) -> HRESULT
 }}
@@ -5382,7 +5382,7 @@ impl IPrintWorkflowTarget {
 }
 RT_CLASS!{class PrintWorkflowTarget: IPrintWorkflowTarget}
 DEFINE_IID!(IID_IPrintWorkflowTriggerDetails, 1463408744, 40326, 16466, 176, 203, 243, 16, 190, 205, 89, 187);
-RT_INTERFACE!{interface IPrintWorkflowTriggerDetails(IPrintWorkflowTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowTriggerDetails] {
+RT_INTERFACE!{interface IPrintWorkflowTriggerDetails(IPrintWorkflowTriggerDetailsVtbl): IInspectable [IID_IPrintWorkflowTriggerDetails] {
     fn get_PrintWorkflowSession(&self, out: *mut <PrintWorkflowBackgroundSession as RtType>::Abi) -> HRESULT
 }}
 impl IPrintWorkflowTriggerDetails {
@@ -5394,7 +5394,7 @@ impl IPrintWorkflowTriggerDetails {
 }
 RT_CLASS!{class PrintWorkflowTriggerDetails: IPrintWorkflowTriggerDetails}
 DEFINE_IID!(IID_IPrintWorkflowUIActivatedEventArgs, 3163194445, 2539, 22342, 114, 166, 141, 200, 181, 237, 190, 155);
-RT_INTERFACE!{interface IPrintWorkflowUIActivatedEventArgs(IPrintWorkflowUIActivatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowUIActivatedEventArgs] {
+RT_INTERFACE!{interface IPrintWorkflowUIActivatedEventArgs(IPrintWorkflowUIActivatedEventArgsVtbl): IInspectable [IID_IPrintWorkflowUIActivatedEventArgs] {
     fn get_PrintWorkflowSession(&self, out: *mut <PrintWorkflowForegroundSession as RtType>::Abi) -> HRESULT
 }}
 impl IPrintWorkflowUIActivatedEventArgs {
@@ -5406,7 +5406,7 @@ impl IPrintWorkflowUIActivatedEventArgs {
 }
 RT_CLASS!{class PrintWorkflowUIActivatedEventArgs: IPrintWorkflowUIActivatedEventArgs}
 DEFINE_IID!(IID_IPrintWorkflowXpsDataAvailableEventArgs, 1293009713, 21713, 17230, 190, 14, 130, 197, 250, 88, 229, 178);
-RT_INTERFACE!{interface IPrintWorkflowXpsDataAvailableEventArgs(IPrintWorkflowXpsDataAvailableEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrintWorkflowXpsDataAvailableEventArgs] {
+RT_INTERFACE!{interface IPrintWorkflowXpsDataAvailableEventArgs(IPrintWorkflowXpsDataAvailableEventArgsVtbl): IInspectable [IID_IPrintWorkflowXpsDataAvailableEventArgs] {
     fn get_Operation(&self, out: *mut <PrintWorkflowSubmittedOperation as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
 }}
@@ -5428,7 +5428,7 @@ RT_CLASS!{class PrintWorkflowXpsDataAvailableEventArgs: IPrintWorkflowXpsDataAva
 pub mod printing3d { // Windows.Graphics.Printing3D
 use crate::prelude::*;
 DEFINE_IID!(IID_IPrint3DManager, 1294977802, 29542, 18801, 139, 213, 23, 196, 227, 232, 198, 192);
-RT_INTERFACE!{interface IPrint3DManager(IPrint3DManagerVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DManager] {
+RT_INTERFACE!{interface IPrint3DManager(IPrint3DManagerVtbl): IInspectable [IID_IPrint3DManager] {
     fn add_TaskRequested(&self, eventHandler: <foundation::TypedEventHandler<Print3DManager, Print3DTaskRequestedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_TaskRequested(&self, token: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -5455,7 +5455,7 @@ impl Print3DManager {
 }
 DEFINE_CLSID!(Print3DManager(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,51,68,77,97,110,97,103,101,114,0]) [CLSID_Print3DManager]);
 DEFINE_IID!(IID_IPrint3DManagerStatics, 250727166, 43437, 19464, 169, 23, 29, 31, 134, 62, 171, 203);
-RT_INTERFACE!{static interface IPrint3DManagerStatics(IPrint3DManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DManagerStatics] {
+RT_INTERFACE!{static interface IPrint3DManagerStatics(IPrint3DManagerStaticsVtbl): IInspectable [IID_IPrint3DManagerStatics] {
     fn GetForCurrentView(&self, out: *mut <Print3DManager as RtType>::Abi) -> HRESULT,
     fn ShowPrintUIAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
 }}
@@ -5472,7 +5472,7 @@ impl IPrint3DManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IPrint3DTask, 2363740288, 8472, 19496, 128, 222, 244, 38, 215, 1, 145, 174);
-RT_INTERFACE!{interface IPrint3DTask(IPrint3DTaskVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTask] {
+RT_INTERFACE!{interface IPrint3DTask(IPrint3DTaskVtbl): IInspectable [IID_IPrint3DTask] {
     fn get_Source(&self, out: *mut <Printing3D3MFPackage as RtType>::Abi) -> HRESULT,
     fn add_Submitting(&self, eventHandler: <foundation::TypedEventHandler<Print3DTask, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Submitting(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT,
@@ -5517,7 +5517,7 @@ impl IPrint3DTask {
 }
 RT_CLASS!{class Print3DTask: IPrint3DTask}
 DEFINE_IID!(IID_IPrint3DTaskCompletedEventArgs, 3424195759, 9748, 20253, 172, 204, 214, 252, 79, 218, 84, 85);
-RT_INTERFACE!{interface IPrint3DTaskCompletedEventArgs(IPrint3DTaskCompletedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskCompletedEventArgs] {
+RT_INTERFACE!{interface IPrint3DTaskCompletedEventArgs(IPrint3DTaskCompletedEventArgsVtbl): IInspectable [IID_IPrint3DTaskCompletedEventArgs] {
     fn get_Completion(&self, out: *mut Print3DTaskCompletion) -> HRESULT,
     fn get_ExtendedStatus(&self, out: *mut Print3DTaskDetail) -> HRESULT
 }}
@@ -5541,7 +5541,7 @@ RT_ENUM! { enum Print3DTaskDetail: i32 {
     Unknown = 0, ModelExceedsPrintBed = 1, UploadFailed = 2, InvalidMaterialSelection = 3, InvalidModel = 4, ModelNotManifold = 5, InvalidPrintTicket = 6,
 }}
 DEFINE_IID!(IID_IPrint3DTaskRequest, 630572143, 8773, 19546, 135, 49, 13, 96, 77, 198, 188, 60);
-RT_INTERFACE!{interface IPrint3DTaskRequest(IPrint3DTaskRequestVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskRequest] {
+RT_INTERFACE!{interface IPrint3DTaskRequest(IPrint3DTaskRequestVtbl): IInspectable [IID_IPrint3DTaskRequest] {
     fn CreateTask(&self, title: HSTRING, printerId: HSTRING, handler: <Print3DTaskSourceRequestedHandler as RtType>::Abi, out: *mut <Print3DTask as RtType>::Abi) -> HRESULT
 }}
 impl IPrint3DTaskRequest {
@@ -5553,7 +5553,7 @@ impl IPrint3DTaskRequest {
 }
 RT_CLASS!{class Print3DTaskRequest: IPrint3DTaskRequest}
 DEFINE_IID!(IID_IPrint3DTaskRequestedEventArgs, 353154943, 6341, 16599, 159, 64, 250, 179, 9, 110, 5, 169);
-RT_INTERFACE!{interface IPrint3DTaskRequestedEventArgs(IPrint3DTaskRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskRequestedEventArgs] {
+RT_INTERFACE!{interface IPrint3DTaskRequestedEventArgs(IPrint3DTaskRequestedEventArgsVtbl): IInspectable [IID_IPrint3DTaskRequestedEventArgs] {
     fn get_Request(&self, out: *mut <Print3DTaskRequest as RtType>::Abi) -> HRESULT
 }}
 impl IPrint3DTaskRequestedEventArgs {
@@ -5565,7 +5565,7 @@ impl IPrint3DTaskRequestedEventArgs {
 }
 RT_CLASS!{class Print3DTaskRequestedEventArgs: IPrint3DTaskRequestedEventArgs}
 DEFINE_IID!(IID_IPrint3DTaskSourceChangedEventArgs, 1540175023, 9449, 19472, 141, 7, 20, 195, 70, 186, 63, 207);
-RT_INTERFACE!{interface IPrint3DTaskSourceChangedEventArgs(IPrint3DTaskSourceChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskSourceChangedEventArgs] {
+RT_INTERFACE!{interface IPrint3DTaskSourceChangedEventArgs(IPrint3DTaskSourceChangedEventArgsVtbl): IInspectable [IID_IPrint3DTaskSourceChangedEventArgs] {
     fn get_Source(&self, out: *mut <Printing3D3MFPackage as RtType>::Abi) -> HRESULT
 }}
 impl IPrint3DTaskSourceChangedEventArgs {
@@ -5577,7 +5577,7 @@ impl IPrint3DTaskSourceChangedEventArgs {
 }
 RT_CLASS!{class Print3DTaskSourceChangedEventArgs: IPrint3DTaskSourceChangedEventArgs}
 DEFINE_IID!(IID_IPrint3DTaskSourceRequestedArgs, 3346832058, 9391, 16973, 163, 191, 146, 37, 12, 53, 86, 2);
-RT_INTERFACE!{interface IPrint3DTaskSourceRequestedArgs(IPrint3DTaskSourceRequestedArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPrint3DTaskSourceRequestedArgs] {
+RT_INTERFACE!{interface IPrint3DTaskSourceRequestedArgs(IPrint3DTaskSourceRequestedArgsVtbl): IInspectable [IID_IPrint3DTaskSourceRequestedArgs] {
     fn SetSource(&self, source: <Printing3D3MFPackage as RtType>::Abi) -> HRESULT
 }}
 impl IPrint3DTaskSourceRequestedArgs {
@@ -5598,7 +5598,7 @@ impl Print3DTaskSourceRequestedHandler {
     }}
 }
 DEFINE_IID!(IID_IPrinting3D3MFPackage, 4132296136, 10935, 17833, 161, 183, 38, 126, 148, 141, 91, 24);
-RT_INTERFACE!{interface IPrinting3D3MFPackage(IPrinting3D3MFPackageVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3D3MFPackage] {
+RT_INTERFACE!{interface IPrinting3D3MFPackage(IPrinting3D3MFPackageVtbl): IInspectable [IID_IPrinting3D3MFPackage] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn SaveAsync(&self, out: *mut <foundation::IAsyncOperation<super::super::storage::streams::IRandomAccessStream> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -5675,7 +5675,7 @@ impl Printing3D3MFPackage {
 }
 DEFINE_CLSID!(Printing3D3MFPackage(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,51,77,70,80,97,99,107,97,103,101,0]) [CLSID_Printing3D3MFPackage]);
 DEFINE_IID!(IID_IPrinting3D3MFPackage2, 2522643140, 37835, 17456, 146, 184, 120, 156, 212, 84, 248, 131);
-RT_INTERFACE!{interface IPrinting3D3MFPackage2(IPrinting3D3MFPackage2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3D3MFPackage2] {
+RT_INTERFACE!{interface IPrinting3D3MFPackage2(IPrinting3D3MFPackage2Vtbl): IInspectable [IID_IPrinting3D3MFPackage2] {
     fn get_Compression(&self, out: *mut Printing3DPackageCompression) -> HRESULT,
     fn put_Compression(&self, value: Printing3DPackageCompression) -> HRESULT
 }}
@@ -5691,7 +5691,7 @@ impl IPrinting3D3MFPackage2 {
     }}
 }
 DEFINE_IID!(IID_IPrinting3D3MFPackageStatics, 1884871087, 31386, 18311, 184, 23, 246, 244, 89, 33, 72, 35);
-RT_INTERFACE!{static interface IPrinting3D3MFPackageStatics(IPrinting3D3MFPackageStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3D3MFPackageStatics] {
+RT_INTERFACE!{static interface IPrinting3D3MFPackageStatics(IPrinting3D3MFPackageStaticsVtbl): IInspectable [IID_IPrinting3D3MFPackageStatics] {
     #[cfg(feature="windows-storage")] fn LoadAsync(&self, value: <super::super::storage::streams::IRandomAccessStream as RtType>::Abi, out: *mut <foundation::IAsyncOperation<Printing3D3MFPackage> as RtType>::Abi) -> HRESULT
 }}
 impl IPrinting3D3MFPackageStatics {
@@ -5702,7 +5702,7 @@ impl IPrinting3D3MFPackageStatics {
     }}
 }
 DEFINE_IID!(IID_IPrinting3DBaseMaterial, 3505448771, 50444, 19403, 157, 4, 252, 22, 173, 206, 162, 201);
-RT_INTERFACE!{interface IPrinting3DBaseMaterial(IPrinting3DBaseMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterial] {
+RT_INTERFACE!{interface IPrinting3DBaseMaterial(IPrinting3DBaseMaterialVtbl): IInspectable [IID_IPrinting3DBaseMaterial] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Name(&self, value: HSTRING) -> HRESULT,
     fn get_Color(&self, out: *mut <Printing3DColorMaterial as RtType>::Abi) -> HRESULT,
@@ -5741,7 +5741,7 @@ impl Printing3DBaseMaterial {
 }
 DEFINE_CLSID!(Printing3DBaseMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,66,97,115,101,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DBaseMaterial]);
 DEFINE_IID!(IID_IPrinting3DBaseMaterialGroup, 2498785464, 9493, 19085, 161, 240, 208, 252, 19, 208, 96, 33);
-RT_INTERFACE!{interface IPrinting3DBaseMaterialGroup(IPrinting3DBaseMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialGroup] {
+RT_INTERFACE!{interface IPrinting3DBaseMaterialGroup(IPrinting3DBaseMaterialGroupVtbl): IInspectable [IID_IPrinting3DBaseMaterialGroup] {
     fn get_Bases(&self, out: *mut <foundation::collections::IVector<Printing3DBaseMaterial> as RtType>::Abi) -> HRESULT,
     fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
 }}
@@ -5766,7 +5766,7 @@ impl Printing3DBaseMaterialGroup {
 }
 DEFINE_CLSID!(Printing3DBaseMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,66,97,115,101,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DBaseMaterialGroup]);
 DEFINE_IID!(IID_IPrinting3DBaseMaterialGroupFactory, 1544898268, 34455, 16787, 151, 107, 132, 187, 65, 22, 229, 191);
-RT_INTERFACE!{static interface IPrinting3DBaseMaterialGroupFactory(IPrinting3DBaseMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialGroupFactory] {
+RT_INTERFACE!{static interface IPrinting3DBaseMaterialGroupFactory(IPrinting3DBaseMaterialGroupFactoryVtbl): IInspectable [IID_IPrinting3DBaseMaterialGroupFactory] {
     fn Create(&self, materialGroupId: u32, out: *mut <Printing3DBaseMaterialGroup as RtType>::Abi) -> HRESULT
 }}
 impl IPrinting3DBaseMaterialGroupFactory {
@@ -5777,7 +5777,7 @@ impl IPrinting3DBaseMaterialGroupFactory {
     }}
 }
 DEFINE_IID!(IID_IPrinting3DBaseMaterialStatics, 2170177468, 14154, 18285, 190, 146, 62, 207, 209, 203, 151, 118);
-RT_INTERFACE!{static interface IPrinting3DBaseMaterialStatics(IPrinting3DBaseMaterialStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DBaseMaterialStatics] {
+RT_INTERFACE!{static interface IPrinting3DBaseMaterialStatics(IPrinting3DBaseMaterialStaticsVtbl): IInspectable [IID_IPrinting3DBaseMaterialStatics] {
     fn get_Abs(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Pla(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -5800,7 +5800,7 @@ RT_ENUM! { enum Printing3DBufferFormat: i32 {
     Unknown = 0, R32G32B32A32Float = 2, R32G32B32A32UInt = 3, R32G32B32Float = 6, R32G32B32UInt = 7, Printing3DDouble = 500, Printing3DUInt = 501,
 }}
 DEFINE_IID!(IID_IPrinting3DColorMaterial, 3783891240, 31975, 17029, 163, 93, 241, 69, 201, 81, 12, 123);
-RT_INTERFACE!{interface IPrinting3DColorMaterial(IPrinting3DColorMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterial] {
+RT_INTERFACE!{interface IPrinting3DColorMaterial(IPrinting3DColorMaterialVtbl): IInspectable [IID_IPrinting3DColorMaterial] {
     fn get_Value(&self, out: *mut u32) -> HRESULT,
     fn put_Value(&self, value: u32) -> HRESULT
 }}
@@ -5819,7 +5819,7 @@ RT_CLASS!{class Printing3DColorMaterial: IPrinting3DColorMaterial}
 impl RtActivatable<IActivationFactory> for Printing3DColorMaterial {}
 DEFINE_CLSID!(Printing3DColorMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,108,111,114,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DColorMaterial]);
 DEFINE_IID!(IID_IPrinting3DColorMaterial2, 4205897810, 2799, 17641, 157, 221, 54, 238, 234, 90, 205, 68);
-RT_INTERFACE!{interface IPrinting3DColorMaterial2(IPrinting3DColorMaterial2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterial2] {
+RT_INTERFACE!{interface IPrinting3DColorMaterial2(IPrinting3DColorMaterial2Vtbl): IInspectable [IID_IPrinting3DColorMaterial2] {
     #[cfg(feature="windows-ui")] fn get_Color(&self, out: *mut super::super::ui::Color) -> HRESULT,
     #[cfg(feature="windows-ui")] fn put_Color(&self, value: super::super::ui::Color) -> HRESULT
 }}
@@ -5835,7 +5835,7 @@ impl IPrinting3DColorMaterial2 {
     }}
 }
 DEFINE_IID!(IID_IPrinting3DColorMaterialGroup, 1731536, 43743, 16934, 175, 233, 243, 105, 160, 180, 80, 4);
-RT_INTERFACE!{interface IPrinting3DColorMaterialGroup(IPrinting3DColorMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterialGroup] {
+RT_INTERFACE!{interface IPrinting3DColorMaterialGroup(IPrinting3DColorMaterialGroupVtbl): IInspectable [IID_IPrinting3DColorMaterialGroup] {
     fn get_Colors(&self, out: *mut <foundation::collections::IVector<Printing3DColorMaterial> as RtType>::Abi) -> HRESULT,
     fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
 }}
@@ -5860,7 +5860,7 @@ impl Printing3DColorMaterialGroup {
 }
 DEFINE_CLSID!(Printing3DColorMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,108,111,114,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DColorMaterialGroup]);
 DEFINE_IID!(IID_IPrinting3DColorMaterialGroupFactory, 1909689709, 45546, 19035, 188, 84, 25, 198, 95, 61, 240, 68);
-RT_INTERFACE!{static interface IPrinting3DColorMaterialGroupFactory(IPrinting3DColorMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DColorMaterialGroupFactory] {
+RT_INTERFACE!{static interface IPrinting3DColorMaterialGroupFactory(IPrinting3DColorMaterialGroupFactoryVtbl): IInspectable [IID_IPrinting3DColorMaterialGroupFactory] {
     fn Create(&self, materialGroupId: u32, out: *mut <Printing3DColorMaterialGroup as RtType>::Abi) -> HRESULT
 }}
 impl IPrinting3DColorMaterialGroupFactory {
@@ -5871,7 +5871,7 @@ impl IPrinting3DColorMaterialGroupFactory {
     }}
 }
 DEFINE_IID!(IID_IPrinting3DComponent, 2116581445, 49023, 19675, 162, 127, 48, 160, 20, 55, 254, 222);
-RT_INTERFACE!{interface IPrinting3DComponent(IPrinting3DComponentVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DComponent] {
+RT_INTERFACE!{interface IPrinting3DComponent(IPrinting3DComponentVtbl): IInspectable [IID_IPrinting3DComponent] {
     fn get_Mesh(&self, out: *mut <Printing3DMesh as RtType>::Abi) -> HRESULT,
     fn put_Mesh(&self, value: <Printing3DMesh as RtType>::Abi) -> HRESULT,
     fn get_Components(&self, out: *mut <foundation::collections::IVector<Printing3DComponentWithMatrix> as RtType>::Abi) -> HRESULT,
@@ -5940,7 +5940,7 @@ RT_CLASS!{class Printing3DComponent: IPrinting3DComponent}
 impl RtActivatable<IActivationFactory> for Printing3DComponent {}
 DEFINE_CLSID!(Printing3DComponent(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,110,101,110,116,0]) [CLSID_Printing3DComponent]);
 DEFINE_IID!(IID_IPrinting3DComponentWithMatrix, 846852917, 3824, 17771, 154, 33, 73, 190, 190, 139, 81, 194);
-RT_INTERFACE!{interface IPrinting3DComponentWithMatrix(IPrinting3DComponentWithMatrixVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DComponentWithMatrix] {
+RT_INTERFACE!{interface IPrinting3DComponentWithMatrix(IPrinting3DComponentWithMatrixVtbl): IInspectable [IID_IPrinting3DComponentWithMatrix] {
     fn get_Component(&self, out: *mut <Printing3DComponent as RtType>::Abi) -> HRESULT,
     fn put_Component(&self, value: <Printing3DComponent as RtType>::Abi) -> HRESULT,
     fn get_Matrix(&self, out: *mut foundation::numerics::Matrix4x4) -> HRESULT,
@@ -5970,7 +5970,7 @@ RT_CLASS!{class Printing3DComponentWithMatrix: IPrinting3DComponentWithMatrix}
 impl RtActivatable<IActivationFactory> for Printing3DComponentWithMatrix {}
 DEFINE_CLSID!(Printing3DComponentWithMatrix(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,110,101,110,116,87,105,116,104,77,97,116,114,105,120,0]) [CLSID_Printing3DComponentWithMatrix]);
 DEFINE_IID!(IID_IPrinting3DCompositeMaterial, 1176647901, 22062, 20332, 136, 45, 244, 216, 65, 253, 99, 199);
-RT_INTERFACE!{interface IPrinting3DCompositeMaterial(IPrinting3DCompositeMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterial] {
+RT_INTERFACE!{interface IPrinting3DCompositeMaterial(IPrinting3DCompositeMaterialVtbl): IInspectable [IID_IPrinting3DCompositeMaterial] {
     fn get_Values(&self, out: *mut <foundation::collections::IVector<f64> as RtType>::Abi) -> HRESULT
 }}
 impl IPrinting3DCompositeMaterial {
@@ -5984,7 +5984,7 @@ RT_CLASS!{class Printing3DCompositeMaterial: IPrinting3DCompositeMaterial}
 impl RtActivatable<IActivationFactory> for Printing3DCompositeMaterial {}
 DEFINE_CLSID!(Printing3DCompositeMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,115,105,116,101,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DCompositeMaterial]);
 DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroup, 2375314011, 16625, 18797, 165, 251, 52, 10, 90, 103, 142, 48);
-RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup(IPrinting3DCompositeMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroup] {
+RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup(IPrinting3DCompositeMaterialGroupVtbl): IInspectable [IID_IPrinting3DCompositeMaterialGroup] {
     fn get_Composites(&self, out: *mut <foundation::collections::IVector<Printing3DCompositeMaterial> as RtType>::Abi) -> HRESULT,
     fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT,
     fn get_MaterialIndices(&self, out: *mut <foundation::collections::IVector<u32> as RtType>::Abi) -> HRESULT
@@ -6015,7 +6015,7 @@ impl Printing3DCompositeMaterialGroup {
 }
 DEFINE_CLSID!(Printing3DCompositeMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,67,111,109,112,111,115,105,116,101,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DCompositeMaterialGroup]);
 DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroup2, 115895650, 32059, 16865, 148, 76, 186, 253, 228, 85, 84, 131);
-RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup2(IPrinting3DCompositeMaterialGroup2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroup2] {
+RT_INTERFACE!{interface IPrinting3DCompositeMaterialGroup2(IPrinting3DCompositeMaterialGroup2Vtbl): IInspectable [IID_IPrinting3DCompositeMaterialGroup2] {
     fn get_BaseMaterialGroup(&self, out: *mut <Printing3DBaseMaterialGroup as RtType>::Abi) -> HRESULT,
     fn put_BaseMaterialGroup(&self, value: <Printing3DBaseMaterialGroup as RtType>::Abi) -> HRESULT
 }}
@@ -6031,7 +6031,7 @@ impl IPrinting3DCompositeMaterialGroup2 {
     }}
 }
 DEFINE_IID!(IID_IPrinting3DCompositeMaterialGroupFactory, 3499019539, 37631, 17322, 166, 39, 141, 67, 194, 44, 129, 126);
-RT_INTERFACE!{static interface IPrinting3DCompositeMaterialGroupFactory(IPrinting3DCompositeMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DCompositeMaterialGroupFactory] {
+RT_INTERFACE!{static interface IPrinting3DCompositeMaterialGroupFactory(IPrinting3DCompositeMaterialGroupFactoryVtbl): IInspectable [IID_IPrinting3DCompositeMaterialGroupFactory] {
     fn Create(&self, materialGroupId: u32, out: *mut <Printing3DCompositeMaterialGroup as RtType>::Abi) -> HRESULT
 }}
 impl IPrinting3DCompositeMaterialGroupFactory {
@@ -6042,7 +6042,7 @@ impl IPrinting3DCompositeMaterialGroupFactory {
     }}
 }
 DEFINE_IID!(IID_IPrinting3DFaceReductionOptions, 3154039703, 11636, 18167, 190, 133, 153, 166, 123, 187, 102, 41);
-RT_INTERFACE!{interface IPrinting3DFaceReductionOptions(IPrinting3DFaceReductionOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DFaceReductionOptions] {
+RT_INTERFACE!{interface IPrinting3DFaceReductionOptions(IPrinting3DFaceReductionOptionsVtbl): IInspectable [IID_IPrinting3DFaceReductionOptions] {
     fn get_MaxReductionArea(&self, out: *mut f64) -> HRESULT,
     fn put_MaxReductionArea(&self, value: f64) -> HRESULT,
     fn get_TargetTriangleCount(&self, out: *mut u32) -> HRESULT,
@@ -6083,7 +6083,7 @@ RT_CLASS!{class Printing3DFaceReductionOptions: IPrinting3DFaceReductionOptions}
 impl RtActivatable<IActivationFactory> for Printing3DFaceReductionOptions {}
 DEFINE_CLSID!(Printing3DFaceReductionOptions(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,70,97,99,101,82,101,100,117,99,116,105,111,110,79,112,116,105,111,110,115,0]) [CLSID_Printing3DFaceReductionOptions]);
 DEFINE_IID!(IID_IPrinting3DMaterial, 932033110, 60770, 18770, 184, 91, 3, 86, 125, 124, 70, 94);
-RT_INTERFACE!{interface IPrinting3DMaterial(IPrinting3DMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMaterial] {
+RT_INTERFACE!{interface IPrinting3DMaterial(IPrinting3DMaterialVtbl): IInspectable [IID_IPrinting3DMaterial] {
     fn get_BaseGroups(&self, out: *mut <foundation::collections::IVector<Printing3DBaseMaterialGroup> as RtType>::Abi) -> HRESULT,
     fn get_ColorGroups(&self, out: *mut <foundation::collections::IVector<Printing3DColorMaterialGroup> as RtType>::Abi) -> HRESULT,
     fn get_Texture2CoordGroups(&self, out: *mut <foundation::collections::IVector<Printing3DTexture2CoordMaterialGroup> as RtType>::Abi) -> HRESULT,
@@ -6121,7 +6121,7 @@ RT_CLASS!{class Printing3DMaterial: IPrinting3DMaterial}
 impl RtActivatable<IActivationFactory> for Printing3DMaterial {}
 DEFINE_CLSID!(Printing3DMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DMaterial]);
 DEFINE_IID!(IID_IPrinting3DMesh, 422482140, 552, 11777, 188, 32, 197, 41, 12, 191, 50, 196);
-RT_INTERFACE!{interface IPrinting3DMesh(IPrinting3DMeshVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMesh] {
+RT_INTERFACE!{interface IPrinting3DMesh(IPrinting3DMeshVtbl): IInspectable [IID_IPrinting3DMesh] {
     fn get_VertexCount(&self, out: *mut u32) -> HRESULT,
     fn put_VertexCount(&self, value: u32) -> HRESULT,
     fn get_IndexCount(&self, out: *mut u32) -> HRESULT,
@@ -6264,7 +6264,7 @@ RT_ENUM! { enum Printing3DMeshVerificationMode: i32 {
     FindFirstError = 0, FindAllErrors = 1,
 }}
 DEFINE_IID!(IID_IPrinting3DMeshVerificationResult, 425095610, 59706, 20106, 164, 111, 222, 168, 232, 82, 25, 126);
-RT_INTERFACE!{interface IPrinting3DMeshVerificationResult(IPrinting3DMeshVerificationResultVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMeshVerificationResult] {
+RT_INTERFACE!{interface IPrinting3DMeshVerificationResult(IPrinting3DMeshVerificationResultVtbl): IInspectable [IID_IPrinting3DMeshVerificationResult] {
     fn get_IsValid(&self, out: *mut bool) -> HRESULT,
     fn get_NonmanifoldTriangles(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
     fn get_ReversedNormalTriangles(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT
@@ -6288,7 +6288,7 @@ impl IPrinting3DMeshVerificationResult {
 }
 RT_CLASS!{class Printing3DMeshVerificationResult: IPrinting3DMeshVerificationResult}
 DEFINE_IID!(IID_IPrinting3DModel, 755052272, 21243, 37274, 119, 176, 75, 26, 59, 128, 50, 79);
-RT_INTERFACE!{interface IPrinting3DModel(IPrinting3DModelVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModel] {
+RT_INTERFACE!{interface IPrinting3DModel(IPrinting3DModelVtbl): IInspectable [IID_IPrinting3DModel] {
     fn get_Unit(&self, out: *mut Printing3DModelUnit) -> HRESULT,
     fn put_Unit(&self, value: Printing3DModelUnit) -> HRESULT,
     fn get_Textures(&self, out: *mut <foundation::collections::IVector<Printing3DModelTexture> as RtType>::Abi) -> HRESULT,
@@ -6382,7 +6382,7 @@ RT_CLASS!{class Printing3DModel: IPrinting3DModel}
 impl RtActivatable<IActivationFactory> for Printing3DModel {}
 DEFINE_CLSID!(Printing3DModel(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,111,100,101,108,0]) [CLSID_Printing3DModel]);
 DEFINE_IID!(IID_IPrinting3DModel2, 3374344647, 51265, 18419, 168, 78, 161, 73, 253, 8, 182, 87);
-RT_INTERFACE!{interface IPrinting3DModel2(IPrinting3DModel2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModel2] {
+RT_INTERFACE!{interface IPrinting3DModel2(IPrinting3DModel2Vtbl): IInspectable [IID_IPrinting3DModel2] {
     fn TryPartialRepairAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn TryPartialRepairWithTimeAsync(&self, maxWaitTime: foundation::TimeSpan, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn TryReduceFacesAsync(&self, out: *mut <foundation::IAsyncOperationWithProgress<bool, f64> as RtType>::Abi) -> HRESULT,
@@ -6423,7 +6423,7 @@ impl IPrinting3DModel2 {
     }}
 }
 DEFINE_IID!(IID_IPrinting3DModelTexture, 1571802881, 46493, 18492, 151, 187, 164, 213, 70, 209, 199, 92);
-RT_INTERFACE!{interface IPrinting3DModelTexture(IPrinting3DModelTextureVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DModelTexture] {
+RT_INTERFACE!{interface IPrinting3DModelTexture(IPrinting3DModelTextureVtbl): IInspectable [IID_IPrinting3DModelTexture] {
     fn get_TextureResource(&self, out: *mut <Printing3DTextureResource as RtType>::Abi) -> HRESULT,
     fn put_TextureResource(&self, value: <Printing3DTextureResource as RtType>::Abi) -> HRESULT,
     fn get_TileStyleU(&self, out: *mut Printing3DTextureEdgeBehavior) -> HRESULT,
@@ -6467,7 +6467,7 @@ RT_ENUM! { enum Printing3DModelUnit: i32 {
     Meter = 0, Micron = 1, Millimeter = 2, Centimeter = 3, Inch = 4, Foot = 5,
 }}
 DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterial, 631645515, 50921, 18509, 162, 20, 162, 94, 87, 118, 186, 98);
-RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterial(IPrinting3DMultiplePropertyMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterial] {
+RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterial(IPrinting3DMultiplePropertyMaterialVtbl): IInspectable [IID_IPrinting3DMultiplePropertyMaterial] {
     fn get_MaterialIndices(&self, out: *mut <foundation::collections::IVector<u32> as RtType>::Abi) -> HRESULT
 }}
 impl IPrinting3DMultiplePropertyMaterial {
@@ -6481,7 +6481,7 @@ RT_CLASS!{class Printing3DMultiplePropertyMaterial: IPrinting3DMultiplePropertyM
 impl RtActivatable<IActivationFactory> for Printing3DMultiplePropertyMaterial {}
 DEFINE_CLSID!(Printing3DMultiplePropertyMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,117,108,116,105,112,108,101,80,114,111,112,101,114,116,121,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DMultiplePropertyMaterial]);
 DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterialGroup, 4036298009, 44729, 17685, 163, 155, 160, 136, 251, 187, 39, 124);
-RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterialGroup(IPrinting3DMultiplePropertyMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterialGroup] {
+RT_INTERFACE!{interface IPrinting3DMultiplePropertyMaterialGroup(IPrinting3DMultiplePropertyMaterialGroupVtbl): IInspectable [IID_IPrinting3DMultiplePropertyMaterialGroup] {
     fn get_MultipleProperties(&self, out: *mut <foundation::collections::IVector<Printing3DMultiplePropertyMaterial> as RtType>::Abi) -> HRESULT,
     fn get_MaterialGroupIndices(&self, out: *mut <foundation::collections::IVector<u32> as RtType>::Abi) -> HRESULT,
     fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
@@ -6512,7 +6512,7 @@ impl Printing3DMultiplePropertyMaterialGroup {
 }
 DEFINE_CLSID!(Printing3DMultiplePropertyMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,77,117,108,116,105,112,108,101,80,114,111,112,101,114,116,121,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DMultiplePropertyMaterialGroup]);
 DEFINE_IID!(IID_IPrinting3DMultiplePropertyMaterialGroupFactory, 842930542, 54470, 17694, 168, 20, 77, 120, 162, 16, 254, 83);
-RT_INTERFACE!{static interface IPrinting3DMultiplePropertyMaterialGroupFactory(IPrinting3DMultiplePropertyMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DMultiplePropertyMaterialGroupFactory] {
+RT_INTERFACE!{static interface IPrinting3DMultiplePropertyMaterialGroupFactory(IPrinting3DMultiplePropertyMaterialGroupFactoryVtbl): IInspectable [IID_IPrinting3DMultiplePropertyMaterialGroupFactory] {
     fn Create(&self, materialGroupId: u32, out: *mut <Printing3DMultiplePropertyMaterialGroup as RtType>::Abi) -> HRESULT
 }}
 impl IPrinting3DMultiplePropertyMaterialGroupFactory {
@@ -6529,7 +6529,7 @@ RT_ENUM! { enum Printing3DPackageCompression: i32 {
     Low = 0, Medium = 1, High = 2,
 }}
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterial, 2374257659, 2025, 18822, 152, 51, 141, 211, 212, 140, 104, 89);
-RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterial(IPrinting3DTexture2CoordMaterialVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterial] {
+RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterial(IPrinting3DTexture2CoordMaterialVtbl): IInspectable [IID_IPrinting3DTexture2CoordMaterial] {
     fn get_Texture(&self, out: *mut <Printing3DModelTexture as RtType>::Abi) -> HRESULT,
     fn put_Texture(&self, value: <Printing3DModelTexture as RtType>::Abi) -> HRESULT,
     fn get_U(&self, out: *mut f64) -> HRESULT,
@@ -6570,7 +6570,7 @@ RT_CLASS!{class Printing3DTexture2CoordMaterial: IPrinting3DTexture2CoordMateria
 impl RtActivatable<IActivationFactory> for Printing3DTexture2CoordMaterial {}
 DEFINE_CLSID!(Printing3DTexture2CoordMaterial(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,50,67,111,111,114,100,77,97,116,101,114,105,97,108,0]) [CLSID_Printing3DTexture2CoordMaterial]);
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroup, 1652391079, 28048, 20409, 159, 196, 159, 239, 243, 223, 168, 146);
-RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup(IPrinting3DTexture2CoordMaterialGroupVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroup] {
+RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup(IPrinting3DTexture2CoordMaterialGroupVtbl): IInspectable [IID_IPrinting3DTexture2CoordMaterialGroup] {
     fn get_Texture2Coords(&self, out: *mut <foundation::collections::IVector<Printing3DTexture2CoordMaterial> as RtType>::Abi) -> HRESULT,
     fn get_MaterialGroupId(&self, out: *mut u32) -> HRESULT
 }}
@@ -6595,7 +6595,7 @@ impl Printing3DTexture2CoordMaterialGroup {
 }
 DEFINE_CLSID!(Printing3DTexture2CoordMaterialGroup(&[87,105,110,100,111,119,115,46,71,114,97,112,104,105,99,115,46,80,114,105,110,116,105,110,103,51,68,46,80,114,105,110,116,105,110,103,51,68,84,101,120,116,117,114,101,50,67,111,111,114,100,77,97,116,101,114,105,97,108,71,114,111,117,112,0]) [CLSID_Printing3DTexture2CoordMaterialGroup]);
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroup2, 1778113466, 45358, 17051, 131, 134, 223, 82, 132, 246, 232, 15);
-RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup2(IPrinting3DTexture2CoordMaterialGroup2Vtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroup2] {
+RT_INTERFACE!{interface IPrinting3DTexture2CoordMaterialGroup2(IPrinting3DTexture2CoordMaterialGroup2Vtbl): IInspectable [IID_IPrinting3DTexture2CoordMaterialGroup2] {
     fn get_Texture(&self, out: *mut <Printing3DModelTexture as RtType>::Abi) -> HRESULT,
     fn put_Texture(&self, value: <Printing3DModelTexture as RtType>::Abi) -> HRESULT
 }}
@@ -6611,7 +6611,7 @@ impl IPrinting3DTexture2CoordMaterialGroup2 {
     }}
 }
 DEFINE_IID!(IID_IPrinting3DTexture2CoordMaterialGroupFactory, 3417328048, 18058, 19567, 178, 162, 142, 184, 186, 141, 234, 72);
-RT_INTERFACE!{static interface IPrinting3DTexture2CoordMaterialGroupFactory(IPrinting3DTexture2CoordMaterialGroupFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTexture2CoordMaterialGroupFactory] {
+RT_INTERFACE!{static interface IPrinting3DTexture2CoordMaterialGroupFactory(IPrinting3DTexture2CoordMaterialGroupFactoryVtbl): IInspectable [IID_IPrinting3DTexture2CoordMaterialGroupFactory] {
     fn Create(&self, materialGroupId: u32, out: *mut <Printing3DTexture2CoordMaterialGroup as RtType>::Abi) -> HRESULT
 }}
 impl IPrinting3DTexture2CoordMaterialGroupFactory {
@@ -6625,7 +6625,7 @@ RT_ENUM! { enum Printing3DTextureEdgeBehavior: i32 {
     None = 0, Wrap = 1, Mirror = 2, Clamp = 3,
 }}
 DEFINE_IID!(IID_IPrinting3DTextureResource, 2802709293, 27313, 17582, 188, 69, 162, 115, 130, 192, 211, 140);
-RT_INTERFACE!{interface IPrinting3DTextureResource(IPrinting3DTextureResourceVtbl): IInspectable(IInspectableVtbl) [IID_IPrinting3DTextureResource] {
+RT_INTERFACE!{interface IPrinting3DTextureResource(IPrinting3DTextureResourceVtbl): IInspectable [IID_IPrinting3DTextureResource] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_TextureData(&self, out: *mut <super::super::storage::streams::IRandomAccessStreamWithContentType as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),

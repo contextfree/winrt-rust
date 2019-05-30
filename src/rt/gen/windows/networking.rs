@@ -3,7 +3,7 @@ RT_ENUM! { enum DomainNameType: i32 {
     Suffix = 0, FullyQualified = 1,
 }}
 DEFINE_IID!(IID_IEndpointPair, 866167350, 63738, 19248, 184, 86, 118, 81, 124, 59, 208, 109);
-RT_INTERFACE!{interface IEndpointPair(IEndpointPairVtbl): IInspectable(IInspectableVtbl) [IID_IEndpointPair] {
+RT_INTERFACE!{interface IEndpointPair(IEndpointPairVtbl): IInspectable [IID_IEndpointPair] {
     fn get_LocalHostName(&self, out: *mut <HostName as RtType>::Abi) -> HRESULT,
     fn put_LocalHostName(&self, value: <HostName as RtType>::Abi) -> HRESULT,
     fn get_LocalServiceName(&self, out: *mut HSTRING) -> HRESULT,
@@ -60,7 +60,7 @@ impl EndpointPair {
 }
 DEFINE_CLSID!(EndpointPair(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,69,110,100,112,111,105,110,116,80,97,105,114,0]) [CLSID_EndpointPair]);
 DEFINE_IID!(IID_IEndpointPairFactory, 3054098801, 25824, 17451, 170, 111, 204, 140, 143, 24, 31, 120);
-RT_INTERFACE!{static interface IEndpointPairFactory(IEndpointPairFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IEndpointPairFactory] {
+RT_INTERFACE!{static interface IEndpointPairFactory(IEndpointPairFactoryVtbl): IInspectable [IID_IEndpointPairFactory] {
     fn CreateEndpointPair(&self, localHostName: <HostName as RtType>::Abi, localServiceName: HSTRING, remoteHostName: <HostName as RtType>::Abi, remoteServiceName: HSTRING, out: *mut <EndpointPair as RtType>::Abi) -> HRESULT
 }}
 impl IEndpointPairFactory {
@@ -71,7 +71,7 @@ impl IEndpointPairFactory {
     }}
 }
 DEFINE_IID!(IID_IHostName, 3213806253, 60822, 18855, 144, 132, 212, 22, 202, 232, 141, 203);
-RT_INTERFACE!{interface IHostName(IHostNameVtbl): IInspectable(IInspectableVtbl) [IID_IHostName] {
+RT_INTERFACE!{interface IHostName(IHostNameVtbl): IInspectable [IID_IHostName] {
     fn get_IPInformation(&self, out: *mut <connectivity::IPInformation as RtType>::Abi) -> HRESULT,
     fn get_RawName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
@@ -124,7 +124,7 @@ impl HostName {
 }
 DEFINE_CLSID!(HostName(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,72,111,115,116,78,97,109,101,0]) [CLSID_HostName]);
 DEFINE_IID!(IID_IHostNameFactory, 1166812141, 28975, 17782, 173, 241, 194, 11, 44, 100, 53, 88);
-RT_INTERFACE!{static interface IHostNameFactory(IHostNameFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IHostNameFactory] {
+RT_INTERFACE!{static interface IHostNameFactory(IHostNameFactoryVtbl): IInspectable [IID_IHostNameFactory] {
     fn CreateHostName(&self, hostName: HSTRING, out: *mut <HostName as RtType>::Abi) -> HRESULT
 }}
 impl IHostNameFactory {
@@ -138,7 +138,7 @@ RT_ENUM! { enum HostNameSortOptions: u32 {
     None = 0, OptimizeForLongConnections = 2,
 }}
 DEFINE_IID!(IID_IHostNameStatics, 4136424639, 41864, 20107, 145, 234, 84, 221, 109, 217, 1, 192);
-RT_INTERFACE!{static interface IHostNameStatics(IHostNameStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHostNameStatics] {
+RT_INTERFACE!{static interface IHostNameStatics(IHostNameStaticsVtbl): IInspectable [IID_IHostNameStatics] {
     fn Compare(&self, value1: HSTRING, value2: HSTRING, out: *mut i32) -> HRESULT
 }}
 impl IHostNameStatics {
@@ -154,7 +154,7 @@ RT_ENUM! { enum HostNameType: i32 {
 pub mod backgroundtransfer { // Windows.Networking.BackgroundTransfer
 use crate::prelude::*;
 DEFINE_IID!(IID_IBackgroundDownloader, 3251082035, 26185, 19229, 168, 38, 164, 179, 221, 35, 77, 11);
-RT_INTERFACE!{interface IBackgroundDownloader(IBackgroundDownloaderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader] {
+RT_INTERFACE!{interface IBackgroundDownloader(IBackgroundDownloaderVtbl): IInspectable [IID_IBackgroundDownloader] {
     #[cfg(feature="windows-storage")] fn CreateDownload(&self, uri: <foundation::Uri as RtType>::Abi, resultFile: <super::super::storage::IStorageFile as RtType>::Abi, out: *mut <DownloadOperation as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateDownloadFromFile(&self, uri: <foundation::Uri as RtType>::Abi, resultFile: <super::super::storage::IStorageFile as RtType>::Abi, requestBodyFile: <super::super::storage::IStorageFile as RtType>::Abi, out: *mut <DownloadOperation as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateDownloadAsync(&self, uri: <foundation::Uri as RtType>::Abi, resultFile: <super::super::storage::IStorageFile as RtType>::Abi, requestBodyStream: <super::super::storage::streams::IInputStream as RtType>::Abi, out: *mut <foundation::IAsyncOperation<DownloadOperation> as RtType>::Abi) -> HRESULT
@@ -201,7 +201,7 @@ impl BackgroundDownloader {
 }
 DEFINE_CLSID!(BackgroundDownloader(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,68,111,119,110,108,111,97,100,101,114,0]) [CLSID_BackgroundDownloader]);
 DEFINE_IID!(IID_IBackgroundDownloader2, 2840221767, 13453, 18997, 137, 14, 138, 30, 243, 121, 132, 121);
-RT_INTERFACE!{interface IBackgroundDownloader2(IBackgroundDownloader2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader2] {
+RT_INTERFACE!{interface IBackgroundDownloader2(IBackgroundDownloader2Vtbl): IInspectable [IID_IBackgroundDownloader2] {
     fn get_TransferGroup(&self, out: *mut <BackgroundTransferGroup as RtType>::Abi) -> HRESULT,
     fn put_TransferGroup(&self, value: <BackgroundTransferGroup as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-ui")] fn get_SuccessToastNotification(&self, out: *mut <super::super::ui::notifications::ToastNotification as RtType>::Abi) -> HRESULT,
@@ -261,7 +261,7 @@ impl IBackgroundDownloader2 {
     }}
 }
 DEFINE_IID!(IID_IBackgroundDownloader3, 3508177992, 34536, 18658, 182, 21, 105, 118, 170, 191, 134, 29);
-RT_INTERFACE!{interface IBackgroundDownloader3(IBackgroundDownloader3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloader3] {
+RT_INTERFACE!{interface IBackgroundDownloader3(IBackgroundDownloader3Vtbl): IInspectable [IID_IBackgroundDownloader3] {
     fn get_CompletionGroup(&self, out: *mut <BackgroundTransferCompletionGroup as RtType>::Abi) -> HRESULT
 }}
 impl IBackgroundDownloader3 {
@@ -272,7 +272,7 @@ impl IBackgroundDownloader3 {
     }}
 }
 DEFINE_IID!(IID_IBackgroundDownloaderFactory, 646147108, 55454, 18164, 162, 154, 79, 77, 79, 20, 65, 85);
-RT_INTERFACE!{static interface IBackgroundDownloaderFactory(IBackgroundDownloaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderFactory] {
+RT_INTERFACE!{static interface IBackgroundDownloaderFactory(IBackgroundDownloaderFactoryVtbl): IInspectable [IID_IBackgroundDownloaderFactory] {
     fn CreateWithCompletionGroup(&self, completionGroup: <BackgroundTransferCompletionGroup as RtType>::Abi, out: *mut <BackgroundDownloader as RtType>::Abi) -> HRESULT
 }}
 impl IBackgroundDownloaderFactory {
@@ -283,7 +283,7 @@ impl IBackgroundDownloaderFactory {
     }}
 }
 DEFINE_IID!(IID_IBackgroundDownloaderStaticMethods, 1386633781, 50766, 17004, 153, 25, 84, 13, 13, 33, 166, 80);
-RT_INTERFACE!{static interface IBackgroundDownloaderStaticMethods(IBackgroundDownloaderStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderStaticMethods] {
+RT_INTERFACE!{static interface IBackgroundDownloaderStaticMethods(IBackgroundDownloaderStaticMethodsVtbl): IInspectable [IID_IBackgroundDownloaderStaticMethods] {
     fn GetCurrentDownloadsAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>> as RtType>::Abi) -> HRESULT,
     fn GetCurrentDownloadsForGroupAsync(&self, group: HSTRING, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>> as RtType>::Abi) -> HRESULT
 }}
@@ -300,7 +300,7 @@ impl IBackgroundDownloaderStaticMethods {
     }}
 }
 DEFINE_IID!(IID_IBackgroundDownloaderStaticMethods2, 799675175, 6868, 19621, 178, 205, 8, 219, 240, 116, 106, 254);
-RT_INTERFACE!{static interface IBackgroundDownloaderStaticMethods2(IBackgroundDownloaderStaticMethods2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderStaticMethods2] {
+RT_INTERFACE!{static interface IBackgroundDownloaderStaticMethods2(IBackgroundDownloaderStaticMethods2Vtbl): IInspectable [IID_IBackgroundDownloaderStaticMethods2] {
     fn GetCurrentDownloadsForTransferGroupAsync(&self, group: <BackgroundTransferGroup as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<DownloadOperation>> as RtType>::Abi) -> HRESULT
 }}
 impl IBackgroundDownloaderStaticMethods2 {
@@ -311,7 +311,7 @@ impl IBackgroundDownloaderStaticMethods2 {
     }}
 }
 DEFINE_IID!(IID_IBackgroundDownloaderUserConsent, 1561651462, 37478, 18440, 189, 113, 89, 37, 242, 163, 19, 10);
-RT_INTERFACE!{static interface IBackgroundDownloaderUserConsent(IBackgroundDownloaderUserConsentVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundDownloaderUserConsent] {
+RT_INTERFACE!{static interface IBackgroundDownloaderUserConsent(IBackgroundDownloaderUserConsentVtbl): IInspectable [IID_IBackgroundDownloaderUserConsent] {
     fn RequestUnconstrainedDownloadsAsync(&self, operations: <foundation::collections::IIterable<DownloadOperation> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<UnconstrainedTransferRequestResult> as RtType>::Abi) -> HRESULT
 }}
 impl IBackgroundDownloaderUserConsent {
@@ -325,7 +325,7 @@ RT_STRUCT! { struct BackgroundDownloadProgress {
     BytesReceived: u64, TotalBytesToReceive: u64, Status: BackgroundTransferStatus, HasResponseChanged: bool, HasRestarted: bool,
 }}
 DEFINE_IID!(IID_IBackgroundTransferBase, 714973776, 51049, 17804, 175, 232, 254, 184, 212, 211, 178, 239);
-RT_INTERFACE!{interface IBackgroundTransferBase(IBackgroundTransferBaseVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferBase] {
+RT_INTERFACE!{interface IBackgroundTransferBase(IBackgroundTransferBaseVtbl): IInspectable [IID_IBackgroundTransferBase] {
     fn SetRequestHeader(&self, headerName: HSTRING, headerValue: HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-security")] fn get_ServerCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
@@ -397,7 +397,7 @@ RT_ENUM! { enum BackgroundTransferBehavior: i32 {
     Parallel = 0, Serialized = 1,
 }}
 DEFINE_IID!(IID_IBackgroundTransferCompletionGroup, 764609061, 39019, 22349, 121, 80, 10, 221, 71, 245, 215, 6);
-RT_INTERFACE!{interface IBackgroundTransferCompletionGroup(IBackgroundTransferCompletionGroupVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferCompletionGroup] {
+RT_INTERFACE!{interface IBackgroundTransferCompletionGroup(IBackgroundTransferCompletionGroupVtbl): IInspectable [IID_IBackgroundTransferCompletionGroup] {
     #[cfg(not(feature="windows-applicationmodel"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-applicationmodel")] fn get_Trigger(&self, out: *mut <super::super::applicationmodel::background::IBackgroundTrigger as RtType>::Abi) -> HRESULT,
     fn get_IsEnabled(&self, out: *mut bool) -> HRESULT,
@@ -423,7 +423,7 @@ RT_CLASS!{class BackgroundTransferCompletionGroup: IBackgroundTransferCompletion
 impl RtActivatable<IActivationFactory> for BackgroundTransferCompletionGroup {}
 DEFINE_CLSID!(BackgroundTransferCompletionGroup(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,67,111,109,112,108,101,116,105,111,110,71,114,111,117,112,0]) [CLSID_BackgroundTransferCompletionGroup]);
 DEFINE_IID!(IID_IBackgroundTransferCompletionGroupTriggerDetails, 2070667910, 28231, 20790, 127, 203, 250, 67, 137, 244, 111, 91);
-RT_INTERFACE!{interface IBackgroundTransferCompletionGroupTriggerDetails(IBackgroundTransferCompletionGroupTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferCompletionGroupTriggerDetails] {
+RT_INTERFACE!{interface IBackgroundTransferCompletionGroupTriggerDetails(IBackgroundTransferCompletionGroupTriggerDetailsVtbl): IInspectable [IID_IBackgroundTransferCompletionGroupTriggerDetails] {
     fn get_Downloads(&self, out: *mut <foundation::collections::IVectorView<DownloadOperation> as RtType>::Abi) -> HRESULT,
     fn get_Uploads(&self, out: *mut <foundation::collections::IVectorView<UploadOperation> as RtType>::Abi) -> HRESULT
 }}
@@ -441,7 +441,7 @@ impl IBackgroundTransferCompletionGroupTriggerDetails {
 }
 RT_CLASS!{class BackgroundTransferCompletionGroupTriggerDetails: IBackgroundTransferCompletionGroupTriggerDetails}
 DEFINE_IID!(IID_IBackgroundTransferContentPart, 3907081815, 55249, 20184, 131, 142, 103, 74, 194, 23, 172, 230);
-RT_INTERFACE!{interface IBackgroundTransferContentPart(IBackgroundTransferContentPartVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferContentPart] {
+RT_INTERFACE!{interface IBackgroundTransferContentPart(IBackgroundTransferContentPartVtbl): IInspectable [IID_IBackgroundTransferContentPart] {
     fn SetHeader(&self, headerName: HSTRING, headerValue: HSTRING) -> HRESULT,
     fn SetText(&self, value: HSTRING) -> HRESULT,
     #[cfg(feature="windows-storage")] fn SetFile(&self, value: <super::super::storage::IStorageFile as RtType>::Abi) -> HRESULT
@@ -473,7 +473,7 @@ impl BackgroundTransferContentPart {
 }
 DEFINE_CLSID!(BackgroundTransferContentPart(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,67,111,110,116,101,110,116,80,97,114,116,0]) [CLSID_BackgroundTransferContentPart]);
 DEFINE_IID!(IID_IBackgroundTransferContentPartFactory, 2431621289, 31233, 18955, 159, 128, 160, 176, 187, 55, 15, 141);
-RT_INTERFACE!{static interface IBackgroundTransferContentPartFactory(IBackgroundTransferContentPartFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferContentPartFactory] {
+RT_INTERFACE!{static interface IBackgroundTransferContentPartFactory(IBackgroundTransferContentPartFactoryVtbl): IInspectable [IID_IBackgroundTransferContentPartFactory] {
     fn CreateWithName(&self, name: HSTRING, out: *mut <BackgroundTransferContentPart as RtType>::Abi) -> HRESULT,
     fn CreateWithNameAndFileName(&self, name: HSTRING, fileName: HSTRING, out: *mut <BackgroundTransferContentPart as RtType>::Abi) -> HRESULT
 }}
@@ -501,7 +501,7 @@ impl BackgroundTransferError {
 }
 DEFINE_CLSID!(BackgroundTransferError(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,69,114,114,111,114,0]) [CLSID_BackgroundTransferError]);
 DEFINE_IID!(IID_IBackgroundTransferErrorStaticMethods, 2865969924, 4498, 19444, 139, 104, 57, 197, 173, 210, 68, 226);
-RT_INTERFACE!{static interface IBackgroundTransferErrorStaticMethods(IBackgroundTransferErrorStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferErrorStaticMethods] {
+RT_INTERFACE!{static interface IBackgroundTransferErrorStaticMethods(IBackgroundTransferErrorStaticMethodsVtbl): IInspectable [IID_IBackgroundTransferErrorStaticMethods] {
     #[cfg(feature="windows-web")] fn GetStatus(&self, hresult: i32, out: *mut super::super::web::WebErrorStatus) -> HRESULT
 }}
 impl IBackgroundTransferErrorStaticMethods {
@@ -515,7 +515,7 @@ RT_STRUCT! { struct BackgroundTransferFileRange {
     Offset: u64, Length: u64,
 }}
 DEFINE_IID!(IID_IBackgroundTransferGroup, 3636716516, 25689, 17728, 133, 235, 170, 161, 200, 144, 54, 119);
-RT_INTERFACE!{interface IBackgroundTransferGroup(IBackgroundTransferGroupVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferGroup] {
+RT_INTERFACE!{interface IBackgroundTransferGroup(IBackgroundTransferGroupVtbl): IInspectable [IID_IBackgroundTransferGroup] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TransferBehavior(&self, out: *mut BackgroundTransferBehavior) -> HRESULT,
     fn put_TransferBehavior(&self, value: BackgroundTransferBehavior) -> HRESULT
@@ -545,7 +545,7 @@ impl BackgroundTransferGroup {
 }
 DEFINE_CLSID!(BackgroundTransferGroup(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,71,114,111,117,112,0]) [CLSID_BackgroundTransferGroup]);
 DEFINE_IID!(IID_IBackgroundTransferGroupStatics, 49041586, 32024, 18779, 170, 34, 50, 169, 125, 69, 211, 226);
-RT_INTERFACE!{static interface IBackgroundTransferGroupStatics(IBackgroundTransferGroupStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferGroupStatics] {
+RT_INTERFACE!{static interface IBackgroundTransferGroupStatics(IBackgroundTransferGroupStaticsVtbl): IInspectable [IID_IBackgroundTransferGroupStatics] {
     fn CreateGroup(&self, name: HSTRING, out: *mut <BackgroundTransferGroup as RtType>::Abi) -> HRESULT
 }}
 impl IBackgroundTransferGroupStatics {
@@ -556,7 +556,7 @@ impl IBackgroundTransferGroupStatics {
     }}
 }
 DEFINE_IID!(IID_IBackgroundTransferOperation, 3738200134, 37066, 17659, 143, 177, 18, 65, 84, 192, 213, 57);
-RT_INTERFACE!{interface IBackgroundTransferOperation(IBackgroundTransferOperationVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferOperation] {
+RT_INTERFACE!{interface IBackgroundTransferOperation(IBackgroundTransferOperationVtbl): IInspectable [IID_IBackgroundTransferOperation] {
     fn get_Guid(&self, out: *mut Guid) -> HRESULT,
     fn get_RequestedUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_Method(&self, out: *mut HSTRING) -> HRESULT,
@@ -609,7 +609,7 @@ impl IBackgroundTransferOperation {
     }}
 }
 DEFINE_IID!(IID_IBackgroundTransferOperationPriority, 75842343, 21076, 19258, 145, 94, 10, 164, 146, 117, 192, 249);
-RT_INTERFACE!{interface IBackgroundTransferOperationPriority(IBackgroundTransferOperationPriorityVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferOperationPriority] {
+RT_INTERFACE!{interface IBackgroundTransferOperationPriority(IBackgroundTransferOperationPriorityVtbl): IInspectable [IID_IBackgroundTransferOperationPriority] {
     fn get_Priority(&self, out: *mut BackgroundTransferPriority) -> HRESULT,
     fn put_Priority(&self, value: BackgroundTransferPriority) -> HRESULT
 }}
@@ -628,7 +628,7 @@ RT_ENUM! { enum BackgroundTransferPriority: i32 {
     Default = 0, High = 1, Low = 2,
 }}
 DEFINE_IID!(IID_IBackgroundTransferRangesDownloadedEventArgs, 1052537939, 48968, 19080, 146, 72, 176, 193, 101, 24, 79, 92);
-RT_INTERFACE!{interface IBackgroundTransferRangesDownloadedEventArgs(IBackgroundTransferRangesDownloadedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundTransferRangesDownloadedEventArgs] {
+RT_INTERFACE!{interface IBackgroundTransferRangesDownloadedEventArgs(IBackgroundTransferRangesDownloadedEventArgsVtbl): IInspectable [IID_IBackgroundTransferRangesDownloadedEventArgs] {
     fn get_WasDownloadRestarted(&self, out: *mut bool) -> HRESULT,
     fn get_AddedRanges(&self, out: *mut <foundation::collections::IVector<BackgroundTransferFileRange> as RtType>::Abi) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -655,7 +655,7 @@ RT_ENUM! { enum BackgroundTransferStatus: i32 {
     Idle = 0, Running = 1, PausedByApplication = 2, PausedCostedNetwork = 3, PausedNoNetwork = 4, Completed = 5, Canceled = 6, Error = 7, PausedRecoverableWebErrorStatus = 8, PausedSystemPolicy = 32,
 }}
 DEFINE_IID!(IID_IBackgroundUploader, 3314928046, 52909, 18011, 136, 1, 197, 90, 201, 10, 1, 206);
-RT_INTERFACE!{interface IBackgroundUploader(IBackgroundUploaderVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader] {
+RT_INTERFACE!{interface IBackgroundUploader(IBackgroundUploaderVtbl): IInspectable [IID_IBackgroundUploader] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn CreateUpload(&self, uri: <foundation::Uri as RtType>::Abi, sourceFile: <super::super::storage::IStorageFile as RtType>::Abi, out: *mut <UploadOperation as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -716,7 +716,7 @@ impl BackgroundUploader {
 }
 DEFINE_CLSID!(BackgroundUploader(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,66,97,99,107,103,114,111,117,110,100,85,112,108,111,97,100,101,114,0]) [CLSID_BackgroundUploader]);
 DEFINE_IID!(IID_IBackgroundUploader2, 2382762702, 3124, 17507, 128, 127, 25, 138, 27, 139, 212, 173);
-RT_INTERFACE!{interface IBackgroundUploader2(IBackgroundUploader2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader2] {
+RT_INTERFACE!{interface IBackgroundUploader2(IBackgroundUploader2Vtbl): IInspectable [IID_IBackgroundUploader2] {
     fn get_TransferGroup(&self, out: *mut <BackgroundTransferGroup as RtType>::Abi) -> HRESULT,
     fn put_TransferGroup(&self, value: <BackgroundTransferGroup as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-ui")] fn get_SuccessToastNotification(&self, out: *mut <super::super::ui::notifications::ToastNotification as RtType>::Abi) -> HRESULT,
@@ -776,7 +776,7 @@ impl IBackgroundUploader2 {
     }}
 }
 DEFINE_IID!(IID_IBackgroundUploader3, 3109983289, 23536, 19258, 140, 71, 44, 97, 153, 168, 84, 185);
-RT_INTERFACE!{interface IBackgroundUploader3(IBackgroundUploader3Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploader3] {
+RT_INTERFACE!{interface IBackgroundUploader3(IBackgroundUploader3Vtbl): IInspectable [IID_IBackgroundUploader3] {
     fn get_CompletionGroup(&self, out: *mut <BackgroundTransferCompletionGroup as RtType>::Abi) -> HRESULT
 }}
 impl IBackgroundUploader3 {
@@ -787,7 +787,7 @@ impl IBackgroundUploader3 {
     }}
 }
 DEFINE_IID!(IID_IBackgroundUploaderFactory, 1935803335, 4327, 18592, 172, 60, 26, 199, 16, 149, 236, 87);
-RT_INTERFACE!{static interface IBackgroundUploaderFactory(IBackgroundUploaderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderFactory] {
+RT_INTERFACE!{static interface IBackgroundUploaderFactory(IBackgroundUploaderFactoryVtbl): IInspectable [IID_IBackgroundUploaderFactory] {
     fn CreateWithCompletionGroup(&self, completionGroup: <BackgroundTransferCompletionGroup as RtType>::Abi, out: *mut <BackgroundUploader as RtType>::Abi) -> HRESULT
 }}
 impl IBackgroundUploaderFactory {
@@ -798,7 +798,7 @@ impl IBackgroundUploaderFactory {
     }}
 }
 DEFINE_IID!(IID_IBackgroundUploaderStaticMethods, 4068957435, 39685, 18241, 145, 33, 116, 10, 131, 226, 71, 223);
-RT_INTERFACE!{static interface IBackgroundUploaderStaticMethods(IBackgroundUploaderStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderStaticMethods] {
+RT_INTERFACE!{static interface IBackgroundUploaderStaticMethods(IBackgroundUploaderStaticMethodsVtbl): IInspectable [IID_IBackgroundUploaderStaticMethods] {
     fn GetCurrentUploadsAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>> as RtType>::Abi) -> HRESULT,
     fn GetCurrentUploadsForGroupAsync(&self, group: HSTRING, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>> as RtType>::Abi) -> HRESULT
 }}
@@ -815,7 +815,7 @@ impl IBackgroundUploaderStaticMethods {
     }}
 }
 DEFINE_IID!(IID_IBackgroundUploaderStaticMethods2, 3910773858, 59912, 17136, 162, 172, 7, 228, 103, 84, 144, 128);
-RT_INTERFACE!{static interface IBackgroundUploaderStaticMethods2(IBackgroundUploaderStaticMethods2Vtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderStaticMethods2] {
+RT_INTERFACE!{static interface IBackgroundUploaderStaticMethods2(IBackgroundUploaderStaticMethods2Vtbl): IInspectable [IID_IBackgroundUploaderStaticMethods2] {
     fn GetCurrentUploadsForTransferGroupAsync(&self, group: <BackgroundTransferGroup as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<UploadOperation>> as RtType>::Abi) -> HRESULT
 }}
 impl IBackgroundUploaderStaticMethods2 {
@@ -826,7 +826,7 @@ impl IBackgroundUploaderStaticMethods2 {
     }}
 }
 DEFINE_IID!(IID_IBackgroundUploaderUserConsent, 1001620683, 1888, 17949, 144, 127, 81, 56, 248, 77, 68, 193);
-RT_INTERFACE!{static interface IBackgroundUploaderUserConsent(IBackgroundUploaderUserConsentVtbl): IInspectable(IInspectableVtbl) [IID_IBackgroundUploaderUserConsent] {
+RT_INTERFACE!{static interface IBackgroundUploaderUserConsent(IBackgroundUploaderUserConsentVtbl): IInspectable [IID_IBackgroundUploaderUserConsent] {
     fn RequestUnconstrainedUploadsAsync(&self, operations: <foundation::collections::IIterable<UploadOperation> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<UnconstrainedTransferRequestResult> as RtType>::Abi) -> HRESULT
 }}
 impl IBackgroundUploaderUserConsent {
@@ -840,7 +840,7 @@ RT_STRUCT! { struct BackgroundUploadProgress {
     BytesReceived: u64, BytesSent: u64, TotalBytesToReceive: u64, TotalBytesToSend: u64, Status: BackgroundTransferStatus, HasResponseChanged: bool, HasRestarted: bool,
 }}
 DEFINE_IID!(IID_IContentPrefetcher, 2832660308, 32193, 19673, 136, 16, 42, 106, 169, 65, 126, 17);
-RT_INTERFACE!{static interface IContentPrefetcher(IContentPrefetcherVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetcher] {
+RT_INTERFACE!{static interface IContentPrefetcher(IContentPrefetcherVtbl): IInspectable [IID_IContentPrefetcher] {
     fn get_ContentUris(&self, out: *mut <foundation::collections::IVector<foundation::Uri> as RtType>::Abi) -> HRESULT,
     fn put_IndirectContentUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_IndirectContentUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
@@ -880,7 +880,7 @@ impl ContentPrefetcher {
 }
 DEFINE_CLSID!(ContentPrefetcher(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,66,97,99,107,103,114,111,117,110,100,84,114,97,110,115,102,101,114,46,67,111,110,116,101,110,116,80,114,101,102,101,116,99,104,101,114,0]) [CLSID_ContentPrefetcher]);
 DEFINE_IID!(IID_IContentPrefetcherTime, 3814849800, 4906, 20446, 167, 204, 252, 176, 230, 101, 35, 175);
-RT_INTERFACE!{static interface IContentPrefetcherTime(IContentPrefetcherTimeVtbl): IInspectable(IInspectableVtbl) [IID_IContentPrefetcherTime] {
+RT_INTERFACE!{static interface IContentPrefetcherTime(IContentPrefetcherTimeVtbl): IInspectable [IID_IContentPrefetcherTime] {
     fn get_LastSuccessfulPrefetchTime(&self, out: *mut <foundation::IReference<foundation::DateTime> as RtType>::Abi) -> HRESULT
 }}
 impl IContentPrefetcherTime {
@@ -891,7 +891,7 @@ impl IContentPrefetcherTime {
     }}
 }
 DEFINE_IID!(IID_IDownloadOperation, 3179801520, 22292, 19977, 186, 104, 190, 247, 57, 3, 176, 215);
-RT_INTERFACE!{interface IDownloadOperation(IDownloadOperationVtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation] {
+RT_INTERFACE!{interface IDownloadOperation(IDownloadOperationVtbl): IInspectable [IID_IDownloadOperation] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_ResultFile(&self, out: *mut <super::super::storage::IStorageFile as RtType>::Abi) -> HRESULT,
     fn get_Progress(&self, out: *mut BackgroundDownloadProgress) -> HRESULT,
@@ -932,7 +932,7 @@ impl IDownloadOperation {
 }
 RT_CLASS!{class DownloadOperation: IDownloadOperation}
 DEFINE_IID!(IID_IDownloadOperation2, 2748116288, 36764, 17235, 156, 212, 41, 13, 238, 56, 124, 56);
-RT_INTERFACE!{interface IDownloadOperation2(IDownloadOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation2] {
+RT_INTERFACE!{interface IDownloadOperation2(IDownloadOperation2Vtbl): IInspectable [IID_IDownloadOperation2] {
     fn get_TransferGroup(&self, out: *mut <BackgroundTransferGroup as RtType>::Abi) -> HRESULT
 }}
 impl IDownloadOperation2 {
@@ -943,7 +943,7 @@ impl IDownloadOperation2 {
     }}
 }
 DEFINE_IID!(IID_IDownloadOperation3, 1344746780, 32094, 19164, 184, 211, 223, 92, 96, 49, 185, 204);
-RT_INTERFACE!{interface IDownloadOperation3(IDownloadOperation3Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation3] {
+RT_INTERFACE!{interface IDownloadOperation3(IDownloadOperation3Vtbl): IInspectable [IID_IDownloadOperation3] {
     fn get_IsRandomAccessRequired(&self, out: *mut bool) -> HRESULT,
     fn put_IsRandomAccessRequired(&self, value: bool) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -1000,7 +1000,7 @@ impl IDownloadOperation3 {
     }}
 }
 DEFINE_IID!(IID_IDownloadOperation4, 215658228, 36079, 16458, 150, 109, 240, 88, 64, 11, 237, 128);
-RT_INTERFACE!{interface IDownloadOperation4(IDownloadOperation4Vtbl): IInspectable(IInspectableVtbl) [IID_IDownloadOperation4] {
+RT_INTERFACE!{interface IDownloadOperation4(IDownloadOperation4Vtbl): IInspectable [IID_IDownloadOperation4] {
     fn MakeCurrentInTransferGroup(&self) -> HRESULT
 }}
 impl IDownloadOperation4 {
@@ -1010,7 +1010,7 @@ impl IDownloadOperation4 {
     }}
 }
 DEFINE_IID!(IID_IResponseInformation, 4173044242, 63251, 18322, 139, 104, 217, 210, 151, 249, 29, 46);
-RT_INTERFACE!{interface IResponseInformation(IResponseInformationVtbl): IInspectable(IInspectableVtbl) [IID_IResponseInformation] {
+RT_INTERFACE!{interface IResponseInformation(IResponseInformationVtbl): IInspectable [IID_IResponseInformation] {
     fn get_IsResumable(&self, out: *mut bool) -> HRESULT,
     fn get_ActualUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_StatusCode(&self, out: *mut u32) -> HRESULT,
@@ -1040,7 +1040,7 @@ impl IResponseInformation {
 }
 RT_CLASS!{class ResponseInformation: IResponseInformation}
 DEFINE_IID!(IID_IUnconstrainedTransferRequestResult, 1277474847, 55620, 16658, 169, 142, 106, 105, 82, 43, 126, 187);
-RT_INTERFACE!{interface IUnconstrainedTransferRequestResult(IUnconstrainedTransferRequestResultVtbl): IInspectable(IInspectableVtbl) [IID_IUnconstrainedTransferRequestResult] {
+RT_INTERFACE!{interface IUnconstrainedTransferRequestResult(IUnconstrainedTransferRequestResultVtbl): IInspectable [IID_IUnconstrainedTransferRequestResult] {
     fn get_IsUnconstrained(&self, out: *mut bool) -> HRESULT
 }}
 impl IUnconstrainedTransferRequestResult {
@@ -1052,7 +1052,7 @@ impl IUnconstrainedTransferRequestResult {
 }
 RT_CLASS!{class UnconstrainedTransferRequestResult: IUnconstrainedTransferRequestResult}
 DEFINE_IID!(IID_IUploadOperation, 1045832928, 29577, 17228, 139, 53, 66, 127, 211, 107, 189, 174);
-RT_INTERFACE!{interface IUploadOperation(IUploadOperationVtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation] {
+RT_INTERFACE!{interface IUploadOperation(IUploadOperationVtbl): IInspectable [IID_IUploadOperation] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_SourceFile(&self, out: *mut <super::super::storage::IStorageFile as RtType>::Abi) -> HRESULT,
     fn get_Progress(&self, out: *mut BackgroundUploadProgress) -> HRESULT,
@@ -1083,7 +1083,7 @@ impl IUploadOperation {
 }
 RT_CLASS!{class UploadOperation: IUploadOperation}
 DEFINE_IID!(IID_IUploadOperation2, 1432455666, 10100, 19958, 159, 165, 32, 159, 43, 251, 18, 247);
-RT_INTERFACE!{interface IUploadOperation2(IUploadOperation2Vtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation2] {
+RT_INTERFACE!{interface IUploadOperation2(IUploadOperation2Vtbl): IInspectable [IID_IUploadOperation2] {
     fn get_TransferGroup(&self, out: *mut <BackgroundTransferGroup as RtType>::Abi) -> HRESULT
 }}
 impl IUploadOperation2 {
@@ -1094,7 +1094,7 @@ impl IUploadOperation2 {
     }}
 }
 DEFINE_IID!(IID_IUploadOperation3, 1120480419, 56889, 17734, 188, 98, 55, 116, 180, 41, 77, 227);
-RT_INTERFACE!{interface IUploadOperation3(IUploadOperation3Vtbl): IInspectable(IInspectableVtbl) [IID_IUploadOperation3] {
+RT_INTERFACE!{interface IUploadOperation3(IUploadOperation3Vtbl): IInspectable [IID_IUploadOperation3] {
     fn MakeCurrentInTransferGroup(&self) -> HRESULT
 }}
 impl IUploadOperation3 {
@@ -1107,7 +1107,7 @@ impl IUploadOperation3 {
 pub mod connectivity { // Windows.Networking.Connectivity
 use crate::prelude::*;
 DEFINE_IID!(IID_IAttributedNetworkUsage, 4150898745, 60578, 17899, 173, 225, 176, 54, 139, 117, 108, 73);
-RT_INTERFACE!{interface IAttributedNetworkUsage(IAttributedNetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_IAttributedNetworkUsage] {
+RT_INTERFACE!{interface IAttributedNetworkUsage(IAttributedNetworkUsageVtbl): IInspectable [IID_IAttributedNetworkUsage] {
     fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
     fn get_BytesReceived(&self, out: *mut u64) -> HRESULT,
     fn get_AttributionId(&self, out: *mut HSTRING) -> HRESULT,
@@ -1146,7 +1146,7 @@ RT_ENUM! { enum CellularApnAuthenticationType: i32 {
     None = 0, Pap = 1, Chap = 2, Mschapv2 = 3,
 }}
 DEFINE_IID!(IID_ICellularApnContext, 1873095156, 61437, 17730, 154, 178, 112, 91, 191, 148, 148, 58);
-RT_INTERFACE!{interface ICellularApnContext(ICellularApnContextVtbl): IInspectable(IInspectableVtbl) [IID_ICellularApnContext] {
+RT_INTERFACE!{interface ICellularApnContext(ICellularApnContextVtbl): IInspectable [IID_ICellularApnContext] {
     fn get_ProviderId(&self, out: *mut HSTRING) -> HRESULT,
     fn put_ProviderId(&self, value: HSTRING) -> HRESULT,
     fn get_AccessPointName(&self, out: *mut HSTRING) -> HRESULT,
@@ -1220,7 +1220,7 @@ RT_CLASS!{class CellularApnContext: ICellularApnContext}
 impl RtActivatable<IActivationFactory> for CellularApnContext {}
 DEFINE_CLSID!(CellularApnContext(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,101,108,108,117,108,97,114,65,112,110,67,111,110,116,101,120,116,0]) [CLSID_CellularApnContext]);
 DEFINE_IID!(IID_ICellularApnContext2, 1991306010, 44105, 17232, 177, 229, 220, 71, 99, 188, 105, 199);
-RT_INTERFACE!{interface ICellularApnContext2(ICellularApnContext2Vtbl): IInspectable(IInspectableVtbl) [IID_ICellularApnContext2] {
+RT_INTERFACE!{interface ICellularApnContext2(ICellularApnContext2Vtbl): IInspectable [IID_ICellularApnContext2] {
     fn get_ProfileName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_ProfileName(&self, value: HSTRING) -> HRESULT
 }}
@@ -1236,7 +1236,7 @@ impl ICellularApnContext2 {
     }}
 }
 DEFINE_IID!(IID_IConnectionCost, 3134707753, 13334, 19216, 162, 2, 186, 192, 176, 117, 189, 174);
-RT_INTERFACE!{interface IConnectionCost(IConnectionCostVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionCost] {
+RT_INTERFACE!{interface IConnectionCost(IConnectionCostVtbl): IInspectable [IID_IConnectionCost] {
     fn get_NetworkCostType(&self, out: *mut NetworkCostType) -> HRESULT,
     fn get_Roaming(&self, out: *mut bool) -> HRESULT,
     fn get_OverDataLimit(&self, out: *mut bool) -> HRESULT,
@@ -1266,7 +1266,7 @@ impl IConnectionCost {
 }
 RT_CLASS!{class ConnectionCost: IConnectionCost}
 DEFINE_IID!(IID_IConnectionCost2, 2383493637, 57865, 17737, 187, 37, 94, 13, 182, 145, 203, 5);
-RT_INTERFACE!{interface IConnectionCost2(IConnectionCost2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionCost2] {
+RT_INTERFACE!{interface IConnectionCost2(IConnectionCost2Vtbl): IInspectable [IID_IConnectionCost2] {
     fn get_BackgroundDataUsageRestricted(&self, out: *mut bool) -> HRESULT
 }}
 impl IConnectionCost2 {
@@ -1277,7 +1277,7 @@ impl IConnectionCost2 {
     }}
 }
 DEFINE_IID!(IID_IConnectionProfile, 1908020284, 22926, 18896, 132, 235, 143, 235, 174, 220, 193, 149);
-RT_INTERFACE!{interface IConnectionProfile(IConnectionProfileVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile] {
+RT_INTERFACE!{interface IConnectionProfile(IConnectionProfileVtbl): IInspectable [IID_IConnectionProfile] {
     fn get_ProfileName(&self, out: *mut HSTRING) -> HRESULT,
     fn GetNetworkConnectivityLevel(&self, out: *mut NetworkConnectivityLevel) -> HRESULT,
     fn GetNetworkNames(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
@@ -1337,7 +1337,7 @@ impl IConnectionProfile {
 }
 RT_CLASS!{class ConnectionProfile: IConnectionProfile}
 DEFINE_IID!(IID_IConnectionProfile2, 3791933765, 19615, 16396, 145, 80, 126, 199, 214, 226, 136, 138);
-RT_INTERFACE!{interface IConnectionProfile2(IConnectionProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile2] {
+RT_INTERFACE!{interface IConnectionProfile2(IConnectionProfile2Vtbl): IInspectable [IID_IConnectionProfile2] {
     fn get_IsWwanConnectionProfile(&self, out: *mut bool) -> HRESULT,
     fn get_IsWlanConnectionProfile(&self, out: *mut bool) -> HRESULT,
     fn get_WwanConnectionProfileDetails(&self, out: *mut <WwanConnectionProfileDetails as RtType>::Abi) -> HRESULT,
@@ -1396,7 +1396,7 @@ impl IConnectionProfile2 {
     }}
 }
 DEFINE_IID!(IID_IConnectionProfile3, 1468802344, 19673, 16737, 128, 69, 32, 28, 253, 91, 17, 92);
-RT_INTERFACE!{interface IConnectionProfile3(IConnectionProfile3Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile3] {
+RT_INTERFACE!{interface IConnectionProfile3(IConnectionProfile3Vtbl): IInspectable [IID_IConnectionProfile3] {
     fn GetAttributedNetworkUsageAsync(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<AttributedNetworkUsage>> as RtType>::Abi) -> HRESULT
 }}
 impl IConnectionProfile3 {
@@ -1407,7 +1407,7 @@ impl IConnectionProfile3 {
     }}
 }
 DEFINE_IID!(IID_IConnectionProfile4, 2049786573, 33248, 19174, 171, 237, 171, 156, 161, 62, 183, 20);
-RT_INTERFACE!{interface IConnectionProfile4(IConnectionProfile4Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile4] {
+RT_INTERFACE!{interface IConnectionProfile4(IConnectionProfile4Vtbl): IInspectable [IID_IConnectionProfile4] {
     fn GetProviderNetworkUsageAsync(&self, startTime: foundation::DateTime, endTime: foundation::DateTime, states: NetworkUsageStates, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<ProviderNetworkUsage>> as RtType>::Abi) -> HRESULT
 }}
 impl IConnectionProfile4 {
@@ -1418,7 +1418,7 @@ impl IConnectionProfile4 {
     }}
 }
 DEFINE_IID!(IID_IConnectionProfile5, 2234916551, 40051, 19424, 143, 20, 87, 142, 236, 113, 238, 14);
-RT_INTERFACE!{interface IConnectionProfile5(IConnectionProfile5Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfile5] {
+RT_INTERFACE!{interface IConnectionProfile5(IConnectionProfile5Vtbl): IInspectable [IID_IConnectionProfile5] {
     fn get_CanDelete(&self, out: *mut bool) -> HRESULT,
     fn TryDeleteAsync(&self, out: *mut <foundation::IAsyncOperation<ConnectionProfileDeleteStatus> as RtType>::Abi) -> HRESULT
 }}
@@ -1438,7 +1438,7 @@ RT_ENUM! { enum ConnectionProfileDeleteStatus: i32 {
     Success = 0, DeniedByUser = 1, DeniedBySystem = 2, UnknownError = 3,
 }}
 DEFINE_IID!(IID_IConnectionProfileFilter, 541883592, 48429, 20109, 164, 179, 69, 94, 195, 55, 56, 138);
-RT_INTERFACE!{interface IConnectionProfileFilter(IConnectionProfileFilterVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter] {
+RT_INTERFACE!{interface IConnectionProfileFilter(IConnectionProfileFilterVtbl): IInspectable [IID_IConnectionProfileFilter] {
     fn put_IsConnected(&self, value: bool) -> HRESULT,
     fn get_IsConnected(&self, out: *mut bool) -> HRESULT,
     fn put_IsWwanConnectionProfile(&self, value: bool) -> HRESULT,
@@ -1501,7 +1501,7 @@ RT_CLASS!{class ConnectionProfileFilter: IConnectionProfileFilter}
 impl RtActivatable<IActivationFactory> for ConnectionProfileFilter {}
 DEFINE_CLSID!(ConnectionProfileFilter(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,111,110,110,101,99,116,105,111,110,80,114,111,102,105,108,101,70,105,108,116,101,114,0]) [CLSID_ConnectionProfileFilter]);
 DEFINE_IID!(IID_IConnectionProfileFilter2, 3439759073, 50172, 20397, 157, 220, 89, 63, 170, 75, 120, 133);
-RT_INTERFACE!{interface IConnectionProfileFilter2(IConnectionProfileFilter2Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter2] {
+RT_INTERFACE!{interface IConnectionProfileFilter2(IConnectionProfileFilter2Vtbl): IInspectable [IID_IConnectionProfileFilter2] {
     fn put_IsRoaming(&self, value: <foundation::IReference<bool> as RtType>::Abi) -> HRESULT,
     fn get_IsRoaming(&self, out: *mut <foundation::IReference<bool> as RtType>::Abi) -> HRESULT,
     fn put_IsOverDataLimit(&self, value: <foundation::IReference<bool> as RtType>::Abi) -> HRESULT,
@@ -1545,7 +1545,7 @@ impl IConnectionProfileFilter2 {
     }}
 }
 DEFINE_IID!(IID_IConnectionProfileFilter3, 178915776, 20500, 17532, 136, 9, 174, 228, 203, 10, 249, 74);
-RT_INTERFACE!{interface IConnectionProfileFilter3(IConnectionProfileFilter3Vtbl): IInspectable(IInspectableVtbl) [IID_IConnectionProfileFilter3] {
+RT_INTERFACE!{interface IConnectionProfileFilter3(IConnectionProfileFilter3Vtbl): IInspectable [IID_IConnectionProfileFilter3] {
     fn put_PurposeGuid(&self, value: <foundation::IReference<Guid> as RtType>::Abi) -> HRESULT,
     fn get_PurposeGuid(&self, out: *mut <foundation::IReference<Guid> as RtType>::Abi) -> HRESULT
 }}
@@ -1561,7 +1561,7 @@ impl IConnectionProfileFilter3 {
     }}
 }
 DEFINE_IID!(IID_IConnectionSession, 4287651148, 63547, 16816, 138, 12, 20, 98, 217, 197, 107, 115);
-RT_INTERFACE!{interface IConnectionSession(IConnectionSessionVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionSession] {
+RT_INTERFACE!{interface IConnectionSession(IConnectionSessionVtbl): IInspectable [IID_IConnectionSession] {
     fn get_ConnectionProfile(&self, out: *mut <ConnectionProfile as RtType>::Abi) -> HRESULT
 }}
 impl IConnectionSession {
@@ -1573,7 +1573,7 @@ impl IConnectionSession {
 }
 RT_CLASS!{class ConnectionSession: IConnectionSession}
 DEFINE_IID!(IID_IConnectivityInterval, 1336557567, 26438, 18468, 169, 100, 238, 216, 232, 127, 135, 9);
-RT_INTERFACE!{interface IConnectivityInterval(IConnectivityIntervalVtbl): IInspectable(IInspectableVtbl) [IID_IConnectivityInterval] {
+RT_INTERFACE!{interface IConnectivityInterval(IConnectivityIntervalVtbl): IInspectable [IID_IConnectivityInterval] {
     fn get_StartTime(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_ConnectionDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
@@ -1605,7 +1605,7 @@ impl ConnectivityManager {
 }
 DEFINE_CLSID!(ConnectivityManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,67,111,110,110,101,99,116,105,118,105,116,121,77,97,110,97,103,101,114,0]) [CLSID_ConnectivityManager]);
 DEFINE_IID!(IID_IConnectivityManagerStatics, 1361106097, 20401, 18608, 175, 201, 66, 224, 9, 42, 129, 100);
-RT_INTERFACE!{static interface IConnectivityManagerStatics(IConnectivityManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IConnectivityManagerStatics] {
+RT_INTERFACE!{static interface IConnectivityManagerStatics(IConnectivityManagerStaticsVtbl): IInspectable [IID_IConnectivityManagerStatics] {
     fn AcquireConnectionAsync(&self, cellularApnContext: <CellularApnContext as RtType>::Abi, out: *mut <foundation::IAsyncOperation<ConnectionSession> as RtType>::Abi) -> HRESULT,
     fn AddHttpRoutePolicy(&self, routePolicy: <RoutePolicy as RtType>::Abi) -> HRESULT,
     fn RemoveHttpRoutePolicy(&self, routePolicy: <RoutePolicy as RtType>::Abi) -> HRESULT
@@ -1626,7 +1626,7 @@ impl IConnectivityManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IDataPlanStatus, 2541390732, 14469, 16627, 136, 81, 66, 205, 43, 213, 104, 187);
-RT_INTERFACE!{interface IDataPlanStatus(IDataPlanStatusVtbl): IInspectable(IInspectableVtbl) [IID_IDataPlanStatus] {
+RT_INTERFACE!{interface IDataPlanStatus(IDataPlanStatusVtbl): IInspectable [IID_IDataPlanStatus] {
     fn get_DataPlanUsage(&self, out: *mut <DataPlanUsage as RtType>::Abi) -> HRESULT,
     fn get_DataLimitInMegabytes(&self, out: *mut <foundation::IReference<u32> as RtType>::Abi) -> HRESULT,
     fn get_InboundBitsPerSecond(&self, out: *mut <foundation::IReference<u64> as RtType>::Abi) -> HRESULT,
@@ -1668,7 +1668,7 @@ impl IDataPlanStatus {
 }
 RT_CLASS!{class DataPlanStatus: IDataPlanStatus}
 DEFINE_IID!(IID_IDataPlanUsage, 3105966381, 15172, 18431, 179, 97, 190, 89, 230, 158, 209, 176);
-RT_INTERFACE!{interface IDataPlanUsage(IDataPlanUsageVtbl): IInspectable(IInspectableVtbl) [IID_IDataPlanUsage] {
+RT_INTERFACE!{interface IDataPlanUsage(IDataPlanUsageVtbl): IInspectable [IID_IDataPlanUsage] {
     fn get_MegabytesUsed(&self, out: *mut u32) -> HRESULT,
     fn get_LastSyncTime(&self, out: *mut foundation::DateTime) -> HRESULT
 }}
@@ -1686,7 +1686,7 @@ impl IDataPlanUsage {
 }
 RT_CLASS!{class DataPlanUsage: IDataPlanUsage}
 DEFINE_IID!(IID_IDataUsage, 3242401235, 45382, 19769, 185, 89, 12, 105, 176, 150, 197, 18);
-RT_INTERFACE!{interface IDataUsage(IDataUsageVtbl): IInspectable(IInspectableVtbl) [IID_IDataUsage] {
+RT_INTERFACE!{interface IDataUsage(IDataUsageVtbl): IInspectable [IID_IDataUsage] {
     fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
     fn get_BytesReceived(&self, out: *mut u64) -> HRESULT
 }}
@@ -1710,7 +1710,7 @@ RT_ENUM! { enum DomainConnectivityLevel: i32 {
     None = 0, Unauthenticated = 1, Authenticated = 2,
 }}
 DEFINE_IID!(IID_IIPInformation, 3629204960, 5007, 18391, 155, 58, 54, 187, 72, 140, 239, 51);
-RT_INTERFACE!{interface IIPInformation(IIPInformationVtbl): IInspectable(IInspectableVtbl) [IID_IIPInformation] {
+RT_INTERFACE!{interface IIPInformation(IIPInformationVtbl): IInspectable [IID_IIPInformation] {
     fn get_NetworkAdapter(&self, out: *mut <NetworkAdapter as RtType>::Abi) -> HRESULT,
     fn get_PrefixLength(&self, out: *mut <foundation::IReference<u8> as RtType>::Abi) -> HRESULT
 }}
@@ -1727,7 +1727,7 @@ impl IIPInformation {
     }}
 }
 DEFINE_IID!(IID_ILanIdentifier, 1219122090, 4360, 17734, 166, 203, 154, 116, 218, 75, 123, 160);
-RT_INTERFACE!{interface ILanIdentifier(ILanIdentifierVtbl): IInspectable(IInspectableVtbl) [IID_ILanIdentifier] {
+RT_INTERFACE!{interface ILanIdentifier(ILanIdentifierVtbl): IInspectable [IID_ILanIdentifier] {
     fn get_InfrastructureId(&self, out: *mut <LanIdentifierData as RtType>::Abi) -> HRESULT,
     fn get_PortId(&self, out: *mut <LanIdentifierData as RtType>::Abi) -> HRESULT,
     fn get_NetworkAdapterId(&self, out: *mut Guid) -> HRESULT
@@ -1751,7 +1751,7 @@ impl ILanIdentifier {
 }
 RT_CLASS!{class LanIdentifier: ILanIdentifier}
 DEFINE_IID!(IID_ILanIdentifierData, 2806940611, 54841, 17854, 163, 106, 196, 228, 174, 175, 109, 155);
-RT_INTERFACE!{interface ILanIdentifierData(ILanIdentifierDataVtbl): IInspectable(IInspectableVtbl) [IID_ILanIdentifierData] {
+RT_INTERFACE!{interface ILanIdentifierData(ILanIdentifierDataVtbl): IInspectable [IID_ILanIdentifierData] {
     fn get_Type(&self, out: *mut u32) -> HRESULT,
     fn get_Value(&self, out: *mut <foundation::collections::IVectorView<u8> as RtType>::Abi) -> HRESULT
 }}
@@ -1769,7 +1769,7 @@ impl ILanIdentifierData {
 }
 RT_CLASS!{class LanIdentifierData: ILanIdentifierData}
 DEFINE_IID!(IID_INetworkAdapter, 995372547, 21384, 18796, 168, 163, 175, 253, 57, 174, 194, 230);
-RT_INTERFACE!{interface INetworkAdapter(INetworkAdapterVtbl): IInspectable(IInspectableVtbl) [IID_INetworkAdapter] {
+RT_INTERFACE!{interface INetworkAdapter(INetworkAdapterVtbl): IInspectable [IID_INetworkAdapter] {
     fn get_OutboundMaxBitsPerSecond(&self, out: *mut u64) -> HRESULT,
     fn get_InboundMaxBitsPerSecond(&self, out: *mut u64) -> HRESULT,
     fn get_IanaInterfaceType(&self, out: *mut u32) -> HRESULT,
@@ -1856,7 +1856,7 @@ impl NetworkInformation {
 }
 DEFINE_CLSID!(NetworkInformation(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,78,101,116,119,111,114,107,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_NetworkInformation]);
 DEFINE_IID!(IID_INetworkInformationStatics, 1349843025, 38157, 16741, 156, 21, 54, 86, 25, 72, 30, 234);
-RT_INTERFACE!{static interface INetworkInformationStatics(INetworkInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkInformationStatics] {
+RT_INTERFACE!{static interface INetworkInformationStatics(INetworkInformationStaticsVtbl): IInspectable [IID_INetworkInformationStatics] {
     fn GetConnectionProfiles(&self, out: *mut <foundation::collections::IVectorView<ConnectionProfile> as RtType>::Abi) -> HRESULT,
     fn GetInternetConnectionProfile(&self, out: *mut <ConnectionProfile as RtType>::Abi) -> HRESULT,
     fn GetLanIdentifiers(&self, out: *mut <foundation::collections::IVectorView<LanIdentifier> as RtType>::Abi) -> HRESULT,
@@ -1908,7 +1908,7 @@ impl INetworkInformationStatics {
     }}
 }
 DEFINE_IID!(IID_INetworkInformationStatics2, 1167912212, 10290, 18870, 186, 110, 226, 101, 240, 71, 134, 168);
-RT_INTERFACE!{static interface INetworkInformationStatics2(INetworkInformationStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkInformationStatics2] {
+RT_INTERFACE!{static interface INetworkInformationStatics2(INetworkInformationStatics2Vtbl): IInspectable [IID_INetworkInformationStatics2] {
     fn FindConnectionProfilesAsync(&self, pProfileFilter: <ConnectionProfileFilter as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<ConnectionProfile>> as RtType>::Abi) -> HRESULT
 }}
 impl INetworkInformationStatics2 {
@@ -1919,7 +1919,7 @@ impl INetworkInformationStatics2 {
     }}
 }
 DEFINE_IID!(IID_INetworkItem, 29117753, 62944, 17767, 162, 140, 66, 8, 12, 131, 27, 43);
-RT_INTERFACE!{interface INetworkItem(INetworkItemVtbl): IInspectable(IInspectableVtbl) [IID_INetworkItem] {
+RT_INTERFACE!{interface INetworkItem(INetworkItemVtbl): IInspectable [IID_INetworkItem] {
     fn get_NetworkId(&self, out: *mut Guid) -> HRESULT,
     fn GetNetworkTypes(&self, out: *mut NetworkTypes) -> HRESULT
 }}
@@ -1937,7 +1937,7 @@ impl INetworkItem {
 }
 RT_CLASS!{class NetworkItem: INetworkItem}
 DEFINE_IID!(IID_INetworkSecuritySettings, 2090892941, 37243, 19295, 184, 77, 40, 247, 165, 172, 84, 2);
-RT_INTERFACE!{interface INetworkSecuritySettings(INetworkSecuritySettingsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkSecuritySettings] {
+RT_INTERFACE!{interface INetworkSecuritySettings(INetworkSecuritySettingsVtbl): IInspectable [IID_INetworkSecuritySettings] {
     fn get_NetworkAuthenticationType(&self, out: *mut NetworkAuthenticationType) -> HRESULT,
     fn get_NetworkEncryptionType(&self, out: *mut NetworkEncryptionType) -> HRESULT
 }}
@@ -1955,7 +1955,7 @@ impl INetworkSecuritySettings {
 }
 RT_CLASS!{class NetworkSecuritySettings: INetworkSecuritySettings}
 DEFINE_IID!(IID_INetworkStateChangeEventDetails, 520942387, 55206, 17629, 164, 233, 104, 124, 71, 107, 144, 61);
-RT_INTERFACE!{interface INetworkStateChangeEventDetails(INetworkStateChangeEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkStateChangeEventDetails] {
+RT_INTERFACE!{interface INetworkStateChangeEventDetails(INetworkStateChangeEventDetailsVtbl): IInspectable [IID_INetworkStateChangeEventDetails] {
     fn get_HasNewInternetConnectionProfile(&self, out: *mut bool) -> HRESULT,
     fn get_HasNewConnectionCost(&self, out: *mut bool) -> HRESULT,
     fn get_HasNewNetworkConnectivityLevel(&self, out: *mut bool) -> HRESULT,
@@ -1997,7 +1997,7 @@ impl INetworkStateChangeEventDetails {
 }
 RT_CLASS!{class NetworkStateChangeEventDetails: INetworkStateChangeEventDetails}
 DEFINE_IID!(IID_INetworkStateChangeEventDetails2, 3594764520, 12499, 20330, 173, 71, 106, 24, 115, 206, 179, 193);
-RT_INTERFACE!{interface INetworkStateChangeEventDetails2(INetworkStateChangeEventDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkStateChangeEventDetails2] {
+RT_INTERFACE!{interface INetworkStateChangeEventDetails2(INetworkStateChangeEventDetails2Vtbl): IInspectable [IID_INetworkStateChangeEventDetails2] {
     fn get_HasNewTetheringOperationalState(&self, out: *mut bool) -> HRESULT,
     fn get_HasNewTetheringClientCount(&self, out: *mut bool) -> HRESULT
 }}
@@ -2027,7 +2027,7 @@ RT_ENUM! { enum NetworkTypes: u32 {
     None = 0, Internet = 1, PrivateNetwork = 2,
 }}
 DEFINE_IID!(IID_INetworkUsage, 1239060430, 39301, 18727, 191, 91, 7, 43, 92, 101, 248, 217);
-RT_INTERFACE!{interface INetworkUsage(INetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_INetworkUsage] {
+RT_INTERFACE!{interface INetworkUsage(INetworkUsageVtbl): IInspectable [IID_INetworkUsage] {
     fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
     fn get_BytesReceived(&self, out: *mut u64) -> HRESULT,
     fn get_ConnectionDuration(&self, out: *mut foundation::TimeSpan) -> HRESULT
@@ -2055,7 +2055,7 @@ RT_STRUCT! { struct NetworkUsageStates {
 }}
 RT_CLASS!{class IPInformation: IIPInformation}
 DEFINE_IID!(IID_IProviderNetworkUsage, 1590074884, 31025, 18632, 184, 243, 70, 48, 15, 164, 39, 40);
-RT_INTERFACE!{interface IProviderNetworkUsage(IProviderNetworkUsageVtbl): IInspectable(IInspectableVtbl) [IID_IProviderNetworkUsage] {
+RT_INTERFACE!{interface IProviderNetworkUsage(IProviderNetworkUsageVtbl): IInspectable [IID_IProviderNetworkUsage] {
     fn get_BytesSent(&self, out: *mut u64) -> HRESULT,
     fn get_BytesReceived(&self, out: *mut u64) -> HRESULT,
     fn get_ProviderId(&self, out: *mut HSTRING) -> HRESULT
@@ -2079,7 +2079,7 @@ impl IProviderNetworkUsage {
 }
 RT_CLASS!{class ProviderNetworkUsage: IProviderNetworkUsage}
 DEFINE_IID!(IID_IProxyConfiguration, 4013580468, 36868, 19926, 183, 216, 179, 229, 2, 244, 170, 208);
-RT_INTERFACE!{interface IProxyConfiguration(IProxyConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IProxyConfiguration] {
+RT_INTERFACE!{interface IProxyConfiguration(IProxyConfigurationVtbl): IInspectable [IID_IProxyConfiguration] {
     fn get_ProxyUris(&self, out: *mut <foundation::collections::IVectorView<foundation::Uri> as RtType>::Abi) -> HRESULT,
     fn get_CanConnectDirectly(&self, out: *mut bool) -> HRESULT
 }}
@@ -2100,7 +2100,7 @@ RT_ENUM! { enum RoamingStates: u32 {
     None = 0, NotRoaming = 1, Roaming = 2,
 }}
 DEFINE_IID!(IID_IRoutePolicy, 296469676, 4039, 17124, 135, 66, 86, 153, 35, 177, 202, 17);
-RT_INTERFACE!{interface IRoutePolicy(IRoutePolicyVtbl): IInspectable(IInspectableVtbl) [IID_IRoutePolicy] {
+RT_INTERFACE!{interface IRoutePolicy(IRoutePolicyVtbl): IInspectable [IID_IRoutePolicy] {
     fn get_ConnectionProfile(&self, out: *mut <ConnectionProfile as RtType>::Abi) -> HRESULT,
     fn get_HostName(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_HostNameType(&self, out: *mut super::DomainNameType) -> HRESULT
@@ -2131,7 +2131,7 @@ impl RoutePolicy {
 }
 DEFINE_CLSID!(RoutePolicy(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,67,111,110,110,101,99,116,105,118,105,116,121,46,82,111,117,116,101,80,111,108,105,99,121,0]) [CLSID_RoutePolicy]);
 DEFINE_IID!(IID_IRoutePolicyFactory, 906131763, 41358, 19893, 166, 151, 245, 143, 167, 54, 78, 68);
-RT_INTERFACE!{static interface IRoutePolicyFactory(IRoutePolicyFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IRoutePolicyFactory] {
+RT_INTERFACE!{static interface IRoutePolicyFactory(IRoutePolicyFactoryVtbl): IInspectable [IID_IRoutePolicyFactory] {
     fn CreateRoutePolicy(&self, connectionProfile: <ConnectionProfile as RtType>::Abi, hostName: <super::HostName as RtType>::Abi, type_: super::DomainNameType, out: *mut <RoutePolicy as RtType>::Abi) -> HRESULT
 }}
 impl IRoutePolicyFactory {
@@ -2145,7 +2145,7 @@ RT_ENUM! { enum TriStates: i32 {
     DoNotCare = 0, No = 1, Yes = 2,
 }}
 DEFINE_IID!(IID_IWlanConnectionProfileDetails, 1444976843, 45914, 19441, 168, 132, 183, 85, 126, 136, 255, 134);
-RT_INTERFACE!{interface IWlanConnectionProfileDetails(IWlanConnectionProfileDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IWlanConnectionProfileDetails] {
+RT_INTERFACE!{interface IWlanConnectionProfileDetails(IWlanConnectionProfileDetailsVtbl): IInspectable [IID_IWlanConnectionProfileDetails] {
     fn GetConnectedSsid(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IWlanConnectionProfileDetails {
@@ -2157,7 +2157,7 @@ impl IWlanConnectionProfileDetails {
 }
 RT_CLASS!{class WlanConnectionProfileDetails: IWlanConnectionProfileDetails}
 DEFINE_IID!(IID_IWwanConnectionProfileDetails, 239970558, 33631, 19955, 130, 253, 223, 85, 110, 188, 9, 239);
-RT_INTERFACE!{interface IWwanConnectionProfileDetails(IWwanConnectionProfileDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IWwanConnectionProfileDetails] {
+RT_INTERFACE!{interface IWwanConnectionProfileDetails(IWwanConnectionProfileDetailsVtbl): IInspectable [IID_IWwanConnectionProfileDetails] {
     fn get_HomeProviderId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_AccessPointName(&self, out: *mut HSTRING) -> HRESULT,
     fn GetNetworkRegistrationState(&self, out: *mut WwanNetworkRegistrationState) -> HRESULT,
@@ -2187,7 +2187,7 @@ impl IWwanConnectionProfileDetails {
 }
 RT_CLASS!{class WwanConnectionProfileDetails: IWwanConnectionProfileDetails}
 DEFINE_IID!(IID_IWwanConnectionProfileDetails2, 2054508254, 41453, 18610, 142, 146, 180, 96, 3, 61, 82, 226);
-RT_INTERFACE!{interface IWwanConnectionProfileDetails2(IWwanConnectionProfileDetails2Vtbl): IInspectable(IInspectableVtbl) [IID_IWwanConnectionProfileDetails2] {
+RT_INTERFACE!{interface IWwanConnectionProfileDetails2(IWwanConnectionProfileDetails2Vtbl): IInspectable [IID_IWwanConnectionProfileDetails2] {
     fn get_IPKind(&self, out: *mut WwanNetworkIPKind) -> HRESULT,
     fn get_PurposeGuids(&self, out: *mut <foundation::collections::IVectorView<Guid> as RtType>::Abi) -> HRESULT
 }}
@@ -2219,7 +2219,7 @@ RT_ENUM! { enum DataClasses: u32 {
     None = 0, Gprs = 1, Edge = 2, Umts = 4, Hsdpa = 8, Hsupa = 16, LteAdvanced = 32, Cdma1xRtt = 65536, Cdma1xEvdo = 131072, Cdma1xEvdoRevA = 262144, Cdma1xEvdv = 524288, Cdma3xRtt = 1048576, Cdma1xEvdoRevB = 2097152, CdmaUmb = 4194304, Custom = 2147483648,
 }}
 DEFINE_IID!(IID_IESim, 1869508134, 61731, 17277, 140, 237, 220, 29, 43, 192, 195, 169);
-RT_INTERFACE!{interface IESim(IESimVtbl): IInspectable(IInspectableVtbl) [IID_IESim] {
+RT_INTERFACE!{interface IESim(IESimVtbl): IInspectable [IID_IESim] {
     fn get_AvailableMemoryInBytes(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_Eid(&self, out: *mut HSTRING) -> HRESULT,
     fn get_FirmwareVersion(&self, out: *mut HSTRING) -> HRESULT,
@@ -2296,7 +2296,7 @@ impl IESim {
 }
 RT_CLASS!{class ESim: IESim}
 DEFINE_IID!(IID_IESimAddedEventArgs, 951913048, 19802, 19720, 141, 167, 231, 62, 255, 54, 157, 221);
-RT_INTERFACE!{interface IESimAddedEventArgs(IESimAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimAddedEventArgs] {
+RT_INTERFACE!{interface IESimAddedEventArgs(IESimAddedEventArgsVtbl): IInspectable [IID_IESimAddedEventArgs] {
     fn get_ESim(&self, out: *mut <ESim as RtType>::Abi) -> HRESULT
 }}
 impl IESimAddedEventArgs {
@@ -2311,7 +2311,7 @@ RT_ENUM! { enum ESimAuthenticationPreference: i32 {
     OnEntry = 0, OnAction = 1, Never = 2,
 }}
 DEFINE_IID!(IID_IESimDownloadProfileMetadataResult, 3290647966, 23254, 17005, 141, 0, 68, 52, 244, 73, 175, 236);
-RT_INTERFACE!{interface IESimDownloadProfileMetadataResult(IESimDownloadProfileMetadataResultVtbl): IInspectable(IInspectableVtbl) [IID_IESimDownloadProfileMetadataResult] {
+RT_INTERFACE!{interface IESimDownloadProfileMetadataResult(IESimDownloadProfileMetadataResultVtbl): IInspectable [IID_IESimDownloadProfileMetadataResult] {
     fn get_Result(&self, out: *mut <ESimOperationResult as RtType>::Abi) -> HRESULT,
     fn get_ProfileMetadata(&self, out: *mut <ESimProfileMetadata as RtType>::Abi) -> HRESULT
 }}
@@ -2346,7 +2346,7 @@ impl ESimManager {
 }
 DEFINE_CLSID!(ESimManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,69,83,105,109,77,97,110,97,103,101,114,0]) [CLSID_ESimManager]);
 DEFINE_IID!(IID_IESimManagerStatics, 200944652, 57224, 17969, 191, 4, 193, 46, 40, 27, 57, 98);
-RT_INTERFACE!{static interface IESimManagerStatics(IESimManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IESimManagerStatics] {
+RT_INTERFACE!{static interface IESimManagerStatics(IESimManagerStaticsVtbl): IInspectable [IID_IESimManagerStatics] {
     fn get_ServiceInfo(&self, out: *mut <ESimServiceInfo as RtType>::Abi) -> HRESULT,
     fn TryCreateESimWatcher(&self, out: *mut <ESimWatcher as RtType>::Abi) -> HRESULT,
     fn add_ServiceInfoChanged(&self, handler: <foundation::EventHandler<IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -2374,7 +2374,7 @@ impl IESimManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IESimOperationResult, 2793104305, 12443, 20087, 158, 126, 205, 147, 241, 221, 199, 185);
-RT_INTERFACE!{interface IESimOperationResult(IESimOperationResultVtbl): IInspectable(IInspectableVtbl) [IID_IESimOperationResult] {
+RT_INTERFACE!{interface IESimOperationResult(IESimOperationResultVtbl): IInspectable [IID_IESimOperationResult] {
     fn get_Status(&self, out: *mut ESimOperationStatus) -> HRESULT
 }}
 impl IESimOperationResult {
@@ -2389,7 +2389,7 @@ RT_ENUM! { enum ESimOperationStatus: i32 {
     Success = 0, NotAuthorized = 1, NotFound = 2, PolicyViolation = 3, InsufficientSpaceOnCard = 4, ServerFailure = 5, ServerNotReachable = 6, TimeoutWaitingForUserConsent = 7, IncorrectConfirmationCode = 8, ConfirmationCodeMaxRetriesExceeded = 9, CardRemoved = 10, CardBusy = 11, Other = 12, CardGeneralFailure = 13, ConfirmationCodeMissing = 14, InvalidMatchingId = 15, NoEligibleProfileForThisDevice = 16, OperationAborted = 17, EidMismatch = 18, ProfileNotAvailableForNewBinding = 19, ProfileNotReleasedByOperator = 20, OperationProhibitedByProfileClass = 21, ProfileNotPresent = 22, NoCorrespondingRequest = 23,
 }}
 DEFINE_IID!(IID_IESimPolicy, 1105312157, 53118, 17173, 136, 43, 111, 30, 116, 176, 211, 143);
-RT_INTERFACE!{interface IESimPolicy(IESimPolicyVtbl): IInspectable(IInspectableVtbl) [IID_IESimPolicy] {
+RT_INTERFACE!{interface IESimPolicy(IESimPolicyVtbl): IInspectable [IID_IESimPolicy] {
     fn get_ShouldEnableManagingUi(&self, out: *mut bool) -> HRESULT
 }}
 impl IESimPolicy {
@@ -2401,7 +2401,7 @@ impl IESimPolicy {
 }
 RT_CLASS!{class ESimPolicy: IESimPolicy}
 DEFINE_IID!(IID_IESimProfile, 3994974336, 1705, 16423, 180, 248, 221, 178, 61, 120, 16, 224);
-RT_INTERFACE!{interface IESimProfile(IESimProfileVtbl): IInspectable(IInspectableVtbl) [IID_IESimProfile] {
+RT_INTERFACE!{interface IESimProfile(IESimProfileVtbl): IInspectable [IID_IESimProfile] {
     fn get_Class(&self, out: *mut ESimProfileClass) -> HRESULT,
     fn get_Nickname(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Policy(&self, out: *mut <ESimProfilePolicy as RtType>::Abi) -> HRESULT,
@@ -2480,7 +2480,7 @@ RT_STRUCT! { struct ESimProfileInstallProgress {
     TotalSizeInBytes: i32, InstalledSizeInBytes: i32,
 }}
 DEFINE_IID!(IID_IESimProfileMetadata, 3978658591, 37083, 18829, 167, 180, 235, 206, 128, 125, 60, 35);
-RT_INTERFACE!{interface IESimProfileMetadata(IESimProfileMetadataVtbl): IInspectable(IInspectableVtbl) [IID_IESimProfileMetadata] {
+RT_INTERFACE!{interface IESimProfileMetadata(IESimProfileMetadataVtbl): IInspectable [IID_IESimProfileMetadata] {
     fn get_IsConfirmationCodeRequired(&self, out: *mut bool) -> HRESULT,
     fn get_Policy(&self, out: *mut <ESimProfilePolicy as RtType>::Abi) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
@@ -2567,7 +2567,7 @@ RT_ENUM! { enum ESimProfileMetadataState: i32 {
     Unknown = 0, WaitingForInstall = 1, Downloading = 2, Installing = 3, Expired = 4, RejectingDownload = 5, NoLongerAvailable = 6, DeniedByPolicy = 7,
 }}
 DEFINE_IID!(IID_IESimProfilePolicy, 3873247005, 40028, 18117, 162, 137, 169, 72, 153, 155, 240, 98);
-RT_INTERFACE!{interface IESimProfilePolicy(IESimProfilePolicyVtbl): IInspectable(IInspectableVtbl) [IID_IESimProfilePolicy] {
+RT_INTERFACE!{interface IESimProfilePolicy(IESimProfilePolicyVtbl): IInspectable [IID_IESimProfilePolicy] {
     fn get_CanDelete(&self, out: *mut bool) -> HRESULT,
     fn get_CanDisable(&self, out: *mut bool) -> HRESULT,
     fn get_IsManagedByEnterprise(&self, out: *mut bool) -> HRESULT
@@ -2594,7 +2594,7 @@ RT_ENUM! { enum ESimProfileState: i32 {
     Unknown = 0, Disabled = 1, Enabled = 2, Deleted = 3,
 }}
 DEFINE_IID!(IID_IESimRemovedEventArgs, 3737462651, 12249, 20185, 131, 118, 217, 181, 228, 18, 120, 163);
-RT_INTERFACE!{interface IESimRemovedEventArgs(IESimRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimRemovedEventArgs] {
+RT_INTERFACE!{interface IESimRemovedEventArgs(IESimRemovedEventArgsVtbl): IInspectable [IID_IESimRemovedEventArgs] {
     fn get_ESim(&self, out: *mut <ESim as RtType>::Abi) -> HRESULT
 }}
 impl IESimRemovedEventArgs {
@@ -2606,7 +2606,7 @@ impl IESimRemovedEventArgs {
 }
 RT_CLASS!{class ESimRemovedEventArgs: IESimRemovedEventArgs}
 DEFINE_IID!(IID_IESimServiceInfo, 4050299855, 32601, 19025, 132, 148, 189, 137, 213, 255, 80, 238);
-RT_INTERFACE!{interface IESimServiceInfo(IESimServiceInfoVtbl): IInspectable(IInspectableVtbl) [IID_IESimServiceInfo] {
+RT_INTERFACE!{interface IESimServiceInfo(IESimServiceInfoVtbl): IInspectable [IID_IESimServiceInfo] {
     fn get_AuthenticationPreference(&self, out: *mut ESimAuthenticationPreference) -> HRESULT,
     fn get_IsESimUiEnabled(&self, out: *mut bool) -> HRESULT
 }}
@@ -2627,7 +2627,7 @@ RT_ENUM! { enum ESimState: i32 {
     Unknown = 0, Idle = 1, Removed = 2, Busy = 3,
 }}
 DEFINE_IID!(IID_IESimUpdatedEventArgs, 1276271852, 20621, 19336, 131, 203, 104, 190, 248, 22, 141, 18);
-RT_INTERFACE!{interface IESimUpdatedEventArgs(IESimUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IESimUpdatedEventArgs] {
+RT_INTERFACE!{interface IESimUpdatedEventArgs(IESimUpdatedEventArgsVtbl): IInspectable [IID_IESimUpdatedEventArgs] {
     fn get_ESim(&self, out: *mut <ESim as RtType>::Abi) -> HRESULT
 }}
 impl IESimUpdatedEventArgs {
@@ -2639,7 +2639,7 @@ impl IESimUpdatedEventArgs {
 }
 RT_CLASS!{class ESimUpdatedEventArgs: IESimUpdatedEventArgs}
 DEFINE_IID!(IID_IESimWatcher, 3254275307, 41613, 20415, 151, 113, 110, 49, 184, 28, 207, 34);
-RT_INTERFACE!{interface IESimWatcher(IESimWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IESimWatcher] {
+RT_INTERFACE!{interface IESimWatcher(IESimWatcherVtbl): IInspectable [IID_IESimWatcher] {
     fn get_Status(&self, out: *mut ESimWatcherStatus) -> HRESULT,
     fn Start(&self) -> HRESULT,
     fn Stop(&self) -> HRESULT,
@@ -2719,7 +2719,7 @@ RT_ENUM! { enum ESimWatcherStatus: i32 {
     Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4,
 }}
 DEFINE_IID!(IID_IHotspotAuthenticationContext, 3881224081, 4099, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
-RT_INTERFACE!{interface IHotspotAuthenticationContext(IHotspotAuthenticationContextVtbl): IInspectable(IInspectableVtbl) [IID_IHotspotAuthenticationContext] {
+RT_INTERFACE!{interface IHotspotAuthenticationContext(IHotspotAuthenticationContextVtbl): IInspectable [IID_IHotspotAuthenticationContext] {
     fn get_WirelessNetworkId(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT,
     fn get_NetworkAdapter(&self, out: *mut <super::connectivity::NetworkAdapter as RtType>::Abi) -> HRESULT,
     fn get_RedirectMessageUrl(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
@@ -2783,7 +2783,7 @@ impl HotspotAuthenticationContext {
 }
 DEFINE_CLSID!(HotspotAuthenticationContext(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,72,111,116,115,112,111,116,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,110,116,101,120,116,0]) [CLSID_HotspotAuthenticationContext]);
 DEFINE_IID!(IID_IHotspotAuthenticationContext2, 3881224081, 4100, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
-RT_INTERFACE!{interface IHotspotAuthenticationContext2(IHotspotAuthenticationContext2Vtbl): IInspectable(IInspectableVtbl) [IID_IHotspotAuthenticationContext2] {
+RT_INTERFACE!{interface IHotspotAuthenticationContext2(IHotspotAuthenticationContext2Vtbl): IInspectable [IID_IHotspotAuthenticationContext2] {
     fn IssueCredentialsAsync(&self, userName: HSTRING, password: HSTRING, extraParameters: HSTRING, markAsManualConnectOnFailure: bool, out: *mut <foundation::IAsyncOperation<HotspotCredentialsAuthenticationResult> as RtType>::Abi) -> HRESULT
 }}
 impl IHotspotAuthenticationContext2 {
@@ -2794,7 +2794,7 @@ impl IHotspotAuthenticationContext2 {
     }}
 }
 DEFINE_IID!(IID_IHotspotAuthenticationContextStatics, 3881224081, 4098, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
-RT_INTERFACE!{static interface IHotspotAuthenticationContextStatics(IHotspotAuthenticationContextStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHotspotAuthenticationContextStatics] {
+RT_INTERFACE!{static interface IHotspotAuthenticationContextStatics(IHotspotAuthenticationContextStaticsVtbl): IInspectable [IID_IHotspotAuthenticationContextStatics] {
     fn TryGetAuthenticationContext(&self, evenToken: HSTRING, context: *mut <HotspotAuthenticationContext as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
 impl IHotspotAuthenticationContextStatics {
@@ -2805,7 +2805,7 @@ impl IHotspotAuthenticationContextStatics {
     }}
 }
 DEFINE_IID!(IID_IHotspotAuthenticationEventDetails, 3881224081, 4097, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
-RT_INTERFACE!{interface IHotspotAuthenticationEventDetails(IHotspotAuthenticationEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IHotspotAuthenticationEventDetails] {
+RT_INTERFACE!{interface IHotspotAuthenticationEventDetails(IHotspotAuthenticationEventDetailsVtbl): IInspectable [IID_IHotspotAuthenticationEventDetails] {
     fn get_EventToken(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IHotspotAuthenticationEventDetails {
@@ -2820,7 +2820,7 @@ RT_ENUM! { enum HotspotAuthenticationResponseCode: i32 {
     NoError = 0, LoginSucceeded = 50, LoginFailed = 100, RadiusServerError = 102, NetworkAdministratorError = 105, LoginAborted = 151, AccessGatewayInternalError = 255,
 }}
 DEFINE_IID!(IID_IHotspotCredentialsAuthenticationResult, 3881224081, 4101, 19941, 131, 199, 222, 97, 216, 136, 49, 208);
-RT_INTERFACE!{interface IHotspotCredentialsAuthenticationResult(IHotspotCredentialsAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_IHotspotCredentialsAuthenticationResult] {
+RT_INTERFACE!{interface IHotspotCredentialsAuthenticationResult(IHotspotCredentialsAuthenticationResultVtbl): IInspectable [IID_IHotspotCredentialsAuthenticationResult] {
     fn get_HasNetworkErrorOccurred(&self, out: *mut bool) -> HRESULT,
     fn get_ResponseCode(&self, out: *mut HotspotAuthenticationResponseCode) -> HRESULT,
     fn get_LogoffUrl(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
@@ -2864,7 +2864,7 @@ impl KnownCSimFilePaths {
 }
 DEFINE_CLSID!(KnownCSimFilePaths(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,75,110,111,119,110,67,83,105,109,70,105,108,101,80,97,116,104,115,0]) [CLSID_KnownCSimFilePaths]);
 DEFINE_IID!(IID_IKnownCSimFilePathsStatics, 3025710829, 18929, 19490, 176, 115, 150, 213, 17, 191, 156, 53);
-RT_INTERFACE!{static interface IKnownCSimFilePathsStatics(IKnownCSimFilePathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownCSimFilePathsStatics] {
+RT_INTERFACE!{static interface IKnownCSimFilePathsStatics(IKnownCSimFilePathsStaticsVtbl): IInspectable [IID_IKnownCSimFilePathsStatics] {
     fn get_EFSpn(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
     fn get_Gid1(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
     fn get_Gid2(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT
@@ -2901,7 +2901,7 @@ impl KnownRuimFilePaths {
 }
 DEFINE_CLSID!(KnownRuimFilePaths(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,75,110,111,119,110,82,117,105,109,70,105,108,101,80,97,116,104,115,0]) [CLSID_KnownRuimFilePaths]);
 DEFINE_IID!(IID_IKnownRuimFilePathsStatics, 948160697, 65316, 17777, 168, 103, 9, 249, 96, 66, 110, 20);
-RT_INTERFACE!{static interface IKnownRuimFilePathsStatics(IKnownRuimFilePathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownRuimFilePathsStatics] {
+RT_INTERFACE!{static interface IKnownRuimFilePathsStatics(IKnownRuimFilePathsStaticsVtbl): IInspectable [IID_IKnownRuimFilePathsStatics] {
     fn get_EFSpn(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
     fn get_Gid1(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
     fn get_Gid2(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT
@@ -2941,7 +2941,7 @@ impl KnownSimFilePaths {
 }
 DEFINE_CLSID!(KnownSimFilePaths(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,75,110,111,119,110,83,105,109,70,105,108,101,80,97,116,104,115,0]) [CLSID_KnownSimFilePaths]);
 DEFINE_IID!(IID_IKnownSimFilePathsStatics, 2160925283, 14245, 17363, 128, 163, 204, 210, 62, 143, 236, 238);
-RT_INTERFACE!{static interface IKnownSimFilePathsStatics(IKnownSimFilePathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownSimFilePathsStatics] {
+RT_INTERFACE!{static interface IKnownSimFilePathsStatics(IKnownSimFilePathsStaticsVtbl): IInspectable [IID_IKnownSimFilePathsStatics] {
     fn get_EFOns(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
     fn get_EFSpn(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
     fn get_Gid1(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
@@ -2990,7 +2990,7 @@ impl KnownUSimFilePaths {
 }
 DEFINE_CLSID!(KnownUSimFilePaths(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,75,110,111,119,110,85,83,105,109,70,105,108,101,80,97,116,104,115,0]) [CLSID_KnownUSimFilePaths]);
 DEFINE_IID!(IID_IKnownUSimFilePathsStatics, 2083841409, 7963, 17396, 149, 48, 139, 9, 45, 50, 215, 31);
-RT_INTERFACE!{static interface IKnownUSimFilePathsStatics(IKnownUSimFilePathsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKnownUSimFilePathsStatics] {
+RT_INTERFACE!{static interface IKnownUSimFilePathsStatics(IKnownUSimFilePathsStaticsVtbl): IInspectable [IID_IKnownUSimFilePathsStatics] {
     fn get_EFSpn(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
     fn get_EFOpl(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
     fn get_EFPnn(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
@@ -3025,7 +3025,7 @@ impl IKnownUSimFilePathsStatics {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandAccount, 918703309, 52962, 17376, 166, 3, 238, 134, 163, 109, 101, 112);
-RT_INTERFACE!{interface IMobileBroadbandAccount(IMobileBroadbandAccountVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccount] {
+RT_INTERFACE!{interface IMobileBroadbandAccount(IMobileBroadbandAccountVtbl): IInspectable [IID_IMobileBroadbandAccount] {
     fn get_NetworkAccountId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ServiceProviderGuid(&self, out: *mut Guid) -> HRESULT,
     fn get_ServiceProviderName(&self, out: *mut HSTRING) -> HRESULT,
@@ -3071,7 +3071,7 @@ impl MobileBroadbandAccount {
 }
 DEFINE_CLSID!(MobileBroadbandAccount(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,65,99,99,111,117,110,116,0]) [CLSID_MobileBroadbandAccount]);
 DEFINE_IID!(IID_IMobileBroadbandAccount2, 955592476, 4406, 16983, 149, 159, 182, 88, 163, 82, 182, 212);
-RT_INTERFACE!{interface IMobileBroadbandAccount2(IMobileBroadbandAccount2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccount2] {
+RT_INTERFACE!{interface IMobileBroadbandAccount2(IMobileBroadbandAccount2Vtbl): IInspectable [IID_IMobileBroadbandAccount2] {
     fn GetConnectionProfiles(&self, out: *mut <foundation::collections::IVectorView<super::connectivity::ConnectionProfile> as RtType>::Abi) -> HRESULT
 }}
 impl IMobileBroadbandAccount2 {
@@ -3082,7 +3082,7 @@ impl IMobileBroadbandAccount2 {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandAccount3, 153755169, 37753, 19355, 173, 49, 213, 254, 226, 247, 72, 198);
-RT_INTERFACE!{interface IMobileBroadbandAccount3(IMobileBroadbandAccount3Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccount3] {
+RT_INTERFACE!{interface IMobileBroadbandAccount3(IMobileBroadbandAccount3Vtbl): IInspectable [IID_IMobileBroadbandAccount3] {
     fn get_AccountExperienceUrl(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
 }}
 impl IMobileBroadbandAccount3 {
@@ -3093,7 +3093,7 @@ impl IMobileBroadbandAccount3 {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandAccountEventArgs, 945014912, 30686, 19460, 190, 173, 161, 35, 176, 140, 159, 89);
-RT_INTERFACE!{interface IMobileBroadbandAccountEventArgs(IMobileBroadbandAccountEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccountEventArgs] {
+RT_INTERFACE!{interface IMobileBroadbandAccountEventArgs(IMobileBroadbandAccountEventArgsVtbl): IInspectable [IID_IMobileBroadbandAccountEventArgs] {
     fn get_NetworkAccountId(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IMobileBroadbandAccountEventArgs {
@@ -3105,7 +3105,7 @@ impl IMobileBroadbandAccountEventArgs {
 }
 RT_CLASS!{class MobileBroadbandAccountEventArgs: IMobileBroadbandAccountEventArgs}
 DEFINE_IID!(IID_IMobileBroadbandAccountStatics, 2860469540, 44993, 20424, 174, 154, 169, 23, 83, 16, 250, 173);
-RT_INTERFACE!{static interface IMobileBroadbandAccountStatics(IMobileBroadbandAccountStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccountStatics] {
+RT_INTERFACE!{static interface IMobileBroadbandAccountStatics(IMobileBroadbandAccountStaticsVtbl): IInspectable [IID_IMobileBroadbandAccountStatics] {
     fn get_AvailableNetworkAccountIds(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut <MobileBroadbandAccount as RtType>::Abi) -> HRESULT
 }}
@@ -3122,7 +3122,7 @@ impl IMobileBroadbandAccountStatics {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandAccountUpdatedEventArgs, 2076384648, 42685, 18913, 128, 171, 107, 145, 53, 74, 87, 212);
-RT_INTERFACE!{interface IMobileBroadbandAccountUpdatedEventArgs(IMobileBroadbandAccountUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccountUpdatedEventArgs] {
+RT_INTERFACE!{interface IMobileBroadbandAccountUpdatedEventArgs(IMobileBroadbandAccountUpdatedEventArgsVtbl): IInspectable [IID_IMobileBroadbandAccountUpdatedEventArgs] {
     fn get_NetworkAccountId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_HasDeviceInformationChanged(&self, out: *mut bool) -> HRESULT,
     fn get_HasNetworkChanged(&self, out: *mut bool) -> HRESULT
@@ -3146,7 +3146,7 @@ impl IMobileBroadbandAccountUpdatedEventArgs {
 }
 RT_CLASS!{class MobileBroadbandAccountUpdatedEventArgs: IMobileBroadbandAccountUpdatedEventArgs}
 DEFINE_IID!(IID_IMobileBroadbandAccountWatcher, 1811100510, 9141, 17567, 146, 141, 94, 13, 62, 4, 71, 29);
-RT_INTERFACE!{interface IMobileBroadbandAccountWatcher(IMobileBroadbandAccountWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAccountWatcher] {
+RT_INTERFACE!{interface IMobileBroadbandAccountWatcher(IMobileBroadbandAccountWatcherVtbl): IInspectable [IID_IMobileBroadbandAccountWatcher] {
     fn add_AccountAdded(&self, handler: <foundation::TypedEventHandler<MobileBroadbandAccountWatcher, MobileBroadbandAccountEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_AccountAdded(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
     fn add_AccountUpdated(&self, handler: <foundation::TypedEventHandler<MobileBroadbandAccountWatcher, MobileBroadbandAccountUpdatedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -3228,7 +3228,7 @@ RT_ENUM! { enum MobileBroadbandAccountWatcherStatus: i32 {
     Created = 0, Started = 1, EnumerationCompleted = 2, Stopped = 3, Aborted = 4,
 }}
 DEFINE_IID!(IID_IMobileBroadbandAntennaSar, 3115273086, 52217, 16649, 144, 190, 92, 6, 191, 213, 19, 182);
-RT_INTERFACE!{interface IMobileBroadbandAntennaSar(IMobileBroadbandAntennaSarVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAntennaSar] {
+RT_INTERFACE!{interface IMobileBroadbandAntennaSar(IMobileBroadbandAntennaSarVtbl): IInspectable [IID_IMobileBroadbandAntennaSar] {
     fn get_AntennaIndex(&self, out: *mut i32) -> HRESULT,
     fn get_SarBackoffIndex(&self, out: *mut i32) -> HRESULT
 }}
@@ -3253,7 +3253,7 @@ impl MobileBroadbandAntennaSar {
 }
 DEFINE_CLSID!(MobileBroadbandAntennaSar(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,65,110,116,101,110,110,97,83,97,114,0]) [CLSID_MobileBroadbandAntennaSar]);
 DEFINE_IID!(IID_IMobileBroadbandAntennaSarFactory, 2837321494, 49229, 18977, 134, 152, 20, 89, 220, 103, 44, 110);
-RT_INTERFACE!{static interface IMobileBroadbandAntennaSarFactory(IMobileBroadbandAntennaSarFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandAntennaSarFactory] {
+RT_INTERFACE!{static interface IMobileBroadbandAntennaSarFactory(IMobileBroadbandAntennaSarFactoryVtbl): IInspectable [IID_IMobileBroadbandAntennaSarFactory] {
     fn CreateWithIndex(&self, antennaIndex: i32, sarBackoffIndex: i32, out: *mut <MobileBroadbandAntennaSar as RtType>::Abi) -> HRESULT
 }}
 impl IMobileBroadbandAntennaSarFactory {
@@ -3264,7 +3264,7 @@ impl IMobileBroadbandAntennaSarFactory {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandCellCdma, 100774836, 16666, 20270, 130, 135, 118, 245, 101, 12, 96, 205);
-RT_INTERFACE!{interface IMobileBroadbandCellCdma(IMobileBroadbandCellCdmaVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellCdma] {
+RT_INTERFACE!{interface IMobileBroadbandCellCdma(IMobileBroadbandCellCdmaVtbl): IInspectable [IID_IMobileBroadbandCellCdma] {
     fn get_BaseStationId(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_BaseStationPNCode(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_BaseStationLatitude(&self, out: *mut <foundation::IReference<f64> as RtType>::Abi) -> HRESULT,
@@ -3318,7 +3318,7 @@ impl IMobileBroadbandCellCdma {
 }
 RT_CLASS!{class MobileBroadbandCellCdma: IMobileBroadbandCellCdma}
 DEFINE_IID!(IID_IMobileBroadbandCellGsm, 3432087302, 32480, 18360, 158, 31, 195, 180, 141, 249, 223, 91);
-RT_INTERFACE!{interface IMobileBroadbandCellGsm(IMobileBroadbandCellGsmVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellGsm] {
+RT_INTERFACE!{interface IMobileBroadbandCellGsm(IMobileBroadbandCellGsmVtbl): IInspectable [IID_IMobileBroadbandCellGsm] {
     fn get_BaseStationId(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_CellId(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_ChannelNumber(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
@@ -3366,7 +3366,7 @@ impl IMobileBroadbandCellGsm {
 }
 RT_CLASS!{class MobileBroadbandCellGsm: IMobileBroadbandCellGsm}
 DEFINE_IID!(IID_IMobileBroadbandCellLte, 2442643579, 11128, 17773, 139, 83, 170, 162, 93, 10, 247, 65);
-RT_INTERFACE!{interface IMobileBroadbandCellLte(IMobileBroadbandCellLteVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellLte] {
+RT_INTERFACE!{interface IMobileBroadbandCellLte(IMobileBroadbandCellLteVtbl): IInspectable [IID_IMobileBroadbandCellLte] {
     fn get_CellId(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_ChannelNumber(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_PhysicalCellId(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
@@ -3420,7 +3420,7 @@ impl IMobileBroadbandCellLte {
 }
 RT_CLASS!{class MobileBroadbandCellLte: IMobileBroadbandCellLte}
 DEFINE_IID!(IID_IMobileBroadbandCellsInfo, 2309576234, 58482, 19877, 146, 156, 222, 97, 113, 29, 210, 97);
-RT_INTERFACE!{interface IMobileBroadbandCellsInfo(IMobileBroadbandCellsInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellsInfo] {
+RT_INTERFACE!{interface IMobileBroadbandCellsInfo(IMobileBroadbandCellsInfoVtbl): IInspectable [IID_IMobileBroadbandCellsInfo] {
     fn get_NeighboringCellsCdma(&self, out: *mut <foundation::collections::IVectorView<MobileBroadbandCellCdma> as RtType>::Abi) -> HRESULT,
     fn get_NeighboringCellsGsm(&self, out: *mut <foundation::collections::IVectorView<MobileBroadbandCellGsm> as RtType>::Abi) -> HRESULT,
     fn get_NeighboringCellsLte(&self, out: *mut <foundation::collections::IVectorView<MobileBroadbandCellLte> as RtType>::Abi) -> HRESULT,
@@ -3486,7 +3486,7 @@ impl IMobileBroadbandCellsInfo {
 }
 RT_CLASS!{class MobileBroadbandCellsInfo: IMobileBroadbandCellsInfo}
 DEFINE_IID!(IID_IMobileBroadbandCellTdscdma, 249173589, 56078, 16770, 140, 218, 204, 65, 154, 123, 222, 8);
-RT_INTERFACE!{interface IMobileBroadbandCellTdscdma(IMobileBroadbandCellTdscdmaVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellTdscdma] {
+RT_INTERFACE!{interface IMobileBroadbandCellTdscdma(IMobileBroadbandCellTdscdmaVtbl): IInspectable [IID_IMobileBroadbandCellTdscdma] {
     fn get_CellId(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_CellParameterId(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_ChannelNumber(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
@@ -3540,7 +3540,7 @@ impl IMobileBroadbandCellTdscdma {
 }
 RT_CLASS!{class MobileBroadbandCellTdscdma: IMobileBroadbandCellTdscdma}
 DEFINE_IID!(IID_IMobileBroadbandCellUmts, 2008331694, 18888, 20245, 178, 133, 76, 38, 167, 246, 114, 21);
-RT_INTERFACE!{interface IMobileBroadbandCellUmts(IMobileBroadbandCellUmtsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandCellUmts] {
+RT_INTERFACE!{interface IMobileBroadbandCellUmts(IMobileBroadbandCellUmtsVtbl): IInspectable [IID_IMobileBroadbandCellUmts] {
     fn get_CellId(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_ChannelNumber(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
     fn get_LocationAreaCode(&self, out: *mut <foundation::IReference<i32> as RtType>::Abi) -> HRESULT,
@@ -3594,7 +3594,7 @@ impl IMobileBroadbandCellUmts {
 }
 RT_CLASS!{class MobileBroadbandCellUmts: IMobileBroadbandCellUmts}
 DEFINE_IID!(IID_IMobileBroadbandDeviceInformation, 3872424296, 58241, 19566, 155, 232, 254, 21, 105, 105, 164, 70);
-RT_INTERFACE!{interface IMobileBroadbandDeviceInformation(IMobileBroadbandDeviceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceInformation] {
+RT_INTERFACE!{interface IMobileBroadbandDeviceInformation(IMobileBroadbandDeviceInformationVtbl): IInspectable [IID_IMobileBroadbandDeviceInformation] {
     fn get_NetworkDeviceStatus(&self, out: *mut NetworkDeviceStatus) -> HRESULT,
     fn get_Manufacturer(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Model(&self, out: *mut HSTRING) -> HRESULT,
@@ -3685,7 +3685,7 @@ impl IMobileBroadbandDeviceInformation {
 }
 RT_CLASS!{class MobileBroadbandDeviceInformation: IMobileBroadbandDeviceInformation}
 DEFINE_IID!(IID_IMobileBroadbandDeviceInformation2, 776370929, 63794, 18231, 167, 34, 3, 186, 114, 55, 12, 184);
-RT_INTERFACE!{interface IMobileBroadbandDeviceInformation2(IMobileBroadbandDeviceInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceInformation2] {
+RT_INTERFACE!{interface IMobileBroadbandDeviceInformation2(IMobileBroadbandDeviceInformation2Vtbl): IInspectable [IID_IMobileBroadbandDeviceInformation2] {
     fn get_PinManager(&self, out: *mut <MobileBroadbandPinManager as RtType>::Abi) -> HRESULT,
     fn get_Revision(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SerialNumber(&self, out: *mut HSTRING) -> HRESULT
@@ -3708,7 +3708,7 @@ impl IMobileBroadbandDeviceInformation2 {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandDeviceInformation3, 3767252157, 23856, 19290, 146, 204, 213, 77, 248, 129, 212, 158);
-RT_INTERFACE!{interface IMobileBroadbandDeviceInformation3(IMobileBroadbandDeviceInformation3Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceInformation3] {
+RT_INTERFACE!{interface IMobileBroadbandDeviceInformation3(IMobileBroadbandDeviceInformation3Vtbl): IInspectable [IID_IMobileBroadbandDeviceInformation3] {
     fn get_SimSpn(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SimPnn(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SimGid1(&self, out: *mut HSTRING) -> HRESULT
@@ -3731,7 +3731,7 @@ impl IMobileBroadbandDeviceInformation3 {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandDeviceService, 582883922, 48512, 16556, 142, 31, 46, 7, 131, 106, 61, 189);
-RT_INTERFACE!{interface IMobileBroadbandDeviceService(IMobileBroadbandDeviceServiceVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceService] {
+RT_INTERFACE!{interface IMobileBroadbandDeviceService(IMobileBroadbandDeviceServiceVtbl): IInspectable [IID_IMobileBroadbandDeviceService] {
     fn get_DeviceServiceId(&self, out: *mut Guid) -> HRESULT,
     fn get_SupportedCommands(&self, out: *mut <foundation::collections::IVectorView<u32> as RtType>::Abi) -> HRESULT,
     fn OpenDataSession(&self, out: *mut <MobileBroadbandDeviceServiceDataSession as RtType>::Abi) -> HRESULT,
@@ -3761,7 +3761,7 @@ impl IMobileBroadbandDeviceService {
 }
 RT_CLASS!{class MobileBroadbandDeviceService: IMobileBroadbandDeviceService}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceCommandResult, 2968808123, 38102, 17593, 165, 56, 240, 129, 11, 100, 83, 137);
-RT_INTERFACE!{interface IMobileBroadbandDeviceServiceCommandResult(IMobileBroadbandDeviceServiceCommandResultVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceCommandResult] {
+RT_INTERFACE!{interface IMobileBroadbandDeviceServiceCommandResult(IMobileBroadbandDeviceServiceCommandResultVtbl): IInspectable [IID_IMobileBroadbandDeviceServiceCommandResult] {
     fn get_StatusCode(&self, out: *mut u32) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_ResponseData(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -3779,7 +3779,7 @@ impl IMobileBroadbandDeviceServiceCommandResult {
 }
 RT_CLASS!{class MobileBroadbandDeviceServiceCommandResult: IMobileBroadbandDeviceServiceCommandResult}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceCommandSession, 4228483653, 37179, 18708, 182, 195, 174, 99, 4, 89, 62, 117);
-RT_INTERFACE!{interface IMobileBroadbandDeviceServiceCommandSession(IMobileBroadbandDeviceServiceCommandSessionVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceCommandSession] {
+RT_INTERFACE!{interface IMobileBroadbandDeviceServiceCommandSession(IMobileBroadbandDeviceServiceCommandSessionVtbl): IInspectable [IID_IMobileBroadbandDeviceServiceCommandSession] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn SendQueryCommandAsync(&self, commandId: u32, data: <super::super::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncOperation<MobileBroadbandDeviceServiceCommandResult> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -3804,7 +3804,7 @@ impl IMobileBroadbandDeviceServiceCommandSession {
 }
 RT_CLASS!{class MobileBroadbandDeviceServiceCommandSession: IMobileBroadbandDeviceServiceCommandSession}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceDataReceivedEventArgs, 3064599518, 4992, 16611, 134, 24, 115, 203, 202, 72, 19, 140);
-RT_INTERFACE!{interface IMobileBroadbandDeviceServiceDataReceivedEventArgs(IMobileBroadbandDeviceServiceDataReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceDataReceivedEventArgs] {
+RT_INTERFACE!{interface IMobileBroadbandDeviceServiceDataReceivedEventArgs(IMobileBroadbandDeviceServiceDataReceivedEventArgsVtbl): IInspectable [IID_IMobileBroadbandDeviceServiceDataReceivedEventArgs] {
     #[cfg(feature="windows-storage")] fn get_ReceivedData(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
 impl IMobileBroadbandDeviceServiceDataReceivedEventArgs {
@@ -3816,7 +3816,7 @@ impl IMobileBroadbandDeviceServiceDataReceivedEventArgs {
 }
 RT_CLASS!{class MobileBroadbandDeviceServiceDataReceivedEventArgs: IMobileBroadbandDeviceServiceDataReceivedEventArgs}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceDataSession, 3671466803, 35791, 17033, 138, 55, 4, 92, 33, 105, 72, 106);
-RT_INTERFACE!{interface IMobileBroadbandDeviceServiceDataSession(IMobileBroadbandDeviceServiceDataSessionVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceDataSession] {
+RT_INTERFACE!{interface IMobileBroadbandDeviceServiceDataSession(IMobileBroadbandDeviceServiceDataSessionVtbl): IInspectable [IID_IMobileBroadbandDeviceServiceDataSession] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn WriteDataAsync(&self, value: <super::super::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn CloseSession(&self) -> HRESULT,
@@ -3845,7 +3845,7 @@ impl IMobileBroadbandDeviceServiceDataSession {
 }
 RT_CLASS!{class MobileBroadbandDeviceServiceDataSession: IMobileBroadbandDeviceServiceDataSession}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceInformation, 1406573403, 50413, 17904, 128, 58, 217, 65, 122, 109, 152, 70);
-RT_INTERFACE!{interface IMobileBroadbandDeviceServiceInformation(IMobileBroadbandDeviceServiceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceInformation] {
+RT_INTERFACE!{interface IMobileBroadbandDeviceServiceInformation(IMobileBroadbandDeviceServiceInformationVtbl): IInspectable [IID_IMobileBroadbandDeviceServiceInformation] {
     fn get_DeviceServiceId(&self, out: *mut Guid) -> HRESULT,
     fn get_IsDataReadSupported(&self, out: *mut bool) -> HRESULT,
     fn get_IsDataWriteSupported(&self, out: *mut bool) -> HRESULT
@@ -3869,7 +3869,7 @@ impl IMobileBroadbandDeviceServiceInformation {
 }
 RT_CLASS!{class MobileBroadbandDeviceServiceInformation: IMobileBroadbandDeviceServiceInformation}
 DEFINE_IID!(IID_IMobileBroadbandDeviceServiceTriggerDetails, 1241865072, 47534, 17496, 146, 65, 166, 165, 251, 241, 138, 12);
-RT_INTERFACE!{interface IMobileBroadbandDeviceServiceTriggerDetails(IMobileBroadbandDeviceServiceTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandDeviceServiceTriggerDetails] {
+RT_INTERFACE!{interface IMobileBroadbandDeviceServiceTriggerDetails(IMobileBroadbandDeviceServiceTriggerDetailsVtbl): IInspectable [IID_IMobileBroadbandDeviceServiceTriggerDetails] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DeviceServiceId(&self, out: *mut Guid) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_ReceivedData(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
@@ -3896,7 +3896,7 @@ RT_ENUM! { enum MobileBroadbandDeviceType: i32 {
     Unknown = 0, Embedded = 1, Removable = 2, Remote = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandModem, 3493161234, 59897, 20327, 160, 61, 67, 24, 154, 49, 107, 241);
-RT_INTERFACE!{interface IMobileBroadbandModem(IMobileBroadbandModemVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModem] {
+RT_INTERFACE!{interface IMobileBroadbandModem(IMobileBroadbandModemVtbl): IInspectable [IID_IMobileBroadbandModem] {
     fn get_CurrentAccount(&self, out: *mut <MobileBroadbandAccount as RtType>::Abi) -> HRESULT,
     fn get_DeviceInformation(&self, out: *mut <MobileBroadbandDeviceInformation as RtType>::Abi) -> HRESULT,
     fn get_MaxDeviceServiceCommandSizeInBytes(&self, out: *mut u32) -> HRESULT,
@@ -3975,7 +3975,7 @@ impl MobileBroadbandModem {
 }
 DEFINE_CLSID!(MobileBroadbandModem(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,77,111,100,101,109,0]) [CLSID_MobileBroadbandModem]);
 DEFINE_IID!(IID_IMobileBroadbandModem2, 310782760, 47595, 20194, 187, 227, 113, 31, 83, 238, 163, 115);
-RT_INTERFACE!{interface IMobileBroadbandModem2(IMobileBroadbandModem2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModem2] {
+RT_INTERFACE!{interface IMobileBroadbandModem2(IMobileBroadbandModem2Vtbl): IInspectable [IID_IMobileBroadbandModem2] {
     fn GetIsPassthroughEnabledAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn SetIsPassthroughEnabledAsync(&self, value: bool, out: *mut <foundation::IAsyncOperation<MobileBroadbandModemStatus> as RtType>::Abi) -> HRESULT
 }}
@@ -3992,7 +3992,7 @@ impl IMobileBroadbandModem2 {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandModem3, 3925788394, 12084, 17794, 145, 2, 195, 20, 210, 168, 126, 236);
-RT_INTERFACE!{interface IMobileBroadbandModem3(IMobileBroadbandModem3Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModem3] {
+RT_INTERFACE!{interface IMobileBroadbandModem3(IMobileBroadbandModem3Vtbl): IInspectable [IID_IMobileBroadbandModem3] {
     fn TryGetPcoAsync(&self, out: *mut <foundation::IAsyncOperation<MobileBroadbandPco> as RtType>::Abi) -> HRESULT,
     fn get_IsInEmergencyCallMode(&self, out: *mut bool) -> HRESULT,
     fn add_IsInEmergencyCallModeChanged(&self, handler: <foundation::TypedEventHandler<MobileBroadbandModem, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -4020,7 +4020,7 @@ impl IMobileBroadbandModem3 {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandModemConfiguration, 4242552227, 54989, 17184, 185, 130, 190, 157, 62, 199, 137, 15);
-RT_INTERFACE!{interface IMobileBroadbandModemConfiguration(IMobileBroadbandModemConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemConfiguration] {
+RT_INTERFACE!{interface IMobileBroadbandModemConfiguration(IMobileBroadbandModemConfigurationVtbl): IInspectable [IID_IMobileBroadbandModemConfiguration] {
     fn get_Uicc(&self, out: *mut <MobileBroadbandUicc as RtType>::Abi) -> HRESULT,
     fn get_HomeProviderId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_HomeProviderName(&self, out: *mut HSTRING) -> HRESULT
@@ -4044,7 +4044,7 @@ impl IMobileBroadbandModemConfiguration {
 }
 RT_CLASS!{class MobileBroadbandModemConfiguration: IMobileBroadbandModemConfiguration}
 DEFINE_IID!(IID_IMobileBroadbandModemConfiguration2, 839906757, 58464, 17070, 170, 81, 105, 98, 30, 122, 68, 119);
-RT_INTERFACE!{interface IMobileBroadbandModemConfiguration2(IMobileBroadbandModemConfiguration2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemConfiguration2] {
+RT_INTERFACE!{interface IMobileBroadbandModemConfiguration2(IMobileBroadbandModemConfiguration2Vtbl): IInspectable [IID_IMobileBroadbandModemConfiguration2] {
     fn get_SarManager(&self, out: *mut <MobileBroadbandSarManager as RtType>::Abi) -> HRESULT
 }}
 impl IMobileBroadbandModemConfiguration2 {
@@ -4055,7 +4055,7 @@ impl IMobileBroadbandModemConfiguration2 {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandModemIsolation, 3043069932, 58977, 17200, 155, 180, 52, 128, 33, 46, 195, 84);
-RT_INTERFACE!{interface IMobileBroadbandModemIsolation(IMobileBroadbandModemIsolationVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemIsolation] {
+RT_INTERFACE!{interface IMobileBroadbandModemIsolation(IMobileBroadbandModemIsolationVtbl): IInspectable [IID_IMobileBroadbandModemIsolation] {
     fn AddAllowedHost(&self, host: <super::HostName as RtType>::Abi) -> HRESULT,
     fn AddAllowedHostRange(&self, first: <super::HostName as RtType>::Abi, last: <super::HostName as RtType>::Abi) -> HRESULT,
     fn ApplyConfigurationAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -4090,7 +4090,7 @@ impl MobileBroadbandModemIsolation {
 }
 DEFINE_CLSID!(MobileBroadbandModemIsolation(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,77,111,98,105,108,101,66,114,111,97,100,98,97,110,100,77,111,100,101,109,73,115,111,108,97,116,105,111,110,0]) [CLSID_MobileBroadbandModemIsolation]);
 DEFINE_IID!(IID_IMobileBroadbandModemIsolationFactory, 567798872, 49841, 19503, 160, 48, 114, 130, 10, 36, 236, 217);
-RT_INTERFACE!{static interface IMobileBroadbandModemIsolationFactory(IMobileBroadbandModemIsolationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemIsolationFactory] {
+RT_INTERFACE!{static interface IMobileBroadbandModemIsolationFactory(IMobileBroadbandModemIsolationFactoryVtbl): IInspectable [IID_IMobileBroadbandModemIsolationFactory] {
     fn Create(&self, modemDeviceId: HSTRING, ruleGroupId: HSTRING, out: *mut <MobileBroadbandModemIsolation as RtType>::Abi) -> HRESULT
 }}
 impl IMobileBroadbandModemIsolationFactory {
@@ -4101,7 +4101,7 @@ impl IMobileBroadbandModemIsolationFactory {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandModemStatics, 4187936311, 55025, 19064, 140, 188, 100, 33, 166, 80, 99, 200);
-RT_INTERFACE!{static interface IMobileBroadbandModemStatics(IMobileBroadbandModemStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandModemStatics] {
+RT_INTERFACE!{static interface IMobileBroadbandModemStatics(IMobileBroadbandModemStaticsVtbl): IInspectable [IID_IMobileBroadbandModemStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
     fn FromId(&self, deviceId: HSTRING, out: *mut <MobileBroadbandModem as RtType>::Abi) -> HRESULT,
     fn GetDefault(&self, out: *mut <MobileBroadbandModem as RtType>::Abi) -> HRESULT
@@ -4127,7 +4127,7 @@ RT_ENUM! { enum MobileBroadbandModemStatus: i32 {
     Success = 0, OtherFailure = 1, Busy = 2, NoDeviceSupport = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandNetwork, 3412300428, 777, 19638, 168, 193, 106, 90, 60, 142, 31, 246);
-RT_INTERFACE!{interface IMobileBroadbandNetwork(IMobileBroadbandNetworkVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandNetwork] {
+RT_INTERFACE!{interface IMobileBroadbandNetwork(IMobileBroadbandNetworkVtbl): IInspectable [IID_IMobileBroadbandNetwork] {
     fn get_NetworkAdapter(&self, out: *mut <super::connectivity::NetworkAdapter as RtType>::Abi) -> HRESULT,
     fn get_NetworkRegistrationState(&self, out: *mut NetworkRegistrationState) -> HRESULT,
     fn get_RegistrationNetworkError(&self, out: *mut u32) -> HRESULT,
@@ -4192,7 +4192,7 @@ impl IMobileBroadbandNetwork {
 }
 RT_CLASS!{class MobileBroadbandNetwork: IMobileBroadbandNetwork}
 DEFINE_IID!(IID_IMobileBroadbandNetwork2, 1515576098, 25335, 19421, 186, 29, 71, 116, 65, 150, 11, 160);
-RT_INTERFACE!{interface IMobileBroadbandNetwork2(IMobileBroadbandNetwork2Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandNetwork2] {
+RT_INTERFACE!{interface IMobileBroadbandNetwork2(IMobileBroadbandNetwork2Vtbl): IInspectable [IID_IMobileBroadbandNetwork2] {
     fn GetVoiceCallSupportAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn get_RegistrationUiccApps(&self, out: *mut <foundation::collections::IVectorView<MobileBroadbandUiccApp> as RtType>::Abi) -> HRESULT
 }}
@@ -4209,7 +4209,7 @@ impl IMobileBroadbandNetwork2 {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandNetwork3, 862390922, 51183, 17484, 171, 108, 223, 126, 247, 163, 144, 254);
-RT_INTERFACE!{interface IMobileBroadbandNetwork3(IMobileBroadbandNetwork3Vtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandNetwork3] {
+RT_INTERFACE!{interface IMobileBroadbandNetwork3(IMobileBroadbandNetwork3Vtbl): IInspectable [IID_IMobileBroadbandNetwork3] {
     fn GetCellsInfoAsync(&self, out: *mut <foundation::IAsyncOperation<MobileBroadbandCellsInfo> as RtType>::Abi) -> HRESULT
 }}
 impl IMobileBroadbandNetwork3 {
@@ -4220,7 +4220,7 @@ impl IMobileBroadbandNetwork3 {
     }}
 }
 DEFINE_IID!(IID_IMobileBroadbandNetworkRegistrationStateChange, 3199177953, 38415, 18868, 160, 141, 125, 133, 233, 104, 199, 236);
-RT_INTERFACE!{interface IMobileBroadbandNetworkRegistrationStateChange(IMobileBroadbandNetworkRegistrationStateChangeVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandNetworkRegistrationStateChange] {
+RT_INTERFACE!{interface IMobileBroadbandNetworkRegistrationStateChange(IMobileBroadbandNetworkRegistrationStateChangeVtbl): IInspectable [IID_IMobileBroadbandNetworkRegistrationStateChange] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Network(&self, out: *mut <MobileBroadbandNetwork as RtType>::Abi) -> HRESULT
 }}
@@ -4238,7 +4238,7 @@ impl IMobileBroadbandNetworkRegistrationStateChange {
 }
 RT_CLASS!{class MobileBroadbandNetworkRegistrationStateChange: IMobileBroadbandNetworkRegistrationStateChange}
 DEFINE_IID!(IID_IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails, 2299747583, 10424, 18090, 177, 55, 28, 75, 15, 33, 237, 254);
-RT_INTERFACE!{interface IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails(IMobileBroadbandNetworkRegistrationStateChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails] {
+RT_INTERFACE!{interface IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails(IMobileBroadbandNetworkRegistrationStateChangeTriggerDetailsVtbl): IInspectable [IID_IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails] {
     fn get_NetworkRegistrationStateChanges(&self, out: *mut <foundation::collections::IVectorView<MobileBroadbandNetworkRegistrationStateChange> as RtType>::Abi) -> HRESULT
 }}
 impl IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails {
@@ -4250,7 +4250,7 @@ impl IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails {
 }
 RT_CLASS!{class MobileBroadbandNetworkRegistrationStateChangeTriggerDetails: IMobileBroadbandNetworkRegistrationStateChangeTriggerDetails}
 DEFINE_IID!(IID_IMobileBroadbandPco, 3571776702, 58275, 17349, 168, 123, 108, 134, 210, 41, 215, 250);
-RT_INTERFACE!{interface IMobileBroadbandPco(IMobileBroadbandPcoVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPco] {
+RT_INTERFACE!{interface IMobileBroadbandPco(IMobileBroadbandPcoVtbl): IInspectable [IID_IMobileBroadbandPco] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     fn get_IsComplete(&self, out: *mut bool) -> HRESULT,
@@ -4275,7 +4275,7 @@ impl IMobileBroadbandPco {
 }
 RT_CLASS!{class MobileBroadbandPco: IMobileBroadbandPco}
 DEFINE_IID!(IID_IMobileBroadbandPcoDataChangeTriggerDetails, 641683732, 25824, 17555, 144, 155, 45, 20, 160, 25, 98, 177);
-RT_INTERFACE!{interface IMobileBroadbandPcoDataChangeTriggerDetails(IMobileBroadbandPcoDataChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPcoDataChangeTriggerDetails] {
+RT_INTERFACE!{interface IMobileBroadbandPcoDataChangeTriggerDetails(IMobileBroadbandPcoDataChangeTriggerDetailsVtbl): IInspectable [IID_IMobileBroadbandPcoDataChangeTriggerDetails] {
     fn get_UpdatedData(&self, out: *mut <MobileBroadbandPco as RtType>::Abi) -> HRESULT
 }}
 impl IMobileBroadbandPcoDataChangeTriggerDetails {
@@ -4287,7 +4287,7 @@ impl IMobileBroadbandPcoDataChangeTriggerDetails {
 }
 RT_CLASS!{class MobileBroadbandPcoDataChangeTriggerDetails: IMobileBroadbandPcoDataChangeTriggerDetails}
 DEFINE_IID!(IID_IMobileBroadbandPin, 3865171721, 59257, 17855, 130, 129, 117, 50, 61, 249, 227, 33);
-RT_INTERFACE!{interface IMobileBroadbandPin(IMobileBroadbandPinVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPin] {
+RT_INTERFACE!{interface IMobileBroadbandPin(IMobileBroadbandPinVtbl): IInspectable [IID_IMobileBroadbandPin] {
     fn get_Type(&self, out: *mut MobileBroadbandPinType) -> HRESULT,
     fn get_LockState(&self, out: *mut MobileBroadbandPinLockState) -> HRESULT,
     fn get_Format(&self, out: *mut MobileBroadbandPinFormat) -> HRESULT,
@@ -4371,7 +4371,7 @@ RT_ENUM! { enum MobileBroadbandPinLockState: i32 {
     Unknown = 0, Unlocked = 1, PinRequired = 2, PinUnblockKeyRequired = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandPinLockStateChange, 3189139262, 7940, 20373, 139, 144, 231, 245, 89, 221, 231, 229);
-RT_INTERFACE!{interface IMobileBroadbandPinLockStateChange(IMobileBroadbandPinLockStateChangeVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPinLockStateChange] {
+RT_INTERFACE!{interface IMobileBroadbandPinLockStateChange(IMobileBroadbandPinLockStateChangeVtbl): IInspectable [IID_IMobileBroadbandPinLockStateChange] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_PinType(&self, out: *mut MobileBroadbandPinType) -> HRESULT,
     fn get_PinLockState(&self, out: *mut MobileBroadbandPinLockState) -> HRESULT
@@ -4395,7 +4395,7 @@ impl IMobileBroadbandPinLockStateChange {
 }
 RT_CLASS!{class MobileBroadbandPinLockStateChange: IMobileBroadbandPinLockStateChange}
 DEFINE_IID!(IID_IMobileBroadbandPinLockStateChangeTriggerDetails, 3543711889, 16017, 19768, 144, 54, 174, 232, 58, 110, 121, 173);
-RT_INTERFACE!{interface IMobileBroadbandPinLockStateChangeTriggerDetails(IMobileBroadbandPinLockStateChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPinLockStateChangeTriggerDetails] {
+RT_INTERFACE!{interface IMobileBroadbandPinLockStateChangeTriggerDetails(IMobileBroadbandPinLockStateChangeTriggerDetailsVtbl): IInspectable [IID_IMobileBroadbandPinLockStateChangeTriggerDetails] {
     fn get_PinLockStateChanges(&self, out: *mut <foundation::collections::IVectorView<MobileBroadbandPinLockStateChange> as RtType>::Abi) -> HRESULT
 }}
 impl IMobileBroadbandPinLockStateChangeTriggerDetails {
@@ -4407,7 +4407,7 @@ impl IMobileBroadbandPinLockStateChangeTriggerDetails {
 }
 RT_CLASS!{class MobileBroadbandPinLockStateChangeTriggerDetails: IMobileBroadbandPinLockStateChangeTriggerDetails}
 DEFINE_IID!(IID_IMobileBroadbandPinManager, 2203483869, 28191, 19355, 164, 19, 43, 31, 80, 204, 54, 223);
-RT_INTERFACE!{interface IMobileBroadbandPinManager(IMobileBroadbandPinManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPinManager] {
+RT_INTERFACE!{interface IMobileBroadbandPinManager(IMobileBroadbandPinManagerVtbl): IInspectable [IID_IMobileBroadbandPinManager] {
     fn get_SupportedPins(&self, out: *mut <foundation::collections::IVectorView<MobileBroadbandPinType> as RtType>::Abi) -> HRESULT,
     fn GetPin(&self, pinType: MobileBroadbandPinType, out: *mut <MobileBroadbandPin as RtType>::Abi) -> HRESULT
 }}
@@ -4425,7 +4425,7 @@ impl IMobileBroadbandPinManager {
 }
 RT_CLASS!{class MobileBroadbandPinManager: IMobileBroadbandPinManager}
 DEFINE_IID!(IID_IMobileBroadbandPinOperationResult, 299752498, 12775, 18933, 182, 99, 18, 61, 59, 239, 3, 98);
-RT_INTERFACE!{interface IMobileBroadbandPinOperationResult(IMobileBroadbandPinOperationResultVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandPinOperationResult] {
+RT_INTERFACE!{interface IMobileBroadbandPinOperationResult(IMobileBroadbandPinOperationResultVtbl): IInspectable [IID_IMobileBroadbandPinOperationResult] {
     fn get_IsSuccessful(&self, out: *mut bool) -> HRESULT,
     fn get_AttemptsRemaining(&self, out: *mut u32) -> HRESULT
 }}
@@ -4449,7 +4449,7 @@ RT_ENUM! { enum MobileBroadbandRadioState: i32 {
     Off = 0, On = 1,
 }}
 DEFINE_IID!(IID_IMobileBroadbandRadioStateChange, 2958337377, 38963, 19181, 151, 23, 67, 72, 178, 26, 36, 179);
-RT_INTERFACE!{interface IMobileBroadbandRadioStateChange(IMobileBroadbandRadioStateChangeVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandRadioStateChange] {
+RT_INTERFACE!{interface IMobileBroadbandRadioStateChange(IMobileBroadbandRadioStateChangeVtbl): IInspectable [IID_IMobileBroadbandRadioStateChange] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_RadioState(&self, out: *mut MobileBroadbandRadioState) -> HRESULT
 }}
@@ -4467,7 +4467,7 @@ impl IMobileBroadbandRadioStateChange {
 }
 RT_CLASS!{class MobileBroadbandRadioStateChange: IMobileBroadbandRadioStateChange}
 DEFINE_IID!(IID_IMobileBroadbandRadioStateChangeTriggerDetails, 1898977998, 2364, 17094, 176, 219, 173, 31, 117, 166, 84, 69);
-RT_INTERFACE!{interface IMobileBroadbandRadioStateChangeTriggerDetails(IMobileBroadbandRadioStateChangeTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandRadioStateChangeTriggerDetails] {
+RT_INTERFACE!{interface IMobileBroadbandRadioStateChangeTriggerDetails(IMobileBroadbandRadioStateChangeTriggerDetailsVtbl): IInspectable [IID_IMobileBroadbandRadioStateChangeTriggerDetails] {
     fn get_RadioStateChanges(&self, out: *mut <foundation::collections::IVectorView<MobileBroadbandRadioStateChange> as RtType>::Abi) -> HRESULT
 }}
 impl IMobileBroadbandRadioStateChangeTriggerDetails {
@@ -4479,7 +4479,7 @@ impl IMobileBroadbandRadioStateChangeTriggerDetails {
 }
 RT_CLASS!{class MobileBroadbandRadioStateChangeTriggerDetails: IMobileBroadbandRadioStateChangeTriggerDetails}
 DEFINE_IID!(IID_IMobileBroadbandSarManager, 3853674547, 38526, 16585, 164, 133, 25, 192, 221, 32, 158, 34);
-RT_INTERFACE!{interface IMobileBroadbandSarManager(IMobileBroadbandSarManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandSarManager] {
+RT_INTERFACE!{interface IMobileBroadbandSarManager(IMobileBroadbandSarManagerVtbl): IInspectable [IID_IMobileBroadbandSarManager] {
     fn get_IsBackoffEnabled(&self, out: *mut bool) -> HRESULT,
     fn get_IsWiFiHardwareIntegrated(&self, out: *mut bool) -> HRESULT,
     fn get_IsSarControlledByHardware(&self, out: *mut bool) -> HRESULT,
@@ -4572,7 +4572,7 @@ impl IMobileBroadbandSarManager {
 }
 RT_CLASS!{class MobileBroadbandSarManager: IMobileBroadbandSarManager}
 DEFINE_IID!(IID_IMobileBroadbandTransmissionStateChangedEventArgs, 1630419061, 1034, 20377, 164, 249, 97, 215, 195, 45, 161, 41);
-RT_INTERFACE!{interface IMobileBroadbandTransmissionStateChangedEventArgs(IMobileBroadbandTransmissionStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandTransmissionStateChangedEventArgs] {
+RT_INTERFACE!{interface IMobileBroadbandTransmissionStateChangedEventArgs(IMobileBroadbandTransmissionStateChangedEventArgsVtbl): IInspectable [IID_IMobileBroadbandTransmissionStateChangedEventArgs] {
     fn get_IsTransmitting(&self, out: *mut bool) -> HRESULT
 }}
 impl IMobileBroadbandTransmissionStateChangedEventArgs {
@@ -4584,7 +4584,7 @@ impl IMobileBroadbandTransmissionStateChangedEventArgs {
 }
 RT_CLASS!{class MobileBroadbandTransmissionStateChangedEventArgs: IMobileBroadbandTransmissionStateChangedEventArgs}
 DEFINE_IID!(IID_IMobileBroadbandUicc, 3862230673, 21082, 19682, 143, 206, 170, 65, 98, 87, 145, 84);
-RT_INTERFACE!{interface IMobileBroadbandUicc(IMobileBroadbandUiccVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandUicc] {
+RT_INTERFACE!{interface IMobileBroadbandUicc(IMobileBroadbandUiccVtbl): IInspectable [IID_IMobileBroadbandUicc] {
     fn get_SimIccId(&self, out: *mut HSTRING) -> HRESULT,
     fn GetUiccAppsAsync(&self, out: *mut <foundation::IAsyncOperation<MobileBroadbandUiccAppsResult> as RtType>::Abi) -> HRESULT
 }}
@@ -4602,7 +4602,7 @@ impl IMobileBroadbandUicc {
 }
 RT_CLASS!{class MobileBroadbandUicc: IMobileBroadbandUicc}
 DEFINE_IID!(IID_IMobileBroadbandUiccApp, 1293354326, 39073, 17373, 178, 236, 80, 201, 12, 242, 72, 223);
-RT_INTERFACE!{interface IMobileBroadbandUiccApp(IMobileBroadbandUiccAppVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandUiccApp] {
+RT_INTERFACE!{interface IMobileBroadbandUiccApp(IMobileBroadbandUiccAppVtbl): IInspectable [IID_IMobileBroadbandUiccApp] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_Id(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     fn get_Kind(&self, out: *mut UiccAppKind) -> HRESULT,
@@ -4636,7 +4636,7 @@ RT_ENUM! { enum MobileBroadbandUiccAppOperationStatus: i32 {
     Success = 0, InvalidUiccFilePath = 1, AccessConditionNotHeld = 2, UiccBusy = 3,
 }}
 DEFINE_IID!(IID_IMobileBroadbandUiccAppReadRecordResult, 1690915461, 13710, 18373, 130, 73, 105, 95, 56, 59, 43, 219);
-RT_INTERFACE!{interface IMobileBroadbandUiccAppReadRecordResult(IMobileBroadbandUiccAppReadRecordResultVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandUiccAppReadRecordResult] {
+RT_INTERFACE!{interface IMobileBroadbandUiccAppReadRecordResult(IMobileBroadbandUiccAppReadRecordResultVtbl): IInspectable [IID_IMobileBroadbandUiccAppReadRecordResult] {
     fn get_Status(&self, out: *mut MobileBroadbandUiccAppOperationStatus) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -4654,7 +4654,7 @@ impl IMobileBroadbandUiccAppReadRecordResult {
 }
 RT_CLASS!{class MobileBroadbandUiccAppReadRecordResult: IMobileBroadbandUiccAppReadRecordResult}
 DEFINE_IID!(IID_IMobileBroadbandUiccAppRecordDetailsResult, 3642320943, 48660, 18740, 152, 29, 47, 87, 185, 237, 131, 230);
-RT_INTERFACE!{interface IMobileBroadbandUiccAppRecordDetailsResult(IMobileBroadbandUiccAppRecordDetailsResultVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandUiccAppRecordDetailsResult] {
+RT_INTERFACE!{interface IMobileBroadbandUiccAppRecordDetailsResult(IMobileBroadbandUiccAppRecordDetailsResultVtbl): IInspectable [IID_IMobileBroadbandUiccAppRecordDetailsResult] {
     fn get_Status(&self, out: *mut MobileBroadbandUiccAppOperationStatus) -> HRESULT,
     fn get_Kind(&self, out: *mut UiccAppRecordKind) -> HRESULT,
     fn get_RecordCount(&self, out: *mut i32) -> HRESULT,
@@ -4696,7 +4696,7 @@ impl IMobileBroadbandUiccAppRecordDetailsResult {
 }
 RT_CLASS!{class MobileBroadbandUiccAppRecordDetailsResult: IMobileBroadbandUiccAppRecordDetailsResult}
 DEFINE_IID!(IID_IMobileBroadbandUiccAppsResult, 1950953707, 33111, 19009, 132, 148, 107, 245, 76, 155, 29, 43);
-RT_INTERFACE!{interface IMobileBroadbandUiccAppsResult(IMobileBroadbandUiccAppsResultVtbl): IInspectable(IInspectableVtbl) [IID_IMobileBroadbandUiccAppsResult] {
+RT_INTERFACE!{interface IMobileBroadbandUiccAppsResult(IMobileBroadbandUiccAppsResultVtbl): IInspectable [IID_IMobileBroadbandUiccAppsResult] {
     fn get_Status(&self, out: *mut MobileBroadbandUiccAppOperationStatus) -> HRESULT,
     fn get_UiccApps(&self, out: *mut <foundation::collections::IVectorView<MobileBroadbandUiccApp> as RtType>::Abi) -> HRESULT
 }}
@@ -4720,7 +4720,7 @@ RT_ENUM! { enum NetworkOperatorDataUsageNotificationKind: i32 {
     DataUsageProgress = 0,
 }}
 DEFINE_IID!(IID_INetworkOperatorDataUsageTriggerDetails, 1357058669, 42085, 20203, 147, 23, 40, 161, 103, 99, 12, 234);
-RT_INTERFACE!{interface INetworkOperatorDataUsageTriggerDetails(INetworkOperatorDataUsageTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorDataUsageTriggerDetails] {
+RT_INTERFACE!{interface INetworkOperatorDataUsageTriggerDetails(INetworkOperatorDataUsageTriggerDetailsVtbl): IInspectable [IID_INetworkOperatorDataUsageTriggerDetails] {
     fn get_NotificationKind(&self, out: *mut NetworkOperatorDataUsageNotificationKind) -> HRESULT
 }}
 impl INetworkOperatorDataUsageTriggerDetails {
@@ -4735,7 +4735,7 @@ RT_ENUM! { enum NetworkOperatorEventMessageType: i32 {
     Gsm = 0, Cdma = 1, Ussd = 2, DataPlanThresholdReached = 3, DataPlanReset = 4, DataPlanDeleted = 5, ProfileConnected = 6, ProfileDisconnected = 7, RegisteredRoaming = 8, RegisteredHome = 9, TetheringEntitlementCheck = 10, TetheringOperationalStateChanged = 11, TetheringNumberOfClientsChanged = 12,
 }}
 DEFINE_IID!(IID_INetworkOperatorNotificationEventDetails, 3160975825, 33505, 17544, 159, 44, 18, 118, 194, 70, 143, 172);
-RT_INTERFACE!{interface INetworkOperatorNotificationEventDetails(INetworkOperatorNotificationEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorNotificationEventDetails] {
+RT_INTERFACE!{interface INetworkOperatorNotificationEventDetails(INetworkOperatorNotificationEventDetailsVtbl): IInspectable [IID_INetworkOperatorNotificationEventDetails] {
     fn get_NotificationType(&self, out: *mut NetworkOperatorEventMessageType) -> HRESULT,
     fn get_NetworkAccountId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_EncodingType(&self, out: *mut u8) -> HRESULT,
@@ -4777,7 +4777,7 @@ impl INetworkOperatorNotificationEventDetails {
 }
 RT_CLASS!{class NetworkOperatorNotificationEventDetails: INetworkOperatorNotificationEventDetails}
 DEFINE_IID!(IID_INetworkOperatorTetheringAccessPointConfiguration, 197919364, 16686, 16445, 172, 198, 183, 87, 227, 71, 116, 164);
-RT_INTERFACE!{interface INetworkOperatorTetheringAccessPointConfiguration(INetworkOperatorTetheringAccessPointConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringAccessPointConfiguration] {
+RT_INTERFACE!{interface INetworkOperatorTetheringAccessPointConfiguration(INetworkOperatorTetheringAccessPointConfigurationVtbl): IInspectable [IID_INetworkOperatorTetheringAccessPointConfiguration] {
     fn get_Ssid(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Ssid(&self, value: HSTRING) -> HRESULT,
     fn get_Passphrase(&self, out: *mut HSTRING) -> HRESULT,
@@ -4807,7 +4807,7 @@ RT_CLASS!{class NetworkOperatorTetheringAccessPointConfiguration: INetworkOperat
 impl RtActivatable<IActivationFactory> for NetworkOperatorTetheringAccessPointConfiguration {}
 DEFINE_CLSID!(NetworkOperatorTetheringAccessPointConfiguration(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,84,101,116,104,101,114,105,110,103,65,99,99,101,115,115,80,111,105,110,116,67,111,110,102,105,103,117,114,97,116,105,111,110,0]) [CLSID_NetworkOperatorTetheringAccessPointConfiguration]);
 DEFINE_IID!(IID_INetworkOperatorTetheringClient, 1889346892, 22879, 18503, 187, 48, 100, 105, 53, 84, 41, 24);
-RT_INTERFACE!{interface INetworkOperatorTetheringClient(INetworkOperatorTetheringClientVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringClient] {
+RT_INTERFACE!{interface INetworkOperatorTetheringClient(INetworkOperatorTetheringClientVtbl): IInspectable [IID_INetworkOperatorTetheringClient] {
     fn get_MacAddress(&self, out: *mut HSTRING) -> HRESULT,
     fn get_HostNames(&self, out: *mut <foundation::collections::IVectorView<super::HostName> as RtType>::Abi) -> HRESULT
 }}
@@ -4825,7 +4825,7 @@ impl INetworkOperatorTetheringClient {
 }
 RT_CLASS!{class NetworkOperatorTetheringClient: INetworkOperatorTetheringClient}
 DEFINE_IID!(IID_INetworkOperatorTetheringClientManager, 2444312598, 36298, 16933, 187, 237, 238, 248, 184, 215, 24, 215);
-RT_INTERFACE!{interface INetworkOperatorTetheringClientManager(INetworkOperatorTetheringClientManagerVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringClientManager] {
+RT_INTERFACE!{interface INetworkOperatorTetheringClientManager(INetworkOperatorTetheringClientManagerVtbl): IInspectable [IID_INetworkOperatorTetheringClientManager] {
     fn GetTetheringClients(&self, out: *mut <foundation::collections::IVectorView<NetworkOperatorTetheringClient> as RtType>::Abi) -> HRESULT
 }}
 impl INetworkOperatorTetheringClientManager {
@@ -4836,7 +4836,7 @@ impl INetworkOperatorTetheringClientManager {
     }}
 }
 DEFINE_IID!(IID_INetworkOperatorTetheringEntitlementCheck, 17338733, 40602, 19190, 141, 163, 96, 73, 59, 25, 194, 4);
-RT_INTERFACE!{interface INetworkOperatorTetheringEntitlementCheck(INetworkOperatorTetheringEntitlementCheckVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringEntitlementCheck] {
+RT_INTERFACE!{interface INetworkOperatorTetheringEntitlementCheck(INetworkOperatorTetheringEntitlementCheckVtbl): IInspectable [IID_INetworkOperatorTetheringEntitlementCheck] {
     fn AuthorizeTethering(&self, allow: bool, entitlementFailureReason: HSTRING) -> HRESULT
 }}
 impl INetworkOperatorTetheringEntitlementCheck {
@@ -4846,7 +4846,7 @@ impl INetworkOperatorTetheringEntitlementCheck {
     }}
 }
 DEFINE_IID!(IID_INetworkOperatorTetheringManager, 3562704288, 3718, 19864, 139, 164, 221, 112, 212, 183, 100, 211);
-RT_INTERFACE!{interface INetworkOperatorTetheringManager(INetworkOperatorTetheringManagerVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringManager] {
+RT_INTERFACE!{interface INetworkOperatorTetheringManager(INetworkOperatorTetheringManagerVtbl): IInspectable [IID_INetworkOperatorTetheringManager] {
     fn get_MaxClientCount(&self, out: *mut u32) -> HRESULT,
     fn get_ClientCount(&self, out: *mut u32) -> HRESULT,
     fn get_TetheringOperationalState(&self, out: *mut TetheringOperationalState) -> HRESULT,
@@ -4915,7 +4915,7 @@ impl NetworkOperatorTetheringManager {
 }
 DEFINE_CLSID!(NetworkOperatorTetheringManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,84,101,116,104,101,114,105,110,103,77,97,110,97,103,101,114,0]) [CLSID_NetworkOperatorTetheringManager]);
 DEFINE_IID!(IID_INetworkOperatorTetheringManagerStatics, 1052555980, 63683, 16476, 153, 100, 112, 161, 238, 171, 225, 148);
-RT_INTERFACE!{static interface INetworkOperatorTetheringManagerStatics(INetworkOperatorTetheringManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringManagerStatics] {
+RT_INTERFACE!{static interface INetworkOperatorTetheringManagerStatics(INetworkOperatorTetheringManagerStaticsVtbl): IInspectable [IID_INetworkOperatorTetheringManagerStatics] {
     fn GetTetheringCapability(&self, networkAccountId: HSTRING, out: *mut TetheringCapability) -> HRESULT,
     fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut <NetworkOperatorTetheringManager as RtType>::Abi) -> HRESULT
 }}
@@ -4932,7 +4932,7 @@ impl INetworkOperatorTetheringManagerStatics {
     }}
 }
 DEFINE_IID!(IID_INetworkOperatorTetheringManagerStatics2, 1529041938, 13808, 18919, 155, 8, 22, 210, 120, 251, 170, 66);
-RT_INTERFACE!{static interface INetworkOperatorTetheringManagerStatics2(INetworkOperatorTetheringManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringManagerStatics2] {
+RT_INTERFACE!{static interface INetworkOperatorTetheringManagerStatics2(INetworkOperatorTetheringManagerStatics2Vtbl): IInspectable [IID_INetworkOperatorTetheringManagerStatics2] {
     fn GetTetheringCapabilityFromConnectionProfile(&self, profile: <super::connectivity::ConnectionProfile as RtType>::Abi, out: *mut TetheringCapability) -> HRESULT,
     fn CreateFromConnectionProfile(&self, profile: <super::connectivity::ConnectionProfile as RtType>::Abi, out: *mut <NetworkOperatorTetheringManager as RtType>::Abi) -> HRESULT
 }}
@@ -4949,7 +4949,7 @@ impl INetworkOperatorTetheringManagerStatics2 {
     }}
 }
 DEFINE_IID!(IID_INetworkOperatorTetheringManagerStatics3, 2413473206, 19193, 20257, 155, 88, 213, 62, 159, 36, 35, 30);
-RT_INTERFACE!{static interface INetworkOperatorTetheringManagerStatics3(INetworkOperatorTetheringManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringManagerStatics3] {
+RT_INTERFACE!{static interface INetworkOperatorTetheringManagerStatics3(INetworkOperatorTetheringManagerStatics3Vtbl): IInspectable [IID_INetworkOperatorTetheringManagerStatics3] {
     fn CreateFromConnectionProfileWithTargetAdapter(&self, profile: <super::connectivity::ConnectionProfile as RtType>::Abi, adapter: <super::connectivity::NetworkAdapter as RtType>::Abi, out: *mut <NetworkOperatorTetheringManager as RtType>::Abi) -> HRESULT
 }}
 impl INetworkOperatorTetheringManagerStatics3 {
@@ -4960,7 +4960,7 @@ impl INetworkOperatorTetheringManagerStatics3 {
     }}
 }
 DEFINE_IID!(IID_INetworkOperatorTetheringOperationResult, 3956409249, 442, 18285, 180, 179, 191, 61, 18, 200, 248, 12);
-RT_INTERFACE!{interface INetworkOperatorTetheringOperationResult(INetworkOperatorTetheringOperationResultVtbl): IInspectable(IInspectableVtbl) [IID_INetworkOperatorTetheringOperationResult] {
+RT_INTERFACE!{interface INetworkOperatorTetheringOperationResult(INetworkOperatorTetheringOperationResultVtbl): IInspectable [IID_INetworkOperatorTetheringOperationResult] {
     fn get_Status(&self, out: *mut TetheringOperationStatus) -> HRESULT,
     fn get_AdditionalErrorMessage(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -4987,7 +4987,7 @@ RT_STRUCT! { struct ProfileUsage {
     UsageInMegabytes: u32, LastSyncTime: foundation::DateTime,
 }}
 DEFINE_IID!(IID_IProvisionedProfile, 561447136, 33282, 4575, 173, 185, 244, 206, 70, 45, 145, 55);
-RT_INTERFACE!{interface IProvisionedProfile(IProvisionedProfileVtbl): IInspectable(IInspectableVtbl) [IID_IProvisionedProfile] {
+RT_INTERFACE!{interface IProvisionedProfile(IProvisionedProfileVtbl): IInspectable [IID_IProvisionedProfile] {
     fn UpdateCost(&self, value: super::connectivity::NetworkCostType) -> HRESULT,
     fn UpdateUsage(&self, value: ProfileUsage) -> HRESULT
 }}
@@ -5003,7 +5003,7 @@ impl IProvisionedProfile {
 }
 RT_CLASS!{class ProvisionedProfile: IProvisionedProfile}
 DEFINE_IID!(IID_IProvisionFromXmlDocumentResults, 561447136, 33283, 4575, 173, 185, 244, 206, 70, 45, 145, 55);
-RT_INTERFACE!{interface IProvisionFromXmlDocumentResults(IProvisionFromXmlDocumentResultsVtbl): IInspectable(IInspectableVtbl) [IID_IProvisionFromXmlDocumentResults] {
+RT_INTERFACE!{interface IProvisionFromXmlDocumentResults(IProvisionFromXmlDocumentResultsVtbl): IInspectable [IID_IProvisionFromXmlDocumentResults] {
     fn get_AllElementsProvisioned(&self, out: *mut bool) -> HRESULT,
     fn get_ProvisionResultsXml(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -5021,7 +5021,7 @@ impl IProvisionFromXmlDocumentResults {
 }
 RT_CLASS!{class ProvisionFromXmlDocumentResults: IProvisionFromXmlDocumentResults}
 DEFINE_IID!(IID_IProvisioningAgent, 561447136, 33281, 4575, 173, 185, 244, 206, 70, 45, 145, 55);
-RT_INTERFACE!{interface IProvisioningAgent(IProvisioningAgentVtbl): IInspectable(IInspectableVtbl) [IID_IProvisioningAgent] {
+RT_INTERFACE!{interface IProvisioningAgent(IProvisioningAgentVtbl): IInspectable [IID_IProvisioningAgent] {
     fn ProvisionFromXmlDocumentAsync(&self, provisioningXmlDocument: HSTRING, out: *mut <foundation::IAsyncOperation<ProvisionFromXmlDocumentResults> as RtType>::Abi) -> HRESULT,
     fn GetProvisionedProfile(&self, mediaType: ProfileMediaType, profileName: HSTRING, out: *mut <ProvisionedProfile as RtType>::Abi) -> HRESULT
 }}
@@ -5047,7 +5047,7 @@ impl ProvisioningAgent {
 }
 DEFINE_CLSID!(ProvisioningAgent(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,80,114,111,118,105,115,105,111,110,105,110,103,65,103,101,110,116,0]) [CLSID_ProvisioningAgent]);
 DEFINE_IID!(IID_IProvisioningAgentStaticMethods, 561447136, 33025, 4575, 173, 185, 244, 206, 70, 45, 145, 55);
-RT_INTERFACE!{static interface IProvisioningAgentStaticMethods(IProvisioningAgentStaticMethodsVtbl): IInspectable(IInspectableVtbl) [IID_IProvisioningAgentStaticMethods] {
+RT_INTERFACE!{static interface IProvisioningAgentStaticMethods(IProvisioningAgentStaticMethodsVtbl): IInspectable [IID_IProvisioningAgentStaticMethods] {
     fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut <ProvisioningAgent as RtType>::Abi) -> HRESULT
 }}
 impl IProvisioningAgentStaticMethods {
@@ -5061,7 +5061,7 @@ RT_ENUM! { enum TetheringCapability: i32 {
     Enabled = 0, DisabledByGroupPolicy = 1, DisabledByHardwareLimitation = 2, DisabledByOperator = 3, DisabledBySku = 4, DisabledByRequiredAppNotInstalled = 5, DisabledDueToUnknownCause = 6, DisabledBySystemCapability = 7,
 }}
 DEFINE_IID!(IID_ITetheringEntitlementCheckTriggerDetails, 63331997, 22822, 16883, 169, 78, 181, 9, 38, 252, 66, 27);
-RT_INTERFACE!{interface ITetheringEntitlementCheckTriggerDetails(ITetheringEntitlementCheckTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ITetheringEntitlementCheckTriggerDetails] {
+RT_INTERFACE!{interface ITetheringEntitlementCheckTriggerDetails(ITetheringEntitlementCheckTriggerDetailsVtbl): IInspectable [IID_ITetheringEntitlementCheckTriggerDetails] {
     fn get_NetworkAccountId(&self, out: *mut HSTRING) -> HRESULT,
     fn AllowTethering(&self) -> HRESULT,
     fn DenyTethering(&self, entitlementFailureReason: HSTRING) -> HRESULT
@@ -5098,7 +5098,7 @@ RT_ENUM! { enum UiccAppRecordKind: i32 {
     Unknown = 0, Transparent = 1, RecordOriented = 2,
 }}
 DEFINE_IID!(IID_IUssdMessage, 798674818, 8196, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
-RT_INTERFACE!{interface IUssdMessage(IUssdMessageVtbl): IInspectable(IInspectableVtbl) [IID_IUssdMessage] {
+RT_INTERFACE!{interface IUssdMessage(IUssdMessageVtbl): IInspectable [IID_IUssdMessage] {
     fn get_DataCodingScheme(&self, out: *mut u8) -> HRESULT,
     fn put_DataCodingScheme(&self, value: u8) -> HRESULT,
     fn GetPayload(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT,
@@ -5144,7 +5144,7 @@ impl UssdMessage {
 }
 DEFINE_CLSID!(UssdMessage(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,85,115,115,100,77,101,115,115,97,103,101,0]) [CLSID_UssdMessage]);
 DEFINE_IID!(IID_IUssdMessageFactory, 798674818, 4099, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
-RT_INTERFACE!{static interface IUssdMessageFactory(IUssdMessageFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IUssdMessageFactory] {
+RT_INTERFACE!{static interface IUssdMessageFactory(IUssdMessageFactoryVtbl): IInspectable [IID_IUssdMessageFactory] {
     fn CreateMessage(&self, messageText: HSTRING, out: *mut <UssdMessage as RtType>::Abi) -> HRESULT
 }}
 impl IUssdMessageFactory {
@@ -5155,7 +5155,7 @@ impl IUssdMessageFactory {
     }}
 }
 DEFINE_IID!(IID_IUssdReply, 798674818, 8197, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
-RT_INTERFACE!{interface IUssdReply(IUssdReplyVtbl): IInspectable(IInspectableVtbl) [IID_IUssdReply] {
+RT_INTERFACE!{interface IUssdReply(IUssdReplyVtbl): IInspectable [IID_IUssdReply] {
     fn get_ResultCode(&self, out: *mut UssdResultCode) -> HRESULT,
     fn get_Message(&self, out: *mut <UssdMessage as RtType>::Abi) -> HRESULT
 }}
@@ -5176,7 +5176,7 @@ RT_ENUM! { enum UssdResultCode: i32 {
     NoActionRequired = 0, ActionRequired = 1, Terminated = 2, OtherLocalClient = 3, OperationNotSupported = 4, NetworkTimeout = 5,
 }}
 DEFINE_IID!(IID_IUssdSession, 798674818, 8194, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
-RT_INTERFACE!{interface IUssdSession(IUssdSessionVtbl): IInspectable(IInspectableVtbl) [IID_IUssdSession] {
+RT_INTERFACE!{interface IUssdSession(IUssdSessionVtbl): IInspectable [IID_IUssdSession] {
     fn SendMessageAndGetReplyAsync(&self, message: <UssdMessage as RtType>::Abi, out: *mut <foundation::IAsyncOperation<UssdReply> as RtType>::Abi) -> HRESULT,
     fn Close(&self) -> HRESULT
 }}
@@ -5203,7 +5203,7 @@ impl UssdSession {
 }
 DEFINE_CLSID!(UssdSession(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,78,101,116,119,111,114,107,79,112,101,114,97,116,111,114,115,46,85,115,115,100,83,101,115,115,105,111,110,0]) [CLSID_UssdSession]);
 DEFINE_IID!(IID_IUssdSessionStatics, 798674818, 4097, 19805, 191, 129, 42, 186, 27, 75, 228, 168);
-RT_INTERFACE!{static interface IUssdSessionStatics(IUssdSessionStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUssdSessionStatics] {
+RT_INTERFACE!{static interface IUssdSessionStatics(IUssdSessionStaticsVtbl): IInspectable [IID_IUssdSessionStatics] {
     fn CreateFromNetworkAccountId(&self, networkAccountId: HSTRING, out: *mut <UssdSession as RtType>::Abi) -> HRESULT,
     fn CreateFromNetworkInterfaceId(&self, networkInterfaceId: HSTRING, out: *mut <UssdSession as RtType>::Abi) -> HRESULT
 }}
@@ -5223,7 +5223,7 @@ impl IUssdSessionStatics {
 pub mod proximity { // Windows.Networking.Proximity
 use crate::prelude::*;
 DEFINE_IID!(IID_IConnectionRequestedEventArgs, 3949498798, 20254, 19558, 189, 13, 70, 146, 74, 148, 46, 8);
-RT_INTERFACE!{interface IConnectionRequestedEventArgs(IConnectionRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IConnectionRequestedEventArgs] {
+RT_INTERFACE!{interface IConnectionRequestedEventArgs(IConnectionRequestedEventArgsVtbl): IInspectable [IID_IConnectionRequestedEventArgs] {
     fn get_PeerInformation(&self, out: *mut <PeerInformation as RtType>::Abi) -> HRESULT
 }}
 impl IConnectionRequestedEventArgs {
@@ -5356,7 +5356,7 @@ impl PeerFinder {
 }
 DEFINE_CLSID!(PeerFinder(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,80,114,111,120,105,109,105,116,121,46,80,101,101,114,70,105,110,100,101,114,0]) [CLSID_PeerFinder]);
 DEFINE_IID!(IID_IPeerFinderStatics, 2437626721, 63201, 18372, 161, 76, 20, 138, 25, 3, 208, 198);
-RT_INTERFACE!{static interface IPeerFinderStatics(IPeerFinderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPeerFinderStatics] {
+RT_INTERFACE!{static interface IPeerFinderStatics(IPeerFinderStaticsVtbl): IInspectable [IID_IPeerFinderStatics] {
     fn get_AllowBluetooth(&self, out: *mut bool) -> HRESULT,
     fn put_AllowBluetooth(&self, value: bool) -> HRESULT,
     fn get_AllowInfrastructure(&self, out: *mut bool) -> HRESULT,
@@ -5466,7 +5466,7 @@ impl IPeerFinderStatics {
     }}
 }
 DEFINE_IID!(IID_IPeerFinderStatics2, 3605478501, 64976, 19211, 147, 18, 134, 100, 8, 147, 93, 130);
-RT_INTERFACE!{static interface IPeerFinderStatics2(IPeerFinderStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPeerFinderStatics2] {
+RT_INTERFACE!{static interface IPeerFinderStatics2(IPeerFinderStatics2Vtbl): IInspectable [IID_IPeerFinderStatics2] {
     fn get_Role(&self, out: *mut PeerRole) -> HRESULT,
     fn put_Role(&self, value: PeerRole) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -5501,7 +5501,7 @@ impl IPeerFinderStatics2 {
     }}
 }
 DEFINE_IID!(IID_IPeerInformation, 537022216, 40959, 17908, 182, 233, 64, 139, 46, 190, 243, 115);
-RT_INTERFACE!{interface IPeerInformation(IPeerInformationVtbl): IInspectable(IInspectableVtbl) [IID_IPeerInformation] {
+RT_INTERFACE!{interface IPeerInformation(IPeerInformationVtbl): IInspectable [IID_IPeerInformation] {
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IPeerInformation {
@@ -5513,7 +5513,7 @@ impl IPeerInformation {
 }
 RT_CLASS!{class PeerInformation: IPeerInformation}
 DEFINE_IID!(IID_IPeerInformation3, 2987352362, 56272, 16632, 149, 189, 45, 66, 9, 199, 131, 111);
-RT_INTERFACE!{interface IPeerInformation3(IPeerInformation3Vtbl): IInspectable(IInspectableVtbl) [IID_IPeerInformation3] {
+RT_INTERFACE!{interface IPeerInformation3(IPeerInformation3Vtbl): IInspectable [IID_IPeerInformation3] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_DiscoveryData(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -5530,7 +5530,7 @@ impl IPeerInformation3 {
     }}
 }
 DEFINE_IID!(IID_IPeerInformationWithHostAndService, 3972517037, 7024, 20107, 146, 219, 187, 231, 129, 65, 147, 8);
-RT_INTERFACE!{interface IPeerInformationWithHostAndService(IPeerInformationWithHostAndServiceVtbl): IInspectable(IInspectableVtbl) [IID_IPeerInformationWithHostAndService] {
+RT_INTERFACE!{interface IPeerInformationWithHostAndService(IPeerInformationWithHostAndServiceVtbl): IInspectable [IID_IPeerInformationWithHostAndService] {
     fn get_HostName(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_ServiceName(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -5550,7 +5550,7 @@ RT_ENUM! { enum PeerRole: i32 {
     Peer = 0, Host = 1, Client = 2,
 }}
 DEFINE_IID!(IID_IPeerWatcher, 1022239224, 12198, 18041, 150, 145, 3, 201, 74, 66, 15, 52);
-RT_INTERFACE!{interface IPeerWatcher(IPeerWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IPeerWatcher] {
+RT_INTERFACE!{interface IPeerWatcher(IPeerWatcherVtbl): IInspectable [IID_IPeerWatcher] {
     fn add_Added(&self, handler: <foundation::TypedEventHandler<PeerWatcher, PeerInformation> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Added(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_Removed(&self, handler: <foundation::TypedEventHandler<PeerWatcher, PeerInformation> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -5630,7 +5630,7 @@ RT_ENUM! { enum PeerWatcherStatus: i32 {
     Created = 0, Started = 1, EnumerationCompleted = 2, Stopping = 3, Stopped = 4, Aborted = 5,
 }}
 DEFINE_IID!(IID_IProximityDevice, 4020806994, 63201, 17193, 160, 252, 171, 107, 15, 210, 130, 98);
-RT_INTERFACE!{interface IProximityDevice(IProximityDeviceVtbl): IInspectable(IInspectableVtbl) [IID_IProximityDevice] {
+RT_INTERFACE!{interface IProximityDevice(IProximityDeviceVtbl): IInspectable [IID_IProximityDevice] {
     fn SubscribeForMessage(&self, messageType: HSTRING, messageReceivedHandler: <MessageReceivedHandler as RtType>::Abi, out: *mut i64) -> HRESULT,
     fn PublishMessage(&self, messageType: HSTRING, message: HSTRING, out: *mut i64) -> HRESULT,
     fn PublishMessageWithCallback(&self, messageType: HSTRING, message: HSTRING, messageTransmittedHandler: <MessageTransmittedHandler as RtType>::Abi, out: *mut i64) -> HRESULT,
@@ -5743,7 +5743,7 @@ impl ProximityDevice {
 }
 DEFINE_CLSID!(ProximityDevice(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,80,114,111,120,105,109,105,116,121,46,80,114,111,120,105,109,105,116,121,68,101,118,105,99,101,0]) [CLSID_ProximityDevice]);
 DEFINE_IID!(IID_IProximityDeviceStatics, 2437652509, 63201, 18372, 161, 76, 20, 138, 25, 3, 208, 198);
-RT_INTERFACE!{static interface IProximityDeviceStatics(IProximityDeviceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IProximityDeviceStatics] {
+RT_INTERFACE!{static interface IProximityDeviceStatics(IProximityDeviceStaticsVtbl): IInspectable [IID_IProximityDeviceStatics] {
     fn GetDeviceSelector(&self, out: *mut HSTRING) -> HRESULT,
     fn GetDefault(&self, out: *mut <ProximityDevice as RtType>::Abi) -> HRESULT,
     fn FromId(&self, deviceId: HSTRING, out: *mut <ProximityDevice as RtType>::Abi) -> HRESULT
@@ -5766,7 +5766,7 @@ impl IProximityDeviceStatics {
     }}
 }
 DEFINE_IID!(IID_IProximityMessage, 4020963202, 63201, 18037, 160, 69, 216, 227, 32, 194, 72, 8);
-RT_INTERFACE!{interface IProximityMessage(IProximityMessageVtbl): IInspectable(IInspectableVtbl) [IID_IProximityMessage] {
+RT_INTERFACE!{interface IProximityMessage(IProximityMessageVtbl): IInspectable [IID_IProximityMessage] {
     fn get_MessageType(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SubscriptionId(&self, out: *mut i64) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -5797,7 +5797,7 @@ impl IProximityMessage {
 }
 RT_CLASS!{class ProximityMessage: IProximityMessage}
 DEFINE_IID!(IID_ITriggeredConnectionStateChangedEventArgs, 3332866221, 63201, 19796, 150, 226, 51, 246, 32, 188, 168, 138);
-RT_INTERFACE!{interface ITriggeredConnectionStateChangedEventArgs(ITriggeredConnectionStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ITriggeredConnectionStateChangedEventArgs] {
+RT_INTERFACE!{interface ITriggeredConnectionStateChangedEventArgs(ITriggeredConnectionStateChangedEventArgsVtbl): IInspectable [IID_ITriggeredConnectionStateChangedEventArgs] {
     fn get_State(&self, out: *mut TriggeredConnectState) -> HRESULT,
     fn get_Id(&self, out: *mut u32) -> HRESULT,
     fn get_Socket(&self, out: *mut <super::sockets::StreamSocket as RtType>::Abi) -> HRESULT
@@ -5827,7 +5827,7 @@ RT_ENUM! { enum TriggeredConnectState: i32 {
 pub mod pushnotifications { // Windows.Networking.PushNotifications
 use crate::prelude::*;
 DEFINE_IID!(IID_IPushNotificationChannel, 724045870, 61195, 20281, 155, 138, 163, 193, 148, 222, 112, 129);
-RT_INTERFACE!{interface IPushNotificationChannel(IPushNotificationChannelVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannel] {
+RT_INTERFACE!{interface IPushNotificationChannel(IPushNotificationChannelVtbl): IInspectable [IID_IPushNotificationChannel] {
     fn get_Uri(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ExpirationTime(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn Close(&self) -> HRESULT,
@@ -5883,7 +5883,7 @@ impl PushNotificationChannelManager {
 }
 DEFINE_CLSID!(PushNotificationChannelManager(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,115,46,80,117,115,104,78,111,116,105,102,105,99,97,116,105,111,110,67,104,97,110,110,101,108,77,97,110,97,103,101,114,0]) [CLSID_PushNotificationChannelManager]);
 DEFINE_IID!(IID_IPushNotificationChannelManagerForUser, 2764330756, 4482, 17095, 136, 144, 245, 99, 196, 137, 13, 196);
-RT_INTERFACE!{interface IPushNotificationChannelManagerForUser(IPushNotificationChannelManagerForUserVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerForUser] {
+RT_INTERFACE!{interface IPushNotificationChannelManagerForUser(IPushNotificationChannelManagerForUserVtbl): IInspectable [IID_IPushNotificationChannelManagerForUser] {
     fn CreatePushNotificationChannelForApplicationAsync(&self, out: *mut <foundation::IAsyncOperation<PushNotificationChannel> as RtType>::Abi) -> HRESULT,
     fn CreatePushNotificationChannelForApplicationAsyncWithId(&self, applicationId: HSTRING, out: *mut <foundation::IAsyncOperation<PushNotificationChannel> as RtType>::Abi) -> HRESULT,
     fn CreatePushNotificationChannelForSecondaryTileAsync(&self, tileId: HSTRING, out: *mut <foundation::IAsyncOperation<PushNotificationChannel> as RtType>::Abi) -> HRESULT,
@@ -5913,7 +5913,7 @@ impl IPushNotificationChannelManagerForUser {
 }
 RT_CLASS!{class PushNotificationChannelManagerForUser: IPushNotificationChannelManagerForUser}
 DEFINE_IID!(IID_IPushNotificationChannelManagerForUser2, 3280668266, 31937, 19884, 135, 253, 190, 110, 146, 4, 20, 164);
-RT_INTERFACE!{interface IPushNotificationChannelManagerForUser2(IPushNotificationChannelManagerForUser2Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerForUser2] {
+RT_INTERFACE!{interface IPushNotificationChannelManagerForUser2(IPushNotificationChannelManagerForUser2Vtbl): IInspectable [IID_IPushNotificationChannelManagerForUser2] {
     #[cfg(feature="windows-storage")] fn CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsync(&self, appServerKey: <super::super::storage::streams::IBuffer as RtType>::Abi, channelId: HSTRING, out: *mut <foundation::IAsyncOperation<PushNotificationChannel> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateRawPushNotificationChannelWithAlternateKeyForApplicationAsyncWithId(&self, appServerKey: <super::super::storage::streams::IBuffer as RtType>::Abi, channelId: HSTRING, appId: HSTRING, out: *mut <foundation::IAsyncOperation<PushNotificationChannel> as RtType>::Abi) -> HRESULT
 }}
@@ -5930,7 +5930,7 @@ impl IPushNotificationChannelManagerForUser2 {
     }}
 }
 DEFINE_IID!(IID_IPushNotificationChannelManagerStatics, 2343541605, 30625, 17800, 189, 25, 134, 21, 41, 169, 220, 240);
-RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics(IPushNotificationChannelManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerStatics] {
+RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics(IPushNotificationChannelManagerStaticsVtbl): IInspectable [IID_IPushNotificationChannelManagerStatics] {
     fn CreatePushNotificationChannelForApplicationAsync(&self, out: *mut <foundation::IAsyncOperation<PushNotificationChannel> as RtType>::Abi) -> HRESULT,
     fn CreatePushNotificationChannelForApplicationAsyncWithId(&self, applicationId: HSTRING, out: *mut <foundation::IAsyncOperation<PushNotificationChannel> as RtType>::Abi) -> HRESULT,
     fn CreatePushNotificationChannelForSecondaryTileAsync(&self, tileId: HSTRING, out: *mut <foundation::IAsyncOperation<PushNotificationChannel> as RtType>::Abi) -> HRESULT
@@ -5953,7 +5953,7 @@ impl IPushNotificationChannelManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IPushNotificationChannelManagerStatics2, 3024397917, 42985, 19240, 149, 14, 243, 117, 169, 7, 249, 223);
-RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics2(IPushNotificationChannelManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerStatics2] {
+RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics2(IPushNotificationChannelManagerStatics2Vtbl): IInspectable [IID_IPushNotificationChannelManagerStatics2] {
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: <super::super::system::User as RtType>::Abi, out: *mut <PushNotificationChannelManagerForUser as RtType>::Abi) -> HRESULT
 }}
 impl IPushNotificationChannelManagerStatics2 {
@@ -5964,7 +5964,7 @@ impl IPushNotificationChannelManagerStatics2 {
     }}
 }
 DEFINE_IID!(IID_IPushNotificationChannelManagerStatics3, 1191313150, 3806, 19007, 174, 120, 191, 164, 113, 73, 105, 37);
-RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics3(IPushNotificationChannelManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationChannelManagerStatics3] {
+RT_INTERFACE!{static interface IPushNotificationChannelManagerStatics3(IPushNotificationChannelManagerStatics3Vtbl): IInspectable [IID_IPushNotificationChannelManagerStatics3] {
     fn GetDefault(&self, out: *mut <PushNotificationChannelManagerForUser as RtType>::Abi) -> HRESULT
 }}
 impl IPushNotificationChannelManagerStatics3 {
@@ -5975,7 +5975,7 @@ impl IPushNotificationChannelManagerStatics3 {
     }}
 }
 DEFINE_IID!(IID_IPushNotificationReceivedEventArgs, 3506855436, 14029, 18508, 185, 53, 10, 153, 183, 83, 207, 0);
-RT_INTERFACE!{interface IPushNotificationReceivedEventArgs(IPushNotificationReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IPushNotificationReceivedEventArgs] {
+RT_INTERFACE!{interface IPushNotificationReceivedEventArgs(IPushNotificationReceivedEventArgsVtbl): IInspectable [IID_IPushNotificationReceivedEventArgs] {
     fn put_Cancel(&self, value: bool) -> HRESULT,
     fn get_Cancel(&self, out: *mut bool) -> HRESULT,
     fn get_NotificationType(&self, out: *mut PushNotificationType) -> HRESULT,
@@ -6028,7 +6028,7 @@ RT_ENUM! { enum PushNotificationType: i32 {
     Toast = 0, Tile = 1, Badge = 2, Raw = 3, TileFlyout = 4,
 }}
 DEFINE_IID!(IID_IRawNotification, 438465153, 15225, 17068, 153, 99, 34, 171, 0, 212, 240, 183);
-RT_INTERFACE!{interface IRawNotification(IRawNotificationVtbl): IInspectable(IInspectableVtbl) [IID_IRawNotification] {
+RT_INTERFACE!{interface IRawNotification(IRawNotificationVtbl): IInspectable [IID_IRawNotification] {
     fn get_Content(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IRawNotification {
@@ -6040,7 +6040,7 @@ impl IRawNotification {
 }
 RT_CLASS!{class RawNotification: IRawNotification}
 DEFINE_IID!(IID_IRawNotification2, 3872444185, 3183, 19677, 148, 36, 238, 197, 190, 1, 77, 38);
-RT_INTERFACE!{interface IRawNotification2(IRawNotification2Vtbl): IInspectable(IInspectableVtbl) [IID_IRawNotification2] {
+RT_INTERFACE!{interface IRawNotification2(IRawNotification2Vtbl): IInspectable [IID_IRawNotification2] {
     fn get_Headers(&self, out: *mut <foundation::collections::IMapView<HString, HString> as RtType>::Abi) -> HRESULT,
     fn get_ChannelId(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -6061,7 +6061,7 @@ pub mod servicediscovery { // Windows.Networking.ServiceDiscovery
 pub mod dnssd { // Windows.Networking.ServiceDiscovery.Dnssd
 use crate::prelude::*;
 DEFINE_IID!(IID_IDnssdRegistrationResult, 1031301842, 58886, 21328, 115, 234, 126, 151, 240, 102, 22, 47);
-RT_INTERFACE!{interface IDnssdRegistrationResult(IDnssdRegistrationResultVtbl): IInspectable(IInspectableVtbl) [IID_IDnssdRegistrationResult] {
+RT_INTERFACE!{interface IDnssdRegistrationResult(IDnssdRegistrationResultVtbl): IInspectable [IID_IDnssdRegistrationResult] {
     fn get_Status(&self, out: *mut DnssdRegistrationStatus) -> HRESULT,
     fn get_IPAddress(&self, out: *mut <super::super::HostName as RtType>::Abi) -> HRESULT,
     fn get_HasInstanceNameChanged(&self, out: *mut bool) -> HRESULT
@@ -6090,7 +6090,7 @@ RT_ENUM! { enum DnssdRegistrationStatus: i32 {
     Success = 0, InvalidServiceName = 1, ServerError = 2, SecurityError = 3,
 }}
 DEFINE_IID!(IID_IDnssdServiceInstance, 3796294526, 39077, 19617, 185, 228, 194, 83, 211, 60, 53, 255);
-RT_INTERFACE!{interface IDnssdServiceInstance(IDnssdServiceInstanceVtbl): IInspectable(IInspectableVtbl) [IID_IDnssdServiceInstance] {
+RT_INTERFACE!{interface IDnssdServiceInstance(IDnssdServiceInstanceVtbl): IInspectable [IID_IDnssdServiceInstance] {
     fn get_DnssdServiceInstanceName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_DnssdServiceInstanceName(&self, value: HSTRING) -> HRESULT,
     fn get_HostName(&self, out: *mut <super::super::HostName as RtType>::Abi) -> HRESULT,
@@ -6189,7 +6189,7 @@ impl DnssdServiceInstance {
 DEFINE_CLSID!(DnssdServiceInstance(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,101,114,118,105,99,101,68,105,115,99,111,118,101,114,121,46,68,110,115,115,100,46,68,110,115,115,100,83,101,114,118,105,99,101,73,110,115,116,97,110,99,101,0]) [CLSID_DnssdServiceInstance]);
 RT_CLASS!{class DnssdServiceInstanceCollection: foundation::collections::IVectorView<DnssdServiceInstance>}
 DEFINE_IID!(IID_IDnssdServiceInstanceFactory, 1823498657, 50296, 17201, 150, 132, 74, 242, 24, 108, 10, 43);
-RT_INTERFACE!{static interface IDnssdServiceInstanceFactory(IDnssdServiceInstanceFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDnssdServiceInstanceFactory] {
+RT_INTERFACE!{static interface IDnssdServiceInstanceFactory(IDnssdServiceInstanceFactoryVtbl): IInspectable [IID_IDnssdServiceInstanceFactory] {
     fn Create(&self, dnssdServiceInstanceName: HSTRING, hostName: <super::super::HostName as RtType>::Abi, port: u16, out: *mut <DnssdServiceInstance as RtType>::Abi) -> HRESULT
 }}
 impl IDnssdServiceInstanceFactory {
@@ -6200,7 +6200,7 @@ impl IDnssdServiceInstanceFactory {
     }}
 }
 DEFINE_IID!(IID_IDnssdServiceWatcher, 3426015681, 56189, 19305, 152, 61, 198, 248, 63, 32, 86, 130);
-RT_INTERFACE!{interface IDnssdServiceWatcher(IDnssdServiceWatcherVtbl): IInspectable(IInspectableVtbl) [IID_IDnssdServiceWatcher] {
+RT_INTERFACE!{interface IDnssdServiceWatcher(IDnssdServiceWatcherVtbl): IInspectable [IID_IDnssdServiceWatcher] {
     fn add_Added(&self, handler: <foundation::TypedEventHandler<DnssdServiceWatcher, DnssdServiceInstance> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Added(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_EnumerationCompleted(&self, handler: <foundation::TypedEventHandler<DnssdServiceWatcher, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -6265,7 +6265,7 @@ RT_STRUCT! { struct BandwidthStatistics {
     OutboundBitsPerSecond: u64, InboundBitsPerSecond: u64, OutboundBitsPerSecondInstability: u64, InboundBitsPerSecondInstability: u64, OutboundBandwidthPeaked: bool, InboundBandwidthPeaked: bool,
 }}
 DEFINE_IID!(IID_IControlChannelTrigger, 2098475431, 61078, 16616, 161, 153, 135, 3, 205, 150, 158, 195);
-RT_INTERFACE!{interface IControlChannelTrigger(IControlChannelTriggerVtbl): IInspectable(IInspectableVtbl) [IID_IControlChannelTrigger] {
+RT_INTERFACE!{interface IControlChannelTrigger(IControlChannelTriggerVtbl): IInspectable [IID_IControlChannelTrigger] {
     fn get_ControlChannelTriggerId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ServerKeepAliveIntervalInMinutes(&self, out: *mut u32) -> HRESULT,
     fn put_ServerKeepAliveIntervalInMinutes(&self, value: u32) -> HRESULT,
@@ -6345,7 +6345,7 @@ impl ControlChannelTrigger {
 }
 DEFINE_CLSID!(ControlChannelTrigger(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,67,111,110,116,114,111,108,67,104,97,110,110,101,108,84,114,105,103,103,101,114,0]) [CLSID_ControlChannelTrigger]);
 DEFINE_IID!(IID_IControlChannelTrigger2, 2936066615, 20926, 17684, 151, 37, 53, 86, 225, 135, 149, 128);
-RT_INTERFACE!{interface IControlChannelTrigger2(IControlChannelTrigger2Vtbl): IInspectable(IInspectableVtbl) [IID_IControlChannelTrigger2] {
+RT_INTERFACE!{interface IControlChannelTrigger2(IControlChannelTrigger2Vtbl): IInspectable [IID_IControlChannelTrigger2] {
     fn get_IsWakeFromLowPowerSupported(&self, out: *mut bool) -> HRESULT
 }}
 impl IControlChannelTrigger2 {
@@ -6356,7 +6356,7 @@ impl IControlChannelTrigger2 {
     }}
 }
 DEFINE_IID!(IID_IControlChannelTriggerEventDetails, 456581191, 35259, 16950, 150, 172, 113, 208, 18, 187, 72, 105);
-RT_INTERFACE!{interface IControlChannelTriggerEventDetails(IControlChannelTriggerEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IControlChannelTriggerEventDetails] {
+RT_INTERFACE!{interface IControlChannelTriggerEventDetails(IControlChannelTriggerEventDetailsVtbl): IInspectable [IID_IControlChannelTriggerEventDetails] {
     fn get_ControlChannelTrigger(&self, out: *mut <ControlChannelTrigger as RtType>::Abi) -> HRESULT
 }}
 impl IControlChannelTriggerEventDetails {
@@ -6367,7 +6367,7 @@ impl IControlChannelTriggerEventDetails {
     }}
 }
 DEFINE_IID!(IID_IControlChannelTriggerFactory, 3662380272, 36209, 17519, 136, 195, 185, 81, 132, 162, 214, 205);
-RT_INTERFACE!{static interface IControlChannelTriggerFactory(IControlChannelTriggerFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IControlChannelTriggerFactory] {
+RT_INTERFACE!{static interface IControlChannelTriggerFactory(IControlChannelTriggerFactoryVtbl): IInspectable [IID_IControlChannelTriggerFactory] {
     fn CreateControlChannelTrigger(&self, channelId: HSTRING, serverKeepAliveIntervalInMinutes: u32, out: *mut <ControlChannelTrigger as RtType>::Abi) -> HRESULT,
     fn CreateControlChannelTriggerEx(&self, channelId: HSTRING, serverKeepAliveIntervalInMinutes: u32, resourceRequestType: ControlChannelTriggerResourceType, out: *mut <ControlChannelTrigger as RtType>::Abi) -> HRESULT
 }}
@@ -6384,7 +6384,7 @@ impl IControlChannelTriggerFactory {
     }}
 }
 DEFINE_IID!(IID_IControlChannelTriggerResetEventDetails, 1750139790, 36548, 17150, 155, 178, 33, 233, 27, 123, 252, 177);
-RT_INTERFACE!{interface IControlChannelTriggerResetEventDetails(IControlChannelTriggerResetEventDetailsVtbl): IInspectable(IInspectableVtbl) [IID_IControlChannelTriggerResetEventDetails] {
+RT_INTERFACE!{interface IControlChannelTriggerResetEventDetails(IControlChannelTriggerResetEventDetailsVtbl): IInspectable [IID_IControlChannelTriggerResetEventDetails] {
     fn get_ResetReason(&self, out: *mut ControlChannelTriggerResetReason) -> HRESULT,
     fn get_HardwareSlotReset(&self, out: *mut bool) -> HRESULT,
     fn get_SoftwareSlotReset(&self, out: *mut bool) -> HRESULT
@@ -6416,7 +6416,7 @@ RT_ENUM! { enum ControlChannelTriggerStatus: i32 {
     HardwareSlotRequested = 0, SoftwareSlotAllocated = 1, HardwareSlotAllocated = 2, PolicyError = 3, SystemError = 4, TransportDisconnected = 5, ServiceUnavailable = 6,
 }}
 DEFINE_IID!(IID_IDatagramSocket, 2145541051, 50108, 18039, 132, 70, 202, 40, 164, 101, 163, 175);
-RT_INTERFACE!{interface IDatagramSocket(IDatagramSocketVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocket] {
+RT_INTERFACE!{interface IDatagramSocket(IDatagramSocketVtbl): IInspectable [IID_IDatagramSocket] {
     fn get_Control(&self, out: *mut <DatagramSocketControl as RtType>::Abi) -> HRESULT,
     fn get_Information(&self, out: *mut <DatagramSocketInformation as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -6506,7 +6506,7 @@ impl DatagramSocket {
 }
 DEFINE_CLSID!(DatagramSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,68,97,116,97,103,114,97,109,83,111,99,107,101,116,0]) [CLSID_DatagramSocket]);
 DEFINE_IID!(IID_IDatagramSocket2, 3627787092, 39581, 16773, 162, 10, 20, 36, 201, 194, 167, 205);
-RT_INTERFACE!{interface IDatagramSocket2(IDatagramSocket2Vtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocket2] {
+RT_INTERFACE!{interface IDatagramSocket2(IDatagramSocket2Vtbl): IInspectable [IID_IDatagramSocket2] {
     fn BindServiceNameAndAdapterAsync(&self, localServiceName: HSTRING, adapter: <super::connectivity::NetworkAdapter as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl IDatagramSocket2 {
@@ -6517,7 +6517,7 @@ impl IDatagramSocket2 {
     }}
 }
 DEFINE_IID!(IID_IDatagramSocket3, 928272137, 43922, 17158, 154, 193, 12, 56, 18, 131, 217, 198);
-RT_INTERFACE!{interface IDatagramSocket3(IDatagramSocket3Vtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocket3] {
+RT_INTERFACE!{interface IDatagramSocket3(IDatagramSocket3Vtbl): IInspectable [IID_IDatagramSocket3] {
     fn CancelIOAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn EnableTransferOwnership(&self, taskId: Guid) -> HRESULT,
     fn EnableTransferOwnershipWithConnectedStandbyAction(&self, taskId: Guid, connectedStandbyAction: SocketActivityConnectedStandbyAction) -> HRESULT,
@@ -6553,7 +6553,7 @@ impl IDatagramSocket3 {
     }}
 }
 DEFINE_IID!(IID_IDatagramSocketControl, 1387020078, 13466, 16693, 187, 88, 183, 155, 38, 71, 211, 144);
-RT_INTERFACE!{interface IDatagramSocketControl(IDatagramSocketControlVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketControl] {
+RT_INTERFACE!{interface IDatagramSocketControl(IDatagramSocketControlVtbl): IInspectable [IID_IDatagramSocketControl] {
     fn get_QualityOfService(&self, out: *mut SocketQualityOfService) -> HRESULT,
     fn put_QualityOfService(&self, value: SocketQualityOfService) -> HRESULT,
     fn get_OutboundUnicastHopLimit(&self, out: *mut u8) -> HRESULT,
@@ -6581,7 +6581,7 @@ impl IDatagramSocketControl {
 }
 RT_CLASS!{class DatagramSocketControl: IDatagramSocketControl}
 DEFINE_IID!(IID_IDatagramSocketControl2, 871028162, 38812, 17429, 130, 161, 60, 250, 246, 70, 193, 146);
-RT_INTERFACE!{interface IDatagramSocketControl2(IDatagramSocketControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketControl2] {
+RT_INTERFACE!{interface IDatagramSocketControl2(IDatagramSocketControl2Vtbl): IInspectable [IID_IDatagramSocketControl2] {
     fn get_InboundBufferSizeInBytes(&self, out: *mut u32) -> HRESULT,
     fn put_InboundBufferSizeInBytes(&self, value: u32) -> HRESULT,
     fn get_DontFragment(&self, out: *mut bool) -> HRESULT,
@@ -6608,7 +6608,7 @@ impl IDatagramSocketControl2 {
     }}
 }
 DEFINE_IID!(IID_IDatagramSocketControl3, 3572204118, 8045, 17816, 155, 87, 212, 42, 0, 29, 243, 73);
-RT_INTERFACE!{interface IDatagramSocketControl3(IDatagramSocketControl3Vtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketControl3] {
+RT_INTERFACE!{interface IDatagramSocketControl3(IDatagramSocketControl3Vtbl): IInspectable [IID_IDatagramSocketControl3] {
     fn get_MulticastOnly(&self, out: *mut bool) -> HRESULT,
     fn put_MulticastOnly(&self, value: bool) -> HRESULT
 }}
@@ -6624,7 +6624,7 @@ impl IDatagramSocketControl3 {
     }}
 }
 DEFINE_IID!(IID_IDatagramSocketInformation, 1595561626, 22011, 18637, 151, 6, 122, 151, 79, 123, 21, 133);
-RT_INTERFACE!{interface IDatagramSocketInformation(IDatagramSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketInformation] {
+RT_INTERFACE!{interface IDatagramSocketInformation(IDatagramSocketInformationVtbl): IInspectable [IID_IDatagramSocketInformation] {
     fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_LocalPort(&self, out: *mut HSTRING) -> HRESULT,
     fn get_RemoteAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
@@ -6654,7 +6654,7 @@ impl IDatagramSocketInformation {
 }
 RT_CLASS!{class DatagramSocketInformation: IDatagramSocketInformation}
 DEFINE_IID!(IID_IDatagramSocketMessageReceivedEventArgs, 2653805730, 5906, 19684, 177, 121, 140, 101, 44, 109, 16, 126);
-RT_INTERFACE!{interface IDatagramSocketMessageReceivedEventArgs(IDatagramSocketMessageReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketMessageReceivedEventArgs] {
+RT_INTERFACE!{interface IDatagramSocketMessageReceivedEventArgs(IDatagramSocketMessageReceivedEventArgsVtbl): IInspectable [IID_IDatagramSocketMessageReceivedEventArgs] {
     fn get_RemoteAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_RemotePort(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
@@ -6690,7 +6690,7 @@ impl IDatagramSocketMessageReceivedEventArgs {
 }
 RT_CLASS!{class DatagramSocketMessageReceivedEventArgs: IDatagramSocketMessageReceivedEventArgs}
 DEFINE_IID!(IID_IDatagramSocketStatics, 3922078446, 5268, 18977, 187, 126, 133, 137, 252, 117, 29, 157);
-RT_INTERFACE!{static interface IDatagramSocketStatics(IDatagramSocketStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDatagramSocketStatics] {
+RT_INTERFACE!{static interface IDatagramSocketStatics(IDatagramSocketStaticsVtbl): IInspectable [IID_IDatagramSocketStatics] {
     fn GetEndpointPairsAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>> as RtType>::Abi) -> HRESULT,
     fn GetEndpointPairsWithSortOptionsAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, sortOptions: super::HostNameSortOptions, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>> as RtType>::Abi) -> HRESULT
 }}
@@ -6707,7 +6707,7 @@ impl IDatagramSocketStatics {
     }}
 }
 DEFINE_IID!(IID_IMessageWebSocket, 863141128, 13525, 18246, 173, 123, 141, 222, 91, 194, 239, 136);
-RT_INTERFACE!{interface IMessageWebSocket(IMessageWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocket] {
+RT_INTERFACE!{interface IMessageWebSocket(IMessageWebSocketVtbl): IInspectable [IID_IMessageWebSocket] {
     fn get_Control(&self, out: *mut <MessageWebSocketControl as RtType>::Abi) -> HRESULT,
     fn get_Information(&self, out: *mut <MessageWebSocketInformation as RtType>::Abi) -> HRESULT,
     fn add_MessageReceived(&self, eventHandler: <foundation::TypedEventHandler<MessageWebSocket, MessageWebSocketMessageReceivedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -6738,7 +6738,7 @@ RT_CLASS!{class MessageWebSocket: IMessageWebSocket}
 impl RtActivatable<IActivationFactory> for MessageWebSocket {}
 DEFINE_CLSID!(MessageWebSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,77,101,115,115,97,103,101,87,101,98,83,111,99,107,101,116,0]) [CLSID_MessageWebSocket]);
 DEFINE_IID!(IID_IMessageWebSocket2, 3201355495, 63944, 17418, 154, 213, 115, 114, 129, 217, 116, 46);
-RT_INTERFACE!{interface IMessageWebSocket2(IMessageWebSocket2Vtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocket2] {
+RT_INTERFACE!{interface IMessageWebSocket2(IMessageWebSocket2Vtbl): IInspectable [IID_IMessageWebSocket2] {
     fn add_ServerCustomValidationRequested(&self, eventHandler: <foundation::TypedEventHandler<MessageWebSocket, WebSocketServerCustomValidationRequestedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ServerCustomValidationRequested(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -6754,7 +6754,7 @@ impl IMessageWebSocket2 {
     }}
 }
 DEFINE_IID!(IID_IMessageWebSocket3, 1507450619, 29103, 17225, 132, 135, 145, 31, 207, 104, 21, 151);
-RT_INTERFACE!{interface IMessageWebSocket3(IMessageWebSocket3Vtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocket3] {
+RT_INTERFACE!{interface IMessageWebSocket3(IMessageWebSocket3Vtbl): IInspectable [IID_IMessageWebSocket3] {
     #[cfg(feature="windows-storage")] fn SendNonfinalFrameAsync(&self, data: <super::super::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<u32, u32> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn SendFinalFrameAsync(&self, data: <super::super::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncOperationWithProgress<u32, u32> as RtType>::Abi) -> HRESULT
 }}
@@ -6771,7 +6771,7 @@ impl IMessageWebSocket3 {
     }}
 }
 DEFINE_IID!(IID_IMessageWebSocketControl, 2165848202, 50729, 20234, 128, 251, 129, 252, 5, 83, 136, 98);
-RT_INTERFACE!{interface IMessageWebSocketControl(IMessageWebSocketControlVtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocketControl] {
+RT_INTERFACE!{interface IMessageWebSocketControl(IMessageWebSocketControlVtbl): IInspectable [IID_IMessageWebSocketControl] {
     fn get_MaxMessageSize(&self, out: *mut u32) -> HRESULT,
     fn put_MaxMessageSize(&self, value: u32) -> HRESULT,
     fn get_MessageType(&self, out: *mut SocketMessageType) -> HRESULT,
@@ -6799,7 +6799,7 @@ impl IMessageWebSocketControl {
 }
 RT_CLASS!{class MessageWebSocketControl: IMessageWebSocketControl}
 DEFINE_IID!(IID_IMessageWebSocketControl2, 3809466257, 2060, 16394, 167, 18, 39, 223, 169, 231, 68, 216);
-RT_INTERFACE!{interface IMessageWebSocketControl2(IMessageWebSocketControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocketControl2] {
+RT_INTERFACE!{interface IMessageWebSocketControl2(IMessageWebSocketControl2Vtbl): IInspectable [IID_IMessageWebSocketControl2] {
     fn get_DesiredUnsolicitedPongInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_DesiredUnsolicitedPongInterval(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_ActualUnsolicitedPongInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -6844,7 +6844,7 @@ impl IMessageWebSocketControl2 {
 }
 RT_CLASS!{class MessageWebSocketInformation: IWebSocketInformation}
 DEFINE_IID!(IID_IMessageWebSocketMessageReceivedEventArgs, 1200366252, 19531, 17133, 158, 215, 30, 249, 249, 79, 163, 213);
-RT_INTERFACE!{interface IMessageWebSocketMessageReceivedEventArgs(IMessageWebSocketMessageReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocketMessageReceivedEventArgs] {
+RT_INTERFACE!{interface IMessageWebSocketMessageReceivedEventArgs(IMessageWebSocketMessageReceivedEventArgsVtbl): IInspectable [IID_IMessageWebSocketMessageReceivedEventArgs] {
     fn get_MessageType(&self, out: *mut SocketMessageType) -> HRESULT,
     #[cfg(feature="windows-storage")] fn GetDataReader(&self, out: *mut <super::super::storage::streams::DataReader as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn GetDataStream(&self, out: *mut <super::super::storage::streams::IInputStream as RtType>::Abi) -> HRESULT
@@ -6868,7 +6868,7 @@ impl IMessageWebSocketMessageReceivedEventArgs {
 }
 RT_CLASS!{class MessageWebSocketMessageReceivedEventArgs: IMessageWebSocketMessageReceivedEventArgs}
 DEFINE_IID!(IID_IMessageWebSocketMessageReceivedEventArgs2, 2311980797, 56687, 18951, 135, 249, 249, 235, 77, 137, 216, 61);
-RT_INTERFACE!{interface IMessageWebSocketMessageReceivedEventArgs2(IMessageWebSocketMessageReceivedEventArgs2Vtbl): IInspectable(IInspectableVtbl) [IID_IMessageWebSocketMessageReceivedEventArgs2] {
+RT_INTERFACE!{interface IMessageWebSocketMessageReceivedEventArgs2(IMessageWebSocketMessageReceivedEventArgs2Vtbl): IInspectable [IID_IMessageWebSocketMessageReceivedEventArgs2] {
     fn get_IsMessageComplete(&self, out: *mut bool) -> HRESULT
 }}
 impl IMessageWebSocketMessageReceivedEventArgs2 {
@@ -6885,7 +6885,7 @@ RT_STRUCT! { struct RoundTripTimeStatistics {
     Variance: u32, Max: u32, Min: u32, Sum: u32,
 }}
 DEFINE_IID!(IID_IServerMessageWebSocket, 3819737664, 33083, 24317, 126, 17, 174, 35, 5, 252, 119, 241);
-RT_INTERFACE!{interface IServerMessageWebSocket(IServerMessageWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IServerMessageWebSocket] {
+RT_INTERFACE!{interface IServerMessageWebSocket(IServerMessageWebSocketVtbl): IInspectable [IID_IServerMessageWebSocket] {
     fn add_MessageReceived(&self, value: <foundation::TypedEventHandler<ServerMessageWebSocket, MessageWebSocketMessageReceivedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_MessageReceived(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn get_Control(&self, out: *mut <ServerMessageWebSocketControl as RtType>::Abi) -> HRESULT,
@@ -6937,7 +6937,7 @@ impl IServerMessageWebSocket {
 }
 RT_CLASS!{class ServerMessageWebSocket: IServerMessageWebSocket}
 DEFINE_IID!(IID_IServerMessageWebSocketControl, 1774383185, 7199, 22650, 69, 25, 33, 129, 97, 1, 146, 183);
-RT_INTERFACE!{interface IServerMessageWebSocketControl(IServerMessageWebSocketControlVtbl): IInspectable(IInspectableVtbl) [IID_IServerMessageWebSocketControl] {
+RT_INTERFACE!{interface IServerMessageWebSocketControl(IServerMessageWebSocketControlVtbl): IInspectable [IID_IServerMessageWebSocketControl] {
     fn get_MessageType(&self, out: *mut SocketMessageType) -> HRESULT,
     fn put_MessageType(&self, value: SocketMessageType) -> HRESULT
 }}
@@ -6954,7 +6954,7 @@ impl IServerMessageWebSocketControl {
 }
 RT_CLASS!{class ServerMessageWebSocketControl: IServerMessageWebSocketControl}
 DEFINE_IID!(IID_IServerMessageWebSocketInformation, 4231181407, 17480, 21765, 108, 201, 9, 175, 168, 145, 95, 93);
-RT_INTERFACE!{interface IServerMessageWebSocketInformation(IServerMessageWebSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IServerMessageWebSocketInformation] {
+RT_INTERFACE!{interface IServerMessageWebSocketInformation(IServerMessageWebSocketInformationVtbl): IInspectable [IID_IServerMessageWebSocketInformation] {
     fn get_BandwidthStatistics(&self, out: *mut BandwidthStatistics) -> HRESULT,
     fn get_Protocol(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT
@@ -6978,7 +6978,7 @@ impl IServerMessageWebSocketInformation {
 }
 RT_CLASS!{class ServerMessageWebSocketInformation: IServerMessageWebSocketInformation}
 DEFINE_IID!(IID_IServerStreamWebSocket, 753753023, 29942, 21988, 121, 223, 145, 50, 104, 13, 254, 232);
-RT_INTERFACE!{interface IServerStreamWebSocket(IServerStreamWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IServerStreamWebSocket] {
+RT_INTERFACE!{interface IServerStreamWebSocket(IServerStreamWebSocketVtbl): IInspectable [IID_IServerStreamWebSocket] {
     fn get_Information(&self, out: *mut <ServerStreamWebSocketInformation as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_InputStream(&self, out: *mut <super::super::storage::streams::IInputStream as RtType>::Abi) -> HRESULT,
@@ -7020,7 +7020,7 @@ impl IServerStreamWebSocket {
 }
 RT_CLASS!{class ServerStreamWebSocket: IServerStreamWebSocket}
 DEFINE_IID!(IID_IServerStreamWebSocketInformation, 4231181407, 17480, 21765, 108, 201, 9, 171, 168, 145, 95, 93);
-RT_INTERFACE!{interface IServerStreamWebSocketInformation(IServerStreamWebSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IServerStreamWebSocketInformation] {
+RT_INTERFACE!{interface IServerStreamWebSocketInformation(IServerStreamWebSocketInformationVtbl): IInspectable [IID_IServerStreamWebSocketInformation] {
     fn get_BandwidthStatistics(&self, out: *mut BandwidthStatistics) -> HRESULT,
     fn get_Protocol(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT
@@ -7047,7 +7047,7 @@ RT_ENUM! { enum SocketActivityConnectedStandbyAction: i32 {
     DoNotWake = 0, Wake = 1,
 }}
 DEFINE_IID!(IID_ISocketActivityContext, 1135627620, 19589, 17302, 166, 55, 29, 151, 63, 110, 189, 73);
-RT_INTERFACE!{interface ISocketActivityContext(ISocketActivityContextVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityContext] {
+RT_INTERFACE!{interface ISocketActivityContext(ISocketActivityContextVtbl): IInspectable [IID_ISocketActivityContext] {
     #[cfg(feature="windows-storage")] fn get_Data(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
 impl ISocketActivityContext {
@@ -7066,7 +7066,7 @@ impl SocketActivityContext {
 }
 DEFINE_CLSID!(SocketActivityContext(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,111,99,107,101,116,65,99,116,105,118,105,116,121,67,111,110,116,101,120,116,0]) [CLSID_SocketActivityContext]);
 DEFINE_IID!(IID_ISocketActivityContextFactory, 3114255299, 2188, 17288, 131, 174, 37, 37, 19, 142, 4, 154);
-RT_INTERFACE!{static interface ISocketActivityContextFactory(ISocketActivityContextFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityContextFactory] {
+RT_INTERFACE!{static interface ISocketActivityContextFactory(ISocketActivityContextFactoryVtbl): IInspectable [IID_ISocketActivityContextFactory] {
     #[cfg(feature="windows-storage")] fn Create(&self, data: <super::super::storage::streams::IBuffer as RtType>::Abi, out: *mut <SocketActivityContext as RtType>::Abi) -> HRESULT
 }}
 impl ISocketActivityContextFactory {
@@ -7077,7 +7077,7 @@ impl ISocketActivityContextFactory {
     }}
 }
 DEFINE_IID!(IID_ISocketActivityInformation, 2374648548, 43134, 19316, 153, 104, 24, 91, 37, 17, 222, 254);
-RT_INTERFACE!{interface ISocketActivityInformation(ISocketActivityInformationVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityInformation] {
+RT_INTERFACE!{interface ISocketActivityInformation(ISocketActivityInformationVtbl): IInspectable [IID_ISocketActivityInformation] {
     fn get_TaskId(&self, out: *mut Guid) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SocketKind(&self, out: *mut SocketActivityKind) -> HRESULT,
@@ -7132,7 +7132,7 @@ impl SocketActivityInformation {
 }
 DEFINE_CLSID!(SocketActivityInformation(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,111,99,107,101,116,65,99,116,105,118,105,116,121,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_SocketActivityInformation]);
 DEFINE_IID!(IID_ISocketActivityInformationStatics, 2238755962, 32381, 18230, 128, 65, 19, 39, 166, 84, 60, 86);
-RT_INTERFACE!{static interface ISocketActivityInformationStatics(ISocketActivityInformationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityInformationStatics] {
+RT_INTERFACE!{static interface ISocketActivityInformationStatics(ISocketActivityInformationStaticsVtbl): IInspectable [IID_ISocketActivityInformationStatics] {
     fn get_AllSockets(&self, out: *mut <foundation::collections::IMapView<HString, SocketActivityInformation> as RtType>::Abi) -> HRESULT
 }}
 impl ISocketActivityInformationStatics {
@@ -7146,7 +7146,7 @@ RT_ENUM! { enum SocketActivityKind: i32 {
     None = 0, StreamSocketListener = 1, DatagramSocket = 2, StreamSocket = 3,
 }}
 DEFINE_IID!(IID_ISocketActivityTriggerDetails, 1173620391, 64671, 20353, 172, 173, 53, 95, 239, 81, 230, 123);
-RT_INTERFACE!{interface ISocketActivityTriggerDetails(ISocketActivityTriggerDetailsVtbl): IInspectable(IInspectableVtbl) [IID_ISocketActivityTriggerDetails] {
+RT_INTERFACE!{interface ISocketActivityTriggerDetails(ISocketActivityTriggerDetailsVtbl): IInspectable [IID_ISocketActivityTriggerDetails] {
     fn get_Reason(&self, out: *mut SocketActivityTriggerReason) -> HRESULT,
     fn get_SocketInformation(&self, out: *mut <SocketActivityInformation as RtType>::Abi) -> HRESULT
 }}
@@ -7175,7 +7175,7 @@ impl SocketError {
 }
 DEFINE_CLSID!(SocketError(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,111,99,107,101,116,69,114,114,111,114,0]) [CLSID_SocketError]);
 DEFINE_IID!(IID_ISocketErrorStatics, 2189637620, 32086, 19854, 183, 180, 160, 125, 215, 193, 188, 169);
-RT_INTERFACE!{static interface ISocketErrorStatics(ISocketErrorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISocketErrorStatics] {
+RT_INTERFACE!{static interface ISocketErrorStatics(ISocketErrorStaticsVtbl): IInspectable [IID_ISocketErrorStatics] {
     fn GetStatus(&self, hresult: i32, out: *mut SocketErrorStatus) -> HRESULT
 }}
 impl ISocketErrorStatics {
@@ -7201,7 +7201,7 @@ RT_ENUM! { enum SocketSslErrorSeverity: i32 {
     None = 0, Ignorable = 1, Fatal = 2,
 }}
 DEFINE_IID!(IID_IStreamSocket, 1772236019, 64635, 18519, 175, 56, 246, 231, 222, 106, 91, 73);
-RT_INTERFACE!{interface IStreamSocket(IStreamSocketVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocket] {
+RT_INTERFACE!{interface IStreamSocket(IStreamSocketVtbl): IInspectable [IID_IStreamSocket] {
     fn get_Control(&self, out: *mut <StreamSocketControl as RtType>::Abi) -> HRESULT,
     fn get_Information(&self, out: *mut <StreamSocketInformation as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -7274,7 +7274,7 @@ impl StreamSocket {
 }
 DEFINE_CLSID!(StreamSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,116,114,101,97,109,83,111,99,107,101,116,0]) [CLSID_StreamSocket]);
 DEFINE_IID!(IID_IStreamSocket2, 701556085, 62228, 19721, 173, 240, 15, 189, 150, 127, 189, 159);
-RT_INTERFACE!{interface IStreamSocket2(IStreamSocket2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocket2] {
+RT_INTERFACE!{interface IStreamSocket2(IStreamSocket2Vtbl): IInspectable [IID_IStreamSocket2] {
     fn ConnectWithProtectionLevelAndAdapterAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, protectionLevel: SocketProtectionLevel, adapter: <super::connectivity::NetworkAdapter as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl IStreamSocket2 {
@@ -7285,7 +7285,7 @@ impl IStreamSocket2 {
     }}
 }
 DEFINE_IID!(IID_IStreamSocket3, 1061358336, 40232, 18516, 186, 195, 35, 1, 148, 30, 194, 35);
-RT_INTERFACE!{interface IStreamSocket3(IStreamSocket3Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocket3] {
+RT_INTERFACE!{interface IStreamSocket3(IStreamSocket3Vtbl): IInspectable [IID_IStreamSocket3] {
     fn CancelIOAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn EnableTransferOwnership(&self, taskId: Guid) -> HRESULT,
     fn EnableTransferOwnershipWithConnectedStandbyAction(&self, taskId: Guid, connectedStandbyAction: SocketActivityConnectedStandbyAction) -> HRESULT,
@@ -7321,7 +7321,7 @@ impl IStreamSocket3 {
     }}
 }
 DEFINE_IID!(IID_IStreamSocketControl, 4263882225, 37547, 19187, 153, 146, 15, 76, 133, 227, 108, 196);
-RT_INTERFACE!{interface IStreamSocketControl(IStreamSocketControlVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketControl] {
+RT_INTERFACE!{interface IStreamSocketControl(IStreamSocketControlVtbl): IInspectable [IID_IStreamSocketControl] {
     fn get_NoDelay(&self, out: *mut bool) -> HRESULT,
     fn put_NoDelay(&self, value: bool) -> HRESULT,
     fn get_KeepAlive(&self, out: *mut bool) -> HRESULT,
@@ -7382,7 +7382,7 @@ impl IStreamSocketControl {
 }
 RT_CLASS!{class StreamSocketControl: IStreamSocketControl}
 DEFINE_IID!(IID_IStreamSocketControl2, 3268450902, 1551, 17601, 184, 226, 31, 191, 96, 189, 98, 197);
-RT_INTERFACE!{interface IStreamSocketControl2(IStreamSocketControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketControl2] {
+RT_INTERFACE!{interface IStreamSocketControl2(IStreamSocketControl2Vtbl): IInspectable [IID_IStreamSocketControl2] {
     #[cfg(feature="windows-security")] fn get_IgnorableServerCertificateErrors(&self, out: *mut <foundation::collections::IVector<super::super::security::cryptography::certificates::ChainValidationResult> as RtType>::Abi) -> HRESULT
 }}
 impl IStreamSocketControl2 {
@@ -7393,7 +7393,7 @@ impl IStreamSocketControl2 {
     }}
 }
 DEFINE_IID!(IID_IStreamSocketControl3, 3312075852, 20084, 16446, 137, 76, 179, 28, 174, 92, 115, 66);
-RT_INTERFACE!{interface IStreamSocketControl3(IStreamSocketControl3Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketControl3] {
+RT_INTERFACE!{interface IStreamSocketControl3(IStreamSocketControl3Vtbl): IInspectable [IID_IStreamSocketControl3] {
     fn get_SerializeConnectionAttempts(&self, out: *mut bool) -> HRESULT,
     fn put_SerializeConnectionAttempts(&self, value: bool) -> HRESULT,
     #[cfg(feature="windows-security")] fn get_ClientCertificate(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
@@ -7420,7 +7420,7 @@ impl IStreamSocketControl3 {
     }}
 }
 DEFINE_IID!(IID_IStreamSocketControl4, 2521705277, 60455, 18568, 179, 206, 199, 75, 65, 132, 35, 173);
-RT_INTERFACE!{interface IStreamSocketControl4(IStreamSocketControl4Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketControl4] {
+RT_INTERFACE!{interface IStreamSocketControl4(IStreamSocketControl4Vtbl): IInspectable [IID_IStreamSocketControl4] {
     fn get_MinProtectionLevel(&self, out: *mut SocketProtectionLevel) -> HRESULT,
     fn put_MinProtectionLevel(&self, value: SocketProtectionLevel) -> HRESULT
 }}
@@ -7436,7 +7436,7 @@ impl IStreamSocketControl4 {
     }}
 }
 DEFINE_IID!(IID_IStreamSocketInformation, 998288944, 24168, 16901, 136, 240, 220, 133, 210, 226, 93, 237);
-RT_INTERFACE!{interface IStreamSocketInformation(IStreamSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketInformation] {
+RT_INTERFACE!{interface IStreamSocketInformation(IStreamSocketInformationVtbl): IInspectable [IID_IStreamSocketInformation] {
     fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_LocalPort(&self, out: *mut HSTRING) -> HRESULT,
     fn get_RemoteHostName(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
@@ -7502,7 +7502,7 @@ impl IStreamSocketInformation {
 }
 RT_CLASS!{class StreamSocketInformation: IStreamSocketInformation}
 DEFINE_IID!(IID_IStreamSocketInformation2, 314737746, 19420, 20196, 151, 106, 207, 19, 14, 157, 146, 227);
-RT_INTERFACE!{interface IStreamSocketInformation2(IStreamSocketInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketInformation2] {
+RT_INTERFACE!{interface IStreamSocketInformation2(IStreamSocketInformation2Vtbl): IInspectable [IID_IStreamSocketInformation2] {
     fn get_ServerCertificateErrorSeverity(&self, out: *mut SocketSslErrorSeverity) -> HRESULT,
     #[cfg(feature="windows-security")] fn get_ServerCertificateErrors(&self, out: *mut <foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
@@ -7531,7 +7531,7 @@ impl IStreamSocketInformation2 {
     }}
 }
 DEFINE_IID!(IID_IStreamSocketListener, 4283511863, 57247, 19952, 191, 130, 14, 197, 215, 179, 90, 174);
-RT_INTERFACE!{interface IStreamSocketListener(IStreamSocketListenerVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListener] {
+RT_INTERFACE!{interface IStreamSocketListener(IStreamSocketListenerVtbl): IInspectable [IID_IStreamSocketListener] {
     fn get_Control(&self, out: *mut <StreamSocketListenerControl as RtType>::Abi) -> HRESULT,
     fn get_Information(&self, out: *mut <StreamSocketListenerInformation as RtType>::Abi) -> HRESULT,
     fn BindServiceNameAsync(&self, localServiceName: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -7574,7 +7574,7 @@ RT_CLASS!{class StreamSocketListener: IStreamSocketListener}
 impl RtActivatable<IActivationFactory> for StreamSocketListener {}
 DEFINE_CLSID!(StreamSocketListener(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,116,114,101,97,109,83,111,99,107,101,116,76,105,115,116,101,110,101,114,0]) [CLSID_StreamSocketListener]);
 DEFINE_IID!(IID_IStreamSocketListener2, 1703788862, 47934, 17496, 178, 50, 237, 16, 136, 105, 75, 152);
-RT_INTERFACE!{interface IStreamSocketListener2(IStreamSocketListener2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListener2] {
+RT_INTERFACE!{interface IStreamSocketListener2(IStreamSocketListener2Vtbl): IInspectable [IID_IStreamSocketListener2] {
     fn BindServiceNameWithProtectionLevelAsync(&self, localServiceName: HSTRING, protectionLevel: SocketProtectionLevel, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn BindServiceNameWithProtectionLevelAndAdapterAsync(&self, localServiceName: HSTRING, protectionLevel: SocketProtectionLevel, adapter: <super::connectivity::NetworkAdapter as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
@@ -7591,7 +7591,7 @@ impl IStreamSocketListener2 {
     }}
 }
 DEFINE_IID!(IID_IStreamSocketListener3, 1201152028, 48632, 18713, 133, 66, 40, 212, 80, 231, 69, 7);
-RT_INTERFACE!{interface IStreamSocketListener3(IStreamSocketListener3Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListener3] {
+RT_INTERFACE!{interface IStreamSocketListener3(IStreamSocketListener3Vtbl): IInspectable [IID_IStreamSocketListener3] {
     fn CancelIOAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn EnableTransferOwnership(&self, taskId: Guid) -> HRESULT,
     fn EnableTransferOwnershipWithConnectedStandbyAction(&self, taskId: Guid, connectedStandbyAction: SocketActivityConnectedStandbyAction) -> HRESULT,
@@ -7622,7 +7622,7 @@ impl IStreamSocketListener3 {
     }}
 }
 DEFINE_IID!(IID_IStreamSocketListenerConnectionReceivedEventArgs, 205991593, 14143, 17531, 133, 177, 221, 212, 84, 136, 3, 186);
-RT_INTERFACE!{interface IStreamSocketListenerConnectionReceivedEventArgs(IStreamSocketListenerConnectionReceivedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListenerConnectionReceivedEventArgs] {
+RT_INTERFACE!{interface IStreamSocketListenerConnectionReceivedEventArgs(IStreamSocketListenerConnectionReceivedEventArgsVtbl): IInspectable [IID_IStreamSocketListenerConnectionReceivedEventArgs] {
     fn get_Socket(&self, out: *mut <StreamSocket as RtType>::Abi) -> HRESULT
 }}
 impl IStreamSocketListenerConnectionReceivedEventArgs {
@@ -7634,7 +7634,7 @@ impl IStreamSocketListenerConnectionReceivedEventArgs {
 }
 RT_CLASS!{class StreamSocketListenerConnectionReceivedEventArgs: IStreamSocketListenerConnectionReceivedEventArgs}
 DEFINE_IID!(IID_IStreamSocketListenerControl, 551077238, 36234, 19898, 151, 34, 161, 108, 77, 152, 73, 128);
-RT_INTERFACE!{interface IStreamSocketListenerControl(IStreamSocketListenerControlVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListenerControl] {
+RT_INTERFACE!{interface IStreamSocketListenerControl(IStreamSocketListenerControlVtbl): IInspectable [IID_IStreamSocketListenerControl] {
     fn get_QualityOfService(&self, out: *mut SocketQualityOfService) -> HRESULT,
     fn put_QualityOfService(&self, value: SocketQualityOfService) -> HRESULT
 }}
@@ -7651,7 +7651,7 @@ impl IStreamSocketListenerControl {
 }
 RT_CLASS!{class StreamSocketListenerControl: IStreamSocketListenerControl}
 DEFINE_IID!(IID_IStreamSocketListenerControl2, 2492184165, 11326, 16459, 184, 176, 142, 178, 73, 162, 176, 161);
-RT_INTERFACE!{interface IStreamSocketListenerControl2(IStreamSocketListenerControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListenerControl2] {
+RT_INTERFACE!{interface IStreamSocketListenerControl2(IStreamSocketListenerControl2Vtbl): IInspectable [IID_IStreamSocketListenerControl2] {
     fn get_NoDelay(&self, out: *mut bool) -> HRESULT,
     fn put_NoDelay(&self, value: bool) -> HRESULT,
     fn get_KeepAlive(&self, out: *mut bool) -> HRESULT,
@@ -7700,7 +7700,7 @@ impl IStreamSocketListenerControl2 {
     }}
 }
 DEFINE_IID!(IID_IStreamSocketListenerInformation, 3861620783, 42554, 17163, 191, 98, 41, 233, 62, 86, 51, 180);
-RT_INTERFACE!{interface IStreamSocketListenerInformation(IStreamSocketListenerInformationVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketListenerInformation] {
+RT_INTERFACE!{interface IStreamSocketListenerInformation(IStreamSocketListenerInformationVtbl): IInspectable [IID_IStreamSocketListenerInformation] {
     fn get_LocalPort(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IStreamSocketListenerInformation {
@@ -7712,7 +7712,7 @@ impl IStreamSocketListenerInformation {
 }
 RT_CLASS!{class StreamSocketListenerInformation: IStreamSocketListenerInformation}
 DEFINE_IID!(IID_IStreamSocketStatics, 2753608778, 28206, 19189, 181, 86, 53, 90, 224, 205, 79, 41);
-RT_INTERFACE!{static interface IStreamSocketStatics(IStreamSocketStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStreamSocketStatics] {
+RT_INTERFACE!{static interface IStreamSocketStatics(IStreamSocketStaticsVtbl): IInspectable [IID_IStreamSocketStatics] {
     fn GetEndpointPairsAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>> as RtType>::Abi) -> HRESULT,
     fn GetEndpointPairsWithSortOptionsAsync(&self, remoteHostName: <super::HostName as RtType>::Abi, remoteServiceName: HSTRING, sortOptions: super::HostNameSortOptions, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<super::EndpointPair>> as RtType>::Abi) -> HRESULT
 }}
@@ -7729,7 +7729,7 @@ impl IStreamSocketStatics {
     }}
 }
 DEFINE_IID!(IID_IStreamWebSocket, 3175762392, 45705, 17851, 151, 235, 199, 82, 82, 5, 168, 67);
-RT_INTERFACE!{interface IStreamWebSocket(IStreamWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IStreamWebSocket] {
+RT_INTERFACE!{interface IStreamWebSocket(IStreamWebSocketVtbl): IInspectable [IID_IStreamWebSocket] {
     fn get_Control(&self, out: *mut <StreamWebSocketControl as RtType>::Abi) -> HRESULT,
     fn get_Information(&self, out: *mut <StreamWebSocketInformation as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_InputStream(&self, out: *mut <super::super::storage::streams::IInputStream as RtType>::Abi) -> HRESULT
@@ -7755,7 +7755,7 @@ RT_CLASS!{class StreamWebSocket: IStreamWebSocket}
 impl RtActivatable<IActivationFactory> for StreamWebSocket {}
 DEFINE_CLSID!(StreamWebSocket(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,83,116,114,101,97,109,87,101,98,83,111,99,107,101,116,0]) [CLSID_StreamWebSocket]);
 DEFINE_IID!(IID_IStreamWebSocket2, 2857175243, 37877, 18040, 130, 54, 87, 204, 229, 65, 126, 213);
-RT_INTERFACE!{interface IStreamWebSocket2(IStreamWebSocket2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamWebSocket2] {
+RT_INTERFACE!{interface IStreamWebSocket2(IStreamWebSocket2Vtbl): IInspectable [IID_IStreamWebSocket2] {
     fn add_ServerCustomValidationRequested(&self, eventHandler: <foundation::TypedEventHandler<StreamWebSocket, WebSocketServerCustomValidationRequestedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_ServerCustomValidationRequested(&self, eventCookie: foundation::EventRegistrationToken) -> HRESULT
 }}
@@ -7771,7 +7771,7 @@ impl IStreamWebSocket2 {
     }}
 }
 DEFINE_IID!(IID_IStreamWebSocketControl, 3035920561, 42074, 18651, 149, 58, 100, 91, 125, 150, 76, 7);
-RT_INTERFACE!{interface IStreamWebSocketControl(IStreamWebSocketControlVtbl): IInspectable(IInspectableVtbl) [IID_IStreamWebSocketControl] {
+RT_INTERFACE!{interface IStreamWebSocketControl(IStreamWebSocketControlVtbl): IInspectable [IID_IStreamWebSocketControl] {
     fn get_NoDelay(&self, out: *mut bool) -> HRESULT,
     fn put_NoDelay(&self, value: bool) -> HRESULT
 }}
@@ -7788,7 +7788,7 @@ impl IStreamWebSocketControl {
 }
 RT_CLASS!{class StreamWebSocketControl: IStreamWebSocketControl}
 DEFINE_IID!(IID_IStreamWebSocketControl2, 559783806, 64088, 16602, 159, 17, 164, 141, 175, 233, 80, 55);
-RT_INTERFACE!{interface IStreamWebSocketControl2(IStreamWebSocketControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IStreamWebSocketControl2] {
+RT_INTERFACE!{interface IStreamWebSocketControl2(IStreamWebSocketControl2Vtbl): IInspectable [IID_IStreamWebSocketControl2] {
     fn get_DesiredUnsolicitedPongInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn put_DesiredUnsolicitedPongInterval(&self, value: foundation::TimeSpan) -> HRESULT,
     fn get_ActualUnsolicitedPongInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -7822,7 +7822,7 @@ impl IStreamWebSocketControl2 {
 }
 RT_CLASS!{class StreamWebSocketInformation: IWebSocketInformation}
 DEFINE_IID!(IID_IWebSocket, 4168563055, 39345, 19992, 188, 8, 133, 12, 154, 223, 21, 110);
-RT_INTERFACE!{interface IWebSocket(IWebSocketVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocket] {
+RT_INTERFACE!{interface IWebSocket(IWebSocketVtbl): IInspectable [IID_IWebSocket] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_OutputStream(&self, out: *mut <super::super::storage::streams::IOutputStream as RtType>::Abi) -> HRESULT,
     fn ConnectAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -7861,7 +7861,7 @@ impl IWebSocket {
     }}
 }
 DEFINE_IID!(IID_IWebSocketClosedEventArgs, 3468135687, 53416, 18179, 160, 145, 200, 194, 192, 145, 91, 195);
-RT_INTERFACE!{interface IWebSocketClosedEventArgs(IWebSocketClosedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketClosedEventArgs] {
+RT_INTERFACE!{interface IWebSocketClosedEventArgs(IWebSocketClosedEventArgsVtbl): IInspectable [IID_IWebSocketClosedEventArgs] {
     fn get_Code(&self, out: *mut u16) -> HRESULT,
     fn get_Reason(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -7879,7 +7879,7 @@ impl IWebSocketClosedEventArgs {
 }
 RT_CLASS!{class WebSocketClosedEventArgs: IWebSocketClosedEventArgs}
 DEFINE_IID!(IID_IWebSocketControl, 784645571, 55717, 17754, 152, 17, 222, 36, 212, 83, 55, 233);
-RT_INTERFACE!{interface IWebSocketControl(IWebSocketControlVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketControl] {
+RT_INTERFACE!{interface IWebSocketControl(IWebSocketControlVtbl): IInspectable [IID_IWebSocketControl] {
     fn get_OutboundBufferSizeInBytes(&self, out: *mut u32) -> HRESULT,
     fn put_OutboundBufferSizeInBytes(&self, value: u32) -> HRESULT,
     #[cfg(not(feature="windows-security"))] fn __Dummy2(&self) -> (),
@@ -7927,7 +7927,7 @@ impl IWebSocketControl {
     }}
 }
 DEFINE_IID!(IID_IWebSocketControl2, 2042871299, 62154, 17950, 175, 78, 150, 101, 188, 45, 6, 32);
-RT_INTERFACE!{interface IWebSocketControl2(IWebSocketControl2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketControl2] {
+RT_INTERFACE!{interface IWebSocketControl2(IWebSocketControl2Vtbl): IInspectable [IID_IWebSocketControl2] {
     #[cfg(feature="windows-security")] fn get_IgnorableServerCertificateErrors(&self, out: *mut <foundation::collections::IVector<super::super::security::cryptography::certificates::ChainValidationResult> as RtType>::Abi) -> HRESULT
 }}
 impl IWebSocketControl2 {
@@ -7946,7 +7946,7 @@ impl WebSocketError {
 }
 DEFINE_CLSID!(WebSocketError(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,87,101,98,83,111,99,107,101,116,69,114,114,111,114,0]) [CLSID_WebSocketError]);
 DEFINE_IID!(IID_IWebSocketErrorStatics, 667808603, 8033, 18185, 142, 2, 97, 40, 58, 218, 78, 157);
-RT_INTERFACE!{static interface IWebSocketErrorStatics(IWebSocketErrorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketErrorStatics] {
+RT_INTERFACE!{static interface IWebSocketErrorStatics(IWebSocketErrorStaticsVtbl): IInspectable [IID_IWebSocketErrorStatics] {
     #[cfg(feature="windows-web")] fn GetStatus(&self, hresult: i32, out: *mut super::super::web::WebErrorStatus) -> HRESULT
 }}
 impl IWebSocketErrorStatics {
@@ -7957,7 +7957,7 @@ impl IWebSocketErrorStatics {
     }}
 }
 DEFINE_IID!(IID_IWebSocketInformation, 1577181974, 51498, 18341, 178, 95, 7, 132, 118, 57, 209, 129);
-RT_INTERFACE!{interface IWebSocketInformation(IWebSocketInformationVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketInformation] {
+RT_INTERFACE!{interface IWebSocketInformation(IWebSocketInformationVtbl): IInspectable [IID_IWebSocketInformation] {
     fn get_LocalAddress(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_BandwidthStatistics(&self, out: *mut BandwidthStatistics) -> HRESULT,
     fn get_Protocol(&self, out: *mut HSTRING) -> HRESULT
@@ -7980,7 +7980,7 @@ impl IWebSocketInformation {
     }}
 }
 DEFINE_IID!(IID_IWebSocketInformation2, 3458021838, 41399, 19779, 130, 105, 141, 91, 152, 27, 212, 122);
-RT_INTERFACE!{interface IWebSocketInformation2(IWebSocketInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketInformation2] {
+RT_INTERFACE!{interface IWebSocketInformation2(IWebSocketInformation2Vtbl): IInspectable [IID_IWebSocketInformation2] {
     #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
     fn get_ServerCertificateErrorSeverity(&self, out: *mut SocketSslErrorSeverity) -> HRESULT,
     #[cfg(feature="windows-security")] fn get_ServerCertificateErrors(&self, out: *mut <foundation::collections::IVectorView<super::super::security::cryptography::certificates::ChainValidationResult> as RtType>::Abi) -> HRESULT,
@@ -8013,7 +8013,7 @@ impl IWebSocketInformation2 {
 impl RtActivatable<IActivationFactory> for WebSocketKeepAlive {}
 DEFINE_CLSID!(WebSocketKeepAlive(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,83,111,99,107,101,116,115,46,87,101,98,83,111,99,107,101,116,75,101,101,112,65,108,105,118,101,0]) [CLSID_WebSocketKeepAlive]);
 DEFINE_IID!(IID_IWebSocketServerCustomValidationRequestedEventArgs, 4293918280, 554, 19127, 139, 54, 225, 10, 244, 100, 14, 107);
-RT_INTERFACE!{interface IWebSocketServerCustomValidationRequestedEventArgs(IWebSocketServerCustomValidationRequestedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebSocketServerCustomValidationRequestedEventArgs] {
+RT_INTERFACE!{interface IWebSocketServerCustomValidationRequestedEventArgs(IWebSocketServerCustomValidationRequestedEventArgsVtbl): IInspectable [IID_IWebSocketServerCustomValidationRequestedEventArgs] {
     #[cfg(not(feature="windows-security"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-security")] fn get_ServerCertificate(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
     fn get_ServerCertificateErrorSeverity(&self, out: *mut SocketSslErrorSeverity) -> HRESULT,
@@ -8060,7 +8060,7 @@ RT_CLASS!{class WebSocketServerCustomValidationRequestedEventArgs: IWebSocketSer
 pub mod vpn { // Windows.Networking.Vpn
 use crate::prelude::*;
 DEFINE_IID!(IID_IVpnAppId, 2064033333, 23640, 16857, 148, 167, 191, 188, 241, 216, 202, 84);
-RT_INTERFACE!{interface IVpnAppId(IVpnAppIdVtbl): IInspectable(IInspectableVtbl) [IID_IVpnAppId] {
+RT_INTERFACE!{interface IVpnAppId(IVpnAppIdVtbl): IInspectable [IID_IVpnAppId] {
     fn get_Type(&self, out: *mut VpnAppIdType) -> HRESULT,
     fn put_Type(&self, value: VpnAppIdType) -> HRESULT,
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT,
@@ -8095,7 +8095,7 @@ impl VpnAppId {
 }
 DEFINE_CLSID!(VpnAppId(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,65,112,112,73,100,0]) [CLSID_VpnAppId]);
 DEFINE_IID!(IID_IVpnAppIdFactory, 1185807658, 2731, 20443, 130, 29, 211, 221, 201, 25, 120, 139);
-RT_INTERFACE!{static interface IVpnAppIdFactory(IVpnAppIdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnAppIdFactory] {
+RT_INTERFACE!{static interface IVpnAppIdFactory(IVpnAppIdFactoryVtbl): IInspectable [IID_IVpnAppIdFactory] {
     fn Create(&self, type_: VpnAppIdType, value: HSTRING, out: *mut <VpnAppId as RtType>::Abi) -> HRESULT
 }}
 impl IVpnAppIdFactory {
@@ -8112,7 +8112,7 @@ RT_ENUM! { enum VpnAuthenticationMethod: i32 {
     Mschapv2 = 0, Eap = 1, Certificate = 2, PresharedKey = 3,
 }}
 DEFINE_IID!(IID_IVpnChannel, 1254591751, 53672, 17155, 160, 145, 200, 210, 224, 145, 91, 195);
-RT_INTERFACE!{interface IVpnChannel(IVpnChannelVtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannel] {
+RT_INTERFACE!{interface IVpnChannel(IVpnChannelVtbl): IInspectable [IID_IVpnChannel] {
     fn AssociateTransport(&self, mainOuterTunnelTransport: <IInspectable as RtType>::Abi, optionalOuterTunnelTransport: <IInspectable as RtType>::Abi) -> HRESULT,
     fn Start(&self, assignedClientIPv4list: <foundation::collections::IVectorView<super::HostName> as RtType>::Abi, assignedClientIPv6list: <foundation::collections::IVectorView<super::HostName> as RtType>::Abi, vpnInterfaceId: <VpnInterfaceId as RtType>::Abi, routeScope: <VpnRouteAssignment as RtType>::Abi, namespaceScope: <VpnNamespaceAssignment as RtType>::Abi, mtuSize: u32, maxFrameSize: u32, optimizeForLowCostNetwork: bool, mainOuterTunnelTransport: <IInspectable as RtType>::Abi, optionalOuterTunnelTransport: <IInspectable as RtType>::Abi) -> HRESULT,
     fn Stop(&self) -> HRESULT,
@@ -8213,7 +8213,7 @@ impl VpnChannel {
 }
 DEFINE_CLSID!(VpnChannel(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,104,97,110,110,101,108,0]) [CLSID_VpnChannel]);
 DEFINE_IID!(IID_IVpnChannel2, 576049509, 39227, 17961, 173, 96, 241, 195, 243, 83, 127, 80);
-RT_INTERFACE!{interface IVpnChannel2(IVpnChannel2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannel2] {
+RT_INTERFACE!{interface IVpnChannel2(IVpnChannel2Vtbl): IInspectable [IID_IVpnChannel2] {
     fn StartWithMainTransport(&self, assignedClientIPv4list: <foundation::collections::IVectorView<super::HostName> as RtType>::Abi, assignedClientIPv6list: <foundation::collections::IVectorView<super::HostName> as RtType>::Abi, vpnInterfaceId: <VpnInterfaceId as RtType>::Abi, assignedRoutes: <VpnRouteAssignment as RtType>::Abi, assignedDomainName: <VpnDomainNameAssignment as RtType>::Abi, mtuSize: u32, maxFrameSize: u32, reserved: bool, mainOuterTunnelTransport: <IInspectable as RtType>::Abi) -> HRESULT,
     fn StartExistingTransports(&self, assignedClientIPv4list: <foundation::collections::IVectorView<super::HostName> as RtType>::Abi, assignedClientIPv6list: <foundation::collections::IVectorView<super::HostName> as RtType>::Abi, vpnInterfaceId: <VpnInterfaceId as RtType>::Abi, assignedRoutes: <VpnRouteAssignment as RtType>::Abi, assignedDomainName: <VpnDomainNameAssignment as RtType>::Abi, mtuSize: u32, maxFrameSize: u32, reserved: bool) -> HRESULT,
     fn add_ActivityStateChange(&self, handler: <foundation::TypedEventHandler<VpnChannel, VpnChannelActivityStateChangedArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -8286,7 +8286,7 @@ impl IVpnChannel2 {
     }}
 }
 DEFINE_IID!(IID_IVpnChannel4, 3609620190, 10551, 16797, 149, 112, 72, 106, 235, 184, 24, 3);
-RT_INTERFACE!{interface IVpnChannel4(IVpnChannel4Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannel4] {
+RT_INTERFACE!{interface IVpnChannel4(IVpnChannel4Vtbl): IInspectable [IID_IVpnChannel4] {
     fn AddAndAssociateTransport(&self, transport: <IInspectable as RtType>::Abi, context: <IInspectable as RtType>::Abi) -> HRESULT,
     fn StartWithMultipleTransports(&self, assignedClientIpv4Addresses: <foundation::collections::IIterable<super::HostName> as RtType>::Abi, assignedClientIpv6Addresses: <foundation::collections::IIterable<super::HostName> as RtType>::Abi, vpninterfaceId: <VpnInterfaceId as RtType>::Abi, assignedRoutes: <VpnRouteAssignment as RtType>::Abi, assignedNamespace: <VpnDomainNameAssignment as RtType>::Abi, mtuSize: u32, maxFrameSize: u32, reserved: bool, transports: <foundation::collections::IIterable<IInspectable> as RtType>::Abi, assignedTrafficFilters: <VpnTrafficFilterAssignment as RtType>::Abi) -> HRESULT,
     fn ReplaceAndAssociateTransport(&self, transport: <IInspectable as RtType>::Abi, context: <IInspectable as RtType>::Abi) -> HRESULT,
@@ -8323,7 +8323,7 @@ impl IVpnChannel4 {
     }}
 }
 DEFINE_IID!(IID_IVpnChannelActivityEventArgs, 2741799154, 45020, 18293, 133, 93, 212, 172, 10, 53, 252, 85);
-RT_INTERFACE!{interface IVpnChannelActivityEventArgs(IVpnChannelActivityEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannelActivityEventArgs] {
+RT_INTERFACE!{interface IVpnChannelActivityEventArgs(IVpnChannelActivityEventArgsVtbl): IInspectable [IID_IVpnChannelActivityEventArgs] {
     fn get_Type(&self, out: *mut VpnChannelActivityEventType) -> HRESULT
 }}
 impl IVpnChannelActivityEventArgs {
@@ -8338,7 +8338,7 @@ RT_ENUM! { enum VpnChannelActivityEventType: i32 {
     Idle = 0, Active = 1,
 }}
 DEFINE_IID!(IID_IVpnChannelActivityStateChangedArgs, 1031079269, 64960, 19390, 162, 59, 69, 255, 252, 109, 151, 161);
-RT_INTERFACE!{interface IVpnChannelActivityStateChangedArgs(IVpnChannelActivityStateChangedArgsVtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannelActivityStateChangedArgs] {
+RT_INTERFACE!{interface IVpnChannelActivityStateChangedArgs(IVpnChannelActivityStateChangedArgsVtbl): IInspectable [IID_IVpnChannelActivityStateChangedArgs] {
     fn get_ActivityState(&self, out: *mut VpnChannelActivityEventType) -> HRESULT
 }}
 impl IVpnChannelActivityStateChangedArgs {
@@ -8350,7 +8350,7 @@ impl IVpnChannelActivityStateChangedArgs {
 }
 RT_CLASS!{class VpnChannelActivityStateChangedArgs: IVpnChannelActivityStateChangedArgs}
 DEFINE_IID!(IID_IVpnChannelConfiguration, 237886626, 8210, 20452, 177, 121, 140, 101, 44, 109, 16, 126);
-RT_INTERFACE!{interface IVpnChannelConfiguration(IVpnChannelConfigurationVtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannelConfiguration] {
+RT_INTERFACE!{interface IVpnChannelConfiguration(IVpnChannelConfigurationVtbl): IInspectable [IID_IVpnChannelConfiguration] {
     fn get_ServerServiceName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ServerHostNameList(&self, out: *mut <foundation::collections::IVectorView<super::HostName> as RtType>::Abi) -> HRESULT,
     fn get_CustomField(&self, out: *mut HSTRING) -> HRESULT
@@ -8374,7 +8374,7 @@ impl IVpnChannelConfiguration {
 }
 RT_CLASS!{class VpnChannelConfiguration: IVpnChannelConfiguration}
 DEFINE_IID!(IID_IVpnChannelConfiguration2, 4077606732, 30756, 18204, 161, 24, 99, 219, 201, 58, 228, 199);
-RT_INTERFACE!{interface IVpnChannelConfiguration2(IVpnChannelConfiguration2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannelConfiguration2] {
+RT_INTERFACE!{interface IVpnChannelConfiguration2(IVpnChannelConfiguration2Vtbl): IInspectable [IID_IVpnChannelConfiguration2] {
     fn get_ServerUris(&self, out: *mut <foundation::collections::IVectorView<foundation::Uri> as RtType>::Abi) -> HRESULT
 }}
 impl IVpnChannelConfiguration2 {
@@ -8388,7 +8388,7 @@ RT_ENUM! { enum VpnChannelRequestCredentialsOptions: u32 {
     None = 0, Retrying = 1, UseForSingleSignIn = 2,
 }}
 DEFINE_IID!(IID_IVpnChannelStatics, 2297103917, 59416, 20477, 152, 166, 54, 62, 55, 54, 201, 93);
-RT_INTERFACE!{static interface IVpnChannelStatics(IVpnChannelStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IVpnChannelStatics] {
+RT_INTERFACE!{static interface IVpnChannelStatics(IVpnChannelStaticsVtbl): IInspectable [IID_IVpnChannelStatics] {
     fn ProcessEventAsync(&self, thirdPartyPlugIn: <IInspectable as RtType>::Abi, event: <IInspectable as RtType>::Abi) -> HRESULT
 }}
 impl IVpnChannelStatics {
@@ -8398,7 +8398,7 @@ impl IVpnChannelStatics {
     }}
 }
 DEFINE_IID!(IID_IVpnCredential, 3085404915, 42093, 16459, 135, 41, 24, 50, 82, 40, 83, 172);
-RT_INTERFACE!{interface IVpnCredential(IVpnCredentialVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCredential] {
+RT_INTERFACE!{interface IVpnCredential(IVpnCredentialVtbl): IInspectable [IID_IVpnCredential] {
     #[cfg(feature="windows-security")] fn get_PasskeyCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-security")] fn get_CertificateCredential(&self, out: *mut <super::super::security::cryptography::certificates::Certificate as RtType>::Abi) -> HRESULT,
     fn get_AdditionalPin(&self, out: *mut HSTRING) -> HRESULT,
@@ -8431,7 +8431,7 @@ RT_ENUM! { enum VpnCredentialType: i32 {
     UsernamePassword = 0, UsernameOtpPin = 1, UsernamePasswordAndPin = 2, UsernamePasswordChange = 3, SmartCard = 4, ProtectedCertificate = 5, UnProtectedCertificate = 6,
 }}
 DEFINE_IID!(IID_IVpnCustomCheckBox, 1132955475, 965, 20065, 147, 215, 169, 87, 113, 76, 66, 130);
-RT_INTERFACE!{interface IVpnCustomCheckBox(IVpnCustomCheckBoxVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomCheckBox] {
+RT_INTERFACE!{interface IVpnCustomCheckBox(IVpnCustomCheckBoxVtbl): IInspectable [IID_IVpnCustomCheckBox] {
     fn put_InitialCheckState(&self, value: bool) -> HRESULT,
     fn get_InitialCheckState(&self, out: *mut bool) -> HRESULT,
     fn get_Checked(&self, out: *mut bool) -> HRESULT
@@ -8456,7 +8456,7 @@ RT_CLASS!{class VpnCustomCheckBox: IVpnCustomCheckBox}
 impl RtActivatable<IActivationFactory> for VpnCustomCheckBox {}
 DEFINE_CLSID!(VpnCustomCheckBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,67,104,101,99,107,66,111,120,0]) [CLSID_VpnCustomCheckBox]);
 DEFINE_IID!(IID_IVpnCustomComboBox, 2586056078, 56225, 19567, 130, 112, 220, 243, 201, 118, 28, 76);
-RT_INTERFACE!{interface IVpnCustomComboBox(IVpnCustomComboBoxVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomComboBox] {
+RT_INTERFACE!{interface IVpnCustomComboBox(IVpnCustomComboBoxVtbl): IInspectable [IID_IVpnCustomComboBox] {
     fn put_OptionsText(&self, value: <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_OptionsText(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_Selected(&self, out: *mut u32) -> HRESULT
@@ -8481,7 +8481,7 @@ RT_CLASS!{class VpnCustomComboBox: IVpnCustomComboBox}
 impl RtActivatable<IActivationFactory> for VpnCustomComboBox {}
 DEFINE_CLSID!(VpnCustomComboBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,67,111,109,98,111,66,111,120,0]) [CLSID_VpnCustomComboBox]);
 DEFINE_IID!(IID_IVpnCustomEditBox, 805493152, 53183, 19467, 143, 60, 102, 245, 3, 194, 11, 57);
-RT_INTERFACE!{interface IVpnCustomEditBox(IVpnCustomEditBoxVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomEditBox] {
+RT_INTERFACE!{interface IVpnCustomEditBox(IVpnCustomEditBoxVtbl): IInspectable [IID_IVpnCustomEditBox] {
     fn put_DefaultText(&self, value: HSTRING) -> HRESULT,
     fn get_DefaultText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_NoEcho(&self, value: bool) -> HRESULT,
@@ -8517,14 +8517,14 @@ RT_CLASS!{class VpnCustomEditBox: IVpnCustomEditBox}
 impl RtActivatable<IActivationFactory> for VpnCustomEditBox {}
 DEFINE_CLSID!(VpnCustomEditBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,69,100,105,116,66,111,120,0]) [CLSID_VpnCustomEditBox]);
 DEFINE_IID!(IID_IVpnCustomErrorBox, 2663706546, 51522, 17071, 178, 35, 88, 139, 72, 50, 135, 33);
-RT_INTERFACE!{interface IVpnCustomErrorBox(IVpnCustomErrorBoxVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomErrorBox] {
+RT_INTERFACE!{interface IVpnCustomErrorBox(IVpnCustomErrorBoxVtbl): IInspectable [IID_IVpnCustomErrorBox] {
     
 }}
 RT_CLASS!{class VpnCustomErrorBox: IVpnCustomErrorBox}
 impl RtActivatable<IActivationFactory> for VpnCustomErrorBox {}
 DEFINE_CLSID!(VpnCustomErrorBox(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,69,114,114,111,114,66,111,120,0]) [CLSID_VpnCustomErrorBox]);
 DEFINE_IID!(IID_IVpnCustomPrompt, 2603531899, 34773, 17212, 180, 246, 238, 230, 170, 104, 162, 68);
-RT_INTERFACE!{interface IVpnCustomPrompt(IVpnCustomPromptVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomPrompt] {
+RT_INTERFACE!{interface IVpnCustomPrompt(IVpnCustomPromptVtbl): IInspectable [IID_IVpnCustomPrompt] {
     fn put_Label(&self, value: HSTRING) -> HRESULT,
     fn get_Label(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Compulsory(&self, value: bool) -> HRESULT,
@@ -8562,7 +8562,7 @@ impl IVpnCustomPrompt {
     }}
 }
 DEFINE_IID!(IID_IVpnCustomPromptBooleanInput, 3301549726, 65351, 17703, 159, 39, 164, 146, 146, 1, 153, 121);
-RT_INTERFACE!{interface IVpnCustomPromptBooleanInput(IVpnCustomPromptBooleanInputVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomPromptBooleanInput] {
+RT_INTERFACE!{interface IVpnCustomPromptBooleanInput(IVpnCustomPromptBooleanInputVtbl): IInspectable [IID_IVpnCustomPromptBooleanInput] {
     fn put_InitialValue(&self, value: bool) -> HRESULT,
     fn get_InitialValue(&self, out: *mut bool) -> HRESULT,
     fn get_Value(&self, out: *mut bool) -> HRESULT
@@ -8587,7 +8587,7 @@ RT_CLASS!{class VpnCustomPromptBooleanInput: IVpnCustomPromptBooleanInput}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptBooleanInput {}
 DEFINE_CLSID!(VpnCustomPromptBooleanInput(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,66,111,111,108,101,97,110,73,110,112,117,116,0]) [CLSID_VpnCustomPromptBooleanInput]);
 DEFINE_IID!(IID_IVpnCustomPromptElement, 1941788216, 28420, 16461, 147, 221, 80, 164, 73, 36, 163, 139);
-RT_INTERFACE!{interface IVpnCustomPromptElement(IVpnCustomPromptElementVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomPromptElement] {
+RT_INTERFACE!{interface IVpnCustomPromptElement(IVpnCustomPromptElementVtbl): IInspectable [IID_IVpnCustomPromptElement] {
     fn put_DisplayName(&self, value: HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Compulsory(&self, value: bool) -> HRESULT,
@@ -8625,7 +8625,7 @@ impl IVpnCustomPromptElement {
     }}
 }
 DEFINE_IID!(IID_IVpnCustomPromptOptionSelector, 999240921, 36545, 20117, 154, 78, 123, 166, 77, 56, 243, 48);
-RT_INTERFACE!{interface IVpnCustomPromptOptionSelector(IVpnCustomPromptOptionSelectorVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomPromptOptionSelector] {
+RT_INTERFACE!{interface IVpnCustomPromptOptionSelector(IVpnCustomPromptOptionSelectorVtbl): IInspectable [IID_IVpnCustomPromptOptionSelector] {
     fn get_Options(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
     fn get_SelectedIndex(&self, out: *mut u32) -> HRESULT
 }}
@@ -8645,7 +8645,7 @@ RT_CLASS!{class VpnCustomPromptOptionSelector: IVpnCustomPromptOptionSelector}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptOptionSelector {}
 DEFINE_CLSID!(VpnCustomPromptOptionSelector(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,79,112,116,105,111,110,83,101,108,101,99,116,111,114,0]) [CLSID_VpnCustomPromptOptionSelector]);
 DEFINE_IID!(IID_IVpnCustomPromptText, 1003011566, 14914, 18851, 171, 221, 7, 178, 237, 234, 117, 45);
-RT_INTERFACE!{interface IVpnCustomPromptText(IVpnCustomPromptTextVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomPromptText] {
+RT_INTERFACE!{interface IVpnCustomPromptText(IVpnCustomPromptTextVtbl): IInspectable [IID_IVpnCustomPromptText] {
     fn put_Text(&self, value: HSTRING) -> HRESULT,
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -8664,7 +8664,7 @@ RT_CLASS!{class VpnCustomPromptText: IVpnCustomPromptText}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptText {}
 DEFINE_CLSID!(VpnCustomPromptText(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,84,101,120,116,0]) [CLSID_VpnCustomPromptText]);
 DEFINE_IID!(IID_IVpnCustomPromptTextInput, 3386547317, 37180, 18389, 136, 186, 72, 252, 72, 147, 2, 53);
-RT_INTERFACE!{interface IVpnCustomPromptTextInput(IVpnCustomPromptTextInputVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomPromptTextInput] {
+RT_INTERFACE!{interface IVpnCustomPromptTextInput(IVpnCustomPromptTextInputVtbl): IInspectable [IID_IVpnCustomPromptTextInput] {
     fn put_PlaceholderText(&self, value: HSTRING) -> HRESULT,
     fn get_PlaceholderText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_IsTextHidden(&self, value: bool) -> HRESULT,
@@ -8700,7 +8700,7 @@ RT_CLASS!{class VpnCustomPromptTextInput: IVpnCustomPromptTextInput}
 impl RtActivatable<IActivationFactory> for VpnCustomPromptTextInput {}
 DEFINE_CLSID!(VpnCustomPromptTextInput(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,67,117,115,116,111,109,80,114,111,109,112,116,84,101,120,116,73,110,112,117,116,0]) [CLSID_VpnCustomPromptTextInput]);
 DEFINE_IID!(IID_IVpnCustomTextBox, 3668231114, 36643, 19766, 145, 241, 118, 217, 55, 130, 121, 66);
-RT_INTERFACE!{interface IVpnCustomTextBox(IVpnCustomTextBoxVtbl): IInspectable(IInspectableVtbl) [IID_IVpnCustomTextBox] {
+RT_INTERFACE!{interface IVpnCustomTextBox(IVpnCustomTextBoxVtbl): IInspectable [IID_IVpnCustomTextBox] {
     fn put_DisplayText(&self, value: HSTRING) -> HRESULT,
     fn get_DisplayText(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -8722,7 +8722,7 @@ RT_ENUM! { enum VpnDataPathType: i32 {
     Send = 0, Receive = 1,
 }}
 DEFINE_IID!(IID_IVpnDomainNameAssignment, 1094037825, 52443, 18869, 148, 1, 3, 154, 138, 231, 103, 233);
-RT_INTERFACE!{interface IVpnDomainNameAssignment(IVpnDomainNameAssignmentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnDomainNameAssignment] {
+RT_INTERFACE!{interface IVpnDomainNameAssignment(IVpnDomainNameAssignmentVtbl): IInspectable [IID_IVpnDomainNameAssignment] {
     fn get_DomainNameList(&self, out: *mut <foundation::collections::IVector<VpnDomainNameInfo> as RtType>::Abi) -> HRESULT,
     fn put_ProxyAutoConfigurationUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_ProxyAutoConfigurationUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
@@ -8747,7 +8747,7 @@ RT_CLASS!{class VpnDomainNameAssignment: IVpnDomainNameAssignment}
 impl RtActivatable<IActivationFactory> for VpnDomainNameAssignment {}
 DEFINE_CLSID!(VpnDomainNameAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,68,111,109,97,105,110,78,97,109,101,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnDomainNameAssignment]);
 DEFINE_IID!(IID_IVpnDomainNameInfo, 2905520175, 60046, 20346, 132, 62, 26, 135, 227, 46, 27, 154);
-RT_INTERFACE!{interface IVpnDomainNameInfo(IVpnDomainNameInfoVtbl): IInspectable(IInspectableVtbl) [IID_IVpnDomainNameInfo] {
+RT_INTERFACE!{interface IVpnDomainNameInfo(IVpnDomainNameInfoVtbl): IInspectable [IID_IVpnDomainNameInfo] {
     fn put_DomainName(&self, value: <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_DomainName(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn put_DomainNameType(&self, value: VpnDomainNameType) -> HRESULT,
@@ -8794,7 +8794,7 @@ impl VpnDomainNameInfo {
 }
 DEFINE_CLSID!(VpnDomainNameInfo(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,68,111,109,97,105,110,78,97,109,101,73,110,102,111,0]) [CLSID_VpnDomainNameInfo]);
 DEFINE_IID!(IID_IVpnDomainNameInfo2, 2877755729, 27731, 18472, 152, 131, 216, 134, 222, 16, 68, 7);
-RT_INTERFACE!{interface IVpnDomainNameInfo2(IVpnDomainNameInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnDomainNameInfo2] {
+RT_INTERFACE!{interface IVpnDomainNameInfo2(IVpnDomainNameInfo2Vtbl): IInspectable [IID_IVpnDomainNameInfo2] {
     fn get_WebProxyUris(&self, out: *mut <foundation::collections::IVector<foundation::Uri> as RtType>::Abi) -> HRESULT
 }}
 impl IVpnDomainNameInfo2 {
@@ -8805,7 +8805,7 @@ impl IVpnDomainNameInfo2 {
     }}
 }
 DEFINE_IID!(IID_IVpnDomainNameInfoFactory, 621263733, 655, 18056, 141, 58, 196, 83, 29, 243, 125, 168);
-RT_INTERFACE!{static interface IVpnDomainNameInfoFactory(IVpnDomainNameInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnDomainNameInfoFactory] {
+RT_INTERFACE!{static interface IVpnDomainNameInfoFactory(IVpnDomainNameInfoFactoryVtbl): IInspectable [IID_IVpnDomainNameInfoFactory] {
     fn CreateVpnDomainNameInfo(&self, name: HSTRING, nameType: VpnDomainNameType, dnsServerList: <foundation::collections::IIterable<super::HostName> as RtType>::Abi, proxyServerList: <foundation::collections::IIterable<super::HostName> as RtType>::Abi, out: *mut <VpnDomainNameInfo as RtType>::Abi) -> HRESULT
 }}
 impl IVpnDomainNameInfoFactory {
@@ -8819,7 +8819,7 @@ RT_ENUM! { enum VpnDomainNameType: i32 {
     Suffix = 0, FullyQualified = 1, Reserved = 65535,
 }}
 DEFINE_IID!(IID_IVpnInterfaceId, 2653805730, 5906, 19684, 177, 121, 140, 101, 44, 109, 16, 17);
-RT_INTERFACE!{interface IVpnInterfaceId(IVpnInterfaceIdVtbl): IInspectable(IInspectableVtbl) [IID_IVpnInterfaceId] {
+RT_INTERFACE!{interface IVpnInterfaceId(IVpnInterfaceIdVtbl): IInspectable [IID_IVpnInterfaceId] {
     fn GetAddressInfo(&self, idSize: *mut u32, id: *mut *mut u8) -> HRESULT
 }}
 impl IVpnInterfaceId {
@@ -8838,7 +8838,7 @@ impl VpnInterfaceId {
 }
 DEFINE_CLSID!(VpnInterfaceId(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,73,110,116,101,114,102,97,99,101,73,100,0]) [CLSID_VpnInterfaceId]);
 DEFINE_IID!(IID_IVpnInterfaceIdFactory, 2653805730, 5906, 19684, 177, 121, 140, 101, 44, 109, 16, 0);
-RT_INTERFACE!{static interface IVpnInterfaceIdFactory(IVpnInterfaceIdFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnInterfaceIdFactory] {
+RT_INTERFACE!{static interface IVpnInterfaceIdFactory(IVpnInterfaceIdFactoryVtbl): IInspectable [IID_IVpnInterfaceIdFactory] {
     fn CreateVpnInterfaceId(&self, addressSize: u32, address: *mut u8, out: *mut <VpnInterfaceId as RtType>::Abi) -> HRESULT
 }}
 impl IVpnInterfaceIdFactory {
@@ -8852,7 +8852,7 @@ RT_ENUM! { enum VpnIPProtocol: i32 {
     None = 0, Tcp = 6, Udp = 17, Icmp = 1, Ipv6Icmp = 58, Igmp = 2, Pgm = 113,
 }}
 DEFINE_IID!(IID_IVpnManagementAgent, 423007949, 42436, 19134, 133, 43, 120, 91, 228, 203, 62, 52);
-RT_INTERFACE!{interface IVpnManagementAgent(IVpnManagementAgentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnManagementAgent] {
+RT_INTERFACE!{interface IVpnManagementAgent(IVpnManagementAgentVtbl): IInspectable [IID_IVpnManagementAgent] {
     fn AddProfileFromXmlAsync(&self, xml: HSTRING, out: *mut <foundation::IAsyncOperation<VpnManagementErrorStatus> as RtType>::Abi) -> HRESULT,
     fn AddProfileFromObjectAsync(&self, profile: <IVpnProfile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<VpnManagementErrorStatus> as RtType>::Abi) -> HRESULT,
     fn UpdateProfileFromXmlAsync(&self, xml: HSTRING, out: *mut <foundation::IAsyncOperation<VpnManagementErrorStatus> as RtType>::Abi) -> HRESULT,
@@ -8921,7 +8921,7 @@ RT_ENUM! { enum VpnManagementErrorStatus: i32 {
     Ok = 0, Other = 1, InvalidXmlSyntax = 2, ProfileNameTooLong = 3, ProfileInvalidAppId = 4, AccessDenied = 5, CannotFindProfile = 6, AlreadyDisconnecting = 7, AlreadyConnected = 8, GeneralAuthenticationFailure = 9, EapFailure = 10, SmartCardFailure = 11, CertificateFailure = 12, ServerConfiguration = 13, NoConnection = 14, ServerConnection = 15, UserNamePassword = 16, DnsNotResolvable = 17, InvalidIP = 18,
 }}
 DEFINE_IID!(IID_IVpnNamespaceAssignment, 3623344920, 12413, 19470, 189, 98, 143, 162, 112, 187, 173, 214);
-RT_INTERFACE!{interface IVpnNamespaceAssignment(IVpnNamespaceAssignmentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnNamespaceAssignment] {
+RT_INTERFACE!{interface IVpnNamespaceAssignment(IVpnNamespaceAssignmentVtbl): IInspectable [IID_IVpnNamespaceAssignment] {
     fn put_NamespaceList(&self, value: <foundation::collections::IVector<VpnNamespaceInfo> as RtType>::Abi) -> HRESULT,
     fn get_NamespaceList(&self, out: *mut <foundation::collections::IVector<VpnNamespaceInfo> as RtType>::Abi) -> HRESULT,
     fn put_ProxyAutoConfigUri(&self, value: <foundation::Uri as RtType>::Abi) -> HRESULT,
@@ -8951,7 +8951,7 @@ RT_CLASS!{class VpnNamespaceAssignment: IVpnNamespaceAssignment}
 impl RtActivatable<IActivationFactory> for VpnNamespaceAssignment {}
 DEFINE_CLSID!(VpnNamespaceAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,78,97,109,101,115,112,97,99,101,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnNamespaceAssignment]);
 DEFINE_IID!(IID_IVpnNamespaceInfo, 820902723, 17487, 17605, 129, 103, 163, 90, 145, 241, 175, 148);
-RT_INTERFACE!{interface IVpnNamespaceInfo(IVpnNamespaceInfoVtbl): IInspectable(IInspectableVtbl) [IID_IVpnNamespaceInfo] {
+RT_INTERFACE!{interface IVpnNamespaceInfo(IVpnNamespaceInfoVtbl): IInspectable [IID_IVpnNamespaceInfo] {
     fn put_Namespace(&self, value: HSTRING) -> HRESULT,
     fn get_Namespace(&self, out: *mut HSTRING) -> HRESULT,
     fn put_DnsServers(&self, value: <foundation::collections::IVector<super::HostName> as RtType>::Abi) -> HRESULT,
@@ -8997,7 +8997,7 @@ impl VpnNamespaceInfo {
 }
 DEFINE_CLSID!(VpnNamespaceInfo(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,78,97,109,101,115,112,97,99,101,73,110,102,111,0]) [CLSID_VpnNamespaceInfo]);
 DEFINE_IID!(IID_IVpnNamespaceInfoFactory, 3409876250, 45262, 17451, 172, 187, 95, 153, 178, 2, 195, 28);
-RT_INTERFACE!{static interface IVpnNamespaceInfoFactory(IVpnNamespaceInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnNamespaceInfoFactory] {
+RT_INTERFACE!{static interface IVpnNamespaceInfoFactory(IVpnNamespaceInfoFactoryVtbl): IInspectable [IID_IVpnNamespaceInfoFactory] {
     fn CreateVpnNamespaceInfo(&self, name: HSTRING, dnsServerList: <foundation::collections::IVector<super::HostName> as RtType>::Abi, proxyServerList: <foundation::collections::IVector<super::HostName> as RtType>::Abi, out: *mut <VpnNamespaceInfo as RtType>::Abi) -> HRESULT
 }}
 impl IVpnNamespaceInfoFactory {
@@ -9008,7 +9008,7 @@ impl IVpnNamespaceInfoFactory {
     }}
 }
 DEFINE_IID!(IID_IVpnNativeProfile, 2762924702, 25623, 17203, 152, 66, 240, 166, 109, 182, 152, 2);
-RT_INTERFACE!{interface IVpnNativeProfile(IVpnNativeProfileVtbl): IInspectable(IInspectableVtbl) [IID_IVpnNativeProfile] {
+RT_INTERFACE!{interface IVpnNativeProfile(IVpnNativeProfileVtbl): IInspectable [IID_IVpnNativeProfile] {
     fn get_Servers(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
     fn get_RoutingPolicyType(&self, out: *mut VpnRoutingPolicyType) -> HRESULT,
     fn put_RoutingPolicyType(&self, value: VpnRoutingPolicyType) -> HRESULT,
@@ -9077,7 +9077,7 @@ RT_CLASS!{class VpnNativeProfile: IVpnNativeProfile}
 impl RtActivatable<IActivationFactory> for VpnNativeProfile {}
 DEFINE_CLSID!(VpnNativeProfile(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,78,97,116,105,118,101,80,114,111,102,105,108,101,0]) [CLSID_VpnNativeProfile]);
 DEFINE_IID!(IID_IVpnNativeProfile2, 267134055, 52661, 19143, 181, 163, 10, 251, 94, 196, 118, 130);
-RT_INTERFACE!{interface IVpnNativeProfile2(IVpnNativeProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnNativeProfile2] {
+RT_INTERFACE!{interface IVpnNativeProfile2(IVpnNativeProfile2Vtbl): IInspectable [IID_IVpnNativeProfile2] {
     fn get_RequireVpnClientAppUI(&self, out: *mut bool) -> HRESULT,
     fn put_RequireVpnClientAppUI(&self, value: bool) -> HRESULT,
     fn get_ConnectionStatus(&self, out: *mut VpnManagementConnectionStatus) -> HRESULT
@@ -9102,7 +9102,7 @@ RT_ENUM! { enum VpnNativeProtocolType: i32 {
     Pptp = 0, L2tp = 1, IpsecIkev2 = 2,
 }}
 DEFINE_IID!(IID_IVpnPacketBuffer, 3271070204, 19804, 19043, 183, 13, 78, 48, 126, 172, 206, 85);
-RT_INTERFACE!{interface IVpnPacketBuffer(IVpnPacketBufferVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBuffer] {
+RT_INTERFACE!{interface IVpnPacketBuffer(IVpnPacketBufferVtbl): IInspectable [IID_IVpnPacketBuffer] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_Buffer(&self, out: *mut <super::super::storage::streams::Buffer as RtType>::Abi) -> HRESULT,
     fn put_Status(&self, value: VpnPacketBufferStatus) -> HRESULT,
@@ -9144,7 +9144,7 @@ impl VpnPacketBuffer {
 }
 DEFINE_CLSID!(VpnPacketBuffer(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,80,97,99,107,101,116,66,117,102,102,101,114,0]) [CLSID_VpnPacketBuffer]);
 DEFINE_IID!(IID_IVpnPacketBuffer2, 1717473776, 34821, 19445, 166, 25, 46, 132, 136, 46, 107, 79);
-RT_INTERFACE!{interface IVpnPacketBuffer2(IVpnPacketBuffer2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBuffer2] {
+RT_INTERFACE!{interface IVpnPacketBuffer2(IVpnPacketBuffer2Vtbl): IInspectable [IID_IVpnPacketBuffer2] {
     fn get_AppId(&self, out: *mut <VpnAppId as RtType>::Abi) -> HRESULT
 }}
 impl IVpnPacketBuffer2 {
@@ -9155,7 +9155,7 @@ impl IVpnPacketBuffer2 {
     }}
 }
 DEFINE_IID!(IID_IVpnPacketBuffer3, 3797288751, 4219, 19520, 177, 39, 91, 197, 62, 10, 217, 96);
-RT_INTERFACE!{interface IVpnPacketBuffer3(IVpnPacketBuffer3Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBuffer3] {
+RT_INTERFACE!{interface IVpnPacketBuffer3(IVpnPacketBuffer3Vtbl): IInspectable [IID_IVpnPacketBuffer3] {
     fn put_TransportContext(&self, value: <IInspectable as RtType>::Abi) -> HRESULT,
     fn get_TransportContext(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT
 }}
@@ -9171,7 +9171,7 @@ impl IVpnPacketBuffer3 {
     }}
 }
 DEFINE_IID!(IID_IVpnPacketBufferFactory, 2653805730, 5906, 19684, 177, 121, 140, 101, 44, 109, 153, 153);
-RT_INTERFACE!{static interface IVpnPacketBufferFactory(IVpnPacketBufferFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBufferFactory] {
+RT_INTERFACE!{static interface IVpnPacketBufferFactory(IVpnPacketBufferFactoryVtbl): IInspectable [IID_IVpnPacketBufferFactory] {
     fn CreateVpnPacketBuffer(&self, parentBuffer: <VpnPacketBuffer as RtType>::Abi, offset: u32, length: u32, out: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT
 }}
 impl IVpnPacketBufferFactory {
@@ -9182,7 +9182,7 @@ impl IVpnPacketBufferFactory {
     }}
 }
 DEFINE_IID!(IID_IVpnPacketBufferList, 3271070204, 19804, 19043, 183, 13, 78, 48, 126, 172, 206, 119);
-RT_INTERFACE!{interface IVpnPacketBufferList(IVpnPacketBufferListVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBufferList] {
+RT_INTERFACE!{interface IVpnPacketBufferList(IVpnPacketBufferListVtbl): IInspectable [IID_IVpnPacketBufferList] {
     fn Append(&self, nextVpnPacketBuffer: <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
     fn AddAtBegin(&self, nextVpnPacketBuffer: <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
     fn RemoveAtEnd(&self, out: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
@@ -9232,7 +9232,7 @@ impl IVpnPacketBufferList {
 }
 RT_CLASS!{class VpnPacketBufferList: IVpnPacketBufferList}
 DEFINE_IID!(IID_IVpnPacketBufferList2, 1048236005, 59934, 18474, 141, 152, 192, 101, 245, 125, 137, 234);
-RT_INTERFACE!{interface IVpnPacketBufferList2(IVpnPacketBufferList2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnPacketBufferList2] {
+RT_INTERFACE!{interface IVpnPacketBufferList2(IVpnPacketBufferList2Vtbl): IInspectable [IID_IVpnPacketBufferList2] {
     fn AddLeadingPacket(&self, nextVpnPacketBuffer: <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
     fn RemoveLeadingPacket(&self, out: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
     fn AddTrailingPacket(&self, nextVpnPacketBuffer: <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
@@ -9262,7 +9262,7 @@ RT_ENUM! { enum VpnPacketBufferStatus: i32 {
     Ok = 0, InvalidBufferSize = 1,
 }}
 DEFINE_IID!(IID_IVpnPickedCredential, 2591636167, 34900, 20050, 173, 151, 36, 221, 154, 132, 43, 206);
-RT_INTERFACE!{interface IVpnPickedCredential(IVpnPickedCredentialVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPickedCredential] {
+RT_INTERFACE!{interface IVpnPickedCredential(IVpnPickedCredentialVtbl): IInspectable [IID_IVpnPickedCredential] {
     #[cfg(feature="windows-security")] fn get_PasskeyCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT,
     fn get_AdditionalPin(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(feature="windows-security")] fn get_OldPasswordCredential(&self, out: *mut <super::super::security::credentials::PasswordCredential as RtType>::Abi) -> HRESULT
@@ -9286,7 +9286,7 @@ impl IVpnPickedCredential {
 }
 RT_CLASS!{class VpnPickedCredential: IVpnPickedCredential}
 DEFINE_IID!(IID_IVpnPlugIn, 3468135687, 53416, 18179, 160, 145, 200, 194, 192, 145, 91, 196);
-RT_INTERFACE!{interface IVpnPlugIn(IVpnPlugInVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPlugIn] {
+RT_INTERFACE!{interface IVpnPlugIn(IVpnPlugInVtbl): IInspectable [IID_IVpnPlugIn] {
     fn Connect(&self, channel: <VpnChannel as RtType>::Abi) -> HRESULT,
     fn Disconnect(&self, channel: <VpnChannel as RtType>::Abi) -> HRESULT,
     fn GetKeepAlivePayload(&self, channel: <VpnChannel as RtType>::Abi, keepAlivePacket: *mut <VpnPacketBuffer as RtType>::Abi) -> HRESULT,
@@ -9317,7 +9317,7 @@ impl IVpnPlugIn {
     }}
 }
 DEFINE_IID!(IID_IVpnPlugInProfile, 249499044, 20224, 17801, 141, 123, 75, 249, 136, 246, 84, 44);
-RT_INTERFACE!{interface IVpnPlugInProfile(IVpnPlugInProfileVtbl): IInspectable(IInspectableVtbl) [IID_IVpnPlugInProfile] {
+RT_INTERFACE!{interface IVpnPlugInProfile(IVpnPlugInProfileVtbl): IInspectable [IID_IVpnPlugInProfile] {
     fn get_ServerUris(&self, out: *mut <foundation::collections::IVector<foundation::Uri> as RtType>::Abi) -> HRESULT,
     fn get_CustomConfiguration(&self, out: *mut HSTRING) -> HRESULT,
     fn put_CustomConfiguration(&self, value: HSTRING) -> HRESULT,
@@ -9353,7 +9353,7 @@ RT_CLASS!{class VpnPlugInProfile: IVpnPlugInProfile}
 impl RtActivatable<IActivationFactory> for VpnPlugInProfile {}
 DEFINE_CLSID!(VpnPlugInProfile(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,80,108,117,103,73,110,80,114,111,102,105,108,101,0]) [CLSID_VpnPlugInProfile]);
 DEFINE_IID!(IID_IVpnPlugInProfile2, 1629243538, 53140, 19158, 186, 153, 0, 244, 255, 52, 86, 94);
-RT_INTERFACE!{interface IVpnPlugInProfile2(IVpnPlugInProfile2Vtbl): IInspectable(IInspectableVtbl) [IID_IVpnPlugInProfile2] {
+RT_INTERFACE!{interface IVpnPlugInProfile2(IVpnPlugInProfile2Vtbl): IInspectable [IID_IVpnPlugInProfile2] {
     fn get_RequireVpnClientAppUI(&self, out: *mut bool) -> HRESULT,
     fn put_RequireVpnClientAppUI(&self, value: bool) -> HRESULT,
     fn get_ConnectionStatus(&self, out: *mut VpnManagementConnectionStatus) -> HRESULT
@@ -9375,7 +9375,7 @@ impl IVpnPlugInProfile2 {
     }}
 }
 DEFINE_IID!(IID_IVpnProfile, 2020980561, 45271, 17371, 138, 147, 211, 254, 36, 121, 229, 106);
-RT_INTERFACE!{interface IVpnProfile(IVpnProfileVtbl): IInspectable(IInspectableVtbl) [IID_IVpnProfile] {
+RT_INTERFACE!{interface IVpnProfile(IVpnProfileVtbl): IInspectable [IID_IVpnProfile] {
     fn get_ProfileName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_ProfileName(&self, value: HSTRING) -> HRESULT,
     fn get_AppTriggers(&self, out: *mut <foundation::collections::IVector<VpnAppId> as RtType>::Abi) -> HRESULT,
@@ -9437,7 +9437,7 @@ impl IVpnProfile {
     }}
 }
 DEFINE_IID!(IID_IVpnRoute, 3044219779, 2409, 18073, 147, 142, 119, 118, 219, 41, 207, 179);
-RT_INTERFACE!{interface IVpnRoute(IVpnRouteVtbl): IInspectable(IInspectableVtbl) [IID_IVpnRoute] {
+RT_INTERFACE!{interface IVpnRoute(IVpnRouteVtbl): IInspectable [IID_IVpnRoute] {
     fn put_Address(&self, value: <super::HostName as RtType>::Abi) -> HRESULT,
     fn get_Address(&self, out: *mut <super::HostName as RtType>::Abi) -> HRESULT,
     fn put_PrefixSize(&self, value: u8) -> HRESULT,
@@ -9472,7 +9472,7 @@ impl VpnRoute {
 }
 DEFINE_CLSID!(VpnRoute(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,82,111,117,116,101,0]) [CLSID_VpnRoute]);
 DEFINE_IID!(IID_IVpnRouteAssignment, 3680820770, 52793, 19062, 149, 80, 246, 16, 57, 248, 14, 72);
-RT_INTERFACE!{interface IVpnRouteAssignment(IVpnRouteAssignmentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnRouteAssignment] {
+RT_INTERFACE!{interface IVpnRouteAssignment(IVpnRouteAssignmentVtbl): IInspectable [IID_IVpnRouteAssignment] {
     fn put_Ipv4InclusionRoutes(&self, value: <foundation::collections::IVector<VpnRoute> as RtType>::Abi) -> HRESULT,
     fn put_Ipv6InclusionRoutes(&self, value: <foundation::collections::IVector<VpnRoute> as RtType>::Abi) -> HRESULT,
     fn get_Ipv4InclusionRoutes(&self, out: *mut <foundation::collections::IVector<VpnRoute> as RtType>::Abi) -> HRESULT,
@@ -9535,7 +9535,7 @@ RT_CLASS!{class VpnRouteAssignment: IVpnRouteAssignment}
 impl RtActivatable<IActivationFactory> for VpnRouteAssignment {}
 DEFINE_CLSID!(VpnRouteAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,82,111,117,116,101,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnRouteAssignment]);
 DEFINE_IID!(IID_IVpnRouteFactory, 3186275839, 17871, 19353, 131, 251, 219, 59, 194, 103, 43, 2);
-RT_INTERFACE!{static interface IVpnRouteFactory(IVpnRouteFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnRouteFactory] {
+RT_INTERFACE!{static interface IVpnRouteFactory(IVpnRouteFactoryVtbl): IInspectable [IID_IVpnRouteFactory] {
     fn CreateVpnRoute(&self, address: <super::HostName as RtType>::Abi, prefixSize: u8, out: *mut <VpnRoute as RtType>::Abi) -> HRESULT
 }}
 impl IVpnRouteFactory {
@@ -9549,7 +9549,7 @@ RT_ENUM! { enum VpnRoutingPolicyType: i32 {
     SplitRouting = 0, ForceAllTrafficOverVpn = 1,
 }}
 DEFINE_IID!(IID_IVpnSystemHealth, 2577987759, 49390, 20085, 129, 122, 242, 49, 174, 229, 18, 61);
-RT_INTERFACE!{interface IVpnSystemHealth(IVpnSystemHealthVtbl): IInspectable(IInspectableVtbl) [IID_IVpnSystemHealth] {
+RT_INTERFACE!{interface IVpnSystemHealth(IVpnSystemHealthVtbl): IInspectable [IID_IVpnSystemHealth] {
     #[cfg(feature="windows-storage")] fn get_StatementOfHealth(&self, out: *mut <super::super::storage::streams::Buffer as RtType>::Abi) -> HRESULT
 }}
 impl IVpnSystemHealth {
@@ -9561,7 +9561,7 @@ impl IVpnSystemHealth {
 }
 RT_CLASS!{class VpnSystemHealth: IVpnSystemHealth}
 DEFINE_IID!(IID_IVpnTrafficFilter, 795417440, 27807, 18421, 172, 54, 187, 27, 4, 46, 44, 80);
-RT_INTERFACE!{interface IVpnTrafficFilter(IVpnTrafficFilterVtbl): IInspectable(IInspectableVtbl) [IID_IVpnTrafficFilter] {
+RT_INTERFACE!{interface IVpnTrafficFilter(IVpnTrafficFilterVtbl): IInspectable [IID_IVpnTrafficFilter] {
     fn get_AppId(&self, out: *mut <VpnAppId as RtType>::Abi) -> HRESULT,
     fn put_AppId(&self, value: <VpnAppId as RtType>::Abi) -> HRESULT,
     fn get_AppClaims(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
@@ -9637,7 +9637,7 @@ impl VpnTrafficFilter {
 }
 DEFINE_CLSID!(VpnTrafficFilter(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,84,114,97,102,102,105,99,70,105,108,116,101,114,0]) [CLSID_VpnTrafficFilter]);
 DEFINE_IID!(IID_IVpnTrafficFilterAssignment, 1456264284, 58980, 18206, 137, 205, 96, 22, 3, 185, 224, 243);
-RT_INTERFACE!{interface IVpnTrafficFilterAssignment(IVpnTrafficFilterAssignmentVtbl): IInspectable(IInspectableVtbl) [IID_IVpnTrafficFilterAssignment] {
+RT_INTERFACE!{interface IVpnTrafficFilterAssignment(IVpnTrafficFilterAssignmentVtbl): IInspectable [IID_IVpnTrafficFilterAssignment] {
     fn get_TrafficFilterList(&self, out: *mut <foundation::collections::IVector<VpnTrafficFilter> as RtType>::Abi) -> HRESULT,
     fn get_AllowOutbound(&self, out: *mut bool) -> HRESULT,
     fn put_AllowOutbound(&self, value: bool) -> HRESULT,
@@ -9673,7 +9673,7 @@ RT_CLASS!{class VpnTrafficFilterAssignment: IVpnTrafficFilterAssignment}
 impl RtActivatable<IActivationFactory> for VpnTrafficFilterAssignment {}
 DEFINE_CLSID!(VpnTrafficFilterAssignment(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,86,112,110,46,86,112,110,84,114,97,102,102,105,99,70,105,108,116,101,114,65,115,115,105,103,110,109,101,110,116,0]) [CLSID_VpnTrafficFilterAssignment]);
 DEFINE_IID!(IID_IVpnTrafficFilterFactory, 1208828373, 32665, 18252, 134, 238, 150, 223, 22, 131, 24, 241);
-RT_INTERFACE!{static interface IVpnTrafficFilterFactory(IVpnTrafficFilterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IVpnTrafficFilterFactory] {
+RT_INTERFACE!{static interface IVpnTrafficFilterFactory(IVpnTrafficFilterFactoryVtbl): IInspectable [IID_IVpnTrafficFilterFactory] {
     fn Create(&self, appId: <VpnAppId as RtType>::Abi, out: *mut <VpnTrafficFilter as RtType>::Abi) -> HRESULT
 }}
 impl IVpnTrafficFilterFactory {
@@ -9687,7 +9687,7 @@ impl IVpnTrafficFilterFactory {
 pub mod xboxlive { // Windows.Networking.XboxLive
 use crate::prelude::*;
 DEFINE_IID!(IID_IXboxLiveDeviceAddress, 4122727033, 15494, 19287, 163, 26, 185, 70, 36, 8, 253, 1);
-RT_INTERFACE!{interface IXboxLiveDeviceAddress(IXboxLiveDeviceAddressVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveDeviceAddress] {
+RT_INTERFACE!{interface IXboxLiveDeviceAddress(IXboxLiveDeviceAddressVtbl): IInspectable [IID_IXboxLiveDeviceAddress] {
     fn add_SnapshotChanged(&self, handler: <foundation::TypedEventHandler<XboxLiveDeviceAddress, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_SnapshotChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn GetSnapshotAsBase64(&self, out: *mut HSTRING) -> HRESULT,
@@ -9766,7 +9766,7 @@ impl XboxLiveDeviceAddress {
 }
 DEFINE_CLSID!(XboxLiveDeviceAddress(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,88,98,111,120,76,105,118,101,46,88,98,111,120,76,105,118,101,68,101,118,105,99,101,65,100,100,114,101,115,115,0]) [CLSID_XboxLiveDeviceAddress]);
 DEFINE_IID!(IID_IXboxLiveDeviceAddressStatics, 1498720281, 19065, 18737, 130, 124, 127, 80, 62, 150, 50, 99);
-RT_INTERFACE!{static interface IXboxLiveDeviceAddressStatics(IXboxLiveDeviceAddressStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveDeviceAddressStatics] {
+RT_INTERFACE!{static interface IXboxLiveDeviceAddressStatics(IXboxLiveDeviceAddressStaticsVtbl): IInspectable [IID_IXboxLiveDeviceAddressStatics] {
     fn CreateFromSnapshotBase64(&self, base64: HSTRING, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-storage")] fn CreateFromSnapshotBuffer(&self, buffer: <super::super::storage::streams::IBuffer as RtType>::Abi, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
@@ -9802,7 +9802,7 @@ impl IXboxLiveDeviceAddressStatics {
     }}
 }
 DEFINE_IID!(IID_IXboxLiveEndpointPair, 513442715, 33086, 17632, 184, 127, 200, 122, 9, 52, 117, 228);
-RT_INTERFACE!{interface IXboxLiveEndpointPair(IXboxLiveEndpointPairVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPair] {
+RT_INTERFACE!{interface IXboxLiveEndpointPair(IXboxLiveEndpointPairVtbl): IInspectable [IID_IXboxLiveEndpointPair] {
     fn add_StateChanged(&self, handler: <foundation::TypedEventHandler<XboxLiveEndpointPair, XboxLiveEndpointPairStateChangedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_StateChanged(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn DeleteAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -9890,7 +9890,7 @@ RT_ENUM! { enum XboxLiveEndpointPairCreationBehaviors: u32 {
     None = 0, ReevaluatePath = 1,
 }}
 DEFINE_IID!(IID_IXboxLiveEndpointPairCreationResult, 3651713941, 10923, 19742, 151, 148, 51, 236, 192, 220, 240, 254);
-RT_INTERFACE!{interface IXboxLiveEndpointPairCreationResult(IXboxLiveEndpointPairCreationResultVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairCreationResult] {
+RT_INTERFACE!{interface IXboxLiveEndpointPairCreationResult(IXboxLiveEndpointPairCreationResultVtbl): IInspectable [IID_IXboxLiveEndpointPairCreationResult] {
     fn get_DeviceAddress(&self, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
     fn get_Status(&self, out: *mut XboxLiveEndpointPairCreationStatus) -> HRESULT,
     fn get_IsExistingPathEvaluation(&self, out: *mut bool) -> HRESULT,
@@ -9926,7 +9926,7 @@ RT_ENUM! { enum XboxLiveEndpointPairState: i32 {
     Invalid = 0, CreatingOutbound = 1, CreatingInbound = 2, Ready = 3, DeletingLocally = 4, RemoteEndpointTerminating = 5, Deleted = 6,
 }}
 DEFINE_IID!(IID_IXboxLiveEndpointPairStateChangedEventArgs, 1496202069, 56840, 17639, 172, 59, 185, 185, 161, 105, 88, 58);
-RT_INTERFACE!{interface IXboxLiveEndpointPairStateChangedEventArgs(IXboxLiveEndpointPairStateChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairStateChangedEventArgs] {
+RT_INTERFACE!{interface IXboxLiveEndpointPairStateChangedEventArgs(IXboxLiveEndpointPairStateChangedEventArgsVtbl): IInspectable [IID_IXboxLiveEndpointPairStateChangedEventArgs] {
     fn get_OldState(&self, out: *mut XboxLiveEndpointPairState) -> HRESULT,
     fn get_NewState(&self, out: *mut XboxLiveEndpointPairState) -> HRESULT
 }}
@@ -9944,7 +9944,7 @@ impl IXboxLiveEndpointPairStateChangedEventArgs {
 }
 RT_CLASS!{class XboxLiveEndpointPairStateChangedEventArgs: IXboxLiveEndpointPairStateChangedEventArgs}
 DEFINE_IID!(IID_IXboxLiveEndpointPairStatics, 1680960304, 8570, 16963, 142, 225, 103, 41, 40, 29, 39, 219);
-RT_INTERFACE!{static interface IXboxLiveEndpointPairStatics(IXboxLiveEndpointPairStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairStatics] {
+RT_INTERFACE!{static interface IXboxLiveEndpointPairStatics(IXboxLiveEndpointPairStaticsVtbl): IInspectable [IID_IXboxLiveEndpointPairStatics] {
     fn FindEndpointPairBySocketAddressBytes(&self, localSocketAddressSize: u32, localSocketAddress: *mut u8, remoteSocketAddressSize: u32, remoteSocketAddress: *mut u8, out: *mut <XboxLiveEndpointPair as RtType>::Abi) -> HRESULT,
     fn FindEndpointPairByHostNamesAndPorts(&self, localHostName: <super::HostName as RtType>::Abi, localPort: HSTRING, remoteHostName: <super::HostName as RtType>::Abi, remotePort: HSTRING, out: *mut <XboxLiveEndpointPair as RtType>::Abi) -> HRESULT
 }}
@@ -9961,7 +9961,7 @@ impl IXboxLiveEndpointPairStatics {
     }}
 }
 DEFINE_IID!(IID_IXboxLiveEndpointPairTemplate, 1797811919, 13399, 16590, 185, 161, 192, 207, 224, 33, 62, 167);
-RT_INTERFACE!{interface IXboxLiveEndpointPairTemplate(IXboxLiveEndpointPairTemplateVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairTemplate] {
+RT_INTERFACE!{interface IXboxLiveEndpointPairTemplate(IXboxLiveEndpointPairTemplateVtbl): IInspectable [IID_IXboxLiveEndpointPairTemplate] {
     fn add_InboundEndpointPairCreated(&self, handler: <foundation::TypedEventHandler<XboxLiveEndpointPairTemplate, XboxLiveInboundEndpointPairCreatedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_InboundEndpointPairCreated(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn CreateEndpointPairDefaultAsync(&self, deviceAddress: <XboxLiveDeviceAddress as RtType>::Abi, out: *mut <foundation::IAsyncOperation<XboxLiveEndpointPairCreationResult> as RtType>::Abi) -> HRESULT,
@@ -10054,7 +10054,7 @@ impl XboxLiveEndpointPairTemplate {
 }
 DEFINE_CLSID!(XboxLiveEndpointPairTemplate(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,88,98,111,120,76,105,118,101,46,88,98,111,120,76,105,118,101,69,110,100,112,111,105,110,116,80,97,105,114,84,101,109,112,108,97,116,101,0]) [CLSID_XboxLiveEndpointPairTemplate]);
 DEFINE_IID!(IID_IXboxLiveEndpointPairTemplateStatics, 504566651, 29563, 18979, 188, 100, 8, 112, 247, 86, 85, 186);
-RT_INTERFACE!{static interface IXboxLiveEndpointPairTemplateStatics(IXboxLiveEndpointPairTemplateStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveEndpointPairTemplateStatics] {
+RT_INTERFACE!{static interface IXboxLiveEndpointPairTemplateStatics(IXboxLiveEndpointPairTemplateStaticsVtbl): IInspectable [IID_IXboxLiveEndpointPairTemplateStatics] {
     fn GetTemplateByName(&self, name: HSTRING, out: *mut <XboxLiveEndpointPairTemplate as RtType>::Abi) -> HRESULT,
     fn get_Templates(&self, out: *mut <foundation::collections::IVectorView<XboxLiveEndpointPairTemplate> as RtType>::Abi) -> HRESULT
 }}
@@ -10071,7 +10071,7 @@ impl IXboxLiveEndpointPairTemplateStatics {
     }}
 }
 DEFINE_IID!(IID_IXboxLiveInboundEndpointPairCreatedEventArgs, 3692575586, 8890, 18642, 128, 222, 194, 57, 104, 189, 25, 139);
-RT_INTERFACE!{interface IXboxLiveInboundEndpointPairCreatedEventArgs(IXboxLiveInboundEndpointPairCreatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveInboundEndpointPairCreatedEventArgs] {
+RT_INTERFACE!{interface IXboxLiveInboundEndpointPairCreatedEventArgs(IXboxLiveInboundEndpointPairCreatedEventArgsVtbl): IInspectable [IID_IXboxLiveInboundEndpointPairCreatedEventArgs] {
     fn get_EndpointPair(&self, out: *mut <XboxLiveEndpointPair as RtType>::Abi) -> HRESULT
 }}
 impl IXboxLiveInboundEndpointPairCreatedEventArgs {
@@ -10086,7 +10086,7 @@ RT_ENUM! { enum XboxLiveNetworkAccessKind: i32 {
     Open = 0, Moderate = 1, Strict = 2,
 }}
 DEFINE_IID!(IID_IXboxLiveQualityOfServiceMeasurement, 1298672590, 42454, 18406, 162, 54, 207, 222, 95, 189, 242, 237);
-RT_INTERFACE!{interface IXboxLiveQualityOfServiceMeasurement(IXboxLiveQualityOfServiceMeasurementVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveQualityOfServiceMeasurement] {
+RT_INTERFACE!{interface IXboxLiveQualityOfServiceMeasurement(IXboxLiveQualityOfServiceMeasurementVtbl): IInspectable [IID_IXboxLiveQualityOfServiceMeasurement] {
     fn MeasureAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn GetMetricResultsForDevice(&self, deviceAddress: <XboxLiveDeviceAddress as RtType>::Abi, out: *mut <foundation::collections::IVectorView<XboxLiveQualityOfServiceMetricResult> as RtType>::Abi) -> HRESULT,
     fn GetMetricResultsForMetric(&self, metric: XboxLiveQualityOfServiceMetric, out: *mut <foundation::collections::IVectorView<XboxLiveQualityOfServiceMetricResult> as RtType>::Abi) -> HRESULT,
@@ -10223,7 +10223,7 @@ impl XboxLiveQualityOfServiceMeasurement {
 }
 DEFINE_CLSID!(XboxLiveQualityOfServiceMeasurement(&[87,105,110,100,111,119,115,46,78,101,116,119,111,114,107,105,110,103,46,88,98,111,120,76,105,118,101,46,88,98,111,120,76,105,118,101,81,117,97,108,105,116,121,79,102,83,101,114,118,105,99,101,77,101,97,115,117,114,101,109,101,110,116,0]) [CLSID_XboxLiveQualityOfServiceMeasurement]);
 DEFINE_IID!(IID_IXboxLiveQualityOfServiceMeasurementStatics, 1848978890, 9167, 17418, 176, 119, 94, 48, 133, 122, 130, 52);
-RT_INTERFACE!{static interface IXboxLiveQualityOfServiceMeasurementStatics(IXboxLiveQualityOfServiceMeasurementStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveQualityOfServiceMeasurementStatics] {
+RT_INTERFACE!{static interface IXboxLiveQualityOfServiceMeasurementStatics(IXboxLiveQualityOfServiceMeasurementStaticsVtbl): IInspectable [IID_IXboxLiveQualityOfServiceMeasurementStatics] {
     fn PublishPrivatePayloadBytes(&self, payloadSize: u32, payload: *mut u8) -> HRESULT,
     fn ClearPrivatePayload(&self) -> HRESULT,
     fn get_MaxSimultaneousProbeConnections(&self, out: *mut u32) -> HRESULT,
@@ -10296,7 +10296,7 @@ RT_ENUM! { enum XboxLiveQualityOfServiceMetric: i32 {
     AverageLatencyInMilliseconds = 0, MinLatencyInMilliseconds = 1, MaxLatencyInMilliseconds = 2, AverageOutboundBitsPerSecond = 3, MinOutboundBitsPerSecond = 4, MaxOutboundBitsPerSecond = 5, AverageInboundBitsPerSecond = 6, MinInboundBitsPerSecond = 7, MaxInboundBitsPerSecond = 8,
 }}
 DEFINE_IID!(IID_IXboxLiveQualityOfServiceMetricResult, 2934723537, 13665, 18306, 176, 207, 211, 174, 41, 217, 250, 135);
-RT_INTERFACE!{interface IXboxLiveQualityOfServiceMetricResult(IXboxLiveQualityOfServiceMetricResultVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveQualityOfServiceMetricResult] {
+RT_INTERFACE!{interface IXboxLiveQualityOfServiceMetricResult(IXboxLiveQualityOfServiceMetricResultVtbl): IInspectable [IID_IXboxLiveQualityOfServiceMetricResult] {
     fn get_Status(&self, out: *mut XboxLiveQualityOfServiceMeasurementStatus) -> HRESULT,
     fn get_DeviceAddress(&self, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
     fn get_Metric(&self, out: *mut XboxLiveQualityOfServiceMetric) -> HRESULT,
@@ -10326,7 +10326,7 @@ impl IXboxLiveQualityOfServiceMetricResult {
 }
 RT_CLASS!{class XboxLiveQualityOfServiceMetricResult: IXboxLiveQualityOfServiceMetricResult}
 DEFINE_IID!(IID_IXboxLiveQualityOfServicePrivatePayloadResult, 1516438190, 28472, 16832, 159, 204, 234, 108, 185, 120, 202, 252);
-RT_INTERFACE!{interface IXboxLiveQualityOfServicePrivatePayloadResult(IXboxLiveQualityOfServicePrivatePayloadResultVtbl): IInspectable(IInspectableVtbl) [IID_IXboxLiveQualityOfServicePrivatePayloadResult] {
+RT_INTERFACE!{interface IXboxLiveQualityOfServicePrivatePayloadResult(IXboxLiveQualityOfServicePrivatePayloadResultVtbl): IInspectable [IID_IXboxLiveQualityOfServicePrivatePayloadResult] {
     fn get_Status(&self, out: *mut XboxLiveQualityOfServiceMeasurementStatus) -> HRESULT,
     fn get_DeviceAddress(&self, out: *mut <XboxLiveDeviceAddress as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_Value(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT

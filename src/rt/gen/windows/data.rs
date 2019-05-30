@@ -1,7 +1,7 @@
 pub mod html { // Windows.Data.Html
 use crate::prelude::*;
 DEFINE_IID!(IID_IHtmlUtilities, 4273998557, 9113, 20396, 181, 167, 5, 233, 172, 215, 24, 29);
-RT_INTERFACE!{static interface IHtmlUtilities(IHtmlUtilitiesVtbl): IInspectable(IInspectableVtbl) [IID_IHtmlUtilities] {
+RT_INTERFACE!{static interface IHtmlUtilities(IHtmlUtilitiesVtbl): IInspectable [IID_IHtmlUtilities] {
     fn ConvertToText(&self, html: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
 impl IHtmlUtilities {
@@ -23,7 +23,7 @@ DEFINE_CLSID!(HtmlUtilities(&[87,105,110,100,111,119,115,46,68,97,116,97,46,72,1
 pub mod json { // Windows.Data.Json
 use crate::prelude::*;
 DEFINE_IID!(IID_IJsonArray, 146922934, 3261, 19098, 181, 211, 47, 133, 45, 195, 126, 129);
-RT_INTERFACE!{interface IJsonArray(IJsonArrayVtbl): IInspectable(IInspectableVtbl) [IID_IJsonArray] {
+RT_INTERFACE!{interface IJsonArray(IJsonArrayVtbl): IInspectable [IID_IJsonArray] {
     fn GetObjectAt(&self, index: u32, out: *mut <JsonObject as RtType>::Abi) -> HRESULT,
     fn GetArrayAt(&self, index: u32, out: *mut <JsonArray as RtType>::Abi) -> HRESULT,
     fn GetStringAt(&self, index: u32, out: *mut HSTRING) -> HRESULT,
@@ -70,7 +70,7 @@ impl JsonArray {
 }
 DEFINE_CLSID!(JsonArray(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,65,114,114,97,121,0]) [CLSID_JsonArray]);
 DEFINE_IID!(IID_IJsonArrayStatics, 3675534505, 57700, 18847, 147, 226, 138, 143, 73, 187, 144, 186);
-RT_INTERFACE!{static interface IJsonArrayStatics(IJsonArrayStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJsonArrayStatics] {
+RT_INTERFACE!{static interface IJsonArrayStatics(IJsonArrayStaticsVtbl): IInspectable [IID_IJsonArrayStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <JsonArray as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, result: *mut <JsonArray as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -95,7 +95,7 @@ impl JsonError {
 }
 DEFINE_CLSID!(JsonError(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,69,114,114,111,114,0]) [CLSID_JsonError]);
 DEFINE_IID!(IID_IJsonErrorStatics2, 1077948634, 34768, 17260, 131, 171, 252, 123, 18, 192, 204, 38);
-RT_INTERFACE!{static interface IJsonErrorStatics2(IJsonErrorStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IJsonErrorStatics2] {
+RT_INTERFACE!{static interface IJsonErrorStatics2(IJsonErrorStatics2Vtbl): IInspectable [IID_IJsonErrorStatics2] {
     fn GetJsonStatus(&self, hresult: i32, out: *mut JsonErrorStatus) -> HRESULT
 }}
 impl IJsonErrorStatics2 {
@@ -109,7 +109,7 @@ RT_ENUM! { enum JsonErrorStatus: i32 {
     Unknown = 0, InvalidJsonString = 1, InvalidJsonNumber = 2, JsonValueNotFound = 3, ImplementationLimit = 4,
 }}
 DEFINE_IID!(IID_IJsonObject, 105784541, 10690, 20355, 154, 193, 158, 225, 21, 120, 190, 179);
-RT_INTERFACE!{interface IJsonObject(IJsonObjectVtbl): IInspectable(IInspectableVtbl) [IID_IJsonObject] {
+RT_INTERFACE!{interface IJsonObject(IJsonObjectVtbl): IInspectable [IID_IJsonObject] {
     fn GetNamedValue(&self, name: HSTRING, out: *mut <JsonValue as RtType>::Abi) -> HRESULT,
     fn SetNamedValue(&self, name: HSTRING, value: <IJsonValue as RtType>::Abi) -> HRESULT,
     fn GetNamedObject(&self, name: HSTRING, out: *mut <JsonObject as RtType>::Abi) -> HRESULT,
@@ -167,7 +167,7 @@ impl JsonObject {
 }
 DEFINE_CLSID!(JsonObject(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,79,98,106,101,99,116,0]) [CLSID_JsonObject]);
 DEFINE_IID!(IID_IJsonObjectStatics, 579465561, 21726, 17880, 171, 204, 34, 96, 63, 160, 102, 160);
-RT_INTERFACE!{static interface IJsonObjectStatics(IJsonObjectStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJsonObjectStatics] {
+RT_INTERFACE!{static interface IJsonObjectStatics(IJsonObjectStaticsVtbl): IInspectable [IID_IJsonObjectStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <JsonObject as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, result: *mut <JsonObject as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
@@ -184,7 +184,7 @@ impl IJsonObjectStatics {
     }}
 }
 DEFINE_IID!(IID_IJsonObjectWithDefaultValues, 3647001250, 47088, 20224, 142, 68, 216, 44, 244, 21, 234, 19);
-RT_INTERFACE!{interface IJsonObjectWithDefaultValues(IJsonObjectWithDefaultValuesVtbl): IInspectable(IInspectableVtbl) [IID_IJsonObjectWithDefaultValues] {
+RT_INTERFACE!{interface IJsonObjectWithDefaultValues(IJsonObjectWithDefaultValuesVtbl): IInspectable [IID_IJsonObjectWithDefaultValues] {
     fn GetNamedValueOrDefault(&self, name: HSTRING, defaultValue: <JsonValue as RtType>::Abi, out: *mut <JsonValue as RtType>::Abi) -> HRESULT,
     fn GetNamedObjectOrDefault(&self, name: HSTRING, defaultValue: <JsonObject as RtType>::Abi, out: *mut <JsonObject as RtType>::Abi) -> HRESULT,
     fn GetNamedStringOrDefault(&self, name: HSTRING, defaultValue: HSTRING, out: *mut HSTRING) -> HRESULT,
@@ -225,7 +225,7 @@ impl IJsonObjectWithDefaultValues {
     }}
 }
 DEFINE_IID!(IID_IJsonValue, 2736889547, 61619, 19917, 190, 238, 25, 212, 140, 211, 237, 30);
-RT_INTERFACE!{interface IJsonValue(IJsonValueVtbl): IInspectable(IInspectableVtbl) [IID_IJsonValue] {
+RT_INTERFACE!{interface IJsonValue(IJsonValueVtbl): IInspectable [IID_IJsonValue] {
     fn get_ValueType(&self, out: *mut JsonValueType) -> HRESULT,
     fn Stringify(&self, out: *mut HSTRING) -> HRESULT,
     fn GetString(&self, out: *mut HSTRING) -> HRESULT,
@@ -296,7 +296,7 @@ impl JsonValue {
 }
 DEFINE_CLSID!(JsonValue(&[87,105,110,100,111,119,115,46,68,97,116,97,46,74,115,111,110,46,74,115,111,110,86,97,108,117,101,0]) [CLSID_JsonValue]);
 DEFINE_IID!(IID_IJsonValueStatics, 1600869450, 12115, 18657, 145, 163, 247, 139, 80, 166, 52, 92);
-RT_INTERFACE!{static interface IJsonValueStatics(IJsonValueStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IJsonValueStatics] {
+RT_INTERFACE!{static interface IJsonValueStatics(IJsonValueStaticsVtbl): IInspectable [IID_IJsonValueStatics] {
     fn Parse(&self, input: HSTRING, out: *mut <JsonValue as RtType>::Abi) -> HRESULT,
     fn TryParse(&self, input: HSTRING, result: *mut <JsonValue as RtType>::Abi, out: *mut bool) -> HRESULT,
     fn CreateBooleanValue(&self, input: bool, out: *mut <JsonValue as RtType>::Abi) -> HRESULT,
@@ -331,7 +331,7 @@ impl IJsonValueStatics {
     }}
 }
 DEFINE_IID!(IID_IJsonValueStatics2, 496946148, 16360, 17205, 131, 146, 147, 216, 227, 104, 101, 240);
-RT_INTERFACE!{static interface IJsonValueStatics2(IJsonValueStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IJsonValueStatics2] {
+RT_INTERFACE!{static interface IJsonValueStatics2(IJsonValueStatics2Vtbl): IInspectable [IID_IJsonValueStatics2] {
     fn CreateNullValue(&self, out: *mut <JsonValue as RtType>::Abi) -> HRESULT
 }}
 impl IJsonValueStatics2 {
@@ -348,7 +348,7 @@ RT_ENUM! { enum JsonValueType: i32 {
 pub mod pdf { // Windows.Data.Pdf
 use crate::prelude::*;
 DEFINE_IID!(IID_IPdfDocument, 2893987549, 33018, 16521, 132, 110, 129, 183, 127, 245, 168, 108);
-RT_INTERFACE!{interface IPdfDocument(IPdfDocumentVtbl): IInspectable(IInspectableVtbl) [IID_IPdfDocument] {
+RT_INTERFACE!{interface IPdfDocument(IPdfDocumentVtbl): IInspectable [IID_IPdfDocument] {
     fn GetPage(&self, pageIndex: u32, out: *mut <PdfPage as RtType>::Abi) -> HRESULT,
     fn get_PageCount(&self, out: *mut u32) -> HRESULT,
     fn get_IsPasswordProtected(&self, out: *mut bool) -> HRESULT
@@ -388,7 +388,7 @@ impl PdfDocument {
 }
 DEFINE_CLSID!(PdfDocument(&[87,105,110,100,111,119,115,46,68,97,116,97,46,80,100,102,46,80,100,102,68,111,99,117,109,101,110,116,0]) [CLSID_PdfDocument]);
 DEFINE_IID!(IID_IPdfDocumentStatics, 1127877471, 49159, 18312, 144, 242, 8, 20, 61, 146, 37, 153);
-RT_INTERFACE!{static interface IPdfDocumentStatics(IPdfDocumentStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfDocumentStatics] {
+RT_INTERFACE!{static interface IPdfDocumentStatics(IPdfDocumentStaticsVtbl): IInspectable [IID_IPdfDocumentStatics] {
     #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: <super::super::storage::IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<PdfDocument> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn LoadFromFileWithPasswordAsync(&self, file: <super::super::storage::IStorageFile as RtType>::Abi, password: HSTRING, out: *mut <foundation::IAsyncOperation<PdfDocument> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn LoadFromStreamAsync(&self, inputStream: <super::super::storage::streams::IRandomAccessStream as RtType>::Abi, out: *mut <foundation::IAsyncOperation<PdfDocument> as RtType>::Abi) -> HRESULT,
@@ -417,7 +417,7 @@ impl IPdfDocumentStatics {
     }}
 }
 DEFINE_IID!(IID_IPdfPage, 2645864648, 21280, 19708, 173, 118, 73, 63, 218, 208, 229, 148);
-RT_INTERFACE!{interface IPdfPage(IPdfPageVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPage] {
+RT_INTERFACE!{interface IPdfPage(IPdfPageVtbl): IInspectable [IID_IPdfPage] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn RenderToStreamAsync(&self, outputStream: <super::super::storage::streams::IRandomAccessStream as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -473,7 +473,7 @@ impl IPdfPage {
 }
 RT_CLASS!{class PdfPage: IPdfPage}
 DEFINE_IID!(IID_IPdfPageDimensions, 571933809, 12606, 17640, 131, 93, 99, 163, 231, 98, 74, 16);
-RT_INTERFACE!{interface IPdfPageDimensions(IPdfPageDimensionsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPageDimensions] {
+RT_INTERFACE!{interface IPdfPageDimensions(IPdfPageDimensionsVtbl): IInspectable [IID_IPdfPageDimensions] {
     fn get_MediaBox(&self, out: *mut foundation::Rect) -> HRESULT,
     fn get_CropBox(&self, out: *mut foundation::Rect) -> HRESULT,
     fn get_BleedBox(&self, out: *mut foundation::Rect) -> HRESULT,
@@ -509,7 +509,7 @@ impl IPdfPageDimensions {
 }
 RT_CLASS!{class PdfPageDimensions: IPdfPageDimensions}
 DEFINE_IID!(IID_IPdfPageRenderOptions, 1016595823, 47055, 19497, 154, 4, 82, 217, 2, 103, 244, 37);
-RT_INTERFACE!{interface IPdfPageRenderOptions(IPdfPageRenderOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IPdfPageRenderOptions] {
+RT_INTERFACE!{interface IPdfPageRenderOptions(IPdfPageRenderOptionsVtbl): IInspectable [IID_IPdfPageRenderOptions] {
     fn get_SourceRect(&self, out: *mut foundation::Rect) -> HRESULT,
     fn put_SourceRect(&self, value: foundation::Rect) -> HRESULT,
     fn get_DestinationWidth(&self, out: *mut u32) -> HRESULT,
@@ -594,7 +594,7 @@ RT_ENUM! { enum AlternateNormalizationFormat: i32 {
     NotNormalized = 0, Number = 1, Currency = 3, Date = 4, Time = 5,
 }}
 DEFINE_IID!(IID_IAlternateWordForm, 1194945566, 20921, 16903, 145, 70, 36, 142, 99, 106, 29, 29);
-RT_INTERFACE!{interface IAlternateWordForm(IAlternateWordFormVtbl): IInspectable(IInspectableVtbl) [IID_IAlternateWordForm] {
+RT_INTERFACE!{interface IAlternateWordForm(IAlternateWordFormVtbl): IInspectable [IID_IAlternateWordForm] {
     fn get_SourceTextSegment(&self, out: *mut TextSegment) -> HRESULT,
     fn get_AlternateText(&self, out: *mut HSTRING) -> HRESULT,
     fn get_NormalizationFormat(&self, out: *mut AlternateNormalizationFormat) -> HRESULT
@@ -618,7 +618,7 @@ impl IAlternateWordForm {
 }
 RT_CLASS!{class AlternateWordForm: IAlternateWordForm}
 DEFINE_IID!(IID_ISelectableWordSegment, 2439662775, 35495, 19576, 179, 116, 93, 237, 183, 82, 230, 11);
-RT_INTERFACE!{interface ISelectableWordSegment(ISelectableWordSegmentVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordSegment] {
+RT_INTERFACE!{interface ISelectableWordSegment(ISelectableWordSegmentVtbl): IInspectable [IID_ISelectableWordSegment] {
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SourceTextSegment(&self, out: *mut TextSegment) -> HRESULT
 }}
@@ -646,7 +646,7 @@ impl SelectableWordSegmentsTokenizingHandler {
     }}
 }
 DEFINE_IID!(IID_ISelectableWordsSegmenter, 4141625831, 19219, 17861, 136, 151, 125, 113, 38, 158, 8, 93);
-RT_INTERFACE!{interface ISelectableWordsSegmenter(ISelectableWordsSegmenterVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordsSegmenter] {
+RT_INTERFACE!{interface ISelectableWordsSegmenter(ISelectableWordsSegmenterVtbl): IInspectable [IID_ISelectableWordsSegmenter] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut <SelectableWordSegment as RtType>::Abi) -> HRESULT,
     fn GetTokens(&self, text: HSTRING, out: *mut <foundation::collections::IVectorView<SelectableWordSegment> as RtType>::Abi) -> HRESULT,
@@ -682,7 +682,7 @@ impl SelectableWordsSegmenter {
 }
 DEFINE_CLSID!(SelectableWordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,108,101,99,116,97,98,108,101,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_SelectableWordsSegmenter]);
 DEFINE_IID!(IID_ISelectableWordsSegmenterFactory, 2356835912, 24663, 17209, 188, 112, 242, 16, 1, 10, 65, 80);
-RT_INTERFACE!{static interface ISelectableWordsSegmenterFactory(ISelectableWordsSegmenterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISelectableWordsSegmenterFactory] {
+RT_INTERFACE!{static interface ISelectableWordsSegmenterFactory(ISelectableWordsSegmenterFactoryVtbl): IInspectable [IID_ISelectableWordsSegmenterFactory] {
     fn CreateWithLanguage(&self, language: HSTRING, out: *mut <SelectableWordsSegmenter as RtType>::Abi) -> HRESULT
 }}
 impl ISelectableWordsSegmenterFactory {
@@ -693,7 +693,7 @@ impl ISelectableWordsSegmenterFactory {
     }}
 }
 DEFINE_IID!(IID_ISemanticTextQuery, 1780263761, 8114, 18697, 128, 184, 53, 115, 26, 43, 62, 127);
-RT_INTERFACE!{interface ISemanticTextQuery(ISemanticTextQueryVtbl): IInspectable(IInspectableVtbl) [IID_ISemanticTextQuery] {
+RT_INTERFACE!{interface ISemanticTextQuery(ISemanticTextQueryVtbl): IInspectable [IID_ISemanticTextQuery] {
     fn Find(&self, content: HSTRING, out: *mut <foundation::collections::IVectorView<TextSegment> as RtType>::Abi) -> HRESULT,
     fn FindInProperty(&self, propertyContent: HSTRING, propertyName: HSTRING, out: *mut <foundation::collections::IVectorView<TextSegment> as RtType>::Abi) -> HRESULT
 }}
@@ -721,7 +721,7 @@ impl SemanticTextQuery {
 }
 DEFINE_CLSID!(SemanticTextQuery(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,83,101,109,97,110,116,105,99,84,101,120,116,81,117,101,114,121,0]) [CLSID_SemanticTextQuery]);
 DEFINE_IID!(IID_ISemanticTextQueryFactory, 596378883, 63893, 17799, 135, 119, 162, 183, 216, 10, 207, 239);
-RT_INTERFACE!{static interface ISemanticTextQueryFactory(ISemanticTextQueryFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISemanticTextQueryFactory] {
+RT_INTERFACE!{static interface ISemanticTextQueryFactory(ISemanticTextQueryFactoryVtbl): IInspectable [IID_ISemanticTextQueryFactory] {
     fn Create(&self, aqsFilter: HSTRING, out: *mut <SemanticTextQuery as RtType>::Abi) -> HRESULT,
     fn CreateWithLanguage(&self, aqsFilter: HSTRING, filterLanguage: HSTRING, out: *mut <SemanticTextQuery as RtType>::Abi) -> HRESULT
 }}
@@ -738,7 +738,7 @@ impl ISemanticTextQueryFactory {
     }}
 }
 DEFINE_IID!(IID_ITextConversionGenerator, 56650334, 10921, 19126, 175, 139, 165, 98, 182, 58, 137, 146);
-RT_INTERFACE!{interface ITextConversionGenerator(ITextConversionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextConversionGenerator] {
+RT_INTERFACE!{interface ITextConversionGenerator(ITextConversionGeneratorVtbl): IInspectable [IID_ITextConversionGenerator] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
     fn GetCandidatesAsync(&self, input: HSTRING, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<HString>> as RtType>::Abi) -> HRESULT,
@@ -775,7 +775,7 @@ impl TextConversionGenerator {
 }
 DEFINE_CLSID!(TextConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextConversionGenerator]);
 DEFINE_IID!(IID_ITextConversionGeneratorFactory, 4239013761, 12419, 18859, 190, 21, 86, 223, 187, 183, 77, 111);
-RT_INTERFACE!{static interface ITextConversionGeneratorFactory(ITextConversionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextConversionGeneratorFactory] {
+RT_INTERFACE!{static interface ITextConversionGeneratorFactory(ITextConversionGeneratorFactoryVtbl): IInspectable [IID_ITextConversionGeneratorFactory] {
     fn Create(&self, languageTag: HSTRING, out: *mut <TextConversionGenerator as RtType>::Abi) -> HRESULT
 }}
 impl ITextConversionGeneratorFactory {
@@ -786,7 +786,7 @@ impl ITextConversionGeneratorFactory {
     }}
 }
 DEFINE_IID!(IID_ITextPhoneme, 2472715274, 39802, 17769, 148, 207, 216, 79, 47, 56, 207, 155);
-RT_INTERFACE!{interface ITextPhoneme(ITextPhonemeVtbl): IInspectable(IInspectableVtbl) [IID_ITextPhoneme] {
+RT_INTERFACE!{interface ITextPhoneme(ITextPhonemeVtbl): IInspectable [IID_ITextPhoneme] {
     fn get_DisplayText(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ReadingText(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -804,7 +804,7 @@ impl ITextPhoneme {
 }
 RT_CLASS!{class TextPhoneme: ITextPhoneme}
 DEFINE_IID!(IID_ITextPredictionGenerator, 1588374279, 44017, 19638, 157, 158, 50, 111, 43, 70, 135, 86);
-RT_INTERFACE!{interface ITextPredictionGenerator(ITextPredictionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGenerator] {
+RT_INTERFACE!{interface ITextPredictionGenerator(ITextPredictionGeneratorVtbl): IInspectable [IID_ITextPredictionGenerator] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
     fn GetCandidatesAsync(&self, input: HSTRING, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<HString>> as RtType>::Abi) -> HRESULT,
@@ -841,7 +841,7 @@ impl TextPredictionGenerator {
 }
 DEFINE_CLSID!(TextPredictionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,80,114,101,100,105,99,116,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextPredictionGenerator]);
 DEFINE_IID!(IID_ITextPredictionGenerator2, 3091669944, 11383, 18538, 144, 10, 163, 69, 62, 237, 193, 93);
-RT_INTERFACE!{interface ITextPredictionGenerator2(ITextPredictionGenerator2Vtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGenerator2] {
+RT_INTERFACE!{interface ITextPredictionGenerator2(ITextPredictionGenerator2Vtbl): IInspectable [IID_ITextPredictionGenerator2] {
     fn GetCandidatesWithParametersAsync(&self, input: HSTRING, maxCandidates: u32, predictionOptions: TextPredictionOptions, previousStrings: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<HString>> as RtType>::Abi) -> HRESULT,
     fn GetNextWordCandidatesAsync(&self, maxCandidates: u32, previousStrings: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<HString>> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-ui")] fn get_InputScope(&self, out: *mut super::super::ui::text::core::CoreTextInputScope) -> HRESULT,
@@ -869,7 +869,7 @@ impl ITextPredictionGenerator2 {
     }}
 }
 DEFINE_IID!(IID_ITextPredictionGeneratorFactory, 1918350358, 35746, 18257, 157, 48, 157, 133, 67, 86, 83, 162);
-RT_INTERFACE!{static interface ITextPredictionGeneratorFactory(ITextPredictionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextPredictionGeneratorFactory] {
+RT_INTERFACE!{static interface ITextPredictionGeneratorFactory(ITextPredictionGeneratorFactoryVtbl): IInspectable [IID_ITextPredictionGeneratorFactory] {
     fn Create(&self, languageTag: HSTRING, out: *mut <TextPredictionGenerator as RtType>::Abi) -> HRESULT
 }}
 impl ITextPredictionGeneratorFactory {
@@ -883,7 +883,7 @@ RT_ENUM! { enum TextPredictionOptions: u32 {
     None = 0, Predictions = 1, Corrections = 2,
 }}
 DEFINE_IID!(IID_ITextReverseConversionGenerator, 1374156052, 40017, 19846, 174, 27, 180, 152, 251, 173, 131, 19);
-RT_INTERFACE!{interface ITextReverseConversionGenerator(ITextReverseConversionGeneratorVtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGenerator] {
+RT_INTERFACE!{interface ITextReverseConversionGenerator(ITextReverseConversionGeneratorVtbl): IInspectable [IID_ITextReverseConversionGenerator] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_LanguageAvailableButNotInstalled(&self, out: *mut bool) -> HRESULT,
     fn ConvertBackAsync(&self, input: HSTRING, out: *mut <foundation::IAsyncOperation<HString> as RtType>::Abi) -> HRESULT
@@ -914,7 +914,7 @@ impl TextReverseConversionGenerator {
 }
 DEFINE_CLSID!(TextReverseConversionGenerator(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,84,101,120,116,82,101,118,101,114,115,101,67,111,110,118,101,114,115,105,111,110,71,101,110,101,114,97,116,111,114,0]) [CLSID_TextReverseConversionGenerator]);
 DEFINE_IID!(IID_ITextReverseConversionGenerator2, 447730412, 34262, 18173, 130, 138, 58, 72, 48, 250, 110, 24);
-RT_INTERFACE!{interface ITextReverseConversionGenerator2(ITextReverseConversionGenerator2Vtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGenerator2] {
+RT_INTERFACE!{interface ITextReverseConversionGenerator2(ITextReverseConversionGenerator2Vtbl): IInspectable [IID_ITextReverseConversionGenerator2] {
     fn GetPhonemesAsync(&self, input: HSTRING, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<TextPhoneme>> as RtType>::Abi) -> HRESULT
 }}
 impl ITextReverseConversionGenerator2 {
@@ -925,7 +925,7 @@ impl ITextReverseConversionGenerator2 {
     }}
 }
 DEFINE_IID!(IID_ITextReverseConversionGeneratorFactory, 1673450278, 8154, 16886, 137, 213, 35, 221, 234, 60, 114, 154);
-RT_INTERFACE!{static interface ITextReverseConversionGeneratorFactory(ITextReverseConversionGeneratorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ITextReverseConversionGeneratorFactory] {
+RT_INTERFACE!{static interface ITextReverseConversionGeneratorFactory(ITextReverseConversionGeneratorFactoryVtbl): IInspectable [IID_ITextReverseConversionGeneratorFactory] {
     fn Create(&self, languageTag: HSTRING, out: *mut <TextReverseConversionGenerator as RtType>::Abi) -> HRESULT
 }}
 impl ITextReverseConversionGeneratorFactory {
@@ -995,7 +995,7 @@ impl UnicodeCharacters {
 }
 DEFINE_CLSID!(UnicodeCharacters(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,85,110,105,99,111,100,101,67,104,97,114,97,99,116,101,114,115,0]) [CLSID_UnicodeCharacters]);
 DEFINE_IID!(IID_IUnicodeCharactersStatics, 2542837383, 37521, 20369, 182, 200, 182, 227, 89, 215, 167, 251);
-RT_INTERFACE!{static interface IUnicodeCharactersStatics(IUnicodeCharactersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUnicodeCharactersStatics] {
+RT_INTERFACE!{static interface IUnicodeCharactersStatics(IUnicodeCharactersStaticsVtbl): IInspectable [IID_IUnicodeCharactersStatics] {
     fn GetCodepointFromSurrogatePair(&self, highSurrogate: u32, lowSurrogate: u32, out: *mut u32) -> HRESULT,
     fn GetSurrogatePairFromCodepoint(&self, codepoint: u32, highSurrogate: *mut Char, lowSurrogate: *mut Char) -> HRESULT,
     fn IsHighSurrogate(&self, codepoint: u32, out: *mut bool) -> HRESULT,
@@ -1108,7 +1108,7 @@ RT_ENUM! { enum UnicodeNumericType: i32 {
     None = 0, Decimal = 1, Digit = 2, Numeric = 3,
 }}
 DEFINE_IID!(IID_IWordSegment, 3537156717, 39036, 19648, 182, 189, 212, 154, 17, 179, 143, 154);
-RT_INTERFACE!{interface IWordSegment(IWordSegmentVtbl): IInspectable(IInspectableVtbl) [IID_IWordSegment] {
+RT_INTERFACE!{interface IWordSegment(IWordSegmentVtbl): IInspectable [IID_IWordSegment] {
     fn get_Text(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SourceTextSegment(&self, out: *mut TextSegment) -> HRESULT,
     fn get_AlternateForms(&self, out: *mut <foundation::collections::IVectorView<AlternateWordForm> as RtType>::Abi) -> HRESULT
@@ -1142,7 +1142,7 @@ impl WordSegmentsTokenizingHandler {
     }}
 }
 DEFINE_IID!(IID_IWordsSegmenter, 2259997905, 45822, 20020, 168, 29, 102, 100, 3, 0, 69, 79);
-RT_INTERFACE!{interface IWordsSegmenter(IWordsSegmenterVtbl): IInspectable(IInspectableVtbl) [IID_IWordsSegmenter] {
+RT_INTERFACE!{interface IWordsSegmenter(IWordsSegmenterVtbl): IInspectable [IID_IWordsSegmenter] {
     fn get_ResolvedLanguage(&self, out: *mut HSTRING) -> HRESULT,
     fn GetTokenAt(&self, text: HSTRING, startIndex: u32, out: *mut <WordSegment as RtType>::Abi) -> HRESULT,
     fn GetTokens(&self, text: HSTRING, out: *mut <foundation::collections::IVectorView<WordSegment> as RtType>::Abi) -> HRESULT,
@@ -1178,7 +1178,7 @@ impl WordsSegmenter {
 }
 DEFINE_CLSID!(WordsSegmenter(&[87,105,110,100,111,119,115,46,68,97,116,97,46,84,101,120,116,46,87,111,114,100,115,83,101,103,109,101,110,116,101,114,0]) [CLSID_WordsSegmenter]);
 DEFINE_IID!(IID_IWordsSegmenterFactory, 3868684916, 64565, 17756, 139, 251, 109, 127, 70, 83, 202, 151);
-RT_INTERFACE!{static interface IWordsSegmenterFactory(IWordsSegmenterFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWordsSegmenterFactory] {
+RT_INTERFACE!{static interface IWordsSegmenterFactory(IWordsSegmenterFactoryVtbl): IInspectable [IID_IWordsSegmenterFactory] {
     fn CreateWithLanguage(&self, language: HSTRING, out: *mut <WordsSegmenter as RtType>::Abi) -> HRESULT
 }}
 impl IWordsSegmenterFactory {
@@ -1193,7 +1193,7 @@ pub mod xml { // Windows.Data.Xml
 pub mod dom { // Windows.Data.Xml.Dom
 use crate::prelude::*;
 DEFINE_IID!(IID_IDtdEntity, 1779130364, 25524, 18447, 158, 106, 138, 146, 129, 106, 173, 228);
-RT_INTERFACE!{interface IDtdEntity(IDtdEntityVtbl): IInspectable(IInspectableVtbl) [IID_IDtdEntity] {
+RT_INTERFACE!{interface IDtdEntity(IDtdEntityVtbl): IInspectable [IID_IDtdEntity] {
     fn get_PublicId(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT,
     fn get_SystemId(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT,
     fn get_NotationName(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT
@@ -1217,7 +1217,7 @@ impl IDtdEntity {
 }
 RT_CLASS!{class DtdEntity: IDtdEntity}
 DEFINE_IID!(IID_IDtdNotation, 2360664141, 27974, 20187, 171, 115, 223, 131, 197, 26, 211, 151);
-RT_INTERFACE!{interface IDtdNotation(IDtdNotationVtbl): IInspectable(IInspectableVtbl) [IID_IDtdNotation] {
+RT_INTERFACE!{interface IDtdNotation(IDtdNotationVtbl): IInspectable [IID_IDtdNotation] {
     fn get_PublicId(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT,
     fn get_SystemId(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT
 }}
@@ -1238,7 +1238,7 @@ RT_ENUM! { enum NodeType: i32 {
     Invalid = 0, ElementNode = 1, AttributeNode = 2, TextNode = 3, DataSectionNode = 4, EntityReferenceNode = 5, EntityNode = 6, ProcessingInstructionNode = 7, CommentNode = 8, DocumentNode = 9, DocumentTypeNode = 10, DocumentFragmentNode = 11, NotationNode = 12,
 }}
 DEFINE_IID!(IID_IXmlAttribute, 2887010980, 46321, 19894, 178, 6, 138, 34, 195, 8, 219, 10);
-RT_INTERFACE!{interface IXmlAttribute(IXmlAttributeVtbl): IInspectable(IInspectableVtbl) [IID_IXmlAttribute] {
+RT_INTERFACE!{interface IXmlAttribute(IXmlAttributeVtbl): IInspectable [IID_IXmlAttribute] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Specified(&self, out: *mut bool) -> HRESULT,
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT,
@@ -1267,12 +1267,12 @@ impl IXmlAttribute {
 }
 RT_CLASS!{class XmlAttribute: IXmlAttribute}
 DEFINE_IID!(IID_IXmlCDataSection, 1292153967, 51389, 17844, 136, 153, 4, 0, 215, 194, 198, 15);
-RT_INTERFACE!{interface IXmlCDataSection(IXmlCDataSectionVtbl): IInspectable(IInspectableVtbl) [IID_IXmlCDataSection] {
+RT_INTERFACE!{interface IXmlCDataSection(IXmlCDataSectionVtbl): IInspectable [IID_IXmlCDataSection] {
     
 }}
 RT_CLASS!{class XmlCDataSection: IXmlCDataSection}
 DEFINE_IID!(IID_IXmlCharacterData, 321798827, 20022, 19958, 177, 200, 12, 230, 47, 216, 139, 38);
-RT_INTERFACE!{interface IXmlCharacterData(IXmlCharacterDataVtbl): IInspectable(IInspectableVtbl) [IID_IXmlCharacterData] {
+RT_INTERFACE!{interface IXmlCharacterData(IXmlCharacterDataVtbl): IInspectable [IID_IXmlCharacterData] {
     fn get_Data(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Data(&self, value: HSTRING) -> HRESULT,
     fn get_Length(&self, out: *mut u32) -> HRESULT,
@@ -1320,12 +1320,12 @@ impl IXmlCharacterData {
     }}
 }
 DEFINE_IID!(IID_IXmlComment, 3164894421, 46623, 17937, 156, 172, 46, 146, 227, 71, 109, 71);
-RT_INTERFACE!{interface IXmlComment(IXmlCommentVtbl): IInspectable(IInspectableVtbl) [IID_IXmlComment] {
+RT_INTERFACE!{interface IXmlComment(IXmlCommentVtbl): IInspectable [IID_IXmlComment] {
     
 }}
 RT_CLASS!{class XmlComment: IXmlComment}
 DEFINE_IID!(IID_IXmlDocument, 4159939846, 7815, 17110, 188, 251, 184, 200, 9, 250, 84, 148);
-RT_INTERFACE!{interface IXmlDocument(IXmlDocumentVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocument] {
+RT_INTERFACE!{interface IXmlDocument(IXmlDocumentVtbl): IInspectable [IID_IXmlDocument] {
     fn get_Doctype(&self, out: *mut <XmlDocumentType as RtType>::Abi) -> HRESULT,
     fn get_Implementation(&self, out: *mut <XmlDomImplementation as RtType>::Abi) -> HRESULT,
     fn get_DocumentElement(&self, out: *mut <XmlElement as RtType>::Abi) -> HRESULT,
@@ -1450,12 +1450,12 @@ impl XmlDocument {
 }
 DEFINE_CLSID!(XmlDocument(&[87,105,110,100,111,119,115,46,68,97,116,97,46,88,109,108,46,68,111,109,46,88,109,108,68,111,99,117,109,101,110,116,0]) [CLSID_XmlDocument]);
 DEFINE_IID!(IID_IXmlDocumentFragment, 3807013526, 3105, 17573, 139, 201, 158, 74, 38, 39, 8, 236);
-RT_INTERFACE!{interface IXmlDocumentFragment(IXmlDocumentFragmentVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentFragment] {
+RT_INTERFACE!{interface IXmlDocumentFragment(IXmlDocumentFragmentVtbl): IInspectable [IID_IXmlDocumentFragment] {
     
 }}
 RT_CLASS!{class XmlDocumentFragment: IXmlDocumentFragment}
 DEFINE_IID!(IID_IXmlDocumentIO, 1825630030, 61029, 17545, 158, 191, 202, 67, 232, 123, 166, 55);
-RT_INTERFACE!{interface IXmlDocumentIO(IXmlDocumentIOVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentIO] {
+RT_INTERFACE!{interface IXmlDocumentIO(IXmlDocumentIOVtbl): IInspectable [IID_IXmlDocumentIO] {
     fn LoadXml(&self, xml: HSTRING) -> HRESULT,
     fn LoadXmlWithSettings(&self, xml: HSTRING, loadSettings: <XmlLoadSettings as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn SaveToFileAsync(&self, file: <crate::windows::storage::IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
@@ -1476,7 +1476,7 @@ impl IXmlDocumentIO {
     }}
 }
 DEFINE_IID!(IID_IXmlDocumentIO2, 1560495713, 31704, 19157, 158, 191, 129, 230, 52, 114, 99, 177);
-RT_INTERFACE!{interface IXmlDocumentIO2(IXmlDocumentIO2Vtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentIO2] {
+RT_INTERFACE!{interface IXmlDocumentIO2(IXmlDocumentIO2Vtbl): IInspectable [IID_IXmlDocumentIO2] {
     #[cfg(feature="windows-storage")] fn LoadXmlFromBuffer(&self, buffer: <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn LoadXmlFromBufferWithSettings(&self, buffer: <crate::windows::storage::streams::IBuffer as RtType>::Abi, loadSettings: <XmlLoadSettings as RtType>::Abi) -> HRESULT
 }}
@@ -1491,7 +1491,7 @@ impl IXmlDocumentIO2 {
     }}
 }
 DEFINE_IID!(IID_IXmlDocumentStatics, 1430508116, 55127, 19321, 149, 57, 35, 43, 24, 245, 11, 241);
-RT_INTERFACE!{static interface IXmlDocumentStatics(IXmlDocumentStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentStatics] {
+RT_INTERFACE!{static interface IXmlDocumentStatics(IXmlDocumentStaticsVtbl): IInspectable [IID_IXmlDocumentStatics] {
     fn LoadFromUriAsync(&self, uri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperation<XmlDocument> as RtType>::Abi) -> HRESULT,
     fn LoadFromUriWithSettingsAsync(&self, uri: <foundation::Uri as RtType>::Abi, loadSettings: <XmlLoadSettings as RtType>::Abi, out: *mut <foundation::IAsyncOperation<XmlDocument> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn LoadFromFileAsync(&self, file: <crate::windows::storage::IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<XmlDocument> as RtType>::Abi) -> HRESULT,
@@ -1520,7 +1520,7 @@ impl IXmlDocumentStatics {
     }}
 }
 DEFINE_IID!(IID_IXmlDocumentType, 4147389477, 38785, 18788, 142, 148, 155, 28, 109, 252, 155, 199);
-RT_INTERFACE!{interface IXmlDocumentType(IXmlDocumentTypeVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDocumentType] {
+RT_INTERFACE!{interface IXmlDocumentType(IXmlDocumentTypeVtbl): IInspectable [IID_IXmlDocumentType] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Entities(&self, out: *mut <XmlNamedNodeMap as RtType>::Abi) -> HRESULT,
     fn get_Notations(&self, out: *mut <XmlNamedNodeMap as RtType>::Abi) -> HRESULT
@@ -1544,7 +1544,7 @@ impl IXmlDocumentType {
 }
 RT_CLASS!{class XmlDocumentType: IXmlDocumentType}
 DEFINE_IID!(IID_IXmlDomImplementation, 1843757362, 61725, 20411, 140, 198, 88, 60, 186, 147, 17, 47);
-RT_INTERFACE!{interface IXmlDomImplementation(IXmlDomImplementationVtbl): IInspectable(IInspectableVtbl) [IID_IXmlDomImplementation] {
+RT_INTERFACE!{interface IXmlDomImplementation(IXmlDomImplementationVtbl): IInspectable [IID_IXmlDomImplementation] {
     fn HasFeature(&self, feature: HSTRING, version: <IInspectable as RtType>::Abi, out: *mut bool) -> HRESULT
 }}
 impl IXmlDomImplementation {
@@ -1556,7 +1556,7 @@ impl IXmlDomImplementation {
 }
 RT_CLASS!{class XmlDomImplementation: IXmlDomImplementation}
 DEFINE_IID!(IID_IXmlElement, 771459615, 27408, 20216, 159, 131, 239, 204, 232, 250, 236, 55);
-RT_INTERFACE!{interface IXmlElement(IXmlElementVtbl): IInspectable(IInspectableVtbl) [IID_IXmlElement] {
+RT_INTERFACE!{interface IXmlElement(IXmlElementVtbl): IInspectable [IID_IXmlElement] {
     fn get_TagName(&self, out: *mut HSTRING) -> HRESULT,
     fn GetAttribute(&self, attributeName: HSTRING, out: *mut HSTRING) -> HRESULT,
     fn SetAttribute(&self, attributeName: HSTRING, attributeValue: HSTRING) -> HRESULT,
@@ -1636,12 +1636,12 @@ impl IXmlElement {
 }
 RT_CLASS!{class XmlElement: IXmlElement}
 DEFINE_IID!(IID_IXmlEntityReference, 774850492, 50128, 19663, 187, 134, 10, 184, 195, 106, 97, 207);
-RT_INTERFACE!{interface IXmlEntityReference(IXmlEntityReferenceVtbl): IInspectable(IInspectableVtbl) [IID_IXmlEntityReference] {
+RT_INTERFACE!{interface IXmlEntityReference(IXmlEntityReferenceVtbl): IInspectable [IID_IXmlEntityReference] {
     
 }}
 RT_CLASS!{class XmlEntityReference: IXmlEntityReference}
 DEFINE_IID!(IID_IXmlLoadSettings, 1487538088, 65238, 18167, 180, 197, 251, 27, 167, 33, 8, 214);
-RT_INTERFACE!{interface IXmlLoadSettings(IXmlLoadSettingsVtbl): IInspectable(IInspectableVtbl) [IID_IXmlLoadSettings] {
+RT_INTERFACE!{interface IXmlLoadSettings(IXmlLoadSettingsVtbl): IInspectable [IID_IXmlLoadSettings] {
     fn get_MaxElementDepth(&self, out: *mut u32) -> HRESULT,
     fn put_MaxElementDepth(&self, value: u32) -> HRESULT,
     fn get_ProhibitDtd(&self, out: *mut bool) -> HRESULT,
@@ -1704,7 +1704,7 @@ RT_CLASS!{class XmlLoadSettings: IXmlLoadSettings}
 impl RtActivatable<IActivationFactory> for XmlLoadSettings {}
 DEFINE_CLSID!(XmlLoadSettings(&[87,105,110,100,111,119,115,46,68,97,116,97,46,88,109,108,46,68,111,109,46,88,109,108,76,111,97,100,83,101,116,116,105,110,103,115,0]) [CLSID_XmlLoadSettings]);
 DEFINE_IID!(IID_IXmlNamedNodeMap, 3014041264, 43696, 19330, 166, 250, 177, 69, 63, 124, 2, 27);
-RT_INTERFACE!{interface IXmlNamedNodeMap(IXmlNamedNodeMapVtbl): IInspectable(IInspectableVtbl) [IID_IXmlNamedNodeMap] {
+RT_INTERFACE!{interface IXmlNamedNodeMap(IXmlNamedNodeMapVtbl): IInspectable [IID_IXmlNamedNodeMap] {
     fn get_Length(&self, out: *mut u32) -> HRESULT,
     fn Item(&self, index: u32, out: *mut <IXmlNode as RtType>::Abi) -> HRESULT,
     fn GetNamedItem(&self, name: HSTRING, out: *mut <IXmlNode as RtType>::Abi) -> HRESULT,
@@ -1758,7 +1758,7 @@ impl IXmlNamedNodeMap {
 }
 RT_CLASS!{class XmlNamedNodeMap: IXmlNamedNodeMap}
 DEFINE_IID!(IID_IXmlNode, 477371737, 8482, 18389, 168, 86, 131, 243, 212, 33, 72, 117);
-RT_INTERFACE!{interface IXmlNode(IXmlNodeVtbl): IInspectable(IInspectableVtbl) [IID_IXmlNode] {
+RT_INTERFACE!{interface IXmlNode(IXmlNodeVtbl): IInspectable [IID_IXmlNode] {
     fn get_NodeValue(&self, out: *mut <IInspectable as RtType>::Abi) -> HRESULT,
     fn put_NodeValue(&self, value: <IInspectable as RtType>::Abi) -> HRESULT,
     fn get_NodeType(&self, out: *mut NodeType) -> HRESULT,
@@ -1898,7 +1898,7 @@ impl IXmlNode {
     }}
 }
 DEFINE_IID!(IID_IXmlNodeList, 2355146103, 33700, 20161, 156, 84, 123, 164, 41, 225, 61, 166);
-RT_INTERFACE!{interface IXmlNodeList(IXmlNodeListVtbl): IInspectable(IInspectableVtbl) [IID_IXmlNodeList] {
+RT_INTERFACE!{interface IXmlNodeList(IXmlNodeListVtbl): IInspectable [IID_IXmlNodeList] {
     fn get_Length(&self, out: *mut u32) -> HRESULT,
     fn Item(&self, index: u32, out: *mut <IXmlNode as RtType>::Abi) -> HRESULT
 }}
@@ -1916,7 +1916,7 @@ impl IXmlNodeList {
 }
 RT_CLASS!{class XmlNodeList: IXmlNodeList}
 DEFINE_IID!(IID_IXmlNodeSelector, 1675344523, 53467, 20449, 183, 69, 249, 67, 58, 253, 194, 91);
-RT_INTERFACE!{interface IXmlNodeSelector(IXmlNodeSelectorVtbl): IInspectable(IInspectableVtbl) [IID_IXmlNodeSelector] {
+RT_INTERFACE!{interface IXmlNodeSelector(IXmlNodeSelectorVtbl): IInspectable [IID_IXmlNodeSelector] {
     fn SelectSingleNode(&self, xpath: HSTRING, out: *mut <IXmlNode as RtType>::Abi) -> HRESULT,
     fn SelectNodes(&self, xpath: HSTRING, out: *mut <XmlNodeList as RtType>::Abi) -> HRESULT,
     fn SelectSingleNodeNS(&self, xpath: HSTRING, namespaces: <IInspectable as RtType>::Abi, out: *mut <IXmlNode as RtType>::Abi) -> HRESULT,
@@ -1945,7 +1945,7 @@ impl IXmlNodeSelector {
     }}
 }
 DEFINE_IID!(IID_IXmlNodeSerializer, 1556460418, 59101, 18833, 171, 239, 6, 216, 210, 231, 189, 12);
-RT_INTERFACE!{interface IXmlNodeSerializer(IXmlNodeSerializerVtbl): IInspectable(IInspectableVtbl) [IID_IXmlNodeSerializer] {
+RT_INTERFACE!{interface IXmlNodeSerializer(IXmlNodeSerializerVtbl): IInspectable [IID_IXmlNodeSerializer] {
     fn GetXml(&self, out: *mut HSTRING) -> HRESULT,
     fn get_InnerText(&self, out: *mut HSTRING) -> HRESULT,
     fn put_InnerText(&self, value: HSTRING) -> HRESULT
@@ -1967,7 +1967,7 @@ impl IXmlNodeSerializer {
     }}
 }
 DEFINE_IID!(IID_IXmlProcessingInstruction, 654834974, 7826, 20174, 182, 244, 38, 240, 105, 7, 141, 220);
-RT_INTERFACE!{interface IXmlProcessingInstruction(IXmlProcessingInstructionVtbl): IInspectable(IInspectableVtbl) [IID_IXmlProcessingInstruction] {
+RT_INTERFACE!{interface IXmlProcessingInstruction(IXmlProcessingInstructionVtbl): IInspectable [IID_IXmlProcessingInstruction] {
     fn get_Target(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Data(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Data(&self, value: HSTRING) -> HRESULT
@@ -1990,7 +1990,7 @@ impl IXmlProcessingInstruction {
 }
 RT_CLASS!{class XmlProcessingInstruction: IXmlProcessingInstruction}
 DEFINE_IID!(IID_IXmlText, 4180780235, 12429, 18272, 161, 213, 67, 182, 116, 80, 172, 126);
-RT_INTERFACE!{interface IXmlText(IXmlTextVtbl): IInspectable(IInspectableVtbl) [IID_IXmlText] {
+RT_INTERFACE!{interface IXmlText(IXmlTextVtbl): IInspectable [IID_IXmlText] {
     fn SplitText(&self, offset: u32, out: *mut <IXmlText as RtType>::Abi) -> HRESULT
 }}
 impl IXmlText {
@@ -2005,7 +2005,7 @@ RT_CLASS!{class XmlText: IXmlText}
 pub mod xsl { // Windows.Data.Xml.Xsl
 use crate::prelude::*;
 DEFINE_IID!(IID_IXsltProcessor, 2070179903, 21772, 18630, 169, 15, 147, 165, 185, 100, 81, 143);
-RT_INTERFACE!{interface IXsltProcessor(IXsltProcessorVtbl): IInspectable(IInspectableVtbl) [IID_IXsltProcessor] {
+RT_INTERFACE!{interface IXsltProcessor(IXsltProcessorVtbl): IInspectable [IID_IXsltProcessor] {
     fn TransformToString(&self, inputNode: <super::dom::IXmlNode as RtType>::Abi, out: *mut HSTRING) -> HRESULT
 }}
 impl IXsltProcessor {
@@ -2024,7 +2024,7 @@ impl XsltProcessor {
 }
 DEFINE_CLSID!(XsltProcessor(&[87,105,110,100,111,119,115,46,68,97,116,97,46,88,109,108,46,88,115,108,46,88,115,108,116,80,114,111,99,101,115,115,111,114,0]) [CLSID_XsltProcessor]);
 DEFINE_IID!(IID_IXsltProcessor2, 2376358998, 38821, 17611, 168, 190, 39, 216, 98, 128, 199, 10);
-RT_INTERFACE!{interface IXsltProcessor2(IXsltProcessor2Vtbl): IInspectable(IInspectableVtbl) [IID_IXsltProcessor2] {
+RT_INTERFACE!{interface IXsltProcessor2(IXsltProcessor2Vtbl): IInspectable [IID_IXsltProcessor2] {
     fn TransformToDocument(&self, inputNode: <super::dom::IXmlNode as RtType>::Abi, out: *mut <super::dom::XmlDocument as RtType>::Abi) -> HRESULT
 }}
 impl IXsltProcessor2 {
@@ -2035,7 +2035,7 @@ impl IXsltProcessor2 {
     }}
 }
 DEFINE_IID!(IID_IXsltProcessorFactory, 658589376, 39505, 18019, 191, 48, 14, 247, 66, 20, 111, 32);
-RT_INTERFACE!{static interface IXsltProcessorFactory(IXsltProcessorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IXsltProcessorFactory] {
+RT_INTERFACE!{static interface IXsltProcessorFactory(IXsltProcessorFactoryVtbl): IInspectable [IID_IXsltProcessorFactory] {
     fn CreateInstance(&self, document: <super::dom::XmlDocument as RtType>::Abi, out: *mut <XsltProcessor as RtType>::Abi) -> HRESULT
 }}
 impl IXsltProcessorFactory {

@@ -2,7 +2,7 @@ pub mod authentication { // Windows.Security.Authentication
 pub mod identity { // Windows.Security.Authentication.Identity
 use crate::prelude::*;
 DEFINE_IID!(IID_IEnterpriseKeyCredentialRegistrationInfo, 942807756, 26411, 18467, 182, 3, 107, 60, 117, 61, 175, 151);
-RT_INTERFACE!{interface IEnterpriseKeyCredentialRegistrationInfo(IEnterpriseKeyCredentialRegistrationInfoVtbl): IInspectable(IInspectableVtbl) [IID_IEnterpriseKeyCredentialRegistrationInfo] {
+RT_INTERFACE!{interface IEnterpriseKeyCredentialRegistrationInfo(IEnterpriseKeyCredentialRegistrationInfoVtbl): IInspectable [IID_IEnterpriseKeyCredentialRegistrationInfo] {
     fn get_TenantId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TenantName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Subject(&self, out: *mut HSTRING) -> HRESULT,
@@ -38,7 +38,7 @@ impl IEnterpriseKeyCredentialRegistrationInfo {
 }
 RT_CLASS!{class EnterpriseKeyCredentialRegistrationInfo: IEnterpriseKeyCredentialRegistrationInfo}
 DEFINE_IID!(IID_IEnterpriseKeyCredentialRegistrationManager, 2213789247, 41567, 19642, 187, 142, 189, 195, 45, 3, 194, 151);
-RT_INTERFACE!{interface IEnterpriseKeyCredentialRegistrationManager(IEnterpriseKeyCredentialRegistrationManagerVtbl): IInspectable(IInspectableVtbl) [IID_IEnterpriseKeyCredentialRegistrationManager] {
+RT_INTERFACE!{interface IEnterpriseKeyCredentialRegistrationManager(IEnterpriseKeyCredentialRegistrationManagerVtbl): IInspectable [IID_IEnterpriseKeyCredentialRegistrationManager] {
     fn GetRegistrationsAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<EnterpriseKeyCredentialRegistrationInfo>> as RtType>::Abi) -> HRESULT
 }}
 impl IEnterpriseKeyCredentialRegistrationManager {
@@ -57,7 +57,7 @@ impl EnterpriseKeyCredentialRegistrationManager {
 }
 DEFINE_CLSID!(EnterpriseKeyCredentialRegistrationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,69,110,116,101,114,112,114,105,115,101,75,101,121,67,114,101,100,101,110,116,105,97,108,82,101,103,105,115,116,114,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_EnterpriseKeyCredentialRegistrationManager]);
 DEFINE_IID!(IID_IEnterpriseKeyCredentialRegistrationManagerStatics, 2008571550, 44276, 19392, 186, 194, 64, 187, 70, 239, 187, 63);
-RT_INTERFACE!{static interface IEnterpriseKeyCredentialRegistrationManagerStatics(IEnterpriseKeyCredentialRegistrationManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IEnterpriseKeyCredentialRegistrationManagerStatics] {
+RT_INTERFACE!{static interface IEnterpriseKeyCredentialRegistrationManagerStatics(IEnterpriseKeyCredentialRegistrationManagerStaticsVtbl): IInspectable [IID_IEnterpriseKeyCredentialRegistrationManagerStatics] {
     fn get_Current(&self, out: *mut <EnterpriseKeyCredentialRegistrationManager as RtType>::Abi) -> HRESULT
 }}
 impl IEnterpriseKeyCredentialRegistrationManagerStatics {
@@ -70,7 +70,7 @@ impl IEnterpriseKeyCredentialRegistrationManagerStatics {
 pub mod core { // Windows.Security.Authentication.Identity.Core
 use crate::prelude::*;
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorAuthenticationManager, 265502885, 62836, 17184, 160, 142, 10, 25, 168, 35, 34, 170);
-RT_INTERFACE!{interface IMicrosoftAccountMultiFactorAuthenticationManager(IMicrosoftAccountMultiFactorAuthenticationManagerVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorAuthenticationManager] {
+RT_INTERFACE!{interface IMicrosoftAccountMultiFactorAuthenticationManager(IMicrosoftAccountMultiFactorAuthenticationManagerVtbl): IInspectable [IID_IMicrosoftAccountMultiFactorAuthenticationManager] {
     fn GetOneTimePassCodeAsync(&self, userAccountId: HSTRING, codeLength: u32, out: *mut <foundation::IAsyncOperation<MicrosoftAccountMultiFactorOneTimeCodedInfo> as RtType>::Abi) -> HRESULT,
     fn AddDeviceAsync(&self, userAccountId: HSTRING, authenticationToken: HSTRING, wnsChannelId: HSTRING, out: *mut <foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse> as RtType>::Abi) -> HRESULT,
     fn RemoveDeviceAsync(&self, userAccountId: HSTRING, out: *mut <foundation::IAsyncOperation<MicrosoftAccountMultiFactorServiceResponse> as RtType>::Abi) -> HRESULT,
@@ -146,7 +146,7 @@ RT_ENUM! { enum MicrosoftAccountMultiFactorAuthenticationType: i32 {
     User = 0, Device = 1,
 }}
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorAuthenticatorStatics, 3647259366, 62534, 19569, 139, 121, 110, 164, 2, 74, 169, 184);
-RT_INTERFACE!{static interface IMicrosoftAccountMultiFactorAuthenticatorStatics(IMicrosoftAccountMultiFactorAuthenticatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorAuthenticatorStatics] {
+RT_INTERFACE!{static interface IMicrosoftAccountMultiFactorAuthenticatorStatics(IMicrosoftAccountMultiFactorAuthenticatorStaticsVtbl): IInspectable [IID_IMicrosoftAccountMultiFactorAuthenticatorStatics] {
     fn get_Current(&self, out: *mut <MicrosoftAccountMultiFactorAuthenticationManager as RtType>::Abi) -> HRESULT
 }}
 impl IMicrosoftAccountMultiFactorAuthenticatorStatics {
@@ -157,7 +157,7 @@ impl IMicrosoftAccountMultiFactorAuthenticatorStatics {
     }}
 }
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorGetSessionsResult, 1310960032, 59898, 18810, 149, 222, 109, 87, 71, 191, 151, 76);
-RT_INTERFACE!{interface IMicrosoftAccountMultiFactorGetSessionsResult(IMicrosoftAccountMultiFactorGetSessionsResultVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorGetSessionsResult] {
+RT_INTERFACE!{interface IMicrosoftAccountMultiFactorGetSessionsResult(IMicrosoftAccountMultiFactorGetSessionsResultVtbl): IInspectable [IID_IMicrosoftAccountMultiFactorGetSessionsResult] {
     fn get_Sessions(&self, out: *mut <foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo> as RtType>::Abi) -> HRESULT,
     fn get_ServiceResponse(&self, out: *mut MicrosoftAccountMultiFactorServiceResponse) -> HRESULT
 }}
@@ -175,7 +175,7 @@ impl IMicrosoftAccountMultiFactorGetSessionsResult {
 }
 RT_CLASS!{class MicrosoftAccountMultiFactorGetSessionsResult: IMicrosoftAccountMultiFactorGetSessionsResult}
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorOneTimeCodedInfo, 2193237579, 55420, 18024, 169, 118, 64, 207, 174, 84, 125, 8);
-RT_INTERFACE!{interface IMicrosoftAccountMultiFactorOneTimeCodedInfo(IMicrosoftAccountMultiFactorOneTimeCodedInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorOneTimeCodedInfo] {
+RT_INTERFACE!{interface IMicrosoftAccountMultiFactorOneTimeCodedInfo(IMicrosoftAccountMultiFactorOneTimeCodedInfoVtbl): IInspectable [IID_IMicrosoftAccountMultiFactorOneTimeCodedInfo] {
     fn get_Code(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TimeInterval(&self, out: *mut foundation::TimeSpan) -> HRESULT,
     fn get_TimeToLive(&self, out: *mut foundation::TimeSpan) -> HRESULT,
@@ -214,7 +214,7 @@ RT_ENUM! { enum MicrosoftAccountMultiFactorSessionAuthenticationStatus: i32 {
     Authenticated = 0, Unauthenticated = 1,
 }}
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorSessionInfo, 1602137012, 41592, 17973, 183, 101, 180, 148, 235, 38, 10, 244);
-RT_INTERFACE!{interface IMicrosoftAccountMultiFactorSessionInfo(IMicrosoftAccountMultiFactorSessionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorSessionInfo] {
+RT_INTERFACE!{interface IMicrosoftAccountMultiFactorSessionInfo(IMicrosoftAccountMultiFactorSessionInfoVtbl): IInspectable [IID_IMicrosoftAccountMultiFactorSessionInfo] {
     fn get_UserAccountId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SessionId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplaySessionId(&self, out: *mut HSTRING) -> HRESULT,
@@ -262,7 +262,7 @@ impl IMicrosoftAccountMultiFactorSessionInfo {
 }
 RT_CLASS!{class MicrosoftAccountMultiFactorSessionInfo: IMicrosoftAccountMultiFactorSessionInfo}
 DEFINE_IID!(IID_IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo, 2860434939, 55871, 16520, 162, 13, 86, 24, 175, 173, 178, 229);
-RT_INTERFACE!{interface IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo(IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo] {
+RT_INTERFACE!{interface IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo(IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfoVtbl): IInspectable [IID_IMicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo] {
     fn get_Sessions(&self, out: *mut <foundation::collections::IVectorView<MicrosoftAccountMultiFactorSessionInfo> as RtType>::Abi) -> HRESULT,
     fn get_UnregisteredAccounts(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_ServiceResponse(&self, out: *mut MicrosoftAccountMultiFactorServiceResponse) -> HRESULT
@@ -289,7 +289,7 @@ RT_CLASS!{class MicrosoftAccountMultiFactorUnregisteredAccountsAndSessionInfo: I
 pub mod provider { // Windows.Security.Authentication.Identity.Provider
 use crate::prelude::*;
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthentication, 34215653, 27173, 16547, 140, 0, 80, 160, 35, 246, 25, 209);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthentication(ISecondaryAuthenticationFactorAuthenticationVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthentication] {
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthentication(ISecondaryAuthenticationFactorAuthenticationVtbl): IInspectable [IID_ISecondaryAuthenticationFactorAuthentication] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_ServiceAuthenticationHmac(&self, out: *mut <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -358,7 +358,7 @@ RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationMessage: i32 {
     Invalid = 0, SwipeUpWelcome = 1, TapWelcome = 2, DeviceNeedsAttention = 3, LookingForDevice = 4, LookingForDevicePluggedin = 5, BluetoothIsDisabled = 6, NfcIsDisabled = 7, WiFiIsDisabled = 8, ExtraTapIsRequired = 9, DisabledByPolicy = 10, TapOnDeviceRequired = 11, HoldFinger = 12, ScanFinger = 13, UnauthorizedUser = 14, ReregisterRequired = 15, TryAgain = 16, SayPassphrase = 17, ReadyToSignIn = 18, UseAnotherSignInOption = 19, ConnectionRequired = 20, TimeLimitExceeded = 21, CanceledByUser = 22, CenterHand = 23, MoveHandCloser = 24, MoveHandFarther = 25, PlaceHandAbove = 26, RecognitionFailed = 27, DeviceUnavailable = 28,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationResult, 2629523847, 61293, 19394, 191, 73, 70, 23, 81, 90, 15, 154);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationResult(ISecondaryAuthenticationFactorAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationResult] {
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationResult(ISecondaryAuthenticationFactorAuthenticationResultVtbl): IInspectable [IID_ISecondaryAuthenticationFactorAuthenticationResult] {
     fn get_Status(&self, out: *mut SecondaryAuthenticationFactorAuthenticationStatus) -> HRESULT,
     fn get_Authentication(&self, out: *mut <SecondaryAuthenticationFactorAuthentication as RtType>::Abi) -> HRESULT
 }}
@@ -382,7 +382,7 @@ RT_ENUM! { enum SecondaryAuthenticationFactorAuthenticationStage: i32 {
     NotStarted = 0, WaitingForUserConfirmation = 1, CollectingCredential = 2, SuspendingAuthentication = 3, CredentialCollected = 4, CredentialAuthenticated = 5, StoppingAuthentication = 6, ReadyForLock = 7, CheckingDevicePresence = 8,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs, 3567644246, 29329, 16499, 188, 31, 204, 184, 245, 175, 223, 150);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs(ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs] {
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs(ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgsVtbl): IInspectable [IID_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs] {
     fn get_StageInfo(&self, out: *mut <SecondaryAuthenticationFactorAuthenticationStageInfo as RtType>::Abi) -> HRESULT
 }}
 impl ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs {
@@ -394,7 +394,7 @@ impl ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs {
 }
 RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs: ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStageInfo, 1459536523, 59562, 19471, 142, 76, 165, 89, 231, 58, 221, 136);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageInfo(ISecondaryAuthenticationFactorAuthenticationStageInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStageInfo] {
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorAuthenticationStageInfo(ISecondaryAuthenticationFactorAuthenticationStageInfoVtbl): IInspectable [IID_ISecondaryAuthenticationFactorAuthenticationStageInfo] {
     fn get_Stage(&self, out: *mut SecondaryAuthenticationFactorAuthenticationStage) -> HRESULT,
     fn get_Scenario(&self, out: *mut SecondaryAuthenticationFactorAuthenticationScenario) -> HRESULT,
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT
@@ -418,7 +418,7 @@ impl ISecondaryAuthenticationFactorAuthenticationStageInfo {
 }
 RT_CLASS!{class SecondaryAuthenticationFactorAuthenticationStageInfo: ISecondaryAuthenticationFactorAuthenticationStageInfo}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorAuthenticationStatics, 1062741590, 10488, 19983, 174, 140, 88, 152, 185, 174, 36, 105);
-RT_INTERFACE!{static interface ISecondaryAuthenticationFactorAuthenticationStatics(ISecondaryAuthenticationFactorAuthenticationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorAuthenticationStatics] {
+RT_INTERFACE!{static interface ISecondaryAuthenticationFactorAuthenticationStatics(ISecondaryAuthenticationFactorAuthenticationStaticsVtbl): IInspectable [IID_ISecondaryAuthenticationFactorAuthenticationStatics] {
     fn ShowNotificationMessageAsync(&self, deviceName: HSTRING, message: SecondaryAuthenticationFactorAuthenticationMessage, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-storage")] fn StartAuthenticationAsync(&self, deviceId: HSTRING, serviceAuthenticationNonce: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncOperation<SecondaryAuthenticationFactorAuthenticationResult> as RtType>::Abi) -> HRESULT,
@@ -468,7 +468,7 @@ RT_ENUM! { enum SecondaryAuthenticationFactorDevicePresenceMonitoringMode: i32 {
     Unsupported = 0, AppManaged = 1, SystemManaged = 2,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics, 2420742681, 32498, 17699, 149, 28, 164, 23, 162, 74, 207, 147);
-RT_INTERFACE!{static interface ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics(ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics] {
+RT_INTERFACE!{static interface ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics(ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStaticsVtbl): IInspectable [IID_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics] {
     fn RegisterDevicePresenceMonitoringAsync(&self, deviceId: HSTRING, deviceInstancePath: HSTRING, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, out: *mut <foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-storage")] fn RegisterDevicePresenceMonitoringWithNewDeviceAsync(&self, deviceId: HSTRING, deviceInstancePath: HSTRING, monitoringMode: SecondaryAuthenticationFactorDevicePresenceMonitoringMode, deviceFriendlyName: HSTRING, deviceModelNumber: HSTRING, deviceConfigurationData: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncOperation<SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> as RtType>::Abi) -> HRESULT,
@@ -504,7 +504,7 @@ RT_ENUM! { enum SecondaryAuthenticationFactorFinishAuthenticationStatus: i32 {
     Failed = 0, Completed = 1, NonceExpired = 2,
 }}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorInfo, 506177633, 34099, 20430, 131, 155, 236, 183, 36, 16, 172, 20);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo(ISecondaryAuthenticationFactorInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorInfo] {
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo(ISecondaryAuthenticationFactorInfoVtbl): IInspectable [IID_ISecondaryAuthenticationFactorInfo] {
     fn get_DeviceId(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DeviceFriendlyName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DeviceModelNumber(&self, out: *mut HSTRING) -> HRESULT,
@@ -534,7 +534,7 @@ impl ISecondaryAuthenticationFactorInfo {
 }
 RT_CLASS!{class SecondaryAuthenticationFactorInfo: ISecondaryAuthenticationFactorInfo}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorInfo2, 349798819, 64550, 20471, 171, 195, 72, 232, 42, 81, 42, 10);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo2(ISecondaryAuthenticationFactorInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorInfo2] {
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorInfo2(ISecondaryAuthenticationFactorInfo2Vtbl): IInspectable [IID_ISecondaryAuthenticationFactorInfo2] {
     fn get_PresenceMonitoringMode(&self, out: *mut SecondaryAuthenticationFactorDevicePresenceMonitoringMode) -> HRESULT,
     fn UpdateDevicePresenceAsync(&self, presenceState: SecondaryAuthenticationFactorDevicePresence, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn get_IsAuthenticationSupported(&self, out: *mut bool) -> HRESULT
@@ -557,7 +557,7 @@ impl ISecondaryAuthenticationFactorInfo2 {
     }}
 }
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorRegistration, 2672606132, 36026, 18608, 132, 13, 219, 178, 42, 84, 198, 120);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistration(ISecondaryAuthenticationFactorRegistrationVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorRegistration] {
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistration(ISecondaryAuthenticationFactorRegistrationVtbl): IInspectable [IID_ISecondaryAuthenticationFactorRegistration] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn FinishRegisteringDeviceAsync(&self, deviceConfigurationData: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn AbortRegisteringDeviceAsync(&self, errorLogMessage: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
@@ -605,7 +605,7 @@ impl SecondaryAuthenticationFactorRegistration {
 }
 DEFINE_CLSID!(SecondaryAuthenticationFactorRegistration(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,73,100,101,110,116,105,116,121,46,80,114,111,118,105,100,101,114,46,83,101,99,111,110,100,97,114,121,65,117,116,104,101,110,116,105,99,97,116,105,111,110,70,97,99,116,111,114,82,101,103,105,115,116,114,97,116,105,111,110,0]) [CLSID_SecondaryAuthenticationFactorRegistration]);
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorRegistrationResult, 2768123376, 44515, 18817, 175, 107, 236, 25, 89, 33, 104, 42);
-RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistrationResult(ISecondaryAuthenticationFactorRegistrationResultVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorRegistrationResult] {
+RT_INTERFACE!{interface ISecondaryAuthenticationFactorRegistrationResult(ISecondaryAuthenticationFactorRegistrationResultVtbl): IInspectable [IID_ISecondaryAuthenticationFactorRegistrationResult] {
     fn get_Status(&self, out: *mut SecondaryAuthenticationFactorRegistrationStatus) -> HRESULT,
     fn get_Registration(&self, out: *mut <SecondaryAuthenticationFactorRegistration as RtType>::Abi) -> HRESULT
 }}
@@ -623,7 +623,7 @@ impl ISecondaryAuthenticationFactorRegistrationResult {
 }
 RT_CLASS!{class SecondaryAuthenticationFactorRegistrationResult: ISecondaryAuthenticationFactorRegistrationResult}
 DEFINE_IID!(IID_ISecondaryAuthenticationFactorRegistrationStatics, 450826085, 58295, 16725, 153, 127, 183, 86, 239, 101, 190, 186);
-RT_INTERFACE!{static interface ISecondaryAuthenticationFactorRegistrationStatics(ISecondaryAuthenticationFactorRegistrationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISecondaryAuthenticationFactorRegistrationStatics] {
+RT_INTERFACE!{static interface ISecondaryAuthenticationFactorRegistrationStatics(ISecondaryAuthenticationFactorRegistrationStaticsVtbl): IInspectable [IID_ISecondaryAuthenticationFactorRegistrationStatics] {
     #[cfg(feature="windows-storage")] fn RequestStartRegisteringDeviceAsync(&self, deviceId: HSTRING, capabilities: SecondaryAuthenticationFactorDeviceCapabilities, deviceFriendlyName: HSTRING, deviceModelNumber: HSTRING, deviceKey: <crate::windows::storage::streams::IBuffer as RtType>::Abi, mutualAuthenticationKey: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncOperation<SecondaryAuthenticationFactorRegistrationResult> as RtType>::Abi) -> HRESULT,
     fn FindAllRegisteredDeviceInfoAsync(&self, queryType: SecondaryAuthenticationFactorDeviceFindScope, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<SecondaryAuthenticationFactorInfo>> as RtType>::Abi) -> HRESULT,
     fn UnregisterDeviceAsync(&self, deviceId: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -662,7 +662,7 @@ RT_ENUM! { enum CredentialPromptType: i32 {
     PromptIfNeeded = 0, RetypeCredentials = 1, DoNotPrompt = 2,
 }}
 DEFINE_IID!(IID_IOnlineIdAuthenticator, 2684614026, 10667, 18455, 184, 132, 215, 81, 109, 173, 24, 185);
-RT_INTERFACE!{interface IOnlineIdAuthenticator(IOnlineIdAuthenticatorVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdAuthenticator] {
+RT_INTERFACE!{interface IOnlineIdAuthenticator(IOnlineIdAuthenticatorVtbl): IInspectable [IID_IOnlineIdAuthenticator] {
     fn AuthenticateUserAsync(&self, request: <OnlineIdServiceTicketRequest as RtType>::Abi, out: *mut <UserAuthenticationOperation as RtType>::Abi) -> HRESULT,
     fn AuthenticateUserAsyncAdvanced(&self, requests: <foundation::collections::IIterable<OnlineIdServiceTicketRequest> as RtType>::Abi, credentialPromptType: CredentialPromptType, out: *mut <UserAuthenticationOperation as RtType>::Abi) -> HRESULT,
     fn SignOutUserAsync(&self, out: *mut <SignOutUserOperation as RtType>::Abi) -> HRESULT,
@@ -711,7 +711,7 @@ RT_CLASS!{class OnlineIdAuthenticator: IOnlineIdAuthenticator}
 impl RtActivatable<IActivationFactory> for OnlineIdAuthenticator {}
 DEFINE_CLSID!(OnlineIdAuthenticator(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,65,117,116,104,101,110,116,105,99,97,116,111,114,0]) [CLSID_OnlineIdAuthenticator]);
 DEFINE_IID!(IID_IOnlineIdServiceTicket, 3378271359, 55169, 19092, 172, 184, 197, 152, 116, 35, 140, 38);
-RT_INTERFACE!{interface IOnlineIdServiceTicket(IOnlineIdServiceTicketVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicket] {
+RT_INTERFACE!{interface IOnlineIdServiceTicket(IOnlineIdServiceTicketVtbl): IInspectable [IID_IOnlineIdServiceTicket] {
     fn get_Value(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Request(&self, out: *mut <OnlineIdServiceTicketRequest as RtType>::Abi) -> HRESULT,
     fn get_ErrorCode(&self, out: *mut i32) -> HRESULT
@@ -735,7 +735,7 @@ impl IOnlineIdServiceTicket {
 }
 RT_CLASS!{class OnlineIdServiceTicket: IOnlineIdServiceTicket}
 DEFINE_IID!(IID_IOnlineIdServiceTicketRequest, 695485907, 64355, 16693, 137, 9, 78, 53, 76, 6, 20, 102);
-RT_INTERFACE!{interface IOnlineIdServiceTicketRequest(IOnlineIdServiceTicketRequestVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicketRequest] {
+RT_INTERFACE!{interface IOnlineIdServiceTicketRequest(IOnlineIdServiceTicketRequestVtbl): IInspectable [IID_IOnlineIdServiceTicketRequest] {
     fn get_Service(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Policy(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -763,7 +763,7 @@ impl OnlineIdServiceTicketRequest {
 }
 DEFINE_CLSID!(OnlineIdServiceTicketRequest(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,83,101,114,118,105,99,101,84,105,99,107,101,116,82,101,113,117,101,115,116,0]) [CLSID_OnlineIdServiceTicketRequest]);
 DEFINE_IID!(IID_IOnlineIdServiceTicketRequestFactory, 3199928840, 40563, 16503, 150, 20, 8, 97, 76, 11, 194, 69);
-RT_INTERFACE!{static interface IOnlineIdServiceTicketRequestFactory(IOnlineIdServiceTicketRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdServiceTicketRequestFactory] {
+RT_INTERFACE!{static interface IOnlineIdServiceTicketRequestFactory(IOnlineIdServiceTicketRequestFactoryVtbl): IInspectable [IID_IOnlineIdServiceTicketRequestFactory] {
     fn CreateOnlineIdServiceTicketRequest(&self, service: HSTRING, policy: HSTRING, out: *mut <OnlineIdServiceTicketRequest as RtType>::Abi) -> HRESULT,
     fn CreateOnlineIdServiceTicketRequestAdvanced(&self, service: HSTRING, out: *mut <OnlineIdServiceTicketRequest as RtType>::Abi) -> HRESULT
 }}
@@ -791,7 +791,7 @@ impl OnlineIdSystemAuthenticator {
 }
 DEFINE_CLSID!(OnlineIdSystemAuthenticator(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,79,110,108,105,110,101,73,100,46,79,110,108,105,110,101,73,100,83,121,115,116,101,109,65,117,116,104,101,110,116,105,99,97,116,111,114,0]) [CLSID_OnlineIdSystemAuthenticator]);
 DEFINE_IID!(IID_IOnlineIdSystemAuthenticatorForUser, 1469628155, 7652, 16774, 162, 230, 181, 99, 248, 106, 175, 68);
-RT_INTERFACE!{interface IOnlineIdSystemAuthenticatorForUser(IOnlineIdSystemAuthenticatorForUserVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemAuthenticatorForUser] {
+RT_INTERFACE!{interface IOnlineIdSystemAuthenticatorForUser(IOnlineIdSystemAuthenticatorForUserVtbl): IInspectable [IID_IOnlineIdSystemAuthenticatorForUser] {
     fn GetTicketAsync(&self, request: <OnlineIdServiceTicketRequest as RtType>::Abi, out: *mut <foundation::IAsyncOperation<OnlineIdSystemTicketResult> as RtType>::Abi) -> HRESULT,
     fn put_ApplicationId(&self, value: Guid) -> HRESULT,
     fn get_ApplicationId(&self, out: *mut Guid) -> HRESULT,
@@ -820,7 +820,7 @@ impl IOnlineIdSystemAuthenticatorForUser {
 }
 RT_CLASS!{class OnlineIdSystemAuthenticatorForUser: IOnlineIdSystemAuthenticatorForUser}
 DEFINE_IID!(IID_IOnlineIdSystemAuthenticatorStatics, 2231662482, 63028, 16867, 150, 164, 81, 100, 233, 2, 199, 64);
-RT_INTERFACE!{static interface IOnlineIdSystemAuthenticatorStatics(IOnlineIdSystemAuthenticatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemAuthenticatorStatics] {
+RT_INTERFACE!{static interface IOnlineIdSystemAuthenticatorStatics(IOnlineIdSystemAuthenticatorStaticsVtbl): IInspectable [IID_IOnlineIdSystemAuthenticatorStatics] {
     fn get_Default(&self, out: *mut <OnlineIdSystemAuthenticatorForUser as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-system")] fn GetForUser(&self, user: <crate::windows::system::User as RtType>::Abi, out: *mut <OnlineIdSystemAuthenticatorForUser as RtType>::Abi) -> HRESULT
 }}
@@ -837,7 +837,7 @@ impl IOnlineIdSystemAuthenticatorStatics {
     }}
 }
 DEFINE_IID!(IID_IOnlineIdSystemIdentity, 1950142989, 46794, 17229, 129, 36, 83, 234, 18, 104, 83, 7);
-RT_INTERFACE!{interface IOnlineIdSystemIdentity(IOnlineIdSystemIdentityVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemIdentity] {
+RT_INTERFACE!{interface IOnlineIdSystemIdentity(IOnlineIdSystemIdentityVtbl): IInspectable [IID_IOnlineIdSystemIdentity] {
     fn get_Ticket(&self, out: *mut <OnlineIdServiceTicket as RtType>::Abi) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -855,7 +855,7 @@ impl IOnlineIdSystemIdentity {
 }
 RT_CLASS!{class OnlineIdSystemIdentity: IOnlineIdSystemIdentity}
 DEFINE_IID!(IID_IOnlineIdSystemTicketResult, 3674890232, 45208, 19149, 157, 19, 158, 100, 6, 82, 181, 182);
-RT_INTERFACE!{interface IOnlineIdSystemTicketResult(IOnlineIdSystemTicketResultVtbl): IInspectable(IInspectableVtbl) [IID_IOnlineIdSystemTicketResult] {
+RT_INTERFACE!{interface IOnlineIdSystemTicketResult(IOnlineIdSystemTicketResultVtbl): IInspectable [IID_IOnlineIdSystemTicketResult] {
     fn get_Identity(&self, out: *mut <OnlineIdSystemIdentity as RtType>::Abi) -> HRESULT,
     fn get_Status(&self, out: *mut OnlineIdSystemTicketStatus) -> HRESULT,
     fn get_ExtendedError(&self, out: *mut foundation::HResult) -> HRESULT
@@ -884,7 +884,7 @@ RT_ENUM! { enum OnlineIdSystemTicketStatus: i32 {
 RT_CLASS!{class SignOutUserOperation: foundation::IAsyncAction}
 RT_CLASS!{class UserAuthenticationOperation: foundation::IAsyncOperation<UserIdentity>}
 DEFINE_IID!(IID_IUserIdentity, 558291405, 1858, 19427, 138, 28, 124, 122, 230, 121, 170, 136);
-RT_INTERFACE!{interface IUserIdentity(IUserIdentityVtbl): IInspectable(IInspectableVtbl) [IID_IUserIdentity] {
+RT_INTERFACE!{interface IUserIdentity(IUserIdentityVtbl): IInspectable [IID_IUserIdentity] {
     fn get_Tickets(&self, out: *mut <foundation::collections::IVectorView<OnlineIdServiceTicket> as RtType>::Abi) -> HRESULT,
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SafeCustomerId(&self, out: *mut HSTRING) -> HRESULT,
@@ -974,7 +974,7 @@ impl WebAuthenticationBroker {
 }
 DEFINE_CLSID!(WebAuthenticationBroker(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,66,114,111,107,101,114,0]) [CLSID_WebAuthenticationBroker]);
 DEFINE_IID!(IID_IWebAuthenticationBrokerStatics, 789880602, 58995, 16565, 188, 34, 32, 26, 104, 100, 163, 123);
-RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics(IWebAuthenticationBrokerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationBrokerStatics] {
+RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics(IWebAuthenticationBrokerStaticsVtbl): IInspectable [IID_IWebAuthenticationBrokerStatics] {
     fn AuthenticateWithCallbackUriAsync(&self, options: WebAuthenticationOptions, requestUri: <foundation::Uri as RtType>::Abi, callbackUri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperation<WebAuthenticationResult> as RtType>::Abi) -> HRESULT,
     fn AuthenticateWithoutCallbackUriAsync(&self, options: WebAuthenticationOptions, requestUri: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperation<WebAuthenticationResult> as RtType>::Abi) -> HRESULT,
     fn GetCurrentApplicationCallbackUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
@@ -997,7 +997,7 @@ impl IWebAuthenticationBrokerStatics {
     }}
 }
 DEFINE_IID!(IID_IWebAuthenticationBrokerStatics2, 1942879134, 5351, 16858, 169, 113, 170, 244, 65, 11, 98, 30);
-RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics2(IWebAuthenticationBrokerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationBrokerStatics2] {
+RT_INTERFACE!{static interface IWebAuthenticationBrokerStatics2(IWebAuthenticationBrokerStatics2Vtbl): IInspectable [IID_IWebAuthenticationBrokerStatics2] {
     fn AuthenticateAndContinue(&self, requestUri: <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn AuthenticateWithCallbackUriAndContinue(&self, requestUri: <foundation::Uri as RtType>::Abi, callbackUri: <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn AuthenticateWithCallbackUriContinuationDataAndOptionsAndContinue(&self, requestUri: <foundation::Uri as RtType>::Abi, callbackUri: <foundation::Uri as RtType>::Abi, continuationData: <foundation::collections::ValueSet as RtType>::Abi, options: WebAuthenticationOptions) -> HRESULT,
@@ -1032,7 +1032,7 @@ RT_ENUM! { enum WebAuthenticationOptions: u32 {
     None = 0, SilentMode = 1, UseTitle = 2, UseHttpPost = 4, UseCorporateNetwork = 8,
 }}
 DEFINE_IID!(IID_IWebAuthenticationResult, 1677732683, 60905, 18186, 165, 205, 3, 35, 250, 246, 226, 98);
-RT_INTERFACE!{interface IWebAuthenticationResult(IWebAuthenticationResultVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationResult] {
+RT_INTERFACE!{interface IWebAuthenticationResult(IWebAuthenticationResultVtbl): IInspectable [IID_IWebAuthenticationResult] {
     fn get_ResponseData(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ResponseStatus(&self, out: *mut WebAuthenticationStatus) -> HRESULT,
     fn get_ResponseErrorDetail(&self, out: *mut u32) -> HRESULT
@@ -1061,7 +1061,7 @@ RT_ENUM! { enum WebAuthenticationStatus: i32 {
 pub mod core { // Windows.Security.Authentication.Web.Core
 use crate::prelude::*;
 DEFINE_IID!(IID_IFindAllAccountsResult, 2776705885, 46894, 16908, 134, 171, 170, 192, 215, 183, 38, 31);
-RT_INTERFACE!{interface IFindAllAccountsResult(IFindAllAccountsResultVtbl): IInspectable(IInspectableVtbl) [IID_IFindAllAccountsResult] {
+RT_INTERFACE!{interface IFindAllAccountsResult(IFindAllAccountsResultVtbl): IInspectable [IID_IFindAllAccountsResult] {
     fn get_Accounts(&self, out: *mut <foundation::collections::IVectorView<super::super::super::credentials::WebAccount> as RtType>::Abi) -> HRESULT,
     fn get_Status(&self, out: *mut FindAllWebAccountsStatus) -> HRESULT,
     fn get_ProviderError(&self, out: *mut <WebProviderError as RtType>::Abi) -> HRESULT
@@ -1088,7 +1088,7 @@ RT_ENUM! { enum FindAllWebAccountsStatus: i32 {
     Success = 0, NotAllowedByProvider = 1, NotSupportedByProvider = 2, ProviderError = 3,
 }}
 DEFINE_IID!(IID_IWebAccountEventArgs, 1874264957, 16974, 17644, 151, 124, 239, 36, 21, 70, 42, 90);
-RT_INTERFACE!{interface IWebAccountEventArgs(IWebAccountEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountEventArgs] {
+RT_INTERFACE!{interface IWebAccountEventArgs(IWebAccountEventArgsVtbl): IInspectable [IID_IWebAccountEventArgs] {
     fn get_Account(&self, out: *mut <super::super::super::credentials::WebAccount as RtType>::Abi) -> HRESULT
 }}
 impl IWebAccountEventArgs {
@@ -1100,7 +1100,7 @@ impl IWebAccountEventArgs {
 }
 RT_CLASS!{class WebAccountEventArgs: IWebAccountEventArgs}
 DEFINE_IID!(IID_IWebAccountMonitor, 1950742013, 43677, 17945, 141, 93, 193, 56, 164, 237, 227, 229);
-RT_INTERFACE!{interface IWebAccountMonitor(IWebAccountMonitorVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountMonitor] {
+RT_INTERFACE!{interface IWebAccountMonitor(IWebAccountMonitorVtbl): IInspectable [IID_IWebAccountMonitor] {
     fn add_Updated(&self, handler: <foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Updated(&self, token: foundation::EventRegistrationToken) -> HRESULT,
     fn add_Removed(&self, handler: <foundation::TypedEventHandler<WebAccountMonitor, WebAccountEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -1189,7 +1189,7 @@ impl WebAuthenticationCoreManager {
 }
 DEFINE_CLSID!(WebAuthenticationCoreManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,65,117,116,104,101,110,116,105,99,97,116,105,111,110,67,111,114,101,77,97,110,97,103,101,114,0]) [CLSID_WebAuthenticationCoreManager]);
 DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics, 1791655058, 42369, 17529, 156, 16, 117, 46, 255, 68, 253, 52);
-RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics(IWebAuthenticationCoreManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics] {
+RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics(IWebAuthenticationCoreManagerStaticsVtbl): IInspectable [IID_IWebAuthenticationCoreManagerStatics] {
     fn GetTokenSilentlyAsync(&self, request: <WebTokenRequest as RtType>::Abi, out: *mut <foundation::IAsyncOperation<WebTokenRequestResult> as RtType>::Abi) -> HRESULT,
     fn GetTokenSilentlyWithWebAccountAsync(&self, request: <WebTokenRequest as RtType>::Abi, webAccount: <super::super::super::credentials::WebAccount as RtType>::Abi, out: *mut <foundation::IAsyncOperation<WebTokenRequestResult> as RtType>::Abi) -> HRESULT,
     fn RequestTokenAsync(&self, request: <WebTokenRequest as RtType>::Abi, out: *mut <foundation::IAsyncOperation<WebTokenRequestResult> as RtType>::Abi) -> HRESULT,
@@ -1236,7 +1236,7 @@ impl IWebAuthenticationCoreManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics2, 4119074890, 35671, 18464, 182, 164, 112, 165, 182, 252, 244, 74);
-RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics2(IWebAuthenticationCoreManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics2] {
+RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics2(IWebAuthenticationCoreManagerStatics2Vtbl): IInspectable [IID_IWebAuthenticationCoreManagerStatics2] {
     #[cfg(feature="windows-system")] fn FindAccountProviderWithAuthorityForUserAsync(&self, webAccountProviderId: HSTRING, authority: HSTRING, user: <crate::windows::system::User as RtType>::Abi, out: *mut <foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider> as RtType>::Abi) -> HRESULT
 }}
 impl IWebAuthenticationCoreManagerStatics2 {
@@ -1247,7 +1247,7 @@ impl IWebAuthenticationCoreManagerStatics2 {
     }}
 }
 DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics3, 604303026, 35108, 19859, 171, 58, 153, 104, 139, 65, 157, 86);
-RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics3(IWebAuthenticationCoreManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics3] {
+RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics3(IWebAuthenticationCoreManagerStatics3Vtbl): IInspectable [IID_IWebAuthenticationCoreManagerStatics3] {
     fn CreateWebAccountMonitor(&self, webAccounts: <foundation::collections::IIterable<super::super::super::credentials::WebAccount> as RtType>::Abi, out: *mut <WebAccountMonitor as RtType>::Abi) -> HRESULT
 }}
 impl IWebAuthenticationCoreManagerStatics3 {
@@ -1258,7 +1258,7 @@ impl IWebAuthenticationCoreManagerStatics3 {
     }}
 }
 DEFINE_IID!(IID_IWebAuthenticationCoreManagerStatics4, 1424372734, 38624, 16872, 152, 50, 18, 152, 137, 124, 42, 175);
-RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics4(IWebAuthenticationCoreManagerStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAuthenticationCoreManagerStatics4] {
+RT_INTERFACE!{static interface IWebAuthenticationCoreManagerStatics4(IWebAuthenticationCoreManagerStatics4Vtbl): IInspectable [IID_IWebAuthenticationCoreManagerStatics4] {
     fn FindAllAccountsAsync(&self, provider: <super::super::super::credentials::WebAccountProvider as RtType>::Abi, out: *mut <foundation::IAsyncOperation<FindAllAccountsResult> as RtType>::Abi) -> HRESULT,
     fn FindAllAccountsWithClientIdAsync(&self, provider: <super::super::super::credentials::WebAccountProvider as RtType>::Abi, clientId: HSTRING, out: *mut <foundation::IAsyncOperation<FindAllAccountsResult> as RtType>::Abi) -> HRESULT,
     fn FindSystemAccountProviderAsync(&self, webAccountProviderId: HSTRING, out: *mut <foundation::IAsyncOperation<super::super::super::credentials::WebAccountProvider> as RtType>::Abi) -> HRESULT,
@@ -1293,7 +1293,7 @@ impl IWebAuthenticationCoreManagerStatics4 {
     }}
 }
 DEFINE_IID!(IID_IWebProviderError, 3675855793, 20677, 18441, 141, 202, 9, 201, 148, 16, 36, 92);
-RT_INTERFACE!{interface IWebProviderError(IWebProviderErrorVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderError] {
+RT_INTERFACE!{interface IWebProviderError(IWebProviderErrorVtbl): IInspectable [IID_IWebProviderError] {
     fn get_ErrorCode(&self, out: *mut u32) -> HRESULT,
     fn get_ErrorMessage(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Properties(&self, out: *mut <foundation::collections::IMap<HString, HString> as RtType>::Abi) -> HRESULT
@@ -1324,7 +1324,7 @@ impl WebProviderError {
 }
 DEFINE_CLSID!(WebProviderError(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,80,114,111,118,105,100,101,114,69,114,114,111,114,0]) [CLSID_WebProviderError]);
 DEFINE_IID!(IID_IWebProviderErrorFactory, 3821275693, 35311, 20023, 132, 127, 168, 185, 213, 163, 41, 16);
-RT_INTERFACE!{static interface IWebProviderErrorFactory(IWebProviderErrorFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderErrorFactory] {
+RT_INTERFACE!{static interface IWebProviderErrorFactory(IWebProviderErrorFactoryVtbl): IInspectable [IID_IWebProviderErrorFactory] {
     fn Create(&self, errorCode: u32, errorMessage: HSTRING, out: *mut <WebProviderError as RtType>::Abi) -> HRESULT
 }}
 impl IWebProviderErrorFactory {
@@ -1335,7 +1335,7 @@ impl IWebProviderErrorFactory {
     }}
 }
 DEFINE_IID!(IID_IWebTokenRequest, 3078311272, 44491, 18035, 179, 100, 12, 247, 179, 92, 175, 151);
-RT_INTERFACE!{interface IWebTokenRequest(IWebTokenRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequest] {
+RT_INTERFACE!{interface IWebTokenRequest(IWebTokenRequestVtbl): IInspectable [IID_IWebTokenRequest] {
     fn get_WebAccountProvider(&self, out: *mut <super::super::super::credentials::WebAccountProvider as RtType>::Abi) -> HRESULT,
     fn get_Scope(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ClientId(&self, out: *mut HSTRING) -> HRESULT,
@@ -1387,7 +1387,7 @@ impl WebTokenRequest {
 }
 DEFINE_CLSID!(WebTokenRequest(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,84,111,107,101,110,82,101,113,117,101,115,116,0]) [CLSID_WebTokenRequest]);
 DEFINE_IID!(IID_IWebTokenRequest2, 3607150713, 12488, 17303, 150, 84, 150, 28, 59, 232, 184, 85);
-RT_INTERFACE!{interface IWebTokenRequest2(IWebTokenRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequest2] {
+RT_INTERFACE!{interface IWebTokenRequest2(IWebTokenRequest2Vtbl): IInspectable [IID_IWebTokenRequest2] {
     fn get_AppProperties(&self, out: *mut <foundation::collections::IMap<HString, HString> as RtType>::Abi) -> HRESULT
 }}
 impl IWebTokenRequest2 {
@@ -1398,7 +1398,7 @@ impl IWebTokenRequest2 {
     }}
 }
 DEFINE_IID!(IID_IWebTokenRequest3, 1517640529, 15281, 16805, 166, 61, 144, 188, 50, 199, 219, 154);
-RT_INTERFACE!{interface IWebTokenRequest3(IWebTokenRequest3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequest3] {
+RT_INTERFACE!{interface IWebTokenRequest3(IWebTokenRequest3Vtbl): IInspectable [IID_IWebTokenRequest3] {
     fn get_CorrelationId(&self, out: *mut HSTRING) -> HRESULT,
     fn put_CorrelationId(&self, value: HSTRING) -> HRESULT
 }}
@@ -1414,7 +1414,7 @@ impl IWebTokenRequest3 {
     }}
 }
 DEFINE_IID!(IID_IWebTokenRequestFactory, 1827804188, 4080, 19559, 184, 79, 153, 221, 190, 74, 114, 201);
-RT_INTERFACE!{static interface IWebTokenRequestFactory(IWebTokenRequestFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequestFactory] {
+RT_INTERFACE!{static interface IWebTokenRequestFactory(IWebTokenRequestFactoryVtbl): IInspectable [IID_IWebTokenRequestFactory] {
     fn Create(&self, provider: <super::super::super::credentials::WebAccountProvider as RtType>::Abi, scope: HSTRING, clientId: HSTRING, out: *mut <WebTokenRequest as RtType>::Abi) -> HRESULT,
     fn CreateWithPromptType(&self, provider: <super::super::super::credentials::WebAccountProvider as RtType>::Abi, scope: HSTRING, clientId: HSTRING, promptType: WebTokenRequestPromptType, out: *mut <WebTokenRequest as RtType>::Abi) -> HRESULT,
     fn CreateWithProvider(&self, provider: <super::super::super::credentials::WebAccountProvider as RtType>::Abi, out: *mut <WebTokenRequest as RtType>::Abi) -> HRESULT,
@@ -1446,7 +1446,7 @@ RT_ENUM! { enum WebTokenRequestPromptType: i32 {
     Default = 0, ForceAuthentication = 1,
 }}
 DEFINE_IID!(IID_IWebTokenRequestResult, 3240788741, 53752, 17539, 141, 84, 56, 254, 41, 39, 132, 255);
-RT_INTERFACE!{interface IWebTokenRequestResult(IWebTokenRequestResultVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenRequestResult] {
+RT_INTERFACE!{interface IWebTokenRequestResult(IWebTokenRequestResultVtbl): IInspectable [IID_IWebTokenRequestResult] {
     fn get_ResponseData(&self, out: *mut <foundation::collections::IVectorView<WebTokenResponse> as RtType>::Abi) -> HRESULT,
     fn get_ResponseStatus(&self, out: *mut WebTokenRequestStatus) -> HRESULT,
     fn get_ResponseError(&self, out: *mut <WebProviderError as RtType>::Abi) -> HRESULT,
@@ -1479,7 +1479,7 @@ RT_ENUM! { enum WebTokenRequestStatus: i32 {
     Success = 0, UserCancel = 1, AccountSwitch = 2, UserInteractionRequired = 3, AccountProviderNotAvailable = 4, ProviderError = 5,
 }}
 DEFINE_IID!(IID_IWebTokenResponse, 1739048394, 33782, 17606, 163, 177, 14, 182, 158, 65, 250, 138);
-RT_INTERFACE!{interface IWebTokenResponse(IWebTokenResponseVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenResponse] {
+RT_INTERFACE!{interface IWebTokenResponse(IWebTokenResponseVtbl): IInspectable [IID_IWebTokenResponse] {
     fn get_Token(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ProviderError(&self, out: *mut <WebProviderError as RtType>::Abi) -> HRESULT,
     fn get_WebAccount(&self, out: *mut <super::super::super::credentials::WebAccount as RtType>::Abi) -> HRESULT,
@@ -1523,7 +1523,7 @@ impl WebTokenResponse {
 }
 DEFINE_CLSID!(WebTokenResponse(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,67,111,114,101,46,87,101,98,84,111,107,101,110,82,101,115,112,111,110,115,101,0]) [CLSID_WebTokenResponse]);
 DEFINE_IID!(IID_IWebTokenResponseFactory, 2875979768, 21584, 20214, 151, 247, 5, 43, 4, 49, 192, 240);
-RT_INTERFACE!{static interface IWebTokenResponseFactory(IWebTokenResponseFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebTokenResponseFactory] {
+RT_INTERFACE!{static interface IWebTokenResponseFactory(IWebTokenResponseFactoryVtbl): IInspectable [IID_IWebTokenResponseFactory] {
     fn CreateWithToken(&self, token: HSTRING, out: *mut <WebTokenResponse as RtType>::Abi) -> HRESULT,
     fn CreateWithTokenAndAccount(&self, token: HSTRING, webAccount: <super::super::super::credentials::WebAccount as RtType>::Abi, out: *mut <WebTokenResponse as RtType>::Abi) -> HRESULT,
     fn CreateWithTokenAccountAndError(&self, token: HSTRING, webAccount: <super::super::super::credentials::WebAccount as RtType>::Abi, error: <WebProviderError as RtType>::Abi, out: *mut <WebTokenResponse as RtType>::Abi) -> HRESULT
@@ -1549,7 +1549,7 @@ impl IWebTokenResponseFactory {
 pub mod provider { // Windows.Security.Authentication.Web.Provider
 use crate::prelude::*;
 DEFINE_IID!(IID_IWebAccountClientView, 3887949498, 3015, 19558, 191, 212, 101, 211, 8, 44, 188, 168);
-RT_INTERFACE!{interface IWebAccountClientView(IWebAccountClientViewVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountClientView] {
+RT_INTERFACE!{interface IWebAccountClientView(IWebAccountClientViewVtbl): IInspectable [IID_IWebAccountClientView] {
     fn get_ApplicationCallbackUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_Type(&self, out: *mut WebAccountClientViewType) -> HRESULT,
     fn get_AccountPairwiseId(&self, out: *mut HSTRING) -> HRESULT
@@ -1583,7 +1583,7 @@ impl WebAccountClientView {
 }
 DEFINE_CLSID!(WebAccountClientView(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,65,99,99,111,117,110,116,67,108,105,101,110,116,86,105,101,119,0]) [CLSID_WebAccountClientView]);
 DEFINE_IID!(IID_IWebAccountClientViewFactory, 1634539172, 56866, 18517, 163, 38, 6, 206, 191, 42, 63, 35);
-RT_INTERFACE!{static interface IWebAccountClientViewFactory(IWebAccountClientViewFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountClientViewFactory] {
+RT_INTERFACE!{static interface IWebAccountClientViewFactory(IWebAccountClientViewFactoryVtbl): IInspectable [IID_IWebAccountClientViewFactory] {
     fn Create(&self, viewType: WebAccountClientViewType, applicationCallbackUri: <foundation::Uri as RtType>::Abi, out: *mut <WebAccountClientView as RtType>::Abi) -> HRESULT,
     fn CreateWithPairwiseId(&self, viewType: WebAccountClientViewType, applicationCallbackUri: <foundation::Uri as RtType>::Abi, accountPairwiseId: HSTRING, out: *mut <WebAccountClientView as RtType>::Abi) -> HRESULT
 }}
@@ -1685,7 +1685,7 @@ impl WebAccountManager {
 }
 DEFINE_CLSID!(WebAccountManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,65,99,99,111,117,110,116,77,97,110,97,103,101,114,0]) [CLSID_WebAccountManager]);
 DEFINE_IID!(IID_IWebAccountManagerStatics, 3001606566, 54426, 16434, 132, 191, 26, 40, 71, 116, 123, 241);
-RT_INTERFACE!{static interface IWebAccountManagerStatics(IWebAccountManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics] {
+RT_INTERFACE!{static interface IWebAccountManagerStatics(IWebAccountManagerStaticsVtbl): IInspectable [IID_IWebAccountManagerStatics] {
     fn UpdateWebAccountPropertiesAsync(&self, webAccount: <super::super::super::credentials::WebAccount as RtType>::Abi, webAccountUserName: HSTRING, additionalProperties: <foundation::collections::IMapView<HString, HString> as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn AddWebAccountAsync(&self, webAccountId: HSTRING, webAccountUserName: HSTRING, props: <foundation::collections::IMapView<HString, HString> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<super::super::super::credentials::WebAccount> as RtType>::Abi) -> HRESULT,
     fn DeleteWebAccountAsync(&self, webAccount: <super::super::super::credentials::WebAccount as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -1752,7 +1752,7 @@ impl IWebAccountManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IWebAccountManagerStatics2, 1755818025, 11615, 18003, 139, 176, 189, 47, 166, 189, 45, 135);
-RT_INTERFACE!{static interface IWebAccountManagerStatics2(IWebAccountManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics2] {
+RT_INTERFACE!{static interface IWebAccountManagerStatics2(IWebAccountManagerStatics2Vtbl): IInspectable [IID_IWebAccountManagerStatics2] {
     fn PullCookiesAsync(&self, uriString: HSTRING, callerPFN: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl IWebAccountManagerStatics2 {
@@ -1763,7 +1763,7 @@ impl IWebAccountManagerStatics2 {
     }}
 }
 DEFINE_IID!(IID_IWebAccountManagerStatics3, 3712295846, 35407, 19106, 177, 94, 3, 245, 80, 175, 19, 89);
-RT_INTERFACE!{static interface IWebAccountManagerStatics3(IWebAccountManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics3] {
+RT_INTERFACE!{static interface IWebAccountManagerStatics3(IWebAccountManagerStatics3Vtbl): IInspectable [IID_IWebAccountManagerStatics3] {
     #[cfg(feature="windows-system")] fn FindAllProviderWebAccountsForUserAsync(&self, user: <crate::windows::system::User as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<super::super::super::credentials::WebAccount>> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-system")] fn AddWebAccountForUserAsync(&self, user: <crate::windows::system::User as RtType>::Abi, webAccountId: HSTRING, webAccountUserName: HSTRING, props: <foundation::collections::IMapView<HString, HString> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<super::super::super::credentials::WebAccount> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-system")] fn AddWebAccountWithScopeForUserAsync(&self, user: <crate::windows::system::User as RtType>::Abi, webAccountId: HSTRING, webAccountUserName: HSTRING, props: <foundation::collections::IMapView<HString, HString> as RtType>::Abi, scope: WebAccountScope, out: *mut <foundation::IAsyncOperation<super::super::super::credentials::WebAccount> as RtType>::Abi) -> HRESULT,
@@ -1792,7 +1792,7 @@ impl IWebAccountManagerStatics3 {
     }}
 }
 DEFINE_IID!(IID_IWebAccountManagerStatics4, 1508623058, 63451, 16687, 188, 63, 242, 254, 160, 68, 48, 180);
-RT_INTERFACE!{static interface IWebAccountManagerStatics4(IWebAccountManagerStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountManagerStatics4] {
+RT_INTERFACE!{static interface IWebAccountManagerStatics4(IWebAccountManagerStatics4Vtbl): IInspectable [IID_IWebAccountManagerStatics4] {
     fn InvalidateAppCacheForAllAccountsAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn InvalidateAppCacheForAccountAsync(&self, webAccount: <super::super::super::credentials::WebAccount as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
@@ -1809,7 +1809,7 @@ impl IWebAccountManagerStatics4 {
     }}
 }
 DEFINE_IID!(IID_IWebAccountMapManagerStatics, 3908715631, 14875, 18596, 142, 144, 30, 89, 202, 111, 84, 219);
-RT_INTERFACE!{static interface IWebAccountMapManagerStatics(IWebAccountMapManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountMapManagerStatics] {
+RT_INTERFACE!{static interface IWebAccountMapManagerStatics(IWebAccountMapManagerStaticsVtbl): IInspectable [IID_IWebAccountMapManagerStatics] {
     fn AddWebAccountWithScopeAndMapAsync(&self, webAccountId: HSTRING, webAccountUserName: HSTRING, props: <foundation::collections::IMapView<HString, HString> as RtType>::Abi, scope: WebAccountScope, perUserWebAccountId: HSTRING, out: *mut <foundation::IAsyncOperation<super::super::super::credentials::WebAccount> as RtType>::Abi) -> HRESULT,
     fn SetPerAppToPerUserAccountAsync(&self, perAppAccount: <super::super::super::credentials::WebAccount as RtType>::Abi, perUserWebAccountId: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn GetPerUserFromPerAppAccountAsync(&self, perAppAccount: <super::super::super::credentials::WebAccount as RtType>::Abi, out: *mut <foundation::IAsyncOperation<super::super::super::credentials::WebAccount> as RtType>::Abi) -> HRESULT,
@@ -1838,7 +1838,7 @@ impl IWebAccountMapManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IWebAccountProviderAddAccountOperation, 1944837327, 17272, 19577, 147, 53, 165, 215, 171, 129, 89, 78);
-RT_INTERFACE!{interface IWebAccountProviderAddAccountOperation(IWebAccountProviderAddAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderAddAccountOperation] {
+RT_INTERFACE!{interface IWebAccountProviderAddAccountOperation(IWebAccountProviderAddAccountOperationVtbl): IInspectable [IID_IWebAccountProviderAddAccountOperation] {
     fn ReportCompleted(&self) -> HRESULT
 }}
 impl IWebAccountProviderAddAccountOperation {
@@ -1849,7 +1849,7 @@ impl IWebAccountProviderAddAccountOperation {
 }
 RT_CLASS!{class WebAccountProviderAddAccountOperation: IWebAccountProviderAddAccountOperation}
 DEFINE_IID!(IID_IWebAccountProviderBaseReportOperation, 3148131515, 39227, 19799, 187, 228, 20, 33, 227, 102, 139, 76);
-RT_INTERFACE!{interface IWebAccountProviderBaseReportOperation(IWebAccountProviderBaseReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderBaseReportOperation] {
+RT_INTERFACE!{interface IWebAccountProviderBaseReportOperation(IWebAccountProviderBaseReportOperationVtbl): IInspectable [IID_IWebAccountProviderBaseReportOperation] {
     fn ReportCompleted(&self) -> HRESULT,
     fn ReportError(&self, value: <super::core::WebProviderError as RtType>::Abi) -> HRESULT
 }}
@@ -1864,7 +1864,7 @@ impl IWebAccountProviderBaseReportOperation {
     }}
 }
 DEFINE_IID!(IID_IWebAccountProviderDeleteAccountOperation, 180046008, 40449, 18889, 163, 85, 125, 72, 202, 247, 214, 202);
-RT_INTERFACE!{interface IWebAccountProviderDeleteAccountOperation(IWebAccountProviderDeleteAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderDeleteAccountOperation] {
+RT_INTERFACE!{interface IWebAccountProviderDeleteAccountOperation(IWebAccountProviderDeleteAccountOperationVtbl): IInspectable [IID_IWebAccountProviderDeleteAccountOperation] {
     fn get_WebAccount(&self, out: *mut <super::super::super::credentials::WebAccount as RtType>::Abi) -> HRESULT
 }}
 impl IWebAccountProviderDeleteAccountOperation {
@@ -1877,7 +1877,7 @@ impl IWebAccountProviderDeleteAccountOperation {
 RT_CLASS!{class WebAccountProviderDeleteAccountOperation: IWebAccountProviderDeleteAccountOperation}
 RT_CLASS!{class WebAccountProviderGetTokenSilentOperation: IWebAccountProviderTokenOperation}
 DEFINE_IID!(IID_IWebAccountProviderManageAccountOperation, 3978353756, 53787, 17982, 169, 183, 193, 253, 14, 218, 233, 120);
-RT_INTERFACE!{interface IWebAccountProviderManageAccountOperation(IWebAccountProviderManageAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderManageAccountOperation] {
+RT_INTERFACE!{interface IWebAccountProviderManageAccountOperation(IWebAccountProviderManageAccountOperationVtbl): IInspectable [IID_IWebAccountProviderManageAccountOperation] {
     fn get_WebAccount(&self, out: *mut <super::super::super::credentials::WebAccount as RtType>::Abi) -> HRESULT,
     fn ReportCompleted(&self) -> HRESULT
 }}
@@ -1894,7 +1894,7 @@ impl IWebAccountProviderManageAccountOperation {
 }
 RT_CLASS!{class WebAccountProviderManageAccountOperation: IWebAccountProviderManageAccountOperation}
 DEFINE_IID!(IID_IWebAccountProviderOperation, 1834820646, 4273, 16794, 164, 78, 249, 197, 22, 21, 116, 230);
-RT_INTERFACE!{interface IWebAccountProviderOperation(IWebAccountProviderOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderOperation] {
+RT_INTERFACE!{interface IWebAccountProviderOperation(IWebAccountProviderOperationVtbl): IInspectable [IID_IWebAccountProviderOperation] {
     fn get_Kind(&self, out: *mut WebAccountProviderOperationKind) -> HRESULT
 }}
 impl IWebAccountProviderOperation {
@@ -1909,7 +1909,7 @@ RT_ENUM! { enum WebAccountProviderOperationKind: i32 {
 }}
 RT_CLASS!{class WebAccountProviderRequestTokenOperation: IWebAccountProviderTokenOperation}
 DEFINE_IID!(IID_IWebAccountProviderRetrieveCookiesOperation, 1510212673, 4003, 19121, 160, 28, 32, 177, 16, 53, 133, 148);
-RT_INTERFACE!{interface IWebAccountProviderRetrieveCookiesOperation(IWebAccountProviderRetrieveCookiesOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderRetrieveCookiesOperation] {
+RT_INTERFACE!{interface IWebAccountProviderRetrieveCookiesOperation(IWebAccountProviderRetrieveCookiesOperationVtbl): IInspectable [IID_IWebAccountProviderRetrieveCookiesOperation] {
     fn get_Context(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-web"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-web")] fn get_Cookies(&self, out: *mut <foundation::collections::IVector<crate::windows::web::http::HttpCookie> as RtType>::Abi) -> HRESULT,
@@ -1945,7 +1945,7 @@ impl IWebAccountProviderRetrieveCookiesOperation {
 }
 RT_CLASS!{class WebAccountProviderRetrieveCookiesOperation: IWebAccountProviderRetrieveCookiesOperation}
 DEFINE_IID!(IID_IWebAccountProviderSignOutAccountOperation, 3096502813, 3157, 18364, 140, 114, 4, 166, 252, 124, 172, 7);
-RT_INTERFACE!{interface IWebAccountProviderSignOutAccountOperation(IWebAccountProviderSignOutAccountOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderSignOutAccountOperation] {
+RT_INTERFACE!{interface IWebAccountProviderSignOutAccountOperation(IWebAccountProviderSignOutAccountOperationVtbl): IInspectable [IID_IWebAccountProviderSignOutAccountOperation] {
     fn get_WebAccount(&self, out: *mut <super::super::super::credentials::WebAccount as RtType>::Abi) -> HRESULT,
     fn get_ApplicationCallbackUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT,
     fn get_ClientId(&self, out: *mut HSTRING) -> HRESULT
@@ -1969,7 +1969,7 @@ impl IWebAccountProviderSignOutAccountOperation {
 }
 RT_CLASS!{class WebAccountProviderSignOutAccountOperation: IWebAccountProviderSignOutAccountOperation}
 DEFINE_IID!(IID_IWebAccountProviderSilentReportOperation, 3769976312, 15119, 17626, 146, 76, 123, 24, 186, 170, 98, 169);
-RT_INTERFACE!{interface IWebAccountProviderSilentReportOperation(IWebAccountProviderSilentReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderSilentReportOperation] {
+RT_INTERFACE!{interface IWebAccountProviderSilentReportOperation(IWebAccountProviderSilentReportOperationVtbl): IInspectable [IID_IWebAccountProviderSilentReportOperation] {
     fn ReportUserInteractionRequired(&self) -> HRESULT,
     fn ReportUserInteractionRequiredWithError(&self, value: <super::core::WebProviderError as RtType>::Abi) -> HRESULT
 }}
@@ -1984,7 +1984,7 @@ impl IWebAccountProviderSilentReportOperation {
     }}
 }
 DEFINE_IID!(IID_IWebAccountProviderTokenObjects, 1083123787, 4904, 17115, 137, 164, 11, 206, 122, 113, 125, 142);
-RT_INTERFACE!{interface IWebAccountProviderTokenObjects(IWebAccountProviderTokenObjectsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderTokenObjects] {
+RT_INTERFACE!{interface IWebAccountProviderTokenObjects(IWebAccountProviderTokenObjectsVtbl): IInspectable [IID_IWebAccountProviderTokenObjects] {
     fn get_Operation(&self, out: *mut <IWebAccountProviderOperation as RtType>::Abi) -> HRESULT
 }}
 impl IWebAccountProviderTokenObjects {
@@ -1995,7 +1995,7 @@ impl IWebAccountProviderTokenObjects {
     }}
 }
 DEFINE_IID!(IID_IWebAccountProviderTokenObjects2, 270579859, 23717, 20479, 149, 251, 184, 32, 39, 63, 195, 149);
-RT_INTERFACE!{interface IWebAccountProviderTokenObjects2(IWebAccountProviderTokenObjects2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderTokenObjects2] {
+RT_INTERFACE!{interface IWebAccountProviderTokenObjects2(IWebAccountProviderTokenObjects2Vtbl): IInspectable [IID_IWebAccountProviderTokenObjects2] {
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut <crate::windows::system::User as RtType>::Abi) -> HRESULT
 }}
 impl IWebAccountProviderTokenObjects2 {
@@ -2006,7 +2006,7 @@ impl IWebAccountProviderTokenObjects2 {
     }}
 }
 DEFINE_IID!(IID_IWebAccountProviderTokenOperation, 2512786366, 8244, 19512, 148, 52, 210, 108, 20, 178, 180, 178);
-RT_INTERFACE!{interface IWebAccountProviderTokenOperation(IWebAccountProviderTokenOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderTokenOperation] {
+RT_INTERFACE!{interface IWebAccountProviderTokenOperation(IWebAccountProviderTokenOperationVtbl): IInspectable [IID_IWebAccountProviderTokenOperation] {
     fn get_ProviderRequest(&self, out: *mut <WebProviderTokenRequest as RtType>::Abi) -> HRESULT,
     fn get_ProviderResponses(&self, out: *mut <foundation::collections::IVector<WebProviderTokenResponse> as RtType>::Abi) -> HRESULT,
     fn put_CacheExpirationTime(&self, value: foundation::DateTime) -> HRESULT,
@@ -2035,7 +2035,7 @@ impl IWebAccountProviderTokenOperation {
 }
 RT_CLASS!{class WebAccountProviderTriggerDetails: IWebAccountProviderTokenObjects}
 DEFINE_IID!(IID_IWebAccountProviderUIReportOperation, 687837907, 36736, 17147, 148, 79, 178, 16, 123, 189, 66, 230);
-RT_INTERFACE!{interface IWebAccountProviderUIReportOperation(IWebAccountProviderUIReportOperationVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderUIReportOperation] {
+RT_INTERFACE!{interface IWebAccountProviderUIReportOperation(IWebAccountProviderUIReportOperationVtbl): IInspectable [IID_IWebAccountProviderUIReportOperation] {
     fn ReportUserCanceled(&self) -> HRESULT
 }}
 impl IWebAccountProviderUIReportOperation {
@@ -2048,7 +2048,7 @@ RT_ENUM! { enum WebAccountScope: i32 {
     PerUser = 0, PerApplication = 1,
 }}
 DEFINE_IID!(IID_IWebAccountScopeManagerStatics, 1550639996, 4786, 16954, 191, 61, 133, 184, 215, 229, 54, 86);
-RT_INTERFACE!{static interface IWebAccountScopeManagerStatics(IWebAccountScopeManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountScopeManagerStatics] {
+RT_INTERFACE!{static interface IWebAccountScopeManagerStatics(IWebAccountScopeManagerStaticsVtbl): IInspectable [IID_IWebAccountScopeManagerStatics] {
     fn AddWebAccountWithScopeAsync(&self, webAccountId: HSTRING, webAccountUserName: HSTRING, props: <foundation::collections::IMapView<HString, HString> as RtType>::Abi, scope: WebAccountScope, out: *mut <foundation::IAsyncOperation<super::super::super::credentials::WebAccount> as RtType>::Abi) -> HRESULT,
     fn SetScopeAsync(&self, webAccount: <super::super::super::credentials::WebAccount as RtType>::Abi, scope: WebAccountScope, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn GetScope(&self, webAccount: <super::super::super::credentials::WebAccount as RtType>::Abi, out: *mut WebAccountScope) -> HRESULT
@@ -2074,7 +2074,7 @@ RT_ENUM! { enum WebAccountSelectionOptions: u32 {
     Default = 0, New = 1,
 }}
 DEFINE_IID!(IID_IWebProviderTokenRequest, 504919947, 34821, 17739, 159, 17, 70, 141, 42, 241, 9, 90);
-RT_INTERFACE!{interface IWebProviderTokenRequest(IWebProviderTokenRequestVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest] {
+RT_INTERFACE!{interface IWebProviderTokenRequest(IWebProviderTokenRequestVtbl): IInspectable [IID_IWebProviderTokenRequest] {
     fn get_ClientRequest(&self, out: *mut <super::core::WebTokenRequest as RtType>::Abi) -> HRESULT,
     fn get_WebAccounts(&self, out: *mut <foundation::collections::IVectorView<super::super::super::credentials::WebAccount> as RtType>::Abi) -> HRESULT,
     fn get_WebAccountSelectionOptions(&self, out: *mut WebAccountSelectionOptions) -> HRESULT,
@@ -2110,7 +2110,7 @@ impl IWebProviderTokenRequest {
 }
 RT_CLASS!{class WebProviderTokenRequest: IWebProviderTokenRequest}
 DEFINE_IID!(IID_IWebProviderTokenRequest2, 3050778188, 4273, 19110, 136, 177, 11, 108, 158, 12, 30, 70);
-RT_INTERFACE!{interface IWebProviderTokenRequest2(IWebProviderTokenRequest2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest2] {
+RT_INTERFACE!{interface IWebProviderTokenRequest2(IWebProviderTokenRequest2Vtbl): IInspectable [IID_IWebProviderTokenRequest2] {
     #[cfg(feature="windows-storage")] fn GetApplicationTokenBindingKeyIdAsync(&self, keyType: super::TokenBindingKeyType, target: <foundation::Uri as RtType>::Abi, out: *mut <foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer> as RtType>::Abi) -> HRESULT
 }}
 impl IWebProviderTokenRequest2 {
@@ -2121,7 +2121,7 @@ impl IWebProviderTokenRequest2 {
     }}
 }
 DEFINE_IID!(IID_IWebProviderTokenRequest3, 455546538, 17033, 17518, 146, 86, 218, 251, 111, 102, 165, 30);
-RT_INTERFACE!{interface IWebProviderTokenRequest3(IWebProviderTokenRequest3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenRequest3] {
+RT_INTERFACE!{interface IWebProviderTokenRequest3(IWebProviderTokenRequest3Vtbl): IInspectable [IID_IWebProviderTokenRequest3] {
     fn get_ApplicationPackageFamilyName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_ApplicationProcessName(&self, out: *mut HSTRING) -> HRESULT,
     fn CheckApplicationForCapabilityAsync(&self, capabilityName: HSTRING, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
@@ -2144,7 +2144,7 @@ impl IWebProviderTokenRequest3 {
     }}
 }
 DEFINE_IID!(IID_IWebProviderTokenResponse, 4011931539, 61269, 16774, 183, 206, 140, 178, 231, 249, 132, 158);
-RT_INTERFACE!{interface IWebProviderTokenResponse(IWebProviderTokenResponseVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenResponse] {
+RT_INTERFACE!{interface IWebProviderTokenResponse(IWebProviderTokenResponseVtbl): IInspectable [IID_IWebProviderTokenResponse] {
     fn get_ClientResponse(&self, out: *mut <super::core::WebTokenResponse as RtType>::Abi) -> HRESULT
 }}
 impl IWebProviderTokenResponse {
@@ -2163,7 +2163,7 @@ impl WebProviderTokenResponse {
 }
 DEFINE_CLSID!(WebProviderTokenResponse(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,65,117,116,104,101,110,116,105,99,97,116,105,111,110,46,87,101,98,46,80,114,111,118,105,100,101,114,46,87,101,98,80,114,111,118,105,100,101,114,84,111,107,101,110,82,101,115,112,111,110,115,101,0]) [CLSID_WebProviderTokenResponse]);
 DEFINE_IID!(IID_IWebProviderTokenResponseFactory, 4199143834, 9658, 16503, 156, 250, 157, 180, 222, 167, 183, 26);
-RT_INTERFACE!{static interface IWebProviderTokenResponseFactory(IWebProviderTokenResponseFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebProviderTokenResponseFactory] {
+RT_INTERFACE!{static interface IWebProviderTokenResponseFactory(IWebProviderTokenResponseFactoryVtbl): IInspectable [IID_IWebProviderTokenResponseFactory] {
     fn Create(&self, webTokenResponse: <super::core::WebTokenResponse as RtType>::Abi, out: *mut <WebProviderTokenResponse as RtType>::Abi) -> HRESULT
 }}
 impl IWebProviderTokenResponseFactory {
@@ -2179,7 +2179,7 @@ impl IWebProviderTokenResponseFactory {
 pub mod credentials { // Windows.Security.Credentials
 use crate::prelude::*;
 DEFINE_IID!(IID_ICredentialFactory, 1424954273, 48934, 18357, 151, 221, 222, 119, 155, 124, 173, 88);
-RT_INTERFACE!{static interface ICredentialFactory(ICredentialFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICredentialFactory] {
+RT_INTERFACE!{static interface ICredentialFactory(ICredentialFactoryVtbl): IInspectable [IID_ICredentialFactory] {
     fn CreatePasswordCredential(&self, resource: HSTRING, userName: HSTRING, password: HSTRING, out: *mut <PasswordCredential as RtType>::Abi) -> HRESULT
 }}
 impl ICredentialFactory {
@@ -2190,7 +2190,7 @@ impl ICredentialFactory {
     }}
 }
 DEFINE_IID!(IID_IKeyCredential, 2508582797, 17787, 18503, 177, 26, 250, 150, 11, 189, 177, 56);
-RT_INTERFACE!{interface IKeyCredential(IKeyCredentialVtbl): IInspectable(IInspectableVtbl) [IID_IKeyCredential] {
+RT_INTERFACE!{interface IKeyCredential(IKeyCredentialVtbl): IInspectable [IID_IKeyCredential] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
     #[cfg(feature="windows-storage")] fn RetrievePublicKeyWithDefaultBlobType(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
@@ -2229,7 +2229,7 @@ impl IKeyCredential {
 }
 RT_CLASS!{class KeyCredential: IKeyCredential}
 DEFINE_IID!(IID_IKeyCredentialAttestationResult, 2024453025, 41921, 16643, 182, 204, 71, 44, 68, 23, 28, 187);
-RT_INTERFACE!{interface IKeyCredentialAttestationResult(IKeyCredentialAttestationResultVtbl): IInspectable(IInspectableVtbl) [IID_IKeyCredentialAttestationResult] {
+RT_INTERFACE!{interface IKeyCredentialAttestationResult(IKeyCredentialAttestationResultVtbl): IInspectable [IID_IKeyCredentialAttestationResult] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_CertificateChainBuffer(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -2281,7 +2281,7 @@ impl KeyCredentialManager {
 }
 DEFINE_CLSID!(KeyCredentialManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,75,101,121,67,114,101,100,101,110,116,105,97,108,77,97,110,97,103,101,114,0]) [CLSID_KeyCredentialManager]);
 DEFINE_IID!(IID_IKeyCredentialManagerStatics, 1789675147, 3825, 19680, 130, 144, 65, 6, 218, 106, 99, 181);
-RT_INTERFACE!{static interface IKeyCredentialManagerStatics(IKeyCredentialManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyCredentialManagerStatics] {
+RT_INTERFACE!{static interface IKeyCredentialManagerStatics(IKeyCredentialManagerStaticsVtbl): IInspectable [IID_IKeyCredentialManagerStatics] {
     fn IsSupportedAsync(&self, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn RenewAttestationAsync(&self, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn RequestCreateAsync(&self, name: HSTRING, option: KeyCredentialCreationOption, out: *mut <foundation::IAsyncOperation<KeyCredentialRetrievalResult> as RtType>::Abi) -> HRESULT,
@@ -2316,7 +2316,7 @@ impl IKeyCredentialManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IKeyCredentialOperationResult, 4114056897, 21089, 19677, 151, 109, 204, 144, 154, 199, 22, 32);
-RT_INTERFACE!{interface IKeyCredentialOperationResult(IKeyCredentialOperationResultVtbl): IInspectable(IInspectableVtbl) [IID_IKeyCredentialOperationResult] {
+RT_INTERFACE!{interface IKeyCredentialOperationResult(IKeyCredentialOperationResultVtbl): IInspectable [IID_IKeyCredentialOperationResult] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_Result(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     fn get_Status(&self, out: *mut KeyCredentialStatus) -> HRESULT
@@ -2335,7 +2335,7 @@ impl IKeyCredentialOperationResult {
 }
 RT_CLASS!{class KeyCredentialOperationResult: IKeyCredentialOperationResult}
 DEFINE_IID!(IID_IKeyCredentialRetrievalResult, 1489860355, 36231, 16969, 155, 88, 246, 89, 140, 201, 100, 78);
-RT_INTERFACE!{interface IKeyCredentialRetrievalResult(IKeyCredentialRetrievalResultVtbl): IInspectable(IInspectableVtbl) [IID_IKeyCredentialRetrievalResult] {
+RT_INTERFACE!{interface IKeyCredentialRetrievalResult(IKeyCredentialRetrievalResultVtbl): IInspectable [IID_IKeyCredentialRetrievalResult] {
     fn get_Credential(&self, out: *mut <KeyCredential as RtType>::Abi) -> HRESULT,
     fn get_Status(&self, out: *mut KeyCredentialStatus) -> HRESULT
 }}
@@ -2356,7 +2356,7 @@ RT_ENUM! { enum KeyCredentialStatus: i32 {
     Success = 0, UnknownError = 1, NotFound = 2, UserCanceled = 3, UserPrefersPassword = 4, CredentialAlreadyExists = 5, SecurityDeviceLocked = 6,
 }}
 DEFINE_IID!(IID_IPasswordCredential, 1790019977, 50976, 16807, 166, 193, 254, 173, 179, 99, 41, 160);
-RT_INTERFACE!{interface IPasswordCredential(IPasswordCredentialVtbl): IInspectable(IInspectableVtbl) [IID_IPasswordCredential] {
+RT_INTERFACE!{interface IPasswordCredential(IPasswordCredentialVtbl): IInspectable [IID_IPasswordCredential] {
     fn get_Resource(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Resource(&self, resource: HSTRING) -> HRESULT,
     fn get_UserName(&self, out: *mut HSTRING) -> HRESULT,
@@ -2417,7 +2417,7 @@ RT_CLASS!{class PasswordCredentialPropertyStore: foundation::collections::IPrope
 impl RtActivatable<IActivationFactory> for PasswordCredentialPropertyStore {}
 DEFINE_CLSID!(PasswordCredentialPropertyStore(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,80,97,115,115,119,111,114,100,67,114,101,100,101,110,116,105,97,108,80,114,111,112,101,114,116,121,83,116,111,114,101,0]) [CLSID_PasswordCredentialPropertyStore]);
 DEFINE_IID!(IID_IPasswordVault, 1643981835, 51412, 18625, 165, 79, 188, 90, 100, 32, 90, 242);
-RT_INTERFACE!{interface IPasswordVault(IPasswordVaultVtbl): IInspectable(IInspectableVtbl) [IID_IPasswordVault] {
+RT_INTERFACE!{interface IPasswordVault(IPasswordVaultVtbl): IInspectable [IID_IPasswordVault] {
     fn Add(&self, credential: <PasswordCredential as RtType>::Abi) -> HRESULT,
     fn Remove(&self, credential: <PasswordCredential as RtType>::Abi) -> HRESULT,
     fn Retrieve(&self, resource: HSTRING, userName: HSTRING, out: *mut <PasswordCredential as RtType>::Abi) -> HRESULT,
@@ -2459,7 +2459,7 @@ RT_CLASS!{class PasswordVault: IPasswordVault}
 impl RtActivatable<IActivationFactory> for PasswordVault {}
 DEFINE_CLSID!(PasswordVault(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,80,97,115,115,119,111,114,100,86,97,117,108,116,0]) [CLSID_PasswordVault]);
 DEFINE_IID!(IID_IWebAccount, 1766276786, 32817, 18878, 128, 187, 150, 203, 70, 217, 154, 186);
-RT_INTERFACE!{interface IWebAccount(IWebAccountVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccount] {
+RT_INTERFACE!{interface IWebAccount(IWebAccountVtbl): IInspectable [IID_IWebAccount] {
     fn get_WebAccountProvider(&self, out: *mut <WebAccountProvider as RtType>::Abi) -> HRESULT,
     fn get_UserName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_State(&self, out: *mut WebAccountState) -> HRESULT
@@ -2490,7 +2490,7 @@ impl WebAccount {
 }
 DEFINE_CLSID!(WebAccount(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,87,101,98,65,99,99,111,117,110,116,0]) [CLSID_WebAccount]);
 DEFINE_IID!(IID_IWebAccount2, 2069288696, 39179, 20149, 148, 167, 86, 33, 243, 168, 184, 36);
-RT_INTERFACE!{interface IWebAccount2(IWebAccount2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccount2] {
+RT_INTERFACE!{interface IWebAccount2(IWebAccount2Vtbl): IInspectable [IID_IWebAccount2] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Properties(&self, out: *mut <foundation::collections::IMapView<HString, HString> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -2526,7 +2526,7 @@ impl IWebAccount2 {
     }}
 }
 DEFINE_IID!(IID_IWebAccountFactory, 2895838009, 7657, 20114, 183, 143, 5, 129, 168, 127, 110, 92);
-RT_INTERFACE!{static interface IWebAccountFactory(IWebAccountFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountFactory] {
+RT_INTERFACE!{static interface IWebAccountFactory(IWebAccountFactoryVtbl): IInspectable [IID_IWebAccountFactory] {
     fn CreateWebAccount(&self, webAccountProvider: <WebAccountProvider as RtType>::Abi, userName: HSTRING, state: WebAccountState, out: *mut <WebAccount as RtType>::Abi) -> HRESULT
 }}
 impl IWebAccountFactory {
@@ -2540,7 +2540,7 @@ RT_ENUM! { enum WebAccountPictureSize: i32 {
     Size64x64 = 64, Size208x208 = 208, Size424x424 = 424, Size1080x1080 = 1080,
 }}
 DEFINE_IID!(IID_IWebAccountProvider, 702335171, 31417, 19068, 163, 54, 185, 66, 249, 219, 247, 199);
-RT_INTERFACE!{interface IWebAccountProvider(IWebAccountProviderVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProvider] {
+RT_INTERFACE!{interface IWebAccountProvider(IWebAccountProviderVtbl): IInspectable [IID_IWebAccountProvider] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DisplayName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IconUri(&self, out: *mut <foundation::Uri as RtType>::Abi) -> HRESULT
@@ -2571,7 +2571,7 @@ impl WebAccountProvider {
 }
 DEFINE_CLSID!(WebAccountProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,87,101,98,65,99,99,111,117,110,116,80,114,111,118,105,100,101,114,0]) [CLSID_WebAccountProvider]);
 DEFINE_IID!(IID_IWebAccountProvider2, 1241639685, 20034, 16852, 181, 24, 224, 8, 165, 22, 54, 20);
-RT_INTERFACE!{interface IWebAccountProvider2(IWebAccountProvider2Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProvider2] {
+RT_INTERFACE!{interface IWebAccountProvider2(IWebAccountProvider2Vtbl): IInspectable [IID_IWebAccountProvider2] {
     fn get_DisplayPurpose(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Authority(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -2588,7 +2588,7 @@ impl IWebAccountProvider2 {
     }}
 }
 DEFINE_IID!(IID_IWebAccountProvider3, 3659288971, 38669, 19785, 130, 92, 242, 112, 111, 140, 167, 254);
-RT_INTERFACE!{interface IWebAccountProvider3(IWebAccountProvider3Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProvider3] {
+RT_INTERFACE!{interface IWebAccountProvider3(IWebAccountProvider3Vtbl): IInspectable [IID_IWebAccountProvider3] {
     #[cfg(feature="windows-system")] fn get_User(&self, out: *mut <super::super::system::User as RtType>::Abi) -> HRESULT
 }}
 impl IWebAccountProvider3 {
@@ -2599,7 +2599,7 @@ impl IWebAccountProvider3 {
     }}
 }
 DEFINE_IID!(IID_IWebAccountProvider4, 1905252571, 59286, 16912, 183, 78, 132, 210, 152, 148, 176, 128);
-RT_INTERFACE!{interface IWebAccountProvider4(IWebAccountProvider4Vtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProvider4] {
+RT_INTERFACE!{interface IWebAccountProvider4(IWebAccountProvider4Vtbl): IInspectable [IID_IWebAccountProvider4] {
     fn get_IsSystemProvider(&self, out: *mut bool) -> HRESULT
 }}
 impl IWebAccountProvider4 {
@@ -2610,7 +2610,7 @@ impl IWebAccountProvider4 {
     }}
 }
 DEFINE_IID!(IID_IWebAccountProviderFactory, 494304753, 57825, 19354, 167, 116, 92, 124, 126, 59, 243, 113);
-RT_INTERFACE!{static interface IWebAccountProviderFactory(IWebAccountProviderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IWebAccountProviderFactory] {
+RT_INTERFACE!{static interface IWebAccountProviderFactory(IWebAccountProviderFactoryVtbl): IInspectable [IID_IWebAccountProviderFactory] {
     fn CreateWebAccountProvider(&self, id: HSTRING, displayName: HSTRING, iconUri: <foundation::Uri as RtType>::Abi, out: *mut <WebAccountProvider as RtType>::Abi) -> HRESULT
 }}
 impl IWebAccountProviderFactory {
@@ -2643,7 +2643,7 @@ impl CredentialPicker {
 }
 DEFINE_CLSID!(CredentialPicker(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,85,73,46,67,114,101,100,101,110,116,105,97,108,80,105,99,107,101,114,0]) [CLSID_CredentialPicker]);
 DEFINE_IID!(IID_ICredentialPickerOptions, 2522483532, 38394, 18047, 153, 43, 11, 34, 229, 133, 155, 246);
-RT_INTERFACE!{interface ICredentialPickerOptions(ICredentialPickerOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ICredentialPickerOptions] {
+RT_INTERFACE!{interface ICredentialPickerOptions(ICredentialPickerOptionsVtbl): IInspectable [IID_ICredentialPickerOptions] {
     fn put_Caption(&self, value: HSTRING) -> HRESULT,
     fn get_Caption(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Message(&self, value: HSTRING) -> HRESULT,
@@ -2763,7 +2763,7 @@ RT_CLASS!{class CredentialPickerOptions: ICredentialPickerOptions}
 impl RtActivatable<IActivationFactory> for CredentialPickerOptions {}
 DEFINE_CLSID!(CredentialPickerOptions(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,101,100,101,110,116,105,97,108,115,46,85,73,46,67,114,101,100,101,110,116,105,97,108,80,105,99,107,101,114,79,112,116,105,111,110,115,0]) [CLSID_CredentialPickerOptions]);
 DEFINE_IID!(IID_ICredentialPickerResults, 424212890, 52272, 16652, 156, 56, 204, 8, 132, 197, 179, 215);
-RT_INTERFACE!{interface ICredentialPickerResults(ICredentialPickerResultsVtbl): IInspectable(IInspectableVtbl) [IID_ICredentialPickerResults] {
+RT_INTERFACE!{interface ICredentialPickerResults(ICredentialPickerResultsVtbl): IInspectable [IID_ICredentialPickerResults] {
     fn get_ErrorCode(&self, out: *mut u32) -> HRESULT,
     fn get_CredentialSaveOption(&self, out: *mut CredentialSaveOption) -> HRESULT,
     fn get_CredentialSaved(&self, out: *mut bool) -> HRESULT,
@@ -2812,7 +2812,7 @@ impl ICredentialPickerResults {
 }
 RT_CLASS!{class CredentialPickerResults: ICredentialPickerResults}
 DEFINE_IID!(IID_ICredentialPickerStatics, 2855951475, 51690, 18306, 153, 251, 230, 215, 233, 56, 225, 45);
-RT_INTERFACE!{static interface ICredentialPickerStatics(ICredentialPickerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICredentialPickerStatics] {
+RT_INTERFACE!{static interface ICredentialPickerStatics(ICredentialPickerStaticsVtbl): IInspectable [IID_ICredentialPickerStatics] {
     fn PickWithOptionsAsync(&self, options: <CredentialPickerOptions as RtType>::Abi, out: *mut <foundation::IAsyncOperation<CredentialPickerResults> as RtType>::Abi) -> HRESULT,
     fn PickWithMessageAsync(&self, targetName: HSTRING, message: HSTRING, out: *mut <foundation::IAsyncOperation<CredentialPickerResults> as RtType>::Abi) -> HRESULT,
     fn PickWithCaptionAsync(&self, targetName: HSTRING, message: HSTRING, caption: HSTRING, out: *mut <foundation::IAsyncOperation<CredentialPickerResults> as RtType>::Abi) -> HRESULT
@@ -2855,7 +2855,7 @@ RT_ENUM! { enum UserConsentVerifierAvailability: i32 {
     Available = 0, DeviceNotPresent = 1, NotConfiguredForUser = 2, DisabledByPolicy = 3, DeviceBusy = 4,
 }}
 DEFINE_IID!(IID_IUserConsentVerifierStatics, 2941206417, 22092, 19932, 184, 181, 151, 52, 71, 98, 124, 101);
-RT_INTERFACE!{static interface IUserConsentVerifierStatics(IUserConsentVerifierStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IUserConsentVerifierStatics] {
+RT_INTERFACE!{static interface IUserConsentVerifierStatics(IUserConsentVerifierStaticsVtbl): IInspectable [IID_IUserConsentVerifierStatics] {
     fn CheckAvailabilityAsync(&self, out: *mut <foundation::IAsyncOperation<UserConsentVerifierAvailability> as RtType>::Abi) -> HRESULT,
     fn RequestVerificationAsync(&self, message: HSTRING, out: *mut <foundation::IAsyncOperation<UserConsentVerificationResult> as RtType>::Abi) -> HRESULT
 }}
@@ -2917,7 +2917,7 @@ impl CryptographicBuffer {
 }
 DEFINE_CLSID!(CryptographicBuffer(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,114,121,112,116,111,103,114,97,112,104,105,99,66,117,102,102,101,114,0]) [CLSID_CryptographicBuffer]);
 DEFINE_IID!(IID_ICryptographicBufferStatics, 839613986, 15536, 19679, 134, 99, 29, 40, 145, 0, 101, 235);
-RT_INTERFACE!{static interface ICryptographicBufferStatics(ICryptographicBufferStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICryptographicBufferStatics] {
+RT_INTERFACE!{static interface ICryptographicBufferStatics(ICryptographicBufferStaticsVtbl): IInspectable [IID_ICryptographicBufferStatics] {
     #[cfg(feature="windows-storage")] fn Compare(&self, object1: <super::super::storage::streams::IBuffer as RtType>::Abi, object2: <super::super::storage::streams::IBuffer as RtType>::Abi, out: *mut bool) -> HRESULT,
     #[cfg(feature="windows-storage")] fn GenerateRandom(&self, length: u32, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     fn GenerateRandomNumber(&self, out: *mut u32) -> HRESULT,
@@ -2990,7 +2990,7 @@ impl ICryptographicBufferStatics {
 pub mod certificates { // Windows.Security.Cryptography.Certificates
 use crate::prelude::*;
 DEFINE_IID!(IID_ICertificate, 859796492, 1240, 17331, 178, 120, 140, 95, 204, 155, 229, 160);
-RT_INTERFACE!{interface ICertificate(ICertificateVtbl): IInspectable(IInspectableVtbl) [IID_ICertificate] {
+RT_INTERFACE!{interface ICertificate(ICertificateVtbl): IInspectable [IID_ICertificate] {
     fn BuildChainAsync(&self, certificates: <foundation::collections::IIterable<Certificate> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<CertificateChain> as RtType>::Abi) -> HRESULT,
     fn BuildChainWithParametersAsync(&self, certificates: <foundation::collections::IIterable<Certificate> as RtType>::Abi, parameters: <ChainBuildingParameters as RtType>::Abi, out: *mut <foundation::IAsyncOperation<CertificateChain> as RtType>::Abi) -> HRESULT,
     fn get_SerialNumber(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT,
@@ -3093,7 +3093,7 @@ impl Certificate {
 }
 DEFINE_CLSID!(Certificate(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,0]) [CLSID_Certificate]);
 DEFINE_IID!(IID_ICertificate2, 397948748, 35365, 19862, 164, 146, 143, 194, 154, 196, 253, 166);
-RT_INTERFACE!{interface ICertificate2(ICertificate2Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificate2] {
+RT_INTERFACE!{interface ICertificate2(ICertificate2Vtbl): IInspectable [IID_ICertificate2] {
     fn get_IsSecurityDeviceBound(&self, out: *mut bool) -> HRESULT,
     fn get_KeyUsages(&self, out: *mut <CertificateKeyUsages as RtType>::Abi) -> HRESULT,
     fn get_KeyAlgorithmName(&self, out: *mut HSTRING) -> HRESULT,
@@ -3134,7 +3134,7 @@ impl ICertificate2 {
     }}
 }
 DEFINE_IID!(IID_ICertificate3, 3193022822, 44639, 18002, 172, 231, 198, 215, 231, 114, 76, 243);
-RT_INTERFACE!{interface ICertificate3(ICertificate3Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificate3] {
+RT_INTERFACE!{interface ICertificate3(ICertificate3Vtbl): IInspectable [IID_ICertificate3] {
     fn get_IsPerUser(&self, out: *mut bool) -> HRESULT,
     fn get_StoreName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_KeyStorageProviderName(&self, out: *mut HSTRING) -> HRESULT
@@ -3157,7 +3157,7 @@ impl ICertificate3 {
     }}
 }
 DEFINE_IID!(IID_ICertificateChain, 549409669, 13969, 17665, 166, 44, 253, 151, 39, 139, 49, 238);
-RT_INTERFACE!{interface ICertificateChain(ICertificateChainVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateChain] {
+RT_INTERFACE!{interface ICertificateChain(ICertificateChainVtbl): IInspectable [IID_ICertificateChain] {
     fn Validate(&self, out: *mut ChainValidationResult) -> HRESULT,
     fn ValidateWithParameters(&self, parameter: <ChainValidationParameters as RtType>::Abi, out: *mut ChainValidationResult) -> HRESULT,
     fn GetCertificates(&self, includeRoot: bool, out: *mut <foundation::collections::IVectorView<Certificate> as RtType>::Abi) -> HRESULT
@@ -3209,7 +3209,7 @@ impl CertificateEnrollmentManager {
 }
 DEFINE_CLSID!(CertificateEnrollmentManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,69,110,114,111,108,108,109,101,110,116,77,97,110,97,103,101,114,0]) [CLSID_CertificateEnrollmentManager]);
 DEFINE_IID!(IID_ICertificateEnrollmentManagerStatics, 2286350143, 43398, 18683, 159, 215, 154, 236, 6, 147, 91, 241);
-RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics(ICertificateEnrollmentManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateEnrollmentManagerStatics] {
+RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics(ICertificateEnrollmentManagerStaticsVtbl): IInspectable [IID_ICertificateEnrollmentManagerStatics] {
     fn CreateRequestAsync(&self, request: <CertificateRequestProperties as RtType>::Abi, out: *mut <foundation::IAsyncOperation<HString> as RtType>::Abi) -> HRESULT,
     fn InstallCertificateAsync(&self, certificate: HSTRING, installOption: InstallOptions, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn ImportPfxDataAsync(&self, pfxData: HSTRING, password: HSTRING, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
@@ -3232,7 +3232,7 @@ impl ICertificateEnrollmentManagerStatics {
     }}
 }
 DEFINE_IID!(IID_ICertificateEnrollmentManagerStatics2, 3696958515, 25641, 16404, 153, 156, 93, 151, 53, 128, 45, 29);
-RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics2(ICertificateEnrollmentManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificateEnrollmentManagerStatics2] {
+RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics2(ICertificateEnrollmentManagerStatics2Vtbl): IInspectable [IID_ICertificateEnrollmentManagerStatics2] {
     fn get_UserCertificateEnrollmentManager(&self, out: *mut <UserCertificateEnrollmentManager as RtType>::Abi) -> HRESULT,
     fn ImportPfxDataToKspAsync(&self, pfxData: HSTRING, password: HSTRING, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: HSTRING, keyStorageProvider: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
@@ -3249,7 +3249,7 @@ impl ICertificateEnrollmentManagerStatics2 {
     }}
 }
 DEFINE_IID!(IID_ICertificateEnrollmentManagerStatics3, 4260135614, 24956, 16986, 183, 45, 57, 139, 38, 172, 114, 100);
-RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics3(ICertificateEnrollmentManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificateEnrollmentManagerStatics3] {
+RT_INTERFACE!{static interface ICertificateEnrollmentManagerStatics3(ICertificateEnrollmentManagerStatics3Vtbl): IInspectable [IID_ICertificateEnrollmentManagerStatics3] {
     fn ImportPfxDataToKspWithParametersAsync(&self, pfxData: HSTRING, password: HSTRING, pfxImportParameters: <PfxImportParameters as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl ICertificateEnrollmentManagerStatics3 {
@@ -3260,7 +3260,7 @@ impl ICertificateEnrollmentManagerStatics3 {
     }}
 }
 DEFINE_IID!(IID_ICertificateExtension, 2228160086, 43494, 17741, 142, 69, 46, 167, 196, 188, 213, 59);
-RT_INTERFACE!{interface ICertificateExtension(ICertificateExtensionVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateExtension] {
+RT_INTERFACE!{interface ICertificateExtension(ICertificateExtensionVtbl): IInspectable [IID_ICertificateExtension] {
     fn get_ObjectId(&self, out: *mut HSTRING) -> HRESULT,
     fn put_ObjectId(&self, value: HSTRING) -> HRESULT,
     fn get_IsCritical(&self, out: *mut bool) -> HRESULT,
@@ -3306,7 +3306,7 @@ RT_CLASS!{class CertificateExtension: ICertificateExtension}
 impl RtActivatable<IActivationFactory> for CertificateExtension {}
 DEFINE_CLSID!(CertificateExtension(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,69,120,116,101,110,115,105,111,110,0]) [CLSID_CertificateExtension]);
 DEFINE_IID!(IID_ICertificateFactory, 397681180, 19375, 17570, 150, 8, 4, 251, 98, 177, 105, 66);
-RT_INTERFACE!{static interface ICertificateFactory(ICertificateFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateFactory] {
+RT_INTERFACE!{static interface ICertificateFactory(ICertificateFactoryVtbl): IInspectable [IID_ICertificateFactory] {
     #[cfg(feature="windows-storage")] fn CreateCertificate(&self, certBlob: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <Certificate as RtType>::Abi) -> HRESULT
 }}
 impl ICertificateFactory {
@@ -3317,7 +3317,7 @@ impl ICertificateFactory {
     }}
 }
 DEFINE_IID!(IID_ICertificateKeyUsages, 1791369327, 57807, 18538, 180, 133, 166, 156, 131, 228, 111, 209);
-RT_INTERFACE!{interface ICertificateKeyUsages(ICertificateKeyUsagesVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateKeyUsages] {
+RT_INTERFACE!{interface ICertificateKeyUsages(ICertificateKeyUsagesVtbl): IInspectable [IID_ICertificateKeyUsages] {
     fn get_EncipherOnly(&self, out: *mut bool) -> HRESULT,
     fn put_EncipherOnly(&self, value: bool) -> HRESULT,
     fn get_CrlSign(&self, out: *mut bool) -> HRESULT,
@@ -3413,7 +3413,7 @@ RT_CLASS!{class CertificateKeyUsages: ICertificateKeyUsages}
 impl RtActivatable<IActivationFactory> for CertificateKeyUsages {}
 DEFINE_CLSID!(CertificateKeyUsages(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,75,101,121,85,115,97,103,101,115,0]) [CLSID_CertificateKeyUsages]);
 DEFINE_IID!(IID_ICertificateQuery, 1527261745, 42792, 18710, 181, 238, 255, 203, 138, 207, 36, 23);
-RT_INTERFACE!{interface ICertificateQuery(ICertificateQueryVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateQuery] {
+RT_INTERFACE!{interface ICertificateQuery(ICertificateQueryVtbl): IInspectable [IID_ICertificateQuery] {
     fn get_EnhancedKeyUsages(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
     fn get_IssuerName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_IssuerName(&self, value: HSTRING) -> HRESULT,
@@ -3471,7 +3471,7 @@ RT_CLASS!{class CertificateQuery: ICertificateQuery}
 impl RtActivatable<IActivationFactory> for CertificateQuery {}
 DEFINE_CLSID!(CertificateQuery(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,81,117,101,114,121,0]) [CLSID_CertificateQuery]);
 DEFINE_IID!(IID_ICertificateQuery2, 2472151799, 3033, 20341, 184, 194, 226, 122, 127, 116, 238, 205);
-RT_INTERFACE!{interface ICertificateQuery2(ICertificateQuery2Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificateQuery2] {
+RT_INTERFACE!{interface ICertificateQuery2(ICertificateQuery2Vtbl): IInspectable [IID_ICertificateQuery2] {
     fn get_IncludeDuplicates(&self, out: *mut bool) -> HRESULT,
     fn put_IncludeDuplicates(&self, value: bool) -> HRESULT,
     fn get_IncludeExpiredCertificates(&self, out: *mut bool) -> HRESULT,
@@ -3509,7 +3509,7 @@ impl ICertificateQuery2 {
     }}
 }
 DEFINE_IID!(IID_ICertificateRequestProperties, 1216251126, 38114, 19918, 136, 51, 26, 112, 10, 55, 162, 154);
-RT_INTERFACE!{interface ICertificateRequestProperties(ICertificateRequestPropertiesVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateRequestProperties] {
+RT_INTERFACE!{interface ICertificateRequestProperties(ICertificateRequestPropertiesVtbl): IInspectable [IID_ICertificateRequestProperties] {
     fn get_Subject(&self, out: *mut HSTRING) -> HRESULT,
     fn put_Subject(&self, value: HSTRING) -> HRESULT,
     fn get_KeyAlgorithmName(&self, out: *mut HSTRING) -> HRESULT,
@@ -3616,7 +3616,7 @@ RT_CLASS!{class CertificateRequestProperties: ICertificateRequestProperties}
 impl RtActivatable<IActivationFactory> for CertificateRequestProperties {}
 DEFINE_CLSID!(CertificateRequestProperties(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,82,101,113,117,101,115,116,80,114,111,112,101,114,116,105,101,115,0]) [CLSID_CertificateRequestProperties]);
 DEFINE_IID!(IID_ICertificateRequestProperties2, 1033947476, 55103, 20467, 160, 166, 6, 119, 192, 173, 160, 91);
-RT_INTERFACE!{interface ICertificateRequestProperties2(ICertificateRequestProperties2Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificateRequestProperties2] {
+RT_INTERFACE!{interface ICertificateRequestProperties2(ICertificateRequestProperties2Vtbl): IInspectable [IID_ICertificateRequestProperties2] {
     fn get_SmartcardReaderName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_SmartcardReaderName(&self, value: HSTRING) -> HRESULT,
     fn get_SigningCertificate(&self, out: *mut <Certificate as RtType>::Abi) -> HRESULT,
@@ -3654,7 +3654,7 @@ impl ICertificateRequestProperties2 {
     }}
 }
 DEFINE_IID!(IID_ICertificateRequestProperties3, 3867670038, 29517, 18097, 157, 76, 110, 223, 219, 252, 132, 91);
-RT_INTERFACE!{interface ICertificateRequestProperties3(ICertificateRequestProperties3Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificateRequestProperties3] {
+RT_INTERFACE!{interface ICertificateRequestProperties3(ICertificateRequestProperties3Vtbl): IInspectable [IID_ICertificateRequestProperties3] {
     fn get_CurveName(&self, out: *mut HSTRING) -> HRESULT,
     fn put_CurveName(&self, value: HSTRING) -> HRESULT,
     fn get_CurveParameters(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT,
@@ -3714,7 +3714,7 @@ impl ICertificateRequestProperties3 {
     }}
 }
 DEFINE_IID!(IID_ICertificateRequestProperties4, 1312987858, 7265, 20458, 184, 254, 19, 95, 177, 156, 220, 228);
-RT_INTERFACE!{interface ICertificateRequestProperties4(ICertificateRequestProperties4Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificateRequestProperties4] {
+RT_INTERFACE!{interface ICertificateRequestProperties4(ICertificateRequestProperties4Vtbl): IInspectable [IID_ICertificateRequestProperties4] {
     fn get_SuppressedDefaults(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
     fn get_SubjectAlternativeName(&self, out: *mut <SubjectAlternativeNameInfo as RtType>::Abi) -> HRESULT,
     fn get_Extensions(&self, out: *mut <foundation::collections::IVector<CertificateExtension> as RtType>::Abi) -> HRESULT
@@ -3737,7 +3737,7 @@ impl ICertificateRequestProperties4 {
     }}
 }
 DEFINE_IID!(IID_ICertificateStore, 2965370656, 13390, 17201, 175, 20, 167, 247, 167, 235, 201, 58);
-RT_INTERFACE!{interface ICertificateStore(ICertificateStoreVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateStore] {
+RT_INTERFACE!{interface ICertificateStore(ICertificateStoreVtbl): IInspectable [IID_ICertificateStore] {
     fn Add(&self, certificate: <Certificate as RtType>::Abi) -> HRESULT,
     fn Delete(&self, certificate: <Certificate as RtType>::Abi) -> HRESULT
 }}
@@ -3753,7 +3753,7 @@ impl ICertificateStore {
 }
 RT_CLASS!{class CertificateStore: ICertificateStore}
 DEFINE_IID!(IID_ICertificateStore2, 3353775690, 16765, 19738, 186, 189, 21, 104, 126, 84, 153, 116);
-RT_INTERFACE!{interface ICertificateStore2(ICertificateStore2Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificateStore2] {
+RT_INTERFACE!{interface ICertificateStore2(ICertificateStore2Vtbl): IInspectable [IID_ICertificateStore2] {
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl ICertificateStore2 {
@@ -3788,7 +3788,7 @@ impl CertificateStores {
 }
 DEFINE_CLSID!(CertificateStores(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,101,114,116,105,102,105,99,97,116,101,83,116,111,114,101,115,0]) [CLSID_CertificateStores]);
 DEFINE_IID!(IID_ICertificateStoresStatics, 4226598713, 50942, 19943, 153, 207, 116, 195, 229, 150, 224, 50);
-RT_INTERFACE!{static interface ICertificateStoresStatics(ICertificateStoresStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICertificateStoresStatics] {
+RT_INTERFACE!{static interface ICertificateStoresStatics(ICertificateStoresStaticsVtbl): IInspectable [IID_ICertificateStoresStatics] {
     fn FindAllAsync(&self, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<Certificate>> as RtType>::Abi) -> HRESULT,
     fn FindAllWithQueryAsync(&self, query: <CertificateQuery as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IVectorView<Certificate>> as RtType>::Abi) -> HRESULT,
     fn get_TrustedRootCertificationAuthorities(&self, out: *mut <CertificateStore as RtType>::Abi) -> HRESULT,
@@ -3823,7 +3823,7 @@ impl ICertificateStoresStatics {
     }}
 }
 DEFINE_IID!(IID_ICertificateStoresStatics2, 4203744121, 41172, 19340, 188, 85, 192, 163, 126, 177, 65, 237);
-RT_INTERFACE!{static interface ICertificateStoresStatics2(ICertificateStoresStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ICertificateStoresStatics2] {
+RT_INTERFACE!{static interface ICertificateStoresStatics2(ICertificateStoresStatics2Vtbl): IInspectable [IID_ICertificateStoresStatics2] {
     fn GetUserStoreByName(&self, storeName: HSTRING, out: *mut <UserCertificateStore as RtType>::Abi) -> HRESULT
 }}
 impl ICertificateStoresStatics2 {
@@ -3834,7 +3834,7 @@ impl ICertificateStoresStatics2 {
     }}
 }
 DEFINE_IID!(IID_IChainBuildingParameters, 1110157602, 31885, 18359, 181, 155, 177, 39, 3, 115, 58, 195);
-RT_INTERFACE!{interface IChainBuildingParameters(IChainBuildingParametersVtbl): IInspectable(IInspectableVtbl) [IID_IChainBuildingParameters] {
+RT_INTERFACE!{interface IChainBuildingParameters(IChainBuildingParametersVtbl): IInspectable [IID_IChainBuildingParameters] {
     fn get_EnhancedKeyUsages(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
     fn get_ValidationTimestamp(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn put_ValidationTimestamp(&self, value: foundation::DateTime) -> HRESULT,
@@ -3909,7 +3909,7 @@ RT_CLASS!{class ChainBuildingParameters: IChainBuildingParameters}
 impl RtActivatable<IActivationFactory> for ChainBuildingParameters {}
 DEFINE_CLSID!(ChainBuildingParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,104,97,105,110,66,117,105,108,100,105,110,103,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_ChainBuildingParameters]);
 DEFINE_IID!(IID_IChainValidationParameters, 3295951690, 32432, 19286, 160, 64, 185, 200, 230, 85, 221, 243);
-RT_INTERFACE!{interface IChainValidationParameters(IChainValidationParametersVtbl): IInspectable(IInspectableVtbl) [IID_IChainValidationParameters] {
+RT_INTERFACE!{interface IChainValidationParameters(IChainValidationParametersVtbl): IInspectable [IID_IChainValidationParameters] {
     fn get_CertificateChainPolicy(&self, out: *mut CertificateChainPolicy) -> HRESULT,
     fn put_CertificateChainPolicy(&self, value: CertificateChainPolicy) -> HRESULT,
     #[cfg(feature="windows-networking")] fn get_ServerDnsName(&self, out: *mut <crate::windows::networking::HostName as RtType>::Abi) -> HRESULT,
@@ -3942,7 +3942,7 @@ RT_ENUM! { enum ChainValidationResult: i32 {
     Success = 0, Untrusted = 1, Revoked = 2, Expired = 3, IncompleteChain = 4, InvalidSignature = 5, WrongUsage = 6, InvalidName = 7, InvalidCertificateAuthorityPolicy = 8, BasicConstraintsError = 9, UnknownCriticalExtension = 10, RevocationInformationMissing = 11, RevocationFailure = 12, OtherErrors = 13,
 }}
 DEFINE_IID!(IID_ICmsAttachedSignature, 1636408733, 14167, 20171, 189, 220, 12, 163, 87, 215, 169, 54);
-RT_INTERFACE!{interface ICmsAttachedSignature(ICmsAttachedSignatureVtbl): IInspectable(IInspectableVtbl) [IID_ICmsAttachedSignature] {
+RT_INTERFACE!{interface ICmsAttachedSignature(ICmsAttachedSignatureVtbl): IInspectable [IID_ICmsAttachedSignature] {
     fn get_Certificates(&self, out: *mut <foundation::collections::IVectorView<Certificate> as RtType>::Abi) -> HRESULT,
     fn get_Content(&self, outSize: *mut u32, out: *mut *mut u8) -> HRESULT,
     fn get_Signers(&self, out: *mut <foundation::collections::IVectorView<CmsSignerInfo> as RtType>::Abi) -> HRESULT,
@@ -3983,7 +3983,7 @@ impl CmsAttachedSignature {
 }
 DEFINE_CLSID!(CmsAttachedSignature(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,109,115,65,116,116,97,99,104,101,100,83,105,103,110,97,116,117,114,101,0]) [CLSID_CmsAttachedSignature]);
 DEFINE_IID!(IID_ICmsAttachedSignatureFactory, 3502832661, 63319, 19556, 163, 98, 82, 204, 28, 119, 207, 251);
-RT_INTERFACE!{static interface ICmsAttachedSignatureFactory(ICmsAttachedSignatureFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICmsAttachedSignatureFactory] {
+RT_INTERFACE!{static interface ICmsAttachedSignatureFactory(ICmsAttachedSignatureFactoryVtbl): IInspectable [IID_ICmsAttachedSignatureFactory] {
     #[cfg(feature="windows-storage")] fn CreateCmsAttachedSignature(&self, inputBlob: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <CmsAttachedSignature as RtType>::Abi) -> HRESULT
 }}
 impl ICmsAttachedSignatureFactory {
@@ -3994,7 +3994,7 @@ impl ICmsAttachedSignatureFactory {
     }}
 }
 DEFINE_IID!(IID_ICmsAttachedSignatureStatics, 2274925710, 45229, 18829, 167, 245, 120, 181, 155, 206, 75, 54);
-RT_INTERFACE!{static interface ICmsAttachedSignatureStatics(ICmsAttachedSignatureStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICmsAttachedSignatureStatics] {
+RT_INTERFACE!{static interface ICmsAttachedSignatureStatics(ICmsAttachedSignatureStaticsVtbl): IInspectable [IID_ICmsAttachedSignatureStatics] {
     #[cfg(feature="windows-storage")] fn GenerateSignatureAsync(&self, data: <crate::windows::storage::streams::IBuffer as RtType>::Abi, signers: <foundation::collections::IIterable<CmsSignerInfo> as RtType>::Abi, certificates: <foundation::collections::IIterable<Certificate> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer> as RtType>::Abi) -> HRESULT
 }}
 impl ICmsAttachedSignatureStatics {
@@ -4005,7 +4005,7 @@ impl ICmsAttachedSignatureStatics {
     }}
 }
 DEFINE_IID!(IID_ICmsDetachedSignature, 253686100, 63070, 17718, 131, 57, 89, 68, 8, 29, 178, 202);
-RT_INTERFACE!{interface ICmsDetachedSignature(ICmsDetachedSignatureVtbl): IInspectable(IInspectableVtbl) [IID_ICmsDetachedSignature] {
+RT_INTERFACE!{interface ICmsDetachedSignature(ICmsDetachedSignatureVtbl): IInspectable [IID_ICmsDetachedSignature] {
     fn get_Certificates(&self, out: *mut <foundation::collections::IVectorView<Certificate> as RtType>::Abi) -> HRESULT,
     fn get_Signers(&self, out: *mut <foundation::collections::IVectorView<CmsSignerInfo> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn VerifySignatureAsync(&self, data: <crate::windows::storage::streams::IInputStream as RtType>::Abi, out: *mut <foundation::IAsyncOperation<SignatureValidationResult> as RtType>::Abi) -> HRESULT
@@ -4040,7 +4040,7 @@ impl CmsDetachedSignature {
 }
 DEFINE_CLSID!(CmsDetachedSignature(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,109,115,68,101,116,97,99,104,101,100,83,105,103,110,97,116,117,114,101,0]) [CLSID_CmsDetachedSignature]);
 DEFINE_IID!(IID_ICmsDetachedSignatureFactory, 3299554563, 44671, 17287, 173, 25, 0, 241, 80, 228, 142, 187);
-RT_INTERFACE!{static interface ICmsDetachedSignatureFactory(ICmsDetachedSignatureFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ICmsDetachedSignatureFactory] {
+RT_INTERFACE!{static interface ICmsDetachedSignatureFactory(ICmsDetachedSignatureFactoryVtbl): IInspectable [IID_ICmsDetachedSignatureFactory] {
     #[cfg(feature="windows-storage")] fn CreateCmsDetachedSignature(&self, inputBlob: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <CmsDetachedSignature as RtType>::Abi) -> HRESULT
 }}
 impl ICmsDetachedSignatureFactory {
@@ -4051,7 +4051,7 @@ impl ICmsDetachedSignatureFactory {
     }}
 }
 DEFINE_IID!(IID_ICmsDetachedSignatureStatics, 1024543997, 49051, 18050, 155, 230, 145, 245, 124, 5, 56, 8);
-RT_INTERFACE!{static interface ICmsDetachedSignatureStatics(ICmsDetachedSignatureStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICmsDetachedSignatureStatics] {
+RT_INTERFACE!{static interface ICmsDetachedSignatureStatics(ICmsDetachedSignatureStaticsVtbl): IInspectable [IID_ICmsDetachedSignatureStatics] {
     #[cfg(feature="windows-storage")] fn GenerateSignatureAsync(&self, data: <crate::windows::storage::streams::IInputStream as RtType>::Abi, signers: <foundation::collections::IIterable<CmsSignerInfo> as RtType>::Abi, certificates: <foundation::collections::IIterable<Certificate> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer> as RtType>::Abi) -> HRESULT
 }}
 impl ICmsDetachedSignatureStatics {
@@ -4062,7 +4062,7 @@ impl ICmsDetachedSignatureStatics {
     }}
 }
 DEFINE_IID!(IID_ICmsSignerInfo, 1355817179, 7471, 19482, 181, 197, 208, 24, 143, 249, 31, 71);
-RT_INTERFACE!{interface ICmsSignerInfo(ICmsSignerInfoVtbl): IInspectable(IInspectableVtbl) [IID_ICmsSignerInfo] {
+RT_INTERFACE!{interface ICmsSignerInfo(ICmsSignerInfoVtbl): IInspectable [IID_ICmsSignerInfo] {
     fn get_Certificate(&self, out: *mut <Certificate as RtType>::Abi) -> HRESULT,
     fn put_Certificate(&self, value: <Certificate as RtType>::Abi) -> HRESULT,
     fn get_HashAlgorithmName(&self, out: *mut HSTRING) -> HRESULT,
@@ -4098,7 +4098,7 @@ RT_CLASS!{class CmsSignerInfo: ICmsSignerInfo}
 impl RtActivatable<IActivationFactory> for CmsSignerInfo {}
 DEFINE_CLSID!(CmsSignerInfo(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,67,109,115,83,105,103,110,101,114,73,110,102,111,0]) [CLSID_CmsSignerInfo]);
 DEFINE_IID!(IID_ICmsTimestampInfo, 794755314, 11288, 20360, 132, 53, 197, 52, 8, 96, 118, 245);
-RT_INTERFACE!{interface ICmsTimestampInfo(ICmsTimestampInfoVtbl): IInspectable(IInspectableVtbl) [IID_ICmsTimestampInfo] {
+RT_INTERFACE!{interface ICmsTimestampInfo(ICmsTimestampInfoVtbl): IInspectable [IID_ICmsTimestampInfo] {
     fn get_SigningCertificate(&self, out: *mut <Certificate as RtType>::Abi) -> HRESULT,
     fn get_Certificates(&self, out: *mut <foundation::collections::IVectorView<Certificate> as RtType>::Abi) -> HRESULT,
     fn get_Timestamp(&self, out: *mut foundation::DateTime) -> HRESULT
@@ -4167,7 +4167,7 @@ impl KeyAlgorithmNames {
 }
 DEFINE_CLSID!(KeyAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,75,101,121,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_KeyAlgorithmNames]);
 DEFINE_IID!(IID_IKeyAlgorithmNamesStatics, 1200645591, 31431, 17793, 140, 59, 208, 112, 39, 20, 4, 72);
-RT_INTERFACE!{static interface IKeyAlgorithmNamesStatics(IKeyAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyAlgorithmNamesStatics] {
+RT_INTERFACE!{static interface IKeyAlgorithmNamesStatics(IKeyAlgorithmNamesStaticsVtbl): IInspectable [IID_IKeyAlgorithmNamesStatics] {
     fn get_Rsa(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Dsa(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Ecdh256(&self, out: *mut HSTRING) -> HRESULT,
@@ -4220,7 +4220,7 @@ impl IKeyAlgorithmNamesStatics {
     }}
 }
 DEFINE_IID!(IID_IKeyAlgorithmNamesStatics2, 3382400646, 57853, 19018, 137, 61, 162, 111, 51, 221, 139, 180);
-RT_INTERFACE!{static interface IKeyAlgorithmNamesStatics2(IKeyAlgorithmNamesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IKeyAlgorithmNamesStatics2] {
+RT_INTERFACE!{static interface IKeyAlgorithmNamesStatics2(IKeyAlgorithmNamesStatics2Vtbl): IInspectable [IID_IKeyAlgorithmNamesStatics2] {
     fn get_Ecdsa(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Ecdh(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -4252,7 +4252,7 @@ impl KeyAttestationHelper {
 }
 DEFINE_CLSID!(KeyAttestationHelper(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,75,101,121,65,116,116,101,115,116,97,116,105,111,110,72,101,108,112,101,114,0]) [CLSID_KeyAttestationHelper]);
 DEFINE_IID!(IID_IKeyAttestationHelperStatics, 373875270, 63044, 17190, 136, 190, 58, 241, 2, 211, 14, 12);
-RT_INTERFACE!{static interface IKeyAttestationHelperStatics(IKeyAttestationHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyAttestationHelperStatics] {
+RT_INTERFACE!{static interface IKeyAttestationHelperStatics(IKeyAttestationHelperStaticsVtbl): IInspectable [IID_IKeyAttestationHelperStatics] {
     fn DecryptTpmAttestationCredentialAsync(&self, credential: HSTRING, out: *mut <foundation::IAsyncOperation<HString> as RtType>::Abi) -> HRESULT,
     fn GetTpmAttestationCredentialId(&self, credential: HSTRING, out: *mut HSTRING) -> HRESULT
 }}
@@ -4269,7 +4269,7 @@ impl IKeyAttestationHelperStatics {
     }}
 }
 DEFINE_IID!(IID_IKeyAttestationHelperStatics2, 2623081260, 42694, 19038, 158, 100, 232, 93, 82, 121, 223, 151);
-RT_INTERFACE!{static interface IKeyAttestationHelperStatics2(IKeyAttestationHelperStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IKeyAttestationHelperStatics2] {
+RT_INTERFACE!{static interface IKeyAttestationHelperStatics2(IKeyAttestationHelperStatics2Vtbl): IInspectable [IID_IKeyAttestationHelperStatics2] {
     fn DecryptTpmAttestationCredentialWithContainerNameAsync(&self, credential: HSTRING, containerName: HSTRING, out: *mut <foundation::IAsyncOperation<HString> as RtType>::Abi) -> HRESULT
 }}
 impl IKeyAttestationHelperStatics2 {
@@ -4304,7 +4304,7 @@ impl KeyStorageProviderNames {
 }
 DEFINE_CLSID!(KeyStorageProviderNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,75,101,121,83,116,111,114,97,103,101,80,114,111,118,105,100,101,114,78,97,109,101,115,0]) [CLSID_KeyStorageProviderNames]);
 DEFINE_IID!(IID_IKeyStorageProviderNamesStatics, 2937613024, 21801, 17922, 189, 148, 10, 171, 145, 149, 123, 92);
-RT_INTERFACE!{static interface IKeyStorageProviderNamesStatics(IKeyStorageProviderNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyStorageProviderNamesStatics] {
+RT_INTERFACE!{static interface IKeyStorageProviderNamesStatics(IKeyStorageProviderNamesStaticsVtbl): IInspectable [IID_IKeyStorageProviderNamesStatics] {
     fn get_SoftwareKeyStorageProvider(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SmartcardKeyStorageProvider(&self, out: *mut HSTRING) -> HRESULT,
     fn get_PlatformKeyStorageProvider(&self, out: *mut HSTRING) -> HRESULT
@@ -4327,7 +4327,7 @@ impl IKeyStorageProviderNamesStatics {
     }}
 }
 DEFINE_IID!(IID_IKeyStorageProviderNamesStatics2, 640513085, 39982, 16844, 136, 18, 196, 217, 113, 221, 124, 96);
-RT_INTERFACE!{static interface IKeyStorageProviderNamesStatics2(IKeyStorageProviderNamesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IKeyStorageProviderNamesStatics2] {
+RT_INTERFACE!{static interface IKeyStorageProviderNamesStatics2(IKeyStorageProviderNamesStatics2Vtbl): IInspectable [IID_IKeyStorageProviderNamesStatics2] {
     fn get_PassportKeyStorageProvider(&self, out: *mut HSTRING) -> HRESULT
 }}
 impl IKeyStorageProviderNamesStatics2 {
@@ -4338,7 +4338,7 @@ impl IKeyStorageProviderNamesStatics2 {
     }}
 }
 DEFINE_IID!(IID_IPfxImportParameters, 1745696017, 39432, 18376, 134, 74, 46, 221, 77, 142, 180, 108);
-RT_INTERFACE!{interface IPfxImportParameters(IPfxImportParametersVtbl): IInspectable(IInspectableVtbl) [IID_IPfxImportParameters] {
+RT_INTERFACE!{interface IPfxImportParameters(IPfxImportParametersVtbl): IInspectable [IID_IPfxImportParameters] {
     fn get_Exportable(&self, out: *mut ExportOption) -> HRESULT,
     fn put_Exportable(&self, value: ExportOption) -> HRESULT,
     fn get_KeyProtectionLevel(&self, out: *mut KeyProtectionLevel) -> HRESULT,
@@ -4440,7 +4440,7 @@ impl StandardCertificateStoreNames {
 }
 DEFINE_CLSID!(StandardCertificateStoreNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,83,116,97,110,100,97,114,100,67,101,114,116,105,102,105,99,97,116,101,83,116,111,114,101,78,97,109,101,115,0]) [CLSID_StandardCertificateStoreNames]);
 DEFINE_IID!(IID_IStandardCertificateStoreNamesStatics, 202722011, 42134, 16888, 143, 229, 158, 150, 243, 110, 251, 248);
-RT_INTERFACE!{static interface IStandardCertificateStoreNamesStatics(IStandardCertificateStoreNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IStandardCertificateStoreNamesStatics] {
+RT_INTERFACE!{static interface IStandardCertificateStoreNamesStatics(IStandardCertificateStoreNamesStaticsVtbl): IInspectable [IID_IStandardCertificateStoreNamesStatics] {
     fn get_Personal(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TrustedRootCertificationAuthorities(&self, out: *mut HSTRING) -> HRESULT,
     fn get_IntermediateCertificationAuthorities(&self, out: *mut HSTRING) -> HRESULT
@@ -4463,7 +4463,7 @@ impl IStandardCertificateStoreNamesStatics {
     }}
 }
 DEFINE_IID!(IID_ISubjectAlternativeNameInfo, 1479039473, 22173, 19488, 190, 123, 78, 28, 154, 11, 197, 43);
-RT_INTERFACE!{interface ISubjectAlternativeNameInfo(ISubjectAlternativeNameInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISubjectAlternativeNameInfo] {
+RT_INTERFACE!{interface ISubjectAlternativeNameInfo(ISubjectAlternativeNameInfoVtbl): IInspectable [IID_ISubjectAlternativeNameInfo] {
     fn get_EmailName(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_IPAddress(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_Url(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
@@ -4507,7 +4507,7 @@ RT_CLASS!{class SubjectAlternativeNameInfo: ISubjectAlternativeNameInfo}
 impl RtActivatable<IActivationFactory> for SubjectAlternativeNameInfo {}
 DEFINE_CLSID!(SubjectAlternativeNameInfo(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,101,114,116,105,102,105,99,97,116,101,115,46,83,117,98,106,101,99,116,65,108,116,101,114,110,97,116,105,118,101,78,97,109,101,73,110,102,111,0]) [CLSID_SubjectAlternativeNameInfo]);
 DEFINE_IID!(IID_ISubjectAlternativeNameInfo2, 1132099782, 7249, 16874, 179, 74, 61, 101, 67, 152, 163, 112);
-RT_INTERFACE!{interface ISubjectAlternativeNameInfo2(ISubjectAlternativeNameInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_ISubjectAlternativeNameInfo2] {
+RT_INTERFACE!{interface ISubjectAlternativeNameInfo2(ISubjectAlternativeNameInfo2Vtbl): IInspectable [IID_ISubjectAlternativeNameInfo2] {
     fn get_EmailNames(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
     fn get_IPAddresses(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
     fn get_Urls(&self, out: *mut <foundation::collections::IVector<HString> as RtType>::Abi) -> HRESULT,
@@ -4554,7 +4554,7 @@ impl ISubjectAlternativeNameInfo2 {
     }}
 }
 DEFINE_IID!(IID_IUserCertificateEnrollmentManager, 2519807768, 8929, 18457, 178, 11, 171, 70, 166, 236, 160, 110);
-RT_INTERFACE!{interface IUserCertificateEnrollmentManager(IUserCertificateEnrollmentManagerVtbl): IInspectable(IInspectableVtbl) [IID_IUserCertificateEnrollmentManager] {
+RT_INTERFACE!{interface IUserCertificateEnrollmentManager(IUserCertificateEnrollmentManagerVtbl): IInspectable [IID_IUserCertificateEnrollmentManager] {
     fn CreateRequestAsync(&self, request: <CertificateRequestProperties as RtType>::Abi, out: *mut <foundation::IAsyncOperation<HString> as RtType>::Abi) -> HRESULT,
     fn InstallCertificateAsync(&self, certificate: HSTRING, installOption: InstallOptions, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn ImportPfxDataAsync(&self, pfxData: HSTRING, password: HSTRING, exportable: ExportOption, keyProtectionLevel: KeyProtectionLevel, installOption: InstallOptions, friendlyName: HSTRING, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -4584,7 +4584,7 @@ impl IUserCertificateEnrollmentManager {
 }
 RT_CLASS!{class UserCertificateEnrollmentManager: IUserCertificateEnrollmentManager}
 DEFINE_IID!(IID_IUserCertificateEnrollmentManager2, 229481649, 26078, 18730, 184, 109, 252, 92, 72, 44, 55, 71);
-RT_INTERFACE!{interface IUserCertificateEnrollmentManager2(IUserCertificateEnrollmentManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IUserCertificateEnrollmentManager2] {
+RT_INTERFACE!{interface IUserCertificateEnrollmentManager2(IUserCertificateEnrollmentManager2Vtbl): IInspectable [IID_IUserCertificateEnrollmentManager2] {
     fn ImportPfxDataToKspWithParametersAsync(&self, pfxData: HSTRING, password: HSTRING, pfxImportParameters: <PfxImportParameters as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT
 }}
 impl IUserCertificateEnrollmentManager2 {
@@ -4595,7 +4595,7 @@ impl IUserCertificateEnrollmentManager2 {
     }}
 }
 DEFINE_IID!(IID_IUserCertificateStore, 3388677507, 30879, 19278, 145, 128, 4, 90, 117, 122, 172, 109);
-RT_INTERFACE!{interface IUserCertificateStore(IUserCertificateStoreVtbl): IInspectable(IInspectableVtbl) [IID_IUserCertificateStore] {
+RT_INTERFACE!{interface IUserCertificateStore(IUserCertificateStoreVtbl): IInspectable [IID_IUserCertificateStore] {
     fn RequestAddAsync(&self, certificate: <Certificate as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn RequestDeleteAsync(&self, certificate: <Certificate as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn get_Name(&self, out: *mut HSTRING) -> HRESULT
@@ -4691,7 +4691,7 @@ impl AsymmetricAlgorithmNames {
 }
 DEFINE_CLSID!(AsymmetricAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,65,115,121,109,109,101,116,114,105,99,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_AsymmetricAlgorithmNames]);
 DEFINE_IID!(IID_IAsymmetricAlgorithmNamesStatics, 3405184228, 26560, 18090, 132, 249, 117, 46, 119, 68, 159, 155);
-RT_INTERFACE!{static interface IAsymmetricAlgorithmNamesStatics(IAsymmetricAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAsymmetricAlgorithmNamesStatics] {
+RT_INTERFACE!{static interface IAsymmetricAlgorithmNamesStatics(IAsymmetricAlgorithmNamesStaticsVtbl): IInspectable [IID_IAsymmetricAlgorithmNamesStatics] {
     fn get_RsaPkcs1(&self, out: *mut HSTRING) -> HRESULT,
     fn get_RsaOaepSha1(&self, out: *mut HSTRING) -> HRESULT,
     fn get_RsaOaepSha256(&self, out: *mut HSTRING) -> HRESULT,
@@ -4804,7 +4804,7 @@ impl IAsymmetricAlgorithmNamesStatics {
     }}
 }
 DEFINE_IID!(IID_IAsymmetricAlgorithmNamesStatics2, 4047618262, 19455, 20259, 186, 102, 96, 69, 177, 55, 213, 223);
-RT_INTERFACE!{static interface IAsymmetricAlgorithmNamesStatics2(IAsymmetricAlgorithmNamesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IAsymmetricAlgorithmNamesStatics2] {
+RT_INTERFACE!{static interface IAsymmetricAlgorithmNamesStatics2(IAsymmetricAlgorithmNamesStatics2Vtbl): IInspectable [IID_IAsymmetricAlgorithmNamesStatics2] {
     fn get_EcdsaSha256(&self, out: *mut HSTRING) -> HRESULT,
     fn get_EcdsaSha384(&self, out: *mut HSTRING) -> HRESULT,
     fn get_EcdsaSha512(&self, out: *mut HSTRING) -> HRESULT
@@ -4827,7 +4827,7 @@ impl IAsymmetricAlgorithmNamesStatics2 {
     }}
 }
 DEFINE_IID!(IID_IAsymmetricKeyAlgorithmProvider, 3906142007, 25177, 20104, 183, 224, 148, 25, 31, 222, 105, 158);
-RT_INTERFACE!{interface IAsymmetricKeyAlgorithmProvider(IAsymmetricKeyAlgorithmProviderVtbl): IInspectable(IInspectableVtbl) [IID_IAsymmetricKeyAlgorithmProvider] {
+RT_INTERFACE!{interface IAsymmetricKeyAlgorithmProvider(IAsymmetricKeyAlgorithmProviderVtbl): IInspectable [IID_IAsymmetricKeyAlgorithmProvider] {
     fn get_AlgorithmName(&self, out: *mut HSTRING) -> HRESULT,
     fn CreateKeyPair(&self, keySize: u32, out: *mut <CryptographicKey as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn ImportDefaultPrivateKeyBlob(&self, keyBlob: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <CryptographicKey as RtType>::Abi) -> HRESULT,
@@ -4876,7 +4876,7 @@ impl AsymmetricKeyAlgorithmProvider {
 }
 DEFINE_CLSID!(AsymmetricKeyAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,65,115,121,109,109,101,116,114,105,99,75,101,121,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_AsymmetricKeyAlgorithmProvider]);
 DEFINE_IID!(IID_IAsymmetricKeyAlgorithmProvider2, 1311910526, 31821, 18839, 172, 79, 27, 132, 139, 54, 48, 110);
-RT_INTERFACE!{interface IAsymmetricKeyAlgorithmProvider2(IAsymmetricKeyAlgorithmProvider2Vtbl): IInspectable(IInspectableVtbl) [IID_IAsymmetricKeyAlgorithmProvider2] {
+RT_INTERFACE!{interface IAsymmetricKeyAlgorithmProvider2(IAsymmetricKeyAlgorithmProvider2Vtbl): IInspectable [IID_IAsymmetricKeyAlgorithmProvider2] {
     fn CreateKeyPairWithCurveName(&self, curveName: HSTRING, out: *mut <CryptographicKey as RtType>::Abi) -> HRESULT,
     fn CreateKeyPairWithCurveParameters(&self, parametersSize: u32, parameters: *mut u8, out: *mut <CryptographicKey as RtType>::Abi) -> HRESULT
 }}
@@ -4893,7 +4893,7 @@ impl IAsymmetricKeyAlgorithmProvider2 {
     }}
 }
 DEFINE_IID!(IID_IAsymmetricKeyAlgorithmProviderStatics, 1113316888, 42995, 18342, 168, 210, 196, 141, 96, 51, 166, 92);
-RT_INTERFACE!{static interface IAsymmetricKeyAlgorithmProviderStatics(IAsymmetricKeyAlgorithmProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IAsymmetricKeyAlgorithmProviderStatics] {
+RT_INTERFACE!{static interface IAsymmetricKeyAlgorithmProviderStatics(IAsymmetricKeyAlgorithmProviderStaticsVtbl): IInspectable [IID_IAsymmetricKeyAlgorithmProviderStatics] {
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut <AsymmetricKeyAlgorithmProvider as RtType>::Abi) -> HRESULT
 }}
 impl IAsymmetricKeyAlgorithmProviderStatics {
@@ -4949,7 +4949,7 @@ impl CryptographicEngine {
 }
 DEFINE_CLSID!(CryptographicEngine(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,67,114,121,112,116,111,103,114,97,112,104,105,99,69,110,103,105,110,101,0]) [CLSID_CryptographicEngine]);
 DEFINE_IID!(IID_ICryptographicEngineStatics, 2682914361, 28663, 19589, 160, 149, 149, 235, 49, 113, 94, 185);
-RT_INTERFACE!{static interface ICryptographicEngineStatics(ICryptographicEngineStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICryptographicEngineStatics] {
+RT_INTERFACE!{static interface ICryptographicEngineStatics(ICryptographicEngineStaticsVtbl): IInspectable [IID_ICryptographicEngineStatics] {
     #[cfg(feature="windows-storage")] fn Encrypt(&self, key: <CryptographicKey as RtType>::Abi, data: <crate::windows::storage::streams::IBuffer as RtType>::Abi, iv: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn Decrypt(&self, key: <CryptographicKey as RtType>::Abi, data: <crate::windows::storage::streams::IBuffer as RtType>::Abi, iv: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn EncryptAndAuthenticate(&self, key: <CryptographicKey as RtType>::Abi, data: <crate::windows::storage::streams::IBuffer as RtType>::Abi, nonce: <crate::windows::storage::streams::IBuffer as RtType>::Abi, authenticatedData: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <EncryptedAndAuthenticatedData as RtType>::Abi) -> HRESULT,
@@ -4996,7 +4996,7 @@ impl ICryptographicEngineStatics {
     }}
 }
 DEFINE_IID!(IID_ICryptographicEngineStatics2, 1733904638, 57247, 16785, 146, 199, 108, 230, 245, 132, 32, 224);
-RT_INTERFACE!{static interface ICryptographicEngineStatics2(ICryptographicEngineStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ICryptographicEngineStatics2] {
+RT_INTERFACE!{static interface ICryptographicEngineStatics2(ICryptographicEngineStatics2Vtbl): IInspectable [IID_ICryptographicEngineStatics2] {
     #[cfg(feature="windows-storage")] fn SignHashedData(&self, key: <CryptographicKey as RtType>::Abi, data: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn VerifySignatureWithHashInput(&self, key: <CryptographicKey as RtType>::Abi, data: <crate::windows::storage::streams::IBuffer as RtType>::Abi, signature: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut bool) -> HRESULT,
     #[cfg(feature="windows-storage")] fn DecryptAsync(&self, key: <CryptographicKey as RtType>::Abi, data: <crate::windows::storage::streams::IBuffer as RtType>::Abi, iv: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer> as RtType>::Abi) -> HRESULT,
@@ -5032,7 +5032,7 @@ impl ICryptographicEngineStatics2 {
 }
 RT_CLASS!{class CryptographicHash: IHashComputation}
 DEFINE_IID!(IID_ICryptographicKey, 3978967920, 36475, 16393, 132, 1, 255, 209, 166, 46, 235, 39);
-RT_INTERFACE!{interface ICryptographicKey(ICryptographicKeyVtbl): IInspectable(IInspectableVtbl) [IID_ICryptographicKey] {
+RT_INTERFACE!{interface ICryptographicKey(ICryptographicKeyVtbl): IInspectable [IID_ICryptographicKey] {
     fn get_KeySize(&self, out: *mut u32) -> HRESULT,
     #[cfg(feature="windows-storage")] fn ExportDefaultPrivateKeyBlobType(&self, out: *mut <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn ExportPrivateKeyWithBlobType(&self, blobType: CryptographicPrivateKeyBlobType, out: *mut <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
@@ -5220,7 +5220,7 @@ impl EccCurveNames {
 }
 DEFINE_CLSID!(EccCurveNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,69,99,99,67,117,114,118,101,78,97,109,101,115,0]) [CLSID_EccCurveNames]);
 DEFINE_IID!(IID_IEccCurveNamesStatics, 3019870988, 44779, 16542, 183, 212, 155, 149, 41, 90, 174, 207);
-RT_INTERFACE!{static interface IEccCurveNamesStatics(IEccCurveNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IEccCurveNamesStatics] {
+RT_INTERFACE!{static interface IEccCurveNamesStatics(IEccCurveNamesStaticsVtbl): IInspectable [IID_IEccCurveNamesStatics] {
     fn get_BrainpoolP160r1(&self, out: *mut HSTRING) -> HRESULT,
     fn get_BrainpoolP160t1(&self, out: *mut HSTRING) -> HRESULT,
     fn get_BrainpoolP192r1(&self, out: *mut HSTRING) -> HRESULT,
@@ -5501,7 +5501,7 @@ impl IEccCurveNamesStatics {
     }}
 }
 DEFINE_IID!(IID_IEncryptedAndAuthenticatedData, 1873031143, 7883, 19200, 190, 165, 96, 184, 63, 134, 47, 23);
-RT_INTERFACE!{interface IEncryptedAndAuthenticatedData(IEncryptedAndAuthenticatedDataVtbl): IInspectable(IInspectableVtbl) [IID_IEncryptedAndAuthenticatedData] {
+RT_INTERFACE!{interface IEncryptedAndAuthenticatedData(IEncryptedAndAuthenticatedDataVtbl): IInspectable [IID_IEncryptedAndAuthenticatedData] {
     #[cfg(feature="windows-storage")] fn get_EncryptedData(&self, out: *mut <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_AuthenticationTag(&self, out: *mut <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -5539,7 +5539,7 @@ impl HashAlgorithmNames {
 }
 DEFINE_CLSID!(HashAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,72,97,115,104,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_HashAlgorithmNames]);
 DEFINE_IID!(IID_IHashAlgorithmNamesStatics, 1801323798, 56982, 20234, 141, 87, 220, 201, 218, 227, 108, 118);
-RT_INTERFACE!{static interface IHashAlgorithmNamesStatics(IHashAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHashAlgorithmNamesStatics] {
+RT_INTERFACE!{static interface IHashAlgorithmNamesStatics(IHashAlgorithmNamesStaticsVtbl): IInspectable [IID_IHashAlgorithmNamesStatics] {
     fn get_Md5(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Sha1(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Sha256(&self, out: *mut HSTRING) -> HRESULT,
@@ -5574,7 +5574,7 @@ impl IHashAlgorithmNamesStatics {
     }}
 }
 DEFINE_IID!(IID_IHashAlgorithmProvider, 3197841536, 45763, 16939, 188, 225, 236, 144, 239, 181, 215, 181);
-RT_INTERFACE!{interface IHashAlgorithmProvider(IHashAlgorithmProviderVtbl): IInspectable(IInspectableVtbl) [IID_IHashAlgorithmProvider] {
+RT_INTERFACE!{interface IHashAlgorithmProvider(IHashAlgorithmProviderVtbl): IInspectable [IID_IHashAlgorithmProvider] {
     fn get_AlgorithmName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_HashLength(&self, out: *mut u32) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy2(&self) -> (),
@@ -5612,7 +5612,7 @@ impl HashAlgorithmProvider {
 }
 DEFINE_CLSID!(HashAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,72,97,115,104,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_HashAlgorithmProvider]);
 DEFINE_IID!(IID_IHashAlgorithmProviderStatics, 2678888257, 23748, 17206, 174, 56, 98, 18, 183, 90, 145, 90);
-RT_INTERFACE!{static interface IHashAlgorithmProviderStatics(IHashAlgorithmProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IHashAlgorithmProviderStatics] {
+RT_INTERFACE!{static interface IHashAlgorithmProviderStatics(IHashAlgorithmProviderStaticsVtbl): IInspectable [IID_IHashAlgorithmProviderStatics] {
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut <HashAlgorithmProvider as RtType>::Abi) -> HRESULT
 }}
 impl IHashAlgorithmProviderStatics {
@@ -5623,7 +5623,7 @@ impl IHashAlgorithmProviderStatics {
     }}
 }
 DEFINE_IID!(IID_IHashComputation, 1493488054, 44337, 17923, 163, 164, 177, 189, 169, 142, 37, 98);
-RT_INTERFACE!{interface IHashComputation(IHashComputationVtbl): IInspectable(IInspectableVtbl) [IID_IHashComputation] {
+RT_INTERFACE!{interface IHashComputation(IHashComputationVtbl): IInspectable [IID_IHashComputation] {
     #[cfg(feature="windows-storage")] fn Append(&self, data: <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn GetValueAndReset(&self, out: *mut <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT
 }}
@@ -5705,7 +5705,7 @@ impl KeyDerivationAlgorithmNames {
 }
 DEFINE_CLSID!(KeyDerivationAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,75,101,121,68,101,114,105,118,97,116,105,111,110,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_KeyDerivationAlgorithmNames]);
 DEFINE_IID!(IID_IKeyDerivationAlgorithmNamesStatics, 2070820414, 38098, 18233, 165, 123, 2, 46, 12, 58, 64, 42);
-RT_INTERFACE!{static interface IKeyDerivationAlgorithmNamesStatics(IKeyDerivationAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyDerivationAlgorithmNamesStatics] {
+RT_INTERFACE!{static interface IKeyDerivationAlgorithmNamesStatics(IKeyDerivationAlgorithmNamesStaticsVtbl): IInspectable [IID_IKeyDerivationAlgorithmNamesStatics] {
     fn get_Pbkdf2Md5(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Pbkdf2Sha1(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Pbkdf2Sha256(&self, out: *mut HSTRING) -> HRESULT,
@@ -5800,7 +5800,7 @@ impl IKeyDerivationAlgorithmNamesStatics {
     }}
 }
 DEFINE_IID!(IID_IKeyDerivationAlgorithmNamesStatics2, 1469398955, 24644, 18031, 151, 244, 51, 123, 120, 8, 56, 77);
-RT_INTERFACE!{static interface IKeyDerivationAlgorithmNamesStatics2(IKeyDerivationAlgorithmNamesStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IKeyDerivationAlgorithmNamesStatics2] {
+RT_INTERFACE!{static interface IKeyDerivationAlgorithmNamesStatics2(IKeyDerivationAlgorithmNamesStatics2Vtbl): IInspectable [IID_IKeyDerivationAlgorithmNamesStatics2] {
     fn get_CapiKdfMd5(&self, out: *mut HSTRING) -> HRESULT,
     fn get_CapiKdfSha1(&self, out: *mut HSTRING) -> HRESULT,
     fn get_CapiKdfSha256(&self, out: *mut HSTRING) -> HRESULT,
@@ -5835,7 +5835,7 @@ impl IKeyDerivationAlgorithmNamesStatics2 {
     }}
 }
 DEFINE_IID!(IID_IKeyDerivationAlgorithmProvider, 3791366203, 18033, 17335, 145, 88, 118, 58, 170, 152, 182, 191);
-RT_INTERFACE!{interface IKeyDerivationAlgorithmProvider(IKeyDerivationAlgorithmProviderVtbl): IInspectable(IInspectableVtbl) [IID_IKeyDerivationAlgorithmProvider] {
+RT_INTERFACE!{interface IKeyDerivationAlgorithmProvider(IKeyDerivationAlgorithmProviderVtbl): IInspectable [IID_IKeyDerivationAlgorithmProvider] {
     fn get_AlgorithmName(&self, out: *mut HSTRING) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateKey(&self, keyMaterial: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <CryptographicKey as RtType>::Abi) -> HRESULT
 }}
@@ -5860,7 +5860,7 @@ impl KeyDerivationAlgorithmProvider {
 }
 DEFINE_CLSID!(KeyDerivationAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,75,101,121,68,101,114,105,118,97,116,105,111,110,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_KeyDerivationAlgorithmProvider]);
 DEFINE_IID!(IID_IKeyDerivationAlgorithmProviderStatics, 170002810, 2588, 17467, 148, 24, 185, 73, 138, 235, 22, 3);
-RT_INTERFACE!{static interface IKeyDerivationAlgorithmProviderStatics(IKeyDerivationAlgorithmProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyDerivationAlgorithmProviderStatics] {
+RT_INTERFACE!{static interface IKeyDerivationAlgorithmProviderStatics(IKeyDerivationAlgorithmProviderStaticsVtbl): IInspectable [IID_IKeyDerivationAlgorithmProviderStatics] {
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut <KeyDerivationAlgorithmProvider as RtType>::Abi) -> HRESULT
 }}
 impl IKeyDerivationAlgorithmProviderStatics {
@@ -5871,7 +5871,7 @@ impl IKeyDerivationAlgorithmProviderStatics {
     }}
 }
 DEFINE_IID!(IID_IKeyDerivationParameters, 2079349095, 1147, 19084, 150, 74, 70, 159, 253, 85, 34, 226);
-RT_INTERFACE!{interface IKeyDerivationParameters(IKeyDerivationParametersVtbl): IInspectable(IInspectableVtbl) [IID_IKeyDerivationParameters] {
+RT_INTERFACE!{interface IKeyDerivationParameters(IKeyDerivationParametersVtbl): IInspectable [IID_IKeyDerivationParameters] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_KdfGenericBinary(&self, out: *mut <crate::windows::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -5913,7 +5913,7 @@ impl KeyDerivationParameters {
 }
 DEFINE_CLSID!(KeyDerivationParameters(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,75,101,121,68,101,114,105,118,97,116,105,111,110,80,97,114,97,109,101,116,101,114,115,0]) [CLSID_KeyDerivationParameters]);
 DEFINE_IID!(IID_IKeyDerivationParameters2, 3443615441, 16766, 20300, 182, 102, 192, 216, 121, 243, 248, 224);
-RT_INTERFACE!{interface IKeyDerivationParameters2(IKeyDerivationParameters2Vtbl): IInspectable(IInspectableVtbl) [IID_IKeyDerivationParameters2] {
+RT_INTERFACE!{interface IKeyDerivationParameters2(IKeyDerivationParameters2Vtbl): IInspectable [IID_IKeyDerivationParameters2] {
     fn get_Capi1KdfTargetAlgorithm(&self, out: *mut Capi1KdfTargetAlgorithm) -> HRESULT,
     fn put_Capi1KdfTargetAlgorithm(&self, value: Capi1KdfTargetAlgorithm) -> HRESULT
 }}
@@ -5929,7 +5929,7 @@ impl IKeyDerivationParameters2 {
     }}
 }
 DEFINE_IID!(IID_IKeyDerivationParametersStatics, 3935707070, 62335, 16710, 157, 254, 164, 86, 241, 115, 95, 75);
-RT_INTERFACE!{static interface IKeyDerivationParametersStatics(IKeyDerivationParametersStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IKeyDerivationParametersStatics] {
+RT_INTERFACE!{static interface IKeyDerivationParametersStatics(IKeyDerivationParametersStaticsVtbl): IInspectable [IID_IKeyDerivationParametersStatics] {
     #[cfg(feature="windows-storage")] fn BuildForPbkdf2(&self, pbkdf2Salt: <crate::windows::storage::streams::IBuffer as RtType>::Abi, iterationCount: u32, out: *mut <KeyDerivationParameters as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn BuildForSP800108(&self, label: <crate::windows::storage::streams::IBuffer as RtType>::Abi, context: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <KeyDerivationParameters as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn BuildForSP80056a(&self, algorithmId: <crate::windows::storage::streams::IBuffer as RtType>::Abi, partyUInfo: <crate::windows::storage::streams::IBuffer as RtType>::Abi, partyVInfo: <crate::windows::storage::streams::IBuffer as RtType>::Abi, suppPubInfo: <crate::windows::storage::streams::IBuffer as RtType>::Abi, suppPrivInfo: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <KeyDerivationParameters as RtType>::Abi) -> HRESULT
@@ -5952,7 +5952,7 @@ impl IKeyDerivationParametersStatics {
     }}
 }
 DEFINE_IID!(IID_IKeyDerivationParametersStatics2, 2776120789, 22755, 20219, 178, 131, 161, 101, 49, 38, 225, 190);
-RT_INTERFACE!{static interface IKeyDerivationParametersStatics2(IKeyDerivationParametersStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IKeyDerivationParametersStatics2] {
+RT_INTERFACE!{static interface IKeyDerivationParametersStatics2(IKeyDerivationParametersStatics2Vtbl): IInspectable [IID_IKeyDerivationParametersStatics2] {
     fn BuildForCapi1Kdf(&self, capi1KdfTargetAlgorithm: Capi1KdfTargetAlgorithm, out: *mut <KeyDerivationParameters as RtType>::Abi) -> HRESULT
 }}
 impl IKeyDerivationParametersStatics2 {
@@ -5986,7 +5986,7 @@ impl MacAlgorithmNames {
 }
 DEFINE_CLSID!(MacAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,77,97,99,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_MacAlgorithmNames]);
 DEFINE_IID!(IID_IMacAlgorithmNamesStatics, 1094788728, 64286, 17316, 137, 94, 169, 2, 110, 67, 144, 163);
-RT_INTERFACE!{static interface IMacAlgorithmNamesStatics(IMacAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMacAlgorithmNamesStatics] {
+RT_INTERFACE!{static interface IMacAlgorithmNamesStatics(IMacAlgorithmNamesStaticsVtbl): IInspectable [IID_IMacAlgorithmNamesStatics] {
     fn get_HmacMd5(&self, out: *mut HSTRING) -> HRESULT,
     fn get_HmacSha1(&self, out: *mut HSTRING) -> HRESULT,
     fn get_HmacSha256(&self, out: *mut HSTRING) -> HRESULT,
@@ -6027,7 +6027,7 @@ impl IMacAlgorithmNamesStatics {
     }}
 }
 DEFINE_IID!(IID_IMacAlgorithmProvider, 1245693379, 7357, 16846, 160, 146, 170, 11, 197, 210, 210, 245);
-RT_INTERFACE!{interface IMacAlgorithmProvider(IMacAlgorithmProviderVtbl): IInspectable(IInspectableVtbl) [IID_IMacAlgorithmProvider] {
+RT_INTERFACE!{interface IMacAlgorithmProvider(IMacAlgorithmProviderVtbl): IInspectable [IID_IMacAlgorithmProvider] {
     fn get_AlgorithmName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_MacLength(&self, out: *mut u32) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateKey(&self, keyMaterial: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <CryptographicKey as RtType>::Abi) -> HRESULT
@@ -6058,7 +6058,7 @@ impl MacAlgorithmProvider {
 }
 DEFINE_CLSID!(MacAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,77,97,99,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_MacAlgorithmProvider]);
 DEFINE_IID!(IID_IMacAlgorithmProvider2, 1839409685, 55601, 17133, 142, 126, 195, 1, 202, 238, 17, 156);
-RT_INTERFACE!{interface IMacAlgorithmProvider2(IMacAlgorithmProvider2Vtbl): IInspectable(IInspectableVtbl) [IID_IMacAlgorithmProvider2] {
+RT_INTERFACE!{interface IMacAlgorithmProvider2(IMacAlgorithmProvider2Vtbl): IInspectable [IID_IMacAlgorithmProvider2] {
     #[cfg(feature="windows-storage")] fn CreateHash(&self, keyMaterial: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <CryptographicHash as RtType>::Abi) -> HRESULT
 }}
 impl IMacAlgorithmProvider2 {
@@ -6069,7 +6069,7 @@ impl IMacAlgorithmProvider2 {
     }}
 }
 DEFINE_IID!(IID_IMacAlgorithmProviderStatics, 3384656199, 52343, 19952, 158, 78, 185, 33, 224, 128, 100, 76);
-RT_INTERFACE!{static interface IMacAlgorithmProviderStatics(IMacAlgorithmProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IMacAlgorithmProviderStatics] {
+RT_INTERFACE!{static interface IMacAlgorithmProviderStatics(IMacAlgorithmProviderStaticsVtbl): IInspectable [IID_IMacAlgorithmProviderStatics] {
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut <MacAlgorithmProvider as RtType>::Abi) -> HRESULT
 }}
 impl IMacAlgorithmProviderStatics {
@@ -6091,7 +6091,7 @@ impl PersistedKeyProvider {
 }
 DEFINE_CLSID!(PersistedKeyProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,80,101,114,115,105,115,116,101,100,75,101,121,80,114,111,118,105,100,101,114,0]) [CLSID_PersistedKeyProvider]);
 DEFINE_IID!(IID_IPersistedKeyProviderStatics, 1999063060, 55764, 19701, 182, 104, 224, 69, 125, 243, 8, 148);
-RT_INTERFACE!{static interface IPersistedKeyProviderStatics(IPersistedKeyProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPersistedKeyProviderStatics] {
+RT_INTERFACE!{static interface IPersistedKeyProviderStatics(IPersistedKeyProviderStaticsVtbl): IInspectable [IID_IPersistedKeyProviderStatics] {
     fn OpenKeyPairFromCertificateAsync(&self, certificate: <super::certificates::Certificate as RtType>::Abi, hashAlgorithmName: HSTRING, padding: CryptographicPadding, out: *mut <foundation::IAsyncOperation<CryptographicKey> as RtType>::Abi) -> HRESULT,
     fn OpenPublicKeyFromCertificate(&self, certificate: <super::certificates::Certificate as RtType>::Abi, hashAlgorithmName: HSTRING, padding: CryptographicPadding, out: *mut <CryptographicKey as RtType>::Abi) -> HRESULT
 }}
@@ -6170,7 +6170,7 @@ impl SymmetricAlgorithmNames {
 }
 DEFINE_CLSID!(SymmetricAlgorithmNames(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,83,121,109,109,101,116,114,105,99,65,108,103,111,114,105,116,104,109,78,97,109,101,115,0]) [CLSID_SymmetricAlgorithmNames]);
 DEFINE_IID!(IID_ISymmetricAlgorithmNamesStatics, 1752199803, 51606, 20142, 132, 215, 121, 178, 174, 183, 59, 156);
-RT_INTERFACE!{static interface ISymmetricAlgorithmNamesStatics(ISymmetricAlgorithmNamesStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISymmetricAlgorithmNamesStatics] {
+RT_INTERFACE!{static interface ISymmetricAlgorithmNamesStatics(ISymmetricAlgorithmNamesStaticsVtbl): IInspectable [IID_ISymmetricAlgorithmNamesStatics] {
     fn get_DesCbc(&self, out: *mut HSTRING) -> HRESULT,
     fn get_DesEcb(&self, out: *mut HSTRING) -> HRESULT,
     fn get_TripleDesCbc(&self, out: *mut HSTRING) -> HRESULT,
@@ -6289,7 +6289,7 @@ impl ISymmetricAlgorithmNamesStatics {
     }}
 }
 DEFINE_IID!(IID_ISymmetricKeyAlgorithmProvider, 1031686707, 15312, 18690, 138, 200, 71, 13, 80, 210, 19, 118);
-RT_INTERFACE!{interface ISymmetricKeyAlgorithmProvider(ISymmetricKeyAlgorithmProviderVtbl): IInspectable(IInspectableVtbl) [IID_ISymmetricKeyAlgorithmProvider] {
+RT_INTERFACE!{interface ISymmetricKeyAlgorithmProvider(ISymmetricKeyAlgorithmProviderVtbl): IInspectable [IID_ISymmetricKeyAlgorithmProvider] {
     fn get_AlgorithmName(&self, out: *mut HSTRING) -> HRESULT,
     fn get_BlockLength(&self, out: *mut u32) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CreateSymmetricKey(&self, keyMaterial: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <CryptographicKey as RtType>::Abi) -> HRESULT
@@ -6320,7 +6320,7 @@ impl SymmetricKeyAlgorithmProvider {
 }
 DEFINE_CLSID!(SymmetricKeyAlgorithmProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,67,111,114,101,46,83,121,109,109,101,116,114,105,99,75,101,121,65,108,103,111,114,105,116,104,109,80,114,111,118,105,100,101,114,0]) [CLSID_SymmetricKeyAlgorithmProvider]);
 DEFINE_IID!(IID_ISymmetricKeyAlgorithmProviderStatics, 2369463078, 7991, 18719, 182, 14, 245, 67, 27, 38, 180, 131);
-RT_INTERFACE!{static interface ISymmetricKeyAlgorithmProviderStatics(ISymmetricKeyAlgorithmProviderStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISymmetricKeyAlgorithmProviderStatics] {
+RT_INTERFACE!{static interface ISymmetricKeyAlgorithmProviderStatics(ISymmetricKeyAlgorithmProviderStaticsVtbl): IInspectable [IID_ISymmetricKeyAlgorithmProviderStatics] {
     fn OpenAlgorithm(&self, algorithm: HSTRING, out: *mut <SymmetricKeyAlgorithmProvider as RtType>::Abi) -> HRESULT
 }}
 impl ISymmetricKeyAlgorithmProviderStatics {
@@ -6334,7 +6334,7 @@ impl ISymmetricKeyAlgorithmProviderStatics {
 pub mod dataprotection { // Windows.Security.Cryptography.DataProtection
 use crate::prelude::*;
 DEFINE_IID!(IID_IDataProtectionProvider, 157522248, 60706, 17008, 189, 28, 109, 114, 192, 15, 135, 135);
-RT_INTERFACE!{interface IDataProtectionProvider(IDataProtectionProviderVtbl): IInspectable(IInspectableVtbl) [IID_IDataProtectionProvider] {
+RT_INTERFACE!{interface IDataProtectionProvider(IDataProtectionProviderVtbl): IInspectable [IID_IDataProtectionProvider] {
     #[cfg(feature="windows-storage")] fn ProtectAsync(&self, data: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn UnprotectAsync(&self, data: <crate::windows::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncOperation<crate::windows::storage::streams::IBuffer> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn ProtectStreamAsync(&self, src: <crate::windows::storage::streams::IInputStream as RtType>::Abi, dest: <crate::windows::storage::streams::IOutputStream as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
@@ -6372,7 +6372,7 @@ impl DataProtectionProvider {
 }
 DEFINE_CLSID!(DataProtectionProvider(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,67,114,121,112,116,111,103,114,97,112,104,121,46,68,97,116,97,80,114,111,116,101,99,116,105,111,110,46,68,97,116,97,80,114,111,116,101,99,116,105,111,110,80,114,111,118,105,100,101,114,0]) [CLSID_DataProtectionProvider]);
 DEFINE_IID!(IID_IDataProtectionProviderFactory, 2918399404, 18738, 19679, 172, 65, 114, 20, 51, 53, 20, 202);
-RT_INTERFACE!{static interface IDataProtectionProviderFactory(IDataProtectionProviderFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IDataProtectionProviderFactory] {
+RT_INTERFACE!{static interface IDataProtectionProviderFactory(IDataProtectionProviderFactoryVtbl): IInspectable [IID_IDataProtectionProviderFactory] {
     fn CreateOverloadExplicit(&self, protectionDescriptor: HSTRING, out: *mut <DataProtectionProvider as RtType>::Abi) -> HRESULT
 }}
 impl IDataProtectionProviderFactory {
@@ -6387,7 +6387,7 @@ impl IDataProtectionProviderFactory {
 pub mod enterprisedata { // Windows.Security.EnterpriseData
 use crate::prelude::*;
 DEFINE_IID!(IID_IBufferProtectUnprotectResult, 1201233628, 27884, 20026, 178, 81, 158, 116, 133, 215, 158, 122);
-RT_INTERFACE!{interface IBufferProtectUnprotectResult(IBufferProtectUnprotectResultVtbl): IInspectable(IInspectableVtbl) [IID_IBufferProtectUnprotectResult] {
+RT_INTERFACE!{interface IBufferProtectUnprotectResult(IBufferProtectUnprotectResultVtbl): IInspectable [IID_IBufferProtectUnprotectResult] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_Buffer(&self, out: *mut <super::super::storage::streams::IBuffer as RtType>::Abi) -> HRESULT,
     fn get_ProtectionInfo(&self, out: *mut <DataProtectionInfo as RtType>::Abi) -> HRESULT
@@ -6406,7 +6406,7 @@ impl IBufferProtectUnprotectResult {
 }
 RT_CLASS!{class BufferProtectUnprotectResult: IBufferProtectUnprotectResult}
 DEFINE_IID!(IID_IDataProtectionInfo, 2216734913, 24113, 17413, 149, 64, 63, 148, 58, 240, 203, 38);
-RT_INTERFACE!{interface IDataProtectionInfo(IDataProtectionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IDataProtectionInfo] {
+RT_INTERFACE!{interface IDataProtectionInfo(IDataProtectionInfoVtbl): IInspectable [IID_IDataProtectionInfo] {
     fn get_Status(&self, out: *mut DataProtectionStatus) -> HRESULT,
     fn get_Identity(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -6447,7 +6447,7 @@ impl DataProtectionManager {
 }
 DEFINE_CLSID!(DataProtectionManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,68,97,116,97,80,114,111,116,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_DataProtectionManager]);
 DEFINE_IID!(IID_IDataProtectionManagerStatics, 3054803828, 37188, 20196, 138, 138, 48, 181, 243, 97, 67, 14);
-RT_INTERFACE!{static interface IDataProtectionManagerStatics(IDataProtectionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IDataProtectionManagerStatics] {
+RT_INTERFACE!{static interface IDataProtectionManagerStatics(IDataProtectionManagerStaticsVtbl): IInspectable [IID_IDataProtectionManagerStatics] {
     #[cfg(feature="windows-storage")] fn ProtectAsync(&self, data: <super::super::storage::streams::IBuffer as RtType>::Abi, identity: HSTRING, out: *mut <foundation::IAsyncOperation<BufferProtectUnprotectResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn UnprotectAsync(&self, data: <super::super::storage::streams::IBuffer as RtType>::Abi, out: *mut <foundation::IAsyncOperation<BufferProtectUnprotectResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn ProtectStreamAsync(&self, unprotectedStream: <super::super::storage::streams::IInputStream as RtType>::Abi, identity: HSTRING, protectedStream: <super::super::storage::streams::IOutputStream as RtType>::Abi, out: *mut <foundation::IAsyncOperation<DataProtectionInfo> as RtType>::Abi) -> HRESULT,
@@ -6494,7 +6494,7 @@ RT_ENUM! { enum EnforcementLevel: i32 {
     NoProtection = 0, Silent = 1, Override = 2, Block = 3,
 }}
 DEFINE_IID!(IID_IFileProtectionInfo, 1323918470, 5246, 19920, 143, 175, 82, 83, 237, 145, 173, 12);
-RT_INTERFACE!{interface IFileProtectionInfo(IFileProtectionInfoVtbl): IInspectable(IInspectableVtbl) [IID_IFileProtectionInfo] {
+RT_INTERFACE!{interface IFileProtectionInfo(IFileProtectionInfoVtbl): IInspectable [IID_IFileProtectionInfo] {
     fn get_Status(&self, out: *mut FileProtectionStatus) -> HRESULT,
     fn get_IsRoamable(&self, out: *mut bool) -> HRESULT,
     fn get_Identity(&self, out: *mut HSTRING) -> HRESULT
@@ -6518,7 +6518,7 @@ impl IFileProtectionInfo {
 }
 RT_CLASS!{class FileProtectionInfo: IFileProtectionInfo}
 DEFINE_IID!(IID_IFileProtectionInfo2, 2182232652, 21882, 18829, 142, 148, 148, 76, 213, 131, 100, 50);
-RT_INTERFACE!{interface IFileProtectionInfo2(IFileProtectionInfo2Vtbl): IInspectable(IInspectableVtbl) [IID_IFileProtectionInfo2] {
+RT_INTERFACE!{interface IFileProtectionInfo2(IFileProtectionInfo2Vtbl): IInspectable [IID_IFileProtectionInfo2] {
     fn get_IsProtectWhileOpenSupported(&self, out: *mut bool) -> HRESULT
 }}
 impl IFileProtectionInfo2 {
@@ -6572,7 +6572,7 @@ impl FileProtectionManager {
 }
 DEFINE_CLSID!(FileProtectionManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,70,105,108,101,80,114,111,116,101,99,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_FileProtectionManager]);
 DEFINE_IID!(IID_IFileProtectionManagerStatics, 1481047195, 58899, 17003, 187, 56, 136, 203, 161, 220, 154, 219);
-RT_INTERFACE!{static interface IFileProtectionManagerStatics(IFileProtectionManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileProtectionManagerStatics] {
+RT_INTERFACE!{static interface IFileProtectionManagerStatics(IFileProtectionManagerStaticsVtbl): IInspectable [IID_IFileProtectionManagerStatics] {
     #[cfg(feature="windows-storage")] fn ProtectAsync(&self, target: <super::super::storage::IStorageItem as RtType>::Abi, identity: HSTRING, out: *mut <foundation::IAsyncOperation<FileProtectionInfo> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CopyProtectionAsync(&self, source: <super::super::storage::IStorageItem as RtType>::Abi, target: <super::super::storage::IStorageItem as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn GetProtectionInfoAsync(&self, source: <super::super::storage::IStorageItem as RtType>::Abi, out: *mut <foundation::IAsyncOperation<FileProtectionInfo> as RtType>::Abi) -> HRESULT,
@@ -6619,7 +6619,7 @@ impl IFileProtectionManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IFileProtectionManagerStatics2, 2211620677, 1155, 16811, 178, 213, 188, 127, 35, 215, 78, 187);
-RT_INTERFACE!{static interface IFileProtectionManagerStatics2(IFileProtectionManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IFileProtectionManagerStatics2] {
+RT_INTERFACE!{static interface IFileProtectionManagerStatics2(IFileProtectionManagerStatics2Vtbl): IInspectable [IID_IFileProtectionManagerStatics2] {
     #[cfg(feature="windows-storage")] fn IsContainerAsync(&self, file: <super::super::storage::IStorageFile as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn LoadFileFromContainerWithTargetAndNameCollisionOptionAsync(&self, containerFile: <super::super::storage::IStorageFile as RtType>::Abi, target: <super::super::storage::IStorageItem as RtType>::Abi, collisionOption: super::super::storage::NameCollisionOption, out: *mut <foundation::IAsyncOperation<ProtectedContainerImportResult> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn SaveFileAsContainerWithSharingAsync(&self, protectedFile: <super::super::storage::IStorageFile as RtType>::Abi, sharedWithIdentities: <foundation::collections::IIterable<HString> as RtType>::Abi, out: *mut <foundation::IAsyncOperation<ProtectedContainerExportResult> as RtType>::Abi) -> HRESULT
@@ -6642,7 +6642,7 @@ impl IFileProtectionManagerStatics2 {
     }}
 }
 DEFINE_IID!(IID_IFileProtectionManagerStatics3, 1763214490, 25167, 18134, 178, 65, 233, 205, 95, 223, 62, 63);
-RT_INTERFACE!{static interface IFileProtectionManagerStatics3(IFileProtectionManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IFileProtectionManagerStatics3] {
+RT_INTERFACE!{static interface IFileProtectionManagerStatics3(IFileProtectionManagerStatics3Vtbl): IInspectable [IID_IFileProtectionManagerStatics3] {
     #[cfg(feature="windows-storage")] fn UnprotectAsync(&self, target: <super::super::storage::IStorageItem as RtType>::Abi, out: *mut <foundation::IAsyncOperation<FileProtectionInfo> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn UnprotectWithOptionsAsync(&self, target: <super::super::storage::IStorageItem as RtType>::Abi, options: <FileUnprotectOptions as RtType>::Abi, out: *mut <foundation::IAsyncOperation<FileProtectionInfo> as RtType>::Abi) -> HRESULT
 }}
@@ -6679,7 +6679,7 @@ impl FileRevocationManager {
 }
 DEFINE_CLSID!(FileRevocationManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,70,105,108,101,82,101,118,111,99,97,116,105,111,110,77,97,110,97,103,101,114,0]) [CLSID_FileRevocationManager]);
 DEFINE_IID!(IID_IFileRevocationManagerStatics, 627817533, 7261, 16992, 140, 117, 145, 68, 207, 183, 139, 169);
-RT_INTERFACE!{static interface IFileRevocationManagerStatics(IFileRevocationManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IFileRevocationManagerStatics] {
+RT_INTERFACE!{static interface IFileRevocationManagerStatics(IFileRevocationManagerStaticsVtbl): IInspectable [IID_IFileRevocationManagerStatics] {
     #[cfg(feature="windows-storage")] fn ProtectAsync(&self, storageItem: <super::super::storage::IStorageItem as RtType>::Abi, enterpriseIdentity: HSTRING, out: *mut <foundation::IAsyncOperation<FileProtectionStatus> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn CopyProtectionAsync(&self, sourceStorageItem: <super::super::storage::IStorageItem as RtType>::Abi, targetStorageItem: <super::super::storage::IStorageItem as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT,
     fn Revoke(&self, enterpriseIdentity: HSTRING) -> HRESULT,
@@ -6707,7 +6707,7 @@ impl IFileRevocationManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IFileUnprotectOptions, 2098402033, 15117, 19928, 161, 248, 30, 197, 56, 34, 226, 243);
-RT_INTERFACE!{interface IFileUnprotectOptions(IFileUnprotectOptionsVtbl): IInspectable(IInspectableVtbl) [IID_IFileUnprotectOptions] {
+RT_INTERFACE!{interface IFileUnprotectOptions(IFileUnprotectOptionsVtbl): IInspectable [IID_IFileUnprotectOptions] {
     fn put_Audit(&self, value: bool) -> HRESULT,
     fn get_Audit(&self, out: *mut bool) -> HRESULT
 }}
@@ -6731,7 +6731,7 @@ impl FileUnprotectOptions {
 }
 DEFINE_CLSID!(FileUnprotectOptions(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,70,105,108,101,85,110,112,114,111,116,101,99,116,79,112,116,105,111,110,115,0]) [CLSID_FileUnprotectOptions]);
 DEFINE_IID!(IID_IFileUnprotectOptionsFactory, 1370403740, 55948, 19519, 155, 251, 203, 115, 167, 204, 224, 221);
-RT_INTERFACE!{static interface IFileUnprotectOptionsFactory(IFileUnprotectOptionsFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IFileUnprotectOptionsFactory] {
+RT_INTERFACE!{static interface IFileUnprotectOptionsFactory(IFileUnprotectOptionsFactoryVtbl): IInspectable [IID_IFileUnprotectOptionsFactory] {
     fn Create(&self, audit: bool, out: *mut <FileUnprotectOptions as RtType>::Abi) -> HRESULT
 }}
 impl IFileUnprotectOptionsFactory {
@@ -6742,7 +6742,7 @@ impl IFileUnprotectOptionsFactory {
     }}
 }
 DEFINE_IID!(IID_IProtectedAccessResumedEventArgs, 2890779225, 23936, 20117, 140, 95, 133, 57, 69, 14, 235, 224);
-RT_INTERFACE!{interface IProtectedAccessResumedEventArgs(IProtectedAccessResumedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IProtectedAccessResumedEventArgs] {
+RT_INTERFACE!{interface IProtectedAccessResumedEventArgs(IProtectedAccessResumedEventArgsVtbl): IInspectable [IID_IProtectedAccessResumedEventArgs] {
     fn get_Identities(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT
 }}
 impl IProtectedAccessResumedEventArgs {
@@ -6754,7 +6754,7 @@ impl IProtectedAccessResumedEventArgs {
 }
 RT_CLASS!{class ProtectedAccessResumedEventArgs: IProtectedAccessResumedEventArgs}
 DEFINE_IID!(IID_IProtectedAccessSuspendingEventArgs, 1973523424, 41796, 17055, 185, 117, 4, 252, 31, 136, 193, 133);
-RT_INTERFACE!{interface IProtectedAccessSuspendingEventArgs(IProtectedAccessSuspendingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IProtectedAccessSuspendingEventArgs] {
+RT_INTERFACE!{interface IProtectedAccessSuspendingEventArgs(IProtectedAccessSuspendingEventArgsVtbl): IInspectable [IID_IProtectedAccessSuspendingEventArgs] {
     fn get_Identities(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT,
     fn get_Deadline(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn GetDeferral(&self, out: *mut <foundation::Deferral as RtType>::Abi) -> HRESULT
@@ -6778,7 +6778,7 @@ impl IProtectedAccessSuspendingEventArgs {
 }
 RT_CLASS!{class ProtectedAccessSuspendingEventArgs: IProtectedAccessSuspendingEventArgs}
 DEFINE_IID!(IID_IProtectedContainerExportResult, 961081237, 63483, 19266, 175, 176, 223, 112, 180, 21, 67, 193);
-RT_INTERFACE!{interface IProtectedContainerExportResult(IProtectedContainerExportResultVtbl): IInspectable(IInspectableVtbl) [IID_IProtectedContainerExportResult] {
+RT_INTERFACE!{interface IProtectedContainerExportResult(IProtectedContainerExportResultVtbl): IInspectable [IID_IProtectedContainerExportResult] {
     fn get_Status(&self, out: *mut ProtectedImportExportStatus) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut <super::super::storage::StorageFile as RtType>::Abi) -> HRESULT
 }}
@@ -6796,7 +6796,7 @@ impl IProtectedContainerExportResult {
 }
 RT_CLASS!{class ProtectedContainerExportResult: IProtectedContainerExportResult}
 DEFINE_IID!(IID_IProtectedContainerImportResult, 3451355345, 59323, 19738, 147, 57, 52, 220, 65, 20, 159, 155);
-RT_INTERFACE!{interface IProtectedContainerImportResult(IProtectedContainerImportResultVtbl): IInspectable(IInspectableVtbl) [IID_IProtectedContainerImportResult] {
+RT_INTERFACE!{interface IProtectedContainerImportResult(IProtectedContainerImportResultVtbl): IInspectable [IID_IProtectedContainerImportResult] {
     fn get_Status(&self, out: *mut ProtectedImportExportStatus) -> HRESULT,
     #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut <super::super::storage::StorageFile as RtType>::Abi) -> HRESULT
 }}
@@ -6814,7 +6814,7 @@ impl IProtectedContainerImportResult {
 }
 RT_CLASS!{class ProtectedContainerImportResult: IProtectedContainerImportResult}
 DEFINE_IID!(IID_IProtectedContentRevokedEventArgs, 1667786785, 22713, 18414, 147, 217, 240, 247, 65, 207, 67, 240);
-RT_INTERFACE!{interface IProtectedContentRevokedEventArgs(IProtectedContentRevokedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_IProtectedContentRevokedEventArgs] {
+RT_INTERFACE!{interface IProtectedContentRevokedEventArgs(IProtectedContentRevokedEventArgsVtbl): IInspectable [IID_IProtectedContentRevokedEventArgs] {
     fn get_Identities(&self, out: *mut <foundation::collections::IVectorView<HString> as RtType>::Abi) -> HRESULT
 }}
 impl IProtectedContentRevokedEventArgs {
@@ -6826,7 +6826,7 @@ impl IProtectedContentRevokedEventArgs {
 }
 RT_CLASS!{class ProtectedContentRevokedEventArgs: IProtectedContentRevokedEventArgs}
 DEFINE_IID!(IID_IProtectedFileCreateResult, 686026090, 59879, 18947, 159, 83, 189, 177, 97, 114, 105, 155);
-RT_INTERFACE!{interface IProtectedFileCreateResult(IProtectedFileCreateResultVtbl): IInspectable(IInspectableVtbl) [IID_IProtectedFileCreateResult] {
+RT_INTERFACE!{interface IProtectedFileCreateResult(IProtectedFileCreateResultVtbl): IInspectable [IID_IProtectedFileCreateResult] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn get_File(&self, out: *mut <super::super::storage::StorageFile as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -6858,7 +6858,7 @@ RT_ENUM! { enum ProtectionPolicyAuditAction: i32 {
     Decrypt = 0, CopyToLocation = 1, SendToRecipient = 2, Other = 3,
 }}
 DEFINE_IID!(IID_IProtectionPolicyAuditInfo, 1113241572, 65207, 17660, 179, 187, 195, 196, 215, 236, 190, 187);
-RT_INTERFACE!{interface IProtectionPolicyAuditInfo(IProtectionPolicyAuditInfoVtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyAuditInfo] {
+RT_INTERFACE!{interface IProtectionPolicyAuditInfo(IProtectionPolicyAuditInfoVtbl): IInspectable [IID_IProtectionPolicyAuditInfo] {
     fn put_Action(&self, value: ProtectionPolicyAuditAction) -> HRESULT,
     fn get_Action(&self, out: *mut ProtectionPolicyAuditAction) -> HRESULT,
     fn put_DataDescription(&self, value: HSTRING) -> HRESULT,
@@ -6918,7 +6918,7 @@ impl ProtectionPolicyAuditInfo {
 }
 DEFINE_CLSID!(ProtectionPolicyAuditInfo(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,80,114,111,116,101,99,116,105,111,110,80,111,108,105,99,121,65,117,100,105,116,73,110,102,111,0]) [CLSID_ProtectionPolicyAuditInfo]);
 DEFINE_IID!(IID_IProtectionPolicyAuditInfoFactory, 2127829003, 37608, 17109, 131, 212, 37, 68, 11, 66, 53, 73);
-RT_INTERFACE!{static interface IProtectionPolicyAuditInfoFactory(IProtectionPolicyAuditInfoFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyAuditInfoFactory] {
+RT_INTERFACE!{static interface IProtectionPolicyAuditInfoFactory(IProtectionPolicyAuditInfoFactoryVtbl): IInspectable [IID_IProtectionPolicyAuditInfoFactory] {
     fn Create(&self, action: ProtectionPolicyAuditAction, dataDescription: HSTRING, sourceDescription: HSTRING, targetDescription: HSTRING, out: *mut <ProtectionPolicyAuditInfo as RtType>::Abi) -> HRESULT,
     fn CreateWithActionAndDataDescription(&self, action: ProtectionPolicyAuditAction, dataDescription: HSTRING, out: *mut <ProtectionPolicyAuditInfo as RtType>::Abi) -> HRESULT
 }}
@@ -6938,7 +6938,7 @@ RT_ENUM! { enum ProtectionPolicyEvaluationResult: i32 {
     Allowed = 0, Blocked = 1, ConsentRequired = 2,
 }}
 DEFINE_IID!(IID_IProtectionPolicyManager, 3580902936, 41101, 18406, 162, 64, 153, 52, 215, 22, 94, 181);
-RT_INTERFACE!{interface IProtectionPolicyManager(IProtectionPolicyManagerVtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyManager] {
+RT_INTERFACE!{interface IProtectionPolicyManager(IProtectionPolicyManagerVtbl): IInspectable [IID_IProtectionPolicyManager] {
     fn put_Identity(&self, value: HSTRING) -> HRESULT,
     fn get_Identity(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -7082,7 +7082,7 @@ impl ProtectionPolicyManager {
 }
 DEFINE_CLSID!(ProtectionPolicyManager(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,110,116,101,114,112,114,105,115,101,68,97,116,97,46,80,114,111,116,101,99,116,105,111,110,80,111,108,105,99,121,77,97,110,97,103,101,114,0]) [CLSID_ProtectionPolicyManager]);
 DEFINE_IID!(IID_IProtectionPolicyManager2, 2885112442, 33845, 16767, 153, 182, 81, 190, 175, 54, 88, 136);
-RT_INTERFACE!{interface IProtectionPolicyManager2(IProtectionPolicyManager2Vtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyManager2] {
+RT_INTERFACE!{interface IProtectionPolicyManager2(IProtectionPolicyManager2Vtbl): IInspectable [IID_IProtectionPolicyManager2] {
     fn put_ShowEnterpriseIndicator(&self, value: bool) -> HRESULT,
     fn get_ShowEnterpriseIndicator(&self, out: *mut bool) -> HRESULT
 }}
@@ -7098,7 +7098,7 @@ impl IProtectionPolicyManager2 {
     }}
 }
 DEFINE_IID!(IID_IProtectionPolicyManagerStatics, 3233807462, 35901, 19798, 136, 4, 198, 143, 10, 211, 46, 197);
-RT_INTERFACE!{static interface IProtectionPolicyManagerStatics(IProtectionPolicyManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyManagerStatics] {
+RT_INTERFACE!{static interface IProtectionPolicyManagerStatics(IProtectionPolicyManagerStaticsVtbl): IInspectable [IID_IProtectionPolicyManagerStatics] {
     fn IsIdentityManaged(&self, identity: HSTRING, out: *mut bool) -> HRESULT,
     fn TryApplyProcessUIPolicy(&self, identity: HSTRING, out: *mut bool) -> HRESULT,
     fn ClearProcessUIPolicy(&self) -> HRESULT,
@@ -7189,7 +7189,7 @@ impl IProtectionPolicyManagerStatics {
     }}
 }
 DEFINE_IID!(IID_IProtectionPolicyManagerStatics2, 3062864524, 14816, 17993, 178, 228, 7, 10, 184, 165, 121, 179);
-RT_INTERFACE!{static interface IProtectionPolicyManagerStatics2(IProtectionPolicyManagerStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyManagerStatics2] {
+RT_INTERFACE!{static interface IProtectionPolicyManagerStatics2(IProtectionPolicyManagerStatics2Vtbl): IInspectable [IID_IProtectionPolicyManagerStatics2] {
     fn HasContentBeenRevokedSince(&self, identity: HSTRING, since: foundation::DateTime, out: *mut bool) -> HRESULT,
     fn CheckAccessForApp(&self, sourceIdentity: HSTRING, appPackageFamilyName: HSTRING, out: *mut ProtectionPolicyEvaluationResult) -> HRESULT,
     fn RequestAccessForAppAsync(&self, sourceIdentity: HSTRING, appPackageFamilyName: HSTRING, out: *mut <foundation::IAsyncOperation<ProtectionPolicyEvaluationResult> as RtType>::Abi) -> HRESULT,
@@ -7247,7 +7247,7 @@ impl IProtectionPolicyManagerStatics2 {
     }}
 }
 DEFINE_IID!(IID_IProtectionPolicyManagerStatics3, 1224711820, 27247, 19871, 188, 237, 24, 171, 83, 122, 160, 21);
-RT_INTERFACE!{static interface IProtectionPolicyManagerStatics3(IProtectionPolicyManagerStatics3Vtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyManagerStatics3] {
+RT_INTERFACE!{static interface IProtectionPolicyManagerStatics3(IProtectionPolicyManagerStatics3Vtbl): IInspectable [IID_IProtectionPolicyManagerStatics3] {
     fn RequestAccessWithAuditingInfoAsync(&self, sourceIdentity: HSTRING, targetIdentity: HSTRING, auditInfo: <ProtectionPolicyAuditInfo as RtType>::Abi, out: *mut <foundation::IAsyncOperation<ProtectionPolicyEvaluationResult> as RtType>::Abi) -> HRESULT,
     fn RequestAccessWithMessageAsync(&self, sourceIdentity: HSTRING, targetIdentity: HSTRING, auditInfo: <ProtectionPolicyAuditInfo as RtType>::Abi, messageFromApp: HSTRING, out: *mut <foundation::IAsyncOperation<ProtectionPolicyEvaluationResult> as RtType>::Abi) -> HRESULT,
     fn RequestAccessForAppWithAuditingInfoAsync(&self, sourceIdentity: HSTRING, appPackageFamilyName: HSTRING, auditInfo: <ProtectionPolicyAuditInfo as RtType>::Abi, out: *mut <foundation::IAsyncOperation<ProtectionPolicyEvaluationResult> as RtType>::Abi) -> HRESULT,
@@ -7281,7 +7281,7 @@ impl IProtectionPolicyManagerStatics3 {
     }}
 }
 DEFINE_IID!(IID_IProtectionPolicyManagerStatics4, 548902107, 52413, 18703, 140, 131, 73, 204, 183, 122, 234, 108);
-RT_INTERFACE!{static interface IProtectionPolicyManagerStatics4(IProtectionPolicyManagerStatics4Vtbl): IInspectable(IInspectableVtbl) [IID_IProtectionPolicyManagerStatics4] {
+RT_INTERFACE!{static interface IProtectionPolicyManagerStatics4(IProtectionPolicyManagerStatics4Vtbl): IInspectable [IID_IProtectionPolicyManagerStatics4] {
     fn IsRoamableProtectionEnabled(&self, identity: HSTRING, out: *mut bool) -> HRESULT,
     fn RequestAccessWithBehaviorAsync(&self, sourceIdentity: HSTRING, targetIdentity: HSTRING, auditInfo: <ProtectionPolicyAuditInfo as RtType>::Abi, messageFromApp: HSTRING, behavior: ProtectionPolicyRequestAccessBehavior, out: *mut <foundation::IAsyncOperation<ProtectionPolicyEvaluationResult> as RtType>::Abi) -> HRESULT,
     fn RequestAccessForAppWithBehaviorAsync(&self, sourceIdentity: HSTRING, appPackageFamilyName: HSTRING, auditInfo: <ProtectionPolicyAuditInfo as RtType>::Abi, messageFromApp: HSTRING, behavior: ProtectionPolicyRequestAccessBehavior, out: *mut <foundation::IAsyncOperation<ProtectionPolicyEvaluationResult> as RtType>::Abi) -> HRESULT,
@@ -7361,7 +7361,7 @@ RT_ENUM! { enum ProtectionPolicyRequestAccessBehavior: i32 {
     Decrypt = 0, TreatOverridePolicyAsBlock = 1,
 }}
 DEFINE_IID!(IID_IThreadNetworkContext, 4199459049, 61203, 16474, 177, 44, 215, 52, 140, 111, 65, 252);
-RT_INTERFACE!{interface IThreadNetworkContext(IThreadNetworkContextVtbl): IInspectable(IInspectableVtbl) [IID_IThreadNetworkContext] {
+RT_INTERFACE!{interface IThreadNetworkContext(IThreadNetworkContextVtbl): IInspectable [IID_IThreadNetworkContext] {
     
 }}
 RT_CLASS!{class ThreadNetworkContext: IThreadNetworkContext}
@@ -7369,7 +7369,7 @@ RT_CLASS!{class ThreadNetworkContext: IThreadNetworkContext}
 pub mod exchangeactivesyncprovisioning { // Windows.Security.ExchangeActiveSyncProvisioning
 use crate::prelude::*;
 DEFINE_IID!(IID_IEasClientDeviceInformation, 1423956353, 6504, 19619, 185, 88, 229, 149, 209, 101, 5, 235);
-RT_INTERFACE!{interface IEasClientDeviceInformation(IEasClientDeviceInformationVtbl): IInspectable(IInspectableVtbl) [IID_IEasClientDeviceInformation] {
+RT_INTERFACE!{interface IEasClientDeviceInformation(IEasClientDeviceInformationVtbl): IInspectable [IID_IEasClientDeviceInformation] {
     fn get_Id(&self, out: *mut Guid) -> HRESULT,
     fn get_OperatingSystem(&self, out: *mut HSTRING) -> HRESULT,
     fn get_FriendlyName(&self, out: *mut HSTRING) -> HRESULT,
@@ -7413,7 +7413,7 @@ RT_CLASS!{class EasClientDeviceInformation: IEasClientDeviceInformation}
 impl RtActivatable<IActivationFactory> for EasClientDeviceInformation {}
 DEFINE_CLSID!(EasClientDeviceInformation(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,120,99,104,97,110,103,101,65,99,116,105,118,101,83,121,110,99,80,114,111,118,105,115,105,111,110,105,110,103,46,69,97,115,67,108,105,101,110,116,68,101,118,105,99,101,73,110,102,111,114,109,97,116,105,111,110,0]) [CLSID_EasClientDeviceInformation]);
 DEFINE_IID!(IID_IEasClientDeviceInformation2, 4289943843, 47910, 19818, 129, 188, 22, 90, 238, 10, 215, 84);
-RT_INTERFACE!{interface IEasClientDeviceInformation2(IEasClientDeviceInformation2Vtbl): IInspectable(IInspectableVtbl) [IID_IEasClientDeviceInformation2] {
+RT_INTERFACE!{interface IEasClientDeviceInformation2(IEasClientDeviceInformation2Vtbl): IInspectable [IID_IEasClientDeviceInformation2] {
     fn get_SystemHardwareVersion(&self, out: *mut HSTRING) -> HRESULT,
     fn get_SystemFirmwareVersion(&self, out: *mut HSTRING) -> HRESULT
 }}
@@ -7430,7 +7430,7 @@ impl IEasClientDeviceInformation2 {
     }}
 }
 DEFINE_IID!(IID_IEasClientSecurityPolicy, 1169630050, 57274, 19099, 172, 237, 111, 226, 173, 203, 100, 32);
-RT_INTERFACE!{interface IEasClientSecurityPolicy(IEasClientSecurityPolicyVtbl): IInspectable(IInspectableVtbl) [IID_IEasClientSecurityPolicy] {
+RT_INTERFACE!{interface IEasClientSecurityPolicy(IEasClientSecurityPolicyVtbl): IInspectable [IID_IEasClientSecurityPolicy] {
     fn get_RequireEncryption(&self, out: *mut bool) -> HRESULT,
     fn put_RequireEncryption(&self, value: bool) -> HRESULT,
     fn get_MinPasswordLength(&self, out: *mut u8) -> HRESULT,
@@ -7538,7 +7538,7 @@ RT_CLASS!{class EasClientSecurityPolicy: IEasClientSecurityPolicy}
 impl RtActivatable<IActivationFactory> for EasClientSecurityPolicy {}
 DEFINE_CLSID!(EasClientSecurityPolicy(&[87,105,110,100,111,119,115,46,83,101,99,117,114,105,116,121,46,69,120,99,104,97,110,103,101,65,99,116,105,118,101,83,121,110,99,80,114,111,118,105,115,105,111,110,105,110,103,46,69,97,115,67,108,105,101,110,116,83,101,99,117,114,105,116,121,80,111,108,105,99,121,0]) [CLSID_EasClientSecurityPolicy]);
 DEFINE_IID!(IID_IEasComplianceResults, 1178347932, 32537, 19558, 180, 3, 203, 69, 221, 87, 162, 179);
-RT_INTERFACE!{interface IEasComplianceResults(IEasComplianceResultsVtbl): IInspectable(IInspectableVtbl) [IID_IEasComplianceResults] {
+RT_INTERFACE!{interface IEasComplianceResults(IEasComplianceResultsVtbl): IInspectable [IID_IEasComplianceResults] {
     fn get_Compliant(&self, out: *mut bool) -> HRESULT,
     fn get_RequireEncryptionResult(&self, out: *mut EasRequireEncryptionResult) -> HRESULT,
     fn get_MinPasswordLengthResult(&self, out: *mut EasMinPasswordLengthResult) -> HRESULT,
@@ -7598,7 +7598,7 @@ impl IEasComplianceResults {
 }
 RT_CLASS!{class EasComplianceResults: IEasComplianceResults}
 DEFINE_IID!(IID_IEasComplianceResults2, 801005769, 6824, 18421, 136, 187, 203, 62, 240, 191, 251, 21);
-RT_INTERFACE!{interface IEasComplianceResults2(IEasComplianceResults2Vtbl): IInspectable(IInspectableVtbl) [IID_IEasComplianceResults2] {
+RT_INTERFACE!{interface IEasComplianceResults2(IEasComplianceResults2Vtbl): IInspectable [IID_IEasComplianceResults2] {
     fn get_EncryptionProviderType(&self, out: *mut EasEncryptionProviderType) -> HRESULT
 }}
 impl IEasComplianceResults2 {

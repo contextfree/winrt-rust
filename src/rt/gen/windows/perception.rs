@@ -1,6 +1,6 @@
 use crate::prelude::*;
 DEFINE_IID!(IID_IPerceptionTimestamp, 2277656580, 41518, 19163, 186, 38, 215, 142, 246, 57, 188, 244);
-RT_INTERFACE!{interface IPerceptionTimestamp(IPerceptionTimestampVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionTimestamp] {
+RT_INTERFACE!{interface IPerceptionTimestamp(IPerceptionTimestampVtbl): IInspectable [IID_IPerceptionTimestamp] {
     fn get_TargetTime(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn get_PredictionAmount(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
@@ -18,7 +18,7 @@ impl IPerceptionTimestamp {
 }
 RT_CLASS!{class PerceptionTimestamp: IPerceptionTimestamp}
 DEFINE_IID!(IID_IPerceptionTimestamp2, 3813980141, 11217, 16823, 158, 208, 116, 161, 92, 53, 69, 55);
-RT_INTERFACE!{interface IPerceptionTimestamp2(IPerceptionTimestamp2Vtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionTimestamp2] {
+RT_INTERFACE!{interface IPerceptionTimestamp2(IPerceptionTimestamp2Vtbl): IInspectable [IID_IPerceptionTimestamp2] {
     fn get_SystemRelativeTargetTime(&self, out: *mut foundation::TimeSpan) -> HRESULT
 }}
 impl IPerceptionTimestamp2 {
@@ -41,7 +41,7 @@ impl PerceptionTimestampHelper {
 }
 DEFINE_CLSID!(PerceptionTimestampHelper(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,80,101,114,99,101,112,116,105,111,110,84,105,109,101,115,116,97,109,112,72,101,108,112,101,114,0]) [CLSID_PerceptionTimestampHelper]);
 DEFINE_IID!(IID_IPerceptionTimestampHelperStatics, 1202065876, 43487, 20188, 133, 93, 244, 211, 57, 217, 103, 172);
-RT_INTERFACE!{static interface IPerceptionTimestampHelperStatics(IPerceptionTimestampHelperStaticsVtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionTimestampHelperStatics] {
+RT_INTERFACE!{static interface IPerceptionTimestampHelperStatics(IPerceptionTimestampHelperStaticsVtbl): IInspectable [IID_IPerceptionTimestampHelperStatics] {
     fn FromHistoricalTargetTime(&self, targetTime: foundation::DateTime, out: *mut <PerceptionTimestamp as RtType>::Abi) -> HRESULT
 }}
 impl IPerceptionTimestampHelperStatics {
@@ -52,7 +52,7 @@ impl IPerceptionTimestampHelperStatics {
     }}
 }
 DEFINE_IID!(IID_IPerceptionTimestampHelperStatics2, 1943119870, 16313, 17777, 135, 212, 60, 146, 10, 94, 134, 235);
-RT_INTERFACE!{static interface IPerceptionTimestampHelperStatics2(IPerceptionTimestampHelperStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_IPerceptionTimestampHelperStatics2] {
+RT_INTERFACE!{static interface IPerceptionTimestampHelperStatics2(IPerceptionTimestampHelperStatics2Vtbl): IInspectable [IID_IPerceptionTimestampHelperStatics2] {
     fn FromSystemRelativeTargetTime(&self, targetTime: foundation::TimeSpan, out: *mut <PerceptionTimestamp as RtType>::Abi) -> HRESULT
 }}
 impl IPerceptionTimestampHelperStatics2 {
@@ -74,7 +74,7 @@ impl CorePerceptionAutomation {
 }
 DEFINE_CLSID!(CorePerceptionAutomation(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,65,117,116,111,109,97,116,105,111,110,46,67,111,114,101,46,67,111,114,101,80,101,114,99,101,112,116,105,111,110,65,117,116,111,109,97,116,105,111,110,0]) [CLSID_CorePerceptionAutomation]);
 DEFINE_IID!(IID_ICorePerceptionAutomationStatics, 196101441, 19682, 18723, 154, 118, 129, 135, 236, 197, 145, 18);
-RT_INTERFACE!{static interface ICorePerceptionAutomationStatics(ICorePerceptionAutomationStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ICorePerceptionAutomationStatics] {
+RT_INTERFACE!{static interface ICorePerceptionAutomationStatics(ICorePerceptionAutomationStaticsVtbl): IInspectable [IID_ICorePerceptionAutomationStatics] {
     fn SetActivationFactoryProvider(&self, provider: <foundation::IGetActivationFactory as RtType>::Abi) -> HRESULT
 }}
 impl ICorePerceptionAutomationStatics {
@@ -88,7 +88,7 @@ impl ICorePerceptionAutomationStatics {
 pub mod people { // Windows.Perception.People
 use crate::prelude::*;
 DEFINE_IID!(IID_IHeadPose, 2136655269, 18907, 14239, 148, 41, 50, 162, 250, 243, 79, 166);
-RT_INTERFACE!{interface IHeadPose(IHeadPoseVtbl): IInspectable(IInspectableVtbl) [IID_IHeadPose] {
+RT_INTERFACE!{interface IHeadPose(IHeadPoseVtbl): IInspectable [IID_IHeadPose] {
     fn get_Position(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
     fn get_ForwardDirection(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
     fn get_UpDirection(&self, out: *mut foundation::numerics::Vector3) -> HRESULT
@@ -115,7 +115,7 @@ RT_CLASS!{class HeadPose: IHeadPose}
 pub mod spatial { // Windows.Perception.Spatial
 use crate::prelude::*;
 DEFINE_IID!(IID_ISpatialAnchor, 86631886, 7476, 14082, 188, 236, 234, 191, 245, 120, 168, 105);
-RT_INTERFACE!{interface ISpatialAnchor(ISpatialAnchorVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchor] {
+RT_INTERFACE!{interface ISpatialAnchor(ISpatialAnchorVtbl): IInspectable [IID_ISpatialAnchor] {
     fn get_CoordinateSystem(&self, out: *mut <SpatialCoordinateSystem as RtType>::Abi) -> HRESULT,
     fn get_RawCoordinateSystem(&self, out: *mut <SpatialCoordinateSystem as RtType>::Abi) -> HRESULT,
     fn add_RawCoordinateSystemAdjusted(&self, handler: <foundation::TypedEventHandler<SpatialAnchor, SpatialAnchorRawCoordinateSystemAdjustedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
@@ -157,7 +157,7 @@ impl SpatialAnchor {
 }
 DEFINE_CLSID!(SpatialAnchor(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,65,110,99,104,111,114,0]) [CLSID_SpatialAnchor]);
 DEFINE_IID!(IID_ISpatialAnchor2, 3977758984, 42645, 19702, 146, 253, 151, 38, 59, 167, 16, 71);
-RT_INTERFACE!{interface ISpatialAnchor2(ISpatialAnchor2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchor2] {
+RT_INTERFACE!{interface ISpatialAnchor2(ISpatialAnchor2Vtbl): IInspectable [IID_ISpatialAnchor2] {
     fn get_RemovedByUser(&self, out: *mut bool) -> HRESULT
 }}
 impl ISpatialAnchor2 {
@@ -168,7 +168,7 @@ impl ISpatialAnchor2 {
     }}
 }
 DEFINE_IID!(IID_ISpatialAnchorExporter, 2586460984, 9467, 17001, 137, 197, 136, 48, 74, 238, 242, 15);
-RT_INTERFACE!{interface ISpatialAnchorExporter(ISpatialAnchorExporterVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorExporter] {
+RT_INTERFACE!{interface ISpatialAnchorExporter(ISpatialAnchorExporterVtbl): IInspectable [IID_ISpatialAnchorExporter] {
     fn GetAnchorExportSufficiencyAsync(&self, anchor: <SpatialAnchor as RtType>::Abi, purpose: SpatialAnchorExportPurpose, out: *mut <foundation::IAsyncOperation<SpatialAnchorExportSufficiency> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-storage")] fn TryExportAnchorAsync(&self, anchor: <SpatialAnchor as RtType>::Abi, purpose: SpatialAnchorExportPurpose, stream: <super::super::storage::streams::IOutputStream as RtType>::Abi, out: *mut <foundation::IAsyncOperation<bool> as RtType>::Abi) -> HRESULT
 }}
@@ -196,7 +196,7 @@ impl SpatialAnchorExporter {
 }
 DEFINE_CLSID!(SpatialAnchorExporter(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,65,110,99,104,111,114,69,120,112,111,114,116,101,114,0]) [CLSID_SpatialAnchorExporter]);
 DEFINE_IID!(IID_ISpatialAnchorExporterStatics, 3978627000, 9333, 17308, 133, 255, 127, 237, 52, 31, 220, 136);
-RT_INTERFACE!{static interface ISpatialAnchorExporterStatics(ISpatialAnchorExporterStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorExporterStatics] {
+RT_INTERFACE!{static interface ISpatialAnchorExporterStatics(ISpatialAnchorExporterStaticsVtbl): IInspectable [IID_ISpatialAnchorExporterStatics] {
     fn GetDefault(&self, out: *mut <SpatialAnchorExporter as RtType>::Abi) -> HRESULT,
     fn RequestAccessAsync(&self, out: *mut <foundation::IAsyncOperation<SpatialPerceptionAccessStatus> as RtType>::Abi) -> HRESULT
 }}
@@ -216,7 +216,7 @@ RT_ENUM! { enum SpatialAnchorExportPurpose: i32 {
     Relocalization = 0, Sharing = 1,
 }}
 DEFINE_IID!(IID_ISpatialAnchorExportSufficiency, 2009226027, 13321, 16520, 185, 27, 253, 253, 5, 209, 100, 143);
-RT_INTERFACE!{interface ISpatialAnchorExportSufficiency(ISpatialAnchorExportSufficiencyVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorExportSufficiency] {
+RT_INTERFACE!{interface ISpatialAnchorExportSufficiency(ISpatialAnchorExportSufficiencyVtbl): IInspectable [IID_ISpatialAnchorExportSufficiency] {
     fn get_IsMinimallySufficient(&self, out: *mut bool) -> HRESULT,
     fn get_SufficiencyLevel(&self, out: *mut f64) -> HRESULT,
     fn get_RecommendedSufficiencyLevel(&self, out: *mut f64) -> HRESULT
@@ -248,7 +248,7 @@ impl SpatialAnchorManager {
 }
 DEFINE_CLSID!(SpatialAnchorManager(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,65,110,99,104,111,114,77,97,110,97,103,101,114,0]) [CLSID_SpatialAnchorManager]);
 DEFINE_IID!(IID_ISpatialAnchorManagerStatics, 2296581803, 62391, 16907, 176, 134, 138, 128, 192, 125, 145, 13);
-RT_INTERFACE!{static interface ISpatialAnchorManagerStatics(ISpatialAnchorManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorManagerStatics] {
+RT_INTERFACE!{static interface ISpatialAnchorManagerStatics(ISpatialAnchorManagerStaticsVtbl): IInspectable [IID_ISpatialAnchorManagerStatics] {
     fn RequestStoreAsync(&self, out: *mut <foundation::IAsyncOperation<SpatialAnchorStore> as RtType>::Abi) -> HRESULT
 }}
 impl ISpatialAnchorManagerStatics {
@@ -259,7 +259,7 @@ impl ISpatialAnchorManagerStatics {
     }}
 }
 DEFINE_IID!(IID_ISpatialAnchorRawCoordinateSystemAdjustedEventArgs, 2716343992, 22215, 12567, 162, 228, 129, 224, 252, 242, 142, 0);
-RT_INTERFACE!{interface ISpatialAnchorRawCoordinateSystemAdjustedEventArgs(ISpatialAnchorRawCoordinateSystemAdjustedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorRawCoordinateSystemAdjustedEventArgs] {
+RT_INTERFACE!{interface ISpatialAnchorRawCoordinateSystemAdjustedEventArgs(ISpatialAnchorRawCoordinateSystemAdjustedEventArgsVtbl): IInspectable [IID_ISpatialAnchorRawCoordinateSystemAdjustedEventArgs] {
     fn get_OldRawCoordinateSystemToNewRawCoordinateSystemTransform(&self, out: *mut foundation::numerics::Matrix4x4) -> HRESULT
 }}
 impl ISpatialAnchorRawCoordinateSystemAdjustedEventArgs {
@@ -271,7 +271,7 @@ impl ISpatialAnchorRawCoordinateSystemAdjustedEventArgs {
 }
 RT_CLASS!{class SpatialAnchorRawCoordinateSystemAdjustedEventArgs: ISpatialAnchorRawCoordinateSystemAdjustedEventArgs}
 DEFINE_IID!(IID_ISpatialAnchorStatics, 2844952130, 372, 12572, 174, 121, 14, 81, 7, 102, 159, 22);
-RT_INTERFACE!{static interface ISpatialAnchorStatics(ISpatialAnchorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorStatics] {
+RT_INTERFACE!{static interface ISpatialAnchorStatics(ISpatialAnchorStaticsVtbl): IInspectable [IID_ISpatialAnchorStatics] {
     fn TryCreateRelativeTo(&self, coordinateSystem: <SpatialCoordinateSystem as RtType>::Abi, out: *mut <SpatialAnchor as RtType>::Abi) -> HRESULT,
     fn TryCreateWithPositionRelativeTo(&self, coordinateSystem: <SpatialCoordinateSystem as RtType>::Abi, position: foundation::numerics::Vector3, out: *mut <SpatialAnchor as RtType>::Abi) -> HRESULT,
     fn TryCreateWithPositionAndOrientationRelativeTo(&self, coordinateSystem: <SpatialCoordinateSystem as RtType>::Abi, position: foundation::numerics::Vector3, orientation: foundation::numerics::Quaternion, out: *mut <SpatialAnchor as RtType>::Abi) -> HRESULT
@@ -294,7 +294,7 @@ impl ISpatialAnchorStatics {
     }}
 }
 DEFINE_IID!(IID_ISpatialAnchorStore, 2965124662, 18538, 15536, 158, 111, 18, 69, 22, 92, 77, 182);
-RT_INTERFACE!{interface ISpatialAnchorStore(ISpatialAnchorStoreVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorStore] {
+RT_INTERFACE!{interface ISpatialAnchorStore(ISpatialAnchorStoreVtbl): IInspectable [IID_ISpatialAnchorStore] {
     fn GetAllSavedAnchors(&self, out: *mut <foundation::collections::IMapView<HString, SpatialAnchor> as RtType>::Abi) -> HRESULT,
     fn TrySave(&self, id: HSTRING, anchor: <SpatialAnchor as RtType>::Abi, out: *mut bool) -> HRESULT,
     fn Remove(&self, id: HSTRING) -> HRESULT,
@@ -336,7 +336,7 @@ impl SpatialAnchorTransferManager {
 }
 DEFINE_CLSID!(SpatialAnchorTransferManager(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,65,110,99,104,111,114,84,114,97,110,115,102,101,114,77,97,110,97,103,101,114,0]) [CLSID_SpatialAnchorTransferManager]);
 DEFINE_IID!(IID_ISpatialAnchorTransferManagerStatics, 62650809, 4824, 19406, 136, 53, 197, 223, 58, 192, 173, 171);
-RT_INTERFACE!{static interface ISpatialAnchorTransferManagerStatics(ISpatialAnchorTransferManagerStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialAnchorTransferManagerStatics] {
+RT_INTERFACE!{static interface ISpatialAnchorTransferManagerStatics(ISpatialAnchorTransferManagerStaticsVtbl): IInspectable [IID_ISpatialAnchorTransferManagerStatics] {
     #[cfg(not(feature="windows-storage"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-storage")] fn TryImportAnchorsAsync(&self, stream: <super::super::storage::streams::IInputStream as RtType>::Abi, out: *mut <foundation::IAsyncOperation<foundation::collections::IMapView<HString, SpatialAnchor>> as RtType>::Abi) -> HRESULT,
     #[cfg(not(feature="windows-storage"))] fn __Dummy1(&self) -> (),
@@ -373,7 +373,7 @@ RT_STRUCT! { struct SpatialBoundingSphere {
     Center: foundation::numerics::Vector3, Radius: f32,
 }}
 DEFINE_IID!(IID_ISpatialBoundingVolume, 4213204442, 26819, 13279, 183, 175, 76, 120, 114, 7, 153, 156);
-RT_INTERFACE!{interface ISpatialBoundingVolume(ISpatialBoundingVolumeVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialBoundingVolume] {
+RT_INTERFACE!{interface ISpatialBoundingVolume(ISpatialBoundingVolumeVtbl): IInspectable [IID_ISpatialBoundingVolume] {
     
 }}
 RT_CLASS!{class SpatialBoundingVolume: ISpatialBoundingVolume}
@@ -394,7 +394,7 @@ impl SpatialBoundingVolume {
 }
 DEFINE_CLSID!(SpatialBoundingVolume(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,66,111,117,110,100,105,110,103,86,111,108,117,109,101,0]) [CLSID_SpatialBoundingVolume]);
 DEFINE_IID!(IID_ISpatialBoundingVolumeStatics, 92836119, 46049, 14040, 176, 23, 86, 97, 129, 165, 177, 150);
-RT_INTERFACE!{static interface ISpatialBoundingVolumeStatics(ISpatialBoundingVolumeStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialBoundingVolumeStatics] {
+RT_INTERFACE!{static interface ISpatialBoundingVolumeStatics(ISpatialBoundingVolumeStaticsVtbl): IInspectable [IID_ISpatialBoundingVolumeStatics] {
     fn FromBox(&self, coordinateSystem: <SpatialCoordinateSystem as RtType>::Abi, box_: SpatialBoundingBox, out: *mut <SpatialBoundingVolume as RtType>::Abi) -> HRESULT,
     fn FromOrientedBox(&self, coordinateSystem: <SpatialCoordinateSystem as RtType>::Abi, box_: SpatialBoundingOrientedBox, out: *mut <SpatialBoundingVolume as RtType>::Abi) -> HRESULT,
     fn FromSphere(&self, coordinateSystem: <SpatialCoordinateSystem as RtType>::Abi, sphere: SpatialBoundingSphere, out: *mut <SpatialBoundingVolume as RtType>::Abi) -> HRESULT,
@@ -423,7 +423,7 @@ impl ISpatialBoundingVolumeStatics {
     }}
 }
 DEFINE_IID!(IID_ISpatialCoordinateSystem, 1777060427, 24739, 13702, 166, 83, 89, 167, 189, 103, 109, 7);
-RT_INTERFACE!{interface ISpatialCoordinateSystem(ISpatialCoordinateSystemVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialCoordinateSystem] {
+RT_INTERFACE!{interface ISpatialCoordinateSystem(ISpatialCoordinateSystemVtbl): IInspectable [IID_ISpatialCoordinateSystem] {
     fn TryGetTransformTo(&self, target: <SpatialCoordinateSystem as RtType>::Abi, out: *mut <foundation::IReference<foundation::numerics::Matrix4x4> as RtType>::Abi) -> HRESULT
 }}
 impl ISpatialCoordinateSystem {
@@ -435,7 +435,7 @@ impl ISpatialCoordinateSystem {
 }
 RT_CLASS!{class SpatialCoordinateSystem: ISpatialCoordinateSystem}
 DEFINE_IID!(IID_ISpatialEntity, 376301909, 57835, 17740, 186, 8, 230, 192, 102, 141, 220, 101);
-RT_INTERFACE!{interface ISpatialEntity(ISpatialEntityVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntity] {
+RT_INTERFACE!{interface ISpatialEntity(ISpatialEntityVtbl): IInspectable [IID_ISpatialEntity] {
     fn get_Id(&self, out: *mut HSTRING) -> HRESULT,
     fn get_Anchor(&self, out: *mut <SpatialAnchor as RtType>::Abi) -> HRESULT,
     fn get_Properties(&self, out: *mut <foundation::collections::ValueSet as RtType>::Abi) -> HRESULT
@@ -469,7 +469,7 @@ impl SpatialEntity {
 }
 DEFINE_CLSID!(SpatialEntity(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,69,110,116,105,116,121,0]) [CLSID_SpatialEntity]);
 DEFINE_IID!(IID_ISpatialEntityAddedEventArgs, 2744644763, 5482, 18183, 172, 44, 211, 29, 87, 14, 211, 153);
-RT_INTERFACE!{interface ISpatialEntityAddedEventArgs(ISpatialEntityAddedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityAddedEventArgs] {
+RT_INTERFACE!{interface ISpatialEntityAddedEventArgs(ISpatialEntityAddedEventArgsVtbl): IInspectable [IID_ISpatialEntityAddedEventArgs] {
     fn get_Entity(&self, out: *mut <SpatialEntity as RtType>::Abi) -> HRESULT
 }}
 impl ISpatialEntityAddedEventArgs {
@@ -481,7 +481,7 @@ impl ISpatialEntityAddedEventArgs {
 }
 RT_CLASS!{class SpatialEntityAddedEventArgs: ISpatialEntityAddedEventArgs}
 DEFINE_IID!(IID_ISpatialEntityFactory, 3790725925, 13471, 16933, 162, 243, 75, 1, 193, 95, 224, 86);
-RT_INTERFACE!{static interface ISpatialEntityFactory(ISpatialEntityFactoryVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityFactory] {
+RT_INTERFACE!{static interface ISpatialEntityFactory(ISpatialEntityFactoryVtbl): IInspectable [IID_ISpatialEntityFactory] {
     fn CreateWithSpatialAnchor(&self, spatialAnchor: <SpatialAnchor as RtType>::Abi, out: *mut <SpatialEntity as RtType>::Abi) -> HRESULT,
     fn CreateWithSpatialAnchorAndProperties(&self, spatialAnchor: <SpatialAnchor as RtType>::Abi, propertySet: <foundation::collections::ValueSet as RtType>::Abi, out: *mut <SpatialEntity as RtType>::Abi) -> HRESULT
 }}
@@ -498,7 +498,7 @@ impl ISpatialEntityFactory {
     }}
 }
 DEFINE_IID!(IID_ISpatialEntityRemovedEventArgs, 2440304640, 21357, 20127, 171, 246, 65, 91, 84, 68, 214, 81);
-RT_INTERFACE!{interface ISpatialEntityRemovedEventArgs(ISpatialEntityRemovedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityRemovedEventArgs] {
+RT_INTERFACE!{interface ISpatialEntityRemovedEventArgs(ISpatialEntityRemovedEventArgsVtbl): IInspectable [IID_ISpatialEntityRemovedEventArgs] {
     fn get_Entity(&self, out: *mut <SpatialEntity as RtType>::Abi) -> HRESULT
 }}
 impl ISpatialEntityRemovedEventArgs {
@@ -510,7 +510,7 @@ impl ISpatialEntityRemovedEventArgs {
 }
 RT_CLASS!{class SpatialEntityRemovedEventArgs: ISpatialEntityRemovedEventArgs}
 DEFINE_IID!(IID_ISpatialEntityStore, 848791738, 58643, 20230, 136, 157, 27, 227, 14, 207, 67, 230);
-RT_INTERFACE!{interface ISpatialEntityStore(ISpatialEntityStoreVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityStore] {
+RT_INTERFACE!{interface ISpatialEntityStore(ISpatialEntityStoreVtbl): IInspectable [IID_ISpatialEntityStore] {
     fn SaveAsync(&self, entity: <SpatialEntity as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn RemoveAsync(&self, entity: <SpatialEntity as RtType>::Abi, out: *mut <foundation::IAsyncAction as RtType>::Abi) -> HRESULT,
     fn CreateEntityWatcher(&self, out: *mut <SpatialEntityWatcher as RtType>::Abi) -> HRESULT
@@ -544,7 +544,7 @@ impl SpatialEntityStore {
 }
 DEFINE_CLSID!(SpatialEntityStore(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,69,110,116,105,116,121,83,116,111,114,101,0]) [CLSID_SpatialEntityStore]);
 DEFINE_IID!(IID_ISpatialEntityStoreStatics, 1800091806, 31824, 20114, 138, 98, 77, 29, 75, 124, 205, 62);
-RT_INTERFACE!{static interface ISpatialEntityStoreStatics(ISpatialEntityStoreStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityStoreStatics] {
+RT_INTERFACE!{static interface ISpatialEntityStoreStatics(ISpatialEntityStoreStaticsVtbl): IInspectable [IID_ISpatialEntityStoreStatics] {
     fn get_IsSupported(&self, out: *mut bool) -> HRESULT,
     #[cfg(feature="windows-system")] fn TryGetForRemoteSystemSession(&self, session: <super::super::system::remotesystems::RemoteSystemSession as RtType>::Abi, out: *mut <SpatialEntityStore as RtType>::Abi) -> HRESULT
 }}
@@ -561,7 +561,7 @@ impl ISpatialEntityStoreStatics {
     }}
 }
 DEFINE_IID!(IID_ISpatialEntityUpdatedEventArgs, 3848738662, 25211, 17355, 164, 159, 179, 190, 109, 71, 222, 237);
-RT_INTERFACE!{interface ISpatialEntityUpdatedEventArgs(ISpatialEntityUpdatedEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityUpdatedEventArgs] {
+RT_INTERFACE!{interface ISpatialEntityUpdatedEventArgs(ISpatialEntityUpdatedEventArgsVtbl): IInspectable [IID_ISpatialEntityUpdatedEventArgs] {
     fn get_Entity(&self, out: *mut <SpatialEntity as RtType>::Abi) -> HRESULT
 }}
 impl ISpatialEntityUpdatedEventArgs {
@@ -573,7 +573,7 @@ impl ISpatialEntityUpdatedEventArgs {
 }
 RT_CLASS!{class SpatialEntityUpdatedEventArgs: ISpatialEntityUpdatedEventArgs}
 DEFINE_IID!(IID_ISpatialEntityWatcher, 3015204768, 27998, 19388, 128, 93, 95, 229, 185, 186, 25, 89);
-RT_INTERFACE!{interface ISpatialEntityWatcher(ISpatialEntityWatcherVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialEntityWatcher] {
+RT_INTERFACE!{interface ISpatialEntityWatcher(ISpatialEntityWatcherVtbl): IInspectable [IID_ISpatialEntityWatcher] {
     fn get_Status(&self, out: *mut SpatialEntityWatcherStatus) -> HRESULT,
     fn add_Added(&self, handler: <foundation::TypedEventHandler<SpatialEntityWatcher, SpatialEntityAddedEventArgs> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_Added(&self, token: foundation::EventRegistrationToken) -> HRESULT,
@@ -645,7 +645,7 @@ RT_ENUM! { enum SpatialLocatability: i32 {
     Unavailable = 0, OrientationOnly = 1, PositionalTrackingActivating = 2, PositionalTrackingActive = 3, PositionalTrackingInhibited = 4,
 }}
 DEFINE_IID!(IID_ISpatialLocation, 495047325, 9377, 14293, 143, 161, 57, 180, 249, 173, 103, 226);
-RT_INTERFACE!{interface ISpatialLocation(ISpatialLocationVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocation] {
+RT_INTERFACE!{interface ISpatialLocation(ISpatialLocationVtbl): IInspectable [IID_ISpatialLocation] {
     fn get_Position(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
     fn get_Orientation(&self, out: *mut foundation::numerics::Quaternion) -> HRESULT,
     fn get_AbsoluteLinearVelocity(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
@@ -687,7 +687,7 @@ impl ISpatialLocation {
 }
 RT_CLASS!{class SpatialLocation: ISpatialLocation}
 DEFINE_IID!(IID_ISpatialLocation2, 293544982, 14503, 18968, 180, 4, 171, 143, 171, 225, 215, 139);
-RT_INTERFACE!{interface ISpatialLocation2(ISpatialLocation2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocation2] {
+RT_INTERFACE!{interface ISpatialLocation2(ISpatialLocation2Vtbl): IInspectable [IID_ISpatialLocation2] {
     fn get_AbsoluteAngularVelocityAxisAngle(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
     fn get_AbsoluteAngularAccelerationAxisAngle(&self, out: *mut foundation::numerics::Vector3) -> HRESULT
 }}
@@ -704,7 +704,7 @@ impl ISpatialLocation2 {
     }}
 }
 DEFINE_IID!(IID_ISpatialLocator, 4131883301, 40460, 15286, 153, 126, 182, 78, 204, 162, 76, 244);
-RT_INTERFACE!{interface ISpatialLocator(ISpatialLocatorVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocator] {
+RT_INTERFACE!{interface ISpatialLocator(ISpatialLocatorVtbl): IInspectable [IID_ISpatialLocator] {
     fn get_Locatability(&self, out: *mut SpatialLocatability) -> HRESULT,
     fn add_LocatabilityChanged(&self, handler: <foundation::TypedEventHandler<SpatialLocator, IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_LocatabilityChanged(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
@@ -799,7 +799,7 @@ impl SpatialLocator {
 }
 DEFINE_CLSID!(SpatialLocator(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,76,111,99,97,116,111,114,0]) [CLSID_SpatialLocator]);
 DEFINE_IID!(IID_ISpatialLocatorAttachedFrameOfReference, 3782692598, 8015, 18844, 150, 37, 239, 94, 110, 215, 160, 72);
-RT_INTERFACE!{interface ISpatialLocatorAttachedFrameOfReference(ISpatialLocatorAttachedFrameOfReferenceVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocatorAttachedFrameOfReference] {
+RT_INTERFACE!{interface ISpatialLocatorAttachedFrameOfReference(ISpatialLocatorAttachedFrameOfReferenceVtbl): IInspectable [IID_ISpatialLocatorAttachedFrameOfReference] {
     fn get_RelativePosition(&self, out: *mut foundation::numerics::Vector3) -> HRESULT,
     fn put_RelativePosition(&self, value: foundation::numerics::Vector3) -> HRESULT,
     fn get_RelativeOrientation(&self, out: *mut foundation::numerics::Quaternion) -> HRESULT,
@@ -844,7 +844,7 @@ impl ISpatialLocatorAttachedFrameOfReference {
 }
 RT_CLASS!{class SpatialLocatorAttachedFrameOfReference: ISpatialLocatorAttachedFrameOfReference}
 DEFINE_IID!(IID_ISpatialLocatorPositionalTrackingDeactivatingEventArgs, 3098034275, 58356, 13963, 144, 97, 158, 169, 209, 214, 204, 22);
-RT_INTERFACE!{interface ISpatialLocatorPositionalTrackingDeactivatingEventArgs(ISpatialLocatorPositionalTrackingDeactivatingEventArgsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocatorPositionalTrackingDeactivatingEventArgs] {
+RT_INTERFACE!{interface ISpatialLocatorPositionalTrackingDeactivatingEventArgs(ISpatialLocatorPositionalTrackingDeactivatingEventArgsVtbl): IInspectable [IID_ISpatialLocatorPositionalTrackingDeactivatingEventArgs] {
     fn get_Canceled(&self, out: *mut bool) -> HRESULT,
     fn put_Canceled(&self, value: bool) -> HRESULT
 }}
@@ -861,7 +861,7 @@ impl ISpatialLocatorPositionalTrackingDeactivatingEventArgs {
 }
 RT_CLASS!{class SpatialLocatorPositionalTrackingDeactivatingEventArgs: ISpatialLocatorPositionalTrackingDeactivatingEventArgs}
 DEFINE_IID!(IID_ISpatialLocatorStatics, 3077452608, 42946, 13851, 187, 130, 86, 233, 59, 137, 177, 187);
-RT_INTERFACE!{static interface ISpatialLocatorStatics(ISpatialLocatorStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialLocatorStatics] {
+RT_INTERFACE!{static interface ISpatialLocatorStatics(ISpatialLocatorStaticsVtbl): IInspectable [IID_ISpatialLocatorStatics] {
     fn GetDefault(&self, out: *mut <SpatialLocator as RtType>::Abi) -> HRESULT
 }}
 impl ISpatialLocatorStatics {
@@ -881,7 +881,7 @@ RT_ENUM! { enum SpatialPerceptionAccessStatus: i32 {
     Unspecified = 0, Allowed = 1, DeniedByUser = 2, DeniedBySystem = 3,
 }}
 DEFINE_IID!(IID_ISpatialStageFrameOfReference, 2055877732, 44301, 17808, 171, 134, 51, 6, 43, 103, 73, 38);
-RT_INTERFACE!{interface ISpatialStageFrameOfReference(ISpatialStageFrameOfReferenceVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialStageFrameOfReference] {
+RT_INTERFACE!{interface ISpatialStageFrameOfReference(ISpatialStageFrameOfReferenceVtbl): IInspectable [IID_ISpatialStageFrameOfReference] {
     fn get_CoordinateSystem(&self, out: *mut <SpatialCoordinateSystem as RtType>::Abi) -> HRESULT,
     fn get_MovementRange(&self, out: *mut SpatialMovementRange) -> HRESULT,
     fn get_LookDirectionRange(&self, out: *mut SpatialLookDirectionRange) -> HRESULT,
@@ -933,7 +933,7 @@ impl SpatialStageFrameOfReference {
 }
 DEFINE_CLSID!(SpatialStageFrameOfReference(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,112,97,116,105,97,108,83,116,97,103,101,70,114,97,109,101,79,102,82,101,102,101,114,101,110,99,101,0]) [CLSID_SpatialStageFrameOfReference]);
 DEFINE_IID!(IID_ISpatialStageFrameOfReferenceStatics, 4153236557, 41124, 18844, 141, 145, 168, 201, 101, 212, 6, 84);
-RT_INTERFACE!{static interface ISpatialStageFrameOfReferenceStatics(ISpatialStageFrameOfReferenceStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialStageFrameOfReferenceStatics] {
+RT_INTERFACE!{static interface ISpatialStageFrameOfReferenceStatics(ISpatialStageFrameOfReferenceStaticsVtbl): IInspectable [IID_ISpatialStageFrameOfReferenceStatics] {
     fn get_Current(&self, out: *mut <SpatialStageFrameOfReference as RtType>::Abi) -> HRESULT,
     fn add_CurrentChanged(&self, handler: <foundation::EventHandler<IInspectable> as RtType>::Abi, out: *mut foundation::EventRegistrationToken) -> HRESULT,
     fn remove_CurrentChanged(&self, cookie: foundation::EventRegistrationToken) -> HRESULT,
@@ -961,7 +961,7 @@ impl ISpatialStageFrameOfReferenceStatics {
     }}
 }
 DEFINE_IID!(IID_ISpatialStationaryFrameOfReference, 165399737, 48376, 15999, 190, 126, 126, 220, 203, 177, 120, 168);
-RT_INTERFACE!{interface ISpatialStationaryFrameOfReference(ISpatialStationaryFrameOfReferenceVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialStationaryFrameOfReference] {
+RT_INTERFACE!{interface ISpatialStationaryFrameOfReference(ISpatialStationaryFrameOfReferenceVtbl): IInspectable [IID_ISpatialStationaryFrameOfReference] {
     fn get_CoordinateSystem(&self, out: *mut <SpatialCoordinateSystem as RtType>::Abi) -> HRESULT
 }}
 impl ISpatialStationaryFrameOfReference {
@@ -992,7 +992,7 @@ impl SpatialGraphInteropPreview {
 }
 DEFINE_CLSID!(SpatialGraphInteropPreview(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,80,114,101,118,105,101,119,46,83,112,97,116,105,97,108,71,114,97,112,104,73,110,116,101,114,111,112,80,114,101,118,105,101,119,0]) [CLSID_SpatialGraphInteropPreview]);
 DEFINE_IID!(IID_ISpatialGraphInteropPreviewStatics, 3225576524, 8408, 20176, 174, 247, 104, 5, 184, 229, 63, 85);
-RT_INTERFACE!{static interface ISpatialGraphInteropPreviewStatics(ISpatialGraphInteropPreviewStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialGraphInteropPreviewStatics] {
+RT_INTERFACE!{static interface ISpatialGraphInteropPreviewStatics(ISpatialGraphInteropPreviewStaticsVtbl): IInspectable [IID_ISpatialGraphInteropPreviewStatics] {
     fn CreateCoordinateSystemForNode(&self, nodeId: Guid, out: *mut <super::SpatialCoordinateSystem as RtType>::Abi) -> HRESULT,
     fn CreateCoordinateSystemForNodeWithPosition(&self, nodeId: Guid, relativePosition: foundation::numerics::Vector3, out: *mut <super::SpatialCoordinateSystem as RtType>::Abi) -> HRESULT,
     fn CreateCoordinateSystemForNodeWithPositionAndOrientation(&self, nodeId: Guid, relativePosition: foundation::numerics::Vector3, relativeOrientation: foundation::numerics::Quaternion, out: *mut <super::SpatialCoordinateSystem as RtType>::Abi) -> HRESULT,
@@ -1024,7 +1024,7 @@ impl ISpatialGraphInteropPreviewStatics {
 pub mod surfaces { // Windows.Perception.Spatial.Surfaces
 use crate::prelude::*;
 DEFINE_IID!(IID_ISpatialSurfaceInfo, 4176079847, 14775, 14690, 187, 3, 87, 245, 110, 31, 176, 161);
-RT_INTERFACE!{interface ISpatialSurfaceInfo(ISpatialSurfaceInfoVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceInfo] {
+RT_INTERFACE!{interface ISpatialSurfaceInfo(ISpatialSurfaceInfoVtbl): IInspectable [IID_ISpatialSurfaceInfo] {
     fn get_Id(&self, out: *mut Guid) -> HRESULT,
     fn get_UpdateTime(&self, out: *mut foundation::DateTime) -> HRESULT,
     fn TryGetBounds(&self, coordinateSystem: <super::SpatialCoordinateSystem as RtType>::Abi, out: *mut <foundation::IReference<super::SpatialBoundingOrientedBox> as RtType>::Abi) -> HRESULT,
@@ -1060,7 +1060,7 @@ impl ISpatialSurfaceInfo {
 }
 RT_CLASS!{class SpatialSurfaceInfo: ISpatialSurfaceInfo}
 DEFINE_IID!(IID_ISpatialSurfaceMesh, 277829593, 57101, 14672, 160, 253, 249, 114, 199, 124, 39, 180);
-RT_INTERFACE!{interface ISpatialSurfaceMesh(ISpatialSurfaceMeshVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceMesh] {
+RT_INTERFACE!{interface ISpatialSurfaceMesh(ISpatialSurfaceMeshVtbl): IInspectable [IID_ISpatialSurfaceMesh] {
     fn get_SurfaceInfo(&self, out: *mut <SpatialSurfaceInfo as RtType>::Abi) -> HRESULT,
     fn get_CoordinateSystem(&self, out: *mut <super::SpatialCoordinateSystem as RtType>::Abi) -> HRESULT,
     fn get_TriangleIndices(&self, out: *mut <SpatialSurfaceMeshBuffer as RtType>::Abi) -> HRESULT,
@@ -1102,7 +1102,7 @@ impl ISpatialSurfaceMesh {
 }
 RT_CLASS!{class SpatialSurfaceMesh: ISpatialSurfaceMesh}
 DEFINE_IID!(IID_ISpatialSurfaceMeshBuffer, 2479839712, 34591, 13304, 152, 178, 3, 209, 1, 69, 143, 111);
-RT_INTERFACE!{interface ISpatialSurfaceMeshBuffer(ISpatialSurfaceMeshBufferVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceMeshBuffer] {
+RT_INTERFACE!{interface ISpatialSurfaceMeshBuffer(ISpatialSurfaceMeshBufferVtbl): IInspectable [IID_ISpatialSurfaceMeshBuffer] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-graphics")] fn get_Format(&self, out: *mut crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     fn get_Stride(&self, out: *mut u32) -> HRESULT,
@@ -1133,7 +1133,7 @@ impl ISpatialSurfaceMeshBuffer {
 }
 RT_CLASS!{class SpatialSurfaceMeshBuffer: ISpatialSurfaceMeshBuffer}
 DEFINE_IID!(IID_ISpatialSurfaceMeshOptions, 3530923913, 13682, 15661, 161, 13, 95, 238, 147, 148, 170, 55);
-RT_INTERFACE!{interface ISpatialSurfaceMeshOptions(ISpatialSurfaceMeshOptionsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceMeshOptions] {
+RT_INTERFACE!{interface ISpatialSurfaceMeshOptions(ISpatialSurfaceMeshOptionsVtbl): IInspectable [IID_ISpatialSurfaceMeshOptions] {
     #[cfg(not(feature="windows-graphics"))] fn __Dummy0(&self) -> (),
     #[cfg(feature="windows-graphics")] fn get_VertexPositionFormat(&self, out: *mut crate::windows::graphics::directx::DirectXPixelFormat) -> HRESULT,
     #[cfg(not(feature="windows-graphics"))] fn __Dummy1(&self) -> (),
@@ -1203,7 +1203,7 @@ impl SpatialSurfaceMeshOptions {
 }
 DEFINE_CLSID!(SpatialSurfaceMeshOptions(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,117,114,102,97,99,101,115,46,83,112,97,116,105,97,108,83,117,114,102,97,99,101,77,101,115,104,79,112,116,105,111,110,115,0]) [CLSID_SpatialSurfaceMeshOptions]);
 DEFINE_IID!(IID_ISpatialSurfaceMeshOptionsStatics, 2603879103, 38785, 17669, 137, 53, 1, 53, 117, 202, 174, 94);
-RT_INTERFACE!{static interface ISpatialSurfaceMeshOptionsStatics(ISpatialSurfaceMeshOptionsStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceMeshOptionsStatics] {
+RT_INTERFACE!{static interface ISpatialSurfaceMeshOptionsStatics(ISpatialSurfaceMeshOptionsStaticsVtbl): IInspectable [IID_ISpatialSurfaceMeshOptionsStatics] {
     #[cfg(feature="windows-graphics")] fn get_SupportedVertexPositionFormats(&self, out: *mut <foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn get_SupportedTriangleIndexFormats(&self, out: *mut <foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat> as RtType>::Abi) -> HRESULT,
     #[cfg(feature="windows-graphics")] fn get_SupportedVertexNormalFormats(&self, out: *mut <foundation::collections::IVectorView<crate::windows::graphics::directx::DirectXPixelFormat> as RtType>::Abi) -> HRESULT
@@ -1226,7 +1226,7 @@ impl ISpatialSurfaceMeshOptionsStatics {
     }}
 }
 DEFINE_IID!(IID_ISpatialSurfaceObserver, 280401945, 56778, 13443, 172, 58, 116, 143, 232, 200, 109, 245);
-RT_INTERFACE!{interface ISpatialSurfaceObserver(ISpatialSurfaceObserverVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceObserver] {
+RT_INTERFACE!{interface ISpatialSurfaceObserver(ISpatialSurfaceObserverVtbl): IInspectable [IID_ISpatialSurfaceObserver] {
     fn GetObservedSurfaces(&self, out: *mut <foundation::collections::IMapView<Guid, SpatialSurfaceInfo> as RtType>::Abi) -> HRESULT,
     fn SetBoundingVolume(&self, bounds: <super::SpatialBoundingVolume as RtType>::Abi) -> HRESULT,
     fn SetBoundingVolumes(&self, bounds: <foundation::collections::IIterable<super::SpatialBoundingVolume> as RtType>::Abi) -> HRESULT,
@@ -1271,7 +1271,7 @@ impl SpatialSurfaceObserver {
 }
 DEFINE_CLSID!(SpatialSurfaceObserver(&[87,105,110,100,111,119,115,46,80,101,114,99,101,112,116,105,111,110,46,83,112,97,116,105,97,108,46,83,117,114,102,97,99,101,115,46,83,112,97,116,105,97,108,83,117,114,102,97,99,101,79,98,115,101,114,118,101,114,0]) [CLSID_SpatialSurfaceObserver]);
 DEFINE_IID!(IID_ISpatialSurfaceObserverStatics, 374952429, 8456, 16744, 145, 117, 135, 224, 39, 188, 146, 133);
-RT_INTERFACE!{static interface ISpatialSurfaceObserverStatics(ISpatialSurfaceObserverStaticsVtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceObserverStatics] {
+RT_INTERFACE!{static interface ISpatialSurfaceObserverStatics(ISpatialSurfaceObserverStaticsVtbl): IInspectable [IID_ISpatialSurfaceObserverStatics] {
     fn RequestAccessAsync(&self, out: *mut <foundation::IAsyncOperation<super::SpatialPerceptionAccessStatus> as RtType>::Abi) -> HRESULT
 }}
 impl ISpatialSurfaceObserverStatics {
@@ -1282,7 +1282,7 @@ impl ISpatialSurfaceObserverStatics {
     }}
 }
 DEFINE_IID!(IID_ISpatialSurfaceObserverStatics2, 257114721, 50525, 20075, 168, 149, 161, 157, 230, 154, 66, 227);
-RT_INTERFACE!{static interface ISpatialSurfaceObserverStatics2(ISpatialSurfaceObserverStatics2Vtbl): IInspectable(IInspectableVtbl) [IID_ISpatialSurfaceObserverStatics2] {
+RT_INTERFACE!{static interface ISpatialSurfaceObserverStatics2(ISpatialSurfaceObserverStatics2Vtbl): IInspectable [IID_ISpatialSurfaceObserverStatics2] {
     fn IsSupported(&self, out: *mut bool) -> HRESULT
 }}
 impl ISpatialSurfaceObserverStatics2 {
