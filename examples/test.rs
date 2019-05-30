@@ -1,8 +1,6 @@
 extern crate winapi;
 extern crate winrt;
 
-use std::ptr;
-
 use winrt::*;
 use winrt::windows::foundation::*;
 use winrt::windows::foundation::collections::*;
@@ -14,7 +12,7 @@ fn main() {
     let base = FastHString::new("https://github.com");
     let relative = FastHString::new("contextfree/winrt-rust");
     let uri = Uri::create_with_relative_uri(&base, &relative).unwrap();
-    let uri2 = uri.clone();
+    let _uri2 = uri.clone();
     let to_string = uri.query_interface::<IStringable>().unwrap().to_string().unwrap();
     println!("{} -> {}", uri.get_runtime_class_name(), to_string);
     println!("TrustLevel: {:?}", uri.get_trust_level());
@@ -30,33 +28,12 @@ fn main() {
     let device_selector = MidiOutPort::get_device_selector().unwrap();
     println!("{}", device_selector);
     
-    unsafe {
-        use winapi::shared::winerror::S_OK;
-        use winapi::winrt::roerrorapi::GetRestrictedErrorInfo;
-
-        // Test some error reporting by using an invalid device selector
-        let wrong_deviceselector: FastHString = "Foobar".into();
-        let res = DeviceInformation::find_all_async_aqs_filter(&wrong_deviceselector);
-        if let Err(e) = res {
-            println!("HRESULT (FindAllAsyncAqsFilter) = {:?}", e);
-            // let error_info = {
-            //     let mut res = ptr::null_mut();
-            //     assert_eq!(GetRestrictedErrorInfo(&mut res), S_OK);
-            //     ComPtr::wrap_nonnull(res)
-            // };
-            // let (description, error, restricted_description, _) = {
-            //     let mut description = ptr::null_mut();
-            //     let mut error = 0;
-            //     let mut restricted_description = ptr::null_mut();
-            //     let mut capability_sid = ptr::null_mut();
-            //     assert_eq!(error_info.as_abi().GetErrorDetails(&mut description, &mut error, &mut restricted_description, &mut capability_sid), S_OK);
-            //     (BStr::wrap(description), error, BStr::wrap(restricted_description), BStr::wrap(capability_sid))
-            // };
-            // println!("Got Error Info: {} ({})", description, restricted_description);
-            // assert_eq!(error, e.as_hresult()); // the returned HRESULT within IRestrictedErrorInfo is the same as the original HRESULT
-        }
-        // NOTE: `res` is still null pointer at this point
-    };
+    // Test some error reporting by using an invalid device selector
+    let wrong_deviceselector: FastHString = "Foobar".into();
+    let res = DeviceInformation::find_all_async_aqs_filter(&wrong_deviceselector);
+    if let Err(e) = res {
+        println!("HRESULT (FindAllAsyncAqsFilter) = {:?}", e);
+    }
 
     let async_op = DeviceInformation::find_all_async().unwrap();
     
