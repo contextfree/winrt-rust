@@ -1,7 +1,6 @@
 use std::ops::{Deref, DerefMut};
-use std::fmt;
 use std::ptr;
-use crate::{ComInterface, ComInterfaceAbi, RtInterface, IInspectable};
+use crate::{ComInterface, ComInterfaceAbi};
 
 use w::shared::minwindef::LPVOID;
 use w::um::unknwnbase::IUnknown;
@@ -31,13 +30,6 @@ impl<Vtbl> Clone for ComAbi<Vtbl> {
 #[repr(transparent)]
 pub(crate) struct ComPtr<T: ComInterfaceAbi>(ptr::NonNull<T>);
 
-impl<T: ComInterfaceAbi> fmt::Pointer for ComPtr<T> {
-    #[inline]
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        fmt::Pointer::fmt(&self.0, f)
-    }
-}
-
 pub(crate) trait ComPtrHelpers {
     /// Changes the type of the underlying COM object to a different interface without doing `QueryInterface`.
     /// This is a runtime no-op, but you need to be sure that the interface is compatible.
@@ -64,31 +56,14 @@ impl<T: ComInterfaceAbi> ComPtr<T> {
     /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
     /// The wrapped pointer must not be null.
     #[inline]
-    pub unsafe fn wrap_nonnull(ptr: *mut T) -> ComPtr<T> {
+    pub unsafe fn wrap(ptr: *mut T) -> ComPtr<T> {
         debug_assert!(!ptr.is_null());
         ComPtr(ptr::NonNull::new_unchecked(ptr))
-    }
-
-    /// Creates an optional `ComPtr` to wrap a raw pointer that may be null.
-    /// It takes ownership over the pointer which means it does __not__ call `AddRef`.
-    #[inline]
-    pub unsafe fn wrap(ptr: *mut T) -> Option<ComPtr<T>> {
-        if ptr.is_null() {
-            None
-        } else {
-            Some(ComPtr(ptr::NonNull::new_unchecked(ptr)))
-        }
-    }
-
-    /// Returns the underlying WinRT object as a reference to an `IInspectable` object.
-    #[inline]
-    fn as_inspectable(&self) -> &mut IInspectable where T: RtInterface {
-        unsafe { &mut *(self.0.as_ptr() as *mut IInspectable) }
     }
     
     /// Returns the underlying WinRT or COM object as a reference to an `IUnknown` object.
     #[inline]
-    fn as_unknown(&self) -> &mut IUnknown {
+    pub fn as_unknown(&self) -> &mut IUnknown {
         unsafe { &mut *(self.0.as_ptr() as *mut IUnknown) }
     }
 
@@ -103,7 +78,7 @@ impl<T: ComInterfaceAbi> Clone for ComPtr<T> {
     fn clone(&self) -> Self {
         unsafe { 
             self.as_unknown().AddRef();
-            ComPtr::wrap_nonnull(self.0.as_ptr())
+            ComPtr::wrap(self.0.as_ptr())
         }
     }
 }
@@ -163,7 +138,7 @@ impl<T> Drop for ComArray<T> where T: crate::RtType {
     #[inline]
     fn drop(&mut self) {
         unsafe {
-            std::ptr::drop_in_place(&mut self[..]);
+            ptr::drop_in_place(&mut self[..]);
             CoTaskMemFree(self.first.as_ptr() as LPVOID)
         };
     }

@@ -55,7 +55,7 @@ impl ComInterfaceAbi for w::um::unknwnbase::IUnknown {
 }
 impl ComInterface for IUnknown {
     type TAbi = w::um::unknwnbase::IUnknown;
-    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IUnknown(ComPtr::wrap_nonnull(ptr)) }
+    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IUnknown(ComPtr::wrap(ptr)) }
     fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
 }
 
@@ -80,7 +80,7 @@ pub struct IRestrictedErrorInfo(ComPtr<ComAbi<w::um::restrictederrorinfo::IRestr
 impl ComIid for IRestrictedErrorInfo { #[inline] fn iid() -> &'static Guid { &IID_IRestrictedErrorInfo } }
 impl ComInterface for IRestrictedErrorInfo {
     type TAbi = ComAbi<w::um::restrictederrorinfo::IRestrictedErrorInfoVtbl>;
-    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IRestrictedErrorInfo(ComPtr::wrap_nonnull(ptr)) }
+    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IRestrictedErrorInfo(ComPtr::wrap(ptr)) }
     fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
 }
 
@@ -106,6 +106,6 @@ impl std::ops::DerefMut for IAgileObject {
 impl ComIid for IAgileObject { #[inline] fn iid() -> &'static Guid { &IID_IAgileObject } }
 impl ComInterface for IAgileObject {
     type TAbi = ComAbi<w::um::unknwnbase::IUnknownVtbl>;
-    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IAgileObject(ComPtr::wrap_nonnull(ptr)) }
+    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IAgileObject(ComPtr::wrap(ptr)) }
     fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
 }
