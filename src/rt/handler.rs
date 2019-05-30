@@ -63,15 +63,15 @@ pub unsafe extern "system" fn ComReprHandler_QueryInterface<T, I>(this_: *mut <I
 }
 
 pub trait ComClass<Interface: ComInterface> where Self: Sized {
-    fn get_vtbl() -> Interface::Vtbl;
+    fn get_vtbl() -> <Interface::TAbi as crate::ComInterfaceAbi>::Vtbl;
     unsafe fn from_interface<'a>(thing: *mut Interface) -> &'a mut Self {
-        &mut (*(thing as *mut _ as *mut ComRepr<Self, Interface::Vtbl>)).data
+        &mut (*(thing as *mut _ as *mut ComRepr<Self, <<Interface as ComInterface>::TAbi as crate::ComInterfaceAbi>::Vtbl>)).data
     }
     unsafe fn from_unknown<'a>(thing: *mut <IUnknown as ComInterface>::TAbi) -> &'a mut Self {
-        &mut (*(thing as *mut _ as *mut ComRepr<Self, Interface::Vtbl>)).data
+        &mut (*(thing as *mut _ as *mut ComRepr<Self, <<Interface as ComInterface>::TAbi as crate::ComInterfaceAbi>::Vtbl>)).data
     }
     unsafe fn destroy(thing: *mut <IUnknown as ComInterface>::TAbi) {
-        Box::from_raw(thing as *mut ComRepr<Self, Interface::Vtbl>);
+        Box::from_raw(thing as *mut ComRepr<Self, <<Interface as ComInterface>::TAbi as crate::ComInterfaceAbi>::Vtbl>);
     }
 }
 

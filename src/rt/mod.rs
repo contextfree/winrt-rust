@@ -28,7 +28,7 @@ pub struct Char(pub w::ctypes::wchar_t); // TODO: deref to u16
 pub unsafe trait RtInterface: ComInterface {}
 
 /// Marker trait for all interfaces that are not factories or statics.
-pub unsafe trait RtClassInterface: RtInterface + Sized {
+pub unsafe trait RtClassInterface: RtInterface {
     /// Gets the fully qualified name of the current Windows Runtime object.
     /// This is only available for interfaces that inherit from `IInspectable` and
     /// are not factory or statics interfaces.
@@ -300,46 +300,32 @@ macro_rules! RT_INTERFACE {
     };
 
     // version with no methods
-    ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident, $abiname:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {}
     ) => {
         #[repr(transparent)] #[allow(missing_copy_implementations)] #[doc(hidden)]
         pub struct $vtbl {
             pub parent: $pvtbl
         }
-        $(#[$attr])* #[repr(transparent)] #[allow(missing_copy_implementations)] #[allow(non_camel_case_types)]
-        pub struct $abiname {
-            lpVtbl: *const $vtbl
-        }
         $(#[$attr])* #[repr(transparent)] #[derive(Clone)]
-        pub struct $interface(ComPtr<$abiname>);
+        pub struct $interface(ComPtr<crate::comptr::ComAbi<$vtbl>>);
         impl ComIid for $interface {
             #[inline] fn iid() -> &'static crate::Guid { &$iid }
         }
-        impl crate::ComInterfaceAbi for $abiname {
-            type Vtbl = $vtbl;
-        }
         impl ComInterface for $interface {
-            type Vtbl = $vtbl;
-            type TAbi = $abiname;
+            type TAbi = crate::comptr::ComAbi<$vtbl>;
             unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap_nonnull(ptr)) }
             fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl crate::RtType for $interface {
             type In = Self;
-            type Abi = *mut $abiname;
+            type Abi = *mut crate::comptr::ComAbi<$vtbl>;
             type Out = Option<Self>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.0.as_abi() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out {
-                if v.is_null() {
-                    None
-                } else {
-                    Some($interface(ComPtr::wrap_nonnull(v)))
-                }
-            }
-            #[doc(hidden)] #[inline] unsafe fn wrap_nonnull(v: Self::Abi) -> Self { $interface(ComPtr::wrap_nonnull(v)) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { Self::wrap_com_opt(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap_nonnull(v: Self::Abi) -> Self { Self::wrap_com(v) }
         }
         impl std::ops::Deref for $interface {
             type Target = $crate::$pinterface;
@@ -357,7 +343,7 @@ macro_rules! RT_INTERFACE {
     };
 
     // version with methods, but without generic parameters
-    ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident, $abiname:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
@@ -370,39 +356,25 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        $(#[$attr])* #[repr(transparent)] #[allow(missing_copy_implementations)] #[allow(non_camel_case_types)]
-        pub struct $abiname {
-            lpVtbl: *const $vtbl
-        }
         $(#[$attr])* #[repr(transparent)] #[derive(Clone)]
-        pub struct $interface(ComPtr<$abiname>);
+        pub struct $interface(ComPtr<crate::comptr::ComAbi<$vtbl>>);
         impl ComIid for $interface {
             #[inline] fn iid() -> &'static crate::Guid { &$iid }
         }
-        impl crate::ComInterfaceAbi for $abiname {
-            type Vtbl = $vtbl;
-        }
         impl ComInterface for $interface {
-            type Vtbl = $vtbl;
-            type TAbi = $abiname;
+            type TAbi = crate::comptr::ComAbi<$vtbl>;
             unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap_nonnull(ptr)) }
             fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl crate::RtType for $interface {
             type In = Self;
-            type Abi = *mut $abiname;
+            type Abi = *mut crate::comptr::ComAbi<$vtbl>;
             type Out = Option<Self>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.0.as_abi() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out {
-                if v.is_null() {
-                    None
-                } else {
-                    Some($interface(ComPtr::wrap_nonnull(v)))
-                }
-            }
-            #[doc(hidden)] #[inline] unsafe fn wrap_nonnull(v: Self::Abi) -> Self { $interface(ComPtr::wrap_nonnull(v)) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { Self::wrap_com_opt(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap_nonnull(v: Self::Abi) -> Self { Self::wrap_com(v) }
         }
         impl std::ops::Deref for $interface {
             type Target = $crate::$pinterface;
@@ -420,7 +392,7 @@ macro_rules! RT_INTERFACE {
     };
     // The $iid is actually not necessary, because it refers to the uninstantiated version of the interface,
     // which is irrelevant at runtime (it is used to generate the IIDs of the parameterized interfaces).
-    ($(#[$attr:meta])* basic $interface:ident<$t1:ident> ($vtbl:ident, $abiname:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident<$t1:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
@@ -433,36 +405,22 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        $(#[$attr])* #[repr(transparent)] #[allow(missing_copy_implementations)] #[allow(non_camel_case_types)]
-        pub struct $abiname<$t1> where $t1: RtType {
-            lpVtbl: *const $vtbl<$t1>,
-        }
         $(#[$attr])* #[repr(transparent)] #[derive(Clone)]
-        pub struct $interface<$t1: RtType>(ComPtr<$abiname<$t1>>);
-        impl<$t1> crate::ComInterfaceAbi for $abiname<$t1> where $t1: RtType {
-            type Vtbl = $vtbl<$t1>;
-        }
+        pub struct $interface<$t1: RtType>(ComPtr<crate::comptr::ComAbi<$vtbl<$t1>>>);
         impl<$t1> ComInterface for $interface<$t1> where $t1: RtType {
-            type Vtbl = $vtbl<$t1>;
-            type TAbi = $abiname<$t1>;
+            type TAbi = crate::comptr::ComAbi<$vtbl<$t1>>;
             unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap_nonnull(ptr)) }
             fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl<$t1> crate::RtType for $interface<$t1> where $t1: RtType{
             type In = Self;
-            type Abi = *mut $abiname<$t1>;
+            type Abi = *mut crate::comptr::ComAbi<$vtbl<$t1>>;
             type Out = Option<Self>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.0.as_abi() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out {
-                if v.is_null() {
-                    None
-                } else {
-                    Some($interface(ComPtr::wrap_nonnull(v)))
-                }
-            }
-            #[doc(hidden)] #[inline] unsafe fn wrap_nonnull(v: Self::Abi) -> Self { $interface(ComPtr::wrap_nonnull(v)) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { Self::wrap_com_opt(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap_nonnull(v: Self::Abi) -> Self { Self::wrap_com(v) }
         }
         impl<$t1> std::ops::Deref for $interface<$t1> where $t1: RtType {
             type Target = $pinterface;
@@ -479,7 +437,7 @@ macro_rules! RT_INTERFACE {
         }
     };
 
-    ($(#[$attr:meta])* basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident, $abiname:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
+    ($(#[$attr:meta])* basic $interface:ident<$t1:ident, $t2:ident> ($vtbl:ident) : $pinterface:ident ($pvtbl:ty) [$iid:ident]
         {$(
             $(#[cfg($cond_attr:meta)])* fn $method:ident(&self $(,$p:ident : $t:ty)*) -> $rtr:ty
         ),+}
@@ -492,36 +450,22 @@ macro_rules! RT_INTERFACE {
                 $(,$p: $t)*
             ) -> $rtr)+
         }
-        $(#[$attr])* #[repr(transparent)] #[allow(missing_copy_implementations)] #[allow(non_camel_case_types)]
-        pub struct $abiname<$t1, $t2> where $t1: RtType, $t2: RtType {
-            lpVtbl: *const $vtbl<$t1, $t2>,
-        }
         $(#[$attr])* #[repr(transparent)] #[derive(Clone)]
-        pub struct $interface<$t1: RtType, $t2: RtType>(ComPtr<$abiname<$t1, $t2>>);
-        impl<$t1, $t2> crate::ComInterfaceAbi for $abiname<$t1, $t2> where $t1: RtType, $t2: RtType {
-            type Vtbl = $vtbl<$t1, $t2>;
-        }
+        pub struct $interface<$t1: RtType, $t2: RtType>(ComPtr<crate::comptr::ComAbi<$vtbl<$t1, $t2>>>);
         impl<$t1, $t2> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
-            type Vtbl = $vtbl<$t1, $t2>;
-            type TAbi = $abiname<$t1, $t2>;
+            type TAbi = crate::comptr::ComAbi<$vtbl<$t1, $t2>>;
             unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap_nonnull(ptr)) }
             fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl<$t1, $t2> crate::RtType for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type In = Self;
-            type Abi = *mut $abiname<$t1, $t2>;
+            type Abi = *mut crate::comptr::ComAbi<$vtbl<$t1, $t2>>;
             type Out = Option<Self>;
 
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.0.as_abi() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out {
-                if v.is_null() {
-                    None
-                } else {
-                    Some($interface(ComPtr::wrap_nonnull(v)))
-                }
-            }
-            #[doc(hidden)] #[inline] unsafe fn wrap_nonnull(v: Self::Abi) -> Self { $interface(ComPtr::wrap_nonnull(v)) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { Self::wrap_com_opt(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap_nonnull(v: Self::Abi) -> Self { Self::wrap_com(v) }
         }
         impl<$t1, $t2> std::ops::Deref for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type Target = $pinterface;
@@ -541,10 +485,10 @@ macro_rules! RT_INTERFACE {
 
 macro_rules! RT_DELEGATE {
     // without generic parameters
-    (delegate $interface:ident ($vtbl:ident, $abiname:ident, $imp:ident) [$iid:ident] {
+    (delegate $interface:ident ($vtbl:ident, $imp:ident) [$iid:ident] {
         $(#[cfg($cond_attr:meta)])* fn Invoke(&self $(,$p:ident : $t:ty)*) -> HRESULT
     }) => {
-        RT_INTERFACE!{basic $interface($vtbl, $abiname) : IUnknown(IUnknownVtbl) [$iid] {
+        RT_INTERFACE!{basic $interface($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
             $(#[cfg($cond_attr)])* fn Invoke(&self $(,$p : $t)*) -> HRESULT
         }}
 
@@ -611,10 +555,10 @@ macro_rules! RT_DELEGATE {
     };
 
     // with generic parameters
-    (delegate $interface:ident<$($ht:ident),+> ($vtbl:ident, $abiname:ident, $imp:ident) [$iid:ident] {
+    (delegate $interface:ident<$($ht:ident),+> ($vtbl:ident, $imp:ident) [$iid:ident] {
         $(#[cfg($cond_attr:meta)])* fn Invoke(&self $(,$p:ident : $t:ty)*) -> HRESULT
     }) => {
-        RT_INTERFACE!{basic $interface<$($ht),+>($vtbl, $abiname) : IUnknown(IUnknownVtbl) [$iid] {
+        RT_INTERFACE!{basic $interface<$($ht),+>($vtbl) : IUnknown(IUnknownVtbl) [$iid] {
             $(#[cfg($cond_attr)])* fn Invoke(&self $(,$p : $t)*) -> HRESULT
         }}
 
@@ -690,7 +634,6 @@ macro_rules! RT_CLASS {
         unsafe impl crate::RtInterface for $cls {}
         unsafe impl crate::RtClassInterface for $cls {}
         impl ComInterface for $cls {
-            type Vtbl = <$interface as ComInterface>::Vtbl;
             type TAbi = <$interface as ComInterface>::TAbi;
             unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $cls(ComPtr::wrap_nonnull(ptr)) }
             fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
@@ -705,14 +648,8 @@ macro_rules! RT_CLASS {
             
             #[doc(hidden)] #[inline] unsafe fn unwrap(v: &Self::In) -> Self::Abi { v.0.as_abi() as *const _ as *mut _ }
             #[doc(hidden)] #[inline] unsafe fn uninitialized() -> Self::Abi { std::ptr::null_mut() }
-            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out {
-                if v.is_null() {
-                    None
-                } else {
-                    Some($cls(ComPtr::wrap_nonnull(v)))
-                }
-            }
-            #[doc(hidden)] #[inline] unsafe fn wrap_nonnull(v: Self::Abi) -> Self { $cls(ComPtr::wrap_nonnull(v)) }
+            #[doc(hidden)] #[inline] unsafe fn wrap(v: Self::Abi) -> Self::Out { Self::wrap_com_opt(v) }
+            #[doc(hidden)] #[inline] unsafe fn wrap_nonnull(v: Self::Abi) -> Self { Self::wrap_com(v) }
         }
         impl std::ops::Deref for $cls {
             type Target = $interface;
@@ -784,7 +721,7 @@ pub(crate) mod gen; // import auto-generated definitions (has to come after macr
 DEFINE_IID!(IID_IInspectable, 0xAF86E2E0, 0xB12D, 0x4c6a, 0x9C, 0x5A, 0xD7, 0xAA, 0x65, 0x10, 0x1E, 0x90);
 RT_INTERFACE!{
 /// The `IInspectable` interface is the base interface for all Windows Runtime classes.
-interface IInspectable(IInspectableVtbl, IInspectable_Abi): IUnknown(IUnknownVtbl) [IID_IInspectable]  {
+interface IInspectable(IInspectableVtbl): IUnknown(IUnknownVtbl) [IID_IInspectable]  {
     fn GetIids(&self, iidCount: *mut ULONG, iids: *mut *mut IID) -> HRESULT,
     fn GetRuntimeClassName(&self, className: *mut HSTRING) -> HRESULT,
     fn GetTrustLevel(&self, trustLevel: *mut crate::TrustLevel) -> HRESULT
@@ -795,7 +732,7 @@ impl IInspectable {
     pub fn get_iids(&self) -> ComArray<Guid> {
         let mut result = std::ptr::null_mut();
         let mut count = 0;
-        let hr = unsafe { ((*self.get_abi().lpVtbl).GetIids)(self.get_abi() as *const _ as *mut _, &mut count, &mut result) };
+        let hr = unsafe { (self.get_vtbl().GetIids)(self.get_abi() as *const _ as *mut _, &mut count, &mut result) };
         assert_eq!(hr, S_OK);
         let result = result as *mut Guid; // convert from w::GUID to (binary compatible) Guid
         unsafe { ComArray::from_raw(count, result) }
@@ -805,7 +742,7 @@ impl IInspectable {
     #[inline]
     pub fn get_trust_level(&self) -> crate::TrustLevel {
         let mut result = unsafe { std::mem::zeroed() };
-        let hr = unsafe { ((*self.get_abi().lpVtbl).GetTrustLevel)(self.get_abi() as *const _ as *mut _, &mut result) };
+        let hr = unsafe { (self.get_vtbl().GetTrustLevel)(self.get_abi() as *const _ as *mut _, &mut result) };
         assert_eq!(hr, S_OK);
         result
     }
@@ -813,7 +750,7 @@ impl IInspectable {
     /// Publically exposed via RtClassInterface
     pub(crate) fn get_runtime_class_name(&self) -> HString {
         let mut result = std::ptr::null_mut();
-        let hr = unsafe { ((*self.get_abi().lpVtbl).GetRuntimeClassName)(self.get_abi() as *const _ as *mut _, &mut result) };
+        let hr = unsafe { (self.get_vtbl().GetRuntimeClassName)(self.get_abi() as *const _ as *mut _, &mut result) };
         assert_eq!(hr, S_OK);
         unsafe { HString::wrap(result) }
     }
@@ -824,7 +761,7 @@ RT_INTERFACE!{
 /// Enables classes to be activated using a default constructor.
 /// This interface should not be used directly, but the `new()` method of
 /// the `RtDefaultConstructible` trait should be used instead.
-interface IActivationFactory(IActivationFactoryVtbl, IActivationFactory_Abi): IInspectable(IInspectableVtbl) [IID_IActivationFactory]  {
+interface IActivationFactory(IActivationFactoryVtbl): IInspectable(IInspectableVtbl) [IID_IActivationFactory]  {
     fn ActivateInstance(&self, instance: *mut <IInspectable as RtType>::Abi) -> HRESULT
 }}
 
@@ -832,7 +769,7 @@ impl IActivationFactory {
     #[inline]
     pub fn activate_instance(&self) -> IInspectable {
         let mut result = std::ptr::null_mut();
-        let hr = unsafe { ((*self.get_abi().lpVtbl).ActivateInstance)(self as *const _ as *mut _, &mut result) };
+        let hr = unsafe { (self.get_vtbl().ActivateInstance)(self as *const _ as *mut _, &mut result) };
         assert_eq!(hr, S_OK);
         unsafe { IInspectable::wrap_com(result) }
     }
@@ -841,7 +778,7 @@ impl IActivationFactory {
 DEFINE_IID!(IID_IMemoryBufferByteAccess, 0x5b0d3235, 0x4dba, 0x4d44, 0x86, 0x5e, 0x8f, 0x1d, 0x0e, 0x4f, 0xd0, 0x4d);
 RT_INTERFACE!{
 /// Provides direct byte access to the memory buffer underlying an `IMemoryBuffer`.
-interface IMemoryBufferByteAccess(IMemoryBufferByteAccessVtbl, IMemoryBufferByteAccess_Abi) : IUnknown(IUnknownVtbl) [IID_IMemoryBufferByteAccess]  {
+interface IMemoryBufferByteAccess(IMemoryBufferByteAccessVtbl) : IUnknown(IUnknownVtbl) [IID_IMemoryBufferByteAccess]  {
     fn GetBuffer(&self, value: *mut *mut u8, capacity: *mut u32) -> HRESULT
 }}
 
@@ -860,7 +797,7 @@ impl IMemoryBufferByteAccess {
     pub unsafe fn get_buffer(&self) -> &[u8] {
         let mut ptr = std::ptr::null_mut();
         let mut capacity: u32 = 0;
-        let hr = ((*self.get_abi().lpVtbl).GetBuffer)(self as *const _ as *mut _, &mut ptr, &mut capacity);
+        let hr = (self.get_vtbl().GetBuffer)(self as *const _ as *mut _, &mut ptr, &mut capacity);
         assert_eq!(hr, S_OK);
         if capacity == 0 {
             ptr = 1 as *mut u8; // null pointer is not allowed
