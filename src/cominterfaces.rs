@@ -49,14 +49,15 @@ pub struct IUnknown(ComPtr<w::um::unknwnbase::IUnknown>);
 impl ComIid for IUnknown { #[inline] fn iid() -> &'static Guid { &IID_IUnknown } }
 impl ComInterfaceAbi for w::um::unknwnbase::IUnknown {
     type Vtbl = w::um::unknwnbase::IUnknownVtbl;
+    #[inline]
     fn get_vtbl(&self) -> *const Self::Vtbl {
         self.lpVtbl
     }
 }
 impl ComInterface for IUnknown {
     type TAbi = w::um::unknwnbase::IUnknown;
-    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IUnknown(ComPtr::wrap(ptr)) }
-    fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
+    #[inline] unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IUnknown(ComPtr::wrap(ptr)) }
+    #[inline] fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
 }
 
 impl IUnknown {
@@ -80,8 +81,8 @@ pub struct IRestrictedErrorInfo(ComPtr<ComAbi<w::um::restrictederrorinfo::IRestr
 impl ComIid for IRestrictedErrorInfo { #[inline] fn iid() -> &'static Guid { &IID_IRestrictedErrorInfo } }
 impl ComInterface for IRestrictedErrorInfo {
     type TAbi = ComAbi<w::um::restrictederrorinfo::IRestrictedErrorInfoVtbl>;
-    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IRestrictedErrorInfo(ComPtr::wrap(ptr)) }
-    fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
+    #[inline] unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IRestrictedErrorInfo(ComPtr::wrap(ptr)) }
+    #[inline] fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
 }
 
 DEFINE_IID!(IID_IAgileObject, 0x94EA2B94, 0xE9CC, 0x49E0, 0xC0, 0xFF, 0xEE, 0x64, 0xCA, 0x8F, 0x5B, 0x90);
@@ -106,6 +107,6 @@ impl std::ops::DerefMut for IAgileObject {
 impl ComIid for IAgileObject { #[inline] fn iid() -> &'static Guid { &IID_IAgileObject } }
 impl ComInterface for IAgileObject {
     type TAbi = ComAbi<w::um::unknwnbase::IUnknownVtbl>;
-    unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IAgileObject(ComPtr::wrap(ptr)) }
-    fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
+    #[inline] unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { IAgileObject(ComPtr::wrap(ptr)) }
+    #[inline] fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
 }

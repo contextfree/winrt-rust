@@ -313,8 +313,8 @@ macro_rules! RT_INTERFACE {
         }
         impl ComInterface for $interface {
             type TAbi = crate::comptr::ComAbi<$vtbl>;
-            unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap(ptr)) }
-            fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
+            #[inline] unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap(ptr)) }
+            #[inline] fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl crate::RtType for $interface {
             type In = Self;
@@ -362,8 +362,8 @@ macro_rules! RT_INTERFACE {
         }
         impl ComInterface for $interface {
             type TAbi = crate::comptr::ComAbi<$vtbl>;
-            unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap(ptr)) }
-            fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
+            #[inline] unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap(ptr)) }
+            #[inline] fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl crate::RtType for $interface {
             type In = Self;
@@ -408,8 +408,8 @@ macro_rules! RT_INTERFACE {
         pub struct $interface<$t1: RtType>(ComPtr<crate::comptr::ComAbi<$vtbl<$t1>>>);
         impl<$t1> ComInterface for $interface<$t1> where $t1: RtType {
             type TAbi = crate::comptr::ComAbi<$vtbl<$t1>>;
-            unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap(ptr)) }
-            fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
+            #[inline] unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap(ptr)) }
+            #[inline] fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl<$t1> crate::RtType for $interface<$t1> where $t1: RtType{
             type In = Self;
@@ -453,8 +453,8 @@ macro_rules! RT_INTERFACE {
         pub struct $interface<$t1: RtType, $t2: RtType>(ComPtr<crate::comptr::ComAbi<$vtbl<$t1, $t2>>>);
         impl<$t1, $t2> ComInterface for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type TAbi = crate::comptr::ComAbi<$vtbl<$t1, $t2>>;
-            unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap(ptr)) }
-            fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
+            #[inline] unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $interface(ComPtr::wrap(ptr)) }
+            #[inline] fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl<$t1, $t2> crate::RtType for $interface<$t1, $t2> where $t1: RtType, $t2: RtType {
             type In = Self;
@@ -634,8 +634,8 @@ macro_rules! RT_CLASS {
         unsafe impl crate::RtClassInterface for $cls {}
         impl ComInterface for $cls {
             type TAbi = <$interface as ComInterface>::TAbi;
-            unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $cls(ComPtr::wrap(ptr)) }
-            fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
+            #[inline] unsafe fn wrap_com(ptr: *mut Self::TAbi) -> Self { $cls(ComPtr::wrap(ptr)) }
+            #[inline] fn get_abi(&self) -> &Self::TAbi { self.0.as_abi() }
         }
         impl ComIid for $cls {
             #[inline] fn iid() -> &'static crate::Guid { <$interface as ComIid>::iid() }

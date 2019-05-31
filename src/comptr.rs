@@ -13,6 +13,7 @@ pub struct ComAbi<Vtbl> {
 
 impl<Vtbl> ComInterfaceAbi for ComAbi<Vtbl> {
     type Vtbl = Vtbl;
+    #[inline]
     fn get_vtbl(&self) -> *const Vtbl {
         self.lpVtbl
     }
