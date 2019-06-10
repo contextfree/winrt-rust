@@ -9,3 +9,5 @@ obj/
 bin/
 .suo
 .vs
+.vscode
+*.code-workspace

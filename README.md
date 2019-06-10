@@ -49,7 +49,7 @@ fn main() {
 Because this example uses the `Windows.System` namespace, we have to enable the `windows-system` feature in `Cargo.toml`:
 ```toml
 [dependencies.winrt]
-version = "0.5.0"
+version = "0.6.0"
 features = ["windows-system"]
 ```
 
@@ -73,6 +73,14 @@ an extension of WinRT, introduced in Windows 10, that allows using additional, m
 *WinRT* is not to be confused with the discontinued flavor of the Windows operating system for ARM devices, *Windows RT*.
 
 ## Changelog
+
+#### Version 0.6.0 (2019-06-10)
+- [Breaking] Implicit initialization for the runtime context. `RuntimeContext` no longer exists and was replaced by `init_apartment` (but it's usually not necessary to call it).
+- [Breaking] Improved snake case conversion for method names
+- [Breaking] Removed `lang-compat` feature
+- Use `std::ptr::NonNull` to enable size optimizaton of `Option<ComPtr<...>>`
+- Implement `Send` for `HString`
+- ⚠️ This will be the last version that uses the Rust 2015 Edition.
 
 #### Version 0.5.1 (2018-09-10)
 - Regenerated bindings from latest Windows SDK
