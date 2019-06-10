@@ -20,9 +20,7 @@ use winrt::windows::media::*;
 use winrt::windows::storage::StorageFile;
 
 fn main() {
-    let rt = RuntimeContext::init();
     block_on(run());
-    rt.uninit();
 }
 
 async fn run() {
@@ -52,7 +50,7 @@ async fn run() {
     let mut async_op = DeviceInformation::find_all_async().unwrap().fuse();
 
     let work = async {
-        let mut result = None;
+        let result;
         loop {
             select! {
                 _ = interval.next() => {
@@ -61,13 +59,13 @@ async fn run() {
                     std::io::stdout().flush().unwrap();
                 },
                 res = async_op => {
-                    result = Some(res);
+                    result = res;
                     println!("");
                     break;
                 }
             };
         }
-        result.unwrap()
+        result
     };
 
     let device_information_collection = work.await.unwrap().unwrap();
@@ -99,7 +97,7 @@ async fn run() {
     let mut async_op = async_op.fuse();
 
     let work = async {
-        let mut result = None;
+        let result;
         loop {
             select! {
                 _ = interval.next() => {
@@ -108,13 +106,13 @@ async fn run() {
                     std::io::stdout().flush().unwrap();
                 },
                 res = async_op => {
-                    result = Some(res);
+                    result = res;
                     println!("");
                     break;
                 }
             };
         }
-        result.unwrap()
+        result
     };
 
     work.await
