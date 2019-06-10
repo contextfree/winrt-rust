@@ -15,6 +15,8 @@ edition = "2018"
 
 [dependencies]
 winapi = { version = "0.3", features = ["winnt", "combaseapi", "oleauto", "roapi", "roerrorapi", "hstring", "winstring", "winerror", "restrictederrorinfo"] }
+futures-preview = { version = "0.3.0-alpha.16", features = ["async-await", "nightly"] }
+futures-native-timers = { path = "../futures-native-timers" }
 
 [features]
 nightly = []

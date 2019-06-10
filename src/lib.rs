@@ -29,6 +29,7 @@
 #![allow(dead_code,non_upper_case_globals,non_snake_case)]
 
 extern crate winapi as w;
+extern crate futures;
 
 mod guid;
 pub use guid::Guid;

@@ -1,3 +1,7 @@
+use futures::future::Future;
+use std::pin::Pin;
+use std::ops::Deref;
+use std::task::{Context, Poll};
 use std::sync::{Arc, Mutex, Condvar};
 
 use crate::{
@@ -75,8 +79,7 @@ macro_rules! impl_blocking_wait {
     }
 }
 
-impl RtAsyncAction for IAsyncAction
-{
+impl RtAsyncAction for IAsyncAction {
     impl_blocking_wait!{ AsyncActionCompletedHandler }
 }
 
@@ -118,4 +121,69 @@ impl<T: RtType + 'static, P: RtType + 'static> RtAsyncOperation for IAsyncOperat
     fn get_results(&self) -> Result<Self::TResult> {
         self.get_results()
     }
+}
+
+
+macro_rules! impl_poll {
+    ($handler:ident => $retexpr:tt) => {
+        fn poll(self: Pin<&mut Self>, cx: &mut Context) -> Poll<Self::Output> {
+            let info = crate::comptr::query_interface::<_, IAsyncInfo>(self.deref().deref()).expect("query_interface failed");
+            let status = info.get_status().expect("get_status failed");
+            match status {
+                crate::windows::foundation::AsyncStatus::Completed => {
+                    Poll::Ready($retexpr(self))
+                },
+                crate::windows::foundation::AsyncStatus::Started => {
+                    // Calling poll multiple times must work correctly, so we have to check that we didn't already install the Completed handler
+                    if self.get_completed().expect("get_completed failed").is_some() {
+                        // TODO: We might have to check that the installed handler is actually
+                        //       the one with the waker (because the user could have installed one independently).
+                        //       Or we document that the user is not allowed to do that.
+                        return Poll::Pending;
+                    }
+                    let waker = cx.waker().clone();
+
+                    let handler = $handler::new(move |_op, _status| {
+                        waker.wake_by_ref();
+                        Ok(())
+                    });
+
+                    self.set_completed(&handler).expect("set_completed failed");
+                    Poll::Pending
+                }
+                _ => unimplemented!() // FIXME
+            }
+        }
+    }
+}
+
+
+impl Future for crate::ComPtr<IAsyncAction> {
+    type Output = ();
+
+    impl_poll!{ AsyncActionCompletedHandler => { |_: Pin<&mut Self>| () } }
+}
+
+impl<P: RtType + 'static> Future for crate::ComPtr<IAsyncActionWithProgress<P>>
+    where AsyncActionWithProgressCompletedHandler<P>: ComIid
+{
+    type Output = ();
+
+    impl_poll!{ AsyncActionWithProgressCompletedHandler => { |_: Pin<&mut Self>| () } }
+}
+
+impl<T: RtType + 'static> Future for crate::ComPtr<IAsyncOperation<T>>
+    where AsyncOperationCompletedHandler<T>: ComIid
+{
+    type Output = Result<<T as RtType>::Out>;
+
+    impl_poll!{ AsyncOperationCompletedHandler => { |s: Pin<&mut Self>| s.get_results() } }
+}
+
+impl<T: RtType + 'static, P: RtType + 'static> Future for crate::ComPtr<IAsyncOperationWithProgress<T, P>>
+    where AsyncOperationWithProgressCompletedHandler<T, P>: ComIid
+{
+    type Output = Result<<T as RtType>::Out>;
+
+    impl_poll!{ AsyncOperationWithProgressCompletedHandler => { |s: Pin<&mut Self>| s.get_results() } }
 }
