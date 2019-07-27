@@ -29,7 +29,7 @@ impl<Vtbl> Clone for ComAbi<Vtbl> {
 /// Smart pointer for Windows Runtime objects. This pointer automatically maintains the
 /// reference count of the underlying COM object.
 #[repr(transparent)]
-pub(crate) struct ComPtr<T: ComInterfaceAbi>(ptr::NonNull<T>);
+pub struct ComPtr<T: ComInterfaceAbi>(ptr::NonNull<T>);
 
 pub(crate) trait ComPtrHelpers {
     /// Changes the type of the underlying COM object to a different interface without doing `QueryInterface`.
@@ -69,7 +69,7 @@ impl<T: ComInterfaceAbi> ComPtr<T> {
     }
 
     #[inline]
-    pub(crate) fn as_abi(&self) -> &T {
+    pub fn as_abi(&self) -> &T {
         unsafe { self.0.as_ref() }
     }
 }
