@@ -37,6 +37,7 @@ pub use guid::Guid;
 pub type TrustLevel = w::winrt::inspectable::TrustLevel;
 
 // Compared to the DEFINE_GUID macro from winapi, this one creates a private const
+#[macro_export]
 macro_rules! DEFINE_IID {
     (
         $name:ident, $l:expr, $w1:expr, $w2:expr, $b1:expr, $b2:expr, $b3:expr, $b4:expr, $b5:expr,
@@ -57,11 +58,12 @@ mod bstr;
 pub use bstr::BStr;
 
 mod comptr;
-pub(crate) use comptr::ComPtr;
-pub use comptr::ComArray;
+pub use comptr::{ComPtr, ComArray, ComAbi};
 
 mod cominterfaces;
 pub use cominterfaces::{ComInterface, ComInterfaceAbi, ComIid, IUnknown, IRestrictedErrorInfo, IAgileObject};
+
+pub mod interop;
 
 mod rt;
 pub use rt::{RtInterface, RtClassInterface, RtNamedClass, RtValueType, RtType, RtActivatable,
