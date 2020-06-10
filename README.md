@@ -1,4 +1,6 @@
-# winrt-rust [![crates.io](https://img.shields.io/crates/v/winrt.svg)](https://crates.io/crates/winrt) [![docs.rs](https://docs.rs/winrt/badge.svg)](https://docs.rs/winrt/*/x86_64-pc-windows-msvc/winrt/)
+# winrt-rust
+
+**This project has been superseded by winrt-rs, which is maintained by Microsoft. Please visit [github.com/Microsoft/winrt-rs](https://github.com/microsoft/winrt-rs).**
 
 This crate provides type and method definitions to use the *Windows Runtime (WinRT)* APIs from Rust.
 
@@ -73,6 +75,8 @@ an extension of WinRT, introduced in Windows 10, that allows using additional, m
 *WinRT* is not to be confused with the discontinued flavor of the Windows operating system for ARM devices, *Windows RT*.
 
 ## Changelog
+
+*Version 0.6.0 was the last release of this project. It has been superseded by [winrt-rs](https://github.com/microsoft/winrt-rs).*
 
 #### Version 0.6.0 (2019-06-10)
 - [Breaking] Implicit initialization for the runtime context. `RuntimeContext` no longer exists and was replaced by `init_apartment` (but it's usually not necessary to call it).
