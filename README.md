@@ -1,6 +1,6 @@
 # winrt-rust
 
-**This project has been superseded by winrt-rs, which is maintained by Microsoft. Please visit [github.com/Microsoft/winrt-rs](https://github.com/microsoft/winrt-rs).**
+**This project has been superseded by windows-rs, which is maintained by Microsoft. Please visit [github.com/microsoft/windows-rs](https://github.com/microsoft/windows-rs).**
 
 This crate provides type and method definitions to use the *Windows Runtime (WinRT)* APIs from Rust.
 
