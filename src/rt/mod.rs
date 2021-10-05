@@ -136,10 +136,16 @@ pub trait RtNamedClass {
     fn name() -> &'static [u16];
 }
 
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum RegistrationStatus {
+    Ok,
+    NotRegistered,
+    Error(u32),
+}
+
 pub trait RtActivatable<Interface> : RtNamedClass {
-    /// Returns a factory object to create instances of this class or to call static methods.
     #[inline]
-    fn get_activation_factory() -> Interface where Interface: RtInterface + ComIid + RtType, Interface: RtType<Abi=*mut <Interface as ComInterface>::TAbi> {
+    fn can_be_registered() -> RegistrationStatus {
         let mut res: <Interface as RtType>::Abi = unsafe { <Interface as RtType>::uninitialized() };
         let class_id = unsafe { HStringReference::from_utf16_unchecked(Self::name()) };
         let mut hr = unsafe { RoGetActivationFactory(class_id.get(), <Interface as ComIid>::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut VOID) };
@@ -149,13 +155,29 @@ pub trait RtActivatable<Interface> : RtNamedClass {
             hr = unsafe { RoGetActivationFactory(class_id.get(), <Interface as ComIid>::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut VOID) };
         }
         if hr == S_OK {
-            unsafe { <Interface as RtType>::wrap_nonnull(res) }
+            RegistrationStatus::Ok
         } else if hr == REGDB_E_CLASSNOTREG {
-            let name = Self::name();
-            panic!("WinRT class \"{}\" not registered", String::from_utf16_lossy(&name[0..name.len()-1]))
+            RegistrationStatus::NotRegistered
         } else {
-            panic!("RoGetActivationFactory failed with error code 0x{:X}", hr as u32)
-        }     
+            RegistrationStatus::Error(hr as u32)
+        }
+    }
+
+    /// Returns a factory object to create instances of this class or to call static methods.
+    #[inline]
+    fn get_activation_factory() -> Interface where Interface: RtInterface + ComIid + RtType, Interface: RtType<Abi=*mut <Interface as ComInterface>::TAbi> {
+        match RtActivatable::can_be_registered() {
+            RegistrationStatus::Ok => {
+                unsafe { <Interface as RtType>::wrap_nonnull(RoGetActivationFactory(class_id.get(), <Interface as ComIid>::iid().as_ref(), &mut res as *mut *mut _ as *mut *mut VOID)) };
+            }
+            RegistrationStatus::NotRegistered => {
+                let name = Self::name();
+                panic!("WinRT class \"{}\" not registered", String::from_utf16_lossy(&name[0..name.len()-1]))
+            }
+            RegistrationStatus::Error(hr) => {
+                panic!("RoGetActivationFactory failed with error code 0x{:X}", hr)
+            }
+        }
     }
 }
 
