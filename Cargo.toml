@@ -16,6 +16,9 @@ edition = "2018"
 [dependencies]
 winapi = { version = "0.3", features = ["winnt", "combaseapi", "oleauto", "roapi", "roerrorapi", "hstring", "winstring", "winerror", "restrictederrorinfo"] }
 
+[dev-dependencies]
+doc-comment = "0.3"
+
 [features]
 nightly = []
 windows-ai = []

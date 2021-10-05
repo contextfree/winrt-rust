@@ -2,8 +2,6 @@
 //!
 //! ## Example
 //! ```
-//! # // THIS IS THE SAME CODE THAT IS SHOWN IN README.md
-//! # // PLEASE KEEP THEM IN SYNC SO WE CAN RELY ON DOCTESTS!
 //! extern crate winrt;
 //!
 //! use winrt::*; // import various helper types
@@ -28,12 +26,18 @@
 
 #![allow(dead_code,non_upper_case_globals,non_snake_case)]
 
+#[cfg(doctest)]
+#[macro_use]
+extern crate doc_comment;
 extern crate winapi as w;
+
+#[cfg(doctest)]
+doctest!("../README.md");
 
 mod guid;
 pub use guid::Guid;
 
-///Represents the trust level of an activatable class (re-export from WinAPI crate)
+/// Represents the trust level of an activatable class (re-export from WinAPI crate)
 pub type TrustLevel = w::winrt::inspectable::TrustLevel;
 
 // Compared to the DEFINE_GUID macro from winapi, this one creates a private const
